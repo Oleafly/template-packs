@@ -1,0 +1,83 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage[hidelinks]{hyperref}
+\definecolor{accent}{HTML}{14532D}
+\definecolor{accentlight}{HTML}{2F8F5B}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\pagestyle{empty}
+
+% Key figure block: {value}{label}
+\newcommand{\keyfig}[2]{%
+  \begin{minipage}[t]{0.23\textwidth}\centering
+    {\Huge\bfseries\color{accent}#1}\\[0.35em]
+    {\small\scshape\color{black!60}#2}
+  \end{minipage}}
+
+\begin{document}
+
+% ---------- Cover band ----------
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[accent] (current page.north west) rectangle
+    ([yshift=-8.6cm]current page.north east);
+  \fill[accentlight] ([yshift=-8.6cm]current page.north west) rectangle
+    ([yshift=-8.95cm]current page.north east);
+  \begin{scope}
+    \clip (current page.north west) rectangle ([yshift=-8.6cm]current page.north east);
+    \foreach \i in {0,...,6} {
+      \draw[accentlight, opacity=0.35, line width=1.1pt]
+        ([xshift=8cm+\i*1.1cm]current page.north west)
+        -- ([xshift=15cm+\i*1.1cm, yshift=-8.6cm]current page.north west);
+    }
+  \end{scope}
+  \node[anchor=north west, text=white, align=left]
+    at ([xshift=2.5cm, yshift=-1.6cm]current page.north west)
+    {\small\scshape Nordwind Energy Group};
+  \node[anchor=north west, text=white, align=left]
+    at ([xshift=2.5cm, yshift=-2.6cm]current page.north west)
+    {\fontsize{40}{46}\selectfont\bfseries Annual Report\\[0.15em]
+     \fontsize{40}{46}\selectfont\bfseries 2025};
+  \node[anchor=north west, text=white, align=left]
+    at ([xshift=2.5cm, yshift=-6.6cm]current page.north west)
+    {\large Powering the North Sea transition,\\
+     \large one turbine at a time.};
+  \node[anchor=north east, text=white]
+    at ([xshift=-2.5cm, yshift=-1.6cm]current page.north east)
+    {\small nordwind-energy.example};
+\end{tikzpicture}
+
+\vspace*{7.6cm}
+
+% ---------- Key figures row ----------
+\begin{center}
+  {\large\bfseries\color{accent} 2025 at a Glance}\\[1.1em]
+  \keyfig{2.4B}{Revenue (EUR)}\hfill
+  \keyfig{+18\%}{Revenue Growth}\hfill
+  \keyfig{3\,900}{Employees}\hfill
+  \keyfig{5.2 GW}{Installed Capacity}
+\end{center}
+
+\vspace{0.6em}
+{\color{accent!30}\hrule height 0.8pt}
+\vspace{0.6em}
+
+\section*{\color{accent}Letter from the Chief Executive}
+2025 was the year Nordwind moved from builder to operator. With the Skagen
+Bank array fully commissioned, more than half of our revenue now comes from
+long-term power purchase agreements, giving the group its most predictable
+cash flow in a decade. We commissioned 1.1 gigawatts of new offshore
+capacity, entered the Baltic market through the Liepaja joint venture, and
+reduced our lost-time incident rate for the fourth consecutive year.
+
+The pages that follow set out our financial results, our project pipeline,
+and the progress we have made against the 2030 net-zero roadmap. On behalf
+of the board, thank you to our shareholders, our partners, and above all the
+3\,900 people whose work this report describes.
+
+\vspace{0.8em}
+\textbf{Astrid Holm}\\
+Chief Executive Officer, Nordwind Energy Group
+
+\end{document}

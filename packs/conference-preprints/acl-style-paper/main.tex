@@ -1,0 +1,77 @@
+% ACL style paper, recreated with standard packages only.
+\documentclass[10pt,twocolumn]{article}
+\usepackage[letterpaper,margin=0.75in,top=1in]{geometry}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{titlesec}
+
+\setlength{\columnsep}{0.25in}
+\pagestyle{empty}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.4ex plus .4ex}{0.8ex}
+
+\begin{document}
+
+\twocolumn[{
+  \centering
+  {\large\bfseries Cross-Lingual Retrieval Augmentation for\\ Low-Resource Question Answering\par}
+  \vskip 16pt
+  {\bfseries Anonymous ACL submission}
+  \vskip 26pt
+}]
+\thispagestyle{empty}
+
+\begin{center}{\bfseries Abstract}\end{center}
+\noindent Retrieval-augmented generation assumes a well-populated corpus in
+the question's language, an assumption that fails for most of the world's
+languages. We propose cross-lingual retrieval augmentation, which retrieves
+evidence from high-resource languages, translates only the selected passages,
+and conditions the reader on both the original and translated evidence. A
+contrastive alignment objective ties passage representations across languages
+so that a single index serves 27 languages. On TyDi QA and a new Swahili
+benchmark we improve exact match by 8.4 points over monolingual retrieval
+while adding no language-specific components.
+
+\section{Introduction}
+Open-domain question answering pipelines retrieve passages and then read them
+to produce an answer. For low-resource languages both stages are starved: the
+corpus is small and the reader sees little supervision. Prior work translates
+the question into English and answers there, which discards evidence written
+in related regional languages~\cite{nabirye2023translate}.
+
+We instead embed questions and passages from all languages into one retrieval
+space. Given question $q$ and passage $d$, the retriever scores
+\begin{equation}
+  s(q, d) \;=\; \cos\bigl(f_{\theta}(q),\, g_{\theta}(d)\bigr),
+  \label{eq:score}
+\end{equation}
+where $f_{\theta}$ and $g_{\theta}$ share parameters across languages and are
+trained with in-batch negatives plus a translation-pair alignment loss.
+Equation~\eqref{eq:score} lets a Luganda question retrieve an English or
+Swahili passage directly.
+
+\section{Experiments}
+We evaluate on TyDi QA gold passage, MKQA, and SW-QA, our new 4{,}800
+question Swahili set collected from radio transcripts. Cross-lingual
+augmentation outperforms translate-test pipelines by 5.1 EM on average and is
+strongest on questions whose answers exist only in a regional language,
+confirming findings on evidence locality~\cite{osei2024locality}. Ablations
+show the alignment loss contributes 3.2 EM and that translating retrieved
+passages rather than the full corpus cuts translation cost by two orders of
+magnitude~\cite{ferreira2022mrag}.
+
+\begin{thebibliography}{9}
+\bibitem{nabirye2023translate} J. Nabirye and T. Okonkwo.
+Translate-test is not enough: evidence loss in cross-lingual QA.
+In \textit{Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics}, 2023.
+\bibitem{osei2024locality} K. Osei, L. Haddad, and P. Munyua.
+Where answers live: evidence locality across Wikipedia language editions.
+In \textit{Findings of the Association for Computational Linguistics: EMNLP}, 2024.
+\bibitem{ferreira2022mrag} A. Ferreira and M. Duarte.
+Multilingual retrieval-augmented generation with a shared dense index.
+In \textit{Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing}, 2022.
+\end{thebibliography}
+
+\end{document}

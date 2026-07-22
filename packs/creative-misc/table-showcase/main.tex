@@ -1,0 +1,90 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1.6cm]{geometry}
+\usepackage[default]{sourcesanspro}
+\usepackage[table]{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\definecolor{accent}{HTML}{2A5C8A}
+\definecolor{accentlight}{HTML}{EAF1F8}
+\definecolor{summaryrow}{HTML}{2A5C8A}
+\color{black!85}
+
+\begin{document}
+
+{\LARGE\bfseries\color{accent} Table Gallery}\\[0.1em]
+{\large A tour of booktabs styles: grouped headers, multirow, a colored summary row, and notes.}
+
+\vspace{1.3em}
+{\bfseries\color{accent} Quarterly regional sales (grouped column headers)}
+
+\vspace{0.5em}
+\begin{tabular}{@{}l rr rr rr@{}}
+\toprule
+& \multicolumn{2}{c}{\bfseries Q1} & \multicolumn{2}{c}{\bfseries Q2} & \multicolumn{2}{c}{\bfseries Q3} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+\textbf{Region} & Units & Revenue & Units & Revenue & Units & Revenue \\
+\midrule
+North   & 1{,}204 & \$182{,}400 & 1{,}340 & \$201{,}900 & 1{,}489 & \$224{,}100 \\
+South   & 980     & \$147{,}600 & 1{,}050 & \$158{,}200 & 1{,}120 & \$168{,}900 \\
+East    & 1{,}560 & \$233{,}500 & 1{,}610 & \$241{,}800 & 1{,}702 & \$255{,}300 \\
+West    & 875     & \$131{,}200 & 910     & \$136{,}700 & 960     & \$144{,}500 \\
+\midrule
+\rowcolor{summaryrow}
+\textcolor{white}{\textbf{Total}} & \textcolor{white}{4{,}619} & \textcolor{white}{\$694{,}700} &
+\textcolor{white}{4{,}910} & \textcolor{white}{\$738{,}600} & \textcolor{white}{5{,}271} & \textcolor{white}{\$792{,}800} \\
+\bottomrule
+\end{tabular}
+
+\vspace{1.4em}
+{\bfseries\color{accent} Experiment results (multirow grouping)}
+
+\vspace{0.5em}
+\begin{tabular}{@{}ll rrr@{}}
+\toprule
+\textbf{Condition} & \textbf{Trial} & \textbf{Accuracy} & \textbf{Latency (ms)} & \textbf{n} \\
+\midrule
+\multirow{3}{*}{Control}
+  & 1 & 0.842 & 312 & 40 \\
+  & 2 & 0.851 & 298 & 40 \\
+  & 3 & 0.839 & 305 & 40 \\
+\cmidrule(lr){1-5}
+\multirow{3}{*}{Treatment A}
+  & 1 & 0.887 & 276 & 40 \\
+  & 2 & 0.891 & 271 & 40 \\
+  & 3 & 0.879 & 280 & 40 \\
+\cmidrule(lr){1-5}
+\multirow{3}{*}{Treatment B}
+  & 1 & 0.903 & 259 & 40 \\
+  & 2 & 0.897 & 264 & 40 \\
+  & 3 & 0.911 & 251 & 40 \\
+\bottomrule
+\end{tabular}
+
+\vspace{1.4em}
+\noindent
+\begin{minipage}{\textwidth}
+{\bfseries\color{accent} Plan comparison (banded rows and footnotes)}
+
+\vspace{0.5em}
+\rowcolors{2}{accentlight}{white}
+\begin{tabular}{@{}l ccc@{}}
+\toprule
+\textbf{Feature} & \textbf{Starter} & \textbf{Team} & \textbf{Enterprise\textsuperscript{a}} \\
+\midrule
+Projects           & 3          & 25          & Unlimited \\
+Collaborators      & 1          & 10          & Unlimited \\
+Storage            & 2 GB       & 50 GB       & 500 GB \\
+Priority support   & --         & Email       & Email and phone \\
+SSO\textsuperscript{b} & --     & --          & Included \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.5em}
+{\footnotesize\textsuperscript{a} Billed annually. \textsuperscript{b} SAML 2.0 and SCIM provisioning.}
+\end{minipage}
+
+\end{document}

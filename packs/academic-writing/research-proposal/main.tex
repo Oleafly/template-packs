@@ -1,0 +1,79 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{1F4E79}
+\titleformat{\section}{\large\bfseries\color{accent}}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.1em}{0.4em}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{0.8em}{0.3em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\begin{document}
+
+\begin{center}
+  {\color{accent}\rule{\textwidth}{1.5pt}}\\[0.9em]
+  {\LARGE\bfseries Predictable Recovery in Geo-Replicated Storage Systems\\[0.25em]
+   \large Under Partial Network Partitions}\\[0.9em]
+  {\normalsize Elena Marchetti \, | \, Department of Computer Science, Aldermere University}\\[0.2em]
+  {\small Proposed duration: 36 months \quad Submitted: March 2026}\\[0.7em]
+  {\color{accent}\rule{\textwidth}{0.6pt}}
+\end{center}
+
+\section{Specific Aims}
+Modern geo-replicated databases promise availability during network faults, yet
+recent incident reports show that \emph{partial} partitions, where some replica
+pairs can still communicate, trigger the longest and least predictable outages.
+This proposal develops the theory and tooling to make recovery time a
+first-class, verifiable property of replicated storage.
+
+\begin{itemize}[leftmargin=1.4em, itemsep=0.1em]
+  \item \textbf{Aim 1.} Formalize recovery latency under partial partitions as a
+        property of consensus protocol state machines, and derive tight bounds
+        for Raft, Multi-Paxos, and leaderless quorum protocols.
+  \item \textbf{Aim 2.} Build \textsc{Fissure}, a fault-injection framework that
+        synthesizes worst-case partial partitions from protocol specifications
+        rather than random link failures.
+  \item \textbf{Aim 3.} Design and evaluate partition-aware reconfiguration
+        policies that cut tail recovery time without weakening consistency.
+\end{itemize}
+
+\section{Background and Significance}
+Production postmortems from large storage operators attribute a majority of
+multi-minute unavailability windows to asymmetric connectivity rather than
+clean partitions. Existing testing tools model links as independently failing,
+which misses the correlated failure patterns produced by misconfigured
+firewalls and route flaps. A predictive model of recovery behavior would let
+operators certify service level objectives before deployment instead of
+discovering violations in production.
+
+\section{Methodology}
+\subsection{Protocol analysis}
+We model each protocol as a labelled transition system and encode partial
+partitions as reachability constraints, checking recovery bounds with an
+off-the-shelf SMT solver on clusters of up to nine replicas.
+
+\subsection{Empirical validation}
+\textsc{Fissure} replays synthesized fault schedules against etcd, TiKV, and a
+research prototype on a 40-node testbed, measuring recovery latency
+distributions across 10,000 injected faults per configuration.
+
+\section{Timeline}
+\begin{tabularx}{\textwidth}{@{}lXl@{}}
+\toprule
+\textbf{Phase} & \textbf{Activities} & \textbf{Months} \\
+\midrule
+Modeling      & Formal model, bounds for three protocol families & 1-9 \\
+Tooling       & \textsc{Fissure} fault synthesis and testbed integration & 8-18 \\
+Evaluation    & Large-scale experiments, policy design and tuning & 17-30 \\
+Dissemination & Artifact release, papers, operator workshop & 28-36 \\
+\bottomrule
+\end{tabularx}
+
+\end{document}

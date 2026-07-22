@@ -1,0 +1,103 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.6in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{multicol}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{16pt}
+
+\definecolor{accent}{HTML}{0369A1}
+
+\newtcolorbox{fgroup}[1]{enhanced, colback=white, colframe=accent,
+  boxrule=0.7pt, arc=1.5mm, left=6pt, right=6pt, top=4pt, bottom=4pt,
+  title={#1}, fonttitle=\bfseries, colbacktitle=accent!12,
+  coltitle=accent!50!black, attach boxed title to top left={yshift=-2mm, xshift=3mm},
+  boxed title style={colframe=accent, boxrule=0.7pt, arc=1mm},
+  before skip=10pt, after skip=6pt}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries\color{accent} Formula Sheet}\quad
+  {\large MATH 2410 Final Exam}\\[2pt]
+  \small Provided with the exam. No other notes permitted.
+\end{center}
+
+\begin{multicols}{2}
+\small
+
+\begin{fgroup}{Differentiation}
+\begin{align*}
+  (fg)' &= f'g + fg' \\
+  \Bigl(\frac{f}{g}\Bigr)' &= \frac{f'g - fg'}{g^2} \\
+  \frac{d}{dx} f(g(x)) &= f'(g(x))\,g'(x) \\
+  \frac{d}{dx}\arctan x &= \frac{1}{1 + x^2}
+\end{align*}
+\end{fgroup}
+
+\begin{fgroup}{Integration}
+\begin{align*}
+  \int u \, dv &= uv - \int v \, du \\
+  \int \frac{dx}{a^2 + x^2} &= \frac{1}{a}\arctan\frac{x}{a} + C \\
+  \int \frac{dx}{\sqrt{a^2 - x^2}} &= \arcsin\frac{x}{a} + C \\
+  \int \sec x \, dx &= \ln\lvert \sec x + \tan x \rvert + C
+\end{align*}
+\end{fgroup}
+
+\begin{fgroup}{Sequences and series}
+\begin{align*}
+  \sum_{k=0}^{n-1} ar^k &= a\,\frac{1 - r^n}{1 - r} \quad (r \neq 1) \\
+  e^{x} &= \sum_{k=0}^{\infty} \frac{x^k}{k!} \\
+  \frac{1}{1 - x} &= \sum_{k=0}^{\infty} x^k \quad (\lvert x \rvert < 1)
+\end{align*}
+Ratio test: $\lim \bigl|\tfrac{a_{n+1}}{a_n}\bigr| = L$; converges if
+$L < 1$, diverges if $L > 1$.
+\end{fgroup}
+
+\begin{fgroup}{Trigonometry}
+\begin{align*}
+  \sin^2\theta + \cos^2\theta &= 1 \\
+  \sin(a \pm b) &= \sin a \cos b \pm \cos a \sin b \\
+  \cos(a \pm b) &= \cos a \cos b \mp \sin a \sin b \\
+  \sin^2\theta = \tfrac{1 - \cos 2\theta}{2}, &\quad
+  \cos^2\theta = \tfrac{1 + \cos 2\theta}{2}
+\end{align*}
+\end{fgroup}
+
+\begin{fgroup}{Linear algebra}
+\[
+  \det\begin{pmatrix} a & b \\ c & d \end{pmatrix} = ad - bc,
+  \qquad
+  \begin{pmatrix} a & b \\ c & d \end{pmatrix}^{-1}
+  = \frac{1}{ad - bc}\begin{pmatrix} d & -b \\ -c & a \end{pmatrix}
+\]
+$Av = \lambda v$ with $v \neq 0$ iff $\det(A - \lambda I) = 0$.\\
+$\operatorname{tr} A = \sum_i \lambda_i$, \quad
+$\det A = \prod_i \lambda_i$.
+\end{fgroup}
+
+\begin{fgroup}{Vectors}
+\begin{align*}
+  u \cdot v &= \lVert u \rVert\, \lVert v \rVert \cos\theta \\
+  \operatorname{proj}_v u &= \frac{u \cdot v}{v \cdot v}\, v \\
+  \lVert u \times v \rVert &= \lVert u \rVert\, \lVert v \rVert \sin\theta
+\end{align*}
+\end{fgroup}
+
+\begin{fgroup}{Probability}
+\begin{align*}
+  P(A \mid B) &= \frac{P(A \cap B)}{P(B)} \\
+  P(A \mid B) &= \frac{P(B \mid A)\,P(A)}{P(B)} \\
+  \operatorname{Var} X &= \mathbb{E}[X^2] - (\mathbb{E}X)^2
+\end{align*}
+Normal density:
+$f(x) = \dfrac{1}{\sigma\sqrt{2\pi}}\,
+e^{-(x - \mu)^2 / (2\sigma^2)}$.
+\end{fgroup}
+
+\end{multicols}
+
+\end{document}

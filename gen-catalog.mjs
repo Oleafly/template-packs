@@ -19,6 +19,54 @@ const PACK_META = {
     description: "Metropolis beamer deck, tikzposter portrait and landscape, and a better-poster layout.",
     category: "Presentations",
   },
+  "conference-preprints": {
+    label: "Conference preprint styles",
+    description:
+      "NeurIPS, ICML, ICLR, ACL, CVPR, AAAI, IJCAI, Springer LNCS, JMLR, arXiv, and Interspeech style preprints.",
+    category: "Journals & Conferences",
+  },
+  "academic-writing": {
+    label: "Academic writing pack",
+    description:
+      "Research and grant proposals, literature reviews, statements of purpose, letters of recommendation, white papers, and theses.",
+    category: "Theses & Reports",
+  },
+  coursework: {
+    label: "Coursework pack",
+    description:
+      "Homework, worksheets, quizzes, rubrics, lecture notes, syllabi, math reference sheets, exams, and pseudocode writeups.",
+    category: "Assignments",
+  },
+  "cv-collection": {
+    label: "CV & resume style collection",
+    description:
+      "ModernCV, AltaCV, Awesome-CV, Europass, Friggeri, Plasmati, Twenty Seconds, and Jake's-style resumes.",
+    category: "CVs & Resumes",
+  },
+  "reports-lab": {
+    label: "Lab & technical reports",
+    description:
+      "Lab reports, scientific and technical reports, project and internship reports, and an annual report.",
+    category: "Theses & Reports",
+  },
+  "business-documents": {
+    label: "Business documents",
+    description:
+      "Invoices, memos, meeting minutes, business plans and reports, certificates, and a trifold brochure.",
+    category: "Business",
+  },
+  "creative-misc": {
+    label: "Creative & miscellaneous",
+    description:
+      "Recipe books, invitations, RPG character sheets, a year calendar, table and TikZ galleries, and field notes.",
+    category: "Creative",
+  },
+  "beamer-themes": {
+    label: "Beamer theme collection",
+    description:
+      "Madrid, Warsaw, Berkeley, Singapore, Copenhagen, Frankfurt, Boadilla, and Pittsburgh beamer decks.",
+    category: "Presentations",
+  },
 };
 
 const catalog = [];

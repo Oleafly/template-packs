@@ -1,0 +1,75 @@
+% altacv.cls is not present in Tectonic's default TeX Live bundle, so this
+% template emulates the AltaCV look (sidebar photo circle, skill tags,
+% two column layout) with paracol and tikz instead of vendoring the class.
+\documentclass[10pt,a4paper]{article}
+\usepackage[margin=0.7in]{geometry}
+\usepackage{paracol}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\definecolor{accent}{HTML}{C0335B}
+\definecolor{accentlight}{HTML}{F1A7BC}
+\setlist[itemize]{leftmargin=1.1em, itemsep=1pt, topsep=2pt, parsep=0pt}
+\newcommand{\sect}[1]{\vspace{8pt}{\color{accent}\Large\bfseries #1}\\[-4pt]{\color{accent}\rule{\linewidth}{1.2pt}}\\[4pt]}
+\newcommand{\skilltag}[1]{\colorbox{accentlight}{\textcolor{white}{\small\strut #1}}~}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent
+\begin{minipage}[c]{1.3in}
+\centering
+\begin{tikzpicture}
+\node[circle, fill=accent, minimum size=1.15in, inner sep=0] {\color{white}\huge\bfseries DA};
+\end{tikzpicture}
+\end{minipage}%
+\begin{minipage}[c]{4.9in}
+{\Huge\bfseries\color{accent} Diego Alvarez}\\[2pt]
+{\Large Product and UX Designer}\\[4pt]
+{\small diego.alvarez@example.com \textbullet\ Lima, Peru \textbullet\ dribbble.com/dalvarez}
+\end{minipage}
+
+\vspace{10pt}
+\columnratio{0.34}
+\begin{paracol}{2}
+
+\sect{Skills}
+\skilltag{Figma}\skilltag{Research}\\[6pt]
+\skilltag{Prototyping}\skilltag{Design Systems}\\[6pt]
+\skilltag{HTML/CSS}\skilltag{Accessibility}
+
+\sect{Languages}
+Spanish (native)\\
+English (fluent)\\
+Portuguese (basic)
+
+\sect{Education}
+\textbf{B.A. Graphic Design}\\
+Pontificia Universidad Catolica del Peru\\
+{\small 2015 -- 2019}
+
+\switchcolumn
+
+\sect{Experience}
+\textbf{Senior Product Designer}, Andina Software \hfill {\small 2022 -- present}
+\begin{itemize}
+  \item Redesigned the onboarding flow, lifting activation by 22 percent.
+  \item Built and maintain the company's first shared design system, adopted by six product teams.
+\end{itemize}
+
+\textbf{UX Designer}, Vistalima Studio \hfill {\small 2019 -- 2022}
+\begin{itemize}
+  \item Led research and prototyping for a banking app used by 300000 customers.
+  \item Ran quarterly usability studies and turned findings into a shared component library.
+\end{itemize}
+
+\sect{Selected Projects}
+\textbf{Mercado Fresco app redesign} \hfill {\small 2023}
+\begin{itemize}
+  \item Cut checkout steps from six to three, reducing cart abandonment by 15 percent.
+\end{itemize}
+
+\end{paracol}
+
+\end{document}

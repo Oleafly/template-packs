@@ -1,0 +1,96 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tikz-cd}
+
+\definecolor{accent}{HTML}{065F46}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries\color{accent} Notes: Group Homomorphisms and Quotients}\\[2pt]
+  {\small personal notes, Algebra I, Chapter 3}
+\end{center}
+
+{\color{accent}\rule{\linewidth}{0.8pt}}
+
+\section{First isomorphism theorem}
+
+\begin{definition}[Group homomorphism]
+Let $G$ and $H$ be groups. A map $\varphi : G \to H$ is a
+\emph{homomorphism} if $\varphi(ab) = \varphi(a)\varphi(b)$ for all
+$a, b \in G$. Its \emph{kernel} is
+$\ker\varphi = \{ g \in G : \varphi(g) = e_H \}$.
+\end{definition}
+
+\begin{lemma}
+For any homomorphism $\varphi : G \to H$, the kernel $\ker\varphi$ is a
+normal subgroup of $G$.
+\end{lemma}
+
+\emph{Proof.} It is a subgroup by the usual checks. For normality, let
+$k \in \ker\varphi$ and $g \in G$. Then
+$\varphi(gkg^{-1}) = \varphi(g)\varphi(k)\varphi(g)^{-1}
+  = \varphi(g)\,e_H\,\varphi(g)^{-1} = e_H$,
+so $gkg^{-1} \in \ker\varphi$. \qedsymbol
+
+\begin{theorem}[First isomorphism theorem]
+Let $\varphi : G \to H$ be a homomorphism. Then
+$G / \ker\varphi \cong \operatorname{im}\varphi$.
+\end{theorem}
+
+The proof produces the map $\bar\varphi(g\ker\varphi) = \varphi(g)$ and
+checks it is a well-defined isomorphism onto $\operatorname{im}\varphi$.
+The relationship between the four maps involved is best remembered as a
+commutative diagram.
+
+\begin{center}
+\begin{tikzcd}[column sep=2.6em, row sep=2.2em]
+  G \arrow[r, "\varphi"] \arrow[d, swap, "\pi"] & H \\
+  G/\ker\varphi \arrow[r, swap, "\bar\varphi", dashed]
+    & \operatorname{im}\varphi \arrow[u, swap, hook, "\iota"]
+\end{tikzcd}
+\end{center}
+
+Here $\pi$ is the canonical quotient map $g \mapsto g\ker\varphi$, $\iota$
+is the inclusion of $\operatorname{im}\varphi$ into $H$, and $\bar\varphi$
+is the induced isomorphism, drawn dashed because it is the map the
+theorem constructs. The diagram commutes: $\iota \circ \bar\varphi \circ
+\pi = \varphi$.
+
+\begin{remark}
+This single diagram also proves the rank-nullity theorem for linear maps
+once $G$, $H$ are vector spaces and $\varphi$ is linear: the kernel and
+image play the roles of the null space and column space, and
+$G/\ker\varphi \cong \operatorname{im}\varphi$ becomes
+$\dim G = \dim\ker\varphi + \dim\operatorname{im}\varphi$.
+\end{remark}
+
+\section{A worked example}
+
+Let $\varphi : \mathbb{Z} \to \mathbb{Z}/n\mathbb{Z}$ send $k$ to
+$k \bmod n$. This is a surjective homomorphism with
+$\ker\varphi = n\mathbb{Z}$, so the theorem gives
+\[
+  \mathbb{Z} / n\mathbb{Z} \;\cong\; \operatorname{im}\varphi
+  = \mathbb{Z}/n\mathbb{Z},
+\]
+a tautology here, but the same argument applied to
+$\varphi : \mathbb{R} \to \mathbb{R}/\mathbb{Z}$ (angle mod $2\pi$,
+rescaled) recovers the circle group, a much less obvious identification.
+
+\end{document}

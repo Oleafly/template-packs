@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+
+\definecolor{accent}{HTML}{1D4ED8}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{MATH 2410}
+\fancyhead[R]{Homework 4}
+\fancyfoot[C]{\thepage}
+
+\newcounter{problem}
+\newenvironment{problem}[1][]{%
+  \refstepcounter{problem}%
+  \par\medskip\noindent
+  {\color{accent}\bfseries Problem \theproblem\ #1.}\ \itshape}{\par\medskip}
+\newenvironment{solution}{%
+  \par\noindent{\bfseries Solution.}\ }{\hfill$\blacksquare$\par\bigskip}
+
+\begin{document}
+
+\begin{tcolorbox}[colback=accent!6,colframe=accent,boxrule=0.8pt,arc=2mm]
+  \begin{center}
+    {\Large\bfseries MATH 2410: Multivariable Calculus and Linear Algebra}\\[4pt]
+    {\large Homework 4}\\[6pt]
+    \begin{tabular}{lll}
+      \textbf{Student:} Ana Petrova \quad &
+      \textbf{Instructor:} Prof.\ Delgado \quad &
+      \textbf{Due:} October 12
+    \end{tabular}
+  \end{center}
+\end{tcolorbox}
+
+\bigskip
+
+\begin{problem}[(10 points)]
+Evaluate $\displaystyle\int_0^{\infty} x e^{-x^2}\,dx$.
+\end{problem}
+
+\begin{solution}
+Substitute $u = x^2$, so $du = 2x\,dx$ and $x\,dx = \tfrac{1}{2}\,du$. As $x$
+runs from $0$ to $\infty$, $u$ does as well, so
+\[
+  \int_0^{\infty} x e^{-x^2}\,dx
+  = \frac{1}{2}\int_0^{\infty} e^{-u}\,du
+  = \frac{1}{2}\Bigl[-e^{-u}\Bigr]_0^{\infty}
+  = \frac{1}{2}(0 - (-1)) = \frac{1}{2}.
+\]
+\end{solution}
+
+\begin{problem}[(10 points)]
+Find the eigenvalues and eigenvectors of
+$A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$.
+\end{problem}
+
+\begin{solution}
+The characteristic polynomial is
+\[
+  \det(A - \lambda I) = (2-\lambda)^2 - 1 = \lambda^2 - 4\lambda + 3
+  = (\lambda - 1)(\lambda - 3),
+\]
+so the eigenvalues are $\lambda_1 = 1$ and $\lambda_2 = 3$. For $\lambda_1 = 1$
+we solve $(A - I)v = 0$, that is $v_1 + v_2 = 0$, giving
+$v = (1, -1)^{\top}$. For $\lambda_2 = 3$ we solve $(A - 3I)v = 0$, that is
+$-v_1 + v_2 = 0$, giving $v = (1, 1)^{\top}$. Since $A$ is symmetric, the two
+eigenvectors are orthogonal, as expected.
+\end{solution}
+
+\begin{problem}[(10 points)]
+Let $X \sim \operatorname{Binomial}(n, p)$. Show that $\mathbb{E}[X] = np$.
+\end{problem}
+
+\begin{solution}
+Write $X = \sum_{i=1}^{n} X_i$ where $X_i$ is the indicator of success on
+trial $i$. Each $X_i$ is Bernoulli with
+$\mathbb{E}[X_i] = 1 \cdot p + 0 \cdot (1-p) = p$. By linearity of
+expectation, which requires no independence,
+\[
+  \mathbb{E}[X] = \sum_{i=1}^{n} \mathbb{E}[X_i] = np.
+\]
+\end{solution}
+
+\end{document}

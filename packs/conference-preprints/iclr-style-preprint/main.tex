@@ -1,0 +1,83 @@
+% ICLR style preprint, recreated with standard packages only.
+\documentclass[10pt]{article}
+\usepackage[letterpaper,textwidth=5.5in,textheight=9in,top=1in,headheight=12pt,headsep=18pt]{geometry}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small Under review as a conference paper, ICLR style}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+\titleformat{\section}{\large\scshape}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalsize\scshape}{\thesubsection}{0.8em}{}
+\titlespacing*{\section}{0pt}{1.8ex plus .4ex}{1ex}
+
+\begin{document}
+\thispagestyle{fancy}
+
+\noindent{\LARGE\bfseries Calibrated Uncertainty Estimation with\\[2pt] Deep Ensembles under Distribution Shift\par}
+\vspace{14pt}
+
+\noindent{\bfseries Anonymous authors}\\
+{\small Paper under double-blind review}
+\vspace{18pt}
+
+\begin{center}{\scshape\large Abstract}\end{center}
+\begin{list}{}{\leftmargin=0.35in\rightmargin=0.35in}\item\relax
+Deep ensembles are the de facto baseline for predictive uncertainty, yet their
+calibration degrades sharply once test inputs drift from the training
+distribution. We show that most of this degradation is explained by a single
+scalar, the disagreement rate between ensemble members, and that reweighting
+member logits by an online estimate of this rate restores calibration without
+retraining. Across corrupted CIFAR, ImageNet-C, and a clinical time-series
+benchmark, our correction reduces expected calibration error by up to 61\%
+relative to temperature scaling while leaving accuracy unchanged.
+\end{list}
+\vspace{6pt}
+
+\section{Introduction}
+A model that reports faithful confidence can defer to a human when it is
+likely to be wrong. Post-hoc calibration methods such as temperature scaling
+fit a correction on held-out in-distribution data, and are known to fail
+precisely where uncertainty matters most, under distribution
+shift~\cite{aldana2023shift}. Ensembles improve matters but remain
+overconfident on shifted inputs.
+
+We measure calibration with the expected calibration error over $B$
+confidence bins,
+\begin{equation}
+  \mathrm{ECE} \;=\; \sum_{b=1}^{B} \frac{n_b}{N}\,
+  \bigl| \mathrm{acc}(b) - \mathrm{conf}(b) \bigr|,
+  \label{eq:ece}
+\end{equation}
+and observe empirically that the growth of Equation~\eqref{eq:ece} under
+shift tracks member disagreement almost linearly across five architectures.
+
+\section{Disagreement-Aware Reweighting}
+Our method maintains an exponential moving average of pairwise member
+disagreement on incoming unlabeled test data and sharpens or flattens the
+ensemble average accordingly. The procedure is closed form, adds one scalar
+per batch of state, and needs no labels at test time, in contrast to
+entropy-minimization approaches that adapt the full
+network~\cite{brandt2024tta}. It composes with any ensemble training recipe,
+including recent efficient variants that share early
+layers~\cite{couto2022batchens}, and we prove that the correction is exact
+under a symmetric label-noise shift model.
+
+\begin{thebibliography}{9}
+\bibitem{aldana2023shift} M. Aldana and Y. Feng.
+Can you trust your model's confidence? A study of calibration under covariate shift.
+In \textit{International Conference on Learning Representations}, 2023.
+\bibitem{brandt2024tta} O. Brandt, S. Kaur, and D. Almeida.
+Test-time adaptation considered harmful for calibration.
+In \textit{International Conference on Learning Representations}, 2024.
+\bibitem{couto2022batchens} R. Couto and W. Lindgren.
+Parameter-efficient ensembles via shared backbones.
+In \textit{Advances in Neural Information Processing Systems 35}, 2022.
+\end{thebibliography}
+
+\end{document}

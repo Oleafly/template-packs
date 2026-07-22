@@ -1,0 +1,82 @@
+% AAAI style paper, recreated with standard packages only.
+\documentclass[10pt,twocolumn]{article}
+\usepackage[letterpaper,margin=0.75in,top=0.95in]{geometry}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{titlesec}
+
+\setlength{\columnsep}{0.25in}
+\pagestyle{empty}
+
+\titleformat{\section}{\centering\large\bfseries}{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.1ex plus .3ex}{0.5ex}
+\titlespacing*{\subsection}{0pt}{0.9ex plus .2ex}{0.4ex}
+
+\begin{document}
+
+\twocolumn[{
+  \centering
+  {\Large\bfseries Curriculum Reinforcement Learning for\\ Multi-Agent Warehouse Coordination\par}
+  \vskip 12pt
+  {\bfseries Sofia Andrade,$^{1}$ Marcus Whitfield,$^{2}$ Chen Yiran$^{1}$}\\[4pt]
+  {\small $^{1}$Instituto Superior T\'ecnico, University of Lisbon\\
+          $^{2}$School of Computer Science, University of Waterloo\\
+          \texttt{sofia.andrade@tecnico.ulisboa.pt, mwhitfield@uwaterloo.ca, yiran.chen@tecnico.ulisboa.pt}}
+  \vskip 18pt
+}]
+\thispagestyle{empty}
+
+\begin{center}{\bfseries Abstract}\end{center}
+\noindent Coordinating hundreds of picking robots in a shared warehouse is a
+cooperative multi-agent problem with sparse rewards and severe congestion
+externalities. Training from scratch at full scale fails: agents never
+discover cooperative routing before gridlock dominates the reward signal. We
+introduce a congestion-driven curriculum that grows the fleet whenever a
+learned congestion index stays below a threshold, together with a shaped
+reward that prices lane occupancy. On fleets of up to 800 agents our policies
+deliver 23\% more totes per hour than the strongest operations-research
+baseline and generalize zero-shot to unseen warehouse layouts.
+
+\section{Introduction}
+Modern fulfillment centers route mobile robots through narrow lanes shared by
+the whole fleet. Classical multi-agent path finding solves each episode
+optimally but replans poorly under stochastic pick times, while flat
+multi-agent RL collapses at scale~\cite{brennan2023mapf}. Curricula over
+agent count are a natural fix, yet fixed schedules either stall or advance
+into gridlock.
+
+Our curriculum advances on evidence. Each agent learns a value function with
+the shared team update
+\begin{equation}
+  y_t \;=\; r_t \;-\; \lambda\, c_t \;+\; \gamma\, \max_{a'} Q\bigl(s_{t+1}, a'; \theta^{-}\bigr),
+  \label{eq:shaped}
+\end{equation}
+where $c_t$ is the occupancy price of the lanes the agent traversed. The
+fleet size increases only when the running mean of $c_t$ stabilizes, so
+Equation~\eqref{eq:shaped} acts as both a shaping term and a promotion
+criterion.
+
+\section{Evaluation}
+We evaluate on three layouts derived from public warehouse footprints with
+stochastic pick and charge times. Against a rolling-horizon MILP and a
+prioritized planning baseline, our method improves throughput at every fleet
+size above 200 and degrades gracefully under 10\% robot dropout,
+corroborating reports that learned policies absorb disturbances that
+replanners must re-solve~\cite{ostrowski2024robust}. Reward pricing alone,
+without the curriculum, recovers only a third of the gain, echoing the
+credit-assignment analysis of~\cite{delacroix2022credit}.
+
+\begin{thebibliography}{9}
+\bibitem{brennan2023mapf} T. Brennan and A. Nakamura.
+When does multi-agent path finding beat learning? A scaling study.
+In \textit{Proceedings of the 37th AAAI Conference on Artificial Intelligence}, 2023.
+\bibitem{ostrowski2024robust} P. Ostrowski, L. Marino, and G. Sanders.
+Robustness of learned warehouse policies under fleet degradation.
+In \textit{Proceedings of the 38th AAAI Conference on Artificial Intelligence}, 2024.
+\bibitem{delacroix2022credit} V. Delacroix and H. Berg.
+Credit assignment in cooperative fleets via occupancy pricing.
+In \textit{Proceedings of the 21st International Conference on Autonomous Agents and Multiagent Systems}, 2022.
+\end{thebibliography}
+
+\end{document}

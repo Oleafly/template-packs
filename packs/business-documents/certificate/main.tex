@@ -1,0 +1,94 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,landscape,margin=2.6cm]{geometry}
+\usepackage{tikz}
+\usepackage{libertine}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\definecolor{gold}{HTML}{8A6D1D}
+\definecolor{navy}{HTML}{1C2E4A}
+\definecolor{inkgray}{HTML}{555555}
+
+\begin{document}
+
+% Ornamental border drawn on the full page
+\begin{tikzpicture}[remember picture, overlay]
+  % outer heavy frame
+  \draw[gold, line width=2.6pt]
+    ([shift={(1.1cm,1.1cm)}]current page.south west) rectangle
+    ([shift={(-1.1cm,-1.1cm)}]current page.north east);
+  % inner fine frame
+  \draw[gold, line width=0.7pt]
+    ([shift={(1.45cm,1.45cm)}]current page.south west) rectangle
+    ([shift={(-1.45cm,-1.45cm)}]current page.north east);
+  % corner ornaments: nested squares rotated 45 degrees
+  \foreach \corner/\xs/\ys in {south west/1/1, south east/-1/1,
+                               north west/1/-1, north east/-1/-1} {
+    \begin{scope}[shift={([shift={(\xs*1.1cm,\ys*1.1cm)}]current page.\corner)}]
+      \fill[gold, rotate=45] (-0.42,-0.42) rectangle (0.42,0.42);
+      \fill[white, rotate=45] (-0.26,-0.26) rectangle (0.26,0.26);
+      \fill[navy, rotate=45] (-0.13,-0.13) rectangle (0.13,0.13);
+    \end{scope}
+  }
+  % side flourishes
+  \foreach \edge/\rot in {north/0, south/180} {
+    \begin{scope}[shift={([shift={(0,\ifnum\rot=0 -1.45cm\else 1.45cm\fi)}]current page.\edge)}, rotate=\rot]
+      \draw[gold, line width=0.9pt] (-2.2,0) -- (-0.55,0);
+      \draw[gold, line width=0.9pt] (0.55,0) -- (2.2,0);
+      \fill[gold, rotate=45] (-0.16,-0.16) rectangle (0.16,0.16);
+    \end{scope}
+  }
+\end{tikzpicture}
+
+\begin{center}
+  \vspace*{1.1cm}
+  {\color{gold}\scshape\large Meridian Analytics}\\[4pt]
+  {\color{inkgray}\small Professional Development Program}
+
+  \vspace{1.0cm}
+  {\fontsize{34}{40}\selectfont\color{navy}\scshape Certificate of Achievement}
+
+  \vspace{0.8cm}
+  {\color{inkgray}\itshape This certificate is proudly presented to}
+
+  \vspace{0.55cm}
+  {\fontsize{28}{34}\selectfont\itshape\color{gold} Rosalind Meyer}
+
+  \vspace{0.25cm}
+  {\color{gold}\rule{9cm}{0.8pt}}
+
+  \vspace{0.6cm}
+  \begin{minipage}{0.72\textwidth}
+    \centering\color{inkgray}
+    in recognition of outstanding completion of the Advanced Analytics
+    Leadership Track, including all six capstone assessments, completed
+    with distinction on July 10, 2026.
+  \end{minipage}
+
+  \vfill
+  \begin{minipage}{0.36\textwidth}
+    \centering
+    {\color{navy}\rule{5.2cm}{0.6pt}}\\[4pt]
+    {\small\bfseries\color{navy} Priya Raghavan}\\
+    {\scriptsize\color{inkgray} VP of Delivery}
+  \end{minipage}\hfill
+  \begin{minipage}{0.2\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \draw[gold, line width=1.4pt] (0,0) circle (0.85);
+      \draw[gold, line width=0.5pt] (0,0) circle (0.68);
+      \node[gold, font=\tiny\scshape] at (0,0.22) {Meridian};
+      \node[gold, font=\tiny\scshape] at (0,-0.02) {Analytics};
+      \node[gold, font=\tiny] at (0,-0.3) {est. 2022};
+    \end{tikzpicture}
+  \end{minipage}\hfill
+  \begin{minipage}{0.36\textwidth}
+    \centering
+    {\color{navy}\rule{5.2cm}{0.6pt}}\\[4pt]
+    {\small\bfseries\color{navy} Elena Marsh}\\
+    {\scriptsize\color{inkgray} Program Director}
+  \end{minipage}
+  \vspace*{0.4cm}
+\end{center}
+
+\end{document}

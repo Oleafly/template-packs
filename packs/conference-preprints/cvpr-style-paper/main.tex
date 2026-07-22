@@ -1,0 +1,80 @@
+% CVPR style paper, recreated with standard packages only.
+\documentclass[10pt,twocolumn]{article}
+\usepackage[letterpaper,margin=0.8in,top=1in,headheight=14pt,headsep=14pt]{geometry}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+\setlength{\columnsep}{0.3125in}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small CVPR-style preprint. Under review, do not distribute.}
+\renewcommand{\headrulewidth}{0.5pt}
+\fancyfoot[C]{\thepage}
+
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.5ex plus .4ex}{0.8ex}
+
+\begin{document}
+
+\twocolumn[{
+  \centering
+  {\Large\bfseries Depth-Aware Feature Fusion for Monocular 3D Object Detection\par}
+  \vskip 14pt
+  {Ingrid Solheim$^{1}$ \quad Rafael Quintana$^{2}$ \quad Wei-Lin Chang$^{1}$}\\[4pt]
+  {\small $^{1}$Norwegian University of Science and Technology \quad $^{2}$Universitat Polit\`ecnica de Catalunya}\\[2pt]
+  {\small\texttt{\{ingrid.solheim, weilin.chang\}@ntnu.no, rafael.quintana@upc.edu}}
+  \vskip 20pt
+}]
+
+\begin{center}{\bfseries Abstract}\end{center}
+\noindent\textit{Monocular 3D detectors hallucinate depth from appearance,
+which makes them brittle at range and under domain shift. We present a
+depth-aware fusion module that combines image features with features lifted
+from a self-supervised depth head, weighting each source by a per-pixel
+reliability estimate. The module is architecture-agnostic and adds 4 ms of
+latency. On KITTI and nuScenes our detector improves moderate-difficulty car
+AP by 3.7 points over the strongest published monocular baseline, with the
+largest gains beyond 40 meters.}
+
+\section{Introduction}
+Lifting 2D features into 3D requires per-pixel depth, and monocular depth is
+precisely where single-camera pipelines are weakest. Existing methods either
+trust a frozen depth network or learn depth end-to-end inside the detector,
+inheriting the failure modes of each choice~\cite{muller2023monodepth}.
+
+Our key idea is to let the network decide, per pixel, how much to trust
+geometry versus appearance. Given image features $F_{\mathrm{rgb}}$ and
+depth-lifted features $F_{\mathrm{depth}}$, the fused representation is
+\begin{equation}
+  F \;=\; \alpha \odot F_{\mathrm{rgb}} \;+\; (1 - \alpha) \odot F_{\mathrm{depth}},
+  \label{eq:fusion}
+\end{equation}
+where the gate $\alpha$ is predicted from the depth head's own uncertainty.
+Equation~\eqref{eq:fusion} reduces to a standard detector when depth is
+uninformative and to a pseudo-LiDAR pipeline when depth is sharp.
+
+\section{Results}
+On the KITTI test server our method reaches 28.4 / 21.9 / 18.6 AP$_{3D}$ on
+easy, moderate, and hard cars, improving over the best prior monocular entry
+on every split~\cite{devlin2024pseudolidar}. Gains concentrate where depth
+uncertainty is informative: distant, truncated, and rain-degraded objects.
+The gate also transfers: trained on nuScenes and evaluated on Waymo without
+fine-tuning, fused features lose 41\% less AP than image-only features,
+consistent with earlier cross-domain studies~\cite{tanaka2022crossdomain}.
+
+\begin{thebibliography}{9}
+\bibitem{muller2023monodepth} H. M\"uller and S. Park.
+What monocular 3D detectors actually learn about depth.
+In \textit{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, 2023.
+\bibitem{devlin2024pseudolidar} C. Devlin, A. Rossi, and M. Okada.
+Pseudo-LiDAR reloaded: calibrated lifting for monocular detection.
+In \textit{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, 2024.
+\bibitem{tanaka2022crossdomain} Y. Tanaka and L. Moreau.
+Cross-domain robustness of camera-based 3D perception.
+In \textit{Proceedings of the European Conference on Computer Vision}, 2022.
+\end{thebibliography}
+
+\end{document}

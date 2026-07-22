@@ -1,0 +1,67 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{5B3A8C}
+\titleformat{\section}{\large\bfseries\color{accent}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.0em}{0.35em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries A Review of Fault-Tolerant Consensus in\\ Wide-Area Distributed Systems}\\[0.4em]
+  {\normalsize Elena Marchetti \quad\textbullet\quad Aldermere University}\\[0.3em]
+  {\small\color{accent}\rule{0.35\textwidth}{0.8pt}}
+\end{center}
+
+\vspace{0.3em}
+This review surveys two decades of work on agreement protocols for
+geographically distributed replicas, organized around three themes: latency
+optimization, membership reconfiguration, and behavior under asymmetric faults.
+We close with a synthesis matrix that positions each line of work along the
+dimensions most relevant to practitioners.
+
+\section{Latency-Optimized Agreement}
+Early leader-based protocols paid a round trip to a single coordinator, a cost
+that dominates in wide-area settings. Leaderless and quorum-rotation designs
+reduced this by letting any replica propose, at the price of higher conflict
+rates under contention. The consensus of this literature is that no single
+placement wins across workloads, motivating adaptive designs.
+
+\section{Reconfiguration and Membership}
+A second thread treats the replica set as dynamic. Joint-consensus approaches
+change membership through an intermediate configuration, while lease-based
+schemes trade availability for simpler reasoning. Reported failure cases
+cluster around reconfiguration that overlaps with network faults.
+
+\section{Behavior Under Asymmetric Faults}
+The most recent and least settled theme concerns partial partitions. Field
+studies show these faults dominate real outages, yet formal treatment remains
+thin, and most testing tools still assume symmetric link failure.
+
+\section{Synthesis Matrix}
+\begin{tabularx}{\textwidth}{@{}lCCCC@{}}
+\toprule
+\textbf{Line of work} & \textbf{WAN latency} & \textbf{Dynamic membership} & \textbf{Partial partitions} & \textbf{Formal proof} \\
+\midrule
+Leader-based    & Weak   & Partial & No      & Strong \\
+Leaderless      & Strong & Partial & Partial & Partial \\
+Quorum rotation & Strong & Weak    & No      & Partial \\
+Reconfigurable  & Partial& Strong  & Weak    & Strong \\
+Partition-aware & Partial& Partial & Strong  & Weak   \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.4em}
+The matrix makes the gap explicit: no existing line combines strong guarantees
+under partial partitions with formal proof, which frames the open problem for
+the remainder of this dissertation.
+
+\end{document}

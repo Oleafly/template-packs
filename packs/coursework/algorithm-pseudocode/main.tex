@@ -1,0 +1,86 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+
+\definecolor{accent}{HTML}{4338CA}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{CS 4820, Algorithms}
+\fancyhead[R]{Assignment 3}
+\fancyfoot[C]{\thepage}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries Assignment 3: Divide and Conquer}\\[3pt]
+  {\large CS 4820: Introduction to Algorithms}\\[3pt]
+  Student: Rohan Iyer \quad | \quad Section 02
+\end{center}
+
+{\color{accent}\rule{\linewidth}{1.2pt}}
+
+\section*{Problem 1: Binary Search}
+
+Given a sorted array $A[1..n]$ and a target $t$, return an index $i$ with
+$A[i] = t$, or \textsc{None} if no such index exists.
+
+\begin{algorithm}[h]
+\caption{\textsc{BinarySearch}$(A, t)$}
+\KwIn{sorted array $A[1..n]$, target value $t$}
+\KwOut{an index $i$ with $A[i] = t$, or \textsc{None}}
+$lo \leftarrow 1$;\quad $hi \leftarrow n$\;
+\While{$lo \le hi$}{
+  $mid \leftarrow \lfloor (lo + hi)/2 \rfloor$\;
+  \uIf{$A[mid] = t$}{\Return $mid$\;}
+  \uElseIf{$A[mid] < t$}{$lo \leftarrow mid + 1$\;}
+  \Else{$hi \leftarrow mid - 1$\;}
+}
+\Return \textsc{None}\;
+\end{algorithm}
+
+\textbf{Correctness.} The invariant is that if $t$ occurs in $A$, then it
+occurs within $A[lo..hi]$. Each iteration preserves the invariant because
+the array is sorted, and the window shrinks strictly, so the loop
+terminates.
+
+\textbf{Complexity.} Each iteration halves the window, so after $k$
+iterations its length is at most $n / 2^{k}$. The loop therefore runs at
+most $\lfloor \log_2 n \rfloor + 1$ times, giving $O(\log n)$ time and
+$O(1)$ extra space.
+
+\section*{Problem 2: Merge Sort}
+
+\begin{algorithm}[h]
+\caption{\textsc{MergeSort}$(A)$}
+\KwIn{array $A[1..n]$}
+\KwOut{the elements of $A$ in nondecreasing order}
+\If{$n \le 1$}{\Return $A$\;}
+$m \leftarrow \lfloor n/2 \rfloor$\;
+$L \leftarrow \textsc{MergeSort}(A[1..m])$\;
+$R \leftarrow \textsc{MergeSort}(A[m+1..n])$\;
+\Return $\textsc{Merge}(L, R)$ \tcp*{two-pointer merge, $O(n)$ time}
+\end{algorithm}
+
+\textbf{Complexity.} The running time satisfies the recurrence
+\[
+  T(n) = 2\,T(n/2) + \Theta(n), \qquad T(1) = \Theta(1).
+\]
+By the master theorem with $a = 2$, $b = 2$, $f(n) = \Theta(n)$ we have
+$n^{\log_b a} = n$, matching $f$, so $T(n) = \Theta(n \log n)$. The merge
+step needs $\Theta(n)$ auxiliary space, and the sort is stable.
+
+\textbf{Lower bound remark.} Any comparison sort performs
+$\Omega(n \log n)$ comparisons in the worst case, since a binary decision
+tree that distinguishes all $n!$ input orders has depth at least
+$\log_2(n!) = \Theta(n \log n)$. Merge sort is therefore asymptotically
+optimal among comparison sorts.
+
+\end{document}

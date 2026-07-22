@@ -1,0 +1,105 @@
+\documentclass[9pt]{extarticle}
+\usepackage[landscape,margin=0.45in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{multicol}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\setlength{\columnsep}{14pt}
+\setlength{\columnseprule}{0.3pt}
+\def\columnseprulecolor{\color{accent!40}}
+\setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}
+\setlength{\abovedisplayshortskip}{1pt}
+\setlength{\belowdisplayshortskip}{1pt}
+
+\definecolor{accent}{HTML}{BE123C}
+\newcommand{\block}[1]{\par\vspace{2pt}\colorbox{accent!10}{\parbox{\dimexpr\linewidth-2\fboxsep}{\bfseries\color{accent}#1}}\par\vspace{1pt}}
+
+\begin{document}
+
+\begin{center}
+  {\large\bfseries\color{accent} Calculus and Linear Algebra Cheat Sheet}
+  \quad {\small MATH 2410 Final \ | \ one card allowed}
+\end{center}
+\vspace{-4pt}
+
+\begin{multicols}{4}
+\footnotesize
+
+\block{Trigonometric identities}
+$\sin^2\theta + \cos^2\theta = 1$\\
+$1 + \tan^2\theta = \sec^2\theta$\\
+$\sin(a \pm b) = \sin a\cos b \pm \cos a\sin b$\\
+$\cos(a \pm b) = \cos a\cos b \mp \sin a\sin b$\\
+$\sin 2\theta = 2\sin\theta\cos\theta$\\
+$\cos 2\theta = 2\cos^2\theta - 1 = 1 - 2\sin^2\theta$\\
+$\sin^2\theta = \tfrac{1 - \cos 2\theta}{2}$, \ $\cos^2\theta = \tfrac{1 + \cos 2\theta}{2}$
+
+\block{Derivatives}
+$(x^n)' = nx^{n-1}$, \ $(e^{x})' = e^{x}$, \ $(\ln x)' = \tfrac1x$\\
+$(\sin x)' = \cos x$, \ $(\cos x)' = -\sin x$\\
+$(\tan x)' = \sec^2 x$, \ $(\sec x)' = \sec x\tan x$\\
+$(\arcsin x)' = \tfrac{1}{\sqrt{1-x^2}}$, \ $(\arctan x)' = \tfrac{1}{1+x^2}$\\
+$(fg)' = f'g + fg'$, \quad $\bigl(\tfrac{f}{g}\bigr)' = \tfrac{f'g - fg'}{g^2}$\\
+$(f\circ g)'(x) = f'(g(x))\,g'(x)$
+
+\block{Integrals}
+$\int x^n\,dx = \tfrac{x^{n+1}}{n+1} + C \ (n \neq -1)$\\
+$\int \tfrac{1}{x}\,dx = \ln|x| + C$, \ $\int e^{x}\,dx = e^{x} + C$\\
+$\int \sin x\,dx = -\cos x + C$\\
+$\int \sec^2 x\,dx = \tan x + C$\\
+$\int \tfrac{dx}{1+x^2} = \arctan x + C$\\
+$\int \tfrac{dx}{\sqrt{1-x^2}} = \arcsin x + C$\\
+Parts: $\int u\,dv = uv - \int v\,du$\\
+$\int_0^\infty e^{-x^2}dx = \tfrac{\sqrt{\pi}}{2}$
+
+\block{Limits and series}
+$\lim_{x\to 0}\tfrac{\sin x}{x} = 1$, \ $\lim_{x\to 0}\tfrac{1-\cos x}{x^2} = \tfrac12$\\
+$\lim_{n\to\infty}\bigl(1 + \tfrac{x}{n}\bigr)^n = e^{x}$\\
+$e^{x} = \sum_{k\ge 0} \tfrac{x^k}{k!}$, \quad
+$\tfrac{1}{1-x} = \sum_{k\ge 0} x^k$ ($|x|<1$)\\
+$\ln(1+x) = x - \tfrac{x^2}{2} + \tfrac{x^3}{3} - \cdots$ ($|x|<1$)\\
+$\sin x = x - \tfrac{x^3}{3!} + \tfrac{x^5}{5!} - \cdots$\\
+$\cos x = 1 - \tfrac{x^2}{2!} + \tfrac{x^4}{4!} - \cdots$
+
+\block{Taylor with remainder}
+$f(x) = \sum_{k=0}^{n} \tfrac{f^{(k)}(a)}{k!}(x-a)^k + R_n$,\\
+$R_n = \tfrac{f^{(n+1)}(\xi)}{(n+1)!}(x-a)^{n+1}$ for some $\xi$ between $a$ and $x$.
+
+\block{Matrices ($2\times 2$)}
+$\det\begin{pmatrix} a & b\\ c & d \end{pmatrix} = ad - bc$\\
+$\begin{pmatrix} a & b\\ c & d\end{pmatrix}^{-1} = \tfrac{1}{ad-bc}\begin{pmatrix} d & -b\\ -c & a \end{pmatrix}$\\
+$\det(AB) = \det A \det B$, \ $\det A^{\top} = \det A$\\
+$\operatorname{tr} A = \sum \lambda_i$, \quad $\det A = \prod \lambda_i$
+
+\block{Eigenvalues}
+$Av = \lambda v$, $v \neq 0$; solve $\det(A - \lambda I) = 0$.\\
+$A$ diagonalizable iff it has $n$ independent eigenvectors: $A = PDP^{-1}$.\\
+Symmetric real $A$: real eigenvalues, orthonormal eigenbasis, $A = QDQ^{\top}$.
+
+\block{Vector geometry}
+$u\cdot v = \lVert u\rVert\,\lVert v\rVert\cos\theta$\\
+$\operatorname{proj}_v u = \tfrac{u\cdot v}{v\cdot v}\,v$\\
+$\lVert u\times v\rVert = \lVert u\rVert\,\lVert v\rVert\sin\theta$ (area of parallelogram)\\
+Cauchy-Schwarz: $|u\cdot v| \le \lVert u\rVert\,\lVert v\rVert$
+
+\block{Probability}
+$P(A\cup B) = P(A) + P(B) - P(A\cap B)$\\
+$P(A\mid B) = \tfrac{P(A\cap B)}{P(B)}$\\
+Bayes: $P(A\mid B) = \tfrac{P(B\mid A)P(A)}{P(B)}$\\
+$\mathbb{E}[aX+bY] = a\mathbb{E}X + b\mathbb{E}Y$\\
+$\operatorname{Var} X = \mathbb{E}[X^2] - (\mathbb{E}X)^2$\\
+Indep.: $\operatorname{Var}(X+Y) = \operatorname{Var}X + \operatorname{Var}Y$
+
+\block{Distributions}
+Binomial$(n,p)$: $P(X=k) = \binom{n}{k}p^k(1-p)^{n-k}$, mean $np$, var $np(1-p)$\\
+Poisson$(\lambda)$: $P(X=k) = e^{-\lambda}\tfrac{\lambda^k}{k!}$, mean and var $\lambda$\\
+Normal$(\mu,\sigma^2)$: $f(x) = \tfrac{1}{\sigma\sqrt{2\pi}}e^{-(x-\mu)^2/2\sigma^2}$\\
+CLT: $\tfrac{\bar X_n - \mu}{\sigma/\sqrt n} \Rightarrow N(0,1)$
+
+\end{multicols}
+
+\end{document}

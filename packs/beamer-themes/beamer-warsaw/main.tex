@@ -1,0 +1,54 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Warsaw}
+
+\title[Shortest Paths]{Lecture 9: Shortest Paths in Weighted Graphs}
+\subtitle{CS 341: Algorithms and Data Structures}
+\author[E. Marsh]{Dr.\ Elena Marsh}
+\institute[Rivergate]{Department of Computer Science, Rivergate University}
+\date{Spring Term 2026}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Today's plan}
+  \tableofcontents
+\end{frame}
+
+\section{Dijkstra's algorithm}
+
+\begin{frame}{Dijkstra's algorithm}
+  Greedy relaxation from a source $s$ over non-negative edge weights.
+  \begin{itemize}
+    \item Maintain tentative distances $d[v]$, initially $d[s] = 0$ and $d[v] = \infty$.
+    \item Repeatedly extract the unvisited vertex with the smallest $d[v]$.
+    \item Relax each outgoing edge: $d[v] \leftarrow \min(d[v],\, d[u] + w(u, v))$.
+  \end{itemize}
+  With a binary heap the running time is $O((n + m)\log n)$.
+\end{frame}
+
+\section{Handling negative weights}
+
+\begin{frame}{Bellman-Ford and negative weights}
+  When edges may have negative weight, greedy choices fail.
+  \begin{block}{Bellman-Ford}
+    Relax every edge $n - 1$ times: $O(nm)$ total. A further improving pass
+    certifies a negative cycle reachable from $s$.
+  \end{block}
+  \begin{alertblock}{Common exam mistake}
+    Adding a constant to every edge weight does not preserve shortest paths,
+    because paths with more edges are penalized more.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{Wrapping up}
+  \begin{itemize}
+    \item Reading: CLRS chapter 22, sections 1 to 3.
+    \item Problem set 5 is due Friday at noon.
+    \item Next lecture: all-pairs shortest paths and Floyd-Warshall.
+  \end{itemize}
+\end{frame}
+
+\end{document}

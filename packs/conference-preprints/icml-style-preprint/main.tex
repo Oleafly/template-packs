@@ -1,0 +1,84 @@
+% ICML style preprint, recreated with standard packages only.
+\documentclass[10pt,twocolumn]{article}
+\usepackage[letterpaper,margin=0.85in,top=1in,headheight=14pt,headsep=16pt]{geometry}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+\setlength{\columnsep}{0.25in}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small\bfseries Sparse Routing Attention for Long-Context Language Models}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{\thepage}
+
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.4ex plus .4ex}{0.8ex}
+
+\begin{document}
+
+\twocolumn[{
+  \centering
+  {\Large\bfseries Sparse Routing Attention for Long-Context Language Models\par}
+  \vskip 14pt
+  {\bfseries Priya Raghunathan\,$^{1}$ \quad Jonas Beck\,$^{2}$ \quad Amara Diallo\,$^{1}$}\\[4pt]
+  {\small $^{1}$Department of Computing, Imperial College London \quad
+          $^{2}$T\"ubingen AI Center, University of T\"ubingen}\\[2pt]
+  {\small\texttt{\{p.raghunathan, a.diallo\}@imperial.ac.uk, jonas.beck@uni-tuebingen.de}}
+  \vskip 22pt
+}]
+
+\begin{center}{\bfseries Abstract}\end{center}
+\noindent\textit{Dense self-attention scales quadratically with sequence
+length, which makes contexts beyond 128k tokens impractical to serve. We
+introduce sparse routing attention, in which a lightweight learned router
+selects, for every query block, a small set of key blocks to attend to. The
+router is trained jointly with the model using a straight-through estimator
+and adds under 2\% compute overhead. On long-document QA and repository-level
+code completion, sparse routing matches dense attention quality while reducing
+attention FLOPs by 9x at 256k context.}
+
+\section{Introduction}
+Serving long contexts is now the dominant cost in production language model
+inference. Sliding-window and dilated patterns reduce cost but discard exact
+retrieval ability, and retrieval-augmented methods move the problem into an
+external index~\cite{fontaine2024window}. Block-sparse kernels make arbitrary
+sparsity cheap on modern accelerators, which raises the question of where the
+sparsity pattern should come from.
+
+Our answer is to learn it. For query block $q$ and key blocks $\{k_j\}$, the
+router computes selection scores and keeps the top-$m$ blocks, after which
+attention proceeds normally inside the selected set:
+\begin{equation}
+  \mathrm{Attn}(Q, K, V) \;=\; \mathrm{softmax}\!\Big(\frac{Q K^{\top}}{\sqrt{d}} + M_{\mathrm{route}}\Big)\, V,
+  \label{eq:route}
+\end{equation}
+where $M_{\mathrm{route}}$ masks all key blocks the router did not select.
+Unlike fixed patterns, the mask in Equation~\eqref{eq:route} adapts per head
+and per input.
+
+\section{Experiments}
+We train 1.3B and 7B parameter models on a 2T token corpus and evaluate on
+NarrativeQA-Long, SCROLLS, and a repository completion suite. Sparse routing
+recovers 99.2\% of dense perplexity at one ninth of the attention compute,
+and outperforms block-local baselines by 3.1 F1 on long-document
+QA~\cite{omura2023blocksparse}. Router entropy collapses early in training,
+suggesting the selection problem is easier than the language modeling problem
+itself, an effect also reported for mixture-of-experts
+gating~\cite{keller2024gating}. Code and checkpoints will be released.
+
+\begin{thebibliography}{9}
+\bibitem{fontaine2024window} C. Fontaine and H. Zhu.
+What sliding windows forget: exact retrieval in efficient attention.
+In \textit{Proceedings of the 41st International Conference on Machine Learning}, 2024.
+\bibitem{omura2023blocksparse} S. Omura, N. Petrov, and G. Alves.
+Hardware-aligned block-sparse attention kernels.
+In \textit{Proceedings of Machine Learning and Systems}, 2023.
+\bibitem{keller2024gating} F. Keller and R. Iyer.
+On the training dynamics of learned sparse gating.
+In \textit{Advances in Neural Information Processing Systems 37}, 2024.
+\end{thebibliography}
+
+\end{document}

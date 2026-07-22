@@ -1,0 +1,77 @@
+% Quarter-fold greeting card. Print, then fold in half twice:
+% first fold the top half back, then fold left over right.
+% Bottom right quadrant is the front, top quadrants are the inside
+% (printed upside down so they read correctly after folding).
+\documentclass{article}
+\usepackage[landscape, margin=0cm, a4paper]{geometry}
+\usepackage[default]{sourcesanspro}
+\usepackage{xcolor}
+\usepackage{tikz}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\definecolor{rosepink}{HTML}{D95970}
+\definecolor{sky}{HTML}{4C86B8}
+\definecolor{sun}{HTML}{E8A33D}
+\definecolor{leafgreen}{HTML}{5B9E6F}
+\definecolor{softgray}{HTML}{9AA3AB}
+
+\newcommand{\balloon}[4]{% x, y, color, string sway
+  \fill[#3] (#1,#2) ellipse (0.55 and 0.7);
+  \fill[#3!70!black] (#1,#2-0.72) -- (#1-0.09,#2-0.86) -- (#1+0.09,#2-0.86) -- cycle;
+  \draw[#3!60!black, line width=0.5pt]
+    (#1,#2-0.86) .. controls (#1+#4,#2-1.5) and (#1-#4,#2-2.1) .. (#1,#2-2.6);
+  \fill[white, opacity=0.45] (#1-0.18,#2+0.22) ellipse (0.12 and 0.2);}
+
+\newcommand{\confetti}[3]{\fill[#3, rotate around={35:(#1,#2)}] (#1-0.09,#2-0.03) rectangle (#1+0.09,#2+0.03);}
+
+\begin{document}
+\mbox{}% anchor for the overlay picture
+\begin{tikzpicture}[remember picture, overlay, shift={(current page.center)}]
+  % Fold guides.
+  \draw[softgray!55, dashed, line width=0.4pt] (-14.85,0) -- (14.85,0);
+  \draw[softgray!55, dashed, line width=0.4pt] (0,-10.5) -- (0,10.5);
+
+  % ---------- Front panel: bottom right quadrant ----------
+  \begin{scope}[shift={(7.42,-5.25)}]
+    \draw[rosepink!45, line width=0.9pt, rounded corners=6pt]
+      (-6.3,-4.35) rectangle (6.3,4.35);
+    \balloon{-2.1}{1.6}{rosepink}{0.35}
+    \balloon{0}{2.3}{sun}{-0.3}
+    \balloon{2.1}{1.5}{sky}{0.3}
+    \confetti{-3.4}{2.9}{leafgreen}
+    \confetti{-4.1}{0.8}{sun}
+    \confetti{3.6}{3.0}{rosepink}
+    \confetti{4.3}{1.1}{sky}
+    \confetti{-2.9}{-1.6}{sky}
+    \confetti{3.1}{-1.3}{leafgreen}
+    \node[rosepink, font=\fontsize{28}{32}\selectfont\bfseries] at (0,-1.6) {Happy Birthday!};
+    \node[softgray, font=\large] at (0,-2.7) {wishing you the brightest of years};
+    \draw[rosepink, line width=1pt] (-1.6,-3.35) -- (1.6,-3.35);
+  \end{scope}
+
+  % ---------- Back panel: bottom left quadrant ----------
+  \begin{scope}[shift={(-7.42,-5.25)}]
+    \node[softgray, font=\scriptsize] at (0,-3.7) {made with care, from our kitchen table to yours};
+    \fill[rosepink] (0,-3.1) circle (0.06);
+  \end{scope}
+
+  % ---------- Inside right: top left quadrant, rotated 180 ----------
+  \begin{scope}[shift={(-7.42,5.25)}, rotate=180, every node/.append style={rotate=180}]
+    \node[align=center, text width=9.5cm, font=\large] at (0,0.6)
+      {Another year of stories, laughter,\\
+       and cake eaten straight from the tin.\\[1.2em]
+       May this one bring you everything\\
+       you have been quietly hoping for.};
+    \node[rosepink, font=\Large\bfseries] at (0,-2.4) {With love, the Hartley family};
+    \confetti{-3.9}{2.6}{sun}
+    \confetti{3.9}{2.5}{sky}
+  \end{scope}
+
+  % ---------- Inside left: top right quadrant, rotated 180 ----------
+  \begin{scope}[shift={(7.42,5.25)}, rotate=180, every node/.append style={rotate=180}]
+    \balloon{0}{1.0}{leafgreen}{0.3}
+    \node[softgray, font=\small\itshape] at (0,-2.2) {sixty candles and counting};
+  \end{scope}
+\end{tikzpicture}
+\end{document}

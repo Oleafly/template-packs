@@ -1,0 +1,63 @@
+\documentclass[11pt, oneside]{report}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{14606B}
+\definecolor{accentlight}{HTML}{DDEBED}
+
+\newcommand{\chapnumbox}{%
+  \colorbox{accentlight}{\makebox[1.7cm][c]{\raisebox{0pt}[1.5cm][0.4cm]{%
+    \color{accent}\fontsize{40}{40}\selectfont\bfseries\thechapter}}}}
+
+% A colored accent sidebar drawn on the chapter-opener page.
+\newcommand{\accentsidebar}{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \fill[accent] (current page.north west) rectangle ([xshift=0.55cm]current page.south west);
+    \fill[accentlight] ([xshift=0.55cm]current page.north west) rectangle ([xshift=0.7cm]current page.south west);
+  \end{tikzpicture}}
+
+\titleformat{\chapter}[display]
+  {\normalfont\raggedright}
+  {\chapnumbox\hspace{0.6em}\raisebox{0.55cm}{\color{accent}\small\bfseries CHAPTER}}
+  {0.7em}
+  {\Huge\bfseries}
+\titlespacing*{\chapter}{0pt}{6pt}{2.0em}
+
+\titleformat{\section}{\large\bfseries\color{accent}}{\thesection}{0.6em}{}
+
+\begin{document}
+
+% ---------- Chapter opener is page 1: modern colored accents ----------
+\chapter{Introduction}
+\accentsidebar
+
+\noindent{\small\color{accent}\bfseries Predictable Recovery in Geo-Replicated Storage Systems}\\
+{\footnotesize\itshape A doctoral thesis by Elena Marchetti \, \textbullet\, Aldermere University}
+
+\vspace{1.2em}
+
+\section{Motivation}
+On an ordinary afternoon in 2024, a routing change at a large cloud provider
+split a storage cluster into two groups that could each reach clients but not
+each other. No machine crashed and no disk failed, yet writes stalled for
+nineteen minutes. Incidents of this shape, where connectivity is asymmetric
+rather than absent, account for the longest outages in the public postmortem
+record, and they are almost entirely invisible to the tools we use to test
+distributed systems.
+
+\section{Thesis statement}
+This thesis argues that recovery time under partial network partitions is a
+predictable, boundable property of a replication protocol, and that worst-case
+partitions can be synthesized mechanically from the protocol specification and
+used as first-class test inputs.
+
+\section{Contributions}
+The dissertation makes three contributions: a formal model of recovery latency
+for asymmetric faults, proved bounds for leader-based and leaderless consensus,
+and \textsc{Fissure}, an open-source fault-synthesis framework evaluated on a
+40-node testbed against etcd, TiKV, and a research prototype.
+
+\end{document}

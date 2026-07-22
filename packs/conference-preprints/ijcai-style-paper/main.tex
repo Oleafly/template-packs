@@ -1,0 +1,82 @@
+% IJCAI style paper, recreated with standard packages only.
+\documentclass[10pt,twocolumn]{article}
+\usepackage[letterpaper,margin=0.75in,top=1in]{geometry}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{titlesec}
+
+\setlength{\columnsep}{0.25in}
+\pagestyle{empty}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.4ex plus .3ex}{0.7ex}
+
+\begin{document}
+
+\twocolumn[{
+  \centering
+  {\LARGE\bfseries Neuro-Symbolic Constraint Solving for Program Synthesis\par}
+  \vskip 14pt
+  {\bfseries Katarina Novak$^{1}$, \; Emeka Adeyemi$^{2}$ \; and \; Louis Perrin$^{1}$}\\[4pt]
+  {\small $^{1}$Faculty of Computer and Information Science, University of Ljubljana\\
+          $^{2}$Department of Computer Science, University of Ibadan\\
+          \texttt{katarina.novak@fri.uni-lj.si, e.adeyemi@ui.edu.ng, louis.perrin@fri.uni-lj.si}}
+  \vskip 20pt
+}]
+\thispagestyle{empty}
+
+\begin{center}{\bfseries Abstract}\end{center}
+\noindent Enumerative program synthesizers explore astronomically large
+search spaces, while neural code models produce plausible but unverified
+programs. We combine both: a neural policy proposes partial programs and a
+constraint solver prunes every proposal against the specification before
+expansion. The interface between the two is a differentiable relaxation of
+clause satisfaction, so solver feedback trains the policy directly. On the
+SyGuS strings track and a spreadsheet-formula benchmark, our system solves
+31\% more tasks than the best neural-only baseline within the same time
+budget, and every returned program is correct by construction.
+
+\section{Introduction}
+Synthesis from examples must reconcile search efficiency with soundness.
+Purely neural generators fail silently on out-of-distribution
+specifications, and purely symbolic enumeration wastes effort on branches a
+learned prior would discard immediately~\cite{halvorsen2023enum}. Existing
+hybrids call the solver only as a final checker, discarding its most useful
+signal: which clause failed and why.
+
+We propagate that signal. For a partial program $p$ and specification
+clauses $\{\phi_j\}$, the policy is trained to maximize
+\begin{equation}
+  J(\theta) \;=\; \mathbb{E}_{p \sim \pi_{\theta}}
+  \Bigl[\, \sum_{j=1}^{m} \sigma\bigl(\kappa\, \mathrm{margin}(p, \phi_j)\bigr) \Bigr],
+  \label{eq:relax}
+\end{equation}
+where the margin measures how far the solver is from refuting clause
+$\phi_j$ on $p$. Equation~\eqref{eq:relax} turns unsatisfiable cores into
+gradient, steering the policy away from doomed subtrees before they are
+expanded.
+
+\section{Results}
+On 1{,}208 SyGuS tasks our solver-in-the-loop system solves 892 within 300
+seconds, against 681 for a fine-tuned code LLM with rejection sampling and
+744 for CEGIS with a neural ranker~\cite{mbeki2024cegis}. Ablating the core
+feedback in Equation~\eqref{eq:relax} costs 118 tasks, confirming that the
+refutation signal, not just verification, drives the gain. The learned
+policy also transfers across domains, mirroring results on constraint-aware
+decoding~\cite{sorensen2022decode}.
+
+\begin{thebibliography}{9}
+\bibitem{halvorsen2023enum} B. Halvorsen and R. Iqbal.
+The price of soundness: profiling enumerative synthesis at scale.
+In \textit{Proceedings of the 32nd International Joint Conference on Artificial Intelligence}, 2023.
+\bibitem{mbeki2024cegis} N. Mbeki, C. Fournier, and D. Radu.
+Neural rankers inside CEGIS loops.
+In \textit{Proceedings of the 33rd International Joint Conference on Artificial Intelligence}, 2024.
+\bibitem{sorensen2022decode} A. S\o rensen and M. Vitale.
+Constraint-aware decoding for structured generation.
+In \textit{Proceedings of the 31st International Joint Conference on Artificial Intelligence}, 2022.
+\end{thebibliography}
+
+\end{document}

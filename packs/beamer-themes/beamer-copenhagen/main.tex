@@ -1,0 +1,52 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Copenhagen}
+\usecolortheme[RGB={31,59,112}]{structure}
+
+\title[Taming Retry Storms]{Taming Retry Storms}
+\subtitle{Reliability lessons from a global payment platform}
+\author[J. Berg]{Jonas Berg}
+\institute[Northpay]{Site Reliability Engineering, Northpay}
+\date{ScaleConf Europe 2026}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+\end{frame}
+
+\section{Anatomy of an incident}
+
+\begin{frame}{Anatomy of a retry storm}
+  \begin{itemize}
+    \item A 40 ms latency bump in one region tripped client timeouts set to 50 ms.
+    \item Every timed-out call retried three times with no jitter, tripling load.
+    \item The extra load pushed p99 latency higher, timing out even more calls.
+    \item Within four minutes, healthy capacity was serving 11x normal traffic.
+  \end{itemize}
+\end{frame}
+
+\section{Defenses that worked}
+
+\begin{frame}{Defenses that worked}
+  \begin{block}{Budgeted retries}
+    Cap retries at 10\% of successful requests per client, measured over a
+    sliding window. Storms starve themselves instead of the service.
+  \end{block}
+  \begin{block}{Deadline propagation}
+    Pass the remaining deadline downstream so a doomed request is dropped
+    early rather than retried at every hop.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Closing}
+  \begin{center}
+    {\Large Retries are load amplifiers. Budget them.}\\[1em]
+    Slides and the incident write-up: northpay.example/talks
+  \end{center}
+\end{frame}
+
+\end{document}

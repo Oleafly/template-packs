@@ -1,0 +1,86 @@
+% Springer LNCS style, recreated with standard packages only.
+\documentclass[10pt]{article}
+\usepackage[textwidth=12.2cm,textheight=19.3cm,centering,headheight=12pt,headsep=16pt]{geometry}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape A Cache-Conscious Index for Persistent Memory Stores}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.7em}{}
+\titlespacing*{\section}{0pt}{1.6ex plus .4ex}{0.9ex}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries A Cache-Conscious Index for Persistent Memory\\ Key-Value Stores\par}
+  \vskip 12pt
+  {Astrid Winther$^{1}$ \quad Tomas Kral$^{2}$ \quad Beatriz Camposeco$^{1}$}\\[6pt]
+  {\small\itshape $^{1}$Department of Computer Science, Aarhus University, Denmark\\
+   $^{2}$Faculty of Informatics, Masaryk University, Brno, Czech Republic}\\[3pt]
+  {\small\texttt{\{awinther, bcamposeco\}@cs.au.dk, kral@fi.muni.cz}}
+\end{center}
+
+\vskip 14pt
+\begin{center}
+\begin{minipage}{0.88\textwidth}\small
+\textbf{Abstract.} Persistent memory offers byte-addressable durability but
+punishes pointer chasing: a cache miss to the media costs three times a DRAM
+miss. We present PMTree, an index whose nodes are sized and packed to the
+256-byte persistent-memory access granularity and whose search path touches
+at most one media line per level. A versioned header makes node updates
+crash-consistent with a single 8-byte atomic store, avoiding logging on the
+common path. On a 100 GB YCSB workload, PMTree improves point-lookup
+throughput by 2.1x over a state-of-the-art persistent B+-tree and recovers a
+terabyte-scale index in under four seconds.
+
+\medskip
+\textbf{Keywords:} Persistent memory \; Index structures \; Crash consistency \; Key-value stores
+\end{minipage}
+\end{center}
+\vskip 10pt
+
+\section{Introduction}
+Indexes designed for DRAM assume uniform load latency, an assumption that
+persistent memory breaks. Media reads arrive in 256-byte units, so a node
+layout that scatters separators across lines pays for every level of the
+tree~\cite{eriksen2023pmlat}. Prior persistent B+-trees restore consistency
+with redo logging, which doubles write traffic on inserts.
+
+PMTree packs each node into a single access unit and orders its slots so
+that a lookup resolves with one media read and at most two cache misses. An
+insert publishes a new version by flipping the header word
+\begin{equation}
+  h' \;=\; \bigl(v + 1\bigr) \,\Vert\, \mathrm{slotmap}',
+  \label{eq:header}
+\end{equation}
+where the version $v$ and slot bitmap share one 8-byte word. Readers that
+observe a torn node retry on the version in Equation~\eqref{eq:header}, so
+no reader ever takes a lock.
+
+\section{Evaluation}
+We compare against FastFair and a logged B+-tree on YCSB A through F under
+uniform and Zipfian keys. PMTree wins every read-dominated mix and ties the
+best writer on insert-heavy loads, while cutting write amplification by
+38\%~\cite{dubois2024wa}. Recovery scans only headers, matching the
+design goal of instant restart argued by~\cite{martins2022restart}.
+
+\begin{thebibliography}{9}
+\bibitem{eriksen2023pmlat} H. Eriksen and Y. Sato.
+Measuring the memory hierarchy of commercial persistent memory.
+In \textit{Proceedings of the 2023 International Conference on Management of Data}, 2023.
+\bibitem{dubois2024wa} C. Dubois, F. Lang, and O. Petersen.
+Write amplification in persistent index structures.
+\textit{Proceedings of the VLDB Endowment}, 17(9):2201--2214, 2024.
+\bibitem{martins2022restart} R. Martins and K. Cho.
+The case for instant-restart storage engines.
+In \textit{Proceedings of the 12th Annual Conference on Innovative Data Systems Research}, 2022.
+\end{thebibliography}
+
+\end{document}

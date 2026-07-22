@@ -1,0 +1,57 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Frankfurt}
+\usecolortheme[RGB={90,40,110}]{structure}
+
+\title[Bayesian Inference]{A Practical Introduction to Bayesian Inference}
+\subtitle{Summer methods workshop, session 3}
+\author[I. Fischer]{Prof.\ Ines Fischer}
+\institute[Lakeview Institute]{Lakeview Institute for Quantitative Methods}
+\date{August 2026}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Session outline}
+  \tableofcontents
+\end{frame}
+
+\section{Priors and posteriors}
+
+\begin{frame}{From prior to posterior}
+  Bayes' rule updates belief in parameters $\theta$ after seeing data $y$:
+  \[
+    p(\theta \mid y) = \frac{p(y \mid \theta)\, p(\theta)}{p(y)}
+  \]
+  \begin{itemize}
+    \item The prior $p(\theta)$ encodes what is plausible before the experiment.
+    \item The likelihood $p(y \mid \theta)$ scores how well parameters explain the data.
+    \item Weakly informative priors regularize without dominating the evidence.
+  \end{itemize}
+\end{frame}
+
+\section{Computation in practice}
+
+\begin{frame}{Making it computable}
+  Posteriors rarely have closed forms, so we sample from them.
+  \begin{itemize}
+    \item Markov chain Monte Carlo draws correlated samples whose long-run
+          distribution is the posterior.
+    \item Diagnostics before trust: $\widehat{R}$ near 1, healthy effective
+          sample size, and no divergent transitions.
+    \item Posterior predictive checks compare simulated replicates to the
+          observed data.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Before next session}
+  \begin{itemize}
+    \item Exercise: refit the reaction-time model with a Student-t likelihood.
+    \item Reading: chapter 5 of the workshop notes, on hierarchical models.
+    \item Bring one dataset from your own work for Thursday's lab.
+  \end{itemize}
+\end{frame}
+
+\end{document}

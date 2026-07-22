@@ -1,0 +1,84 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{lmodern}
+\usepackage{xcolor}
+
+\definecolor{accent}{HTML}{374151}
+\pagestyle{plain}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+
+\newcounter{problem}
+\newenvironment{problem}{%
+  \refstepcounter{problem}%
+  \par\medskip\noindent{\bfseries Problem \theproblem.}\ }{\par}
+\newcommand{\hint}[1]{\par\smallskip{\small\itshape\color{accent} Hint: #1}\par\medskip}
+
+\begin{document}
+
+\begin{center}
+  {\Large\bfseries MATH 6210: Measure Theory and Probability}\\[3pt]
+  {\large Problem Set 5}\\[3pt]
+  Due Friday, November 7, at the start of lecture\\[6pt]
+  \rule{0.55\linewidth}{0.5pt}
+\end{center}
+
+\medskip
+\textit{Write complete proofs. You may cite any result proved in lecture or
+in Chapters 1 through 6 of the notes, but state precisely what you use.
+Collaboration is allowed; write-ups must be your own.}
+
+\begin{problem}
+Let $(X, \mathcal{F}, \mu)$ be a measure space and let
+$f_n : X \to [0, \infty]$ be measurable with $f_n \uparrow f$ pointwise.
+Prove directly from the definition of the integral of nonnegative simple
+functions that
+\[
+  \int_X f_n \, d\mu \;\longrightarrow\; \int_X f \, d\mu,
+\]
+without invoking the monotone convergence theorem as a black box.
+\hint{For a simple function $s \le f$ and $c \in (0,1)$, consider the sets
+$E_n = \{x : f_n(x) \ge c\, s(x)\}$ and use continuity of $\mu$ from below.}
+\end{problem}
+
+\begin{problem}
+Let $(A_n)_{n \ge 1}$ be events in a probability space with
+$\sum_{n=1}^{\infty} P(A_n) < \infty$. Prove that
+$P(\limsup_n A_n) = 0$, and give an example showing the converse fails:
+a sequence of events with $P(\limsup_n A_n) = 0$ but
+$\sum_n P(A_n) = \infty$.
+\hint{For the first part, bound
+$P\bigl(\bigcup_{k \ge n} A_k\bigr)$ by a tail of the series. For the
+example, dependent events on $[0,1]$ with shrinking nested supports work.}
+\end{problem}
+
+\begin{problem}
+Let $X_1, X_2, \dots$ be i.i.d.\ random variables with
+$\mathbb{E}|X_1| < \infty$ and $\mathbb{E}X_1 = 0$, and set
+$S_n = X_1 + \dots + X_n$. Show that $(S_n)_{n\ge1}$ is a martingale with
+respect to its natural filtration, and deduce that if additionally
+$\mathbb{E}X_1^2 = \sigma^2 < \infty$, then $S_n^2 - n\sigma^2$ is also a
+martingale.
+\hint{Only linearity of conditional expectation, independence, and the
+tower property are needed. Expand $S_{n+1}^2 = (S_n + X_{n+1})^2$.}
+\end{problem}
+
+\begin{problem}
+Let $\mu$ be a finite Borel measure on $\mathbb{R}$ and define its
+characteristic function $\varphi(t) = \int e^{itx}\, d\mu(x)$. Prove that
+$\varphi$ is uniformly continuous on $\mathbb{R}$, and that if
+$\int |x| \, d\mu(x) < \infty$ then $\varphi$ is differentiable with
+$\varphi'(t) = \int i x\, e^{itx} \, d\mu(x)$.
+\hint{Use $|e^{ihx} - 1| \le \min(2, |hx|)$ together with dominated
+convergence.}
+\end{problem}
+
+\begin{problem}[Optional, extra credit]
+Construct a sequence of functions $f_n : [0,1] \to [0,1]$ that converges to
+$0$ in measure but converges pointwise at no point of $[0,1]$.
+\hint{March intervals of shrinking length across $[0,1]$ repeatedly, the
+so-called typewriter sequence, and verify both claims carefully.}
+\end{problem}
+
+\end{document}

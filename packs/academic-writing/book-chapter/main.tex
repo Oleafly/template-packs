@@ -1,0 +1,55 @@
+\documentclass[11pt, oneside]{book}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{xcolor}
+\usepackage{lettrine}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{5A3E2B}
+\setlength{\parindent}{1.2em}
+
+\titleformat{\chapter}[display]
+  {\normalfont\filright}
+  {\Large\color{accent}\bfseries CHAPTER \thechapter}
+  {0.6em}
+  {\Huge\bfseries}
+\titlespacing*{\chapter}{0pt}{10pt}{28pt}
+
+\newcommand{\epigraph}[2]{%
+  \begin{flushright}\begin{minipage}{0.72\textwidth}\raggedleft
+    \itshape #1\par\vspace{0.3em}\upshape\small\color{accent}--- #2
+  \end{minipage}\end{flushright}\vspace{1.8em}}
+
+\begin{document}
+
+\chapter{The Shape of Failure}
+
+\epigraph{We do not fear the collapse we can see. We fear the one that hides
+inside a system reporting perfect health.}{From the field notes of an on-call engineer}
+
+\lettrine[lines=3, lhang=0.1, findent=0.1em, nindent=0.4em]{\color{accent}T}{he}
+history of distributed computing is, in one telling, a long argument about what
+it means for a system to be broken. In the earliest machines the answer was
+obvious: a broken system was one that had stopped. The lamp went dark, the tape
+stopped spinning, and everyone in the room understood that work had ceased. This
+chapter is about how that comfortable clarity dissolved, and about what replaced
+it.
+
+When we distributed computation across many machines, we bought resilience at
+the price of legibility. A cluster of a hundred servers rarely stops all at
+once. Instead it degrades, and it degrades unevenly. One replica falls behind,
+another cannot be reached from the east coast but answers fine from the west, a
+third believes it is the leader while its peers have already elected someone
+else. None of these conditions is a clean stop, and none of them is a clean
+success. They live in a middle country our vocabulary was never built to
+describe.
+
+The central claim of this book is that reliability engineering is the discipline
+of naming and taming that middle country. To make a distributed system
+trustworthy, we must first learn to see the failures that hide between up and
+down, and then we must build tools that can summon those failures on demand,
+before our users summon them for us. The chapters that follow take up that
+project one fault at a time, beginning with the most deceptive of them all, the
+partial network partition.
+
+\end{document}

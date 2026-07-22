@@ -1,0 +1,91 @@
+% JMLR style article, recreated with standard packages only.
+\documentclass[11pt]{article}
+\usepackage[letterpaper,textwidth=6in,textheight=8.8in,top=1in]{geometry}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{titlesec}
+
+\pagestyle{plain}
+
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.6ex plus .4ex}{0.9ex}
+
+\begin{document}
+
+\noindent{\small Journal of Machine Learning Research 27 (2026) 1--24
+\hfill Submitted 9/25; Revised 4/26; Published 7/26}
+\vskip 2pt
+\noindent\rule{\textwidth}{0.5pt}
+
+\vskip 22pt
+\begin{center}
+  {\Large\bfseries Convergence Rates of Stochastic Mirror Descent\\ with Adaptive Regularization\par}
+\end{center}
+
+\vskip 14pt
+\noindent{\bfseries Nadia Kowalczyk} \hfill {\small\texttt{nadia.kowalczyk@mimuw.edu.pl}}\\
+{\small\itshape Institute of Mathematics, University of Warsaw, Warsaw, Poland}
+\vskip 8pt
+\noindent{\bfseries Julian Weiss} \hfill {\small\texttt{jweiss@ist.ac.at}}\\
+{\small\itshape Institute of Science and Technology Austria, Klosterneuburg, Austria}
+\vskip 12pt
+\noindent{\small\bfseries Editor:} {\small Ravindra Menon}
+
+\vskip 18pt
+\begin{center}{\bfseries Abstract}\end{center}
+\begin{list}{}{\leftmargin=0.3in\rightmargin=0.3in}\item\relax\small
+We analyze stochastic mirror descent when the mirror map itself is adapted
+online from observed gradients. Existing analyses fix the geometry in
+advance, which forfeits the method's main practical appeal. We show that a
+regularizer chosen from a growing family of Bregman divergences achieves the
+best rate attainable by any fixed member of the family, up to a logarithmic
+factor, without prior knowledge of the gradient distribution. The proof
+couples a follow-the-regularized-leader argument with a new stability bound
+for time-varying mirror maps. As corollaries we recover AdaGrad-type rates in
+the Euclidean case and obtain the first adaptive guarantees for spectral
+geometries used in matrix completion.
+\end{list}
+\vskip 4pt
+\noindent{\small{\bfseries Keywords:} mirror descent, adaptive methods, online learning, Bregman divergences, regret bounds}
+
+\section{Introduction}
+Mirror descent generalizes gradient descent to non-Euclidean geometries and
+underlies most modern adaptive optimizers. Its behavior is governed by the
+choice of mirror map, yet that choice is usually made once, before any data
+is seen~\cite{ferro2023geometry}. We ask whether the geometry can be learned
+during optimization at no asymptotic cost.
+
+With mirror map $\psi_t$ at step $t$, the iterate update is
+\begin{equation}
+  x_{t+1} \;=\; \arg\min_{x \in \mathcal{X}}
+  \Bigl\{ \eta \,\langle \hat{g}_t, x \rangle + D_{\psi_t}(x, x_t) \Bigr\},
+  \label{eq:md}
+\end{equation}
+where $D_{\psi_t}$ is the Bregman divergence of $\psi_t$ and $\hat{g}_t$ is
+a stochastic gradient. Our contribution is a schedule for $\psi_t$ under
+which Equation~\eqref{eq:md} satisfies an anytime regret bound competitive
+with the best fixed geometry in hindsight.
+
+\section{Main Result}
+Our central theorem bounds the excess risk after $T$ steps by
+$O(\sqrt{\smash[b]{S_T^{\ast} \log T}}/T)$, where $S_T^{\ast}$ is the
+cumulative gradient energy measured in the optimal fixed geometry. The
+stability argument extends the anytime analysis of~\cite{delgado2024anytime}
+and closes a gap left open for spectral regularizers
+by~\cite{brekke2022spectral}. All proofs are in Appendix~A, and code
+reproducing the matrix-completion experiments accompanies the paper.
+
+\begin{thebibliography}{9}
+\bibitem{ferro2023geometry} L. Ferro and D. Anand.
+Choosing the geometry of first-order methods.
+\textit{Journal of Machine Learning Research}, 24(201):1--52, 2023.
+\bibitem{delgado2024anytime} M. Delgado and S. Okabe.
+Anytime bounds for follow-the-regularized-leader.
+In \textit{Proceedings of the 37th Annual Conference on Learning Theory}, 2024.
+\bibitem{brekke2022spectral} A. Brekke and P. Chandrasekar.
+Spectral regularization in stochastic approximation.
+\textit{Journal of Machine Learning Research}, 23(88):1--39, 2022.
+\end{thebibliography}
+
+\end{document}

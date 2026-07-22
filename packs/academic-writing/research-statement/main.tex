@@ -1,0 +1,58 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{8C3A2B}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+\newcommand{\lead}[1]{{\color{accent}\bfseries #1.}\hspace{0.4em}}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries Research Statement}\\[0.3em]
+  {\large Elena Marchetti}\\[0.2em]
+  {\small\color{accent}\rule{0.3\textwidth}{0.8pt}}
+\end{center}
+
+\vspace{0.4em}
+
+\lead{Overview}
+My research makes the reliability of distributed systems something engineers can
+predict rather than discover in production. I work at the boundary between formal
+methods and systems building, and I care most about the failures that do not fit
+our clean models: the partial network partition, the reconfiguration that races a
+fault, the recovery that takes minutes instead of milliseconds. Across my
+dissertation I have shown that these cases are not rare corner cases but the
+dominant source of real outages.
+
+\lead{Contributions to date}
+In my first line of work I formalized recovery latency as a property of the
+protocol state machine, which let me derive tight bounds for Raft and
+Multi-Paxos and prove that a widely deployed reconfiguration procedure can stall
+indefinitely under asymmetric connectivity. This result, presented at a leading
+systems venue, changed how one open-source database schedules membership
+changes.
+
+\lead{Current directions}
+I am now building \textsc{Fissure}, a tool that synthesizes worst-case partial
+partitions directly from a protocol specification instead of injecting random
+link failures. Early experiments reproduce three published production incidents
+that random testing had missed entirely, which suggests that specification-guided
+fault injection deserves a place alongside fuzzing in the reliability toolkit.
+
+\lead{Future agenda}
+Over the next five years I plan to extend this program from storage systems to
+the control planes that orchestrate them, where the same asymmetric faults cause
+cascading failures across services. I want to give operators a certificate: a
+machine-checked guarantee that a deployment meets its recovery objective before
+it ever serves traffic. This agenda is deliberately broad enough to support a
+group of students yet grounded in a concrete, buildable first artifact.
+
+\lead{Fit and vision}
+Your department's strength in programming languages and its systems testbed make
+it the ideal place to pursue this work, and I look forward to teaching a graduate
+course that treats reliability as a design property rather than an afterthought.
+
+\end{document}

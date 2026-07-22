@@ -1,0 +1,95 @@
+% NeurIPS style preprint, recreated with standard packages only.
+\documentclass[10pt]{article}
+\usepackage[letterpaper,textwidth=5.5in,textheight=9in,top=1in]{geometry}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries\sffamily}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\normalsize\bfseries\sffamily}{\thesubsection}{0.7em}{}
+\titlespacing*{\section}{0pt}{1.6ex plus .4ex}{0.9ex}
+\titlespacing*{\subsection}{0pt}{1.3ex plus .3ex}{0.7ex}
+
+\begin{document}
+
+\noindent\rule{\textwidth}{1.2pt}
+\begin{center}
+  \vspace{4pt}
+  {\sffamily\bfseries\LARGE Gradient Sketching for Communication-Efficient\\ Federated Learning\par}
+  \vspace{6pt}
+\end{center}
+\noindent\rule{\textwidth}{0.5pt}
+
+\vspace{14pt}
+\begin{center}
+\begin{minipage}[t]{0.31\textwidth}\centering
+  {\bfseries Maya Lindqvist}\\ Department of Computer Science\\ Aalto University\\ \texttt{maya.lindqvist@aalto.fi}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.31\textwidth}\centering
+  {\bfseries Daniel Okafor}\\ School of Informatics\\ University of Edinburgh\\ \texttt{d.okafor@ed.ac.uk}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.31\textwidth}\centering
+  {\bfseries Elena Marchetti}\\ Institute for ML Systems\\ ETH Zurich\\ \texttt{elenam@ethz.ch}
+\end{minipage}
+\end{center}
+
+\let\thefootnote\relax\footnotetext{Preprint. Under review.}
+
+\vspace{16pt}
+\begin{center}{\sffamily\bfseries\large Abstract}\end{center}
+\begin{list}{}{\leftmargin=0.4in\rightmargin=0.4in}\item\relax
+Federated optimization is dominated by the cost of shipping dense gradient
+updates between clients and the server. We propose gradient sketching, a
+compression scheme that projects each client update onto a shared random
+subspace and reconstructs an unbiased estimate on the server. The sketch
+dimension adapts to the observed gradient spectrum, so communication shrinks
+automatically as training converges. On image and language benchmarks with up
+to 1{,}024 simulated clients, our method cuts uplink traffic by 14x while
+matching the accuracy of uncompressed FedAvg within 0.3 points.
+\end{list}
+
+\section{Introduction}
+Cross-device federated learning trains a shared model on data that never
+leaves user hardware. In practice the bottleneck is not computation but the
+uplink: mobile clients upload millions of parameters per round over
+constrained links. Prior work reduces this cost with quantization or top-$k$
+sparsification~\cite{stromberg2023topk}, but both approaches introduce biased
+updates that require error feedback to remain stable.
+
+We take a different route. Each round, the server broadcasts a seed that
+defines a random projection $S_t \in \mathbb{R}^{k \times d}$ with $k \ll d$.
+Clients upload the sketch $S_t g_i$ of their local gradient $g_i$, and the
+server forms the unbiased reconstruction
+\begin{equation}
+  \hat{g}_t \;=\; \frac{d}{k}\, S_t^{\top} \Big( \tfrac{1}{n} \sum_{i=1}^{n} S_t\, g_i \Big),
+  \label{eq:sketch}
+\end{equation}
+which it feeds to any server-side optimizer. Because the projection is shared,
+sketches aggregate before reconstruction and the server cost is a single
+matrix product.
+
+\section{Method and Analysis}
+Equation~\eqref{eq:sketch} yields an estimator whose variance is controlled by
+the stable rank of the averaged gradient, which we observe to fall sharply
+after the first few epochs. We exploit this by shrinking $k$ on a schedule
+tied to a cheap online estimate of the spectrum, following the adaptive
+compression analysis of~\cite{vasquez2024adaptive}. Under standard smoothness
+assumptions the scheme retains the $O(1/\sqrt{T})$ rate of FedAvg, and unlike
+sign-based compressors it needs no error accumulation
+buffers~\cite{herzog2022signfl}. A full proof and ablations over sketch
+schedules appear in the appendix.
+
+\begin{thebibliography}{9}
+\bibitem{stromberg2023topk} L. Str\"omberg and P. Aravind.
+Top-$k$ sparsification revisited: error feedback in cross-device settings.
+In \textit{Proceedings of the 40th International Conference on Machine Learning}, 2023.
+\bibitem{vasquez2024adaptive} R. V\'asquez, T. Nakayama, and S. Bhat.
+Adaptive compression rates for distributed SGD.
+\textit{Journal of Machine Learning Research}, 25(118):1--43, 2024.
+\bibitem{herzog2022signfl} K. Herzog and A. Deml.
+SignFL: one-bit federated optimization at scale.
+In \textit{Advances in Neural Information Processing Systems 35}, 2022.
+\end{thebibliography}
+
+\end{document}

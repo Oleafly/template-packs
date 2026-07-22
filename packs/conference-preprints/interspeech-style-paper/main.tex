@@ -1,0 +1,83 @@
+% Interspeech style paper, recreated with standard packages only.
+\documentclass[10pt,twocolumn]{article}
+\usepackage[a4paper,margin=0.8in,top=1in]{geometry}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{titlesec}
+
+\setlength{\columnsep}{0.2in}
+\pagestyle{empty}
+
+\titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.3ex plus .3ex}{0.7ex}
+
+\begin{document}
+
+\twocolumn[{
+  \centering
+  {\Large\bfseries Low-Latency Streaming Speech Recognition\\ with Chunked Conformer Encoders\par}
+  \vskip 14pt
+  {\itshape Aoife Brennan$^{1}$, Milos Jankovic$^{2}$, Rehema Said$^{1}$}\\[5pt]
+  {\small $^{1}$School of Computer Science and Statistics, Trinity College Dublin, Ireland\\
+          $^{2}$Faculty of Electrical Engineering, University of Belgrade, Serbia}\\[3pt]
+  {\small\texttt{\{brennaao, saidr\}@tcd.ie, milos.jankovic@etf.bg.ac.rs}}
+  \vskip 20pt
+}]
+\thispagestyle{empty}
+
+\begin{center}{\bfseries Abstract}\end{center}
+\noindent Streaming recognizers trade accuracy for latency through their
+attention context, and the trade-off is usually fixed at training time. We
+propose chunked Conformer encoders with stochastic chunk sizes: during
+training each batch samples its chunk width, so a single model serves any
+latency target at inference. A boundary-aware convolution avoids edge
+artifacts between chunks, and a lightweight right-context cache adds 40 ms
+of lookahead at negligible cost. On LibriSpeech and a 5{,}000 hour in-house
+voice assistant corpus, one model matches separately trained baselines
+across latency budgets from 160 ms to 1.2 s, simplifying deployment to a
+single artifact.
+
+\vskip 6pt
+\noindent{\bfseries Index Terms:} speech recognition, streaming ASR, Conformer, low latency, transducer models
+
+\section{Introduction}
+Voice assistants require partial hypotheses within a few hundred
+milliseconds, while dictation tolerates a second of delay for higher
+accuracy. Operating one model per latency point multiplies training and
+maintenance cost~\cite{osullivan2023latency}. Chunked attention restricts
+the encoder to fixed windows, and prior work shows accuracy varies smoothly
+with chunk width, suggesting a single elastic model is feasible.
+
+We train with the transducer objective
+\begin{equation}
+  \mathcal{L} \;=\; -\log \sum_{\pi \in \mathcal{B}^{-1}(y)} \Pr\bigl(\pi \mid x; w\bigr),
+  \label{eq:rnnt}
+\end{equation}
+where the chunk width $w$ is drawn per batch from a log-uniform
+distribution. Optimizing Equation~\eqref{eq:rnnt} over sampled widths
+forces the encoder to form representations that degrade gracefully as
+context shrinks.
+
+\section{Experiments}
+At a 320 ms budget the elastic model reaches 3.1\% WER on
+LibriSpeech test-clean, within 0.05 absolute of a width-matched dedicated
+baseline, and at 1.2 s it matches the full-context topline. The boundary
+convolution contributes 0.3 WER at the smallest widths, consistent with
+edge-effect analyses~\cite{tran2024chunk}. Latency measurements on a mobile
+CPU confirm the cache adds under 2 ms per chunk, in line with streaming
+benchmark methodology~\cite{gudmund2022bench}.
+
+\begin{thebibliography}{9}
+\bibitem{osullivan2023latency} C. O'Sullivan and R. Nakade.
+One model per latency point considered wasteful.
+In \textit{Proceedings of Interspeech}, 2023.
+\bibitem{tran2024chunk} H. Tran, B. Fischer, and A. Duma.
+Edge effects in chunked attention encoders.
+In \textit{Proceedings of Interspeech}, 2024.
+\bibitem{gudmund2022bench} S. Gudmundsdottir and P. Laurent.
+Benchmarking streaming ASR on commodity mobile hardware.
+In \textit{Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing}, 2022.
+\end{thebibliography}
+
+\end{document}

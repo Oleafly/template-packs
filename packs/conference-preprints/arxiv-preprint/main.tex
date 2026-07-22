@@ -1,0 +1,84 @@
+% arXiv style preprint with a rotated margin stamp, standard packages only.
+\documentclass[11pt]{article}
+\usepackage[letterpaper,textwidth=6.2in,textheight=8.9in,top=1in]{geometry}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{titlesec}
+\usepackage{tikz}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{0.7em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.7em}{}
+\titlespacing*{\section}{0pt}{1.6ex plus .4ex}{0.9ex}
+
+\begin{document}
+
+\begin{tikzpicture}[remember picture, overlay]
+  \node[rotate=90, anchor=center, xshift=0pt]
+    at ([xshift=0.45in]current page.west)
+    {\ttfamily\small arXiv:2607.09482v1 [cs.LG] 22 Jul 2026};
+\end{tikzpicture}
+
+\begin{center}
+  {\LARGE\bfseries Scaling Laws for Sparse\\[2pt] Mixture-of-Experts Language Models\par}
+  \vskip 16pt
+  {\large Robert Ellingsen$^{1}$ \quad Farah Al-Amin$^{2}$ \quad Georgia Pappas$^{1}$}\\[6pt]
+  {\small $^{1}$Department of Informatics, University of Oslo \quad
+          $^{2}$Qatar Computing Research Institute}\\[2pt]
+  {\small\texttt{\{roberell, georgiap\}@ifi.uio.no, falamin@hbku.edu.qa}}\\[8pt]
+  {\small July 22, 2026}
+\end{center}
+
+\vskip 14pt
+\begin{center}{\bfseries Abstract}\end{center}
+\begin{list}{}{\leftmargin=0.45in\rightmargin=0.45in}\item\relax
+Scaling laws for dense transformers do not directly transfer to
+mixture-of-experts models, where total parameters and per-token compute
+decouple. We train 212 sparse models spanning three orders of magnitude in
+active compute and fit a joint law in active parameters and expert count.
+The law predicts held-out losses within 0.4\% and exposes a compute-optimal
+frontier along which expert count should grow roughly as the cube root of
+the training budget. Fitting the same functional form to published frontier
+models suggests several were trained with substantially too few experts.
+\end{list}
+\vskip 8pt
+
+\section{Introduction}
+Dense scaling studies relate loss to parameters, data, and compute, and have
+become the primary tool for planning large training runs. Sparse
+mixture-of-experts architectures break the one-to-one link between
+parameters and compute: a token activates only a few experts, so capacity
+can grow almost freely~\cite{navarro2023moescale}. Which combination of
+active width and expert count buys the most loss per FLOP has remained
+empirical folklore.
+
+We model the final loss as
+\begin{equation}
+  L(N_a, E) \;=\; \frac{a}{N_a^{\alpha}} \;+\; \frac{b}{E^{\beta}} \;+\; L_{\infty},
+  \label{eq:law}
+\end{equation}
+where $N_a$ is active parameters per token and $E$ the number of experts.
+Fitting Equation~\eqref{eq:law} across our sweep gives $\alpha = 0.31$,
+$\beta = 0.12$, with tight confidence intervals under bootstrap resampling.
+
+\section{Compute-Optimal Experts}
+Minimizing Equation~\eqref{eq:law} under a fixed training budget yields an
+allocation rule that favors more experts earlier than common practice, in
+line with routing-capacity arguments~\cite{svoboda2024routing}. The rule
+holds across two tokenizers and both dropless and capacity-factor routing,
+though gains saturate once routing entropy collapses, an effect analyzed
+by~\cite{lindholm2022entropy}. We release all 212 checkpoints and the
+fitting code.
+
+\begin{thebibliography}{9}
+\bibitem{navarro2023moescale} D. Navarro and K. Whitmore.
+Decoupling capacity from compute in sparse expert models.
+\textit{arXiv preprint arXiv:2303.11077}, 2023.
+\bibitem{svoboda2024routing} P. Svoboda, A. Rezaei, and M. Toussaint.
+Routing capacity limits in mixture-of-experts transformers.
+\textit{arXiv preprint arXiv:2401.05561}, 2024.
+\bibitem{lindholm2022entropy} E. Lindholm and C. Braga.
+Entropy collapse in learned sparse routing.
+\textit{arXiv preprint arXiv:2210.14329}, 2022.
+\end{thebibliography}
+
+\end{document}

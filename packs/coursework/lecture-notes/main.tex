@@ -1,0 +1,97 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+
+\definecolor{accent}{HTML}{0E7490}
+\definecolor{defcolor}{HTML}{9333EA}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{MATH 3410, Linear Algebra II}
+\fancyhead[R]{Lecture 7}
+\fancyfoot[C]{\thepage}
+
+\newcounter{thmc}[section]
+\newtcolorbox{thmbox}[1]{enhanced, colback=accent!5, colframe=accent,
+  boxrule=0.8pt, arc=1.5mm, left=6pt, right=6pt,
+  title={\refstepcounter{thmc}Theorem 7.\arabic{thmc}\ \ (#1)}, fonttitle=\bfseries}
+\newtcolorbox{defbox}[1]{enhanced, colback=defcolor!5, colframe=defcolor,
+  boxrule=0.8pt, arc=1.5mm, left=6pt, right=6pt,
+  title={\refstepcounter{thmc}Definition 7.\arabic{thmc}\ \ (#1)}, fonttitle=\bfseries}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\begin{document}
+
+\begin{center}
+  {\color{accent}\rule{\linewidth}{2pt}}\\[8pt]
+  {\Large\bfseries MATH 3410: Linear Algebra II}\\[4pt]
+  {\large Lecture 7: Diagonalization of Symmetric Matrices}\\[4pt]
+  Prof.\ N.\ Okafor \quad | \quad Week 4, Fall Term\\[6pt]
+  {\color{accent}\rule{\linewidth}{0.8pt}}
+\end{center}
+
+\textbf{Today.} Real symmetric matrices have a remarkably rigid structure:
+their eigenvalues are real and their eigenvectors can be chosen orthonormal.
+We prove both facts and state the spectral theorem.
+
+\begin{defbox}{Orthogonal diagonalizability}
+A matrix $A \in \mathbb{R}^{n \times n}$ is \emph{orthogonally
+diagonalizable} if there exist an orthogonal matrix $Q$ (that is,
+$Q^{\top}Q = I$) and a diagonal matrix $D$ with
+\[
+  A = Q D Q^{\top}.
+\]
+The columns of $Q$ then form an orthonormal basis of eigenvectors of $A$.
+\end{defbox}
+
+\begin{thmbox}{Eigenvalues of symmetric matrices are real}
+Let $A \in \mathbb{R}^{n \times n}$ with $A^{\top} = A$. Then every
+eigenvalue of $A$ is real.
+\end{thmbox}
+
+\emph{Proof.} Let $Av = \lambda v$ with $v \in \mathbb{C}^n$, $v \neq 0$.
+Using the conjugate transpose $v^{*}$,
+\[
+  \lambda\, v^{*}v = v^{*}(Av) = (Av)^{*}v = \overline{\lambda}\, v^{*}v,
+\]
+where the middle equality uses $A^{\top} = A$ and that $A$ has real entries.
+Since $v^{*}v = \lVert v \rVert^2 > 0$, we get
+$\lambda = \overline{\lambda}$, so $\lambda \in \mathbb{R}$. \qedsymbol
+
+\begin{thmbox}{Spectral theorem}
+Every real symmetric matrix is orthogonally diagonalizable. Moreover,
+eigenvectors belonging to distinct eigenvalues are orthogonal.
+\end{thmbox}
+
+\emph{Proof of the second claim.} Suppose $Av_1 = \lambda_1 v_1$ and
+$Av_2 = \lambda_2 v_2$ with $\lambda_1 \neq \lambda_2$. Then
+\[
+  \lambda_1 \langle v_1, v_2 \rangle
+  = \langle A v_1, v_2 \rangle
+  = \langle v_1, A v_2 \rangle
+  = \lambda_2 \langle v_1, v_2 \rangle,
+\]
+so $(\lambda_1 - \lambda_2)\langle v_1, v_2 \rangle = 0$, forcing
+$\langle v_1, v_2 \rangle = 0$. \qedsymbol
+
+\textbf{Example.} For
+$A = \begin{pmatrix} 2 & 1 \\ 1 & 2 \end{pmatrix}$ the eigenvalues are
+$1$ and $3$ with eigenvectors $(1,-1)^{\top}$ and $(1,1)^{\top}$.
+Normalizing gives
+\[
+  Q = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ -1 & 1 \end{pmatrix},
+  \qquad
+  D = \begin{pmatrix} 1 & 0 \\ 0 & 3 \end{pmatrix},
+  \qquad A = QDQ^{\top}.
+\]
+
+\textbf{Next lecture.} Quadratic forms, positive definiteness, and the
+principal axis theorem.
+
+\end{document}

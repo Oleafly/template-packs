@@ -1,0 +1,58 @@
+% Business card sheet: ten identical 85 x 50 mm cards, two columns by five
+% rows, with light cut guides. Edit the card macro once; the whole sheet
+% updates.
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=0pt]{geometry}
+\usepackage{tikz}
+\usepackage{sourcesanspro}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\definecolor{accent}{HTML}{0F4C5C}
+\definecolor{gold}{HTML}{C9A227}
+\definecolor{inkgray}{HTML}{555555}
+
+% One card, lower-left corner at the current origin. 85mm x 50mm.
+\newcommand{\businesscard}{%
+  % cut guide
+  \draw[gray!45, line width=0.3pt] (0,0) rectangle (85mm,50mm);
+  % left accent band with mark
+  \fill[accent] (0,0) rectangle (28mm,50mm);
+  \draw[white, line width=1.1pt] (14mm,31mm) circle (6.2mm);
+  \fill[gold]      (10.9mm,26.5mm) rectangle (12.5mm,30.0mm);
+  \fill[white]     (13.2mm,26.5mm) rectangle (14.8mm,32.0mm);
+  \fill[white!70!accent] (15.5mm,26.5mm) rectangle (17.1mm,34.0mm);
+  \node[white, font=\footnotesize\bfseries] at (14mm,17mm) {MERIDIAN};
+  \node[white!80!accent, font=\tiny] at (14mm,13.5mm) {ANALYTICS};
+  % right side: identity
+  \node[anchor=west, font=\large\bfseries, text=accent]
+    at (33mm,38mm) {Amara Chen};
+  \node[anchor=west, font=\scriptsize, text=inkgray]
+    at (33mm,33mm) {Director of Client Strategy};
+  \draw[gold, line width=0.9pt] (33mm,29.5mm) -- (58mm,29.5mm);
+  \node[anchor=west, font=\tiny, text=inkgray]
+    at (33mm,24mm) {+1 (503) 555-0177};
+  \node[anchor=west, font=\tiny, text=inkgray]
+    at (33mm,20mm) {amara.chen@meridiananalytics.example};
+  \node[anchor=west, font=\tiny, text=inkgray]
+    at (33mm,16mm) {meridiananalytics.example};
+  \node[anchor=west, font=\tiny, text=inkgray]
+    at (33mm,12mm) {400 Harbor Street, Suite 210, Portland, OR};
+}
+
+\begin{document}
+
+\begin{tikzpicture}[remember picture, overlay,
+                    shift={(current page.south west)}]
+  % 2 columns x 5 rows, sheet centered on A4 (210 x 297 mm)
+  \foreach \col in {0,1}
+    \foreach \row in {0,...,4} {
+      \begin{scope}[shift={(\col*85mm + 20mm, \row*50mm + 23.5mm)}]
+        \businesscard
+      \end{scope}
+    }
+\end{tikzpicture}
+
+\phantom{x}
+
+\end{document}
