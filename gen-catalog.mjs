@@ -28,7 +28,7 @@ const PACK_META = {
   "academic-writing": {
     label: "Academic writing pack",
     description:
-      "Research and grant proposals, registered reports, literature reviews, statements of purpose, letters of recommendation, white papers, and theses.",
+      "Research and grant proposals, registered reports, literature reviews, application materials, and traditional, publication-based, minimal, and bilingual theses.",
     category: "Theses & Reports",
   },
   coursework: {

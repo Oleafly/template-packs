@@ -1,0 +1,115 @@
+% A portable thesis monograph built on KOMA-Script.
+\documentclass[11pt,twoside,openany,headings=small]{scrbook}
+\usepackage[inner=1.25in,outer=1in,top=1in,bottom=1.1in]{geometry}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{scrlayer-scrpage}
+\usepackage[hidelinks,bookmarksnumbered]{hyperref}
+
+\definecolor{accent}{HTML}{243B53}
+\clearpairofpagestyles
+\ihead{\headmark}
+\ohead{\pagemark}
+\automark[section]{chapter}
+\setkomafont{pageheadfoot}{\small}
+\setkomafont{chapter}{\normalfont\huge\bfseries\color{accent}}
+\setkomafont{section}{\normalfont\Large\bfseries\color{accent}}
+\setlength{\parindent}{1.2em}
+\setlength{\parskip}{0pt}
+
+\begin{document}
+
+\begin{titlepage}
+\raggedright
+\vspace*{1.1in}
+{\color{accent}\rule{\textwidth}{2pt}}\\[1.5em]
+{\fontsize{13}{16}\selectfont DOCTORAL THESIS}\\[1.2em]
+{\fontsize{30}{36}\selectfont\bfseries Learning Reliable Representations\\
+from Incomplete Scientific Data\par}
+\vspace{1.5em}
+{\Large Elena Marchetti}\\[0.4em]
+{\large Department of Computational Science}
+
+\vfill
+\begin{tabular}{@{}ll@{}}
+University & Aldermere University \\
+Degree & Doctor of Philosophy \\
+Supervisors & Priya Nadeau and Samuel Okoro \\
+Submitted & July 2026 \\
+\end{tabular}
+\vspace{0.8in}
+{\color{accent}\rule{\textwidth}{0.6pt}}
+\end{titlepage}
+
+\frontmatter
+\chapter*{Declaration}
+I declare that this thesis is my own work, that all collaborative contributions
+are identified, and that no material has been submitted for another degree.
+Replace this text with the exact declaration required by your institution.
+
+\chapter*{Abstract}
+Scientific datasets are often incomplete in ways that correlate with the
+phenomenon being measured. This thesis develops representation-learning
+methods that model the observation process alongside the data, establishes
+identifiability conditions, and evaluates the methods across climate,
+neuroimaging, and materials datasets. The resulting models improve calibration
+under structured missingness while making their failure conditions explicit.
+
+\chapter*{Reproducibility statement}
+Data accession numbers, software versions, environment files, random seeds,
+and exact commands for every figure are archived with a permanent identifier.
+Restricted data are documented with a synthetic validation path.
+
+\tableofcontents
+
+\mainmatter
+\chapter{Introduction}
+Missing data are rarely missing at random. Sensors fail under extreme
+conditions, participants leave studies for outcome-related reasons, and
+laboratories preferentially measure promising samples. Treating the observed
+matrix as a neutral subsample can therefore produce confident but incorrect
+conclusions.
+
+\section{Research questions}
+This thesis asks when the observation process is learnable, which inductive
+biases remain identifiable, and how uncertainty should be reported when the
+missingness mechanism is only partially observed.
+
+\section{Contributions}
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}p{0.2\textwidth}p{0.68\textwidth}@{}}
+\toprule
+Chapter & Contribution \\
+\midrule
+2 & A causal model of structured scientific missingness \\
+3 & An identifiable objective with finite-sample guarantees \\
+4 & Cross-domain evaluation and calibrated sensitivity analysis \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Notation}
+For observations $x$ and mask $m$, the joint objective is
+\begin{equation}
+  \mathcal{L}(\theta,\phi)
+  = -\log p_{\theta}(x_{\mathrm{obs}}\mid m)
+    -\lambda\log p_{\phi}(m\mid x_{\mathrm{obs}}).
+\end{equation}
+Define symbols at first use and keep a consistent notation across chapters.
+
+\backmatter
+\chapter*{Data and code availability}
+List stable repository identifiers, licenses, access restrictions, retention
+periods, and the tested reproduction workflow.
+
+\begin{thebibliography}{9}
+\bibitem{example} A. Researcher and B. Scientist.
+Inference under informative missingness.
+\textit{Journal of Reliable Data Science}, 8:1--28, 2025.
+\end{thebibliography}
+
+\end{document}
