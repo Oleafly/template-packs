@@ -1,0 +1,100 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+
+\title{Energy-Aware Scheduling for Edge Inference Clusters}
+
+\author{
+\IEEEauthorblockN{Mina Okafor, Luca Bianchi, and Hana Sato}
+\IEEEauthorblockA{Department of Electrical and Computer Engineering\\
+Northgate Institute of Technology\\
+\{mina.okafor,luca.bianchi,hana.sato\}@example.edu}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Edge inference clusters must meet latency targets while operating under a
+tight power envelope. We present a scheduler that predicts batch-level energy
+and jointly selects model variants and accelerators. On three production-like
+workloads it reduces energy per request by 29\% while preserving p99 latency.
+\end{abstract}
+
+\begin{IEEEkeywords}
+edge computing, inference serving, energy efficiency, scheduling
+\end{IEEEkeywords}
+
+\section{Introduction}
+Accelerator-rich edge sites serve bursty workloads with less cooling and power
+headroom than data centers. Static placement wastes energy during quiet periods,
+while purely reactive policies violate tail-latency objectives after bursts.
+Our controller combines a calibrated energy model with a short-horizon queue
+forecast and makes three contributions: a constrained scheduler, a trace-driven
+evaluation, and an analysis of model error.
+
+The design targets a practical deployment constraint: model quality may change
+only within an application-approved set, and each request must carry the model
+version that served it. This makes every scheduling decision auditable and
+prevents a power-saving policy from silently changing the product metric.
+
+\section{Method}
+For assignment $x$ over model variants and devices, the controller solves
+\begin{equation}
+  \min_x \sum_{j} E_j(x_j)
+  \quad \text{subject to} \quad
+  \widehat L_{99}(x) \leq L_{\mathrm{SLO}} .
+\end{equation}
+The fallback policy reserves one device whenever the forecast interval crosses
+the latency constraint.
+
+Energy models are fitted per device from hardware counters and updated only
+after a drift test. The online solver receives point forecasts and calibrated
+upper bounds, so it can reject an apparently efficient placement when its
+latency uncertainty is too large. A deterministic safe policy handles solver
+timeouts and missing telemetry.
+
+\section{Evaluation}
+We replay six weeks of anonymized request traces against CPU, GPU, and neural
+accelerator nodes. Table~\ref{tab:results} reports paired daily means.
+
+The primary endpoint is joules per completed request under a fixed p99 service
+objective. Secondary endpoints include cold-start frequency, device
+utilization, and model-switch rate. We repeat each daily trace with ten
+scheduler seeds and report confidence intervals over days rather than treating
+individual requests as independent samples.
+
+\begin{table}[b]
+\caption{Serving efficiency under the same latency objective.}
+\label{tab:results}
+\centering
+\begin{tabular}{lcc}
+\toprule
+Policy & Energy (J/request) & p99 (ms) \\
+\midrule
+Static placement & 3.42 & 91 \\
+Reactive packing & 2.71 & 118 \\
+Proposed scheduler & \textbf{2.43} & \textbf{94} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Limitations}
+Trace replay cannot capture every feedback loop between queueing and upstream
+clients. Our energy model also requires recalibration after firmware changes.
+We therefore recommend a shadow deployment and a conservative power cap before
+enabling active placement.
+
+\section{Conclusion}
+Forecast-aware placement reduces energy without trading away latency. Future
+work will study multi-tenant interference and carbon-aware admission control.
+
+\section*{Acknowledgment}
+List funding, compute grants, and non-author contributions here.
+
+\begin{thebibliography}{1}
+\bibitem{example} A. Author and B. Author, ``A reproducible edge-serving
+benchmark,'' \emph{IEEE Transactions on Cloud Computing}, 2025.
+\end{thebibliography}
+\end{document}

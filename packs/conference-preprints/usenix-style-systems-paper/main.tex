@@ -1,0 +1,91 @@
+% USENIX style paper, recreated with standard packages only.
+\documentclass[10pt,twocolumn]{article}
+\usepackage[letterpaper,textwidth=7in,textheight=9in,top=1in]{geometry}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\setlength{\columnsep}{0.33in}
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0pt}
+\pagestyle{plain}
+\titleformat{\section}{\large\bfseries}{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.4ex plus .3ex}{0.7ex}
+
+\begin{document}
+\twocolumn[{
+\centering
+{\Large\bfseries Quorum: Predictable Recovery for Geo-Replicated Stores\par}
+\vskip 12pt
+{\large Anonymous submission}
+\vskip 18pt
+}]
+
+\begin{abstract}
+\noindent Partial network partitions make storage recovery unpredictable even
+when every replica remains healthy. Quorum synthesizes adversarial connectivity
+schedules from a protocol model and replays them against an unmodified cluster.
+Across three systems, it finds seven recovery stalls missed by random fault
+injection and reduces regression suites from hours to eleven minutes.
+\end{abstract}
+
+\section{Introduction}
+Production storage incidents often preserve some paths while breaking others.
+Randomly dropping links rarely generates these correlated patterns. Quorum
+turns a protocol specification into a small, versioned fault corpus that can be
+run in continuous integration. Our evaluation answers three questions: whether
+the schedules expose new failures, whether the failures reproduce, and whether
+the suite is cheap enough for every change.
+
+\section{Design}
+The search maximizes time without a successful write under a fixed fault budget:
+\begin{equation}
+  \max_{\pi\in\Pi_b} T_{\mathrm{recover}}(\pi).
+\end{equation}
+Schedules are minimized after discovery, stored as human-readable event traces,
+and replayed through ordinary network controls.
+
+\section{Evaluation}
+We evaluate 10{,}000 generated schedules on 15-node deployments and repeat each
+failure 30 times. Table~\ref{tab:results} separates discovery rate from suite
+cost.
+\begin{table}[b]
+\caption{Fault discovery and replay cost.}
+\label{tab:results}
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+Method & Unique stalls & Suite time \\
+\midrule
+Random links & 1 & 6.2 h \\
+Trace replay & 3 & 44 min \\
+Quorum & \textbf{7} & \textbf{11 min} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Ethics and artifact availability}
+Experiments use synthetic records and isolated test clusters. The artifact
+includes source, container digests, deployment manifests, raw results, plotting
+scripts, and a one-command smoke test. Responsible disclosure details for
+affected projects are withheld during anonymous review.
+
+\section{Limitations}
+The current model covers crash and network faults but not Byzantine replicas.
+Search cost grows with cluster size, so results beyond 15 replicas use symmetry
+reduction.
+
+\section{Conclusion}
+Specification-guided fault suites make recovery regressions reproducible and
+cheap enough to test continuously.
+
+\begin{thebibliography}{9}
+\bibitem{example} A. Researcher and B. Engineer.
+Testing partial partitions in replicated systems.
+In \textit{Proceedings of a Systems Conference}, 2025.
+\end{thebibliography}
+\end{document}

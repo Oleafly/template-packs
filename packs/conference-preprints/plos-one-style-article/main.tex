@@ -1,0 +1,88 @@
+% PLOS ONE style submission manuscript, recreated with standard packages only.
+\documentclass[12pt]{article}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{lineno}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+
+\doublespacing
+\linenumbers
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries Open benchmark for detecting invasive plants from community
+science photographs\par}
+\vspace{0.7em}
+Marta Silva$^{1*}$, Ayo Mensah$^2$, and Noor Haddad$^1$\\
+$^1$Department of Ecology, Aldermere University\\
+$^2$Open Biodiversity Lab, Northgate Institute\\
+$^*$\texttt{corresponding.author@example.edu}
+\end{center}
+
+\section*{Abstract}
+Early detection of invasive plants depends on observations that vary widely in
+camera quality, season, and geography. We release a consent-aware benchmark of
+84{,}000 community science photographs across 62 species, with geographic
+splits that prevent location leakage. A compact vision model reaches 81.4\%
+macro-F1 on the held-out region, 9.2 points below a random split, demonstrating
+that common evaluations substantially overstate field performance.
+
+\section{Introduction}
+Image classifiers could help experts prioritize observations, but benchmarks
+often place photographs from the same location in both training and test data.
+We quantify this leakage and publish a dataset card, a fixed geographic split,
+and uncertainty-aware baselines.
+
+\section{Materials and methods}
+\subsection{Ethics and permissions}
+Only observations with redistribution-compatible licenses are included.
+Contributor identifiers and precise coordinates for sensitive species are
+removed. The institutional review determination and consent procedure belong
+here.
+
+\subsection{Dataset and analysis}
+Primary performance is macro-F1 on a region held out before model development.
+Confidence intervals use 2{,}000 stratified bootstrap samples. All exclusions,
+hyperparameters, and stopping rules are reported in the protocol.
+
+\section{Results}
+\begin{table}[h]
+\caption{Performance under random and geographic evaluation splits.}
+\centering
+\begin{tabular}{lcc}
+\toprule
+Split & Macro-F1 & Calibration error \\
+\midrule
+Random & $90.6\pm0.4$ & 0.031 \\
+Geographic & $81.4\pm0.7$ & 0.079 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+Random splits substantially overestimate deployment performance. The benchmark
+does not cover rare species with fewer than 100 licensed images, and regional
+performance should not be extrapolated globally without local validation.
+
+\section*{Supporting information}
+\textbf{S1 Protocol.} Sampling, exclusions, model selection, and planned
+analyses. \textbf{S1 Data.} Per-species metrics and confidence intervals.
+
+\section*{Data availability}
+Provide repository identifiers, licenses, access restrictions, and a data
+dictionary. State exactly which records are excluded and why.
+
+\section*{Acknowledgments}
+Credit community contributors, curators, and facilities here. Enter funding,
+CRediT author roles, the data availability statement, and competing interests
+in the journal's submission system as requested.
+
+\begin{thebibliography}{9}
+\bibitem{example} A. Author and B. Author. Geographic leakage in ecological
+image benchmarks. \textit{Open Ecology}. 2025;4:1--14.
+\end{thebibliography}
+\end{document}

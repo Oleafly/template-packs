@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{accent}{HTML}{315B7D}
+\titleformat{\section}{\large\bfseries\color{accent}}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.0em}{0.35em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+
+\begin{document}
+\begin{center}
+{\LARGE\bfseries Stage 1 Registered Report}\\[0.25em]
+{\large Sleep restriction and confidence calibration in medical decisions}\\[0.55em]
+{\small Priya Nadeau, Samuel Okoro, and Lena Fischer}\\
+{\small Protocol version 1.2 \quad Registered 24 July 2026}
+\end{center}
+\color{accent}\rule{\textwidth}{1pt}\color{black}
+
+\section{Research question and hypotheses}
+Does one night of moderate sleep restriction impair clinicians' ability to
+calibrate diagnostic confidence? The primary hypothesis is that restriction
+increases Brier score relative to a rested control condition. Accuracy,
+response time, and metacognitive efficiency are secondary outcomes.
+
+\section{Design}
+The study uses a randomized, counterbalanced crossover design with a seven-day
+washout. The confirmatory sample is 96 licensed clinicians recruited before
+unblinding. The protocol, materials, analysis code, and simulated-data checks
+are archived with immutable version identifiers.
+
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Decision} & \textbf{Pre-specified rule} \\
+\midrule
+Primary outcome & Mean Brier score across 40 diagnostic vignettes \\
+Exclusions & Failed attention check or protocol deviation recorded before scoring \\
+Missing data & Hierarchical model using all observed trials, with sensitivity analysis \\
+Stopping rule & Recruitment ends at 96 complete crossover participants \\
+Alpha and tails & Two-sided $\alpha=0.05$ for the single primary contrast \\
+\bottomrule
+\end{tabularx}
+
+\section{Sampling and power}
+Simulation under the planned hierarchical model gives 90\% power for a
+standardized within-participant effect of 0.32. The simulation script varies
+trial correlation, attrition, and heteroscedasticity. No interim outcome test
+will be performed.
+
+\section{Analysis plan}
+The primary model includes condition as a fixed effect and participant and
+vignette as varying intercepts. We will report the estimated contrast, 95\%
+interval, standardized effect, model diagnostics, and the full multiverse
+defined below.
+
+\begin{enumerate}[leftmargin=1.5em,itemsep=0.15em]
+\item Fit the confirmatory model to the locked analysis dataset.
+\item Run prior predictive and posterior predictive checks.
+\item Repeat with the pre-specified complete-case and robust-likelihood models.
+\item Label every non-registered analysis as exploratory.
+\end{enumerate}
+
+\section{Interpretation table}
+\begin{tabularx}{\textwidth}{@{}lX@{}}
+\toprule
+\textbf{Outcome} & \textbf{Planned interpretation} \\
+\midrule
+Positive primary effect & Evidence that restriction worsens calibration \\
+Interval excludes target effect & Evidence against a practically meaningful effect \\
+Inconclusive interval & Insufficient precision, without a directional claim \\
+\bottomrule
+\end{tabularx}
+
+\section{Ethics, data, and deviations}
+Insert the ethics approval or exemption, consent process, compensation, privacy
+controls, and retention period. Stage 2 will include a dated deviation log,
+including deviations with no effect on the conclusions. De-identified data and
+reproduction code will be released under the licenses stated in the repository.
+
+\end{document}

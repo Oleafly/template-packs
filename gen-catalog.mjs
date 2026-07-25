@@ -6,7 +6,7 @@ const BASE = "https://raw.githubusercontent.com/Oleafly/template-packs/main";
 const PACK_META = {
   "venue-classes": {
     label: "Journal & conference classes",
-    description: "REVTeX, ACS achemso, Elsevier, ACM sigconf, and Typst journal starters.",
+    description: "REVTeX, ACS achemso, Elsevier, ACM sigconf, IEEEtran, and Typst journal starters.",
     category: "Journals & Conferences",
   },
   "resume-plus": {
@@ -22,13 +22,13 @@ const PACK_META = {
   "conference-preprints": {
     label: "Conference preprint styles",
     description:
-      "NeurIPS, ICML, ICLR, ACL, CVPR, AAAI, IJCAI, Springer LNCS, JMLR, arXiv, and Interspeech style preprints.",
+      "NeurIPS, ICML, ICLR, ACL, CVPR, AAAI, IJCAI, USENIX, Nature, PLOS ONE, Springer LNCS, JMLR, arXiv, and Interspeech style preprints.",
     category: "Journals & Conferences",
   },
   "academic-writing": {
     label: "Academic writing pack",
     description:
-      "Research and grant proposals, literature reviews, statements of purpose, letters of recommendation, white papers, and theses.",
+      "Research and grant proposals, registered reports, literature reviews, statements of purpose, letters of recommendation, white papers, and theses.",
     category: "Theses & Reports",
   },
   coursework: {
