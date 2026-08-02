@@ -1,0 +1,56 @@
+\documentclass[tikz]{standalone}
+\usepackage{datetime2}
+\usepackage{tikz}
+\usepackage{xfp}
+\usepackage{ifthen}
+
+\begin{document}
+
+\DTMsavenow{now}
+
+\begin{tikzpicture}[scale=1.2]
+
+		%drawing clock
+		\draw[fill=gray!70,draw=black] (0,0) circle (2.1);
+		\draw[fill=brown!30] (0,0) circle (2);
+		
+		%minute markings
+		\foreach \i in {6,12,18,...,360}{
+			\draw (\i:1.92) -- (\i:2); 
+		}
+		
+		%hour markings
+		\foreach \j in {0,30,60,...,360}{
+			\draw (\j:1.4) -- (\j:2); 
+		}
+		
+		\foreach \k [count=\inc from 1] in {60,30,0,-30,-60,-90,-120,-150,-180,-210,-240, 90}{
+			\draw (\k:1.55) node[fill=brown!30] {\texttt{\inc}};
+			
+		}
+		
+		%calculating hand placements
+		\xdef\anglesecondhand{\fpeval{\DTMfetchsecond{now} * 6}}
+		\xdef\angleminutehand{\fpeval{{\DTMfetchminute{now} * 6} + {\DTMfetchsecond{now} / 10}}}
+		\xdef\anglehourhand{\fpeval{(\DTMfetchhour{now} * 30) + (\DTMfetchminute{now} / 2) + (\DTMfetchsecond{now} / 120)}}
+		
+		%drawing AM/PM and logo
+		
+		\ifthenelse{\DTMfetchhour{now}>12}{
+			\draw (180:0.9) node[fill=white,draw=black] {\small \texttt{PM}};
+		}{
+			\draw (180:0.9) node[fill=white,draw=black] {\small \texttt{AM}};
+		}
+		
+		\draw (90:1.05) node[]{\it \tiny TiKZ Clock};
+		
+		%drawing hands
+		
+		\draw[very thick,-latex] (0:0) -- (\fpeval{(360-\angleminutehand) + 90}:1.34);
+		\draw[very thick,-latex] (0:0) -- (\fpeval{(360-\anglehourhand) + 90}:0.9);
+		\draw[thin,red,-latex] (0,0) -- (\fpeval{(360-\anglesecondhand) + 90}:1.4);
+		\draw[fill=black] (0,0) circle (1.3pt);
+		
+\end{tikzpicture}
+
+\end{document}

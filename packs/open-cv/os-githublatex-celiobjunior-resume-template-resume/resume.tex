@@ -1,0 +1,162 @@
+% GitHub Repo and Documentation: https://github.com/celiobjunior/resume-template
+% Copyright © 2025 Celio B Junior. All rights reserved.
+% 
+% Licensed under the Apache License, Version 2.0 (the "License");
+% you may not use this file except in compliance with the License.
+% You may obtain a copy of the License at
+%
+%     http://www.apache.org/licenses/LICENSE-2.0
+%
+% This template follows best practices from README.md
+
+% Start of the LaTeX document: defines document type and format
+% a4paper = A4 size, 10pt = base font size
+\documentclass[a4paper,10pt]{article}
+
+% --- PACKAGES: BASE / LANGUAGE ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+% --- PACKAGES: LAYOUT / TYPOGRAPHY ---
+\usepackage{geometry}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{array}
+\usepackage{tabularx}
+
+% --- PACKAGES: LINKS / BOOKMARKS ---
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{xurl}
+
+% --- SETTINGS: MARGINS / SPACING ---
+\geometry{top=1.5cm, bottom=1.5cm, left=1.5cm, right=1.5cm} % Page margins
+\setcounter{secnumdepth}{0}                                 % Removes section numbering
+\setlist[itemize]{
+    leftmargin=0.75em, % List indentation (closer to page margin)
+    itemsep=0.2em,     % Space between items
+    topsep=0.25em,     % Space before/after list
+    parsep=0em,        % Space between paragraphs in same item
+    partopsep=0em      % Extra spacing at list start
+}
+
+% Removes page numbers and headers for a clean resume layout
+\pagestyle{empty}
+
+% --- SETTINGS: METADATA / LINKS ---
+\hypersetup{
+    pdftitle={CV Your Name},   % PDF title
+    pdfauthor={Your Name},     % PDF author
+    colorlinks=true,           % Uses colored links (no boxes)
+    linkcolor=black,           % Internal links color
+    urlcolor=black,            % URLs color
+    citecolor=black,           % Citations color
+    bookmarksdepth=2           % Sidebar: section and subsection
+}
+
+% --- SETTINGS: TITLES ---
+\titleformat{\section}
+{\Large\bfseries}
+{}
+{0em}
+{}
+[\titlerule\vspace{0.5ex}]
+\titleformat{\subsection}
+{\normalsize\bfseries}
+{}
+{0em}
+{}
+\titlespacing*{\subsection}{0pt}{0.35em}{0.15em}
+
+% Macro for resume entries with PDF bookmark
+\newcounter{cventry}
+\newcommand{\cventry}[4]{%
+    \refstepcounter{cventry}%
+    \phantomsection%
+    \pdfbookmark[2]{#1}{cventry-\thecventry}%
+    \noindent\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X >{\raggedleft\arraybackslash}X@{}}
+    \textbf{#1} & #2 \\
+    \textit{#3} & \textit{#4} \\
+    \end{tabularx}
+}
+
+% --- START OF DOCUMENT ---
+\begin{document}
+
+% --- HEADER ---
+% Replace with your personal information
+\begin{center}
+    {\LARGE \textbf{Full Name}} 
+    \\ [0.1cm]
+    City, State
+    {\textbullet}
+    \href{mailto:your.email@example.com}{your.email@example.com} 
+    {\textbullet}
+    \href{https://linkedin.com/in/username}{linkedin.com/in/username} 
+    {\textbullet}
+    \href{https://github.com/username}{github.com/username}
+\end{center}
+
+% --- SECTIONS ---
+
+\section{Leadership Activities}
+    % Include volunteer work, academic clubs, or leadership positions
+    \cventry{Company/Organization Name}{Location (e.g., Remote or State, Country)}{Your Role/Position}{Start Date - End Date (e.g., Jan 2024 - Present)}
+        \begin{itemize}
+            % Use action verbs from README - quantify your impact whenever possible
+            \item Describe a meaningful leadership achievement with specific metrics.
+            \item Highlight how you managed teams, led initiatives, or drove outcomes.
+            \item Show impact on the organization or community you served.
+        \end{itemize}
+
+% ------
+
+\section{Experience}
+    % List your professional or academic experiences, most recent first
+    \cventry{Company/Organization Name}{Location (e.g., Remote or State, Country)}{Role (e.g., Software Engineer, Data Analyst)}{Start Date - End Date}
+        \begin{itemize}
+            % Focus on achievements, not only technical details - use the STAR method (Situation, Task, Action, Result)
+            \item Achieved [specific result] through [action taken], resulting in [quantified impact].
+            \item Developed/Built/Created [what you did] using [technologies/methods], resulting in [benefit].
+            \item Collaborated with [team size/type] to [accomplish what], improving [metric] by [percentage/amount].
+        \end{itemize}
+
+    \cventry{Company/Organization Name}{Location (e.g., Remote or State, Country)}{Role (e.g., Junior Developer, Research Assistant)}{Start Date - End Date}
+        \begin{itemize}
+            \item Use active verbs from the action verbs table in README.md
+            \item Quantify your achievements whenever possible (numbers, percentages, deadlines)
+            \item Show progression and increasing responsibility across roles
+        \end{itemize}
+
+    \cventry{University/Research Institution}{Location (e.g., Remote or State, Country)}{Role (e.g., Undergraduate Researcher, Teaching Assistant)}{Start Date - End Date}
+        \begin{itemize}
+            \item Include research, academic work, or projects that demonstrate technical skills
+            \item Highlight publications, presentations, or meaningful findings
+        \end{itemize}
+
+% ------
+
+\section{Skills}
+    % Keep this section concise and use as many keywords as possible
+    % that are relevant to the role you want.
+    \begin{itemize}
+        \item \textbf{Technical:} List your programming languages, frameworks, tools, and methodologies
+        \item \textbf{Languages:} Portuguese (Native), English (Proficiency Level), Third Language (Proficiency Level)
+    \end{itemize}
+
+% ------
+
+% !!!!!!!!!!!!!!!!!!!!!!
+% Move this section to the beginning, after the header and before
+% your experiences, if you are looking for your first
+% job or an internship. Otherwise, leave it as is.
+% !!!!!!!!!!!!!!!!!!!!!!
+
+\section{Education}
+    % Most recent education first
+    \cventry{Your University Name}{Location (e.g., Remote or State, Country)}{Your Degree Title (e.g., B.S. in Computer Science)}{Start Date - End Date (e.g., Jan 2020 - Dec 2024)}
+
+\end{document}

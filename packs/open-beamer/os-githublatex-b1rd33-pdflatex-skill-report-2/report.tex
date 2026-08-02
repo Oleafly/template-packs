@@ -1,0 +1,260 @@
+% Business Report Template
+% Compile: pdflatex report.tex && pdflatex report.tex (two passes for TOC)
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% Graphics and tables
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage{float}
+
+% Lists
+\usepackage{enumitem}
+
+% Headers/footers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\leftmark}
+\fancyhead[R]{\small Acme Corp --- Confidential}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Colors
+\definecolor{accentblue}{HTML}{1E40AF}
+
+% Cross-references
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accentblue,
+    urlcolor=accentblue,
+    pdftitle={Q1 2026 Performance Report},
+    pdfauthor={Acme Corp}
+}
+\usepackage[noabbrev,capitalise]{cleveref}
+
+% ============================
+% DOCUMENT
+% ============================
+\begin{document}
+
+% ============================
+% TITLE PAGE
+% ============================
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+
+    % Replace with: \includegraphics[width=5cm]{logo.png}
+    {\Huge\textbf{\textcolor{accentblue}{ACME CORP}}}
+
+    \vspace{1.5cm}
+    \rule{\textwidth}{1pt}
+    \vspace{0.5cm}
+
+    {\LARGE\textbf{Q1 2026 Performance Report}}
+
+    \vspace{0.3cm}
+    {\large Strategic Review \& Forward Outlook}
+
+    \vspace{0.5cm}
+    \rule{\textwidth}{1pt}
+
+    \vspace{2cm}
+
+    \begin{tabular}{rl}
+        \textbf{Prepared by:} & Strategy \& Analytics Team \\
+        \textbf{Date:} & \today \\
+        \textbf{Classification:} & Confidential \\
+        \textbf{Version:} & 1.0 \\
+    \end{tabular}
+
+    \vfill
+    {\small\textit{This document contains proprietary information.\\
+    Distribution is limited to authorized personnel only.}}
+\end{titlepage}
+
+% ============================
+% TABLE OF CONTENTS
+% ============================
+\newpage
+\tableofcontents
+\newpage
+
+% ============================
+% EXECUTIVE SUMMARY
+% ============================
+\section{Executive Summary}
+\label{sec:summary}
+
+Q1 2026 delivered strong results across all business units. Revenue grew 18\% year-over-year to \$47.3M, exceeding our target of \$44M. Key highlights:
+
+\begin{itemize}
+    \item \textbf{Revenue}: \$47.3M (+18\% YoY), driven by Enterprise segment growth
+    \item \textbf{Gross Margin}: 72.4\%, up from 68.1\% in Q1 2025
+    \item \textbf{Customer Acquisition}: 342 new accounts, including 28 enterprise deals
+    \item \textbf{Net Revenue Retention}: 124\%, indicating strong expansion within existing accounts
+    \item \textbf{Headcount}: 847 employees (+62 net new hires)
+\end{itemize}
+
+Challenges remain in the SMB segment where churn increased to 4.2\% monthly, and in APAC where macro headwinds slowed pipeline velocity by 15\%. Mitigation strategies are outlined in \cref{sec:outlook}.
+
+% ============================
+% FINANCIAL PERFORMANCE
+% ============================
+\section{Financial Performance}
+\label{sec:financials}
+
+\subsection{Revenue Overview}
+
+\Cref{tbl:revenue} presents quarterly revenue breakdown by segment.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Revenue by segment (USD millions).}
+    \label{tbl:revenue}
+    \sisetup{table-format=2.1}
+    \begin{tabular}{l S S S S}
+        \toprule
+        Segment & {Q1 2025} & {Q2 2025} & {Q3 2025} & {Q1 2026} \\
+        \midrule
+        Enterprise   & 22.1 & 24.3 & 26.8 & 28.5 \\
+        Mid-Market   & 10.4 & 11.2 & 11.8 & 12.1 \\
+        SMB          &  5.3 &  5.1 &  5.4 &  5.2 \\
+        Professional &  2.2 &  1.8 &  1.5 &  1.5 \\
+        \midrule
+        \textbf{Total} & \bfseries 40.0 & \bfseries 42.4 & \bfseries 45.5 & \bfseries 47.3 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Margin Analysis}
+
+Gross margin improved to 72.4\% from 68.1\%, primarily driven by:
+
+\begin{enumerate}
+    \item Infrastructure cost optimization (migrated 40\% of workloads to spot instances)
+    \item Improved pricing on new Enterprise contracts (+8\% average deal size)
+    \item Reduced support cost per account through self-service tooling
+\end{enumerate}
+
+Operating expenses grew 12\% YoY, below revenue growth of 18\%, demonstrating improving operating leverage. R\&D spend as a percentage of revenue declined from 32\% to 29\%.
+
+% ============================
+% PRODUCT & ENGINEERING
+% ============================
+\section{Product \& Engineering}
+\label{sec:product}
+
+\subsection{Key Releases}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Major product releases in Q1 2026.}
+    \label{tbl:releases}
+    \begin{tabularx}{\textwidth}{llX}
+        \toprule
+        \textbf{Release} & \textbf{Date} & \textbf{Impact} \\
+        \midrule
+        Platform v4.2 & Jan 15 & New analytics dashboard, 3x faster query engine \\
+        API v3 & Feb 8 & GraphQL support, webhook improvements \\
+        Mobile 2.0 & Mar 1 & Full feature parity with web, offline mode \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+\subsection{Engineering Metrics}
+
+\begin{itemize}
+    \item \textbf{Deployment frequency}: 47 deploys/week (up from 32)
+    \item \textbf{Lead time}: 2.1 days (down from 3.8)
+    \item \textbf{Uptime}: 99.97\% (target: 99.95\%)
+    \item \textbf{P0 incidents}: 1 (8-minute resolution)
+\end{itemize}
+
+% ============================
+% TEAM & OPERATIONS
+% ============================
+\section{Team \& Operations}
+\label{sec:team}
+
+Headcount grew from 785 to 847, with key hires in:
+
+\begin{itemize}
+    \item \textbf{Engineering}: +28 (focus on platform and AI teams)
+    \item \textbf{Sales}: +18 (EMEA and APAC expansion)
+    \item \textbf{Customer Success}: +12 (Enterprise segment)
+    \item \textbf{G\&A}: +4 (Finance and Legal)
+\end{itemize}
+
+Employee engagement score: 4.2/5.0 (industry average: 3.8). Voluntary attrition: 8\% annualized, down from 11\% in 2025.
+
+% ============================
+% OUTLOOK
+% ============================
+\section{Outlook \& Priorities for Q2 2026}
+\label{sec:outlook}
+
+\subsection{Revenue Targets}
+
+Q2 target: \$50.5M (+7\% QoQ). Key drivers:
+
+\begin{enumerate}
+    \item Enterprise pipeline of \$32M in qualified opportunities
+    \item Launch of Premium tier (projected \$2.1M incremental ARR)
+    \item EMEA expansion with Frankfurt data center go-live (April)
+\end{enumerate}
+
+\subsection{Strategic Priorities}
+
+\begin{enumerate}
+    \item \textbf{AI Integration}: Ship AI copilot features across all product surfaces
+    \item \textbf{SMB Retention}: Implement automated health scoring and proactive outreach
+    \item \textbf{APAC Growth}: Hire regional sales leader, launch Japan localization
+    \item \textbf{Platform Scalability}: Complete migration to multi-region architecture
+\end{enumerate}
+
+\subsection{Risks}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Key risks and mitigation strategies.}
+    \label{tbl:risks}
+    \begin{tabularx}{\textwidth}{lXX}
+        \toprule
+        \textbf{Risk} & \textbf{Impact} & \textbf{Mitigation} \\
+        \midrule
+        Macro slowdown & Longer sales cycles, budget freezes & Multi-year deal incentives, ROI tooling \\
+        Competitive pressure & Price compression in mid-market & Feature differentiation, customer success \\
+        Talent retention & Knowledge loss, slower delivery & Retention bonuses, career frameworks \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+% ============================
+% APPENDIX
+% ============================
+\newpage
+\appendix
+\section{Detailed Financial Tables}
+\label{app:financials}
+
+Full P\&L and balance sheet available upon request from the Finance team.
+
+\section{Methodology Notes}
+\label{app:methodology}
+
+Revenue figures follow ASC 606 recognition standards. Customer counts include accounts with at least one active subscription. NRR calculated on a trailing 12-month basis.
+
+\end{document}

@@ -1,0 +1,32 @@
+% This file is embedded in datatool-user.pdf version 3.0.1 2025-03-05
+% Example 188 Creating a List of Abbreviations
+% Label: "ex:abbrev"
+% arara: pdflatex
+% arara: pdflatex
+% arara: pdfcrop
+\documentclass[12pt]{article}
+\pagestyle{empty}
+\usepackage{datagidx}
+\usepackage[colorlinks]{hyperref}
+\newgidx{abbreviations}{Abbreviations}% define a database for the abbreviations
+ \DTLgidxSetDefaultDB{abbreviations}% set this as the default
+ % define abbreviations:
+ \newacro{html}{hyper-text markup language}
+\newacro{css}{cascading style sheet}
+% The following overrides the default description:
+ \newacro[description={eXtensible Markup Language}] {xml}{extensible markup language} 
+\begin{document}
+ First use: \acr{xml} and \acr{css}. 
+
+Next use: \acr{xml} and \acr{css}. 
+
+Full form: \gls{xml} and \gls{css}. 
+
+\printterms [
+postdesc=dot,% put a full stop after the description
+ columns=1,% one column page layout
+ namefont={\textbf},% put the name (i.e. the abbreviation) in bold
+ namecase=uc,% make the name upper case
+ style=align% use the 'align' style
+ ] 
+\end{document}

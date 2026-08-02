@@ -1,0 +1,87 @@
+% This file is public domain
+% If you want to use arara, you need the following directives:
+% arara: pdflatex: { synctex: on }
+% arara: makeglossaries
+% arara: pdflatex: { synctex: on }
+% arara: pdflatex: { synctex: on }
+%
+%http://mirrors.ctan.org/macros/latex/contrib/glossaries/glossaries-user.html#sample-prefix
+
+\documentclass{article}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage[toc,acronym]{glossaries-prefix}
+
+\makeglossaries
+
+\newglossaryentry{sample}{name={sample},
+  description={an example},
+  prefix={a~},
+  prefixplural={the\space}%
+}
+
+\newglossaryentry{oeil}{name={oeil},
+  plural={yeux},
+  description={eye},
+  prefix={l'},
+  prefixplural={les\space}}
+
+\newacronym
+ [%
+   prefix={an\space},%
+   prefixfirst={a~}%
+ ]{svm}{SVM}{support vector machine}
+
+\newglossaryentry{noprefix}{name={no prefix},plural={no prefixes},
+ description={entry without prefix}}
+
+\newglossarystyle{plist}{%
+  \setglossarystyle{list}%
+  \renewcommand*{\glossentry}[2]{%
+    \item[\glsentryitem{##1}%
+          \glstarget{##1}%
+          {%
+            \ifglshasprefix{##1}%
+            {\Glsentryprefix{##1}\glsprefixsep\glossentryname{##1}}%
+            {\Glossentryname{##1}}%
+          }]
+       \glossentrydesc{##1}\glspostdescription\space ##2}%
+}
+
+\begin{document}
+
+\tableofcontents
+
+\section{Sample}
+
+First use: \pgls{sample}, \pgls{svm}, \pgls{oeil}, \pgls{noprefix}. Next use:
+\pgls{sample}, \pgls{svm}, \pgls{oeil}, \pgls{noprefix}.
+
+Reset. \glsresetall
+
+First use: \pglspl{sample}, \pglspl{svm}, \pglspl{oeil}, \pglspl{noprefix}. Next use:
+\pglspl{sample}, \pglspl{svm}, \pglspl{oeil}, \pglspl{noprefix}.
+
+Reset. \glsresetall
+
+First use: \Pgls{sample}, \Pgls{svm}, \Pgls{oeil}, \Pgls{noprefix}. Next use:
+\Pgls{sample}, \Pgls{svm}, \Pgls{oeil}, \Pgls{noprefix}.
+
+Reset. \glsresetall
+
+First use: \Pglspl{sample}, \Pglspl{svm}, \Pglspl{oeil}, \Pglspl{noprefix}. Next use:
+\Pglspl{sample}, \Pglspl{svm}, \Pglspl{oeil}, \Pglspl{noprefix}.
+
+Reset. \glsresetall
+
+First use: \PGLS{sample}, \PGLS{svm}, \PGLS{oeil}, \PGLS{noprefix}. Next use:
+\PGLS{sample}, \PGLS{svm}, \PGLS{oeil}, \PGLS{noprefix}.
+
+Reset. \glsresetall
+
+First use: \PGLSpl{sample}, \PGLSpl{svm}, \PGLSpl{oeil}, \PGLSpl{noprefix}. Next use:
+\PGLSpl{sample}, \PGLSpl{svm}, \PGLSpl{oeil}, \PGLSpl{noprefix}.
+
+\printglossary[style=plist]
+\printacronyms
+\end{document}

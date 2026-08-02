@@ -1,0 +1,40 @@
+\documentclass[draft]{article}
+\usepackage{hyperref}
+
+\IfFileExists{version.tex}{\input{version.tex}}{}
+
+\author{Maximilian Luz}
+\title{Test for GitHub CI}
+\date{\today}
+
+\makeatletter
+
+\ifdefined\git@ref
+\def\pdfrevision{\git@ref\git@dirty}
+\else
+\def\pdfrevision{(Unknown)}
+\fi
+
+\hypersetup{
+    final,
+    pdfinfo={
+        Title={\@title},
+        Author={\@author},
+        Revision={\pdfrevision},
+    }
+}
+
+\makeatother
+
+\begin{document}
+
+\maketitle
+
+This is a test for compiling \LaTeX\ documents automatically with GitHub CI,
+\makeatletter\ifdefined\git@shortref
+built from commit \git@shortref\git@dirty.
+\else
+built out of tree (no revision information available).
+\fi\makeatother
+
+\end{document}

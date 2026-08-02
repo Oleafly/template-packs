@@ -1,0 +1,150 @@
+\documentclass[a4paper,11pt,oneside]{article}
+
+\usepackage[left=1in, right=1in, bottom=1in, top=0.8in]{geometry}
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{enumitem}
+
+\pagenumbering{gobble} % Removes page numbers
+
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\email}[1]{\href{mailto:#1}{#1}}
+\setlist{nosep}
+\sloppy
+
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}
+  {\settowidth}
+  {\setlength{\itemsep}{0pt plus 0.1pt}\settowidth}
+  {}{}
+\apptocmd{\thebibliography}
+  {\small}
+  {}{}
+
+\usepackage{titlesec}
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection}{1em}{}[{\titlerule[0.8pt]}]
+
+\usepackage{tabularx, multicol}
+
+\begin{document}
+    \begin{center}
+        \LARGE{\textbf{Your Name}}
+    \end{center}
+
+    \section*{Contact Details}
+    \begin{minipage}{0.5\textwidth}
+        Email: \email{name@example.com}\\
+        Homepage: \href{https://example.com}{example.com}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        1 Example Street, City, Postcode\\
+        DoB: YYYY-MM-DD
+    \end{minipage}
+
+    \section*{Employment}
+    \begin{tabularx}{\textwidth}{lX}
+         YYYY - present & Current Job Title, Current Employer \\
+         YYYY - YYYY    & Previous Job Title, Previous Employer.
+    \end{tabularx}
+
+    \section*{Education}
+    \begin{tabularx}{\textwidth}{lX}
+         YYYY - YYYY & Ph.D. Subject, University\newline
+                       Title: ``Title of your thesis''\newline
+                       Supervised by Professor Example\\
+         YYYY - YYYY & Masters Subject, University\newline
+                       Title: ``Title of your thesis''\newline
+                       Supervised by Professor Example\\
+         YYYY - YYYY & Undergraduate Subject, University\newline
+                       Qualification\\
+        \multicolumn{2}{l}{\textbf{Awards and Scholarshops} }\\
+        YYYY - YYYY & \textit{Academic Achievement Scholarship} - Scholarship criteria explanation.
+    \end{tabularx}
+
+    \section*{Research}
+    I have published NUMBER research papers, including publications in [examples of top journals in the field].
+
+    \noindent\textbf{Selected highlights:}
+    \begin{itemize}
+        \item Awarded best paper award at conference.
+        \item Joint lead author on paper in top journal.
+        \item Established collaboration with notable research lab.
+        \item Regular reviewer for top publication venues, including [top journals].
+    \end{itemize}
+
+    \noindent\textbf{Funding:}
+    I have developed my grant-writing experience in recent years, and led the submission of a proposal to FUNDING BODY on SUBJECT, which is currently under review.
+    I have also secured funding for and led the following projects:
+    \begin{tabularx}{\textwidth}{p{3.2cm}X}
+        YYYY\newline
+        NAME (£amount) & Brief explanation\\
+        YYYY - YYYY\newline
+        NAME (£amount) & Brief explanation\\
+    \end{tabularx}
+
+    \section*{Key Skills}
+    \begin{minipage}{0.5\textwidth}
+        \begin{itemize}
+            \item List your key skills here
+            \item
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        \begin{itemize}
+            \item Do it in two columns to save space
+            \item
+        \end{itemize}
+    \end{minipage}
+
+    \section*{Teaching}
+    I am an [Associate/Senior] Fellow of the UK Higher Education Academy (HEA).
+    I have been eager to gain teaching experience alongside my primary research activities.
+    So far this has involved:
+    \begin{description}
+        \item[Project supervision] I co-supervised the Ph.D. projects for two students (both successfully completed).
+        I have supervised [funded student research projects].
+        I have supervised [X] masters and [Y] undergraduate dissertation projects.
+        \item[Lectures] I have given lectures for [MODULES] which contained [X] students.
+    \end{description}
+
+    \section*{Referees}
+    Professor Example is head of the [Research] group at the University of Example, and my current line manager.
+    Dr. Example is a senior lecturer at the University of Example, my former line manager, and PI on [the research project where I worked].\\[1em]
+
+    \begin{minipage}{0.5\textwidth}
+        Professor Example\\*
+        Department of Research\\*
+        University of Example\\*
+        Address line 1\\*
+        City, Postcode\\*
+        Country\\
+
+        \email{professor.example@example.com}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+      Dr. Example\\*
+      Department of Research\\*
+      University of Example\\*
+      Address line 1\\*
+      City, Postcode\\*
+      Country\\
+
+      \email{dr.example@example.com}
+    \end{minipage}
+
+    \clearpage
+    \nocite{*}
+    \renewcommand{\refname}{}
+    \section*{Publications}
+    % These will automatically be sorted by year, with newest at the top.
+    % You will need to manually bold the titles of top venues in the bibtex file.
+    Papers published at CORE A/A* venues are highlighted in bold.
+    \titleformat{\section}{}{}{}{}
+    \vspace{-3em}
+    \bibliographystyle{plainyr-rev}
+    \bibliography{publications.bib}
+
+\end{document}

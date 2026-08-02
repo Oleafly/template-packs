@@ -1,0 +1,61 @@
+
+\documentclass[tikz]{standalone}
+
+\usepackage[english,italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage{microtype}
+
+\usepackage{pgfplots}
+\usepackage{pgf-pie}
+\pgfplotsset{compat=newest}
+%\pgfplotsset{compat=1.16}
+\usetikzlibrary{shapes,arrows,fit,calc}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\usepackage{siunitx}
+\sisetup{%
+	output-decimal-marker={.}, group-separator={\,},%
+	round-mode=places%
+}
+
+\usepackage{enumitem}
+%\setlist{nosep,left=0pt}
+
+%\usepackage{pgfplots}
+%\pgfplotsset{compat=newest}
+%\pgfplotsset{plot coordinates/math parser=false}
+%\newlength\figureheight
+%\newlength\figurewidth
+
+\definecolor{crimson2143940}{RGB}{214,39,40}
+\definecolor{darkgray176}{RGB}{176,176,176}
+\definecolor{darkorange25512714}{RGB}{255,127,14}
+\definecolor{forestgreen4416044}{RGB}{44,160,44}
+\definecolor{steelblue31119180}{RGB}{31,119,180}
+
+\tikzstyle{block} = [rectangle,draw,fill=blue!20,text width=4.75em,text centered,rounded corners,minimum height=3em,font=\sffamily\small]
+\tikzstyle{line} = [draw,thick,color=black!50,-latex']
+
+\begin{document}
+
+% ******************************************************** %
+% Simple flow chart, page=1
+\begin{tikzpicture}[node distance=3cm,auto]
+% nodes
+\node[block] (phase1) {phase one};
+\node[block,right of=phase1] (phase2) {phase two};
+\node[block,right of=phase2] (phase3) {phase three};
+\node[block,below of=phase1,node distance=2.1cm,right={0.5*3cm-0.5*4.5em}] (phase4) {phase four};
+\node[block,right of=phase4] (phase5) {phase five};
+% lines
+\foreach \source/\target in {phase1/phase2,phase2/phase3,phase4/phase5} {%
+	\path[line] (\source) -- (\target);}
+\path[line] (phase3) -- ++(0,-1cm) -| (phase4);
+\end{tikzpicture}
+
+\end{document}

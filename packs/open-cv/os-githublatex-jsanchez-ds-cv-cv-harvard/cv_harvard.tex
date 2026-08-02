@@ -1,0 +1,156 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amssymb}           % for \checkmark
+\usepackage{geometry}
+\geometry{top=0.5in, bottom=0.4in, left=0.55in, right=0.55in}
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=2pt, leftmargin=0.25in, itemsep=1pt, label=\textbullet}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% --- Harvard-style section: centered, bold, with rule below ---
+\titleformat{\section}{\normalsize\bfseries\centering}{}{0em}{\MakeUppercase}[\vspace{2pt}\titlerule]
+\titlespacing*{\section}{0pt}{8pt}{5pt}
+
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\parindent}{0pt}
+
+% Spacing helpers
+\newcommand{\entryspace}{\vspace{5pt}}
+\newcommand{\subentryspace}{\vspace{2pt}}
+
+\begin{document}
+
+% ===================== HEADER =====================
+\begin{center}
+    {\Large\bfseries Jonathan Sánchez Pesantes} \\[3pt]
+    {\normalsize \textbf{Senior Data Scientist $\cdot$ ML Engineer $\cdot$ LLM / AI Engineer}} \\[4pt]
+    {\small +569 6758 5503 \enspace\textbullet\enspace \href{mailto:jonathan.sanchez.ep@gmail.com}{jonathan.sanchez.ep@gmail.com} \enspace\textbullet\enspace \href{https://www.linkedin.com/in/jonasanchez}{linkedin.com/in/jonasanchez} \enspace\textbullet\enspace \href{https://github.com/jsanchez-ds}{github.com/jsanchez-ds}}
+\end{center}
+
+% ===================== SUMMARY =====================
+\section*{Resumen Profesional}
+Ingeniero Civil Industrial (U. de Chile, distinción máxima) con experiencia construyendo sistemas productivos end-to-end de forecasting, anomaly detection y RAG sobre stack Python / PySpark / Databricks. Portfolio público con trilogía flagship que cubre ML clásico (LightGBM, LSTM, SHAP, MLflow Model Registry), LLM engineering (RAG híbrido con BM25+vector+rerank, evaluación RAGAS, provider abstraction sobre Groq / Anthropic / OpenAI / OpenRouter) y streaming agentic (Spark Structured Streaming + agente LLM con function calling integrando servicios vía MLflow y HTTP). Base sólida en econometría y causalidad. Busco roles Senior Data Scientist, ML Engineer o LLM / AI Engineer donde el rigor metodológico y el impacto de negocio vayan de la mano.
+
+% ===================== EXPERIENCE =====================
+\section*{Experiencia Profesional}
+
+\textbf{ClaroVTR} \hfill Santiago, Chile \\
+\textbf{Ingeniero en Eficiencias} -- Subgerencia de Gestión Operacional \hfill Marzo 2025 -- Presente
+\begin{itemize}
+    \item Diseñé sistema end-to-end de predicción de consumo de datos Starlink para 494 líneas, con ensemble de XGBoost (regresión cuantílica P90), LightGBM global y Prophet, logrando SMAPE de \textbf{22.9\%} con validación cruzada temporal.
+    \item Creé variables de comportamiento (aceleración, saturación de plan, cambio abrupto) y segmenté series temporales mediante clustering DTW en 8 grupos, mejorando SMAPE de 24.5\% a 22.9\%.
+    \item Generé recomendaciones automatizadas de plan por línea, identificando $\sim$\$30M CLP/mes en ahorro potencial mediante optimización tarifaria con lógica de bolsas de datos.
+    \item Desarrollé pipeline de extracción desde API REST Starlink v2 (OAuth2), integrando datos de SAP y SQL para consolidación analítica.
+    \item Automaticé reporte PxQ y monitoreo de contratos; construí dashboards en HTML/JS y Power BI.
+\end{itemize}
+
+\entryspace
+
+\textbf{Keirón} \hfill Santiago, Chile \\
+\textbf{Analyst -- Customer Success} \hfill 2024
+\begin{itemize}
+    \item Diseñé e implementé el \textit{Customer Health Index} (CHI), modelo de scoring multivariable para predicción de riesgo de fuga en segmentos Enterprise.
+    \item Analicé patrones de uso para detección temprana de clientes en riesgo, integrando múltiples señales de adopción y actividad.
+    \item Desarrollé dashboards en Redash para métricas clave de adopción y uso de plataforma.
+\end{itemize}
+
+\entryspace
+
+\textbf{Agrosuper} \hfill Santiago, Chile \\
+\textbf{Proyecto de Título -- Ingeniería en Planificación} \hfill 2024
+\begin{itemize}
+    \item Implementé scripts en Python para limpieza y validación masiva de datos de importaciones, detectando inconsistencias históricas en registros de comercio exterior.
+    \item Reemplacé cruces manuales en Excel por procesos automatizados de conciliación entre SAP y bases SQL, reduciendo significativamente tiempos de procesamiento y mejorando trazabilidad de inventarios.
+\end{itemize}
+
+\entryspace
+
+\textbf{Cencosud Scotiabank} \hfill Santiago, Chile \\
+\textbf{Práctica Profesional -- Analista MIS} \hfill 2023
+\begin{itemize}
+    \item Optimicé consultas SQL (Query Tuning) sobre grandes volúmenes de datos financieros e integré múltiples fuentes mediante procesos ETL para el Panel de Información Institucional.
+    \item Generé reportes ejecutivos de KPIs para la alta gerencia en Chile y Canadá.
+\end{itemize}
+
+% ===================== FLAGSHIP PROJECTS =====================
+\section*{Proyectos Destacados (2026)}
+
+\textbf{\href{https://github.com/jsanchez-ds/gridpulse-realtime-agent}{GridPulse --- Agente LLM en tiempo real}} $\cdot$ Spark Streaming / LLM Agent / MLflow \hfill 2026 \\
+Plataforma streaming que detecta anomalías con Isolation Forest (consumido desde MLflow Registry) y dispara un agente LLM custom con function calling (5 tools) integrando forecaster clásico y RAG. Incident reports autónomos a Discord (HTTP 204 $\checkmark$), con cero números alucinados --- todo grounded en tool calls. Transport pluggable (Delta / Kafka).
+
+\entryspace
+
+\textbf{\href{https://github.com/jsanchez-ds/energyscholar-rag}{EnergyScholar --- RAG production-grade sobre papers}} $\cdot$ Qdrant / RAGAS / LLM providers \hfill 2026 \\
+RAG provider-agnostic (Groq / Anthropic / OpenAI / OpenRouter) sobre 17 papers de arXiv. Retrieval híbrido (BM25 + dense + cross-encoder rerank). Evaluación RAGAS gateada en CI: context\_precision \textbf{0.81}, answer\_relevancy \textbf{0.996}; respuestas con citas a página.
+
+\entryspace
+
+\textbf{\href{https://github.com/jsanchez-ds/energy-forecasting-databricks}{Energy Forecasting --- MLOps en Databricks Unity Catalog}} $\cdot$ Medallion / MLflow / SHAP \hfill 2026 \\
+Pipeline end-to-end sobre 2 años de datos CAISO (17K registros horarios). Arquitectura Medallion (Bronze/Silver/Gold) en Delta Lake. LightGBM MAPE \textbf{1.81\%} vs LSTM (PyTorch) 2.84\% vs Isolation Forest. SHAP explainability. Unity Catalog Model Registry con alias @staging. Reproducible: local 1.81\% $\equiv$ Databricks 1.83\%.
+
+% ===================== OTHER PROJECTS =====================
+\section*{Otros Proyectos Analíticos}
+
+\textbf{\href{https://github.com/jsanchez-ds/telecom-quota-forecasting}{Telecom Quota Forecasting}} \hfill 2025 \\
+Reproducción portfolio del sistema productivo: Quantile XGBoost P90 + LightGBM con pérdida asimétrica + Prophet + DTW shape clustering. Optimizador de bolsas con property-based tests; $\sim$93\% cobertura P90 en validación.
+
+\entryspace
+
+\textbf{\href{https://bank-marketing-analysis-jsanchez.streamlit.app/}{Análisis de Campañas Bancarias}} -- \textit{Demo interactiva en Streamlit} \hfill 2024 \\
+Predicción de suscripción a depósito (UCI, 45K registros). Random Forest ROC-AUC 0.80 (sin \texttt{duration}). Diagnóstico y corrección de fuga SMOTE-en-CV vía \texttt{imblearn.Pipeline}.
+
+\entryspace
+
+\textbf{\href{https://jsanchez-ds.github.io/medical-diagnosis-classification/}{Clasificación de Diagnóstico Médico con ML}} \hfill 2024 \\
+Wisconsin Breast Cancer (569 reg, 30 vars). SVM con GridSearchCV $\to$ accuracy 97.6\%, AUC 0.99. Manejo de desbalance (Under/Over-Sampling).
+
+\entryspace
+
+\textbf{\href{https://jsanchez-ds.github.io/gender-income-gap/}{Brecha de Género en Ingresos de Pequeños Comercios}} \hfill 2023 \\
+Regresión con efectos fijos (\texttt{fixest}) sobre $\sim$5.000 comercios. LASSO/Ridge; MARS seleccionado por menor error out-of-sample.
+
+\entryspace
+
+\textbf{\href{https://jsanchez-ds.github.io/credit-choice-experiment/}{Experimento de Elección de Crédito Financiero}} \hfill 2023 \\
+Discrete choice modeling con 4 condiciones experimentales. Logit condicional, Mixed Logit y comparación ML (RF, SVM, CART, KNN).
+
+% ===================== EDUCATION =====================
+\section*{Formación Académica}
+
+\textbf{Pontificia Universidad Católica de Chile} \hfill Santiago, Chile \\
+Diplomado en Big Data y Ciencia de Datos (296 horas) \hfill 2026 \\
+Infraestructura de Datos, Minería de Datos, Visualización, Programación en R y Aprendizaje de Máquina.
+
+\entryspace
+
+\textbf{Universidad Adolfo Ibáñez} \hfill Santiago, Chile \\
+Gestión y Mejora de Procesos -- BPM (96 horas) \hfill 2025 \\
+Mejora continua, diseño de KPIs y evaluación de calidad de datos.
+
+\entryspace
+
+\textbf{Universidad de Chile} \hfill Santiago, Chile \\
+Ingeniero Civil Industrial, Licenciado en Ciencias de la Ingeniería mención Industrial \hfill 2019 -- 2024 \\
+Titulado con distinción máxima. Estudiante Destacado 2023 -- Top $\sim$6\% de la generación.
+
+% ===================== SKILLS =====================
+\section*{Habilidades Técnicas e Idiomas}
+
+\textbf{Lenguajes:} Python (Pandas, NumPy, scikit-learn), R (tidyverse, ggplot2), SQL \\
+\textbf{ML clásico:} XGBoost, LightGBM, Random Forest, SVM, Prophet, LASSO/Ridge, Logit, Mixed Logit, SHAP \\
+\textbf{Deep learning:} PyTorch, LSTM, sentence-transformers, cross-encoders \\
+\textbf{LLM / GenAI:} Anthropic SDK, OpenAI SDK, Groq, OpenRouter, function calling, RAG, RAGAS, Langfuse, Qdrant \\
+\textbf{MLOps:} MLflow (tracking + registry), model signatures, Docker, GitHub Actions, pytest, ruff \\
+\textbf{Big data / streaming:} PySpark, Spark Structured Streaming, Delta Lake, Databricks, Unity Catalog, Kafka / Redpanda \\
+\textbf{Data engineering:} Apache Airflow, DBT, APIs REST (OAuth2), ETL \\
+\textbf{Serving / UX:} FastAPI, Streamlit, Plotly, Prometheus \\
+\textbf{BI \& DBs:} Power BI (DAX), Redash, PostgreSQL, SQL Server, SAP \\
+\textbf{Idiomas:} Español (Nativo), Inglés (Professional working proficiency, B2+); GitHub portfolio bilingüe ES/EN
+
+\end{document}

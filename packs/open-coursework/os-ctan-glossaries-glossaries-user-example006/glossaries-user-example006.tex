@@ -1,0 +1,45 @@
+% This file is embedded in glossaries-user.pdf 
+% Example 6 Simple document that uses bib2gls to sort entries
+% Label: "ex:b2g"
+% arara: pdflatex
+% arara: bib2gls
+% arara: pdflatex
+% arara: pdfcrop
+\documentclass[12pt]{article}
+\pagestyle{empty}
+\begin{filecontents*}{sample-entries.bib}
+@entry{parrot,
+ name={parrot}, 
+ description={a brightly coloured tropical bird}
+}
+@entry{duck,
+ name={duck}, 
+ description={a waterbird}
+}
+@entry{puffin,
+ name={puffin},
+ description={a seabird with a brightly coloured bill}
+}
+@entry{penguin,
+ name={penguin}, 
+ description={a flightless black and white seabird}
+}
+@symbol{alpha,
+ name={\ensuremath{\alpha}},
+ description={a variable}
+}
+@abbreviation{arpanet,
+ short={ARPANET},
+ long={Advanced Research Projects Agency Network}
+}
+\end{filecontents*}
+\usepackage[record,style=indexgroup]{glossaries-extra}
+\setabbreviationstyle{short-long}
+\GlsXtrLoadResources[src={sample-entries}]% data in sample-entries.bib
+ 
+\begin{document}
+\Gls{puffin}, \gls{duck} and \gls{parrot}.
+\gls{arpanet} and \gls{alpha}.
+Next use: \gls{arpanet}.
+\printunsrtglossary 
+\end{document}

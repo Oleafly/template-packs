@@ -1,0 +1,185 @@
+% Template for a Computer Science Tripos Part II project dissertation
+\documentclass[12pt,a4paper,twoside,openright]{report}
+\usepackage[pdfborder={0 0 0}]{hyperref}    % turns references into hyperlinks
+\usepackage[margin=25mm]{geometry}  % adjusts page layout
+\usepackage{graphicx}  % allows inclusion of PDF, PNG and JPG images
+\usepackage{verbatim}
+\usepackage{docmute}   % only needed to allow inclusion of proposal.tex
+\usepackage{booktabs} %For professional formatting of tables
+\usepackage[numbers]{natbib} %For formatting of references
+\usepackage[toc,page]{appendix}
+\usepackage{pdfpages} %For inserting PDF into latex source file
+\usepackage{listings}
+
+%For a more accurate word count
+%TC:envir table 0 1
+%TC:envir table* 0 1
+%TC:envir tabular [ignore] word
+%TC:envir displaymath 0 word
+%TC:envir math 0 word
+%TC:envir listings 0 1
+%TC:envir comment 0 0
+
+
+%For inserting index
+\usepackage{makeidx}
+\makeindex
+%\newcommand{\printthesisindex}{%
+%    \cleardoublepage%
+%    \phantomsection%
+%    \addcontentsline{toc}{chapter}{Index}%
+%    \printindex}
+
+%Commands for entering line breaks
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2.0ex plus0.5ex minus0.2ex}
+\renewcommand\baselinestretch{1.2}
+
+\raggedbottom                           % try to avoid widows and orphans
+\sloppy
+\clubpenalty1000%
+\widowpenalty1000%
+
+
+\begin{document}
+
+%Don't count text outside the main body within the word count
+%tc:ignore
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title
+
+\pagestyle{empty}
+
+\rightline{\LARGE \textbf{blind-grading-number}}
+
+\vspace*{60mm}
+\begin{center}
+\Huge
+\textbf{dissertation-title} \\[5mm]
+Computer Science Tripos -- Part II \\[5mm]
+\today  % today's date
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Declaration
+%%
+%%%%%
+ 
+\newpage
+\section*{Declaration}
+
+I, the candidate for Part II of the Computer Science Tripos with Blind Grading Number [insert BGN here], hereby declare that this report and the work described in it are my own work, unaided except as may be specified below, and that the report does not contain material that has already been used to any substantial extent for a comparable purpose. In preparation of this report, I adhered to the Department of Computer Science and Technology AI Policy. [The project required the approved use of [insert name of technology] and such use is acknowledged in the text at the relevant sections.] [I am content for my report to be made available to the students and staff of the University.]
+Date \today
+
+\medskip
+\leftline{Date [date]}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Proforma, table of contents and list of figures
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Proforma
+%%
+%%%%%
+
+\chapter*{Proforma}
+
+
+\textbf{Candidate number}: XXXXX \\
+\textbf{Project title}: XXXX \\
+\textbf{Examination}: Computer Science Tripos -- Part II, May XXXX  \\
+\textbf{Word count}: XXXX \\
+\textbf{Code line count}: \\
+\textbf{Project originator} (if this is the student please state `The candidate'):  \\
+\textbf{Day-to-day supervisor}: \\
+\textbf{Marking supervisor}: \\
+\textbf{(Whether approval from the Departmental Ethics Committee was requested, whether it was approved, and the Ethics Committee case number if applicable.)} \\
+
+
+\footnotetext[1]{This word count was computed
+by \texttt{detex diss.tex | tr -cd '0-9A-Za-z $\tt\backslash$n' | wc -w}
+}
+\stepcounter{footnote}
+
+
+\section*{Original aims of the project}
+
+Maximum 100 words.
+
+
+\section*{Work completed}
+
+Maximum 100 words.
+
+\section*{Special difficulties}
+
+Maximum 100 words.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Acknowledgements
+%%
+%%%%%
+\section*{Acknowledgements}
+
+Acknowledgements go here...
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Table of contents
+%%
+%%%%%
+
+\tableofcontents
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% now for the chapters
+
+\pagestyle{headings}
+
+%tc:endignore
+
+\include{introduction/introduction}
+
+\include{preparation/preparation}
+
+\include{implementation/implementation}
+
+\include{evaluation/evaluation}
+
+\include{conclusions/conclusions}
+
+%tc:ignore
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the bibliography
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the appendices
+\appendix
+
+\include{appendices/project-proposal}
+
+\include{appendices/latex-primer}
+
+\include{appendices/formatting-checklist}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Index:
+%%
+%\printthesisindex
+
+%tc:endignore
+\end{document}

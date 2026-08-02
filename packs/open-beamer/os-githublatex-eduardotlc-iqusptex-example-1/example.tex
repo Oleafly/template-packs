@@ -1,0 +1,93 @@
+\documentclass[tikz, margin=3mm]{standalone}
+
+%######################%
+% Lighter Blue palette %
+%######################%
+
+%----------------------------------------------------------------------------------
+\definecolor{lightstrongblue}{HTML}{4E7EC5}
+\definecolor{lightnormalblue}{HTML}{79A0DA}
+\definecolor{lightfadingblue}{HTML}{98B4E3}
+\definecolor{lightweakblue}{HTML}{B9CBEC}
+\definecolor{almostwhiteblue}{HTML}{CAD7F0}
+%----------------------------------------------------------------------------------
+
+
+%##############################%
+% Darker blue palette elements %
+%##############################%
+
+%----------------------------------------------------------------------------------
+\definecolor{darkstrongblue}{HTML}{214598} 
+\definecolor{neutralblue}{HTML}{4564B7}
+\definecolor{fadedblue}{HTML}{6E7FC7}
+\definecolor{whitishblue}{HTML}{9AA2D8}
+\definecolor{paleblue}{HTML}{CACCEB}
+%----------------------------------------------------------------------------------
+
+\usetikzlibrary{arrows.meta,
+                chains,
+                positioning,
+                shapes.geometric
+                }
+                
+\tikzstyle{startstop} = [rectangle, rounded corners, 
+minimum width=3cm, 
+minimum height=1cm,
+draw=black, 
+text width=17mm,
+align=center,
+font=\linespread{0.8}\selectfont,
+fill=darkstrongblue!30]
+
+\tikzstyle{inpout} = [trapezium, 
+trapezium stretches=true,
+trapezium left angle=70, 
+trapezium right angle=110, 
+minimum width=3cm, 
+minimum height=1cm,
+draw=black,
+text width=17mm,
+align=center,
+font=\linespread{0.8}\selectfont,
+fill=neutralblue!30]
+
+\tikzstyle{proc} = [rectangle, 
+minimum width=3cm, 
+minimum height=1cm, 
+text centered, 
+text width=3cm, 
+draw=black,
+text width=17mm,
+align=center,
+font=\linespread{0.8}\selectfont,
+fill=fadedblue!30]
+
+\tikzstyle{dec} = [diamond, 
+minimum width=3cm, 
+minimum height=1cm, 
+text centered, 
+draw=black,
+text width=17mm,
+align=center,
+font=\linespread{0.8}\selectfont,
+fill=whitishblue!30]
+
+\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\begin{document}
+\begin{tikzpicture}[node distance = 2cm, start chain = going right]
+
+\node (a) [startstop] {Terminal\\ Start/Stop};
+\node (b) [inpout, right of=a, xshift=2cm] {Input\\ Output};
+\node (c) [proc, right of=b, xshift=2cm] {Process};
+\node (d) [dec, right of=c, xshift=2cm] {Decision};
+\node (e) [proc, below of=d, yshift=-0.5cm] {Optional Process};
+    
+\draw [arrow] (a) -- (b);
+\draw [arrow] (b) -- (c);
+\draw [arrow] (c) -- (d);
+\draw [arrow] (d) -- node[anchor=east] {yes} (e);
+    
+\end{tikzpicture}
+\end{document}

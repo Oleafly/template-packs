@@ -1,0 +1,41 @@
+
+% file `eso-ex1.tex'; a framed background example
+
+\documentclass[a4paper]{article}
+\usepackage{eso-pic}
+\listfiles
+
+\newdimen\myLenA
+\newdimen\myLenB
+\newdimen\myLenC
+
+\AddToShipoutPictureBG{%
+  \begingroup
+    \setlength\myLenA{15mm}%
+    \setlength\myLenB{\dimexpr\paperwidth-2\myLenA}%
+    \setlength\myLenC{\dimexpr\paperheight-2\myLenA}%
+    \thicklines%
+    \put(\myLenA,\myLenA){\framebox(\myLenB,\myLenC){}}%
+  \endgroup
+}
+
+\begin{document}
+
+  \section*{First page}
+
+  This page and all the following have a frame with 15~mm
+  distance from the paper edges.
+  
+  \newpage
+
+  \section*{Second page}
+
+  \AddToShipoutPictureBG*{\put(100,100){\circle{40}}}
+
+  Only this page has a circle on the lower left side.
+
+  \newpage
+
+  \section*{Last page}
+
+\end{document}

@@ -1,0 +1,86 @@
+\documentclass[10pt]{article}
+
+%This is the minimal setup required to render the flag
+\usepackage[paperwidth=120cm, paperheight=60cm, top=0cm, bottom=0cm, left=0cm, right=0cm]{geometry}
+%Paper width is set to 120cm by 60 cm to match the New Zealand Government-specified aspect ratio (2:1)
+\usepackage{tikz}
+%\usepackage[dvipsnames]{xcolor} % Optional unless you want to use colors pre-defined by the xcolor package
+
+% New Zealand Government-specified colors for the flag
+\definecolor{nzred}{RGB}{200,16,46}
+\definecolor{nzwhite}{RGB}{255,255,255}
+\definecolor{nzblue}{RGB}{1,33,105}
+
+% Other government specifications include:
+%Positions from lower-left corner of flag (assuming flag is 120 units by 60 units):
+%Center of Alpha Crucis is 90 units across and 12 units up
+%Center of Gamma Crucis is 90 units across and 48 units up
+%Pivot of Beta Crucis-Delta Crucis pair is 90 units across and 36 units up
+%Axis joining Beta Crucis and Delta Crucis is rotated about the pivot, 82 degrees clockwise from the vertical
+%Center of Beta Crucis is 14 units left (along axis) from pivot
+%Center of Delta Crucis is 12 units right (along axis) from pivot
+%Horizontal span of Alpha Crucis is 7 units
+%Horizontal span of Beta Crucis is 6 units
+%Horizontal span of Gamma Crucis is 6 units
+%Horizontal span of Delta Crucis is 5 units
+%Width of white border around each star is 1/2 unit
+
+%Source:
+%https://mch.govt.nz/nz-identity-heritage/flags/description-and-dimensions
+
+%Created by Senan Sekhon, December 24, 2020
+
+\begin{document}
+
+\begin{center}
+\begin{tikzpicture}[scale=1] %Scale must be changed to make the flag fit on letter/A4 paper (scale=1 produces a 120 cm by 60 cm flag)
+\clip (-60,-30) rectangle (60,30); %Optional, crops the flag to the correct size
+\draw[-] (-60,-30)--(60,-30)--(60,30)--(-60,30)--cycle; %Optional, draws a border around the flag
+\fill[nzblue] (-60,-30)--(60,-30)--(60,30)--(-60,30)--cycle; %Blue background
+%Union Jack at the upper-left corner of the flag (with nzwhite and nzred colors and without blue background)
+%Taken from https://www.overleaf.com/latex/examples/flag-of-the-united-kingdom/xcxqkwpvnxbs
+\begin{scope}[shift={(-30,15)},scale=1,rotate=0]
+%White upright cross:
+\fill[nzwhite] (5,15)--(5,5)--(30,5)--(30,-5)--(5,-5)--(5,-15)--(-5,-15)--(-5,-5)--(-30,-5)--(-30,5)--(-30,5)--(-5,5)--(-5,15)--cycle;
+%White St. Andrew's Cross:
+\fill[nzwhite] (-30,-15)--(-30,{-15+3/2*sqrt(5)})--({30-3*sqrt(5)},15)--(30,15)--(30,{15-3/2*sqrt(5)})--({-30+3*sqrt(5)},-15)--cycle; %Lower-left to upper-right
+\fill[nzwhite] (-30,15)--(-30,{15-3/2*sqrt(5)})--({30-3*sqrt(5)},-15)--(30,-15)--(30,{-15+3/2*sqrt(5)})--({-30+3*sqrt(5)},15)--cycle; %Upper-left to lower-right
+%Red upright Cross:
+\fill[nzred] (3,15)--(3,3)--(30,3)--(30,-3)--(3,-3)--(3,-15)--(-3,-15)--(-3,-3)--(-30,-3)--(-30,3)--(-30,3)--(-3,3)--(-3,15)--cycle;
+%Red St. Patrick's Cross:
+\fill[nzred] ({10-2*sqrt(5)},5)--(10,5)--(30,15)--({30-2*sqrt(5)},15)--cycle; %Upper-right diagonal
+\fill[nzred] (-10,5)--({-10-2*sqrt(5)},5)--(-30,{15-sqrt(5)})--(-30,15)--cycle; %Upper-left diagonal
+\fill[nzred] ({-10+2*sqrt(5)},-5)--(-10,-5)--(-30,-15)--({-30+2*sqrt(5)},-15)--cycle; %Lower-left diagonal
+\fill[nzred] (10,-5)--({10+2*sqrt(5)},-5)--(30,{-15+sqrt(5)})--(30,-15)--cycle; %Lower-right diagonal
+\end{scope}
+
+%Template for a star, this can be shifted, scaled and rotated as you wish
+\def\star{(0,4)--({sqrt(50-22*sqrt(5))},{-1+sqrt(5)})--({sqrt(10+2*sqrt(5))},{-1+sqrt(5)})--({2*sqrt(5-2*sqrt(5))},{4-2*sqrt(5)})--({sqrt(10-2*sqrt(5))},{-1-sqrt(5)})--(0,{-6+2*sqrt(5)})--({-sqrt(10-2*sqrt(5))},{-1-sqrt(5)})--({-2*sqrt(5-2*sqrt(5))},{4-2*sqrt(5)})--({-sqrt(10+2*sqrt(5))},{-1+sqrt(5)})--({-sqrt(50-22*sqrt(5))},{-1+sqrt(5)})--cycle}
+
+%Outer scope for shifting, scaling and rotation of the entire Southern Cross
+\begin{scope}[shift={(30,0)},scale=1,rotate=0]
+%Inner scopes for shifting, scaling and rotation of each individual star
+\begin{scope}[shift={(0,-18)},scale={7/(2*sqrt(10+2*sqrt(5)))},rotate=0]
+\fill[nzwhite,scale={1+sqrt(5+2*sqrt(5))/7}] \star;
+\fill[nzred] \star; %Alpha Crucis
+\end{scope}
+\begin{scope}[shift={(0,18)},scale={3/sqrt(10+2*sqrt(5))},rotate=0]
+\fill[nzwhite,scale={1+sqrt(5+2*sqrt(5))/6}] \star;
+\fill[nzred] \star; %Gamma Crucis
+\end{scope}
+%Inner scope for rotation of the Beta Crucis-Delta Crucis pair
+\begin{scope}[shift={(0,6)},scale=1,rotate=8]
+\begin{scope}[shift={(-14,0)},scale={3/sqrt(10+2*sqrt(5))},rotate=-8]
+\fill[nzwhite,scale={1+sqrt(5+2*sqrt(5))/6}] \star;
+\fill[nzred] \star; %Beta Crucis
+\end{scope}
+\begin{scope}[shift={(12,0)},scale={5/(2*sqrt(10+2*sqrt(5)))},rotate=-8]
+\fill[nzwhite,scale={1+sqrt(5+2*sqrt(5))/5}] \star;
+\fill[nzred] \star; %Delta Crucis
+\end{scope}
+\end{scope}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+\end{document}

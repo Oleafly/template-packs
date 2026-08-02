@@ -1,0 +1,31 @@
+% This file is embedded in glossaries-user.pdf 
+% Example 5 Simple document that uses xindy to sort entries
+% Label: "ex:xdy"
+% arara: pdflatex
+% arara: makeglossaries
+% arara: pdflatex
+% arara: pdfcrop
+\documentclass[12pt]{article}
+\pagestyle{empty}
+\usepackage[xindy,style=indexgroup]{glossaries}
+\makeglossaries % open \dglspl {indexingfile}
+ \newglossaryentry{parrot}{name={parrot},
+ description={a brightly coloured tropical bird}}
+\newglossaryentry{duck}{name={duck},
+ description={a waterbird}}
+\newglossaryentry{puffin}{name={puffin},
+ description={a seabird with a brightly coloured bill}}
+\newglossaryentry{penguin}{name={penguin},
+ description={a flightless black and white seabird}}
+% a symbol:
+ \newglossaryentry{alpha}{name={\ensuremath{\alpha}},
+ sort={alpha},description={a variable}}
+% an acronym:
+ \setacronymstyle{short-long}
+ \newacronym{arpanet}{ARPANET}{Advanced Research Projects Agency Network} 
+\begin{document}
+\Gls{puffin}, \gls{duck} and \gls{parrot}.
+\gls{arpanet} and \gls{alpha}.
+Next use: \gls{arpanet}.
+\printglossary 
+\end{document}

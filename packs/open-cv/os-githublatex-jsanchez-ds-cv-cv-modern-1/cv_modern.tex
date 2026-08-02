@@ -1,0 +1,171 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amssymb}           % for \checkmark
+\usepackage{geometry}
+\geometry{top=0.6in, bottom=0.6in, left=0.75in, right=0.75in}
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=1pt, leftmargin=*, itemsep=2pt}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{multicol}
+
+\newcommand{\sectionspace}{\vspace{0.15cm}}
+\newcommand{\entryspace}{\vspace{0.12cm}}
+\newcommand{\minispace}{\vspace{0.05cm}}
+
+\titleformat{\section}{\normalsize\bfseries\uppercase}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{0.30cm}{0.15cm}
+
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+
+\begin{document}
+
+\begin{center}
+    \textbf{\LARGE Jonathan Sánchez Pesantes} \\[3pt]
+    \normalsize \textbf{Senior Data Scientist $\cdot$ ML Engineer $\cdot$ LLM / AI Engineer} \\[3pt]
+    \small
+    +569 6758 5503 \quad $|$ \quad
+    \href{mailto:jonathan.sanchez.ep@gmail.com}{jonathan.sanchez.ep@gmail.com} \quad $|$ \quad
+    \href{https://www.linkedin.com/in/jonasanchez}{linkedin.com/in/jonasanchez} \quad $|$ \quad
+    \href{https://github.com/jsanchez-ds}{github.com/jsanchez-ds}
+\end{center}
+\vspace{0.1cm}
+
+% --- RESUMEN ---
+\section*{Resumen Profesional}
+Ingeniero Civil Industrial (U. de Chile, distinción máxima) con experiencia construyendo sistemas productivos end-to-end de forecasting, anomaly detection y RAG sobre stack Python / PySpark / Databricks. Portfolio público con trilogía flagship que cubre ML clásico (LightGBM, LSTM, SHAP, MLflow Model Registry), LLM engineering (RAG híbrido con BM25+vector+rerank, evaluación RAGAS, provider abstraction sobre Groq / Anthropic / OpenAI / OpenRouter) y streaming agentic (Spark Structured Streaming + agente LLM con function calling integrando servicios vía MLflow y HTTP). Base sólida en econometría y causalidad. Busco roles Senior Data Scientist, ML Engineer o LLM / AI Engineer donde el rigor metodológico y el impacto de negocio vayan de la mano.
+
+\sectionspace
+
+% --- EXPERIENCIA ---
+\section*{Experiencia Profesional}
+
+\noindent\textbf{Ingeniero en Eficiencias} $|$ ClaroVTR \hfill Marzo 2025~--~Presente \\
+\textit{Subgerencia de Gestión Operacional}
+\begin{itemize}
+    \item \textbf{Forecasting productivo:} sistema end-to-end de predicción de consumo de datos Starlink para 494 líneas con ensemble de XGBoost (regresión cuantílica P90), LightGBM global y Prophet, alcanzando SMAPE \textbf{22.9\%} con validación cruzada temporal.
+    \item \textbf{Feature engineering de series temporales:} variables de comportamiento (aceleración, saturación de plan, cambio abrupto) y clustering DTW en 8 grupos por forma de consumo; mejora de SMAPE de 24.5\% a 22.9\%.
+    \item \textbf{Impacto de negocio:} recomendaciones automatizadas de plan por línea, identificando $\sim$\$30M CLP/mes de ahorro potencial mediante optimización tarifaria con lógica de bolsas de datos.
+    \item \textbf{Data engineering:} pipeline de extracción desde API REST Starlink v2 (OAuth2), conciliación con SAP y SQL para consolidación analítica; automatización de reporte PxQ y monitoreo de contratos.
+    \item \textbf{Visualización:} dashboards HTML/JS y Power BI para seguimiento de KPIs operacionales y validación de facturación corporativa.
+\end{itemize}
+\entryspace
+
+\noindent\textbf{Analyst -- Customer Success} $|$ Keirón \hfill 2024 \\
+\textit{Área Customer Success}
+\begin{itemize}
+    \item \textbf{Modelo de churn:} diseño e implementación del \textit{Customer Health Index} (CHI), modelo de scoring multivariable para predicción de riesgo de fuga en segmentos Enterprise.
+    \item \textbf{Analítica de comportamiento:} detección temprana de clientes en riesgo integrando múltiples señales de adopción y actividad.
+    \item \textbf{Reportería:} dashboards en Redash para métricas clave de adopción y uso de plataforma.
+\end{itemize}
+\entryspace
+
+\noindent\textbf{Proyecto de Título -- Ingeniería en Planificación} $|$ Agrosuper \hfill 2024 \\
+\textit{Jefatura de Planificación y Operaciones Logísticas}
+\begin{itemize}
+    \item \textbf{Data quality:} scripts en Python para limpieza y validación masiva de datos de importaciones, detectando inconsistencias históricas en registros de comercio exterior.
+    \item \textbf{Automatización:} reemplazo de cruces manuales en Excel por conciliación automatizada entre SAP y bases SQL, con reducción significativa de tiempos de procesamiento y mejor trazabilidad de inventarios.
+\end{itemize}
+\entryspace
+
+\noindent\textbf{Práctica Profesional -- Analista MIS} $|$ Cencosud Scotiabank \hfill 2023 \\
+\textit{Subgerencia Management Information System}
+\begin{itemize}
+    \item Optimización de consultas SQL (Query Tuning) sobre grandes volúmenes de datos financieros; integración de múltiples fuentes vía ETL para el Panel de Información Institucional.
+    \item Reportes ejecutivos de KPIs para la alta gerencia en Chile y Canadá.
+\end{itemize}
+
+\sectionspace
+
+% --- PROYECTOS DESTACADOS ---
+\section*{Proyectos Destacados (2026)}
+
+\noindent\textbf{\href{https://github.com/jsanchez-ds/gridpulse-realtime-agent}{GridPulse --- Agente LLM en tiempo real}} $|$ Spark Streaming $\cdot$ LLM Agent $\cdot$ MLflow \hfill 2026
+\begin{itemize}
+    \item Plataforma streaming que detecta anomalías con Isolation Forest (consumido desde MLflow Registry) y dispara un agente LLM custom con function calling (5 tools) integrando forecaster clásico y RAG. Incident reports autónomos a Discord (HTTP 204 $\checkmark$) con cero números alucinados --- todo grounded en tool calls. Transport pluggable (Delta / Kafka).
+\end{itemize}
+\entryspace
+
+\noindent\textbf{\href{https://github.com/jsanchez-ds/energyscholar-rag}{EnergyScholar --- RAG production-grade sobre papers}} $|$ Qdrant $\cdot$ RAGAS $\cdot$ LLM providers \hfill 2026
+\begin{itemize}
+    \item RAG provider-agnostic (Groq / Anthropic / OpenAI / OpenRouter, una línea de \texttt{.env}) sobre 17 papers de arXiv. Retrieval híbrido (BM25 + dense + cross-encoder rerank). Evaluación RAGAS gateada en CI: context\_precision \textbf{0.81}, answer\_relevancy \textbf{0.996}; respuestas con citas a página.
+\end{itemize}
+\entryspace
+
+\noindent\textbf{\href{https://github.com/jsanchez-ds/energy-forecasting-databricks}{Energy Forecasting --- MLOps en Databricks Unity Catalog}} $|$ Medallion $\cdot$ MLflow $\cdot$ SHAP \hfill 2026
+\begin{itemize}
+    \item Pipeline end-to-end sobre 2 años de datos CAISO (17K registros horarios). Arquitectura Medallion (Bronze/Silver/Gold) en Delta Lake. LightGBM MAPE \textbf{1.81\%} vs LSTM (PyTorch) 2.84\% vs Isolation Forest para anomalías. SHAP explainability. Model Registry en Unity Catalog con alias @staging. Reproducible: local 1.81\% $\equiv$ Databricks 1.83\%.
+\end{itemize}
+
+\sectionspace
+
+% --- OTROS PROYECTOS ---
+\section*{Otros Proyectos Analíticos}
+
+\noindent\textbf{\href{https://github.com/jsanchez-ds/telecom-quota-forecasting}{Telecom Quota Forecasting}} $|$ Python $\cdot$ XGBoost $\cdot$ DTW clustering \hfill 2025 \\
+Reproducción portfolio del sistema productivo: Quantile XGBoost P90 + LightGBM con pérdida asimétrica + Prophet + DTW shape clustering. Optimizador de bolsas con property-based tests; $\sim$93\% cobertura P90 en validación.
+
+\minispace
+
+\noindent\textbf{\href{https://bank-marketing-analysis-jsanchez.streamlit.app/}{Análisis de Campañas Bancarias}} $|$ \textit{Demo Streamlit en vivo} \hfill 2024 \\
+Predicción de suscripción a depósito (UCI, 45K registros). Random Forest ROC-AUC 0.80 (sin \texttt{duration}). Diagnóstico y corrección de fuga SMOTE-en-CV vía \texttt{imblearn.Pipeline}.
+
+\minispace
+
+\noindent\textbf{\href{https://jsanchez-ds.github.io/medical-diagnosis-classification/}{Clasificación de Diagnóstico Médico}} $|$ scikit-learn \hfill 2024 \\
+Wisconsin Breast Cancer (569 reg, 30 vars). SVM con GridSearchCV $\to$ accuracy 97.6\%, AUC 0.99. Manejo de desbalance (Under/Over-Sampling).
+
+\minispace
+
+\noindent\textbf{\href{https://jsanchez-ds.github.io/gender-income-gap/}{Brecha de Género en Ingresos}} $|$ R $\cdot$ fixest $\cdot$ MARS \hfill 2023 \\
+Regresión con efectos fijos sobre $\sim$5.000 comercios. LASSO/Ridge; MARS seleccionado por menor error out-of-sample. Brecha bruta $\sim$20.7\% parcialmente mediada por horas y categoría.
+
+\minispace
+
+\noindent\textbf{\href{https://jsanchez-ds.github.io/credit-choice-experiment/}{Experimento de Elección de Crédito}} $|$ R $\cdot$ mlogit $\cdot$ caret \hfill 2023 \\
+Discrete choice con 4 condiciones experimentales. Logit condicional + mixed logit revela efecto T3 oculto por heterogeneidad no observada.
+
+\sectionspace
+
+% --- FORMACIÓN ---
+\section*{Formación Académica}
+
+\noindent\textbf{Diplomado en Big Data y Ciencia de Datos} $|$ Pontificia Universidad Católica de Chile \hfill 2026 \\
+\textit{Escuela de Ingeniería -- Educación Continua.} Diplomado de 296 horas: Infraestructura de Datos, Minería de Datos, Visualización, Programación en R y Aprendizaje de Máquina.
+
+\entryspace
+
+\noindent\textbf{Gestión y Mejora de Procesos (BPM)} $|$ Universidad Adolfo Ibáñez \hfill 2025 \\
+Curso de 96 horas. Mejora continua, diseño de KPIs y evaluación de calidad de datos.
+
+\entryspace
+
+\noindent\textbf{Ingeniero Civil Industrial} $|$ Universidad de Chile \hfill 2019~--~2024 \\
+\textit{Facultad de Ciencias Físicas y Matemáticas.} Titulado con distinción máxima. Estudiante Destacado 2023 -- Top $\sim$6\% de la generación.
+
+\sectionspace
+
+% --- HABILIDADES TÉCNICAS ---
+\section*{Habilidades Técnicas}
+\begin{multicols}{2}
+\begin{itemize}
+    \item \textbf{Lenguajes:} Python, R, SQL
+    \item \textbf{ML clásico:} XGBoost, LightGBM, Random Forest, SVM, Prophet, LASSO/Ridge, Logit, Mixed Logit, SHAP
+    \item \textbf{Deep learning:} PyTorch, LSTM, sentence-transformers, cross-encoders
+    \item \textbf{LLM / GenAI:} Anthropic SDK, OpenAI SDK, Groq, OpenRouter, function calling, RAG, RAGAS, Langfuse, Qdrant
+    \item \textbf{MLOps:} MLflow (tracking + registry), model signatures, Docker, GitHub Actions, pytest, ruff
+    \item \textbf{Big data / streaming:} PySpark, Spark Structured Streaming, Delta Lake, Databricks, Unity Catalog, Kafka / Redpanda
+    \item \textbf{Data engineering:} Apache Airflow, DBT, APIs REST (OAuth2), ETL
+    \item \textbf{Serving / UX:} FastAPI, Streamlit, Plotly, Prometheus
+    \item \textbf{BI / DBs:} Power BI (DAX), Redash, PostgreSQL, SQL Server, SAP
+\end{itemize}
+\end{multicols}
+
+\vspace{-0.1cm}
+\section*{Idiomas}
+\textbf{Español:} Nativo \quad $|$ \quad \textbf{Inglés:} Professional working proficiency (B2+) \quad $|$ \quad \textbf{GitHub portfolio:} bilingüe ES/EN
+
+\end{document}

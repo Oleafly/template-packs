@@ -1,0 +1,575 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+\usepackage{tikz,tikz-3dplot}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\urlstyle{same}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=20mm,
+ bottom=20mm,
+ right=20mm
+ }
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Correction}
+\lhead{DM 16, ex 2 p 23-24}
+\rfoot{Page \thepage}
+
+
+\makeatletter
+\def\@seccntformat#1{%
+  \expandafter\ifx\csname c@#1\endcsname\c@section\else
+  \csname the#1\endcsname\quad
+  \fi}
+\makeatother
+
+\begin{document}
+
+\section{Partie A}
+
+\begin{figure}[hbt!]
+ \centering
+ \tdplotsetmaincoords{70}{40}
+\begin{tikzpicture}[scale=4.5, tdplot_main_coords]
+    \iffalse
+    \draw[thick,->, red] (0,0,0) -- (1,0,0) node[anchor=north east]{$x$};
+    \draw[thick,->, green] (0,0,0) -- (0,1,0) node[anchor=north east]{$y$};
+    \draw[thick,->, blue] (0,0,0) -- (0,0,1) node[anchor=east]{$z$};
+    \fi
+    
+    \coordinate (A) at (0,0,0);
+    \coordinate (B) at (1,0,0);
+    \coordinate (D) at (0,1,0);
+    \coordinate (E) at (0,0,1);
+
+    \coordinate (C) at (1,1,0);
+    \coordinate (F) at (1,0,1);
+    \coordinate (H) at (0,1,1);
+    \coordinate (G) at (1,1,1);
+    
+    \coordinate (I) at (0.5,0,1);
+    \coordinate (J) at (0,0.5,1);
+    \coordinate (K) at (0,0.25,0);
+    
+    \coordinate (M) at (0,0,-1/3);
+    \coordinate (M') at (0,0,1/3);
+    \coordinate (L) at (4/3,4/3,0);
+    
+    \coordinate (special1) at (0,0.17,-0.1);
+    
+    \coordinate (start_delta) at (-0.27,-0.27,1.2);
+    \coordinate (end_delta) at (1.57,1.57,-0.17);
+    
+    \coordinate (EM_end) at (0,0,-0.53);
+    
+    \coordinate (HM_start) at (0,1.11,1.15);
+    \coordinate (HM_end) at (0,-0.1,-0.46);
+    
+    \coordinate (L_x) at (4/3,0,0);
+    \coordinate (L_y) at (0,4/3,0);
+    
+    \coordinate (AL_start) at (-0.26,-0.26,0);
+    \coordinate (AL_end) at (1.52,1.52,0);
+    
+    \filldraw[
+        draw=red,%
+        fill=red!10,%
+    ]          (J)
+            -- (I)
+            -- (M')
+            -- (0,0.28,0.71)
+            -- cycle;
+            
+    \draw[red!75] (AL_start) -- (AL_end);
+    
+    \filldraw[black] (A) circle (0.25pt)node[anchor=east] {A};
+    \filldraw[black] (B) circle (0.25pt)node[anchor=north] {B};
+    \filldraw[black] (C) circle (0.25pt)node[anchor=west] {C};
+    \filldraw[black] (D) circle (0.25pt)node[anchor=east] {D};
+    \filldraw[black] (E) circle (0.25pt)node[anchor=east] {E};
+    \filldraw[black] (F) circle (0.25pt)node[anchor=south] {F};
+    \filldraw[black] (G) circle (0.25pt)node[anchor=west] {G};
+    \filldraw[black] (H) circle (0.25pt)node[anchor=south] {H};
+    \filldraw[black] (I) circle (0.25pt)node[anchor=south] {I};
+    \filldraw[black] (J) circle (0.25pt)node[anchor=south] {J};
+    \filldraw[black] (K) circle (0.25pt)node[anchor=south] {K};
+    \filldraw[black] (M) circle (0.25pt)node[anchor=east] {M};
+    \filldraw[black] (M') circle (0.25pt)node[anchor=east] {M'};
+    \filldraw[black] (start_delta) node[anchor=east] {$\Delta$};
+    
+    \filldraw[black] (L) circle (0.25pt)node[anchor=east] {L};
+
+    \draw[black] (A) -- (B);
+    \draw[gray] (B) -- (L_x);
+    \draw[gray, dashed] (D) -- (L_y);
+    \draw[black] (A) -- (E);
+    \draw[black] (B) -- (C);
+    \draw[gray, dashed] (C) -- (D);
+    \draw[gray, dashed] (D) -- (A);
+    \draw[gray, dashed] (D) -- (H);
+    \draw[black] (E) -- (H);
+    \draw[black] (E) -- (F);
+    \draw[black] (B) -- (F);
+    \draw[black] (C) -- (G);
+    \draw[black] (G) -- (F);
+    \draw[black] (H) -- (G);
+    
+    \draw[blue] (A) -- (EM_end);
+    \draw[blue] (special1) -- (HM_end);
+    \draw[blue, dashed] (special1) -- (HM_start);
+    
+    \draw[red, dashed] (M') -- (J);
+    \draw[red] (J) -- (I);
+    \draw[red] (I) -- (M');
+    
+    \draw[green] (start_delta) -- (end_delta);
+    
+\end{tikzpicture}
+
+\end{figure}
+
+\noindent Les réponses de la question 1 sont représentées en bleu et les réponses de la question 2 sont représentées en rouge.
+
+\textbf{1.} Pour construire le point $M$, on trace les droites coplanaires $(HK)$ et $(EA)$ pour ensuite retrouver $M$ à l'intersection de ces deux droites.
+
+\textbf{2.} Pour construire le point $M'$, on trace la droite parallèle à $(HK)$ passant par $J$. ($(HK)$ et $(JM')$ sont coplanaires)
+
+\vspace{2mm}
+
+\section{Partie B}
+
+\textbf{1.a}
+
+\vspace{2mm}
+
+\noindent D'après l'énoncé, $(FHK)$ est un plan donc $\overrightarrow{FH}$ et $\overrightarrow{FK}$ sont non colinéaires.
+
+\vspace{2mm}
+
+$\overrightarrow{FH}
+\begin{pmatrix}
+   x_H-x_F\\
+   y_H-y_F\\
+   z_H-z_F
+\end{pmatrix}
+=
+\begin{pmatrix}
+   0-1\\
+   1-0\\
+   1-1
+\end{pmatrix}
+= 
+\begin{pmatrix}
+   -1\\
+   1\\
+   0
+\end{pmatrix}
+$
+
+\vspace{2mm}
+$\overrightarrow{FH} \cdot \overrightarrow{n} = -1\times 4 + 1 \times 4 - 3 \times 0 = -4 + 4 - 0 = 0$ \qquad  Donc $\overrightarrow{FH} \perp \overrightarrow{n}$
+\vspace{2mm}
+
+$\overrightarrow{FK}
+\begin{pmatrix}
+   x_K-x_F\\
+   y_K-y_F\\
+   z_K-z_F
+\end{pmatrix}
+=
+\begin{pmatrix}
+   0-1\\
+   \frac{1}{4}-0\\
+   0-1
+\end{pmatrix}
+= 
+\begin{pmatrix}
+   -1\\
+   \frac{1}{4}\\
+   -1
+\end{pmatrix}
+$
+\vspace{2mm}
+
+$\overrightarrow{FK} \cdot \overrightarrow{n} = -1 \times 4 + \frac{1}{4} \times 4 - 1 \times -3 = -4+1+3 = -4+4 = 0$\qquad Donc $\overrightarrow{FK} \perp \overrightarrow{n}$
+\vspace{2mm}
+
+\noindent Donc le vecteur $\overrightarrow{n}$ est bien un vecteur normal au plan $(FHK)$ car $\overrightarrow{n}$ est orthogonal à deux vecteurs non colinéaires de $(FHK)$. 
+
+\vspace{2mm}
+
+\textbf{1.b}
+
+\vspace{2mm}
+
+\noindent Une équation du plan $(FHK)$ est $4x+4y-3z+d=0$ or $F \in (FHK)$ donc :
+
+\vspace{2mm}
+
+$4x_F + 4y_F - 3z_F + d = 0$ \qquad avec $F(1; 0; 1)$
+
+$\Leftrightarrow 4 \times 1 + 4 \times 0 - 3 \times 1 + d = 0$
+
+$\Leftrightarrow 4+0-3+d=0$
+
+$\Leftrightarrow 1+d = 0$
+
+$\Leftrightarrow d = -1$
+
+\vspace{2mm}
+
+\noindent Donc une équation cartésienne du plan $(FHK)$ est : $4x + 4y - 3z - 1 = 0$
+
+\vspace{2mm}
+
+\textbf{1.c}
+
+\vspace{2mm}
+
+\noindent Comme $(FHK)$ est parallèle à $\mathscr{P}$ alors $\mathscr{P}$ a pour vecteur normal $\overrightarrow{n}$.
+
+\noindent Alors une équation cartésienne de $\mathscr{P}$ est : $4x + 4y - 3z + d = 0$
+
+\vspace{2mm}
+
+\noindent On utilise alors les coordonnées de $I \in \mathscr{P}$ pour trouver la valeur de $d$ :
+
+\vspace{2mm}
+
+$I = \Bigg(\displaystyle\frac{x_F+x_E}{2}; \frac{y_F+y_E}{2}; \frac{1+1}{2}\Bigg) = \Bigg(\displaystyle\frac{1+0}{2}; \frac{0+0}{2}; \frac{1+1}{2}\Bigg) = \Bigg(\displaystyle\frac{1}{2}; 0; 1\Bigg)$
+
+\vspace{2mm}
+
+$4 \times \displaystyle\frac{1}{2} + 4 \times 0 - 3 \times 1 + d = 0$
+
+$\Leftrightarrow 2 + 0 - 3 + d = 0$
+
+$\Leftrightarrow -1 + d = 0$
+
+$\Leftrightarrow d = 1$
+
+\vspace{2mm}
+
+\noindent Donc une équation cartésienne du plan $\mathscr{P}$ est : $4x + 4y - 3z + 1 = 0$
+
+\vspace{2mm}
+
+\textbf{1.d}
+
+\vspace{2mm}
+
+\noindent Pour trouver les coordonnées de $M'$ on va résoudre un système pour trouver le point d'intersection entre le plan $\mathscr{P}$ et la droite $(AE)$. Or il nous manque la représentation paramétrique de la droite $(AE)$.
+
+\vspace{2mm}
+
+$\overrightarrow{AE}
+\begin{pmatrix}
+   x_E-x_A\\
+   y_E-y_A\\
+   z_E-z_A
+\end{pmatrix}
+=
+\begin{pmatrix}
+   0-0\\
+   0-0\\
+   1-0
+\end{pmatrix}
+= 
+\begin{pmatrix}
+   0\\
+   0\\
+   1
+\end{pmatrix}
+$
+
+\vspace{2mm}
+\noindent Donc une représentation paramétrique de $(AE)$ est
+\vspace{2mm}
+
+$(AE):\left\{\begin{matrix}
+x = 0\\
+y = 0\\
+z = t
+\end{matrix}
+\right., t \in \mathbb{R}
+$
+
+\vspace{2mm}
+\noindent On peut alors résoudre le système : 
+
+$\left\{\begin{matrix*}[l]
+   4x+4y-3z+1=0\\
+   \\
+   x = 0\\
+   \\
+   y = 0\\
+   \\
+   z = t
+\end{matrix*}\right.
+\Leftrightarrow
+\left\{\begin{matrix*}[l]
+   -3t+1=0\\
+   \\
+   x = 0\\
+   \\
+   y = 0\\
+   \\
+   z = t
+\end{matrix*}\right.
+\Leftrightarrow
+\left\{\begin{matrix*}[l]
+   t = \displaystyle\frac{-1}{-3}\\
+   \\
+   x = 0\\
+   \\
+   y = 0\\
+   \\
+   z = t
+\end{matrix*}\right.
+\Leftrightarrow
+\left\{\begin{matrix*}[l]
+   t = \displaystyle\frac{1}{3}\\
+   \\
+   x = 0\\
+   \\
+   y = 0\\
+   \\
+   z = \displaystyle\frac{1}{3}
+\end{matrix*}\right.
+$
+
+\noindent Donc les coordonnées de M' sont :  $M'\Bigg(0; 0; \displaystyle\frac{1}{3}\Bigg)$
+
+\vspace{2mm}
+
+\textbf{2.a}
+
+\vspace{2mm}
+
+\noindent Comme la droite $\Delta$ est orthogonale au plan $\mathscr{P}$ alors un vecteur directeur de $\Delta$ est colinéaire à un vecteur normal au plan $\mathscr{P}$, $\overrightarrow{n}$. Ainsi, $\overrightarrow{n}$ est un vecteur directeur de la droite $\Delta$. On en déduit alors la représentation paramétrique de la droite $\Delta$ en utilisant les coordonnées de $\overrightarrow{n}$ et $E$ :
+
+\vspace{2mm}
+
+$\Delta:\left\{\begin{matrix*}[l]
+x = 4t'+ 0\\
+y = 4t'+ 0\\
+z = -3t'+ 1
+\end{matrix*}
+\right., t' \in \mathbb{R}
+\Leftrightarrow \left\{\begin{matrix*}[l]
+x = 4t'\\
+y = 4t'\\
+z = -3t'+ 1
+\end{matrix*}
+\right., t' \in \mathbb{R}
+$
+
+\vspace{2mm}
+
+\textbf{2.b}
+
+\vspace{2mm}
+
+\noindent Le plan $(ABC)$ est le plan de base d'équation $z = 0$, on sait donc que la côte du point L est nulle on peut donc en déduire ce système :
+
+\vspace{2mm}
+
+$\left\{\begin{matrix*}[l]
+   x= 4t'\\
+   \\
+   y=4t'\\
+   \\
+   z=-3t'+1\\
+   \\
+   z = 0
+\end{matrix*}\right.
+\Leftrightarrow\left\{\begin{matrix*}[l]
+   -3t'+1=0\\
+   \\
+   x = 4t'\\
+   \\
+   y = 4t'\\
+   \\
+   z = 0
+\end{matrix*}\right.
+\Leftrightarrow
+\left\{\begin{matrix*}[l]
+   t' = \displaystyle\frac{1}{3}\\
+   \\
+   x = 4 \times \displaystyle\frac{1}{3}\\
+   \\
+   y = 4 \times \displaystyle\frac{1}{3}\\
+   \\
+   z = 0
+\end{matrix*}\right.
+\Leftrightarrow
+\left\{\begin{matrix*}[l]
+   t' = \displaystyle\frac{1}{3}\\
+   \\
+   x = \displaystyle\frac{4}{3}\\
+   \\
+   y = \displaystyle\frac{4}{3}\\
+   \\
+   z = 0
+\end{matrix*}\right.
+$
+
+\vspace{2mm}
+
+\noindent Donc les coordonnées de L sont $L\Bigg(\displaystyle\frac{4}{3}; \displaystyle\frac{4}{3}; 0\Bigg)$.
+
+\vspace{2mm}
+
+\textbf{2.c} \noindent La droite $\Delta$ est représentée en vert sur la figure du début. On commence par tracer le point L, ensuite on trace la droite $(EL)$.
+
+\vspace{2mm}
+
+\textbf{2.d}
+
+\vspace{2mm}
+
+\noindent Pour connaitre l'éventuel point d'intersection entre $\Delta$ et $(BF)$ on essaye de résoudre un système regroupant les représentations paramétriques de $\Delta$ et $(BF)$.
+
+\vspace{2mm}
+
+$\overrightarrow{BF}
+\begin{pmatrix}
+   x_F-x_B\\
+   y_F-y_B\\
+   z_F-z_B
+\end{pmatrix}
+=
+\begin{pmatrix}
+   1 - 1\\
+   0 - 0\\
+   1 - 0
+\end{pmatrix}
+= 
+\begin{pmatrix}
+   0\\
+   0\\
+   1
+\end{pmatrix}
+\qquad
+(BF):\left\{\begin{matrix*}[l]
+x = 0u + 1\\
+y = 0u + 0\\
+z = 1u + 0
+\end{matrix*}
+\right., u \in \mathbb{R}
+\Leftrightarrow \left\{\begin{matrix*}[l]
+x = 1\\
+y = 0\\
+z = u
+\end{matrix*}
+\right., u \in \mathbb{R}
+$
+
+\vspace{2mm}
+
+$
+\left\{\begin{matrix*}[l]
+   4t'=1\\
+   4t'=0\\
+   -3t'+1=u\\
+\end{matrix*}\right.
+\Leftrightarrow
+\left\{\begin{matrix*}[l]
+   t' = \frac{1}{4}\\
+   t' = 0\\
+   -3t' = u - 1\\
+\end{matrix*}\right.
+$
+
+\vspace{2mm}
+
+\noindent Il est impossible de résoudre ce système, donc les droite $\Delta$ et $(CF)$ ne sont pas sécantes. On fait la même chose pour savoir si $\Delta$ et $(CG)$ sont sécantes :
+
+\vspace{2mm}
+
+$\overrightarrow{CG}
+\begin{pmatrix}
+   x_G-x_C\\
+   y_G-y_C\\
+   z_G-z_C
+\end{pmatrix}
+=
+\begin{pmatrix}
+   1 - 1\\
+   1 - 1\\
+   1 - 0
+\end{pmatrix}
+= 
+\begin{pmatrix}
+   0\\
+   0\\
+   1
+\end{pmatrix}
+\qquad
+(CG):\left\{\begin{matrix*}[l]
+x = 1\\
+y = 1\\
+z = u'
+\end{matrix*}
+\right., u' \in \mathbb{R}
+$
+
+
+\vspace{2mm}
+
+$
+\left\{\begin{matrix*}[l]
+   4t'=1\\
+   4t'=1\\
+   -3t'+1=u'\\
+\end{matrix*}\right.
+\Leftrightarrow
+\left\{\begin{matrix*}[l]
+   t' = \frac{1}{4}\\
+   t' = \frac{1}{4}\\
+   -3 \times \frac{1}{4} + 1 = u'\\
+\end{matrix*}\right.
+\Leftrightarrow
+\left\{\begin{matrix*}[l]
+   t' = \frac{1}{4}\\
+   \\
+   u' = \frac{1}{4}\\
+\end{matrix*}\right.
+$
+
+\vspace{2mm}
+
+\noindent On injecte la valeur du paramètre dans la représentation paramétrique de $(CG)$ ce qui donne:
+
+\vspace{2mm}
+$
+\left\{\begin{matrix*}[l]
+   x = 1\\
+   y = 1\\
+   z = \frac{1}{4}\\
+\end{matrix*}\right.
+$
+
+\noindent Donc les droites $\Delta$ et $(CG)$ sont sécantes et se coupent au point de coordonnées $\Bigg(1; 1; \displaystyle\frac{1}{4}\Bigg)$.
+
+
+\end{document}
+

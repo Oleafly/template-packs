@@ -1,0 +1,38 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{tikz}
+
+%%%%%
+% useful for the skills Venn diagram
+\usepackage{adjustbox}
+\usetikzlibrary{positioning}
+\definecolor{myblued}{RGB}{0,114,189}
+\definecolor{myred}{RGB}{217,83,25}
+\definecolor{mygreen}{RGB}{32,134,48}
+\definecolor{myyellow}{RGB}{237,137,32}
+\definecolor{mypurple}{RGB}{126,47,142}
+\definecolor{myblues}{RGB}{77,190,238}
+
+\makeatletter
+  \newcommand\notsotiny{\@setfontsize\notsotiny\@vipt\@viipt}
+\makeatother
+
+\begin{document}
+
+\begin{tikzpicture}[
+  , c/.style = {
+    , circle
+    , fill = #1
+    , opacity = 0.3
+    , text opacity = 1
+    , minimum size = 32mm
+  }
+]
+
+  \node (a) [c = myblued] {};
+  \node (c) [c = myred, below right = 12mm and 12mm of a.center, anchor = center] {};
+  \node (d) [c = mypurple, below left = 12mm and 12mm of a.center, anchor = center] {};
+  \node (b) [c = mygreen, below = 24mm of a.center, anchor = center] {};
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,159 @@
+% Instructions: you don't need to change anything in the macros, but
+% feel free to define new commands as you wish. Starting from the main
+% body, change the specs (e.g., your
+% name). use \begin{solution} \end{solution} environment to write your
+% solutions. Don't forget to list your collaborators.
+
+\documentclass[12pt,addpoints,answers]{exam}
+%============Macros==================%
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+%--------------Cosmetic----------------%
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{fullpage}
+\usepackage{microtype}
+\usepackage{xspace}
+\usepackage[svgnames]{xcolor}
+\usepackage[sc]{mathpazo}
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=1pt,topsep=2pt}
+\setlist[itemize]{itemsep=1pt,topsep=2pt}
+%----------Header--------------------%
+\def\course{CSCE629 Analysis of Algorithms}
+\def\term{Texas A\&M U, Fall 2019}
+\def\prof{Lecturer: Fang Song}
+\newcommand{\handout}[5]{
+   \renewcommand{\thepage}{\arabic{page}}
+   \begin{center}
+   \framebox{
+      \vbox{
+    \hbox to 5.78in { \hfill \large{\course} \hfill }
+       \vspace{2mm}
+       \hbox to 5.78in { {\Large \hfill \textbf{#5}  \hfill} }
+       \vspace{2mm}
+       \hbox to 5.78in { \term \hfill \emph{#2}}
+       \hbox to 5.78in { {#3 \hfill \emph{#4}}}
+      }
+   }
+   \end{center}
+   \vspace*{4mm}
+}
+\newcommand{\hw}[4]{\handout{#1}{#2}{#3}{#4}{Homework #1}}
+
+%-----defs and commands-----%
+%\def\mG{[\textbf{G}]\xspace}
+\def\veps{\varepsilon}
+\newcommand{\bit}{\{0,1\}}
+\newcommand{\negl}{\text{negl}}
+\newcommand{\corr}[1]{{\color{blue}{#1}}}
+\newcommand{\alg}[1]{\textsf{#1}}
+%=======Main document==============%
+\begin{document}
+
+%----Specs: change accordingly-----%
+\newif\ifstudent % comment out false
+\studenttrue 
+% \studentfalse
+
+\def\hwnum{3}
+\def\issuedate{09/13/19}
+\def\duedate{10am, 09/20/19} % 
+\def\yourname{your name} % put your name here
+%------------------------------%
+
+\ifstudent
+\hw{\hwnum}{\issuedate}{Student: \yourname}{Due: \duedate}%
+\else
+\hw{\hwnum}{\issuedate}{\prof}{Due: \duedate}%
+\fi
+
+\noindent \textbf{Instructions.}
+
+\begin{itemize} 
+\item Typeset your submission by \LaTeX, and submit in PDF
+  format. Your solutions will be graded on \emph{correctness} and
+  \emph{clarity}. You should only submit work that you believe to be
+  correct, and you will get significantly more partial credit if you
+  clearly identify the gap(s) in your solution. You may opt for the
+  ``I’ll take 15\%'' option (details in Syllabus).
+\item You may collaborate with others on this problem set.  However,
+  you must \textbf{{write up your own solutions}} and \textbf{{list
+      your collaborators and any external sources}} for each
+  problem. Be ready to explain your solutions orally to a course staff
+  if asked.
+\item For problems that require you to provide an algorithm, you must
+  give a precise description of the algorithm, together with a proof
+  of correctness and an analysis of its running time. You may use
+  algorithms from class as subroutines. You may also use any facts
+  that we proved in class or from the book.
+\end{itemize}
+
+\noindent This assignment contains \numquestions\ questions,
+\numpages\ pages for the total of \numpoints \ points and
+\numbonuspoints\ bonus points. A random subset of the problems will be
+graded. \medskip
+
+\newpage
+
+\begin{questions}
+
+  \question (Akinator's trick) Play the game \alg{Akinator} online
+  (\url{https://en.akinator.com/}), and answer the questions below.
+
+  \begin{parts}
+    \part[10] Given a \emph{sorted} array $A$ with distinct numbers,
+    we want to find out an $i$ such that $A[i] = i$ if exists. Give an
+    $O(\log n)$ algorithm.
+    \part[10] Consider a sorted array with distinct numbers. It is
+    then rotated $k$ ($k$ is unknown) positions to the right, and call
+    the resulting array $A$. (Example: (8,9,2,3,5,7) is the sorted
+    array (2,3,5,7,8,9) rotated to the right by 2 positions) Design as
+    efficient an algorithm as you can to find out if $A$ contains a
+    number $x$.
+
+    Exercise (do not turn in). Can you think of some real-world
+    problems that the techniques in your algorithms could be useful?
+  \end{parts}
+
+  \newpage
+  \question (Counting inversions) Given a sequence of $n$
+  \emph{distinct} numbers $a_1,\ldots,a_n$, we call $(a_i,a_j)$ an
+  \emph{inversion} if $i< j$ but $a_i > a_j$. For instance, the
+  sequence $(2,4,1,3,5)$ contains three inversions $(2,1)$, $(4,1)$
+  and $(4,3)$. 
+
+  \begin{parts}
+    \part[15] Given an algorithm running in time $O(n\log n)$ that
+    counts the number of inversions. (Hint: does Merge-sort help?) Can
+    you also output all inversions?
+
+    \bonuspart[10] Let's call a pair a \emph{significant inversion} if
+    $i<j$ and $a_i > 2a_j$. Given an $O(n\log n)$ algorithm to count
+    the number of significant inversions. 
+  \end{parts}
+
+  \newpage 
+
+  
+  \question[10] (Cycles) Give an algorithm to detect whether a given
+  undirected graph contains a cycle. If the graph contains a cycle,
+  then your algorithm should output one (not all cycles, just one of
+  them). The running time of your algorithm should be $O(m + n)$ for a
+  graph with $n$ nodes and $m$ edges.
+
+  \newpage
+  
+  \question[15] (Shortest cycles containing a given edge) Give an
+  algorithm that takes as input an undirected graph $G = (V, E)$ and
+  an edge $e \in E$, and outputs a shortest cycle that contains $e$
+  (if no cycle containing $e$ exists, the algorithm should output
+  ``none'').
+
+  (Note: Give as efficient an algorithm as you can.)
+
+  
+\end{questions}
+
+
+\end{document}

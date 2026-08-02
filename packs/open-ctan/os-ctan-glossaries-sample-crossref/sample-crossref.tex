@@ -1,0 +1,53 @@
+% This file is public domain
+% If you want to use arara, you need the following directives:
+% arara: pdflatex: { synctex: on }
+% arara: makeglossaries
+% arara: pdflatex: { synctex: on }
+%
+%http://mirrors.ctan.org/macros/latex/contrib/glossaries/glossaries-user.html#sample-crossref
+\documentclass{article}
+
+\usepackage[colorlinks]{hyperref}
+\usepackage{glossaries}
+
+\makeglossaries
+
+\providecommand{\alsoname}{see also}
+
+\renewcommand{\glsseeitemformat}[1]{\textsc{\glsentryname{#1}}}
+
+\newglossaryentry{pear}{name=pear,
+description={an oddly shaped fruit}}
+
+\newglossaryentry{apple}{name=apple,
+description={firm, round fruit},
+see=[\alsoname]{pear}}
+
+\newglossaryentry{banana}{name=banana,
+description={a yellow fruit with an even odder shape than
+a \gls{pear}}}
+
+\newglossaryentry{fruit}{name=fruit,
+description={sweet, fleshy product of plant containing seed}}
+
+% An alternative to using the 'see' key:
+\glssee{fruit}{pear,apple,banana}
+
+\newglossaryentry{courgette}{name={courgette},
+ description={type of long, green summer squash}}
+
+% The 'see' key automatically triggers \glssee so this entry will be
+% included even though it's not referenced in the document.
+\newglossaryentry{marrow}{name={marrow},
+ description={long vegetable with thin green skin and white flesh},
+ see={[\alsoname]courgette}}
+
+\newglossaryentry{zucchini}{name={zucchini},description={\nopostdesc},
+ see={courgette}}
+
+\begin{document}
+\gls{pear}, \gls{apple}, \gls{banana} and \gls{courgette}.
+
+\printglossaries
+
+\end{document}

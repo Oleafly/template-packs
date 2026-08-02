@@ -1,0 +1,88 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[left=0.75in,top=0.6in,right=0.75in,bottom=0.6in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{charter}
+
+% Section formatting
+\titleformat{\section}{\large\bfseries\uppercase}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{12pt}{8pt}
+
+% Itemize formatting
+\setlist[itemize]{leftmargin=0.15in, labelsep=0.1in, nosep}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% Cabeçalho
+\begin{center}
+    {\huge \textbf{João Victor Mendes}} \\
+    \vspace{4pt}
+    {\large Engenheiro de Suporte Técnico L2/L3 | PostgreSQL · Resposta a Incidentes · ETL} \\
+    \vspace{2pt}
+    \href{https://linkedin.com/in/mendes-victor}{linkedin.com/in/mendes-victor} | \href{https://github.com/victormends}{github.com/victormends \small(pg-incident-recovery · receita-cnpj-etl-pipeline · brazil-ncm-table-tools)} | \href{mailto:j.victor8@hotmail.com}{j.victor8@hotmail.com} | +55 (41) 99593-8387 \\
+    União da Vitória, PR, Brasil (UTC-3)
+\end{center}
+
+% Resumo Profissional
+\section{Resumo Profissional}
+\textbf{Medalha de Prata, Olimpíada Brasileira de Matemática (OBMEP, Top 0,01\% entre 18M+ participantes).} Traduz rigor analítico extremo em resposta estrutural a incidentes em ambientes de produção de alto risco. Especialista em Suporte de Engenharia L2/L3, fechando 80+ chamados semanais com 95\%+ de conformidade com SLA. Expert em diagnóstico PostgreSQL e eliminação de classes de falha estrutural, protegendo sistemas onde 30 minutos de indisponibilidade representa \textasciitilde R\$75k em exposição combinada de clientes.
+
+% Habilidades Técnicas
+\section{Habilidades Técnicas}
+\begin{itemize}
+    \item \textbf{Diagnóstico PostgreSQL \& Resposta a Incidentes:} Gerenciamento de WAL, replication slots, internos do catálogo de sistema (pg\_class, pg\_toast), análise de bloat, otimização com EXPLAIN ANALYZE, JIT, pg\_hba (SCRAM/MD5), pg\_restore -j 4, PL/pgSQL; ferramentas fiscais: Receita CNPJ, XML SEFAZ (NF-e/NFC-e/NFS-e/CT-e), NCM/CFOP/ICMS, conversão NCM Siscomex/Classif JSON-para-CSV.
+    \item \textbf{Automação de Infraestrutura:} PowerShell, Python (Pandas/parsing), .NET 8/C\#, Bash, SQL, design de pipelines ETL, lógica de Registro/ACL do Windows Server, diagnósticos de protocolo DNS/SMTP/TLS, Git.
+    \item \textbf{Operações de Suporte:} Gerenciamento de incidentes P1/P2, RCA alinhado ao ITIL, documentação de pós-mortem, gestão de SLA \& Churn, depuração ao vivo cross-domain em SaaS B2B, mentoria técnica.
+    \item \textbf{Idiomas:} Inglês (Proficiência Profissional Plena Certificada B2, BRASAS), Português (Nativo).
+\end{itemize}
+
+% Experiência Profissional
+\section{Experiência Profissional}
+
+\textbf{Pedroso Automação} | ERP SaaS de conformidade fiscal B2B \hfill Junho 2024 -- Atual \\
+\textit{Engenheiro de Suporte Técnico | Recuperação de Infraestrutura L2/L3} \hfill União da Vitória, PR
+
+Suporte L2/L3 direto para 500+ ambientes corporativos (1.500+ usuários finais). Manteve independência total em rotações solo, resolvendo incidentes P1/P2 sem escalada por meio de análise estrutural profunda.
+\begin{itemize}[topsep=4pt]
+    \item \textbf{Eliminou a classe de risco de retenção de WAL} na frota: construiu um monitor PowerShell agendado via Agendador de Tarefas (PG12) que detecta slots de replicação órfãos inativos e os remove quando a retenção ultrapassa 2GB ou a inatividade supera 30 minutos, com alertas no Visualizador de Eventos. Em instâncias PG13+, complementado com \texttt{max\_slot\_wal\_keep\_size} como limite rígido no servidor.
+    \item \textbf{Automatizou a recuperação de cluster com 30 bancos de dados} desenvolvendo script PowerShell que paraleliza verificações de estado, limpa arquivos \texttt{postmaster.pid} obsoletos e monitora recuperação WAL na inicialização; reduziu o tempo de recuperação de horas para menos de 5 minutos.
+    \item \textbf{Padronizou a implantação do PostgreSQL no Windows} com script de instalação ponta a ponta, configuração de serviço e hardening de runtime; reduziu o tempo de configuração manual de \textasciitilde{}2 horas para menos de 7 minutos nos ambientes da frota.
+    \item \textbf{Diagnosticou bloat de disco de 1GB/mês} por meio de \texttt{pg\_class} e \texttt{pg\_toast}; rastreou a causa raiz a caminhos de arquivos criptografados serializados como milhares de caracteres por entrada de log de auditoria; reduziu o tempo de restore em 60\% (17 min para 6:58) via \texttt{pg\_restore -j 4}.
+    \item \textbf{Construiu pipeline ETL de 70M de registros} com redução de 60\% no tempo de processamento sobre dataset governamental de 15GB+; estendido com classificação tributária de CNPJs (MEI, Simples Nacional, Normal, inválido), auditoria de regime fiscal via XML (NF-e/NFC-e/NFS-e/CT-e) e staging em PostgreSQL, expondo o top 0,001\% dos leads comerciais ativos.
+    \item \textbf{Resolveu falhas silenciosas de downgrade TLS 1.0} no Windows 11 via rastreamento com Process Monitor; identificou chaves de registro forçadas pela aplicação que sobrescreviam os padrões do sistema e viabilizou correção permanente no código na mesma semana.
+    \item \textbf{Protegeu R\$500k em estoque ativo (\textasciitilde{}\$100k USD)} ao fazer engenharia reversa de um banco Firebird legado sem documentação; reprocessou 20 anos de changelogs de transações para reconstruir o estado completo do inventário --- sem perda de dados, entregue no mesmo dia em que o esquema foi visto pela primeira vez.
+    \item \textbf{Reduziu diagnóstico fiscal de 30+ min para menos de 5 min} desenvolvendo um fluxo estruturado de triagem assistido por LLM: baixar o XML de rejeição SEFAZ, injetar contexto de banco de dados e sistema, e extrair a regra específica de NCM, CFOP ou ICMS que causa cada rejeição --- eliminando toda uma classe de escaladas para desenvolvimento.
+    \item \textbf{Estabeleceu runbooks e cultura de mentoria técnica}; produziu 20+ guias em vídeo e pós-mortems ITIL, reduzindo a dependência de disponibilidade sênior e acelerando o onboarding de novos engenheiros.
+\end{itemize}
+
+\vspace{8pt}
+\textbf{Girafa Comunicação Interativa} | Agência Digital \hfill Set 2022 -- Abr 2024 \\
+\textit{Analista de Infraestrutura Cloud \& Operações Web} \hfill Remoto, Brasil
+
+Operou infraestrutura Cloud e operações web para 70+ clientes corporativos (AWS Route 53, Registro.br, Locaweb).
+\begin{itemize}[topsep=4pt]
+    \item \textbf{Atuou como Liaison de Fornecedor para domínios em inglês} (GoDaddy, AWS, Namecheap), coordenando transferências complexas de propriedade e migrações de infraestrutura para clientes internacionais.
+    \item \textbf{Investigou brechas de segurança de clientes} auditando histórico Git e logs de acesso; revogou sessões comprometidas e redefiniu credenciais para resolver incidentes de segurança de alta prioridade.
+    \item \textbf{Resolveu incidentes de infraestrutura de alta prioridade} no AWS Route 53, WAF e e-mail; isolou domínios de falha durante travamentos de cache do CloudFront e conflitos de propagação de DNS.
+\end{itemize}
+
+% Formação e Prêmios
+\section{Formação \& Histórico}
+\textbf{FGV --- Ciência de Dados \& Economia (2020--2022)} \hfill Rio de Janeiro, Brasil \\
+Bolsista integral OBMEP; AED: 9,71. Saiu após dois anos para retornar ao Sul --- a bolsa exigia residência integral a 1.000 km da família; optou pelo trabalho prático em vez de concluir a graduação no Rio.
+
+\textbf{IFPR --- Análise e Desenvolvimento de Sistemas (2023--2024)} \hfill União da Vitória, Brasil \\
+Conceito A em Matemática para Computação. Saiu para se dedicar integralmente ao cargo de L2/L3; a atuação em incidentes reais acelerava o aprendizado mais do que o currículo noturno.
+
+\vspace{4pt}
+\textbf{Medalha de Prata --- Olimpíada Brasileira de Matemática (OBMEP, 2016)} \hfill Nacional \\
+Top 0,01\% entre 18M+ participantes. Medalha de Bronze (2014); 2x Menções Honrosas.
+
+\end{document}

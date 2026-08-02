@@ -1,0 +1,17 @@
+% This file is embedded in glossaries-user.pdf 
+% Example 26 Defining and Using an Acronym (Rollback)
+% Label: "ex:newacronymrollback"
+% arara: pdflatex
+% arara: pdfcrop
+\documentclass[12pt]{article}
+\pagestyle{empty}
+\usepackage{glossaries}[=v4.46]% rollback to v4.46
+ % no \setacronymstyle so old style used
+ \newacronym{idn}{IDN}{identification number} 
+\begin{document}
+First use: \gls{idn}. Next use: \gls{idn}. 
+
+\glsreset{idn}% reset first use
+ The \gls{idn}['s] prefix is a capital letter.
+Next use: the \gls{idn}['s] prefix is a capital letter. 
+\end{document}

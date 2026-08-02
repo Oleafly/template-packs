@@ -1,0 +1,86 @@
+% This file is public domain
+% If you want to use arara, you need the following directives:
+% arara: pdflatex: { synctex: on }
+% arara: makeglossaries
+% arara: pdflatex: { synctex: on }
+%
+%http://mirrors.ctan.org/macros/latex/contrib/glossaries/glossaries-user.html#sampleaccsupp
+%
+% Note that this document isn't fully accessible as it's not tagged.
+% See the accessibility or tagpdf packages for examples of how to tag the document.
+\documentclass[a4paper]{article}
+
+\usepackage[includemp,marginpar=1.5in,textwidth=5in]{geometry}
+\usepackage{graphicx}
+% use debug=showaccsupp to show replacement text in the margin
+\usepackage[acronym]{glossaries-accsupp}
+
+\makeglossaries
+
+\setacronymstyle{long-short}
+
+% These will use 'ActualText' rather than 'E' because the
+% abbreviation is in the 'name' field.
+\newglossaryentry{Doctor}{name=Dr,description={Doctor},access={Doctor}}
+
+\newglossaryentry{Drive}{name={Dr.},description={Drive},access={Drive},
+ plural={Drvs}}
+
+% These will use 'E'
+\newacronym{eg}{e.g.}{for example}
+
+\newacronym[shortaccess={TiKZ ist kein Zeichenprogramm}]
+{tikz}{Ti\emph{k}Z}{Ti\emph{k}Z ist \emph{kein} Zeichenprogramm}
+
+
+% The symbol key needs to use 'ActualText' but the replacement text
+% needs to be supplied as the hexadecimal character code.
+
+\newcommand{\glssymbolaccsupp}[2]{%
+ \glsaccessibility[method=hex,unicode]{ActualText}{#1}{#2}%
+}
+
+\newglossaryentry{int}{name={int},description={integral},
+  symbol={\ensuremath{\int}},symbolaccess={222B}
+}
+
+% The user1 key needs to use 'Alt':
+\newcommand{\glsuseriaccsupp}[2]{%
+  \glsaccessibility{Alt}{#1}{#2}%
+}
+
+\newglossaryentry{sampleimage}{name={sample image},
+ description={an example image},
+% \protect is needed unless \glsnoexpandfields has been used
+ user1={\protect\includegraphics[height=20pt]{example-image}},
+ user1access={a boilerplate image used in examples}
+}
+
+\begin{document}
+
+\section{General Terms}
+
+Testing general terms that are really abbreviations.
+
+\gls{Doctor} Smith lives at 2, Blueberry \gls{Drive}
+
+\section{Symbols and Images}
+
+Symbol: \glssymbol{int} (\gls{int}).
+
+Image: \glsuseri{sampleimage} (\gls{sampleimage}).
+
+\section{Abbreviations}
+
+First use: \gls{eg}, \gls{tikz}.
+
+Next use: \gls{eg}, \gls{tikz}.
+
+Short: \acrshort{eg}, \acrshort{tikz}.
+
+Long: \acrlong{eg}, \acrlong{tikz}.
+
+Full: \acrfull{eg}, \acrfull{tikz}.
+
+\printglossaries
+\end{document}

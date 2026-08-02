@@ -1,0 +1,448 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{enumitem}
+\usepackage{tabu}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%If you want to title your bold things something different just make another thing exactly like this but replace "problem" with the name of the thing you want, like theorem or lemma or whatever
+
+\newenvironment{nscenter}
+ {\parskip=0pt\par\nopagebreak\centering}
+ {\par\noindent\ignorespacesafterend}
+ 
+\begin{document}
+ %Good resources for looking up how to do stuff:
+%Binary operators: http://www.access2science.com/latex/Binary.html
+%General help: http://en.wikibooks.org/wiki/LaTeX/Mathematics
+ 
+\title{Math 310 Homework 3}
+\author{Jacob Shiohira}
+\maketitle
+
+\noindent
+\textit{Note:} This homework took a total of 6 hours. I initially did it alone, but I did review with Jacob Warner. He helped me a lot with Problem $2$, namely, he introduced the idea of using if $a|b$ and $b|c$, then $a|c$.
+
+\begin{problem}{1}
+Let $a,b,c \in \mathbb{Z}$ be so that $a,b,c \neq 0.$ Write a formal definition for the greatest common divisor of $a,b,c$, denoted $(a,b,c)$.
+
+\vspace{.3cm}
+
+\noindent
+According to B\`ezout's Identity, if $gcd(a_1, a_2, ..., a_n)=d$, then there are integers $x_1, x_2, ..., x_n$ such that $d=a_1x_1+a_2x_2+...+a_nx_n$. Note that this was referenced in the formal definition of the greatest common denominator of two integers, and it can be extended to the definition of the greatest common denominator of three integers.\\
+
+\noindent
+\textbf{Definition} Let $a,b,c,d \in \Z$, $abc \neq 0$ and $d>0$. Then $d$ is the greatest common divisor of $a,b$, and $c$ if and only if $d$ satisfies these conditions:
+\begin{enumerate}[label=\roman*] 
+\item $d|a$, $d|b$, and $d|c$
+\item If $m|a$, $m|b$, and $m|c$, then $m \leq d$ for $m \in \Z$.
+\end{enumerate}
+\end{problem}
+
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+
+\begin{problem}{2}
+Show that for all integers $a,b,c$, all non-zero, $((a,b),c)=(a,(b,c))=(a,b,c)$.
+
+\vspace{.3cm}
+
+\noindent
+Note: In order to make this proof much shorter, we will use the following result (the proof follows): 
+
+\begin{center}
+If $a|b$ and $b|c$, then $a|c$.
+\end{center}
+
+\noindent
+Let $a$, $b$, and $c$ be integers. Suppose that $a|b$ and $b|c$. We want to then show that $a|c$. Since $a|b$, we know $b=am$ for some integer $m$ from the definition of divisibility. Likewise, we know $c=bn$ for some integer $n$. By substituting $b=am$ for $b$ in $c=bn$, we get $c=(am)n$. By the associative property of the integers, we have that $c=a(mn)$. Thus, $c|a$.
+
+\vspace{.3cm}
+
+\noindent
+\textbf{Claim I} We are going to first show that $((a,b),c)=(a,b,c)$. \\
+
+\noindent
+Suppose that $(a,b,c)=e$, $((a,b),c)=f$, and $(a,b)=d$. Through substitution, $((a,b),c)$ becomes $(d,c)=f$. Then, B\`ezout's Identity says that $e=au+bv+cw$ and $f=(a,b)u_0+cv_0=du_0+cv_0$. By the definition of divisibility, we know that $f|d$ and $f|c$, which also means $c=fc_f$ for some integers $c_f$. We can use the result above to show that since $f|d$ and $d|a$ and $d|b$, we know $f|a$ and $f|b$, which means $a=fa_f$ and $b=fb_f$ for some integers $a_f, b_f$. Finally, from $(a,b,c)=e$, we know that $e|a$, $e|b$ and $e|c$, which means $a=ea_e$, $b=eb_e$ and $c=ec_e$ for some integers $a_e, b_e, c_e$. We can then take $e=au+bv+cw$ and substitute values for $a,b,$ and $c$ to get
+
+\begin{center}
+$e=(fa_f)u+(fb_f)v+(fc_f)w$.
+\end{center}
+
+\noindent
+By the associative and distributive property of the integers, we then have 
+
+\begin{center}
+$e=f(a_fu+b_fv+c_fw)$.
+\end{center}
+
+\noindent
+Since the integers are closed under addition and multiplication, $a_fu+b_fv+c_fw$ is an integer, and we have that $f|e$. By definition of divisibility, if $f|e$, then $f \leq e$. Now, we can then take $f=du_0+cv_0$ and substitute $d$ to get
+
+\begin{center}
+$f=(au+bv)u_0+cv_0$.
+\end{center}
+
+\noindent
+By the associative and distributive property of the integers, we then have 
+
+\begin{center}
+$f=auu_0+bvu_0+cv_0$.
+\end{center}
+
+\noindent
+We can now substitute our values for $a$, $b$, and $c$ to get 
+
+\begin{center}
+$f=(ea_e)uu_0+(eb_e)vu_0+(ec_e)v_0$.
+\end{center}
+
+\noindent
+By the associative and distributive property of the integers, we then have 
+
+\begin{center}
+$f=e(a_euu_0+b_evu_0+c_ev_0)$.
+\end{center}
+
+\noindent
+Since the integers are closed under addition and multiplication, $a_euu_0+b_evu_0+c_ev_0$ is an integer, and we have that $e|f$. By definition of divisibility, if $e|f$, then $e \leq f$. So, we have reached that $e \leq f$ and $f \leq e$. Thus, $e=f$, therefore proving that $((a,b),c)=(a,b,c)$.
+
+\vspace{.3cm}
+
+\noindent
+\textbf{Claim II} We are going to first show that $(a,(b,c))=(a,b,c)$. \\
+
+\noindent
+Suppose that $(a,b,c)=e$, $(a,(b,c))=f$, and $(b,c)=d$. Through substitution, $(a,(b,c))$ becomes $(a,d)=f$. Then, B\`ezout's Identity says that $e=au+bv+cw$ and $f=au_0+(b,c)v_0=au_0+dv_0$. By the definition of divisibility, we know that $f|a$ and $f|d$, which also means $a=fa_f$ for some integers $a_f$. We can use the result above to show that since $f|d$ and $d|b$ and $d|d$, we know $f|b$ and $f|c$, which means $b=fb_f$ and $c=fc_f$ for some integers $b_f, c_f$. Finally, from $(a,b,c)=e$, we know that $e|a$, $e|b$ and $e|c$, which means $a=ea_e$, $b=eb_e$ and $c=ec_e$ for some integers $a_e, b_e, c_e$. We can then take $e=au+bv+cw$ and substitute values for $a,b,$ and $c$ to get
+
+\begin{center}
+$e=(fa_f)u+(fb_f)v+(fc_f)w$.
+\end{center}
+
+\noindent
+By the associative and distributive property of the integers, we then have 
+
+\begin{center}
+$e=f(a_fu+b_fv+c_fw)$.
+\end{center}
+
+\noindent
+Since the integers are closed under addition and multiplication, $a_fu+b_fv+c_fw$ is an integer, and we have that $f|e$. By definition of divisibility, if $f|e$, then $f \leq e$. Now, we can then take $f=au_0+dv_0$ and substitute $d$ to get
+
+\begin{center}
+$f=au_0+(bu+cv)v_0$.
+\end{center}
+
+\noindent
+By the associative and distributive property of the integers, we then have 
+
+\begin{center}
+$f=au_0+buv_0+cvv_0$.
+\end{center}
+
+\noindent
+We can now substitute our values for $a$, $b$, and $c$ to get 
+
+\begin{center}
+$f=(ea_e)u_0+(eb_e)uv_0+(ec_e)vv_0$.
+\end{center}
+
+\noindent
+By the associative and distributive property of the integers, we then have 
+
+\begin{center}
+$f=e(a_eu_0+b_euv_0+c_evv_0)$.
+\end{center}
+
+\noindent
+Since the integers are closed under addition and multiplication, $a_eu_0+b_euv_0+c_evv_0$ is an integer, and we have that $e|f$. By definition of divisibility, if $e|f$, then $e \leq f$. So, we have reached that $e \leq f$ and $f \leq e$. Thus, $e=f$, therefore proving that $(a,(b,c))=(a,b,c)$. We have now shown that $((a,b),c)=(a,b,c)$ and $(a,(b,c))=(a,b,c)$, so $((a,b),c)=(a,(b,c))=(a,b,c)$ must hold. \qedsymbol
+\end{problem}
+
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+
+\begin{problem}{3}
+Show that for all $a,b \in \mathbb{Z}$, both non-zero, and all $m, n \in \mathbb{Z}$, $(a,b)|(am+bn)$. \\
+
+% We want to show that ((a,b),c) = d
+% We assume that (a,b)=m, so we are left with
+% (d,c)=d ... follow with the fact that z is the 
+% gcd of d and c
+
+\noindent
+To show $(a,b)|(am+bn)$, we must show that this is only true $iff r=0$. Suppose that $(a,b)=d$ for some $d \in \Z$. Per B\`ezout's Identity, this means there exist $u,v \in \Z$ such that $d=au+bv$. Further, per the definition of $gcd$, $d|a$ and $d|b$. The definition of divisibility gives us that $a=dp$ and $b=dp_0$ for $p,p_0 \in \Z$. Consider the following two cases:
+
+\begin{nscenter}
+\begin{enumerate}[label=(\alph*)] 
+\item If $(a,b)$ divides $(am+bn)$, then $r=0$
+\item If $r=0$, then $(a,b)$ divides $(am+bn)$.
+\end{enumerate}
+\end{nscenter}
+
+\noindent
+\textbf{Claim I} If $(a,b)$ divides $(am+bn)$, then $r=0$. \\
+
+\noindent
+Suppose that $(a,b)$ divides $(am+bn)$. We then want to show that $r=0$ follows. By the division algorithm, there exist $q, r \in \Z$ such that 
+
+\begin{center}
+$am+bn=(a,b)q+r$, $0 \leq r < (a,b) = d$.
+\end{center}
+
+\noindent
+Since we are looking at the values of $r$, we can rearrange the equation
+
+\begin{center}
+$r=(am+bn)-(a,b)q$.
+\end{center}
+
+\noindent
+By substituting and distributing,
+
+\begin{center}
+$r=(am+bn)-dq$, \\
+$r=am+bn-dq$, \\
+$r=dpm+dp_0n-dq$, \\
+$r=d(pm+p_0n-q)$.\\
+\end{center}
+
+\noindent
+Since $\Z$ is closed under addition and multiplication, $pm+p_0n-q$ is also an integer. Thus, $d$ must divide $r$. However, that would mean that $d<r$, but the division algorithm says that $r<d$. So, \\
+% TODO: Finish this argument by figuring out what this contradiction means
+
+\noindent
+\textbf{Claim II} If $r=0$, then $(a,b)$ divides $(am+bn)$. \\
+
+\noindent
+Suppose that $r=0$. We then want to show that $(a,b)$ divides $(am+bn)$. By the division algorithm, if $r=0$, there exist $q \in \Z$ such that 
+
+\begin{center}
+$(am+bn)=(a,b)q+0$.
+\end{center}
+
+\noindent
+Then,
+
+\begin{center}
+$(am+bn)=(a,b)q$. \\
+\end{center}
+
+\noindent
+By the definition of divisibility, $(a,b)$ must divide $(am+bn)$. We can now combine Claim I and Claim II, and we see that $(a,b)$ divides $(am+bn)$ if and only if $r=0$. \qedsymbol
+\end{problem}
+
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+
+\begin{problem}{4} See items $a, b,$ and $c$.
+\begin{enumerate}[label=(\alph*)] 
+\item Find $(6,21)$. \\
+
+\noindent
+We can use the Euclidean Algorithm to now find the $gcd(6,21)$:
+
+\begin{center}
+$A=21, B=6$
+\end{center}
+
+\noindent
+Use long division to find that $21/6 = 3$ with a remainder of $3$. We can write this as: $21 = 6 \cdot 3 +3$.
+Find GCD$(6,3)$, since GCD$(21,6)$ = GCD$(6,3)$.
+
+\begin{center}
+$A=6, B=3$
+\end{center}
+
+\noindent
+Use long division to find that $6/3 = 2$ with a remainder of $0$. We can write this as: $6 = 6 \cdot 2 +0-$.
+Find GCD$(3,0)$, since GCD$(21,6)$ = GCD$(3,0)$.
+
+\begin{center}
+$A=3, B=0$
+\end{center}
+
+\noindent
+Thus, we have shown that GCD$(21,6)=$ GCD$(6,3)=$ GCD$(3,0)=3$. Note: Since the process is the same for the 12 steps below, I will not repeat the Euclidean algorithm for each one. \\
+% TODO: Do I need this note? AND Is this true?
+
+\item Compute $(6, 21+6n)$ for new values of $n$. Make a conjecture about the value for all $n$. 
+
+\noindent
+Note: The last column in each of the tables represents the GCD of $b+an$ for each iteration. \\
+
+\begin{center}
+\begin{tabu} to 0.7\textwidth { | X[c] | X[c] | X[c] | X[c] |}
+ \hline
+ $n=0$ & $(6, 21+6(0))$ & $(6, 21)$ & $3$\\
+ \hline
+ $n=1$ & $(6, 21+6(1))$ & $(6, 27)$ & $3$\\
+\hline
+ $n=2$ & $(6, 21+6(2))$ & $(6, 33)$ & $3$\\
+\hline
+ $n=3$ & $(6, 21+6(3))$ & $(6, 39)$ & $3$\\
+\hline
+\end{tabu}
+\end{center}
+
+\noindent
+We have now seen that the GCD$(a, b)=$GCD$(a, b+an)$ independent for any integer $n$. Thus, we arrive at the following conjecture:
+
+\vspace{.2cm}
+
+\begin{nscenter}
+\textbf{Conjecture} %TODO: Add my conjecture% 
+For any integer $n$, $(a,b)=(a,b+an)$.
+\end{nscenter}
+
+\item Try different values of $a,b$ and make a conjecture about $(a, b+an)$. \\
+
+Trial $8$ and $32$:
+
+\begin{center}
+\begin{tabu} to .85\textwidth { | X[c] | X[c] | X[c] | X[c] |}
+\hline
+ $n=1$ & $(8, 14+8(1))$ & $(8, 14)$ & $2$\\
+\hline
+ $n=1$ & $(8, 14+8(1))$ & $(8, 22)$ & $2$\\
+\hline
+ $n=2$ & $(8, 14+8(2))$ & $(8, 30)$ & $2$\\
+ \hline
+ $n=3$ & $(8, 14+8(3))$ & $(8, 38)$ & $2$\\
+ \hline
+\end{tabu}
+\end{center}
+
+Trial $-1$ and $7$:
+
+\begin{center}
+\begin{tabu} to 0.7\textwidth { | X[c] | X[c] | X[c] | X[c] |}
+ \hline
+ $n=0$ & $(-1, 7-1(0))$ & $(1, 7)$ & $1$\\
+ \hline
+ $n=1$ & $(-1, 7-1(1))$ & $(1, 6)$ & $1$\\
+ \hline
+ $n=2$ & $(-1, 7-1(2))$ & $(1, 5)$ & $1$\\
+\hline
+ $n=3$ & $(-1, 7-1(3))$ & $(1, 4)$ & $1$\\
+\hline
+\end{tabu}
+\end{center}
+
+Trial $4$ and $-26$:
+
+\begin{center}
+\begin{tabu} to 0.8\textwidth { | X[c] | X[c] | X[c] | X[c] |}
+ \hline
+ $n=0$ & $(4, -26+4(0))$ & $(4, -26)$ & $2$\\
+ \hline
+ $n=1$ & $(4, -26+4(1))$ & $(4, -22)$ & $2$\\
+\hline
+ $n=2$ & $(4, -26+4(2))$ & $(4, -18)$ & $2$\\
+ \hline
+ $n=3$ & $(4, -26+4(3))$ & $(4, -14)$ & $2$\\
+ \hline
+\end{tabu}
+\end{center}
+
+\noindent
+We have now seen through multiple examples that, independent of integers $a, b$ and $n$, the $gcd(a,b)$ is always the same as $gcd(a,b+an)$. Thus, we arrive at the following conjecture:
+
+\vspace{.2cm}
+
+\begin{nscenter}
+\textbf{Conjecture} %TODO: Add my conjecture% 
+For any integers $a,b$, $a,b \neq 0$, $(a,b)=(a,b+an)$ for any $n \in \Z$.
+\end{nscenter}
+\end{enumerate}
+\end{problem}
+
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+
+\begin{problem}{5} See items $a$ and $b$.
+\begin{enumerate}[label=(\alph*)] 
+\item If $a,b,u,v \in \mathbb{Z}$ are such that $au+bv=1$, prove that $(a,b)=1$.
+
+\noindent
+Suppose that $au+bv=1$ and that $a,b$ have a common divisor $c$. Then, we would have that $a=cx$ and $b=cy$. Substituting the new values of $a$ and $b$ would yield $(cx)u+(cy)v=1$. From the associative property and distributive of the integers, we have that $c(xu+yv)=1$. It then follows that $c|1$ because $xu+yv$ is an integer, as a result of the integers being closed under addition and multiplication. Since $c$ is a divisor of $1$, $c \leq 1$. The definition of $gcd$ of two integers states that $c \geq 1$, and we arrive at the following restriction on $1$: $1 \leq c \leq 1$. Referencing the fact that the integers are not dense, $1=1$ and $(a,b)=1$. \qedsymbol
+
+\item Show by example that if $au+bv=d>1$, then $(a,b)$ may not be $d$. 
+
+\vspace{.1cm}
+
+\noindent
+Consider $a=1$, $b=7$, $u=1$, and $v=1$. Then
+
+\begin{center}
+$au+bv=7$
+\end{center}
+
+but $gcd(1,7)=1$.
+\end{enumerate}
+\end{problem}
+
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+
+\begin{problem}{6}
+If $a|c$ and $b|c$ and $(a,b)=d$, prove that $ab|cd$. \\
+
+\noindent
+Suppose $a|c$ and $b|c$ and $(a,b)=d$. Since $a|c$ and $b|c$, we know $c=ax$ and $c=by$ for some $x,y \in \Z$. Additionally, B\`ezout's Identity gives us that $d=au+bv$ for some $u,v \in \Z$. We want to show that $ab|cd$ then follows. We can multiply by $c$ on both sides of $d=au+bv$ to get 
+
+\begin{center}
+$cd=c(au+bv)$.
+\end{center} 
+
+\noindent
+By distribution property of the integers,
+
+\begin{center}
+$cd=cau+cbv$.
+\end{center} 
+
+\noindent
+We can now substitute $c=ax$ and $c=by$ and then apply the associative property of the integers to get
+
+\begin{center}
+$cd=(by)au+(ax)bv$
+\end{center} 
+
+\noindent
+and
+
+\begin{center}
+$cd=ab(yu)+ab(xv)$.
+\end{center} 
+
+\noindent
+We can factor out $ab$ from the right hand side to get
+
+\begin{center}
+$cd=ab(yu+xv)$.
+\end{center} 
+
+\noindent
+Finally, we can then invoke the definition of divisibility because we know $yu+xv$ is also an integer since the integers are closed under addition and multiplication. Thus, $ab$ must divide $cd$. \qedsymbol
+\end{problem}
+
+\end{document} 

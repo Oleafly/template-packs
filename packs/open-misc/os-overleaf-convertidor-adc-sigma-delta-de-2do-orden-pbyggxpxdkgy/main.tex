@@ -1,0 +1,82 @@
+\documentclass[svgnames, border=20pt]{standalone}
+% Carga de paquetes
+% El paquete "circuitikz" ahora se carga con opciones
+\usepackage[RPvoltages]{circuitikz}
+\usepackage{helvet, verbatim}
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{comment}
+Este ejemplo muestra el Convertidor ADC (Analógico a Digital) Sigma Delte de Segundo Orden que a diferencia del Convertidor de primer orden, tiene dos etapas integradoras de las señales de diferencia que provienen de los sumadores. En este caso, a la salida del segundo integrador aparece el comparador como convertidor ADC de 1 bit cuya salida alimenta al bloque convertidor DAC (Digital a Analógico) de 1 bit y a la etapa de Filtro Digital o Diezmador. 
+
+La teoría, en idioma inglés, de este diseño se encuentra en el documento "How delta-sigma ADCs work, Part 1", publicado por la empresa Texas Instruments de Bonnie Baker, disponible en el enlace https://www.ti.com/lit/pdf/slyt423?keyMatch=BONNIE%20BAKER&amp;tisearch=Search-EN-technicaldocument
+\end{comment}
+% Bibliotecas de formas
+\usetikzlibrary{arrows.meta, shadows, shapes.arrows, shapes.symbols} 
+
+% Nodos del circuíto
+\tikzstyle{dac} = [fill=Solitude, line width=2pt, minimum height=1.5cm, minimum width=2.5cm, signal, draw=Solitude, signal to=west, font=\bf]
+\tikzstyle{filtro} = [fill=Clear Day, line width=2pt, minimum height=1.5cm, minimum width=3.5cm, rectangle, draw=Clear Day, font=\bf]
+\tikzstyle{flecha ancha} = [draw, shape=single arrow, shape border rotate=270, below=1pt, minimum height=45pt, minimum width=65pt]
+
+% Estilo de relleno y sombreado
+\tikzstyle{sombra1} = [fill=Portage,shadow yshift=4pt, shadow xshift=4pt]
+\tikzstyle{sombra2} = [fill=Riptide,shadow yshift=4pt, shadow xshift=4pt]
+
+% Estilo de signos positivos y negativos
+\tikzstyle{signo} = [left=5pt, font=\Large]
+
+% Definiciones de color
+\definecolor{Solitude}{HTML}{E5E9F7}
+\definecolor{Portage}{HTML}{849DD8}
+\definecolor{Vivid Violet}{HTML}{782F9A}
+\definecolor{Persian Rose}{HTML}{F034A3}
+\definecolor{Clear Day}{HTML}{E8F7F2}
+\definecolor{Riptide}{HTML}{8CD8C3}
+
+\begin{document}
+\begin{circuitikz}[american, line width=1.1pt, fill=Solitude]
+    % Dibujo de los nodos
+    \draw 
+    % Sumadores 
+    (0, 3) node[adder](sum1){}
+    (6, 3) node[adder](sum2){}
+    % Integradores
+    (3, 3) node[buffer, scale=1.5](amp1){} 
+    node[left=-2pt]{$\displaystyle\int$}
+    (9, 3) node[buffer, scale=1.5](amp2){}
+    node[left=-2pt]{$\displaystyle\int$}
+    % Nodos conversores
+    (amp2.out) to[adc, name=adc1,>] ++(3,0) coordinate(radc)% ADC de 1 bit
+    (10, -1) node[dac, align=center, general shadow={sombra1}](dac1){DAC\\de 1 bit}
+    % Nodo de filtro
+    (10, -4) node[filtro, align=center, general shadow={sombra2}] (fil1){Filtro Digital \\o Diezmador}
+    % Flecha ancha (salida binaria paralela)
+    (fil1.south) node[flecha ancha]{} node[below=45pt, align=center]{Salida binaria paralela\\(18-24 bits)\\}
+    % Salida Binaria Serial
+    (fil1.west) -- ++(-2, 0) node[inputarrow, rotate=180]{} node[left=5pt]{Salida serial de bits}
+    % Conexiones
+    (sum1.west) to[short, -o] ++(-1, 0) node[left]{$v_i$}
+    (radc) |- (dac1.east) node[inputarrow, rotate=180]{}
+    (radc) to[short, *-] ++(1, 0) |- (fil1.east) node[inputarrow, rotate=180]{}
+    (sum1.east) -- (amp1.in)
+    (amp1.out) -- (sum2.west)
+    (sum2.east) -- (amp2.in)
+    (dac1.west) -- (dac1.west-|sum2.south) node[circ]{} -- (sum2.south)
+    (dac1.west) -| (sum1.south)
+    (adc1.south) -- ++(0, -1) node[below=5pt]{Reloj}
+    (sum1.south) node[inputarrow, rotate=90]{}
+    (sum2.south) node[inputarrow, rotate=90]{}
+    (adc1.south) node[inputarrow, rotate=90]{}
+    % Nodos de texto
+    node[align=center, font=\huge\bf, color=blue] at (6, 6) {Convertidor ADC Sigma Delta ($\Sigma\Delta$)\\ de segundo orden\\}
+    (sum1.west) node[signo, above]{$+$}
+    (sum2.west) node[signo, above]{$+$}
+    (sum1.south) node[signo, below]{$-$}
+    (sum2.south) node[signo, below]{$-$}
+    (sum1) node[above=30pt]{Sumador 1}
+    (amp1) node[above=30pt]{Integrador 1}
+    (sum2) node[above=30pt]{Sumador 2}
+    (amp2) node[above=30pt]{Integrador 2}
+    ;
+\end{circuitikz}
+\end{document}

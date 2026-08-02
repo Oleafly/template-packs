@@ -1,0 +1,162 @@
+% GitHub Repo and Documentation: https://github.com/celiobjunior/resume-template
+% Copyright © 2025 Celio B Junior. All rights reserved.
+% 
+% Licensed under the Apache License, Version 2.0 (the "License");
+% you may not use this file except in compliance with the License.
+% You may obtain a copy of the License at
+%
+%     http://www.apache.org/licenses/LICENSE-2.0
+%
+% This template follows best practices from README.md
+
+% Início do documento LaTeX: define tipo e formato do documento
+% a4paper = tamanho A4, 10pt = tamanho base da fonte
+\documentclass[a4paper,10pt]{article}
+
+% --- PACOTES: BASE / IDIOMA ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+
+% --- PACOTES: LAYOUT / TIPOGRAFIA ---
+\usepackage{geometry}
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{array}
+\usepackage{tabularx}
+
+% --- PACOTES: LINKS / BOOKMARKS ---
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage{xurl}
+
+% --- CONFIGURAÇÃO: MARGENS / ESPAÇAMENTO ---
+\geometry{top=1.5cm, bottom=1.5cm, left=1.5cm, right=1.5cm} % Margens da página
+\setcounter{secnumdepth}{0}                                 % Remove numeração de seção
+\setlist[itemize]{
+    leftmargin=0.75em, % Recuo da lista (mais perto da margem da página)
+    itemsep=0.2em,     % Espaço entre itens
+    topsep=0.25em,     % Espaço antes/depois da lista
+    parsep=0em,        % Espaço entre parágrafos no mesmo item
+    partopsep=0em      % Espaço extra ao iniciar a lista
+}
+
+% Remove números de página e cabeçalhos para visual limpo do currículo
+\pagestyle{empty}
+
+% --- CONFIGURAÇÃO: METADADOS / LINKS ---
+\hypersetup{
+    pdftitle={CV Seu Nome},   % Título do PDF
+    pdfauthor={Seu Nome},     % Autor do PDF
+    colorlinks=true,          % Usa cor nos links (sem caixa)
+    linkcolor=black,          % Cor de links internos
+    urlcolor=black,           % Cor de URLs
+    citecolor=black,          % Cor de citações
+    bookmarksdepth=2          % Barra lateral: seção e subseção
+}
+
+% --- CONFIGURAÇÃO: TÍTULOS ---
+\titleformat{\section}
+{\Large\bfseries}
+{}
+{0em}
+{}
+[\titlerule\vspace{0.5ex}]
+\titleformat{\subsection}
+{\normalsize\bfseries}
+{}
+{0em}
+{}
+\titlespacing*{\subsection}{0pt}{0.35em}{0.15em}
+
+% Macro para entradas do currículo com bookmark no PDF
+\newcounter{cventry}
+\newcommand{\cventry}[4]{%
+    \refstepcounter{cventry}%
+    \phantomsection%
+    \pdfbookmark[2]{#1}{cventry-\thecventry}%
+    \noindent\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X >{\raggedleft\arraybackslash}X@{}}
+    \textbf{#1} & #2 \\
+    \textit{#3} & \textit{#4} \\
+    \end{tabularx}
+}
+
+% --- INÍCIO DO DOCUMENTO ---
+\begin{document}
+
+% --- CABEÇALHO ---
+% Substitua por suas informações pessoais
+\begin{center}
+    {\LARGE \textbf{Nome Completo}} 
+    \\ [0.1cm]
+    Cidade, Estado
+    {\textbullet}
+    \href{mailto:seu.email@exemplo.com}{seu.email@exemplo.com} 
+    {\textbullet}
+    \href{https://linkedin.com/in/usuario}{linkedin.com/in/usuario} 
+    {\textbullet}
+    \href{https://github.com/usuario}{github.com/usuario}
+\end{center}
+
+% --- SEÇÕES ---
+
+\section{Atividades de Liderança}
+    % Inclua trabalho voluntário, ligas acadêmicas ou cargos de liderança
+    \cventry{Nome da Empresa/Organização}{Localização (ex: Remoto ou Estado, País)}{Seu Cargo/Posição}{Data de Início - Data de Término (ex: Jan 2024 - Atual)}
+        \begin{itemize}
+            % Use verbos de ação do README - quantifique seu impacto quando possível
+            \item Descreva uma conquista significativa de liderança com métricas específicas.
+            \item Destaque como você gerenciou equipes, liderou iniciativas ou impulsionou resultados.
+            \item Mostre impacto na organização ou comunidade que você serviu.
+        \end{itemize}
+
+% ------
+
+\section{Experiência}
+    % Liste suas experiências profissionais ou acadêmicas, da mais recente para a mais antiga
+    \cventry{Nome da Empresa/Organização}{Localização (ex: Remoto ou Estado, País)}{Cargo (ex: Engenheiro de Software, Analista de Dados)}{Data de Início - Data de Término}
+        \begin{itemize}
+            % Foque em conquistas, não apenas na parte técnica - use o método STAR (Situação, Tarefa, Ação, Resultado)
+            \item Alcancei [resultado específico] através de [ação tomada], resultando em [impacto quantificado].
+            \item Desenvolvi/Construí/Criei [o que você fez] usando [tecnologias/métodos], resultando em [benefício].
+            \item Colaborei com [tamanho/tipo da equipe] para [alcançar o quê], melhorando [métrica] em [porcentagem/quantidade].
+        \end{itemize}
+
+    \cventry{Nome da Empresa/Organização}{Localização (ex: Remoto ou Estado, País)}{Cargo (ex: Desenvolvedor Júnior, Assistente de Pesquisa)}{Data de Início - Data de Término}
+        \begin{itemize}
+            \item Use verbos ativos da tabela de verbos de ação no README.md
+            \item Quantifique suas conquistas sempre que possível (números, porcentagens, prazos)
+            \item Mostre progressão e responsabilidade crescente entre os cargos
+        \end{itemize}
+
+    \cventry{Universidade/Instituição de Pesquisa}{Localização (ex: Remoto ou Estado, País)}{Função (ex: Pesquisador de Graduação, Monitor)}{Data de Início - Data de Término}
+        \begin{itemize}
+            \item Inclua pesquisa, trabalho acadêmico ou projetos que demonstrem habilidades técnicas
+            \item Destaque publicações, apresentações ou descobertas significativas
+        \end{itemize}
+
+% ------
+
+\section{Habilidades}
+    % Mantenha esta seção concisa e use o máximo de palavras-chave
+    % que fazem sentido para a vaga que você deseja.
+    \begin{itemize}
+        \item \textbf{Técnicas:} Liste suas linguagens de programação, frameworks, ferramentas e metodologias
+        \item \textbf{Idiomas:} Português (Nativo), Inglês (Nível de Proficiência), Terceiro Idioma (Nível de Proficiência)
+    \end{itemize}
+
+% ------
+
+% !!!!!!!!!!!!!!!!!!!!!!
+% Mude esta seção para o começo, depois do cabeçalho e antes
+% das suas experiências se você está procurando sua primeira
+% vaga ou algum estágio. Do contrário, deixe como está.
+% !!!!!!!!!!!!!!!!!!!!!!
+
+\section{Educação}
+    % Formação mais recente primeiro
+    \cventry{Nome da Sua Universidade}{Localização (ex: Remoto ou Estado, País)}{Título do Seu Curso (ex: Bacharelado em Ciência da Computação)}{Data de Início - Data de Término (ex: Jan 2020 - Dez 2024)}
+
+\end{document}

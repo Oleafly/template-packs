@@ -1,0 +1,175 @@
+% Compiled and edited online at https://letx.app
+\documentclass[10pt,letterpaper]{article}
+
+% Language and font encoding
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Font setting (as specified in LetX Brief)
+\usepackage[defaultsans]{lato}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Page Geometry (Zero left margin for the sidebar)
+\usepackage[left=0cm, right=1.2cm, top=1.2cm, bottom=1.2cm, noheadfoot]{geometry}
+
+% Core Packages
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\usepackage{accsupp}
+
+% Color Definitions (Elegant Slate / Brand Indigo Palette)
+\definecolor{accent}{HTML}{0F172A}      % Dark Slate for primary headings
+\definecolor{brand}{HTML}{4F46E5}       % Indigo for highlights and icons
+\definecolor{sidebarbg}{HTML}{F8FAFC}   % Very light Slate/Blue for sidebar background
+\definecolor{textdark}{HTML}{334155}    % Slate 700 for body text
+\definecolor{textmuted}{HTML}{64748B}   % Slate 500 for secondary/muted text
+
+% Zero out indents and spacing to prevent table and column misalignments
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% Section Header Command (Thin Rule)
+\newcommand{\sectionheader}[1]{%
+  \vspace{0.4cm}%
+  {\Large\bfseries\color{accent} #1}%
+  \vspace{0.15cm}%
+  \hrule height 0.5pt\relax%
+  \vspace{0.25cm}%
+}
+
+% Sidebar Section Header
+\newcommand{\sidebarsection}[1]{%
+  \vspace{0.5cm}%
+  {\large\bfseries\color{accent} #1}%
+  \vspace{0.12cm}%
+  \hrule height 0.5pt\relax%
+  \vspace{0.25cm}%
+}
+
+% Experience Item Command
+\newcommand{\experienceitem}[4]{%
+  \vspace{0.25cm}%
+  \noindent{\large\bfseries\color{accent} #1} \hfill {\color{brand}\bfseries #3} \\
+  \noindent{\textbf{\color{textdark}#2}} \hfill {\small\color{textmuted}\textit{#4}}%
+  \vspace{0.15cm}%
+}
+
+% Education Item Command
+\newcommand{\educationitem}[4]{%
+  \vspace{0.2cm}%
+  \noindent{\bfseries\color{accent} #1} \hfill {\color{brand}\bfseries #3} \\
+  \noindent{\textbf{\color{textdark}#2}} \hfill {\small\color{textmuted}\textit{#4}}\par
+  \vspace{0.15cm}%
+}
+
+% ATS-friendly Icon Wrapper
+\newcommand{\atsicon}[2]{%
+  \BeginAccSupp{ActualText={#1: }}#2\EndAccSupp{}%
+}
+
+% Contact Item Command (Sidebar)
+\newcommand{\contactitem}[2]{%
+  \noindent
+  \makebox[0.5cm][l]{\color{brand}#1}%
+  \parbox[t]{\dimexpr\linewidth - 0.5cm\relax}{\small\color{textdark}\raggedright #2}\par
+  \vspace{0.15cm}
+}
+
+\begin{document}
+\pagestyle{empty}
+
+% Draw sidebar background using TikZ (full height)
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[sidebarbg] (current page.north west) rectangle ([xshift=0.32\paperwidth]current page.south west);
+\end{tikzpicture}
+
+\noindent
+\begin{minipage}[t]{0.32\paperwidth}
+  \raggedright
+  \hspace*{1.0cm}%
+  \begin{minipage}[t]{\dimexpr0.32\paperwidth - 1.8cm\relax}
+    \vspace{0.4cm}
+    
+    % Photo/Avatar Placeholder (TikZ Vector Silhouette)
+    \begin{center}
+      \begin{tikzpicture}[scale=0.8]
+        \draw[draw=brand, fill=white, line width=1.5pt] (0,0) circle (1.2cm);
+        \clip (0,0) circle (1.2cm);
+        \fill[brand!10] (-1.2,-1.2) rectangle (1.2,1.2);
+        \fill[brand!40] (0,0.15) circle (0.38cm);
+        \fill[brand!40] (0,-0.9) circle (0.85cm);
+      \end{tikzpicture}
+    \end{center}
+    \vspace{0.4cm}
+    
+    {\LARGE\bfseries\color{accent} Alex\\Mercer} \\[0.15cm]
+    {\small\bfseries\color{brand} SOFTWARE ENGINEER}
+    
+    \vspace{0.5cm}
+    \hrule height 0.8pt\relax
+    \vspace{0.5cm}
+    
+    \contactitem{\atsicon{Email}{\faEnvelope}}{\href{mailto:alex.mercer@email.com}{alex.mercer@email.com}}
+    \contactitem{\atsicon{Phone}{\faPhone}}{+1 (555) 019-2834}
+    \contactitem{\atsicon{Location}{\faMapMarker*}}{San Francisco, CA}
+    \contactitem{\atsicon{LinkedIn}{\faLinkedin}}{\href{https://linkedin.com/in/alexmercer}{linkedin.com/in/alexmercer}}
+    \contactitem{\atsicon{GitHub}{\faGithub}}{\href{https://github.com/alexmercer}{github.com/alexmercer}}
+    
+    \sidebarsection{Skills}
+    \textbf{Programming} \\
+    {\small Python $\cdot$ Go $\cdot$ TypeScript \\ JavaScript $\cdot$ Rust $\cdot$ SQL} \\[0.3cm]
+    \textbf{Frameworks} \\
+    {\small React $\cdot$ Next.js $\cdot$ Node.js \\ FastAPI $\cdot$ Gin $\cdot$ gRPC} \\[0.3cm]
+    \textbf{Tools \& Cloud} \\
+    {\small AWS $\cdot$ Docker $\cdot$ Kubernetes \\ Terraform $\cdot$ CI/CD $\cdot$ Git}
+    
+    \sidebarsection{Languages}
+    {\small\textbf{English} (Native) \\
+    \textbf{Spanish} (Conversational)}
+    
+  \end{minipage}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{\dimexpr0.68\paperwidth - 1.8cm\relax}
+  \vspace{0.4cm}
+  \color{textdark}
+  
+  \sectionheader{Summary}
+  {\small Senior Software Engineer with 6+ years of experience specializing in building highly scalable microservices, cloud-native architectures, and robust API endpoints. Proven track record of improving system performance and leading cross-functional teams to deliver production-ready software solutions.}
+  
+  \sectionheader{Experience}
+  
+  \experienceitem{Senior Software Engineer}{TechCorp}{Oct 2023 -- Present}{San Francisco, CA}
+  \begin{itemize}[leftmargin=*, nosep, after=\vspace{0.2cm}]
+    \item Led a team of 4 engineers to rebuild the core API gateway, improving throughput by 40\% and reducing p99 latency from 150ms to 45ms.
+    \item Architected and deployed microservices using Go and gRPC, reducing system complexity and infrastructure costs by \$120K annually.
+    \item Standardized CI/CD pipelines with GitHub Actions and Terraform, cutting deployment times from 45 minutes to under 8 minutes.
+  \end{itemize}
+  
+  \experienceitem{Software Engineer II}{CloudFlow}{Mar 2021 -- Sep 2023}{Seattle, WA}
+  \begin{itemize}[leftmargin=*, nosep, after=\vspace{0.2cm}]
+    \item Developed and maintained data ingestion pipelines in Python, processing over 50M+ events daily with 99.99\% uptime.
+    \item Integrated Redis caching layer, reducing database load by 35\% and optimizing API response times across the platform.
+    \item Mentored junior developers and conducted code reviews, increasing team velocity and ensuring high test coverage (>90\%).
+  \end{itemize}
+
+  \experienceitem{Software Engineer I}{DevLaunch}{Jun 2019 -- Feb 2021}{Austin, TX}
+  \begin{itemize}[leftmargin=*, nosep, after=\vspace{0.2cm}]
+    \item Built responsive web applications using React and Next.js, resulting in a 25\% increase in user engagement.
+    \item Collaborated with product and design teams to implement modern, accessible UI components matching WCAG guidelines.
+    \item Optimized frontend assets and implemented lazy loading, reducing initial bundle size by 30\%.
+  \end{itemize}
+  
+  \sectionheader{Education}
+  
+  \educationitem{M.S. in Computer Science}{Stanford University}{2017 -- 2019}{Stanford, CA}
+  \educationitem{B.S. in Software Engineering}{University of Texas}{2013 -- 2017}{Austin, TX}
+  
+\end{minipage}
+
+\end{document}

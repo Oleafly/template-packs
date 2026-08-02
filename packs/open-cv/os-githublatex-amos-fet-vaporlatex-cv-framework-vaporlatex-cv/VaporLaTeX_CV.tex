@@ -1,0 +1,498 @@
+\documentclass[11pt, a4paper]{article}
+
+% --- PACKAGES ---
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{fontawesome5}
+\usepackage[most]{tcolorbox}
+\usepackage{etoolbox} 
+\usepackage[default]{raleway} 
+\usetikzlibrary{patterns.meta}
+\usetikzlibrary{patterns}
+\usepackage{lipsum}
+\usepackage[hidelinks]{hyperref}
+\usepackage{ragged2e}
+\usepackage[italian, english]{babel}
+
+\geometry{
+	top=0.5cm, bottom=1cm, left=1cm, right=1cm, 
+	headheight=0cm, footskip=1cm, headsep=0cm, 
+	marginparwidth=0cm, marginparsep=0cm
+}
+
+\pagenumbering{gobble}
+
+% --- COLORS ---
+\definecolor{vpBlack}{RGB}{45, 45, 45}
+\definecolor{vpPink}{RGB}{255, 113, 206}
+\definecolor{vpBlue}{RGB}{1, 205, 254}
+\definecolor{vpPurple}{RGB}{185, 103, 255}
+\definecolor{vpYellow}{RGB}{255, 202, 6}
+\definecolor{vpGreen}{RGB}{39, 230, 95}
+\definecolor{vpDeepNight}{RGB}{43, 25, 61}
+\definecolor{vpOrange}{RGB}{255, 108, 17}
+\definecolor{vpCyan}{RGB}{1, 205, 254}   
+\definecolor{vpBlue}{RGB}{26, 38, 160}
+
+% =====================================================================
+% GRAPHIC MACROS 
+% =====================================================================
+
+% --- SHADOW SELECTOR ---
+\newcommand{\drawvaporshadow}[4]{
+	% #1: choice, #2: color, #3: rounded edges, #4: coordinates
+	\def\vpchoice{#1}
+	
+	\ifdefstring{\vpchoice}{random}{%
+		\pgfmathrandominteger{\randpattern}{0}{4}
+		\ifcase\randpattern
+		\def\vpchoice{dots}\or
+		\def\vpchoice{crosshatch}\or
+		\def\vpchoice{grid}\or
+		\def\vpchoice{solid}\or
+		\def\vpchoice{lines}\fi
+	}{}
+	
+	\ifdefstring{\vpchoice}{dots}{
+		\fill[#2, fill opacity=0.1, #3] #4;
+		\fill[pattern={Dots[angle=45, distance=1mm, radius=1pt]}, pattern color=#2, #3] #4;
+	}{}
+	\ifdefstring{\vpchoice}{crosshatch}{
+		\fill[#2, fill opacity=0.1, #3] #4;
+		\fill[pattern={Lines[angle=45, distance=1mm, line width=0.5pt]}, pattern color=#2, #3] #4;
+		\fill[pattern={Lines[angle=-45, distance=1mm, line width=0.5pt]}, pattern color=#2, #3] #4;
+	}{}
+	\ifdefstring{\vpchoice}{grid}{
+		\fill[#2, fill opacity=0.1, #3] #4;
+		\fill[pattern={Lines[angle=0, distance=1.25mm, line width=0.5pt]}, pattern color=#2, #3] #4;
+		\fill[pattern={Lines[angle=90, distance=1.25mm, line width=0.5pt]}, pattern color=#2, #3] #4;
+	}{}
+	\ifdefstring{\vpchoice}{solid}{
+		\fill[#2, #3] #4;
+	}{}
+	\ifdefstring{\vpchoice}{lines}{
+		\fill[#2, fill opacity=0.1, #3] #4;
+		\fill[pattern={Lines[angle=-45, distance=1mm, line width=0.5pt]}, pattern color=#2, #3] #4;
+	}{}
+}
+
+\newcommand{\vaporframecode}{
+	\fill[vpThemeColor, rounded corners=2mm] (frame.south west) rectangle (frame.north east);
+}
+
+\newcommand{\vaporoverlaycode}{
+	\fill[white]
+	(interior.north west) 
+	-- ([xshift=-3mm]interior.north east) 
+	-- ([xshift=-3mm, yshift=3mm]interior.south east)
+	-- ([yshift=3mm]interior.south west) [rounded corners=2mm]
+	-- cycle;
+	
+	% Scrollbars background 
+	\fill[vpThemeColor!10] 
+	([yshift=3mm]interior.south west) 
+	-- ([xshift=-3mm, yshift=3mm]interior.south east) 
+	-- ([xshift=-3mm]interior.north east) 
+	-- (interior.north east) [rounded corners=1.35mm]   
+	-- (interior.south east) 
+	-- (interior.south west) [sharp corners]          
+	-- cycle;                
+	
+	% Left scroll button
+	\fill[vpThemeColor!30]
+	(interior.south west) 
+	-- ([yshift=3mm]interior.south west)
+	-- ([xshift=3mm, yshift=3mm]interior.south west)
+	-- ([xshift=3mm]interior.south west) [rounded corners=1.35mm]
+	-- cycle node[pos=0.5, scale=0.9, color=vpThemeColor, xshift=-0.2mm, yshift=1.4mm] {\faIcon{caret-left}};
+	
+	% Right scroll button
+	\fill[vpThemeColor!30]
+	([xshift=-3mm]interior.south east) 
+	rectangle ([xshift=-6mm, yshift=3mm]interior.south east)
+	node[pos=0.5, scale=0.9, color=vpThemeColor, xshift=0.2mm, yshift=-0.2mm] {\faIcon{caret-right}};
+	
+	% Up scroll button
+	\fill[vpThemeColor!30]
+	([xshift=-3mm]interior.north east) 
+	rectangle ([yshift=-3mm]interior.north east)
+	node[pos=0.5, scale=0.9, color=vpThemeColor, xshift=0mm, yshift=-0.3mm] {\faIcon{caret-up}};
+	
+	% Down scroll button
+	\fill[vpThemeColor!30]
+	([xshift=-3mm, yshift=6mm]interior.south east) 
+	rectangle ([yshift=3mm]interior.south east)
+	node[pos=0.5, scale=0.9, color=vpThemeColor, xshift=0mm, yshift=-0.4mm] {\faIcon{caret-down}};
+	
+	% Inner borders and dividers
+	\draw[vpThemeColor, line width=0.75pt]
+	([yshift=3mm]interior.south west) 
+	-- ([xshift=-3mm, yshift=3mm]interior.south east)
+	-- ([xshift=-3mm]interior.north east)
+	
+	([xshift=3mm, yshift=3mm]interior.south west) node (h1) {} 
+	-- ([xshift=3mm]interior.south west) 
+	
+	([xshift=-3mm, yshift=3mm]interior.south east) 
+	-- ([xshift=-3mm]interior.south east) 
+	
+	([xshift=-6mm, yshift=3mm]interior.south east) node (h2) {} 
+	-- ([xshift=-6mm]interior.south east) 
+	
+	([xshift=-3mm, yshift=3mm]interior.south east) 
+	-- ([yshift=3mm]interior.south east)
+	
+	([xshift=-3mm, yshift=6mm]interior.south east) node (v2) {}
+	-- ([yshift=6mm]interior.south east)
+	
+	([xshift=-3mm, yshift=-3mm]interior.north east) node (v1) {}
+	-- ([yshift=-3mm]interior.north east);
+	
+	% --- Vertical scrollbar thumb ---
+	\path (v1);
+	\pgfgetlastxy{\xVuno}{\yVuno}
+	\path (v2);
+	\pgfgetlastxy{\xVdue}{\yVdue}
+	\pgfmathsetmacro{\distV}{abs(\yVdue-\yVuno)}
+	
+	\ifdim\distV pt > 15mm\relax
+	\pgfmathsetmacro{\rectHig}{\distV * (0.20 + 0.10*rnd)}
+	\pgfmathsetmacro{\rectPosV}{rnd*(\distV-\rectHig)}
+	
+	\fill[vpThemeColor!30] 
+	([yshift=\rectPosV pt]v2.center) rectangle ++(3mm, \rectHig pt);
+	
+	\draw[vpThemeColor, line width=0.75pt]
+	([yshift=\rectPosV pt]v2.center) -- ++(0,\rectHig pt)
+	([yshift=\rectPosV pt]v2.center) -- ++(3mm,0)
+	([yshift=\rectPosV pt+\rectHig]v2.center) -- ++(3mm,0)
+	node[scale=0.9, text=vpThemeColor] at([xshift=1.6mm,yshift=\rectPosV pt+\rectHig/2+1.1mm]\xVuno,\yVdue) {\faIcon{angle-double-up}}
+	node[scale=0.9, text=vpThemeColor] at([xshift=1.6mm,yshift=\rectPosV pt+\rectHig/2-1.1mm]\xVuno,\yVdue) {\faIcon{angle-double-down}};
+	\fi
+	
+	% --- Horizontal scrollbar thumb ---
+	\path (h1);
+	\pgfgetlastxy{\xHuno}{\yHuno}
+	\path (h2);
+	\pgfgetlastxy{\xHdue}{\yHdue}
+	\pgfmathsetmacro{\distH}{\xHdue-\xHuno}
+	
+	\ifdim\distH pt > 15mm\relax
+	\pgfmathsetmacro{\rectLen}{\distH * (0.10 + 0.25*rnd)}
+	\pgfmathsetmacro{\rectPosH}{rnd*(\distH-\rectLen)}
+	
+	\fill[vpThemeColor!30] 
+	([xshift=\rectPosH pt]h1.center) rectangle ++(\rectLen pt, -3mm);
+	
+	\draw[vpThemeColor, line width=0.75pt]
+	([xshift=\rectPosH pt]h1.center) -- ++(\rectLen pt,0)
+	([xshift=\rectPosH pt]h1.center) -- ++(0,-3mm)
+	([xshift=\rectPosH pt+\rectLen]h1.center) -- ++(0,-3mm)
+	node[scale=0.9, text=vpThemeColor] at([xshift=\rectPosH pt+\rectLen/2-1.1mm]\xHuno,1.9mm) {\faIcon{angle-double-left}}
+	node[scale=0.9, text=vpThemeColor] at([xshift=\rectPosH pt+\rectLen/2+1.1mm]\xHuno,1.9mm) {\faIcon{angle-double-right}};
+	\fi
+}
+
+% === 1. VAPORWINDOW ===
+\NewTColorBox{vaporwindow}{ O{vpBlack} m O{random} }{
+	code={\colorlet{vpThemeColor}{#1}},
+	enhanced,
+	arc=1.25mm,                 
+	colback=vpThemeColor,            
+	colframe=vpThemeColor,        
+	boxrule=2pt,             
+	lefttitle=1.5mm,         
+	righttitle=0mm,        
+	toptitle=0mm,            
+	bottomtitle=-0.25mm,         
+	top=1.3mm, 
+	bottom=3mm, 
+	fonttitle=\bfseries\sffamily,
+	coltitle=white,          
+	titlerule=1pt,           
+	titlerule style={vpThemeColor},
+	colbacktitle=vpThemeColor,    
+	title={#2 \hfill \faIcon{window-minimize} \faIcon{window-maximize} \faIcon{window-close}}, 
+	frame code={\vaporframecode},
+	overlay={\vaporoverlaycode},
+	enlarge bottom by=3mm, 
+	enlarge right by=3mm,  
+	before upper={\RaggedRight}, 
+	underlay={
+		\coordinate (Ssw) at ([xshift=1mm, yshift=-2mm]frame.south west);
+		\coordinate (Sne) at ([xshift=1mm, yshift=-2mm]frame.north east);
+		
+		\drawvaporshadow{#3}{vpThemeColor}{rounded corners=1.25mm}{(Ssw) rectangle (Sne)}
+	}
+}
+
+% === 2. VAPORNAME  ===
+\NewDocumentCommand{\vaporname}{O{vpBlack} m m O{} O{dots}}{
+	\par\noindent
+	\begin{tikzpicture}[
+		baseline=(current bounding box.south),
+		inner sep=0pt, 
+		outer sep=0pt
+		]
+		% 1. GHOST NODES
+		\node[inner xsep=10pt, inner ysep=8pt, outer sep=0pt, anchor=north west] 
+		(N1) at (0,0) {\phantom{\Huge \textbf{\MakeUppercase{#2}}}};
+		\node[inner xsep=10pt, inner ysep=8pt, outer sep=0pt, anchor=north west] 
+		(N2) at ([yshift=8pt]N1.south west) {\phantom{\Huge \textbf{\MakeUppercase{#3}}}};
+		
+		% 2. SHADOW
+		\drawvaporshadow{#5}{#1}{rounded corners=2.5mm}{
+			([xshift=1.5mm, yshift=-2mm]N1.north west) --
+			([xshift=1.5mm, yshift=-2mm]N2.south west) --
+			([xshift=1.5mm, yshift=-2mm]N2.south east) |-   
+			([xshift=1.5mm, yshift=-2mm]N1.south east) --
+			([xshift=1.5mm, yshift=-2mm]N1.north east) -- cycle
+		}
+		
+		% 3. BOX 
+		\fill[#1, rounded corners=2.5mm]
+		(N1.north west) --
+		(N2.south west) --
+		(N2.south east) |-   
+		(N1.south east) --
+		(N1.north east) -- cycle;
+		
+		% 4. TEXT
+		\node[inner sep=0pt, outer sep=0pt, text=white] at (N1.center) {\Huge \textbf{\MakeUppercase{#2}}};
+		\node[inner sep=0pt, outer sep=0pt, text=white] at (N2.center) {\Huge \textbf{\MakeUppercase{#3}}};
+		
+		% 5. ROLE 
+		\ifstrempty{#4}{}{
+			\node[anchor=north west, inner sep=0pt, text=#1, font=\sffamily\large, yshift=-8pt] 
+			at ([xshift=2pt, yshift=-3pt]N2.south west) {\MakeUppercase{#4}};
+		}
+	\end{tikzpicture}
+	\par\vspace{1cm}
+}
+
+% === 3. VAPORELEMENT ===
+\NewDocumentCommand{\vaporelement}{m o m}{
+	\begin{tcolorbox}[
+		enhanced,
+		nobeforeafter,     
+		width=\linewidth,  
+		height=5.5mm,      
+		colback=vpThemeColor!20, 
+		colframe=vpThemeColor, 
+		boxrule=1pt,
+		arc=1mm,
+		left=7.5mm,        
+		right=8pt, top=1.5pt, bottom=0pt,
+		boxsep=0pt,
+		valign=center,
+		halign=flush left,
+		underlay={
+			\begin{tcbclipinterior}
+				\fill[vpThemeColor] (interior.north west) rectangle ([xshift=5.5mm]interior.south west);
+			\end{tcbclipinterior}
+			\node[text=vpThemeColor!20, font=\scriptsize] at ([xshift=2.75mm]interior.west) {\faIcon{#1}};
+		}
+		]
+		\scriptsize\sffamily\bfseries
+		\IfValueTF{#2}{
+			\href{#2}{\textcolor{vpThemeColor}{#3}}
+		}{
+			\textcolor{vpThemeColor}{#3}
+		}
+	\end{tcolorbox}%
+}
+
+% === 4. VAPORBOX ===
+\NewTColorBox{vaporbox}{ O{vpBlack} O{\linewidth} O{lines} O{2} }{
+	width=#2, 
+	code={\colorlet{vpThemeColor}{#1}},
+	enhanced,
+	arc=1.25mm,                 
+	colback=white,            
+	colframe=vpThemeColor,    
+	boxrule=2pt,              
+	boxsep=0pt,    
+	top=3.3mm+2pt, 
+	bottom=3mm,    
+	left=4mm,      
+	right=4mm,     
+	enlarge bottom by=0mm, 
+	enlarge right by=0mm,  
+	before upper={
+		\setlength{\tabcolsep}{3mm}
+		\offinterlineskip 
+		\setlength{\lineskip}{2mm}
+		\setlength{\lineskiplimit}{\maxdimen}
+		\begin{tabular}{@{} *{#4}{p{\dimexpr\linewidth/#4 - 6mm + 6mm/#4\relax}} @{}}
+		},
+		after upper={\end{tabular}},
+	underlay={
+		\coordinate (Ssw) at ([xshift=1mm, yshift=-2mm]frame.south west);
+		\coordinate (Sne) at ([xshift=1mm, yshift=-2mm]frame.north east);
+		
+		\drawvaporshadow{#3}{vpThemeColor}{rounded corners=1.5mm, even odd rule}{
+			(Ssw) rectangle (Sne) 
+			(frame.south west) rectangle (frame.north east)
+		}
+		
+		\fill[white, rounded corners=1.25mm] ([xshift=2pt,yshift=2pt]frame.south west) rectangle ([xshift=-2pt,yshift=-2pt]frame.north east);
+		\fill[pattern=checkerboard, pattern color=vpThemeColor!10, rounded corners=1.25mm] 
+		([xshift=2pt, yshift=2pt]frame.south west) 
+		rectangle 
+		([xshift=-2pt, yshift=-2pt]frame.north east);
+		
+		\path (interior.south west); \pgfgetlastxy{\xSW}{\ySW}
+		\path (interior.north east); \pgfgetlastxy{\xNE}{\yNE}
+		
+		\pgfmathsetmacro{\lw}{\xNE - \xSW} 
+		\pgfmathsetmacro{\colW}{(\lw - 22.7622 - (#4-1)*17.0716)/#4} 
+		\pgfmathsetmacro{\panelW}{\colW + 11.3811} 
+		
+		\foreach \i in {1,...,#4} {
+			\pgfmathsetmacro{\startX}{\xSW + 5.6905 + (\i-1)*(\colW + 17.0716)}
+			\pgfmathsetmacro{\endX}{\startX + \panelW}
+			\pgfmathsetmacro{\startY}{\ySW + 5.6905}
+			\pgfmathsetmacro{\endY}{\yNE - 5.6905}
+			
+			\draw[vpThemeColor!30, line width=1pt, fill=white, rounded corners=1.25mm] 
+			(\startX pt, \startY pt) rectangle (\endX pt, \endY pt);
+		}
+	}
+}
+
+% === 5. VAPORWINDOW SPLIT ===
+\NewDocumentCommand{\vaporitem}{m m}{
+	{\leavevmode\color{vpThemeColor}\bfseries\RaggedRight\hspace*{0pt}\MakeUppercase{#1}} & \RaggedRight #2 \tabularnewline 
+}
+
+\NewTColorBox{vaporwindowsplit}{ O{vpBlack} m O{random} O{0.25} }{
+	code={\colorlet{vpThemeColor}{#1}},
+	enhanced,
+	arc=1.25mm,                 
+	colback=vpThemeColor,            
+	colframe=vpThemeColor,        
+	boxrule=2pt,             
+	lefttitle=1.5mm,         
+	righttitle=0mm,        
+	toptitle=0mm,            
+	bottomtitle=0mm,         
+	top=1.3mm, 
+	bottom=3mm, 
+	fonttitle=\bfseries\sffamily,
+	coltitle=white,          
+	titlerule=1pt,           
+	titlerule style={vpThemeColor},
+	colbacktitle=vpThemeColor,    
+	title={#2 \hfill \faIcon{window-minimize} \faIcon{window-maximize} \faIcon{window-close}}, 
+	frame code={\vaporframecode},
+	overlay={\vaporoverlaycode},
+	enlarge bottom by=2mm, 
+	enlarge right by=3mm,  
+	before upper={
+		\renewcommand{\arraystretch}{1.5}
+		\setlength{\tabcolsep}{0pt}
+		\begin{tabular}{@{} p{\dimexpr #4\linewidth-1.5mm\relax} @{\hspace{3mm}} p{\dimexpr \linewidth-#4\linewidth-1.5mm\relax} @{}}
+		},
+		after upper={\end{tabular}},
+	underlay={
+		\coordinate (Ssw) at ([xshift=1mm, yshift=-2mm]frame.south west);
+		\coordinate (Sne) at ([xshift=1mm, yshift=-2mm]frame.north east);
+		\drawvaporshadow{#3}{vpThemeColor}{rounded corners=1.25mm}{(Ssw) rectangle (Sne)}
+	}
+}
+
+
+% =====================================================================
+% MAIN
+% =====================================================================
+
+\begin{document}
+	\noindent
+	\begin{minipage}[t]{0.35\textwidth}
+		\vspace{0pt}
+		\vaporname[vpBlack]{john}{doe}[software dev][dots]
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t]{0.61\textwidth}
+		\vspace{0pt}
+		\begin{vaporbox}[vpDeepNight][\linewidth][lines]
+			\vaporelement{phone}{+39 012 345 678} & \vaporelement{envelope}{mail@example.com} \\
+			\vaporelement{map-marker-alt}{City, Somewere} & \vaporelement{linkedin}{linkedin.com/in/user} \\
+			\vaporelement{github}{github.com/user} & \vaporelement{globe}{www.portfolio.com}
+		\end{vaporbox}
+	\end{minipage}
+	
+	\vspace{5mm}
+	
+	\noindent 
+	\begin{vaporwindow}[vpPink]{STANDARD FULL WIDTH WINDOW}[random]
+		\lipsum[1][1-4]
+	\end{vaporwindow}
+	
+	\noindent 
+	\begin{minipage}[t]{0.28\textwidth}
+		\vspace{0pt}
+		\begin{vaporwindow}[vpGreen]{SMALL}[solid] 
+			\lipsum[2][1-2]
+		\end{vaporwindow}
+		\vspace*{2mm}
+		\begin{vaporwindow}[vpBlack]{SMALL}[solid] 
+			\lipsum[2][3]
+		\end{vaporwindow}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t]{0.38\textwidth}
+		\vspace{0pt}
+		\begin{vaporwindow}[vpOrange]{MEDIUM WINDOW}[random] 
+			\lipsum[2][4-15] \lipsum[3][1]
+		\end{vaporwindow}
+	\end{minipage}%
+	\hfill
+	\begin{minipage}[t]{0.28\textwidth}
+		\vspace{0pt}
+		\begin{vaporwindow}[vpYellow]{SMALL}[grid] 
+			\lipsum[3][2-7]
+		\end{vaporwindow}
+	\end{minipage}
+	
+	\vspace{5mm}
+	
+	\noindent 
+	\begin{minipage}[t]{0.6\textwidth}
+		\vspace{0mm}
+		\begin{vaporwindowsplit}[vpPurple]{WINDOW SPLIT}[crosshatch]
+			\vaporitem{2022 -- 2025}{
+				\lipsum[3][8-10]
+			}
+			\vaporitem{2019 -- 2022}{
+				\lipsum[3][11-14] 
+			}
+		\end{vaporwindowsplit}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[t]{0.35\textwidth}
+		\vspace{0mm}
+		\begin{vaporwindowsplit}[vpCyan]{WINDOW SPLIT}[crosshatch]
+			\vaporitem{Cat 1}{
+				\lipsum[3][11-12]
+			}
+		\end{vaporwindowsplit}
+	\end{minipage}
+	
+	\vspace{4mm}
+	
+	\noindent
+	\begin{vaporbox}[vpBlue][\linewidth][grid][3]
+		% --- ROW 1 ---
+		\vaporelement{language}{English, Italian (Native)} & 
+		\vaporelement{car}{Driving License (B)} & 
+		\vaporelement{code}{Python, C++, Java} \\
+		
+		% --- ROW 2 ---
+		\vaporelement{laptop-code}{React, Node.js, \LaTeX} & 
+		\vaporelement{users}{Team Management} & 
+		\vaporelement{database}{SQL, MongoDB}
+	\end{vaporbox}
+\end{document}

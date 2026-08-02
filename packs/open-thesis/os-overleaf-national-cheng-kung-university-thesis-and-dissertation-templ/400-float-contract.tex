@@ -1,0 +1,200 @@
+% Focused figure/multi-figure/table compatibility contract.
+\input{./template/configure}
+
+\begin{document}
+\stepcounter{chapter}
+\section*{Float Contract}
+
+\InsertFigure
+  [scale=2.0,
+    angle=5,
+    caption={Float Single Caption},
+    label={ncku:float:single},
+    pos={tbp},
+    align={left},
+    opacity=0.7]
+  {./example/how-to/write/figure/pic/CC-BY-NC.png}
+\typeout{NCKU-FLOAT-SINGLE-STATE: \TmpValueScale/\TmpValueAngle/\TmpValueCaption/\TmpValueLabel/\TmpValuePosition/\TmpValueAlign/\TmpValueOpacity}
+
+\InsertFigures
+  [perrow=3,
+    caption={Float Multi Caption},
+    label={ncku:float:multi},
+    align={right},
+    opacity=0.6]
+  {
+    [scale=1.5,
+      angle=0,
+      caption={Float Sub A},
+      label={ncku:float:sub-a},
+      align={sub-left}]
+    {./example/how-to/write/figure/pic/CC-BY-NC.png}
+  }
+  {
+    [scale=1.5,
+      angle=180,
+      caption={Float Sub B},
+      label={ncku:float:sub-b},
+      align={sub-right}]
+    {./example/how-to/write/figure/pic/CC-BY-NC-ND.png}
+  }
+  {
+    [scale=1.25,
+      angle=0,
+      caption={Float Sub C},
+      label={ncku:float:sub-c},
+      align={sub-center}]
+    {./example/how-to/write/figure/pic/CC-BY-NC.png}
+  }
+\typeout{NCKU-FLOAT-MULTI-STATE: \TmpMIValueImagePerRow/\TmpMIValueCaption/\TmpMIValueLabel/\TmpMIValueAlign/\TmpValueOpacity}
+
+\InsertTable
+  [scale=0.0,
+    caption={Float Table Top Caption},
+    label={ncku:float:table-top},
+    pos=top,
+    tabcolsep=3pt,
+    arraystretch=1.2,
+    opacity=0.5]
+  {
+    \begin{tabular}{cc}
+      TOP-A & TOP-B \\
+      TOP-C & TOP-D
+    \end{tabular}
+  }
+\typeout{NCKU-FLOAT-TABLE-TOP-STATE: \TmpValueScale/\TmpValueCaption/\TmpValueLabel/\TmpValuePosition/\TmpValueTabColSep/\TmpValueArrayStretch/\TmpValueOpacity}
+
+\InsertTable
+  [scale=0.4,
+    caption={Float Table Bottom Caption},
+    label={ncku:float:table-bottom},
+    pos=bottom,
+    tabcolsep=2pt,
+    arraystretch=0.8,
+    opacity=0.3]
+  {
+    \begin{tabular}{ccc}
+      BOTTOM-A & BOTTOM-B & BOTTOM-C \\
+      BOTTOM-D & BOTTOM-E & BOTTOM-F
+    \end{tabular}
+  }
+\typeout{NCKU-FLOAT-TABLE-BOTTOM-STATE: \TmpValueScale/\TmpValueCaption/\TmpValueLabel/\TmpValuePosition/\TmpValueTabColSep/\TmpValueArrayStretch/\TmpValueOpacity}
+
+\InsertTable
+  [nomtitle={Float Table Star Title},
+    label={ncku:float:table-star},
+    pos=top,
+    opacity=0.2]
+  {
+    \begin{tabular}{cc}
+      STAR-A & STAR-B
+    \end{tabular}
+  }
+\typeout{NCKU-FLOAT-TABLE-STAR-STATE: \TmpValueScale/\TmpValueNomTitle/\TmpValueLabel/\TmpValuePosition/\TmpValueOpacity}
+
+% Freeze the single-table parser independently of rendering: literal defaults,
+% expanded macro values, and reset-on-repeat behavior must survive a parser swap.
+\begingroup
+\NCKUPrivateSetInsertTableKeys{\empty}
+\typeout{NCKU-TABLE-KEY-DEFAULTS: \TmpValueScale/\TmpValueNomTitle/\TmpValueCaption/\TmpValueLabel/\TmpValuePosition/\TmpValueTabColSep/\TmpValueArrayStretch/\TmpValueOpacity}
+\def\NCKUTableScale{0.55}
+\def\NCKUTableNomTitle{Expanded Nom Title}
+\def\NCKUTableCaption{Expanded Caption}
+\def\NCKUTableLabel{ncku:table-expanded}
+\def\NCKUTablePosition{bottom}
+\def\NCKUTableTabColSep{4pt}
+\def\NCKUTableArrayStretch{1.4}
+\def\NCKUTableOpacity{0.85}
+\NCKUPrivateSetInsertTableKeys{%
+  scale=\NCKUTableScale,
+  nomtitle=\NCKUTableNomTitle,
+  caption=\NCKUTableCaption,
+  label=\NCKUTableLabel,
+  pos=\NCKUTablePosition,
+  tabcolsep=\NCKUTableTabColSep,
+  arraystretch=\NCKUTableArrayStretch,
+  opacity=\NCKUTableOpacity}
+\typeout{NCKU-TABLE-KEY-EXPANDED: \TmpValueScale/\TmpValueNomTitle/\TmpValueCaption/\TmpValueLabel/\TmpValuePosition/\TmpValueTabColSep/\TmpValueArrayStretch/\TmpValueOpacity}
+\NCKUPrivateSetInsertTableKeys{\empty}
+\typeout{NCKU-TABLE-KEY-RESET: \TmpValueScale/\TmpValueNomTitle/\TmpValueCaption/\TmpValueLabel/\TmpValuePosition/\TmpValueTabColSep/\TmpValueArrayStretch/\TmpValueOpacity}
+\endgroup
+
+% Freeze the single-figure parser independently of rendering: literal defaults,
+% expanded macro values, and reset-on-repeat behavior must survive a parser swap.
+\begingroup
+\NCKUPrivateSetInsertFigureKeys{\empty}
+\typeout{NCKU-FIGURE-KEY-DEFAULTS: \TmpValueScale/\TmpValueAngle/\TmpValueCaption/\TmpValueLabel/\TmpValuePosition/\TmpValueAlign/\TmpValueOpacity}
+\def\NCKUFigureScale{1.75}
+\def\NCKUFigureAngle{15}
+\def\NCKUFigureCaption{Expanded Caption}
+\def\NCKUFigureLabel{ncku:expanded}
+\def\NCKUFigurePosition{ignored-pos}
+\def\NCKUFigureAlign{ignored-align}
+\def\NCKUFigureOpacity{0.9}
+\NCKUPrivateSetInsertFigureKeys{%
+  scale=\NCKUFigureScale,
+  angle=\NCKUFigureAngle,
+  caption=\NCKUFigureCaption,
+  label=\NCKUFigureLabel,
+  pos=\NCKUFigurePosition,
+  align=\NCKUFigureAlign,
+  opacity=\NCKUFigureOpacity}
+\typeout{NCKU-FIGURE-KEY-EXPANDED: \TmpValueScale/\TmpValueAngle/\TmpValueCaption/\TmpValueLabel/\TmpValuePosition/\TmpValueAlign/\TmpValueOpacity}
+\NCKUPrivateSetInsertFigureKeys{\empty}
+\typeout{NCKU-FIGURE-KEY-RESET: \TmpValueScale/\TmpValueAngle/\TmpValueCaption/\TmpValueLabel/\TmpValuePosition/\TmpValueAlign/\TmpValueOpacity}
+\endgroup
+
+% Freeze the top-level and nested multi-figure parsers independently.
+\begingroup
+\NCKUPrivateSetInsertFiguresKeys{\empty}
+\typeout{NCKU-MULTI-KEY-DEFAULTS: \TmpMIValueImagePerRow/\TmpMIValueCaption/\TmpMIValueLabel/\TmpMIValueAlign/\TmpValueOpacity}
+\def\NCKUMultiPerRow{4}
+\def\NCKUMultiCaption{Expanded Multi Caption}
+\def\NCKUMultiLabel{ncku:multi-expanded}
+\def\NCKUMultiAlign{ignored-multi-align}
+\def\NCKUMultiOpacity{0.95}
+\NCKUPrivateSetInsertFiguresKeys{perrow=\NCKUMultiPerRow,caption=\NCKUMultiCaption,label=\NCKUMultiLabel,align=\NCKUMultiAlign,opacity=\NCKUMultiOpacity}
+\typeout{NCKU-MULTI-KEY-EXPANDED: \TmpMIValueImagePerRow/\TmpMIValueCaption/\TmpMIValueLabel/\TmpMIValueAlign/\TmpValueOpacity}
+\NCKUPrivateSetInsertFiguresKeys{caption=Partial Multi}
+\typeout{NCKU-MULTI-KEY-PARTIAL: \TmpMIValueImagePerRow/\TmpMIValueCaption/\TmpMIValueLabel/\TmpMIValueAlign/\TmpValueOpacity}
+\NCKUPrivateSetInsertFiguresKeys{\empty}
+\typeout{NCKU-MULTI-KEY-OMITTED: \TmpMIValueImagePerRow/\TmpMIValueCaption/\TmpMIValueLabel/\TmpMIValueAlign/\TmpValueOpacity}
+
+\NCKUPrivateSetInsertFiguresSubFigureKeys{\empty}
+\typeout{NCKU-SUBFIGURE-KEY-DEFAULTS: \TmpMISubValueScale/\TmpMISubValueAngle/\TmpMISubValueCaption/\TmpMISubValueLabel/\TmpMISubValueAlign}
+\def\NCKUSubScale{1.8}
+\def\NCKUSubAngle{25}
+\def\NCKUSubCaption{Expanded Sub Caption}
+\def\NCKUSubLabel{ncku:sub-expanded}
+\def\NCKUSubAlign{ignored-sub-align}
+\NCKUPrivateSetInsertFiguresSubFigureKeys{scale=\NCKUSubScale,angle=\NCKUSubAngle,caption=\NCKUSubCaption,label=\NCKUSubLabel,align=\NCKUSubAlign}
+\typeout{NCKU-SUBFIGURE-KEY-EXPANDED: \TmpMISubValueScale/\TmpMISubValueAngle/\TmpMISubValueCaption/\TmpMISubValueLabel/\TmpMISubValueAlign}
+\NCKUPrivateSetInsertFiguresSubFigureKeys{caption=Partial Sub}
+\typeout{NCKU-SUBFIGURE-KEY-PARTIAL: \TmpMISubValueScale/\TmpMISubValueAngle/\TmpMISubValueCaption/\TmpMISubValueLabel/\TmpMISubValueAlign}
+\NCKUPrivateSetInsertFiguresSubFigureKeys{\empty}
+\typeout{NCKU-SUBFIGURE-KEY-OMITTED: \TmpMISubValueScale/\TmpMISubValueAngle/\TmpMISubValueCaption/\TmpMISubValueLabel/\TmpMISubValueAlign}
+\endgroup
+
+% Freeze all one-to-four-per-row helper branches without visible output.
+\begingroup
+\renewcommand\InsertSubfigureOneFigure[1]{\typeout{NCKU-MULTI-ROW-ONE: #1}}
+\renewcommand\InsertSubfigureTwoFigure[2]{\typeout{NCKU-MULTI-ROW-TWO: #1+#2}}
+\renewcommand\InsertSubfigureThreeFigure[3]{\typeout{NCKU-MULTI-ROW-THREE: #1+#2+#3}}
+\renewcommand\InsertSubfigureFourFigure[4]{\typeout{NCKU-MULTI-ROW-FOUR: #1+#2+#3+#4}}
+\InsertFiguresOnePerRow{A}{B}
+\InsertFiguresTwoPerRow{C}{D}{E}
+\InsertFiguresThreePerRow{F}{G}{H}{I}{J}
+\InsertFiguresFourPerRow{K}{L}{M}{N}{O}{P}
+\endgroup
+
+References: \ref{ncku:float:single}, \ref{ncku:float:multi},
+\ref{ncku:float:sub-a}, \ref{ncku:float:sub-b}, \ref{ncku:float:sub-c},
+\ref{ncku:float:table-top}, \ref{ncku:float:table-bottom}.
+
+Names: \nameref{ncku:float:single}; \nameref{ncku:float:multi};
+\nameref{ncku:float:sub-a}; \nameref{ncku:float:sub-b};
+\nameref{ncku:float:sub-c}; \nameref{ncku:float:table-top};
+\nameref{ncku:float:table-bottom}; \nameref{ncku:float:table-star}.
+
+\typeout{NCKU-TEST-PASS: focused float contract compiled}
+\end{document}

@@ -1,0 +1,337 @@
+% ============================================================
+% 1-Page CV Template (LaTeX) — Placeholder Version
+% ============================================================
+
+\documentclass[10pt,a4paper]{article}
+
+% ------------------------------------------------------------
+% A) PAGE LAYOUT (tight margins to fit 1 page)
+% ------------------------------------------------------------
+\usepackage[a4paper,top=0.7cm,bottom=0.7cm,left=0.8cm,right=0.8cm]{geometry}
+
+% ------------------------------------------------------------
+% B) FONTS / ENCODING (clean professional look)
+% ------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}     % keep for pdflatex; remove if using lualatex/xelatex
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ------------------------------------------------------------
+% C) COLORS + LINKS (customize AccentColor if needed)
+% ------------------------------------------------------------
+\usepackage{xcolor}
+\colorlet{AccentColor}{blue}    % <--- change to teal, purple, black, etc.
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  urlcolor=AccentColor
+}
+
+% ------------------------------------------------------------
+% D) TABLES / COLUMNS / ALIGNMENT HELPERS
+% ------------------------------------------------------------
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{paracol}
+
+% Column types:
+% L = expanding left column (ragged-right)
+% D = fixed date column (right aligned)
+\newcolumntype{L}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{D}{>{\raggedleft\arraybackslash}p{3cm}}
+
+% ------------------------------------------------------------
+% E) LISTS / ICONS / SECTIONS
+% ------------------------------------------------------------
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{titlesec}
+\usepackage{tikz} % optional; keep if you plan to draw small elements
+
+% ------------------------------------------------------------
+% F) GLOBAL SPACING (CV style)
+% ------------------------------------------------------------
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+\titlespacing*{\section}{0pt}{6pt}{4pt}
+
+% ------------------------------------------------------------
+% G) SMALL HELPER COMMANDS
+% ------------------------------------------------------------
+\newcommand{\sep}{\hspace{0.6em}{\color{gray}\textbar}\hspace{0.6em}}
+\newcommand{\role}[1]{\textbf{#1}}
+\newcommand{\company}[1]{\textbf{#1}}
+\newcommand{\place}[1]{\textit{#1}}
+
+% ------------------------------------------------------------
+% H) SIZE CONTROLS (tune these if you want more/less density)
+% ------------------------------------------------------------
+\newcommand{\BodySize}{\fontsize{7}{11}\selectfont}
+\newcommand{\SectionSize}{\fontsize{9}{14}\selectfont}
+\newcommand{\ListSize}{\fontsize{7}{10.2}\selectfont}
+\newcommand{\ProjectSize}{\fontsize{7}{9.0}\selectfont}
+\newcommand{\MetaSize}{\fontsize{7}{10.0}\selectfont}
+
+% Section title style + a thin horizontal rule under each title
+\titleformat{\section}{\SectionSize\bfseries}{}{0pt}{}[\vspace{1pt}\hrule\vspace{1pt}]
+
+% Global itemize style (compact)
+\setlist[itemize]{
+  leftmargin=1.2em,
+  itemsep=2pt,
+  topsep=2pt,
+  parsep=0pt,
+  partopsep=0pt,
+  font=\ListSize
+}
+
+% Apply body font size after the header area
+\newcommand{\ApplyBodySizes}{\BodySize}
+
+% ============================================================
+% ===================== EDIT HERE (USER DATA) =================
+% ============================================================
+% Tip: only edit this section when reusing the template.
+
+% -- Header info
+\newcommand{\CVName}{YOUR FULL NAME}
+\newcommand{\CVHeadline}{Your Role / Target Position (e.g., Embedded Systems Engineer)}
+
+\newcommand{\CVEmail}{your.email@example.com}
+\newcommand{\CVPhone}{+XXX XX-XXX-XXXX}
+\newcommand{\CVLocation}{City, Country}
+\newcommand{\CVMobility}{Remote / On-site...}
+\newcommand{\CVLicense}{(optional)}
+
+% -- Links (optional)
+\newcommand{\CVLinkedInURL}{https://www.linkedin.com/in/your-profile/}
+\newcommand{\CVLinkedInText}{LinkedIn Username}
+\newcommand{\CVGithubURL}{https://github.com/your-username}
+\newcommand{\CVGithubText}{GitHub Username}
+
+% -- Professional Summary (keep it short: 3–5 lines)
+\newcommand{\CVSummary}{%
+A short professional summary describing your focus and strengths.
+Mention your core skills, domains, and what roles you target (e.g., Embedded C, CAN/UDS, MATLAB/Simulink, SIL/HIL).
+Add 1–2 keywords for standards or processes if relevant (e.g., ISO 26262, AUTOSAR awareness).
+}
+
+% ============================================================
+% ======================= MACROS (BUILDING BLOCKS) ============
+% ============================================================
+
+% Education entry:
+% \eduentry{Degree / Program}{Dates}{Institution / Faculty}
+\newcommand{\eduentry}[3]{%
+  \begin{tabularx}{\textwidth}{@{}L D@{}}
+    \textbf{#1} & {\MetaSize\textit{#2}}\\[-2pt]
+    \multicolumn{2}{@{}l@{}}{\MetaSize\textcolor{AccentColor}{#3}}\\
+  \end{tabularx}\vspace{-3pt}
+}
+
+% Project entry:
+% \proj{Project Title}{Technologies: ...}
+\newcommand{\proj}[2]{%
+  \textbf{#1}\\[-1pt]
+  {\ProjectSize\textbf{\textit{Technologies :}} #2}\\[-10pt]
+}
+
+% ============================================================
+% ========================= DOCUMENT ==========================
+% ============================================================
+\begin{document}
+\ApplyBodySizes
+
+% ============================================================
+% 1) HEADER (Name/Title left, Contact right)
+% ============================================================
+\noindent
+\begin{minipage}[t]{0.705\textwidth}
+  \vspace{0pt}
+  {\LARGE \textbf{\CVName}}\\[6pt]
+  {\large\textbf{\CVHeadline}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.25\textwidth}
+  \vspace{0pt}
+  \fontsize{7}{9.6}\selectfont
+  \raggedright
+  Email : \href{mailto:\CVEmail}{\CVEmail}\\
+  Phone : \CVPhone\\
+  Location : \CVLocation\\
+  Mobility : \CVMobility\\
+  Driver’s License : \CVLicense
+\end{minipage}
+\vspace{-8pt}
+
+% ============================================================
+% 2) PROFESSIONAL SUMMARY
+% ============================================================
+\section*{Professional Summary}
+\CVSummary
+\vspace{-4pt}
+
+% ============================================================
+% 3) EDUCATION (add/remove as needed)
+% ============================================================
+\section*{Education}
+\vspace{-2pt}
+
+\eduentry{Degree Name / Program Name}{Start -- End}{University / Faculty / School}
+
+\eduentry{Degree Name / Program Name}{Start -- End}{University / Faculty / School}
+
+\eduentry{Degree Name / Program Name}{Start -- End}{University / Faculty / School}
+
+\vspace{-8pt}
+
+% ============================================================
+% 4) PROJECTS (add/remove as needed)
+% ============================================================
+\section*{Projects}
+\vspace{0.5pt}
+
+\proj{Project Title 1 }
+{Tech 1, Tech 2, Tech 3, Tool 1, Tool 2}
+
+\proj{Project Title 2 }
+{Tech 1, Tech 2, Tech 3, Tool 1, Tool 2}
+
+\proj{Project Title 3 }
+{Tech 1, Tech 2, Tech 3, Tool 1, Tool 2}
+
+\proj{Project Title 4 }
+{Tech 1, Tech 2, Tech 3, Tool 1, Tool 2}
+
+\vspace{-6pt}
+
+% ============================================================
+% 5) EXPERIENCE (1 role example; copy/paste for more)
+% ============================================================
+\section*{Experience}
+\vspace{1pt}
+
+{\fontsize{8}{9}\selectfont
+\company{Company Name} \sep \place{City, Country}\hfill {\MetaSize\textit{Month YYYY -- Month YYYY}} } \\
+\role{Job Title / Internship Title}\\
+{\MetaSize{\textbf{Topic :} Your topic / mission (optional)}}\\[-11pt]
+
+{\fontsize{7}{9}\selectfont
+\begin{itemize}[leftmargin=3em]
+  \item Action + what you did + measurable impact (if possible).
+  \item Action + tools/tech you used + result.
+  \item Action + responsibility + outcome.
+  \item Action + documentation / collaboration / testing.
+\end{itemize}
+}
+
+\vspace{-6pt}
+
+% ============================================================
+% 6) TECHNICAL SKILLS (group by categories)
+% ============================================================
+\section*{Technical Skills}
+\vspace{-0.5pt}
+
+{\fontsize{7}{9}\selectfont
+\begin{itemize}
+  \item \textbf{Programming \& Version Control :} Language 1, Language 2, Language 3 \sep Git/GitHub.
+  \item \textbf{Embedded / Hardware :} MCU 1, MCU 2, Peripherals, Protocols (I2C/SPI/UART), RTOS (optional).
+  \item \textbf{Automotive Networks (optional) :} CAN, LIN, UDS, DBC, Tools (CANoe/CANalyzer).
+  \item \textbf{Modeling / Simulation (optional) :} MATLAB/Simulink, Simscape, Model-Based Design tools.
+  \item \textbf{Data / ML (optional) :} pandas, NumPy, scikit-learn, etc.
+  \item \textbf{Tooling :} IDEs, CI, documentation, PCB tools, etc.
+\end{itemize}
+}
+
+\vspace{-6pt}
+
+% ============================================================
+% 7) TECHNICAL KNOWLEDGE (standards/testing/process)
+% ============================================================
+\section*{Technical Knowledge}
+\vspace{-0.5pt}
+
+{\fontsize{7}{9}\selectfont
+\begin{itemize}
+  \item \textbf{Standards / Process :} ISO 26262, AUTOSAR awareness, Automotive SPICE, MISRA (edit to your domain).
+  \item \textbf{Testing \& Validation :} MIL / SIL / HIL concepts, test cases, reporting, traceability basics.
+  \item \textbf{Systems / Communication :} Timing, real-time constraints, message framing, diagnostics, etc.
+  \item \textbf{Project Practices :} V-model / Agile, documentation discipline, modular design.
+\end{itemize}
+}
+
+\vspace{-6pt}
+
+% ============================================================
+% 8) BOTTOM AREA (2 columns)
+%    Left: Certificates, Soft skills, Activities
+%    Right: Interests, Languages, Tools, Social links
+% ============================================================
+\begin{paracol}{2}
+\setlength{\columnsep}{0.5cm}
+
+% ---------------- LEFT COLUMN ----------------
+
+\section*{Certificates}
+\vspace{0pt}
+
+\textbf{Platform / Provider}
+{\fontsize{7}{8}\selectfont
+\begin{itemize}[leftmargin=3em]
+  \item Certificate / Course 1
+  \item Certificate / Course 2
+  \item Certificate / Course 3
+\end{itemize}
+}
+
+\vspace{-5pt}
+
+\section*{Interpersonal Skills}
+Skill 1 \sep Skill 2 \sep Skill 3 \\
+Skill 4 \sep Skill 5 \sep Skill 6
+\vspace{-4pt}
+
+\section*{Extracurricular Activities}
+\textbf{Club / Association : Role}\\[-11pt]
+{\fontsize{7}{9}\selectfont
+\begin{itemize}[leftmargin=3em]
+  \item Activity / responsibility 1
+  \item Activity / responsibility 2
+\end{itemize}
+}
+
+% ---------------- RIGHT COLUMN ----------------
+\switchcolumn
+\vspace{0pt}
+
+\section*{Interests}
+Interest 1 \sep Interest 2 \sep Interest 3
+\vspace{-4pt}
+
+\section*{Languages}
+\textbf{Language 1} (Level) \sep
+\textbf{Language 2} (Level) \sep
+\textbf{Language 3} (Level)
+\vspace{-4pt}
+
+\section*{Documentation tools}
+Tool 1 \sep Tool 2 \sep Tool 3 \sep Tool 4
+\vspace{-4pt}
+
+\section*{Social Media}
+{
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}l l@{}}
+  \faLinkedin & \href{\CVLinkedInURL}{\CVLinkedInText} \\
+  \faGithub   & \href{\CVGithubURL}{\CVGithubText} \\
+\end{tabular}
+}
+
+\end{paracol}
+
+\end{document}

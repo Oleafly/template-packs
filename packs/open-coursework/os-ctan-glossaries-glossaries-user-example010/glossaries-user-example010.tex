@@ -1,0 +1,68 @@
+% This file is embedded in glossaries-user.pdf 
+% Example 10 UTF-8 and bib2gls
+% Label: "ex:bib2glsutf8"
+% arara: pdflatex
+% arara: bib2gls
+% arara: pdflatex
+% arara: pdfcrop
+\documentclass[12pt]{article}
+\pagestyle{empty}
+\begin{filecontents*}{sample-utf8-en.bib}
+% Encoding: UTF-8
+@entry{élite,
+ name={élite},
+ description={select group or class}
+} 
+
+@entry{elephant,
+ name={elephant},
+ description={large animal with trunk and tusks}
+} 
+
+@entry{elk,
+ name={elk},
+ description={large deer}
+}
+\end{filecontents*}
+\begin{filecontents*}{sample-utf8-pt.bib}
+% Encoding: UTF-8
+@entry{água,
+ name={água},
+ description={water}
+} 
+
+@entry{árvore,
+ name={árvore},
+ description={tree}
+} 
+
+@entry{ano,
+ name={ano},
+ description={year}
+}
+\end{filecontents*}
+\usepackage[T1]{fontenc}
+\usepackage[main=english,brazilian]{babel}
+\usepackage[record]{glossaries-extra}
+\newglossary*{dictionary}{\glossaryname}
+\GlsXtrLoadResources[
+ sort=en,% sort according to English language rules
+ src={sample-utf8-en}% data in sample-utf8-en.bib
+]
+\GlsXtrLoadResources[
+ sort=pt-BR,% sort according to pt-BR language rules
+ src={sample-utf8-pt},% data in sample-utf8-pt.bib
+ type=dictionary
+] 
+\begin{document}
+\section{English}
+An \gls{elk} and an \gls{elephant} belonged to an \gls{élite} group. 
+
+\printunsrtglossary 
+
+\selectlanguage{brazilian}
+\section{Brasileiro}
+A \gls{árvore} tive \gls{água} este \gls{ano}. 
+
+\printunsrtglossary[type=dictionary] 
+\end{document}

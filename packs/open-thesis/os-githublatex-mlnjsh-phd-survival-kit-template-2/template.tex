@@ -1,0 +1,485 @@
+% =============================================================================
+% IEEE-Style LaTeX Paper Template
+% PhD Survival Kit — Prof. Milan Amrut Joshi
+% =============================================================================
+%
+% USAGE:
+%   1. Replace placeholder content with your own
+%   2. Compile with: pdflatex template.tex && bibtex template && pdflatex template.tex && pdflatex template.tex
+%   3. For IEEE conferences, download the official IEEEtran class from:
+%      https://www.ieee.org/conferences/publishing/templates.html
+%
+% =============================================================================
+
+% --- Document Class ---
+% IEEEtran: Official IEEE Transactions LaTeX class
+% Options:
+%   conference  — for conference papers (single column abstract)
+%   journal     — for journal papers (two column throughout)
+%   10pt/11pt   — font size
+%   draftcls    — draft mode (shows overfull hbox warnings)
+\documentclass[conference,10pt]{IEEEtran}
+
+% =============================================================================
+% PACKAGES
+% =============================================================================
+
+% --- Mathematics ---
+\usepackage{amsmath}      % Advanced math environments (align, equation*, etc.)
+\usepackage{amssymb}      % Mathematical symbols (e.g., \mathbb, \mathcal)
+\usepackage{amsthm}       % Theorem environments
+
+% --- Graphics and Figures ---
+\usepackage{graphicx}     % Include images with \includegraphics
+\usepackage{subfig}       % Side-by-side figures with \subfloat
+\usepackage{float}        % Better float placement with [H] option
+\usepackage{booktabs}     % Professional table rules (\toprule, \midrule, \bottomrule)
+
+% --- References and Links ---
+\usepackage{cite}         % Improved citation handling (sorts and compresses)
+\usepackage{hyperref}     % Clickable cross-references and URLs
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue,
+    bookmarks=true,
+    pdfauthor={Your Name},
+    pdftitle={Your Paper Title},
+}
+
+% --- Algorithms ---
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}  % Algorithm typesetting
+% Usage: \begin{algorithm}[H] ... \end{algorithm}
+
+% --- Code Listings (optional, uncomment if needed) ---
+% \usepackage{listings}
+% \lstset{basicstyle=\ttfamily\footnotesize, breaklines=true}
+
+% --- Miscellaneous ---
+\usepackage{xcolor}       % Color definitions
+\usepackage{url}          % URL formatting
+\usepackage{balance}      % Balance columns on last page (use \balance before bibliography)
+
+% =============================================================================
+% CUSTOM COMMANDS (add your own shortcuts here)
+% =============================================================================
+\newcommand{\eg}{\textit{e.g.}}
+\newcommand{\ie}{\textit{i.e.}}
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\wrt}{w.r.t.}
+\newcommand{\R}{\mathbb{R}}        % Real numbers
+\newcommand{\N}{\mathbb{N}}        % Natural numbers
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+\newcommand{\abs}[1]{\left| #1 \right|}
+
+% =============================================================================
+% TITLE AND AUTHOR INFORMATION
+% =============================================================================
+
+\title{%
+    Your Paper Title: A Descriptive Subtitle \\
+    That Conveys the Core Contribution
+}
+
+% --- Author Block ---
+% For conference papers, use this format:
+\author{
+    \IEEEauthorblockN{First Author\IEEEauthorrefmark{1},
+                       Second Author\IEEEauthorrefmark{2},
+                       Third Author\IEEEauthorrefmark{1}}
+    \IEEEauthorblockA{
+        \IEEEauthorrefmark{1}Department of Computer Science,
+        University Name, City, Country \\
+        Email: \{first.author, third.author\}@university.edu
+    }
+    \IEEEauthorblockA{
+        \IEEEauthorrefmark{2}Department of Electrical Engineering,
+        Another University, City, Country \\
+        Email: second.author@another.edu
+    }
+}
+
+% =============================================================================
+% DOCUMENT BODY
+% =============================================================================
+\begin{document}
+
+% --- Title ---
+\maketitle
+
+% =============================================================================
+% ABSTRACT
+% =============================================================================
+% Guidelines:
+%   - 150-250 words for most IEEE venues
+%   - State the problem, approach, key results, and significance
+%   - No citations, no acronyms (unless universally known), no equations
+%   - Write this LAST, after the paper is complete
+\begin{abstract}
+    State the problem you are addressing in 1--2 sentences. Describe the
+    limitation of existing approaches. Present your proposed method or
+    contribution concisely. Summarize the key experimental findings with
+    specific quantitative results (\eg, ``achieves 94.3\% accuracy, a
+    3.7\% improvement over the state of the art''). Conclude with the
+    broader significance or implication of your work.
+\end{abstract}
+
+% --- Keywords ---
+% Choose 4-6 keywords, ordered from most specific to most general
+\begin{IEEEkeywords}
+    topological data analysis, feature extraction, persistent homology,
+    machine learning, image classification
+\end{IEEEkeywords}
+
+% =============================================================================
+% I. INTRODUCTION
+% =============================================================================
+% Structure (approximately 1.5-2 pages):
+%   1. Context and motivation (why does this problem matter?)
+%   2. Problem statement (what specific gap exists?)
+%   3. Limitations of existing work (why can't current methods solve it?)
+%   4. Your contribution (what do you propose?)
+%   5. Paper organization (roadmap of remaining sections)
+\section{Introduction}
+\label{sec:introduction}
+
+% --- Paragraph 1: Broad context ---
+Provide the broad context for your research area. Explain why this field
+is important and what real-world applications motivate the work. Use
+citations to establish that this is an active area of
+research~\cite{ref_foundational_work}.
+
+% --- Paragraph 2: Narrow down to specific problem ---
+Narrow the focus to the specific problem you address. Describe what has
+been done and what remains unsolved. Identify the gap in the literature
+that your work fills.
+
+% --- Paragraph 3: Limitations of existing approaches ---
+Discuss the limitations of current approaches. Be specific and cite
+relevant work~\cite{ref_limitation_1, ref_limitation_2}. Explain why
+these limitations matter in practice.
+
+% --- Paragraph 4: Your contribution ---
+Introduce your proposed approach. Clearly state your contributions.
+It is common to use a bulleted list:
+
+The main contributions of this paper are as follows:
+\begin{itemize}
+    \item We propose [method name], a novel approach to [problem] that
+          addresses [limitation].
+    \item We introduce [specific technical contribution], which enables
+          [benefit].
+    \item We conduct extensive experiments on [datasets/benchmarks],
+          demonstrating [quantitative improvement] over state-of-the-art
+          methods.
+\end{itemize}
+
+% --- Paragraph 5: Paper organization ---
+The remainder of this paper is organized as follows.
+Section~\ref{sec:related_work} reviews related work.
+Section~\ref{sec:methodology} presents the proposed methodology.
+Section~\ref{sec:experiments} describes the experimental setup.
+Section~\ref{sec:results} discusses the results.
+Section~\ref{sec:conclusion} concludes the paper and outlines future work.
+
+% =============================================================================
+% II. RELATED WORK
+% =============================================================================
+% Structure:
+%   - Organize by theme/approach, not chronologically
+%   - End each subsection by noting what is missing (your gap)
+%   - Be fair and thorough, but concise
+\section{Related Work}
+\label{sec:related_work}
+
+\subsection{First Category of Related Work}
+\label{subsec:related_category_1}
+Discuss the first category of related approaches. Cite and briefly
+summarize key papers~\cite{ref_related_1, ref_related_2}. Note their
+strengths and limitations.
+
+\subsection{Second Category of Related Work}
+\label{subsec:related_category_2}
+Discuss the second category. Compare and contrast approaches within
+this category~\cite{ref_related_3}.
+
+\subsection{Summary and Positioning}
+Briefly summarize the landscape and position your work relative to
+existing approaches. Make it clear how your contribution differs from
+and improves upon prior work.
+
+% =============================================================================
+% III. METHODOLOGY
+% =============================================================================
+% Structure:
+%   - Start with problem formulation (mathematical notation)
+%   - Describe your method step by step
+%   - Include algorithm pseudocode if applicable
+%   - Use figures to illustrate architecture/pipeline
+\section{Proposed Methodology}
+\label{sec:methodology}
+
+\subsection{Problem Formulation}
+\label{subsec:problem_formulation}
+Let $\mathcal{X} = \{x_1, x_2, \ldots, x_n\}$ denote the input dataset
+where each $x_i \in \R^d$. We aim to learn a mapping
+$f: \R^d \rightarrow \R^k$ such that:
+%
+\begin{equation}
+    \label{eq:objective}
+    \min_{f \in \mathcal{F}} \frac{1}{n} \sum_{i=1}^{n}
+    \mathcal{L}(f(x_i), y_i) + \lambda \Omega(f),
+\end{equation}
+%
+where $\mathcal{L}$ is the loss function, $y_i$ is the ground truth
+label, and $\Omega(f)$ is a regularization term with hyperparameter
+$\lambda > 0$.
+
+\subsection{Proposed Approach}
+\label{subsec:proposed_approach}
+Describe your method in detail. Use subsections to break it into
+logical components.
+
+% --- Example: Including a figure ---
+\begin{figure}[t]
+    \centering
+    % \includegraphics[width=\columnwidth]{figures/architecture.pdf}
+    \fbox{\parbox{0.9\columnwidth}{\centering
+        \vspace{2cm}
+        [Architecture Diagram Placeholder] \\
+        Replace with your figure
+        \vspace{2cm}
+    }}
+    \caption{Overview of the proposed architecture. The input data flows
+             through [component 1], [component 2], and produces [output].
+             Best viewed in color.}
+    \label{fig:architecture}
+\end{figure}
+
+As illustrated in Fig.~\ref{fig:architecture}, our approach consists of
+three main components: (1) feature extraction, (2) representation
+learning, and (3) classification.
+
+\subsection{Algorithm}
+\label{subsec:algorithm}
+
+% --- Example: Algorithm pseudocode ---
+\begin{algorithm}[t]
+    \caption{Proposed Method Name}
+    \label{alg:proposed}
+    \KwIn{Dataset $\mathcal{X}$, learning rate $\eta$, epochs $T$}
+    \KwOut{Trained model parameters $\theta^*$}
+
+    Initialize parameters $\theta_0$ randomly\;
+    \For{$t = 1$ \KwTo $T$}{
+        Sample mini-batch $\mathcal{B} \subset \mathcal{X}$\;
+        Compute loss: $\ell \leftarrow \frac{1}{|\mathcal{B}|}
+            \sum_{(x,y) \in \mathcal{B}} \mathcal{L}(f_\theta(x), y)$\;
+        Compute gradients: $g \leftarrow \nabla_\theta \ell$\;
+        Update parameters: $\theta_t \leftarrow \theta_{t-1} - \eta \cdot g$\;
+    }
+    \Return{$\theta^* = \theta_T$}\;
+\end{algorithm}
+
+The complete procedure is summarized in Algorithm~\ref{alg:proposed}.
+The time complexity is $O(ndk)$ per epoch, where $n$ is the number of
+samples, $d$ is the feature dimension, and $k$ is the number of classes.
+
+% =============================================================================
+% IV. EXPERIMENTS
+% =============================================================================
+% Structure:
+%   - Datasets (with statistics in a table)
+%   - Baselines/compared methods
+%   - Implementation details (hyperparameters, hardware)
+%   - Evaluation metrics
+\section{Experiments}
+\label{sec:experiments}
+
+\subsection{Datasets}
+\label{subsec:datasets}
+We evaluate our method on three benchmark datasets, summarized in
+Table~\ref{tab:datasets}.
+
+% --- Example: Table ---
+\begin{table}[t]
+    \centering
+    \caption{Summary of Datasets Used in Experiments}
+    \label{tab:datasets}
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Dataset} & \textbf{Samples} & \textbf{Features} & \textbf{Classes} \\
+        \midrule
+        Dataset A & 10{,}000 & 784  & 10 \\
+        Dataset B & 50{,}000 & 2048 & 100 \\
+        Dataset C & 5{,}000  & 512  & 5 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Baseline Methods}
+We compare against the following state-of-the-art methods:
+\begin{itemize}
+    \item \textbf{Method A}~\cite{ref_baseline_1}: Brief description.
+    \item \textbf{Method B}~\cite{ref_baseline_2}: Brief description.
+    \item \textbf{Method C}~\cite{ref_baseline_3}: Brief description.
+\end{itemize}
+
+\subsection{Implementation Details}
+\label{subsec:implementation}
+All experiments are conducted using Python 3.10 with PyTorch 2.0 on a
+single NVIDIA RTX 3090 GPU. We use Adam optimizer with learning rate
+$\eta = 10^{-3}$ and batch size 64. Training runs for 100 epochs with
+early stopping (patience of 10 epochs). All results are averaged over
+5 independent runs with different random seeds.
+
+\subsection{Evaluation Metrics}
+We report accuracy, precision, recall, and F1-score (macro-averaged).
+For computational efficiency, we also report training time and inference
+latency.
+
+% =============================================================================
+% V. RESULTS AND DISCUSSION
+% =============================================================================
+\section{Results and Discussion}
+\label{sec:results}
+
+\subsection{Main Results}
+\label{subsec:main_results}
+Table~\ref{tab:results} presents the main experimental results.
+
+\begin{table}[t]
+    \centering
+    \caption{Comparison with State-of-the-Art Methods. Best results
+             in \textbf{bold}, second best \underline{underlined}.}
+    \label{tab:results}
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Method} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
+        \midrule
+        Method A & 91.2 & 90.8 & 91.0 & 90.9 \\
+        Method B & 92.5 & \underline{92.1} & 92.3 & 92.2 \\
+        Method C & \underline{93.1} & 91.9 & \underline{93.0} & \underline{92.4} \\
+        \midrule
+        \textbf{Ours} & \textbf{94.3} & \textbf{94.0} & \textbf{94.1} & \textbf{94.0} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Our method achieves the best performance across all metrics on Dataset A,
+with a 1.2\% improvement in accuracy over the strongest baseline
+(Method C).
+
+\subsection{Ablation Study}
+\label{subsec:ablation}
+To understand the contribution of each component, we conduct ablation
+experiments by systematically removing one component at a time.
+
+\subsection{Qualitative Analysis}
+\label{subsec:qualitative}
+Provide visual examples, attention maps, failure cases, or other
+qualitative evidence that helps readers understand when and why
+your method works.
+
+\subsection{Computational Cost}
+\label{subsec:computational}
+Discuss training time, inference speed, memory usage, and model size.
+Compare with baselines.
+
+% =============================================================================
+% VI. CONCLUSION
+% =============================================================================
+% Structure:
+%   - Summarize what you did (1-2 sentences)
+%   - Summarize key results (1-2 sentences)
+%   - Discuss limitations honestly
+%   - Outline future work directions
+\section{Conclusion}
+\label{sec:conclusion}
+
+In this paper, we proposed [method name], a novel approach for [problem].
+Our method addresses the limitation of [existing gap] by introducing
+[key innovation]. Extensive experiments on [number] benchmark datasets
+demonstrate that our approach outperforms state-of-the-art methods by
+up to [X]\% in [metric].
+
+\textbf{Limitations.} We acknowledge the following limitations:
+(1) our method assumes [assumption]; (2) scalability to
+[larger scale] has not been tested.
+
+\textbf{Future Work.} We plan to extend this work by:
+(1) [direction 1]; (2) [direction 2]; (3) [direction 3].
+
+% =============================================================================
+% ACKNOWLEDGMENTS
+% =============================================================================
+\section*{Acknowledgments}
+The authors would like to thank [funding agency] for financial support
+under grant [number]. We also thank [names] for helpful discussions.
+
+% =============================================================================
+% BIBLIOGRAPHY
+% =============================================================================
+% Balance the columns on the last page
+\balance
+
+% Option 1: BibTeX file (recommended)
+% \bibliographystyle{IEEEtran}
+% \bibliography{references}
+
+% Option 2: Inline bibliography (for quick prototyping)
+\begin{thebibliography}{10}
+
+\bibitem{ref_foundational_work}
+    A.~Author and B.~Coauthor,
+    ``Title of foundational paper,''
+    \textit{IEEE Trans. Pattern Anal. Mach. Intell.},
+    vol.~42, no.~3, pp.~123--135, Mar. 2020.
+
+\bibitem{ref_limitation_1}
+    C.~Researcher,
+    ``Title of paper showing limitation 1,''
+    in \textit{Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)},
+    2021, pp.~456--463.
+
+\bibitem{ref_limitation_2}
+    D.~Scholar and E.~Collaborator,
+    ``Title of paper showing limitation 2,''
+    \textit{Pattern Recognition}, vol.~118, p.~108024, 2021.
+
+\bibitem{ref_related_1}
+    F.~Scientist,
+    ``Title of related work 1,''
+    in \textit{Proc. Int. Conf. Mach. Learn. (ICML)}, 2022, pp.~789--798.
+
+\bibitem{ref_related_2}
+    G.~Expert and H.~Partner,
+    ``Title of related work 2,''
+    \textit{Neural Networks}, vol.~150, pp.~201--215, 2022.
+
+\bibitem{ref_related_3}
+    I.~Pioneer,
+    ``Title of related work 3,''
+    \textit{arXiv preprint arXiv:2301.00001}, 2023.
+
+\bibitem{ref_baseline_1}
+    J.~Baseline and K.~Author,
+    ``Baseline method A,''
+    in \textit{Proc. Advances Neural Inf. Process. Syst. (NeurIPS)},
+    2022, pp.~1234--1245.
+
+\bibitem{ref_baseline_2}
+    L.~Comparison,
+    ``Baseline method B,''
+    \textit{IEEE Trans. Neural Netw. Learn. Syst.},
+    vol.~34, no.~5, pp.~2345--2358, 2023.
+
+\bibitem{ref_baseline_3}
+    M.~Reference,
+    ``Baseline method C,''
+    in \textit{Proc. Eur. Conf. Comput. Vis. (ECCV)}, 2022, pp.~567--578.
+
+\end{thebibliography}
+
+\end{document}

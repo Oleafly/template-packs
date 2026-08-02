@@ -1,0 +1,180 @@
+% !TEX program = xelatex
+\documentclass[aspectratio=169,10pt]{beamer}
+\usepackage[UTF8]{ctex}
+\usepackage{amsmath,booktabs,siunitx,tikz}
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
+
+\title{低压能量回馈变流器控制系统}
+\subtitle{工程项目答辩演示模板}
+\author{张三}
+\institute{示例大学·示例学院}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{汇报结构}
+  \tableofcontents
+\end{frame}
+
+\section{问题与目标}
+\begin{frame}{项目背景与核心问题}
+\begin{columns}[T]
+\column{0.54\textwidth}
+\begin{itemize}
+  \item 传统负载测试把能量转化为热量，效率低、散热压力大；
+  \item 控制系统需要兼顾双向功率流、动态响应和故障安全；
+  \item 竞赛展示要求指标可复现、测试过程清晰、现场操作稳定。
+\end{itemize}
+\column{0.42\textwidth}
+\begin{block}{项目目标}
+建立一套低压、隔离、可验证的控制与测试平台，并为后续功率级升级保留接口。
+\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}{关键指标}
+\centering
+\begin{tabular}{lll}
+\toprule
+指标 & 目标 & 验证方式\\
+\midrule
+电流稳态误差 & $\leq\SI{2}{\percent}$ & 标准表对比\\
+保护关断时间 & $\leq\SI{10}{\milli\second}$ & 示波器触发\\
+通信稳定性 & 1000 帧无 CRC 错误 & 自动化日志\\
+安全默认状态 & PWM=0 & 上电/复位测试\\
+\bottomrule
+\end{tabular}
+\end{frame}
+
+\section{方案与实现}
+\begin{frame}{总体架构}
+\centering
+\begin{tikzpicture}[>=latex,every node/.style={draw,rounded corners,minimum width=2.4cm,minimum height=0.8cm,align=center,font=\small}]
+\node (source) at (0,0) {低压电源};
+\node (power) at (3.3,0) {双向功率级};
+\node (bus) at (6.6,0) {负载/母线};
+\node (sample) at (3.3,-1.7) {采样调理};
+\node (mcu) at (6.6,-1.7) {STM32};
+\node (pc) at (9.4,-1.7) {RS485 上位机};
+\draw[->] (source) -- (power);
+\draw[<->] (power) -- (bus);
+\draw[->] (power) -- (sample);
+\draw[->] (sample) -- (mcu);
+\draw[->] (mcu) -- (power);
+\draw[<->] (mcu) -- (pc);
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{控制与安全策略}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{block}{控制链路}
+采样标定 $\rightarrow$ 滤波 $\rightarrow$ 参考斜率限制 $\rightarrow$ PI 控制 $\rightarrow$ 占空比限幅
+\end{block}
+\begin{equation*}
+  u[k]=\operatorname{sat}\left(K_pe[k]+K_iT_s\sum e[k]\right)
+\end{equation*}
+\column{0.48\textwidth}
+\begin{alertblock}{安全链路}
+\begin{itemize}
+  \item 上电与失联强制零输出
+  \item 过流/过压/欠压/过温锁存
+  \item 急停与硬件关断独立于软件
+  \item 故障恢复需停机并重新确认
+\end{itemize}
+\end{alertblock}
+\end{columns}
+\end{frame}
+
+\begin{frame}{软件结构}
+\centering
+\begin{tikzpicture}[>=latex,every node/.style={draw,rounded corners,minimum width=2.2cm,minimum height=0.75cm,align=center,font=\small}]
+\node (idle) at (0,0) {IDLE};
+\node (run) at (4,0) {RUN};
+\node (fault) at (8,0) {FAULT};
+\draw[->,bend left] (idle) to node[above,draw=none]{Arm} (run);
+\draw[->,bend left] (run) to node[below,draw=none]{Disarm/Timeout} (idle);
+\draw[->] (idle) -- node[above,draw=none]{异常} (fault);
+\draw[->] (run) -- node[above,draw=none]{异常} (fault);
+\draw[->,bend left=25] (fault) to node[below,draw=none]{安全确认+清故障} (idle);
+\end{tikzpicture}
+\end{frame}
+
+\section{实验与结果}
+\begin{frame}{测试方案}
+\begin{enumerate}
+  \item 无功率测试：确认 PWM 默认关闭、状态机和通信；
+  \item 模拟采样测试：验证标定、滤波和阈值故障；
+  \item 低压限流测试：确认正反向 PWM 互锁和闭环趋势；
+  \item 指标测试：记录原始 CSV、示波器波形和仪器不确定度；
+  \item 长时间与重复性测试：检查温升、漂移和故障恢复。
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{结果展示示例}
+\begin{columns}[T]
+\column{0.50\textwidth}
+\begin{table}
+\centering
+\begin{tabular}{lrr}
+\toprule
+工况 & 目标/A & 实测/A\\
+\midrule
+低负载 & 0.50 & 0.49\\
+中负载 & 1.00 & 0.99\\
+高负载 & 1.50 & 1.48\\
+\bottomrule
+\end{tabular}
+\caption{示例数据，正式答辩必须替换}
+\end{table}
+\column{0.46\textwidth}
+\begin{block}{展示原则}
+\begin{itemize}
+  \item 一页只表达一个结论；
+  \item 结果必须注明工况与单位；
+  \item PPT、论文和实物参数一致；
+  \item 保留原始数据和复现步骤。
+\end{itemize}
+\end{block}
+\end{columns}
+\end{frame}
+
+\section{总结}
+\begin{frame}{创新点、局限与下一步}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\begin{block}{已完成}
+\begin{itemize}
+  \item 可移植控制核心与自动化测试
+  \item ADC 标定、滤波和通信看门狗
+  \item 故障锁存与安全默认状态
+  \item 可复现的文档和测试流程
+\end{itemize}
+\end{block}
+\column{0.48\textwidth}
+\begin{block}{下一步}
+\begin{itemize}
+  \item 完成具体功率硬件与参数设计
+  \item 增加实机效率和热测试
+  \item 完善 EMC、可靠性和现场演示
+  \item 根据比赛规则优化指标
+\end{itemize}
+\end{block}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\centering
+{\Huge 谢谢！}\par
+\vspace{1cm}
+{\Large 欢迎提问}
+\end{frame}
+
+\end{document}

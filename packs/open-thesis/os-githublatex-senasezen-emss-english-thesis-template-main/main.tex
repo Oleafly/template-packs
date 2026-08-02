@@ -1,0 +1,194 @@
+%%%%%%%%%%%%%%%%% General Document Format %%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,12pt,headsepline]{scrartcl}
+
+%%%%%%%%%%%%%%%%% Packages %%%%%%%%%%%%%%%%%
+
+% Graphics
+\usepackage{graphicx}
+
+% Language
+\usepackage[english]{babel}
+
+% UTF-8 encoding
+\usepackage[utf8]{inputenc}
+
+% Font encoding
+\usepackage[T1]{fontenc}
+
+% Font
+\usepackage{lmodern}
+\usepackage{fix-cm}
+
+% Page margins
+\usepackage{geometry}
+
+% Tables
+\usepackage{array}
+\usepackage{longtable}
+
+% Text boxes
+\usepackage{fancybox}
+
+% URL formatting
+\usepackage[hyphens,obeyspaces,spaces]{url}
+
+% Colors
+\usepackage{color}
+
+% Mathematical symbols
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+% Hyperlinks in PDF
+\usepackage[bookmarksnumbered,hyperfootnotes=false]{hyperref}
+
+% Header and footer
+\usepackage{fancyhdr}
+
+% Line spacing
+\usepackage{setspace}
+
+% Captions
+\usepackage{capt-of}
+
+% Index
+\usepackage{makeidx}
+
+% Code listings
+\usepackage{listings}
+
+% Glossary and acronyms
+\usepackage[acronym,toc]{glossaries}
+
+%%%%%%%%%%%%%%%%% Page Formatting %%%%%%%%%%%%%%%%%
+
+% Layout
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2cm}
+
+% Header
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[C]{}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Bibliography style
+\bibliographystyle{plain}
+
+% Avoid extra space after punctuation
+\frenchspacing
+
+% Line spacing
+\onehalfspacing
+
+% Listing format
+\lstset{
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=5pt,
+  keywordstyle=\color{black}\bfseries,
+  stringstyle=\ttfamily,
+  showstringspaces=false,
+  basicstyle=\footnotesize,
+  captionpos=b,
+  language=C++
+}
+
+% Index
+\makeindex
+
+% Glossary
+\makeglossaries
+
+% PDF metadata
+\hypersetup{
+  pdftitle    = {Topic},
+  pdfsubject  = {Master Thesis},
+  pdfauthor   = {Name},
+  pdfkeywords = {key words}
+}
+
+% Disable single lines at the start or end of a paragraph
+\clubpenalty = 10000
+\widowpenalty = 10000
+\displaywidowpenalty = 10000
+
+%%%%%%%%%%%%%%%%% Definitions %%%%%%%%%%%%%%%%%
+
+% Glossary definitions
+\include{definitions/glossary}
+
+% Acronym definitions
+\include{definitions/acronyms}
+
+%%%%%%%%%%%%%%%%% Content %%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% Title Page
+\include{extras/titlepage}
+
+% Declaration of Originality
+\include{extras/declaration}
+
+% Abstract
+\include{extras/abstract}
+
+% Acknowledgements
+\include{extras/acknowledgements}
+
+% Table of Contents
+\newpage
+\tableofcontents
+
+% Lists
+\newpage
+\fancyhead[L]{List of Figures / Tables / Listings}
+
+% List of Figures
+\addcontentsline{toc}{section}{List of Figures} 
+\listoffigures
+
+% List of Tables
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
+
+% List of Listings
+\addcontentsline{toc}{section}{List of Listings}
+\renewcommand{\lstlistlistingname}{List of Listings} 
+\lstlistoflistings
+
+
+% Glossary
+\newpage
+\fancyhead[L]{Glossary}
+\printglossary
+
+% List of Acronyms
+\newpage
+\fancyhead[L]{List of Acronyms}
+\printglossary[type=\acronymtype, title={List of Acronyms}]
+
+% Main Chapters
+\newpage
+\fancyhead[L]{\nouppercase{\leftmark}}
+
+\include{chapters/1_introduction}
+\include{chapters/2_theoretical_background}
+\include{chapters/3_methodology}
+\include{chapters/4_results}
+\include{chapters/5_discussion}
+\include{chapters/6_conclusion}
+
+% References
+\newpage
+\addcontentsline{toc}{section}{References}
+\bibliography{definitions/references}
+
+% Appendix
+\include{extras/appendix}
+
+\end{document}
+```

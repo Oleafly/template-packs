@@ -1,0 +1,249 @@
+%-------------------------------------
+% LaTeX Resume for Software Engineers
+% Author : Leslie Cheng
+% License : MIT
+%-------------------------------------
+
+\documentclass[letterpaper,12pt]{article}[leftmargin=*]
+
+\usepackage[empty]{fullpage}
+\usepackage{enumitem}
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+  \usepackage[xetex]{hyperref}
+\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \usepackage[pdftex]{hyperref}
+\fi
+\usepackage{fontawesome}
+\usepackage[sfdefault,light]{FiraSans}
+\usepackage{anyfontsize}
+\usepackage{xcolor}
+\usepackage{tabularx}
+
+%-------------------------------------------------- SETTINGS HERE --------------------------------------------------
+% Header settings
+\def \fullname {Caian Ertl}
+\def \subtitle {Senior backend engineer}
+
+\def \emailicon {\faEnvelope}
+\def \emaillink {mailto:hi@caian.org}
+\def \emailtext {hi@caian.org}
+
+\def \phoneicon {\faPhone}
+\def \phonetext {+1 (212) 555-4240}
+
+\def \githubicon {\faGithub}
+\def \githublink {https://github.com/upsetbit}
+\def \githubtext {upsetbit}
+
+\def \websiteicon {\faGlobe}
+\def \websitelink {https://caian.org}
+\def \websitetext {caian.org}
+
+\def \headertype {\singlecol} % \singlecol or \doublecol
+
+% Misc settings
+\def \entryspacing {-0pt}
+
+\def \bulletstyle {\faAngleRight}
+
+% Define colours
+\definecolor{primary}{HTML}{222222}
+\definecolor{secondary}{HTML}{3B6064}
+\definecolor{accent}{HTML}{444444}
+\definecolor{links}{HTML}{48787D}
+
+%-------------------------------------------------------------------------------------------------------------------
+
+% Defines to make listing easier
+\def \phone {\phoneicon \hspace{3pt}{ \phonetext}}
+\def \email {\emailicon \hspace{3pt}\href{\emaillink}{\emailtext}}
+\def \github {\githubicon \hspace{3pt}\href{\githublink}{\githubtext}}
+\def \website {\websiteicon \hspace{3pt}\href{\websitelink}{\websitetext}}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.55in}
+\addtolength{\evensidemargin}{-0.55in}
+\addtolength{\textwidth}{1.1in}
+\addtolength{\topmargin}{-0.6in}
+\addtolength{\textheight}{1.1in}
+
+% Define the link colours
+\hypersetup{
+    colorlinks=true,
+    urlcolor=links,
+}
+
+% Set the margin alignment
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+%-------------------------
+% Custom commands
+
+% Sections
+\renewcommand{\section}[2]{\vspace{5pt}
+  \colorbox{secondary}{\color{white}\raggedbottom\normalsize\textbf{{#1}{\hspace{7pt}#2}}}
+}
+
+% Entry start and end, for spacing
+\newcommand{\resumeEntryStart}{\begin{itemize}[leftmargin=2.5mm]}
+\newcommand{\resumeEntryEnd}{\end{itemize}\vspace{\entryspacing}}
+
+% Itemized list for the bullet points under an entry, if necessary
+\newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=4.5mm]}
+\newcommand{\resumeItemListEnd}{\end{itemize}}
+
+% Resume item
+\renewcommand{\labelitemii}{\bulletstyle}
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+% Entry with title, subheading, date(s), and location
+\newcommand{\resumeEntryTSDL}[4]{
+  \vspace{-1pt}\item[]
+    \begin{tabularx}{0.97\textwidth}{X@{\hspace{60pt}}r}
+      \textbf{\color{primary}#1} & {\firabook\color{accent}\small#2} \\
+      \textit{\color{accent}\small#3} & \textit{\color{accent}\small#4} \\
+    \end{tabularx}\vspace{-6pt}
+}
+
+% Entry with title and date(s)
+\newcommand{\resumeEntryTD}[2]{
+  \vspace{-1pt}\item[]
+    \begin{tabularx}{0.97\textwidth}{X@{\hspace{60pt}}r}
+      \textbf{\color{primary}#1} & {\firabook\color{accent}\small#2} \\
+    \end{tabularx}\vspace{-6pt}
+}
+
+% Entry for special (skills)
+\newcommand{\resumeEntryS}[2]{
+  \item[]\small{
+    \textbf{\color{primary}#1 }{ #2 \vspace{-6pt}}
+  }
+}
+
+% Double column header
+\newcommand{\doublecol}[5]{
+  \begin{tabularx}{\textwidth}{Xr}
+    {
+      \begin{tabular}[c]{l}
+        \fontsize{35}{45}\selectfont{\color{primary}{{\textbf{\fullname}}}} \\
+        {\textit{\subtitle}} % You could add a subtitle here
+      \end{tabular}
+    } & {
+      \begin{tabular}[c]{l@{\hspace{1.5em}}l}
+        {\small#3} & {\small#1} \\
+        {\small#4} & {\small#2} \\
+        {\small#5}
+      \end{tabular}
+    }
+  \end{tabularx}
+}
+
+% Single column header
+\newcommand{\singlecol}[5]{
+  \begin{tabularx}{\textwidth}{Xr}
+    {
+      \begin{tabular}[b]{l}
+        \fontsize{35}{45}\selectfont{\color{primary}{{\textbf{\fullname}}}} \\
+        {\textit{\subtitle}} % You could add a subtitle here
+      \end{tabular}
+    } & {
+      \begin{tabular}[c]{l}
+        {\small#1} \\
+        {\small#2} \\
+        {\small#3} \\
+        {\small#4} \\
+        {\small#5}
+      \end{tabular}
+    }
+  \end{tabularx}
+}
+
+\begin{document}
+%-------------------------------------------------- BEGIN HERE --------------------------------------------------
+
+%---------------------------------------------------- HEADER ----------------------------------------------------
+
+\headertype{\phone}{\email}{\website}{\github}{} % Set the order of items here
+\vspace{-10pt} % Set a negative value to push the body up, and the opposite
+
+%-------------------------------------------------- EDUCATION --------------------------------------------------
+\section{\faGraduationCap}{Education }
+
+  \resumeEntryStart
+    \resumeEntryTSDL
+      {Anhembi Morumbi University}{2015 -- 2018}
+      {Information Systems bachelor’s degree}{São Paulo, SP}
+  \resumeEntryEnd
+
+%-------------------------------------------------- SKILLS --------------------------------------------------
+\section{\faGears}{Skills }
+ \resumeEntryStart
+  \resumeEntryS{Programming } {Python, JavaScript, TypeScript, Go, Shell Script}
+  \resumeEntryS{Databases } {PostgreSQL, MongoDB, Redis}
+  \resumeEntryS{Cloud } {AWS -- Lambda, EC2, ECS, ECR, S3, IAM, CloudFront}
+  \resumeEntryS{Automation } {Terraform, Packer, Ansible, Docker, Docker Compose, GitLab-CI, GitHub Actions}
+  \resumeEntryS{Other (no experience) } {Custom parsers/compilers, C++ for RP2040, \LaTeX, Cloudflare Workers}
+ \resumeEntryEnd
+
+%-------------------------------------------------- EXPERIENCE --------------------------------------------------
+\section{\faPieChart}{Experience }
+
+  \resumeEntryStart
+    \resumeEntryTSDL
+      {MZ Group}{Jun. 2022 -- Today}
+      {Senior backend engineer \& staff member}{Remote}
+    \resumeItemListStart
+      \resumeItem {Mentored developers on architectural decisions and code-related issues}
+      \resumeItem {Led the project and implementation of Terraform, drastically reducing provisioning and deployment times}
+      \resumeItem {Reduced AWS costs by migrating services to Lambda and minimizing over-allocated resources on ECS}
+      \resumeItem {Worked with other staff members to research, evaluate and implement new technologies}
+    \resumeItemListEnd
+  \resumeEntryEnd
+
+  \resumeEntryStart
+    \resumeEntryTSDL
+      {MZ Group}{Nov. 2019 -- May. 2022}
+      {Mid-level backend engineer}{Hybrid work}
+    \resumeItemListStart
+      \resumeItem {Participated in the migration of data, schema, and queries from SQL Server to MongoDB}
+      \resumeItem {Designed and developed a microservice-based system for data (web) scraping and ingestion}
+      \resumeItem {Maintained legacy codebases of REST APIs and queue-based workers used by our products}
+      \resumeItem {Assisted in various efforts to improve code quality, test coverage and build times}
+    \resumeItemListEnd
+  \resumeEntryEnd
+
+  \resumeEntryStart
+    \resumeEntryTSDL
+      {HVAR Consulting}{May. 2019 -- Oct. 2019}
+      {Chatbot developer}{São Paulo, SP}
+    \resumeItemListStart
+        \resumeItem {Met with clients to understand and draft the expected interactions between the chatbot and users}
+        \resumeItem {Developed models and conversation flows using AI services -- DialogFlow, Azure LUIS and IBM Watson}
+        \resumeItem {Delivered entire projects and POCs, including the backend, integration tests and usage metrics}
+        \resumeItem {Post-implementation follow-ups to improve user experience and the chatbot's performance}
+    \resumeItemListEnd
+  \resumeEntryEnd
+
+  \resumeEntryStart
+    \resumeEntryTSDL
+      {Rivendel Technology}{Feb. 2018 -- Apr. 2019}
+      {Infrastructure developer}{São Paulo, SP}
+    \resumeItemListStart
+      \resumeItem {Developed several scripts and internal tools to simplify systems monitoring and anomaly detection}
+      \resumeItem {Assisted clients in the migration of their infrastructure from on-premise to cloud-based solutions}
+      \resumeItem {Delivered security assessments and cost optimization strategies for clients on AWS}
+      \resumeItem {Automated client's repetitive maintenance routines using serverless functions and scheduled tasks}
+    \resumeItemListEnd
+  \resumeEntryEnd
+
+\end{document}

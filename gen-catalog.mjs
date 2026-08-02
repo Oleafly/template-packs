@@ -67,6 +67,78 @@ const PACK_META = {
       "Madrid, Warsaw, Berkeley, Singapore, Copenhagen, Frankfurt, Boadilla, and Pittsburgh beamer decks.",
     category: "Presentations",
   },
+  "open-venue": {
+    label: "Open journal & conference templates",
+    description:
+      "Openly licensed journal and conference paper templates from public sources (GitHub, Overleaf Gallery, Typst Universe).",
+    category: "Journals & Conferences",
+  },
+  "open-cv": {
+    label: "Open CV & resume templates",
+    description:
+      "Openly licensed CV and resume templates from public sources (GitHub, Overleaf Gallery, Typst Universe).",
+    category: "CVs & Resumes",
+  },
+  "open-thesis": {
+    label: "Open thesis templates",
+    description:
+      "Openly licensed thesis and dissertation templates from public sources.",
+    category: "Theses & Reports",
+  },
+  "open-coursework": {
+    label: "Open coursework templates",
+    description:
+      "Openly licensed homework, notes, and assignment templates from public sources.",
+    category: "Assignments",
+  },
+  "open-business": {
+    label: "Open business document templates",
+    description:
+      "Openly licensed business and office document templates from public sources.",
+    category: "Business",
+  },
+  "open-creative": {
+    label: "Open creative templates",
+    description:
+      "Openly licensed creative and miscellaneous templates from public sources.",
+    category: "Creative",
+  },
+  "open-beamer": {
+    label: "Open presentation templates",
+    description:
+      "Openly licensed Beamer and Typst presentation templates from public sources.",
+    category: "Presentations",
+  },
+  "open-report": {
+    label: "Open report templates",
+    description:
+      "Openly licensed lab, technical, and project report templates from public sources.",
+    category: "Theses & Reports",
+  },
+  "open-letter": {
+    label: "Open letter templates",
+    description:
+      "Openly licensed letter and correspondence templates from public sources.",
+    category: "Business",
+  },
+  "open-book": {
+    label: "Open book templates",
+    description:
+      "Openly licensed book and long-form document templates from public sources.",
+    category: "Theses & Reports",
+  },
+  "open-ctan": {
+    label: "CTAN package examples",
+    description:
+      "Example documents from TeX Live / CTAN packages under the LaTeX Project Public License (LPPL).",
+    category: "Package Examples",
+  },
+  "open-misc": {
+    label: "Open community templates",
+    description:
+      "Openly licensed community document templates from public sources.",
+    category: "Community",
+  },
 };
 
 const catalog = [];
