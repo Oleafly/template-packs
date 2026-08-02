@@ -1,0 +1,337 @@
+% ============================================================
+% Modèle de CV 1 page (LaTeX) — Version “placeholders”
+% ============================================================
+
+\documentclass[10pt,a4paper]{article}
+
+% ------------------------------------------------------------
+% A) MISE EN PAGE (marges serrées pour tenir sur 1 page)
+% ------------------------------------------------------------
+\usepackage[a4paper,top=0.7cm,bottom=0.7cm,left=0.8cm,right=0.8cm]{geometry}
+
+% ------------------------------------------------------------
+% B) POLICES / ENCODAGE (rendu propre et professionnel)
+% ------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}     % garder pour pdflatex ; retirer si lualatex/xelatex
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% ------------------------------------------------------------
+% C) COULEURS + LIENS (personnaliser AccentColor si besoin)
+% ------------------------------------------------------------
+\usepackage{xcolor}
+\colorlet{AccentColor}{blue}    % <--- changer en teal, purple, black, etc.
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  urlcolor=AccentColor
+}
+
+% ------------------------------------------------------------
+% D) TABLEAUX / COLONNES / OUTILS D’ALIGNEMENT
+% ------------------------------------------------------------
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{paracol}
+
+% Types de colonnes :
+% L = colonne gauche extensible (alignée à gauche, ragged-right)
+% D = colonne dates fixe (alignée à droite)
+\newcolumntype{L}{>{\RaggedRight\arraybackslash}X}
+\newcolumntype{D}{>{\raggedleft\arraybackslash}p{3cm}}
+
+% ------------------------------------------------------------
+% E) LISTES / ICÔNES / TITRES DE SECTIONS
+% ------------------------------------------------------------
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{titlesec}
+\usepackage{tikz} % optionnel ; garder si vous prévoyez des éléments graphiques
+
+% ------------------------------------------------------------
+% F) ESPACEMENTS GLOBAUX (style CV)
+% ------------------------------------------------------------
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+\titlespacing*{\section}{0pt}{6pt}{4pt}
+
+% ------------------------------------------------------------
+% G) PETITES COMMANDES UTILES
+% ------------------------------------------------------------
+\newcommand{\sep}{\hspace{0.6em}{\color{gray}\textbar}\hspace{0.6em}}
+\newcommand{\role}[1]{\textbf{#1}}
+\newcommand{\company}[1]{\textbf{#1}}
+\newcommand{\place}[1]{\textit{#1}}
+
+% ------------------------------------------------------------
+% H) CONTRÔLES DE TAILLE (ajuster si vous voulez +/– de densité)
+% ------------------------------------------------------------
+\newcommand{\BodySize}{\fontsize{7}{11}\selectfont}
+\newcommand{\SectionSize}{\fontsize{9}{14}\selectfont}
+\newcommand{\ListSize}{\fontsize{7}{10.2}\selectfont}
+\newcommand{\ProjectSize}{\fontsize{7}{9.0}\selectfont}
+\newcommand{\MetaSize}{\fontsize{7}{10.0}\selectfont}
+
+% Style des titres de section + fine ligne horizontale sous chaque titre
+\titleformat{\section}{\SectionSize\bfseries}{}{0pt}{}[\vspace{1pt}\hrule\vspace{1pt}]
+
+% Style global des itemize (compact)
+\setlist[itemize]{
+  leftmargin=1.2em,
+  itemsep=2pt,
+  topsep=2pt,
+  parsep=0pt,
+  partopsep=0pt,
+  font=\ListSize
+}
+
+% Appliquer la taille du texte après la zone d’en-tête
+\newcommand{\ApplyBodySizes}{\BodySize}
+
+% ============================================================
+% ===================== MODIFIER ICI (DONNÉES) ================
+% ============================================================
+% Astuce : ne modifier que cette section lors de la réutilisation du modèle.
+
+% -- Informations d’en-tête
+\newcommand{\CVName}{VOTRE NOM COMPLET}
+\newcommand{\CVHeadline}{Votre poste / objectif (ex. Ingénieur Systèmes Embarqués)}
+
+\newcommand{\CVEmail}{votre.email@exemple.com}
+\newcommand{\CVPhone}{+XXX XX-XXX-XXXX}
+\newcommand{\CVLocation}{Ville, Pays}
+\newcommand{\CVMobility}{Télétravail / Présentiel ...}
+\newcommand{\CVLicense}{(optionnel)}
+
+% -- Liens (optionnel)
+\newcommand{\CVLinkedInURL}{https://www.linkedin.com/in/votre-profil/}
+\newcommand{\CVLinkedInText}{Identifiant LinkedIn}
+\newcommand{\CVGithubURL}{https://github.com/votre-username}
+\newcommand{\CVGithubText}{Identifiant GitHub}
+
+% -- Résumé professionnel (court : 3 à 5 lignes)
+\newcommand{\CVSummary}{%
+Un court résumé professionnel décrivant votre spécialité et vos points forts.
+Mentionnez vos compétences clés, vos domaines, et le type de poste visé (ex. C embarqué, CAN/UDS, MATLAB/Simulink, SIL/HIL).
+Ajoutez 1 à 2 mots-clés standards/process si pertinent (ex. ISO 26262, notions AUTOSAR).
+}
+
+% ============================================================
+% ======================= MACROS (BLOCS) ======================
+% ============================================================
+
+% Entrée Formation :
+% \eduentry{Diplôme / Programme}{Dates}{Établissement / Faculté}
+\newcommand{\eduentry}[3]{%
+  \begin{tabularx}{\textwidth}{@{}L D@{}}
+    \textbf{#1} & {\MetaSize\textit{#2}}\\[-2pt]
+    \multicolumn{2}{@{}l@{}}{\MetaSize\textcolor{AccentColor}{#3}}\\
+  \end{tabularx}\vspace{-3pt}
+}
+
+% Entrée Projet :
+% \proj{Titre du projet}{Technologies : ...}
+\newcommand{\proj}[2]{%
+  \textbf{#1}\\[-1pt]
+  {\ProjectSize\textbf{\textit{Technologies :}} #2}\\[-10pt]
+}
+
+% ============================================================
+% ========================= DOCUMENT ==========================
+% ============================================================
+\begin{document}
+\ApplyBodySizes
+
+% ============================================================
+% 1) EN-TÊTE (Nom/Titre à gauche, Contact à droite)
+% ============================================================
+\noindent
+\begin{minipage}[t]{0.705\textwidth}
+  \vspace{0pt}
+  {\LARGE \textbf{\CVName}}\\[6pt]
+  {\large\textbf{\CVHeadline}}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.25\textwidth}
+  \vspace{0pt}
+  \fontsize{7}{9.6}\selectfont
+  \raggedright
+  Email : \href{mailto:\CVEmail}{\CVEmail}\\
+  Téléphone : \CVPhone\\
+  Localisation : \CVLocation\\
+  Mobilité : \CVMobility\\
+  Permis : \CVLicense
+\end{minipage}
+\vspace{-8pt}
+
+% ============================================================
+% 2) RÉSUMÉ PROFESSIONNEL
+% ============================================================
+\section*{Résumé professionnel}
+\CVSummary
+\vspace{-4pt}
+
+% ============================================================
+% 3) FORMATION (ajouter/supprimer selon besoin)
+% ============================================================
+\section*{Formation}
+\vspace{-2pt}
+
+\eduentry{Nom du diplôme / programme}{Début -- Fin}{Université / Faculté / École}
+
+\eduentry{Nom du diplôme / programme}{Début -- Fin}{Université / Faculté / École}
+
+\eduentry{Nom du diplôme / programme}{Début -- Fin}{Université / Faculté / École}
+
+\vspace{-8pt}
+
+% ============================================================
+% 4) PROJETS (ajouter/supprimer selon besoin)
+% ============================================================
+\section*{Projets}
+\vspace{0.5pt}
+
+\proj{Titre du projet 1}
+{Tech 1, Tech 2, Tech 3, Outil 1, Outil 2}
+
+\proj{Titre du projet 2}
+{Tech 1, Tech 2, Tech 3, Outil 1, Outil 2}
+
+\proj{Titre du projet 3}
+{Tech 1, Tech 2, Tech 3, Outil 1, Outil 2}
+
+\proj{Titre du projet 4}
+{Tech 1, Tech 2, Tech 3, Outil 1, Outil 2}
+
+\vspace{-6pt}
+
+% ============================================================
+% 5) EXPÉRIENCE (1 exemple ; copier/coller pour plus)
+% ============================================================
+\section*{Expérience}
+\vspace{1pt}
+
+{\fontsize{8}{9}\selectfont
+\company{Nom de l’entreprise} \sep \place{Ville, Pays}\hfill {\MetaSize\textit{Mois AAAA -- Mois AAAA}} } \\
+\role{Intitulé du poste / stage}\\
+{\MetaSize{\textbf{Sujet :} Votre sujet / mission (optionnel)}}\\[-11pt]
+
+{\fontsize{7}{9}\selectfont
+\begin{itemize}[leftmargin=3em]
+  \item Action + ce que vous avez fait + impact mesurable (si possible).
+  \item Action + outils/tech utilisés + résultat.
+  \item Action + responsabilité + résultat.
+  \item Action + documentation / collaboration / tests.
+\end{itemize}
+}
+
+\vspace{-6pt}
+
+% ============================================================
+% 6) COMPÉTENCES TECHNIQUES (regrouper par catégories)
+% ============================================================
+\section*{Compétences techniques}
+\vspace{-0.5pt}
+
+{\fontsize{7}{9}\selectfont
+\begin{itemize}
+  \item \textbf{Programmation \& Gestion de versions :} Langage 1, Langage 2, Langage 3 \sep Git/GitHub.
+  \item \textbf{Embarqué / Matériel :} MCU 1, MCU 2, Périphériques, Protocoles (I2C/SPI/UART), RTOS (optionnel).
+  \item \textbf{Réseaux automobiles (optionnel) :} CAN, LIN, UDS, DBC, Outils (CANoe/CANalyzer).
+  \item \textbf{Modélisation / Simulation (optionnel) :} MATLAB/Simulink, Simscape, outils MBD.
+  \item \textbf{Data / ML (optionnel) :} pandas, NumPy, scikit-learn, etc.
+  \item \textbf{Outils :} IDEs, CI, documentation, outils PCB, etc.
+\end{itemize}
+}
+
+\vspace{-6pt}
+
+% ============================================================
+% 7) CONNAISSANCES TECHNIQUES (standards/tests/process)
+% ============================================================
+\section*{Connaissances techniques}
+\vspace{-0.5pt}
+
+{\fontsize{7}{9}\selectfont
+\begin{itemize}
+  \item \textbf{Standards / Process :} ISO 26262, notions AUTOSAR, Automotive SPICE, MISRA (adapter à votre domaine).
+  \item \textbf{Tests \& Validation :} concepts MIL / SIL / HIL, cas de test, reporting, notions de traçabilité.
+  \item \textbf{Systèmes / Communication :} timing, contraintes temps réel, trames, diagnostic, etc.
+  \item \textbf{Pratiques projet :} cycle en V / Agile, discipline de documentation, conception modulaire.
+\end{itemize}
+}
+
+\vspace{-6pt}
+
+% ============================================================
+% 8) BAS DE PAGE (2 colonnes)
+%    Gauche : Certificats, Soft skills, Activités
+%    Droite : Intérêts, Langues, Outils, Liens
+% ============================================================
+\begin{paracol}{2}
+\setlength{\columnsep}{0.5cm}
+
+% ---------------- COLONNE GAUCHE ----------------
+
+\section*{Certificats}
+\vspace{0pt}
+
+\textbf{Plateforme / Organisme}
+{\fontsize{7}{8}\selectfont
+\begin{itemize}[leftmargin=3em]
+  \item Certificat / Cours 1
+  \item Certificat / Cours 2
+  \item Certificat / Cours 3
+\end{itemize}
+}
+
+\vspace{-5pt}
+
+\section*{Compétences interpersonnelles}
+Compétence 1 \sep Compétence 2 \sep Compétence 3 \\
+Compétence 4 \sep Compétence 5 \sep Compétence 6
+\vspace{-4pt}
+
+\section*{Activités extra-scolaires}
+\textbf{Club / Association : Rôle}\\[-11pt]
+{\fontsize{7}{9}\selectfont
+\begin{itemize}[leftmargin=3em]
+  \item Activité / responsabilité 1
+  \item Activité / responsabilité 2
+\end{itemize}
+}
+
+% ---------------- COLONNE DROITE ----------------
+\switchcolumn
+\vspace{0pt}
+
+\section*{Centres d’intérêt}
+Intérêt 1 \sep Intérêt 2 \sep Intérêt 3
+\vspace{-4pt}
+
+\section*{Langues}
+\textbf{Langue 1} (Niveau) \sep
+\textbf{Langue 2} (Niveau) \sep
+\textbf{Langue 3} (Niveau)
+\vspace{-4pt}
+
+\section*{Outils de documentation}
+Outil 1 \sep Outil 2 \sep Outil 3 \sep Outil 4
+\vspace{-4pt}
+
+\section*{Réseaux sociaux}
+{
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}l l@{}}
+  \faLinkedin & \href{\CVLinkedInURL}{\CVLinkedInText} \\
+  \faGithub   & \href{\CVGithubURL}{\CVGithubText} \\
+\end{tabular}
+}
+
+\end{paracol}
+
+\end{document}

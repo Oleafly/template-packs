@@ -1,0 +1,242 @@
+%-------------------------------------------
+% Curriculum Vitae (CV) in LaTeX
+% Author : Mehdi Karami
+% License : MIT
+%-------------------------------------------
+
+%------Required Packages and Functions------
+\documentclass[letter,10pt]{article}
+\usepackage{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{fontawesome5}
+\usepackage{hyperref}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{newtxtext,newtxmath}
+\usepackage{microtype}
+\usepackage{marvosym}
+
+% Document setup
+\geometry{left=0.5in, right=0.5in, top=0.5in, bottom=0.5in} % Set page margins
+% \raisebox{4mm}{\hbox to 0pt{\small Last Update: \textbf{September, 2025}\hss}\hbox to\textwidth{\hfill\thepage\hfill}}
+\makeatletter
+\def\ps@plain{
+  \def\@oddhead{\headername}
+  \let\@evenhead\@oddhead
+  \def\@oddfoot{
+    \raisebox{4mm}{\hbox to 0pt{\small Last Update: \textbf{February, 2026}\hss}\hbox to\textwidth{\hfill\thepage\hfill}}
+  }
+  \let\@evenfoot\@oddfoot
+}
+\makeatother
+\pagestyle{plain}
+
+% Section and subsection formatting
+\definecolor{tintColor}{RGB}{70,91,136}
+\newcommand{\sectionline}{\color{tintColor}\leaders\hrule height 0.5pt\hfill}
+\titleformat{\section}{\color{tintColor}\large\bfseries}{}{0em}{\sectiontitleformat}
+\newcommand{\sectiontitleformat}[1]{#1\ \sectionline}
+\titlespacing*{\section}{0pt}{*3.25}{1.5ex}
+
+\setlength{\tabcolsep}{18pt}
+\setlist[itemize]{topsep=5pt, itemsep=0.5em, parsep=0pt, partopsep=0pt}
+
+% Hyperlink setup
+\hypersetup{
+    urlbordercolor = black,
+    pdfborderstyle = {/S/U/W 0}
+}
+
+%--------------Custom Commands--------------
+\newcommand{\customsquare}{\raisebox{0.25ex}{\scalebox{0.45}{$\blacksquare$}}}
+\newcommand{\headername}{
+  \ifnum\value{page}>1
+    \raisebox{-4mm}{\textbf{Mehdi Karami}}
+  \fi
+}
+
+% Personal information
+\newcommand{\name}{\textcolor{tintColor}{Mehdi} Karami} % Name
+\newcommand{\phone}{+98 (990) 956-2438} % Phone Number
+\newcommand{\email}{karami.mehdi.scholar@gmail.com} % Email
+
+%%%%%%%%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%
+\begin{document}
+
+%-----------------HEADING-------------------
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{@{} p{\linewidth} @{}}
+\textbf{\huge \name} \hfill \hspace{9mm} \href{mailto:\email}{\underline{\small \faEnvelope\ \email}} \hfill \href{tel:\phone}{\underline{\small \faPhone\ \phone}} \hspace{12mm} \hfill\\
+{\small \faLocationArrow\ Shiraz, Iran} \hfill \hfill \href{https://github.com/karami-mehdi}{\underline{\small \faGithub\ github.com/karami-mehdi}} \hspace{2mm} \hfill \href{https://www.linkedin.com/in/karami-mehdi}{\underline{\small \faLinkedin\ linkedin.com/in/karami-mehdi}}\\ % LinkedIn profile
+\end{tabular}
+\end{center}
+
+%-----------------SUMMARY-------------------
+\section*{Summary}
+\begin{itemize}[label={\customsquare}]
+    \item \textbf{Machine Learning Researcher} specializing in \textbf{image processing}, proposed a \textbf{pre-trained GAN for limited-label brain MRI segmentation} to advance \textbf{medical AI research}.
+    \item Strong foundation in \textbf{machine learning theory and practice}, with experience in \textbf{model development, training, and optimization}, and a clear focus on contributing to \textbf{cutting-edge AI projects} and \textbf{real-world applications}.
+    \item \textbf{Active open-source contributor} in AI, collaborating on \textbf{public and volunteer projects}, reflecting commitment to \textbf{innovation, collaboration, and advancement of the AI community}.
+\end{itemize}
+
+%-----------------EDUCATION-----------------
+\section*{Education}
+\textbf{Bachelor of Computer Engineering} -  GPA: 17.88/20 (equivalent to 3.57/4.00) \hfill Sep 2021 - Aug 2025 \\
+\textit{Zand Institute of Higher Education} \hfill Shiraz, Iran \\[5pt]
+\textbf{Visiting Student} \hfill Feb 2023 - Jul 2024 \\
+\textit{University of Science and Culture} \hfill Tehran, Iran
+
+%------------RESEARCH INTERESTS-------------
+\section*{Research Interests}
+\setlength{\tabcolsep}{18pt} % Adjusting space around the table
+
+\begin{tabularx}{\textwidth} { 
+    >{\customsquare \hspace{1mm} \raggedright\arraybackslash}X 
+    @{\extracolsep{\fill}}
+    >{\customsquare \hspace{1mm} \raggedright\arraybackslash}X
+    @{\extracolsep{\fill}}
+    >{\customsquare \hspace{1mm} \raggedright\arraybackslash}X
+    @{\extracolsep{\fill}}
+    }
+Machine learning & Deep Learning & Natural Language Processing \\
+Computer Vision & Computational Biology & Scientific Computing
+\end{tabularx}
+
+%-------------PUBLICATION---------------
+\section*{Publication}
+\textbf{Pre-Trained Generative Adversarial Network for Limited-Labeled Brain MRI Segmentation} \hfill engrXiv, \href{https://doi.org/10.31224/6504}{\underline{DOI: 10.31224/6504}}. \\[3pt]
+Mehdi Karami$^{\text{\Letter}}$, Betsabeh Tanoori
+
+%-----------OPEN SOURCE PROJECTS------------
+\section*{Open Source Projects}
+\begin{itemize}[label={\customsquare}]
+    \item \href{https://github.com/AINexumLab/slm-rag/}{\underline{\textbf{Retrieval-Augmented Generation (RAG) for Small Language Models (SLMs)}}}
+    \begin{itemize}
+        \item Implements a RAG pipeline which includes text chunking, embedding, and vector retrieval to enable efficient generation and inference with local Small Language Models (SLMs) as well as standard language models.
+        \item Stack: Pytorch, FAISS, Transformers (HuggingFace), Sentence-Transformers, LangChain, PyMuPDF4LLM, ...
+    \end{itemize}
+
+    \item \href{https://github.com/karami-mehdi/AISightQuest}{\underline{\textbf{AI Sight Quest (Bachelor’s Project)}}}
+    \begin{itemize}
+        \item Utilizes the \href{https://arxiv.org/abs/1810.04805}{\underline{BERT}} language model to extract text from images and answer questions about documents.
+        \item Stack: BERT-SQuAD, Swift, SwiftUI, SwiftData, Apple's \href{https://developer.apple.com/documentation/vision}{\underline{Vision}} and \href{https://developer.apple.com/documentation/speech}{\underline{Speech}} frameworks, \href{https://developer.apple.com/documentation/tipkit}{\underline{TipKit}}, Protocol-Oriented Programming (POP), Model-view-viewmodel (MVVM), ...
+    \end{itemize}
+
+    \item \href{https://github.com/karami-mehdi/CyberattackDetection}{\underline{\textbf{Cyberattack Detection and Anomalous Behavior Analysis}}}
+    \begin{itemize}
+        \item Utilizes an LSTM-based RNN to detect cyberattacks from anomalous network traffic, including DDoS, port scanning, and brute-force attempts.
+        \item Stack: TensorFlow/Keras, Scikit-learn, PCA, ROC Curve, ...
+    \end{itemize}
+
+    \item \href{https://github.com/karami-mehdi/SolarPowerGenerationAnalysis}{\underline{\textbf{Solar Power Generation Prediction}}}
+    \begin{itemize}
+        \item Implements ML models (Linear, Decision Tree, Random Forest, Gradient Boosting, MLP, DNN) to predict solar power generation, evaluated via MAE, MSE, $R^2$, and confusion matrix.
+        \item Stack: TensorFlow, Scikit-learn, Pandas, NumPy, Seaborn, ...
+    \end{itemize}
+    
+    \item \href{https://github.com/AINexumLab/NexumAI}{\underline{\textbf{NexumAI}}}
+    \begin{itemize}
+        \item Provides an interface for training models (e.g., image classification, segmentation) without technical expertise, letting users obtain trained models by supplying datasets and configurations.
+        \item Stack: TensorFlow, PyTorch, Torchvision, PyQt6, ...
+    \end{itemize}
+\end{itemize}
+
+\small \textbf{Additional projects can be found at: \href{https://github.com/karami-mehdi}{\underline{GitHub account}}.}
+
+%-------------WORK EXPERIENCE---------------
+\section*{Work Experience}
+\textbf{iOS Developer} (Full-time, on-site) \hfill Jun 2023 -- Jun 2024 \\
+\href{https://roundtableapps.com}{\underline{\textit{Round Table Apps} (Sydney, Australia)}} \hfill Development Office, Tehran, Iran \\ [-10pt]
+\begin{itemize}[label={\customsquare}]
+    \item Engineered \href{https://www.blossomapp.com}{\underline{\textbf{Blossom -- Save and Invest}}}, a consumer-facing financial application for the \textbf{Australian} and \textbf{New Zealand} markets, serving \textbf{25K+} active users.
+    \item Maintained \href{https://mailplus.com.au}{\underline{\textbf{MailPlus -- MP Operator}}}, a post-transportation application for \textbf{MailPlus Australia}, supporting \textbf{300+} owner-operators and \textbf{30K+} customers.
+    \item Developed and refactored \href{https://app.resiliencebox.com}{\underline{\textbf{Resilience Box}}}, an \textbf{international} wellbeing and resilience platform.
+\end{itemize}
+\textbf{Technical Contributions:}
+\begin{itemize}[label={\customsquare}]
+    \item Researched the development of \textbf{AR} and \textbf{VR} technologies in \textbf{healthcare} using \textbf{visionOS}.
+    \item Conducted in-depth analysis of \textbf{data flows} to identify and model \textbf{user behavioral patterns} across various scenarios.
+    \item Applied key design patterns such as \textbf{MVC}, \textbf{MVVM}, \textbf{VIP}, and \textbf{Repository}.
+    \item Boosted development efficiency by up to \textbf{40\%} through the creation of custom file templates.
+\end{itemize}
+
+%-------------TEACHING EXPERIENCE---------------
+\section*{Teaching Experience}
+\textbf{Teaching Assistant (TA)} \hfill Zand Institute of Higher Education, Shiraz, Iran \\ [5pt]
+\begin{tabularx}{\textwidth}{@{}X X@{}}
+    \customsquare\hspace{2mm}\textbf{Fall 2024:} 
+    \begin{itemize}
+        \item Human-Computer Interaction
+        \item Digital Electronics
+    \end{itemize}
+    &
+    \customsquare\hspace{2mm}\textbf{Spring 2025:} 
+    \begin{itemize}
+        \item Fundamentals of Computer and Programming
+        \item Digital Electronics
+        \item Computer Architecture
+    \end{itemize}
+\end{tabularx} \\ [-20pt]
+
+%-------------TECHNICAL SKILLS---------------
+\section*{Technical Skills}
+\begin{tabularx}{\textwidth}{@{}X@{\hspace{5mm}}X@{}}
+\customsquare\hspace{2mm}\textbf{Programming \& Scripting:} Python, C/C++, Julia, MATLAB, Swift, Objective-C, SQL, Bash, LaTeX, ... & 
+\customsquare\hspace{2mm}\textbf{Data Science \& ML:} TensorFlow/Keras, PyTorch, Scikit-learn, OpenCV, HuggingFace, NumPy, Pandas, ... \\
+\vspace{-1mm}
+\customsquare\hspace{2mm}\textbf{Deep Learning:} Neural Networks, Image Processing, Natural Language Processing, Transformers, GAN, RAG &
+\vspace{-1mm}
+\customsquare\hspace{2mm}\textbf{Software Development:} Git, CI/CD, Design Patterns, SOLID, iOS Development, Unit Testing, TDD, BDD, Agile \\
+\vspace{-1mm}
+\customsquare\hspace{2mm}\textbf{Tools \& Platforms:} Jupyter, Google Colab, GitHub, GitLab, Command Line, Linux, macOS, Jira, Confluence, Trello &
+\vspace{-1mm}
+\customsquare\hspace{2mm}\textbf{Databases \& Cloud:} MLOps, Vector DBs, Relational DBs (SQLite, PostgreSQL), Docker, Kubernetes, Query Optimization
+\end{tabularx}
+
+%---------------VOLUNTEERING----------------
+\section*{Volunteering}
+\textbf{Workshop on Git and GitHub} \\ [2pt]
+\textit{Zand Institute of Higher Education} -- \href{https://github.com/karami-mehdi/CV/blob/main/Assets/certificate-of-workshop-participation-karami-mehdi-zand-ihe.pdf}{\underline{Certificate}} \hfill Dec 2024 \\ [2pt]
+\textit{K. N. Toosi University of Technology} -- \href{https://github.com/karami-mehdi/CV/blob/main/Assets/certificate-of-workshop-participation-karami-mehdi.pdf}{\underline{Certificate}} \hfill May 2024
+
+%--------------HONORS & AWARDS--------------
+\section*{Honors \& Awards}
+\noindent
+\textbf{First Place Winner in the C++ Programming Language Competition} \hfill May 2022 \\
+Zand Institute of Higher Education \hfill Shiraz, Iran
+
+% %---------------CERTIFICATES----------------
+% \section*{Certificates}
+% % \noindent
+% % \href{https://www.mindluster.com/storage/cer/1688271634.jpg}{\underline{\textbf{Swift for Beginners}}} \hfill Issued by Mind Luster \\ [2pt]
+% % Credential ID 1688271634 \hfill Mar 2023 \\ [5pt]
+% % \href{https://www.sololearn.com/certificate/CT-QD4IETGO/png}{\underline{\textbf{Theoretical understanding of Swift 4}}} \hfill Issued by Sololearn \\ [2pt]
+% % Credential ID CT-QD4IETGO \hfill Jan 2023
+% \hbox{
+%     \vtop{\hbox{\customsquare\hspace{2mm}\href{https://www.mindluster.com/storage/cer/1688271634.jpg}{\underline{\textbf{Swift for Beginners}}} \hspace{5.5mm} Issued by Mind Luster}
+%           \vspace{5pt}
+%           \hbox{\quad Credential ID 1688271634 \hspace{18.5mm} Mar 2023}}
+%     \hspace{15.5mm}
+%     \vtop{\hbox{\customsquare\hspace{2mm}\href{https://www.sololearn.com/certificate/CT-QD4IETGO/png}{\underline{\textbf{Theoretical understanding of Swift 4}}} \hspace{4mm} Issued by Sololearn}
+%           \vspace{5pt}
+%           \hbox{\quad Credential ID CT-QD4IETGO \hspace{35mm} Jan 2023}}
+% }
+% \vspace{10pt}
+
+%------------------HOBBIES------------------
+\section*{Hobbies}
+
+\begin{tabularx}{\textwidth} { 
+    >{\customsquare\hspace{2mm}\hsize=0.5\hsize\centering\arraybackslash}X
+    >{\customsquare\hspace{2mm}\hsize=0.5\hsize\centering\arraybackslash}X
+    >{\customsquare\hspace{2mm}\hsize=1\hsize\centering\arraybackslash}X
+    >{\customsquare\hspace{2mm}\hsize=0.8\hsize\centering\arraybackslash}X
+}
+Swimming & Traveling & Cooking International Cuisine & Esports Gaming (LOL)
+\end{tabularx}
+
+\end{document}

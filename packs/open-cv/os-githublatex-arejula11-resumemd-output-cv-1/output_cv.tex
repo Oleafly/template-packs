@@ -1,0 +1,309 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=1 cm, % seperation between body and page edge from the top
+    bottom=1 cm, % seperation between body and page edge from the bottom
+    left=2 cm, % seperation between body and page edge from the left
+    right=2 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 0, 0} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={Miguel Aréjula CV},
+    pdfauthor={Miguel Aréjula},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Some settings:
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\pagenumbering{gobble} % no page numbering
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.1 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0 cm + 0.00001 cm
+    }{
+        0 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+        \small\color{gray}\textit{Last updated in September 2024}\hspace{\widthof{Last updated in September 2024}}
+    }}}%
+  }%
+}%
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+
+%--------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{$|$}
+
+    \begin{header}
+    \fontsize{25 pt}{25 pt}\selectfont Miguel Aréjula Aísa
+
+\vspace{5 pt}
+\normalsize
+\mbox{\hrefWithoutArrow{mailto:arejula10@gmail.com}{\texttt{arejula10@gmail.com}}}%
+\kern 5.0 pt%
+\AND%
+\kern 5.0 pt%
+\mbox{\hrefWithoutArrow{tel:+34 601 49 10 89}{+34 601 49 10 89}}%
+\kern 5.0 pt%
+\AND%
+\kern 5.0 pt%
+\mbox{\hrefWithoutArrow{https://www.linkedin.com/in/miguel-arejula-aisa-653088291}{\texttt{LinkedIn}}}%
+\kern 5.0 pt%
+\AND%
+\kern 5.0 pt%
+\mbox{\hrefWithoutArrow{https://github.com/Arejula11}{\texttt{GitHub}}}%
+\kern 5.0 pt%
+\AND%
+\kern 5.0 pt%
+\mbox{\hrefWithoutArrow{https://www.are-dev.es}{\texttt{Blog}}}%
+
+    \end{header}
+
+%--------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------
+    \vspace{5 pt - 0.3 cm}
+    \section{Education}
+    \begin{twocolentry}{Sept 2025 – June 2027}
+\textbf{Master in Software Engineering}, University of Southern Denmark
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+\begin{highlights}
+\item \textbf{Coursework:} Advanced Software Engineering Methodologies, Advanced Software Architecture and Analysis Techniques, Big Data and Data Science Technology
+\end{highlights}
+\end{onecolentry}
+\vspace{0.20 cm}
+\begin{twocolentry}{Sept 2021 – June 2025}
+\textbf{Bachelor in Software Engineering}, University of Zaragoza
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+\begin{highlights}
+\item \textbf{Coursework:} Software Engineer, Distributed Systems, Software Architecture, Prerequisite Engineering, Verification and Validation, Agile Methodologies and Quality, and Artificial Intelligence.
+\item Achieved high honors in Information Systems II and Verification and Validation, demonstrating exceptional proficiency and understanding in these subjects.
+\end{highlights}
+\end{onecolentry}
+\vspace{0.20 cm}
+\begin{twocolentry}{July 2024}
+\textbf{Cambridge English  Advance}, 
+\end{twocolentry}
+
+
+%--------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------
+    \section{Experience}
+
+    \begin{twocolentry}{June 2024 – August 2025}
+\textbf{Software Engineer}, University of Zaragoza
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+\begin{highlights}
+\item Researcher in project TED2021-130449B-I00 at the University of Zaragoza, where I led development of a custom web application for the Traumatology Department (Hospital Clínico Lozano Blesa), from requirements gathering with medical staff to architecture design and final delivery.
+\item Developed a full-stack system using React and PostgreSQL, with RESTful APIs in Express and FastAPI, streamlining operations and expected to support ~50 patients per day, enhancing efficiency and quality of care.
+\item Integrated and processed structured clinical data (CSV-based surgical records) into a relational model, enabling generation and validation of clinical pathways through Petri nets and formal methods.
+\end{highlights}
+\end{onecolentry}
+\vspace{0.10 cm}
+\begin{twocolentry}{Starting February 2026}
+\textbf{Teaching Assistant (Incoming)}, SDU
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+\begin{highlights}
+\item Support students in understanding core software architecture concepts by assisting with lab sessions, assignments, and problem-solving, while clearly explaining technical concepts and collaborating with professors.
+\end{highlights}
+\end{onecolentry}
+
+
+%--------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------
+%--------------------------------------------------------------------------------------------------------------
+
+
+\section{Projects}
+    \vspace{0.10 cm}
+\begin{twocolentry}{\href{are-dev.es}{are-dev.es}}\textbf{Are-Dev}
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+\begin{highlights}
+\item Are-dev is a personal technical blog and YouTube channel focused on software development, front-end technologies, and modern frameworks.
+\item Publish blog posts and videos, sharing tutorials, project walk-throughs, and insights to engage the developer community. \textbf{Tools Used:} Astro, Vercel, Markdown.
+\end{highlights}
+\end{onecolentry}
+\vspace{0.10 cm}
+\begin{twocolentry}{\href{https://github.com/The-European-Avengers/pizza-i4-architecture-group2}{github.com/I4-Pizza}}\textbf{I4 Pizza Production System}
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+\begin{highlights}
+\item Industry 4.0 pizza production system integrating warehouse, production line, and web platform via a distributed architecture.
+\item Designed, validated, and documented the system architecture using ADD, covering requirements, use cases, microservice boundaries, formal verification with UPPAAL, and experimental evaluation.
+\item Led system-level coordination, ensured architectural consistency, and supervised implementation. \textbf{Tools Used:} Go, Python, Kafka, Docker, UPPAAL.
+\end{highlights}
+\end{onecolentry}
+\vspace{0.10 cm}
+\begin{twocolentry}{\href{https://github.com/STW-24-25}{github.com/AgroNet}}\textbf{AgroNet}
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+\begin{highlights}
+\item Designed and developed a full-stack collaborative web platform for farmers, integrating real-time market prices, personalized weather alerts, and interactive geospatial data visualization across Spain.
+\item Led the front-end team, developed the web application, and deployed it on Vercel.
+\item Managed communication with the backend hosted on AWS, ensuring reliable API integration and real-time data synchronization. \textbf{Tools Used:} Astro, NodeJs, TypeScript, MongoDB, AWS, Vercel.
+\end{highlights}
+\end{onecolentry}
+\vspace{0.10 cm}
+\begin{twocolentry}{\href{https://github.com/The-European-Avengers/BigDataProject}{github.com/BigDataProject}}\textbf{Energy Price Prediction}
+\end{twocolentry}
+
+\vspace{0.10 cm}
+\begin{onecolentry}
+\begin{highlights}
+\item Using Danish Meteorological Institute (DMI) weather datasets and national energy consumption/price data to analyze correlations and forecast future electricity prices.
+\item Expected insights include: renewable energy impact, peak price periods, seasonal patterns, and cost optimization windows.
+\item Applying big data frameworks and machine learning models to process large-scale datasets and deliver predictive analytics. \textbf{Tools Used:} Kafka, HDFS, Kubernetes, Hive, Spark, Python.
+\end{highlights}
+\end{onecolentry}
+
+
+
+\end{document}

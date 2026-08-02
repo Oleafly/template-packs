@@ -1,0 +1,74 @@
+\documentclass[10pt]{article}
+
+%This is the minimal setup required to render the flag
+\usepackage[paperwidth=192cm, paperheight=96cm, top=0cm, bottom=0cm, left=0cm, right=0cm]{geometry}
+%Paper width is set to 192cm by 96 cm to match the Canadian Government-specified aspect ratio (2:1)
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+%\usepackage[dvipsnames]{xcolor} % Optional unless you want to use colors pre-defined by the xcolor package
+
+% Canadian Government-specified colors for the flag
+\definecolor{cared}{RGB}{239,51,64}
+\definecolor{cawhite}{RGB}{255,255,255}
+
+% Other government specifications include:
+% Each red portion on the left/right is 1/4 flag width, here it is 48cm
+
+%Source: https://en.wikipedia.org/wiki/Flag_of_Canada#/media/File:Flag_of_Canada_(construction_sheet_-_leaf_geometry).svg
+
+%Created by Senan Sekhon, August 5, 2021
+
+\begin{document}
+
+\begin{center} %Optional, but helps to tidy up the layout
+\begin{tikzpicture}[scale=1] %Scale must be changed to make the flag fit on letter/A4 paper (scale=1 produces a 192 cm by 96 cm flag)
+\clip (-96,-48) rectangle (96,48); %Optional, crops the flag to the correct size
+\draw[-] (-96,-48) rectangle (96,48); %Optional, draws a border around the flag
+\fill[cared] (-96,-48) rectangle (-48,48); %Red portion on the left
+\fill[cared] (48,-48) rectangle (96,48); %Red portion on the right
+\fill[cawhite] (-48,-48) rectangle (48,48); %White portion in the center
+
+% Specifying the coordinates of the sharp corners of the maple leaf
+\coordinate (A) at (-1.8,-40.6);
+\coordinate (B) at (-20.3,-24.4);
+\coordinate (C) at (-37.2,-1.3);
+\coordinate (D) at (-36,13.7);
+\coordinate (E) at (-21.6,17.1);
+\coordinate (F) at (-15,30.2);
+\coordinate (G) at (0,40);
+\coordinate (H) at (15,30.2);
+\coordinate (I) at (21.6,17.1);
+\coordinate (J) at (36,13.7);
+\coordinate (K) at (37.2,-1.3);
+\coordinate (L) at (20.3,-24.4);
+\coordinate (M) at (1.8,-40.6);
+
+\foreach \p/\q/\tp/\tq/\r in {% Specifying the coordinates of the rounded corners of the maple leaf
+A/B/87/10/1.9,
+B/C/70/321/1.3,
+C/D/25/288/1.3,
+D/E/348/247/1.3,
+E/F/313/281/1.3,
+F/G/330/243/1.3,
+G/H/297/210/1.3,
+H/I/259/227/1.3,
+I/J/293/192/1.3,
+J/K/252/155/1.3,
+K/L/219/110/1.3,
+L/M/170/93/1.9}
+{% Phantom lines from each point, length set to 30cm to ensure they intersect but stay within the flag boundary
+\path[name path=line \p1] (\p)--++(\tp:30);
+\path[name path=line \p2] (\q)--++(\tq:30);
+% Intersection point of phantom lines
+% Adapted from https://tex.stackexchange.com/questions/31398/tikz-intersection-of-two-lines
+\path[name intersections={of=line \p1 and line \p2,by=\p\q}];
+% Offset length to start of arc
+\pgfmathsetmacro{\ds}{\r/tan((\tq-\tp)/2)}
+% Coordinate of start of arc
+\coordinate (\p\q0) at ([shift={(\tp:\ds)}] \p\q);}
+% Maple leaf
+\fill[cared] (A)--(AB0) arc(-3:100:1.9)--(B)--(BC0) arc(-20:51:1.3)--(C)--(CD0) arc(-65:18:1.3)--(D)--(DE0) arc(258:337:1.3)--(E)--(EF0) arc(223:371:1.3)--(F)--(FG0) arc(240:333:1.3)--(G)--(GH0) arc(207:300:1.3)--(H)--(HI0) arc(169:317:1.3)--(I)--(IJ0) arc(203:282:1.3)--(J)--(JK0) arc(162:245:1.3)--(K)--(KL0) arc(129:200:1.3)--(L)--(LM0) arc(80:183:1.9)--(M)--cycle;
+\end{tikzpicture}
+\end{center}
+
+\end{document}

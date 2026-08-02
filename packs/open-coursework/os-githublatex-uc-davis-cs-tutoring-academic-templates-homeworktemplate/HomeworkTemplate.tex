@@ -1,0 +1,165 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[colorlinks=true, allcolors=red]{hyperref}
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+%\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{sectsty} % Allows customizing section commands
+% \allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\newcommand{\heads}{\textsc{h}}
+\newcommand{\tails}{\textsc{t}}
+
+\newcommand{\logten}{\log}%\mathrm{log}\hspace{0.05in}}
+\newcommand{\logtwo}{\lg}%\mathrm{lg}\hspace{0.05in}}
+\newcommand{\loge}{\ln}%\mathrm{ln}\hspace{0.05in}}
+
+\theoremstyle{definition}
+\newtheorem*{solution}{Solution}
+
+\usepackage{algpseudocode, algorithm}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{
+\normalfont \normalsize
+\textsc{ECS xxx \hfill Dept. of Computer Science, University of California, Davis} % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Homework \#0 \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+
+\author{Your Name and Student ID} % Put your name here
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+Classmate collaborator(s): If you collaborated with fellow students, you \emph{must} list them here.
+
+\section{First Problem}
+    \begin{solution}
+        Write your solution here.
+        You insert math into a sentence using the dollar sign, like this: $f(x) = 2x$.
+        Sometimes you need an entire line for an equation, so you use the equation environment, like this:
+        \begin{equation*}
+            2^{n+1} = \sum_{i=0}^{n} 2^{i}
+        \end{equation*}
+        If you wish to define an equation that spans multiple lines, use the align environment, like this:
+        \begin{align*}
+            % This percent denotes a comment.
+            % Here, the & tells Latex where to align the text
+            % The \\ is required for every line except the last, and it denotes a newline.
+            1 + 2 + 2^2 + \ldots + 2^{k+1} &= (1 + 2 + 2^2 + \ldots + 2^k) + 2^{k+1}\\
+                &= 2^{k+1} - 1 + 2^{k+1}\\
+                &= 2 \cdot 2^{k+1} - 1\\
+                &= 2^{k + 2} - 1
+        \end{align*}
+        If you wish to define a function with cases, use the cases environment, like this:
+        \begin{equation*}
+            f(n) =
+                \begin{cases}
+                    n   &   \text{if $n$ is even } \\
+                    -n  &   \text{if $n$ is odd}
+                \end{cases}
+        \end{equation*}
+    \end{solution}
+
+\section{Second Problem}
+    \begin{solution}
+    Sometimes you will want to write proofs. Use the proof environment, like this:
+    \begin{proof}
+        Suppose that $f:A \to B$ and $g:B \to C$ are injective. Suppose that $x, y \in A$ and $x \neq y$. Then $f(x) \neq f(y)$ because $f$ is injective. Similarly, $g(f(x)) \neq g(f(y))$ because $g$ is injective. Therefore $g \circ f (x) \neq g \circ f (y)$ whenever $x \neq y$, so $g \circ f$ is injective.
+    \end{proof}
+    \end{solution}
+
+    Sometimes you will want to write algorithms. Use the algorithmic environment, like this:
+    \begin{algorithm}
+        \caption{YourAlgorithm$(A, B)$}
+        \begin{algorithmic}
+          \For{$i = 1$ to $n$}
+              \If{$A[i] > B[i]$}
+                \State $A[i]$ is bigger!
+              \Else
+                \State $A[i]$ is not bigger!
+              \EndIf
+          \EndFor
+        \State \Return \texttt{True}
+        \end{algorithmic}
+        \end{algorithm}
+
+    Sometimes you will want to use tables. Use the tabular environment, like this:\\
+
+      \begin{tabular}{|l|cr|}
+      $a$ & $b$ & 10\\ \hline
+      $e$ & 2 & $d$\\
+      \end{tabular}\\
+
+    The argument after the beginning of tabular specifies the columns. l for left justification, c for centered, r for right justification. The bar $|$ creates a vertical line in the table. $\backslash$hline creates a horizontal line in the table.
+
+\section{Third Problem}
+    Here is a brief, incomplete list of useful math symbols etc.
+    \begin{enumerate}
+        \item Exponential $\exp{n}$, $e^n$, $2^n$ etc.
+        \item Logarithm $\log$
+        \item Big-O $O(f(n))$, Big-Omega $\Omega(f(n))$, Big-Theta $\Theta(f(n))$
+        \item Summation $\sum_{i=1}^n i$
+        \item Function $f: A \to B$
+        \item Union $A \cup B$, Intersection $A \cap B$, Complement $\overline{A}$, Set Difference $A \setminus B$
+        \item Set membership $x \in A$
+        \item Power Set $\mathcal{P}(A)$
+    \end{enumerate}
+
+\end{document}

@@ -1,0 +1,177 @@
+% This file is public domain
+% If you want to use arara, you need the following directives:
+% arara: pdflatex: { synctex: on }
+% arara: makeglossaries
+% arara: pdflatex: { synctex: on }
+% arara: pdflatex: { synctex: on }
+%
+%http://mirrors.ctan.org/macros/latex/contrib/glossaries/glossaries-user.html#sample
+\documentclass[a4paper]{report}
+
+\usepackage[plainpages=false,colorlinks]{hyperref}
+\usepackage[toc,style=treenonamegroup,subentrycounter]{glossaries}
+
+\makeglossaries
+
+\newcommand{\scriptlang}[1]{\textsf{#1}}
+
+\newglossaryentry{Perl}{name=\scriptlang{Perl},
+sort=Perl, % need a sort key because name contains a command
+description={A scripting language}}
+
+\newglossaryentry{glossary}{name=glossary,
+description={\nopostdesc},
+plural={glossaries}}
+
+\newglossaryentry{glossarycol}{
+description={collection of glosses},
+sort={2},
+parent={glossary}}
+
+\newglossaryentry{glossarylist}{
+description={list of technical words},
+sort={1},
+parent={glossary}}
+
+\newglossaryentry{pagelist}{name=page list,
+% description value has to be enclosed in braces
+% because it contains commas
+description={a list of individual pages or page ranges 
+(e.g.\ 1,2,4,7-9)}}
+
+\newglossaryentry{mtrx}{name=matrix,
+description={rectangular array of quantities},
+% plural is not simply obtained by appending an s, so specify
+plural=matrices}
+
+% Entry with a paragraph break in the description:
+% (If you use \newglossaryentry, the paragraph break
+% must be identified with \glspar not with \par or a blank line.
+% It's easier to use \longnewglossaryentry.)
+
+\longnewglossaryentry{par}% label
+{name=paragraph}% options
+{% multi-paragraph description
+distinct section of a piece of writing.
+
+Beginning on new, usually indented, line}
+
+% entry with two types of plural. Set the plural form to the 
+% form most likely to be used. The alternative plural is stored in
+% the 'user1' key. Another option is to define your own custom
+% storage key for alternative plurals.
+\newglossaryentry{cow}{name=cow,
+% this isn't necessary, as this form (appending an s) is
+% the default
+plural=cows,
+% alternative plural:
+user1=kine,
+% description:
+description={(\emph{pl.}\ cows, \emph{archaic} kine) an adult
+female of any bovine animal}}
+
+\newglossaryentry{bravo}{name={bravo},
+description={\nopostdesc}}
+
+\newglossaryentry{bravocry}{description={cry of approval (pl.\ bravos)},
+sort={1},
+parent=bravo}
+
+\newglossaryentry{bravoruffian}{description={hired ruffian or killer (pl.\ bravoes)},
+sort={2},
+plural={bravoes},
+parent=bravo}
+
+\newglossaryentry{seal}{%
+  name=seal,%
+  description={sea mammal with flippers that eats fish}
+}
+
+\newglossaryentry{sealion}{%
+ name={sea lion},%
+ description={large seal}%
+}
+
+% If a value contains a comma, you must use braces to hide
+% it from the key=value list parser. Take care to avoid
+% accidentally introducing unwanted space as leading and trailing
+% spaces within the braces aren't stripped. For example,
+% text={ spurious space } will result in extra space appearing
+% when the entry is referenced.  
+\newglossaryentry{spuriousspace}{%
+  name={space, spurious},
+  text={spurious space},
+  description={unwanted spaces accidentally introduced by
+uncommented line breaks or attempts to pretty-print the \LaTeX\ code}
+}
+
+\begin{document}
+
+\title{Sample Document Using the glossaries Package}
+\author{Nicola Talbot}
+\pagenumbering{alph}% prevent duplicate page link names if using PDF
+\maketitle
+
+\pagenumbering{roman}
+\tableofcontents
+
+\chapter{Introduction}
+\pagenumbering{arabic}
+
+A \gls{glossarylist} (definition~\glsrefentry{glossarylist}, plural
+\glspl{glossarylist}) is a very useful addition to any technical
+document, although a \gls{glossarycol}
+(definition~\glsrefentry{glossarycol}, plural \glspl{glossarycol})
+can also simply be a collection of glosses, which is another thing
+entirely.  Some documents have multiple \glspl{glossarylist}.
+
+Once you have run your document through \LaTeX, you will then need
+to run the \texttt{.glo} file through \texttt{makeindex} (default)
+or \texttt{xindy}.  You will need to set the output file so that the
+indexing application
+creates a \texttt{.gls} file instead of an \texttt{.ind} file, and
+change the name of the log file so that it doesn't overwrite the
+index log file (if you have an index for your document).  Rather
+than having to remember all the command line switches, you can call
+the \gls{Perl} script \texttt{makeglossaries} which provides a
+convenient wrapper. See
+\href{https://www.dickimaw-books.com/latex/buildglossaries}{Incorporating makeglossaries or makeglossaries-lite or bib2gls into the document build} for help.
+
+If a comma appears within the name or description, grouping
+must be used, e.g.\ in the description of \gls{pagelist}.
+Be careful about \glspl{spuriousspace} appearing in your code.
+
+\chapter{Plurals and Paragraphs}
+
+Plurals are assumed to have the letter ``s'' appended, but if this is
+not the case, as in \glspl{mtrx}, then you need to specify the
+plural when you define the entry. If a term may have multiple
+plurals (for example \glspl{cow}/\glsuseri{cow}) then 
+define the entry with the plural form most likely to be used.
+The alternative can simply be referenced with  \verb|\glslink|
+(e.g.\ \glslink{cow}{kine})
+or \verb|\glsdisp| (e.g.\ \glsdisp{cow}{kine}).
+Another option is to save the alternative plural in another key. In
+this case, the ``user1'' key has been used, but a custom key can be
+defined instead.
+
+\Glspl{seal} and \glspl{sealion} have regular plural forms.
+
+\Gls{bravo} is a homograph, but the plural forms are spelt
+differently. The plural of \gls{bravocry}, a cry of approval
+(definition~\glsrefentry{bravocry}), is \glspl{bravocry}, whereas the
+plural of \gls{bravoruffian}, a hired ruffian or killer
+(definition~\glsrefentry{bravoruffian}), is \glspl{bravoruffian}.
+
+\Glspl{par} can cause a problem in commands, so care is needed
+when having a paragraph break in a \gls{glossarylist} entry.
+
+\chapter{Ordering}
+
+There are two types of ordering: word ordering (which places
+``\gls{sealion}'' before ``\gls{seal}'') and letter ordering
+(which places ``\gls{seal}'' before ``\gls{sealion}'').
+
+\printglossaries
+
+\end{document}

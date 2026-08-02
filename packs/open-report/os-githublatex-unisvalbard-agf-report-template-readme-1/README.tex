@@ -1,0 +1,98 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\author{\Large \textbf{Lukas Frank}}
+\title{\Huge \textbf{AGF-213/214 Latex Template Manual}}
+\date{\today}
+
+
+
+\begin{document}
+\maketitle
+
+Create a pdf of this document with \texttt{pdflatex README.tex}!
+
+Please read this manual carefully before you start working with the provided template! It includes instructions on how to use the template. Following these instructions makes life easier not only for you, but especially for the editor and the supervisors.
+
+This document does not provide a comprehensive course in how to use Latex, only some examples of how to place figures, tables etc. and some basic descriptions of commands etc. If you are completely new to Latex, I advise you to find a collaborator with a bit more Latex experience or to take some time to look at an online Latex course. e.g. starting from here: \url{https://www.overleaf.com/learn/latex/Free_online_introduction_to_LaTeX_(part_1)}. The course instructors are of course also happy to help and give some guidance for the first steps...
+
+\section{Individual report groups}
+This part of the document includes all information you need in order to use the provided template for your report. Please carefully follow the steps below:
+
+\begin{enumerate}
+   \item All you need is the material provided on the server. Copy it to your personal overleaf project/local machine/... and rename it into\texttt{Yourname}. The folder will include (amongst others) the files: 
+   \begin{enumerate}
+        \item a style-file called \texttt{preamble.sty}: \\
+            Do not touch this file!!! It contains all commands to load packages, set styles etc. It is identical for each individual report and the final collection of reports. If you start adding packages by yourself, the final compilation of the collection will not work! If you really can't get along without a certain package, coordinate with the editor, so that the package is added also for the final collection.
+        \item a folder for your figures and plots called \texttt{figures\_john}: \\
+            Please rename this folder into \texttt{figures\_yourname}. This is where you save your plots, pictures and other material you wish to include into your report.
+        \item a bibliography file called \texttt{biblio\_john.bib}: \\
+            Please rename this file into \texttt{biblio\_yourname.bib}. This is where you save your references as bibtex entries. You can easily get the entry for any paper/book/... directly from google scholar by clicking on the citation shortcut and choosing \texttt{BibTeX}. Attention: The entries copied from google scholar might differ in their styles (e.g. capital letters of book titles, abbriviations or full author names etc.). Please double-check that in your final list of references, all entries follow the same style and adjust possible irregularities manually in the .bib-file.
+        \item the actual tex-file containing the report template, \texttt{report\_john.tex}: \\
+            Please rename this folder into \texttt{report\_yourname}. This is where you write your report. Please do not change anything above the sign.
+        \item similar couples of .bib- and .tex files for possible appendices and introductory texts
+   \end{enumerate}
+   
+   \item Fill the report-file with your science!
+   \begin{enumerate}
+       \item Start with changing the title and the list of authors.
+       \item The template includes example of how to include figures and tables and how to cite references. Use them!
+       \item In order to make cross-referencing between different reports easier, \textbf{always} use the following structure for the labels: \texttt{\textbackslash label\{yourname:label\}}. For appendices and introductory references, use \texttt{\textbackslash label\{appendix\_yourname:label\}} and \texttt{\textbackslash label\{introduction\_yourname:label\}}.
+       \item The templates contain some dummy text, which is inserted by the command \texttt{\textbackslash lipsum}. These commands should of course be deleted and replaced by your work.
+    \end{enumerate}
+    
+    The compilation of the whole report collection includes several steps:
+    \begin{itemize}
+        \item \texttt{pdflatex report\_yourname.tex}
+        \item \texttt{bibtex report\_yourname} (No file extension!)
+        \item \texttt{pdflatex report\_yourname.tex}
+        \item \texttt{pdflatex report\_yourname.tex}
+   \end{itemize}
+    When you compile your report, it will have the chapter number 1. Do not try to change that, it is supposed to be like that to make life easier for the editor.
+    
+    \item Use the same set of compilation commands for appendices or introductory texts.
+   
+   \item When you have submitted your final report, the editor is going to merge all individual reports into one document. For that he needs from you one folder containing:
+   \begin{itemize}
+       \item your bibliography file (with your name instead of \texttt{john} in the file name!)
+       \item your figure folder (with your name instead of \texttt{john} in the file name!)
+       \item your report file (with your name instead of \texttt{john} in the file name!)
+       \item if applicable, your appendix and/or introduction file together with the respective .bib-file (with your name instead of \texttt{john} in the file names!)
+   \end{itemize}
+ \end{enumerate}
+
+\vspace{3cm}
+
+\section{Editor}
+This part of the document is only relevant for the editor, who collects all individual reports into one large document. Please read it carefully, before you start merging everything.
+
+\begin{enumerate}
+    \item In addition to the material introduced above, you will receive the files needed to merge all reports into one big collection.
+    \item You should have received the items from every individual report (see above). Save them directly in the same folder with all the other files (preface, main, ...), don't create sub-directories (except the already existing ones for the figures). 
+    \item In every individual report-file, delete everything above the respective sign as well as the \texttt{\textbackslash end\{document\}} in the very end. For the final compilation, this information will be provided by the \texttt{main.tex}-file.
+    \item Furthermore, copy all individual introductory texts into the central \texttt{introduction.tex}-file and all individual appendices into the central \texttt{appendix.tex}-file (deleting everything above and below the respective signs like for the reports, see also the provided example).
+    \item Copy all entries from the individual introduction- and appendix-bib-files into the central \texttt{biblio\_introduction.bib}- and \texttt{biblio\_appendix.bib}-files.
+    \item In the \texttt{main.tex}-file, include all individual reports.
+    \item Include the preface from the teacher.
+    \item Update the list of authors and supervisors on the titlepage, furthermore add a nice cover picture.
+\end{enumerate}
+
+The compilation of the whole report collection includes even more steps than for the individual reports, in order to get all cross-references between the individual reports:
+\begin{itemize}
+    \item \texttt{pdflatex main.tex}
+    \item \texttt{bibtex introduction} (No file extension!)
+    \item \texttt{bibtex appendix}
+    \item \texttt{bibtex report\_name1}
+    \item \texttt{bibtex report\_name2}
+    \item ... (for all individual reports)
+    \item \texttt{pdflatex main.tex}
+    \item \texttt{pdflatex main.tex}
+\end{itemize}
+This should give you one pdf of the whole document. You might wanna think of writing a small shell script to do all the compilation steps with one single command.
+\end{document}

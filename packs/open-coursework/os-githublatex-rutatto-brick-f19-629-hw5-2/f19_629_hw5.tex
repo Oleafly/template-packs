@@ -1,0 +1,169 @@
+
+% Instructions: you don't need to change anything in the macros, but
+% feel free to define new commands as you wish. Starting from the main
+% body, change the specs (e.g., your
+% name). use \begin{solution} \end{solution} environment to write your
+% solutions. Don't forget to list your collaborators.
+
+\documentclass[12pt,addpoints,answers]{exam}
+%============Macros==================%
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+%--------------Cosmetic----------------%
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{fullpage}
+\usepackage{microtype}
+\usepackage{xspace}
+\usepackage[svgnames]{xcolor}
+\usepackage[sc]{mathpazo}
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=1pt,topsep=2pt}
+\setlist[itemize]{itemsep=1pt,topsep=2pt}
+%----------Header--------------------%
+\def\course{CSCE629 Analysis of Algorithms}
+\def\term{Texas A\&M U, Fall 2019}
+\def\prof{Lecturer: Fang Song}
+\newcommand{\handout}[5]{
+   \renewcommand{\thepage}{\arabic{page}}
+   \begin{center}
+   \framebox{
+      \vbox{
+    \hbox to 5.78in { \hfill \large{\course} \hfill }
+       \vspace{2mm}
+       \hbox to 5.78in { {\Large \hfill \textbf{#5}  \hfill} }
+       \vspace{2mm}
+       \hbox to 5.78in { \term \hfill \emph{#2}}
+       \hbox to 5.78in { {#3 \hfill \emph{#4}}}
+      }
+   }
+   \end{center}
+   \vspace*{4mm}
+}
+\newcommand{\hw}[4]{\handout{#1}{#2}{#3}{#4}{Homework #1}}
+
+%-----defs and commands-----%
+%\def\mG{[\textbf{G}]\xspace}
+\def\veps{\varepsilon}
+\newcommand{\bit}{\{0,1\}}
+\newcommand{\negl}{\text{negl}}
+\newcommand{\corr}[1]{{\color{blue}{#1}}}
+\newcommand{\alg}[1]{\textsf{#1}}
+%=======Main document==============%
+\begin{document}
+
+%----Specs: change accordingly-----%
+\newif\ifstudent % comment out false
+\studenttrue 
+%\studentfalse
+
+\def\hwnum{5}
+\def\issuedate{09/27/19}
+\def\duedate{10am, 10/04/19} % 
+\def\yourname{your name} % put your name here
+%------------------------------%
+
+\ifstudent
+\hw{\hwnum}{\issuedate}{Student: \yourname}{Due: \duedate}%
+\else
+\hw{\hwnum}{\issuedate}{\prof}{Due: \duedate}%
+\fi
+
+\noindent \textbf{Instructions.}
+
+\begin{itemize} 
+\item Typeset your submission by \LaTeX, and submit in PDF
+  format. Your solutions will be graded on \emph{correctness} and
+  \emph{clarity}. You should only submit work that you believe to be
+  correct, and you will get significantly more partial credit if you
+  clearly identify the gap(s) in your solution. You may opt for the
+  ``I’ll take 15\%'' option (details in Syllabus).
+\item You may collaborate with others on this problem set.  However,
+  you must \textbf{{write up your own solutions}} and \textbf{{list
+      your collaborators and any external sources}} for each
+  problem. Be ready to explain your solutions orally to a course staff
+  if asked.
+\item For problems that require you to provide an algorithm, you must
+  give a precise description of the algorithm, together with a proof
+  of correctness and an analysis of its running time. You may use
+  algorithms from class as subroutines. You may also use any facts
+  that we proved in class or from the book.
+\end{itemize}
+
+\noindent This assignment contains \numquestions\ questions,
+\numpages\ pages for the total of \numpoints \ points and
+\numbonuspoints\ bonus points. A random subset of the problems will be
+graded. \medskip
+
+\newpage
+\begin{questions}
+  \question[20] (Longest forward-backward contiguous substring) Describe
+  and analyze an efficient algorithm to find the length of the longest
+  \emph{contiguous} substring that appears both \emph{forward} and
+  \emph{backward} in an input string $T[1,\ldots,n]$. The forward and
+  backward substrings must NOT overlap.  Here are several examples.
+  \begin{itemize}
+  \item Given the input string \texttt{ALGORITHM}, your algorithm
+    should return 0.
+
+  \item Given the input string
+    \texttt{\underline{R}ECU\underline{R}SION}, your algorithm should
+    return 1, for the substring \texttt{R}.
+  \item Given the input string
+    \texttt{R\underline{EDI}V\underline{IDE}}, your algorithm should
+    return 3, for the substring \texttt{EDI}. (The forward and backward
+    substrings must not overlap!)
+  \item Given the input string
+    \texttt{D\underline{YNAM}ICPROGRAMMING\underline{MANY}TIMES}, your
+    algorithm should return 4, for the substring \texttt{YNAM}. (It
+    should not return 6, for the subsequence \texttt{YNAMIR}, because
+    it's not contiguous.).
+  \end{itemize}
+\newpage
+
+  \question[20] (Word segmentation) If English were written without
+  spaces, then we need to infer likely boundaries between consecutive
+  words in the text. This is called word segmentation. For example,
+  given \texttt{meetateight}, you can probably decide that the best
+  segmentation is \texttt{meet{\char32}at{\char32}eight}. (and not
+  \texttt{me{\char32}et{\char32}at{\char32}eight}, or
+  \texttt{meet{\char32}ate{\char32}ight}. This is all the more
+  relevant in languages like Chinese and Japanese, which are written
+  without spaces between the words.
+
+  How could we automate this process?  A simple approach that is at
+  least reasonably effective is to find a segmentation that maximizes
+  the cumulative ``quality'' of its individual constituent
+  words. Thus, suppose you are given a black box that, for any string
+  of letters $x = x_1x_2\ldots x_n$, will return a number
+  $quality(x)$. This number can be either positive or negative; larger
+  numbers correspond to more plausible English words. (So
+  $quality(\texttt{me})$ would be positive, while
+  $quality(\texttt{ght})$ would be negative.)
+
+  Given a long string of letters $y = y_1y_2\ldots y_n$, a
+  segmentation of $y$ is a partition of its letters into contiguous
+  blocks of letters; each block corresponds to a word in the
+  segmentation. The total quality of a segmentation is determined by
+  adding up the qualities of each of its blocks. (So we’d get the
+  right answer above provided that
+  $quality(\texttt{meet}) + quality(\texttt{at}) +
+  quality(\texttt{eight})$ was greater than the total quality of any
+  other segmentation of the string.)
+
+  Descrive and analyze an efficient algorithm that takes a string $y$
+  and computes a segmentation of maximum total quality. (You can treat
+  a single call to the black box computing $quality()$ as a single
+  computational step.)
+  \newpage
+
+  \bonusquestion[10] (Greedy matrix-chain multiplication?) As
+  suggested in class, one approach to choosing the matrix $A_k$ at
+  which to split the subproduct $A_iA_{i+1}\ldots A_j$ is by selecting
+  $k$ to minimize the quantity $d_{i-1}d_kd_j$. Does this always give
+  an optimal solution. Prove it or give a counterexample (i.e., an
+  instance of the matrix-chain multiplication problem for which this
+  greedy approach yields a suboptimal solution.)
+
+\end{questions}
+\end{document}

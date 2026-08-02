@@ -1,0 +1,308 @@
+
+
+
+
+\documentclass[twoside,british,a4paper]{article}
+%%% The Young Man The Station
+%%% A LaTeX article template. See https://github.com/episanty/TheYoungManTheStation for more.
+%%% © Emilio Pisanty (2016), available under the MIT license.
+
+
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb,upref}
+\usepackage{fourier}
+\usepackage{tgheros}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}% add latexsym if you need it
+\usepackage{microtype}
+\usepackage{anyfontsize}
+\usepackage{xcolor}
+
+%% Use accented characters
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% slightly prettier date
+\usepackage{isodate}
+\cleanlookdateon
+
+%% Mainly useful at draft stage
+%\usepackage{showframe}
+\usepackage{lipsum}
+
+
+
+\usepackage{geometry}
+\geometry{reset,ignoreall,
+  textheight=240mm,
+  textwidth=140mm,
+  bottom=30mm,
+  inner=31.5mm,
+  headheight=12.4pt
+  }
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.6\baselineskip}
+
+\usepackage[contents={},opacity=1,]{background}
+\usepackage{ifthen}
+\definecolor{cornerboxcyan}{cmyk}{1,0.05,0,0.05}
+\AddEverypageHook{%
+\ifthenelse{\isodd{\value{page}}}%
+{\backgroundsetup{
+  angle=0,
+  position=current page.south west,
+  nodeanchor=south west,
+  scale=1,
+  contents={
+    \begin{tikzpicture}[remember picture, overlay,x=1cm,y=1cm]
+    \node[anchor=center] at (current page.north east){%%%
+      \tikz \fill [cornerboxcyan] (0,0) rectangle (2,12);
+    };
+    \node[anchor=center] at (current page.south west){%%%
+      \tikz \fill [cornerboxcyan] (0,0) rectangle (2,8);
+    };
+    \end{tikzpicture}
+    }
+  }
+}{\backgroundsetup{
+  angle=0,
+  position=current page.south east,
+  nodeanchor=south east,
+  scale=1,
+  contents={
+    \begin{tikzpicture}[remember picture, overlay,x=1cm,y=1cm]
+    \node[anchor=center] at (current page.north west){%%%
+      \tikz \fill [cornerboxcyan] (0,0) rectangle (2,12);
+    };
+    \node[anchor=center] at (current page.south east){%%%
+      \tikz \fill [cornerboxcyan] (0,0) rectangle (2,8);
+    };
+    \end{tikzpicture}
+    }
+  }
+}\BgMaterial}
+
+
+\usepackage{fancyhdr}
+\renewcommand{\headrule}{}
+\renewcommand{\footrule}{}
+%
+\pagestyle{fancy}
+\fancyhead{}\fancyfoot{}
+\fancyhead[LE]{ \footnotesize\sffamily\upshape \shortauthor}
+\fancyhead[RO]{ \footnotesize\sffamily\upshape \shorttitle}
+\fancyfoot[LE,RO]{\sffamily\bfseries\upshape \thepage}
+%
+\fancypagestyle{firstpagestyle}
+\fancyhead{}\fancyfoot{}
+\fancyfoot[LE,RO]{\sffamily\bfseries\upshape \thepage}
+
+\usepackage{titlesec}
+\titleformat{\section}[block]{\large\bfseries\upshape\sffamily\boldmath}{\thesection}{0.5em}{}
+
+\usepackage{titling}
+\setlength{\droptitle}{-12mm}
+\pretitle{\noindent\begin{minipage}{\textwidth}\LARGE\bfseries\upshape\sffamily\boldmath}
+\posttitle{\end{minipage} \vskip 1.0em}
+\preauthor{\noindent \begin{minipage}{\textwidth} \large\mdseries\sffamily}
+\postauthor{
+  \end{minipage} 
+  \vskip 0.3em
+  {
+   \color{black!80}
+   \noindent \small
+   \address
+   \par \vskip -1.em
+   \authoremail
+   }
+   \par
+  }
+\predate{ \noindent \hspace{-0.4em} \sffamily\small}
+\postdate{\vskip 0.0em}
+
+
+\usepackage{tcolorbox}
+\definecolor{abstractboxcolor}{cmyk}{0.1,0,0,0}
+\newtcolorbox{abstractbox}{
+  arc=0pt,
+  boxrule=0pt,
+  colback=abstractboxcolor,
+  boxsep=0.5em,
+  left=0pt, right=0pt, bottom=0pt, top=0pt,
+  width=\columnwidth
+}
+%
+%%% To avoid some bad box warnings, as per tex.se/q/62296/
+\makeatletter
+ \def\@textbottom{\vskip \z@ \@plus 1pt}
+ \let\@texttop\relax
+\makeatother
+%
+\renewenvironment{abstract}{
+   \noindent
+   \begin{minipage}{\textwidth}
+   \upshape\sffamily 
+   \begin{abstractbox}
+   \fontsize{10.5}{13.2}\selectfont
+  }{
+   \end{abstractbox}
+   \end{minipage} 
+   \vskip 2.0em
+  }
+
+
+%%% Bibliography
+\usepackage[numbers,sort&compress]{natbib}
+%% reduce spacing inside [1, 2]:
+\makeatletter \def\NAT@def@citea{\def\@citea{\NAT@separator\,}} \makeatother
+
+%%% Specified referencers
+\newcommand{\citer}[1]{Ref.~\citealp{#1}}
+\newcommand{\citers}[1]{Refs.~\citealp{#1}}
+\newcommand{\reffig}[1]{Fig.~\ref{#1}}
+
+
+\usepackage[%
+  bookmarks=true,
+  colorlinks,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue,
+  plainpages=false,
+  pdfpagelabels,
+  final,
+  breaklinks=true
+]{hyperref}
+\hypersetup{
+pdftitle={The young man the station}, 
+pdfauthor={Emilio Pisanty},
+pdfkeywords={latex, article, class}
+}
+
+\title{The Young Man The Station: a LaTeX article template}
+\newcommand\shorttitle{The young man the station}
+
+\author{Emilio Pisanty\textsuperscript{1$\,*$}}
+\newcommand\shortauthor{E. Pisanty}
+
+\newcommand\address{\textsuperscript{1}ICFO -- The Institute of Photonic Sciences, Barcelona, Spain}
+\newcommand\authoremail{$^*$author@email.com}
+
+\date{ \today }
+
+
+
+
+
+
+\begin{document}
+
+\maketitle
+\thispagestyle{firstpagestyle}
+
+\begin{abstract}
+The Young Man The Station is a LaTeX template built on top of the standard \verb|article| class, and built on the notion that not all LaTeX-formatted papers need to use Computer Modern, be in two columns, or generally share the same old and tired look. The name of the template is a variation of a standard garden-path sentence~\cite{TomScott}. You can find the LaTeX source at \url{github.com/episanty/TheYoungManTheStation}.
+\\[0.6em]
+{
+\footnotesize
+© Emilio Pisanty (2016), available under the MIT license.
+}
+\end{abstract}
+
+
+
+
+\section{Introduction}
+This is a paragraph with some text at the start of the article. This is just a sample but it has some mathematics like $x=y^2 +A_\mathrm{eff}$ and something else like $\hat{V}_\mathsf{L} = \sum_j \mathbf{r}_j^k$. Then it just starts repeating itself. This is a paragraph with some text at the start of the article. Then it just starts repeating itself. This is just a sample but it has some mathematics like $\chi = a_{d} \xi \zeta/\lambda = m_\mathrm{eff}d^2/(\hbar^2 \lambda)$ and something else like $r=|\vec{x}_A-\vec{x}_B|=\sqrt{(x_A-x_B)^2+(y_A-y_B)^2}$ or $d  \mathopen{}\left(  p+A(t)  \right)\mathclose{}  ^*$ . Then it just starts repeating itself.
+
+This is another paragraph with more text just to show paragraph breaks. This is really just filler text but to be honest including a whole paragraph of Lorem Ipsum here seemed a bit too much. So instead here is a bit of filler text to flesh out the paragraph a bit.
+
+
+
+
+
+
+\section{Here are some maths}
+\lipsum[4]
+
+Here is a paragraph with a couple of citations: There is a paper \cite{Schulman-phys-rev}, as well as a book \cite{Schulman}, and the initial citation of some miscellaneous item~\cite{TomScott}.
+
+Here's an equation with a label, \eqref{first-equation} and there's more equations further down. So, we have
+\begin{equation}
+V(\mathbf{x}_A,\mathbf{x}_B)=V(\vec{x}_A,\vec{x}_B)=d^2\frac{r^2-2\lambda^2}{(r^2+\lambda^2)^{5/2}},
+\label{first-equation}
+\end{equation}
+being $d$ a letter, $\lambda$ a gathingammy $r$ a letter in $r=|\vec{x}_A-\vec{x}_B|=\sqrt{(x_A-x_B)^2+(y_A-y_B)^2}$, with  $A$, $B$  labels. Moreover $\Lambda=\lambda/a$, and  $\chi = a_{d}/\lambda = m_{eff}d^2/(\hbar^2 \lambda)$, with $m_\mathrm{eff}=\hbar^2/2ta^2$, and $t$, are more maths expressions. So are $k=\sqrt{k_x^2+k_y^2}$ and $V_{latt}(\vec r)= V_0\left(\sin^2(k_x x)+ \sin^2(k_y y)\right))$, and a displayed equation is 
+\begin{equation}
+\left(\hat{T}_A+\hat{T}_B+{\hat V}(\vec{x}_A,\vec{x}_B)\right)\Phi(\vec{x}_A,\vec{x}_B)=E\Phi(\vec{x}_A,\vec{x}_B).
+\end{equation}
+
+As a side note, you can sometimes get some pretty persistent underfull box warnings (more specifically, \verb|Underfull \vbox (badness 10000)|) when there are displayed equations at the end of a page, so be careful with that if you're doing it. I'm not sure if it's due to the class or something else, so for the moment it is only something to keep an eye on.
+
+Other displayed equations are
+\begin{equation}
+(\vec{\xi}_{\vec{K}}\cdot\vec{\hat{T}}_D+V(\vec{r}))\psi(\vec{r})=E\psi(\vec{r}),
+\end{equation}
+where $\vec{\xi }_{\vec{K}}=-2t(\cos(K_x a/2),\cos(K_y a/2))$ and $\vec{\hat{I}}\cdot\vec{\hat{T}}_D\psi(\vec{r})=\sum_{i=x,y}\left(\psi(\vec{r}+\vec{\delta}_i)+\psi(\vec{r}-\vec{\delta}_i)\right)$, where $\vec{\delta}_i=a\hat{e}_{i}$, and also
+\begin{equation}
+\psi(\vec{r})=\frac{1}{N_x N_y}\sum_{\vec{q}}\psi(\vec{q})e^{i\vec{q}\cdot\vec{r}}.
+\end{equation}
+Here's a little bit of text to round out the paragraph after the equation and (probably) round out the page, so this needs to be a couple of lines long.
+
+Here some text: \lipsum[7] 
+
+Some text, then some more equations: these ones are
+$$
+E_{\vec{K},\vec{q}}=-4t\left(\cos(K_xa/2)\cos(q_xa)+\cos(K_ya/2)\cos(q_ya)\right)
+$$ 
+and 
+\begin{equation}
+(E-E_{\vec{K},\vec{q}})\psi(\vec{q})=\sum_{\vec{q'}}V(\vec{q}-\vec{q'})\psi(\vec{q'}). 
+\end{equation}
+To round out the paper, we now include a bunch of Lorem Ipsum paragraphs, some more math, more filler text, and call it a day.
+
+\lipsum[1-3]
+
+Here $\vec{\xi }_{\vec{K}}=-2t(\cos(K_x a/2),\cos(K_y a/2))$ and $\vec{\hat{I}}\cdot\vec{\hat{T}}_D\psi(\vec{r})=\sum_{i=x,y}\left(\psi(\vec{r}+\vec{\delta}_i)+\psi(\vec{r}-\vec{\delta}_i)\right)$, where $\vec{\delta}_i=a\hat{e}_{i}$, and also
+\begin{equation}
+\psi(\vec{r})=\frac{1}{N_x N_y}\sum_{\vec{q}}\psi(\vec{q})e^{i\vec{q}\cdot\vec{r}}
+\end{equation}
+and
+$$
+E_{\vec{K},\vec{q}}=-4t\left(\cos(K_xa/2)\cos(q_xa)+\cos(K_ya/2)\cos(q_ya)\right)
+$$ 
+and 
+\begin{equation}
+(E-E_{\vec{K},\vec{q}})\psi(\vec{q})=\sum_{\vec{q'}}V(\vec{q}-\vec{q'})\psi(\vec{q'}). 
+\end{equation}
+
+
+
+\section{More filler text}
+
+\lipsum[1-6]
+
+\section{Conclusions}
+
+\lipsum[11-12]
+
+
+\section*{Acknowledgements}
+Here you thank all the people ever and everyone who ever gave you money.
+
+
+%\singlespacing % for bibliography.
+%\setlength{\bibsep}{2.5mm}
+%\renewcommand\bibname{References}
+
+%% Add bibliography to TOC
+%\clearpage
+%\addcontentsline{toc}{chapter}{References}    
+
+\bibliographystyle{arthur} 
+\bibliography{references}{}
+
+
+\end{document}

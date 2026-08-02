@@ -1,0 +1,667 @@
+%-----------------------------------------------------------------------------------------------------------------------------------------------%
+%	The MIT License (MIT)
+%
+%	Copyright (c) 2020 Amey Jadiye
+%
+%	Permission is hereby granted, free of charge, to any person obtaining a copy
+%	of this software and associated documentation files (the "Software"), to deal
+%	in the Software without restriction, including without limitation the rights
+%	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+%	copies of the Software, and to permit persons to whom the Software is
+%	furnished to do so, subject to the following conditions:
+%	
+%	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+%	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+%	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+%	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+%	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+%	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+%	THE SOFTWARE.
+%	
+%
+%-----------------------------------------------------------------------------------------------------------------------------------------------%
+
+
+%============================================================================%
+%
+%	DOCUMENT DEFINITION
+%
+%============================================================================%
+
+%we use article class because we want to fully customize the page and dont use a cv template
+\documentclass[10pt,A4]{article}	
+
+
+%----------------------------------------------------------------------------------------
+%	ENCODING
+%----------------------------------------------------------------------------------------
+
+%we use utf8 since we want to build from any machine
+\usepackage[utf8]{inputenc}		
+
+%----------------------------------------------------------------------------------------
+%	LOGIC
+%----------------------------------------------------------------------------------------
+
+% provides \isempty test
+\usepackage{xifthen}
+
+%----------------------------------------------------------------------------------------
+%	FONT
+%----------------------------------------------------------------------------------------
+
+% some tex-live fonts - choose your own
+
+%\usepackage[defaultsans]{droidsans}
+%\usepackage[default]{comfortaa}
+%\usepackage{cmbright}
+%\usepackage[default]{calibri}
+%\usepackage[default]{raleway}
+%\usepackage{fetamont}
+%\usepackage[default]{gillius}
+%\usepackage[light,math]{iwona}
+\usepackage[default]{roboto} 
+
+% set font default
+\renewcommand*\familydefault{\sfdefault} 	
+\usepackage[T1]{fontenc}
+
+% more font size definitions
+\usepackage{moresize}		
+
+
+%----------------------------------------------------------------------------------------
+%	PAGE LAYOUT  DEFINITIONS
+%----------------------------------------------------------------------------------------
+
+%debug page outer frames
+%\usepackage{showframe}			
+
+
+%define page styles using geometry
+\usepackage[a4paper]{geometry}		
+
+% for example, change the margins to 2 inches all round
+\geometry{top=2cm, bottom=1cm, left=1.5cm, right=1.5cm} 	
+
+%use customized header
+\usepackage{fancyhdr}				
+\pagestyle{fancy}
+
+%less space between header and content
+\setlength{\headheight}{-5pt}		
+
+
+%customize entries left, center and right
+%\lhead{}
+%\chead{}
+%\rhead{}
+
+
+%indentation is zero
+\setlength{\parindent}{0mm}
+
+%----------------------------------------------------------------------------------------
+%	TABLE /ARRAY DEFINITIONS
+%---------------------------------------------------------------------------------------- 
+
+%for layouting tables
+\usepackage{multicol}			
+\usepackage{multirow}
+
+%extended aligning of tabular cells
+\usepackage{array}
+
+\newcolumntype{x}[1]{%
+>{\raggedleft\hspace{0pt}}p{#1}}%
+
+
+%----------------------------------------------------------------------------------------
+%	GRAPHICS DEFINITIONS
+%---------------------------------------------------------------------------------------- 
+
+%for header image
+\usepackage{graphicx}
+
+%for floating figures
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{hyperref}
+%\floatstyle{boxed} 
+%\restylefloat{figure}
+
+%for drawing graphics		
+\usepackage{tikz}				
+\usetikzlibrary{shapes, backgrounds,mindmap, trees}
+
+
+%----------------------------------------------------------------------------------------
+%	Color DEFINITIONS
+%---------------------------------------------------------------------------------------- 
+
+\usepackage{color}
+
+%accent color
+%\definecolor{sectcol}{RGB}{0,100,255}
+\definecolor{sectcol}{RGB}{0,150,150}
+
+%dark background color
+\definecolor{bgcol}{RGB}{110,110,110}
+
+%light background / accent color
+\definecolor{softcol}{RGB}{225,225,225}
+
+
+\usepackage{tabto}
+%============================================================================%
+%
+%
+%	DEFINITIONS
+%
+%
+%============================================================================%
+
+%----------------------------------------------------------------------------------------
+% 	HEADER
+%----------------------------------------------------------------------------------------
+
+% remove top header line
+\renewcommand{\headrulewidth}{0pt} 
+
+%remove botttom header line
+\renewcommand{\footrulewidth}{0pt}	  	
+
+%remove pagenum
+\renewcommand{\thepage}{}	
+
+%remove section num		
+\renewcommand{\thesection}{}			
+
+%----------------------------------------------------------------------------------------
+% 	ARROW GRAPHICS in Tikz
+%----------------------------------------------------------------------------------------
+
+% a six pointed arrow poiting to the left
+\newcommand{\tzlarrow}{(0,0) -- (0.2,0) -- (0.3,0.2) -- (0.2,0.4) -- (0,0.4) -- (0.1,0.2) -- cycle;}	
+
+% include the left arrow into a tikz picture
+% param1: fill color
+%
+\newcommand{\larrow}[1]
+{\begin{tikzpicture}[scale=0.58]
+	 \filldraw[fill=#1!100,draw=#1!100!black]  \tzlarrow
+ \end{tikzpicture}
+}
+
+% a six pointed arrow poiting to the right
+\newcommand{\tzrarrow}{ (0,0.2) -- (0.1,0) -- (0.3,0) -- (0.2,0.2) -- (0.3,0.4) -- (0.1,0.4) -- cycle;}
+
+% include the right arrow into a tikz picture
+% param1: fill color
+%
+\newcommand{\rarrow}
+{\begin{tikzpicture}[scale=0.7]
+	\filldraw[fill=sectcol!100,draw=sectcol!100!black] \tzrarrow
+ \end{tikzpicture}
+}
+
+
+
+%----------------------------------------------------------------------------------------
+%	custom sections
+%----------------------------------------------------------------------------------------
+
+% create a coloured box with arrow and title as cv section headline
+% param 1: section title
+%
+\newcommand{\cvsection}[1]
+{
+	\begin{center}
+		\large\textcolor{sectcol}{\textbf{#1}}
+	\end{center}
+}
+
+%create a coloured arrow with title as cv meta section section
+% param 1: meta section title
+%
+\newcommand{\metasection}[2]
+{
+%\begin{tabular*}{1\textwidth}{r r}
+\footnotesize{#2} \hspace*{\fill} \footnotesize{#1}\\[1pt]
+%\end{tabular*}
+}
+
+%----------------------------------------------------------------------------------------
+%	 CV EVENT
+%----------------------------------------------------------------------------------------
+
+% creates a stretched box as cv entry headline followed by two paragraphs about 
+% the work you did
+% param 1:	event time i.e. 2014 or 2011-2014 etc.
+% param 2:	event name (what did you do?)
+% param 3:	institution (where did you work / study)
+% param 4:	what was your position & contributions
+%
+\newcommand{\cvevent}[4]
+{
+
+\begin{tabular*}{1\textwidth}{p{13.6cm}  x{3.9cm}}
+	\textbf{#2} - \textcolor{bgcol}{#3} &   \vspace{2.0pt}\textcolor{sectcol}{#1}
+\end{tabular*}
+
+\vspace{-8pt}
+\textcolor{softcol}{\hrule}
+\vspace{6pt}
+
+  #4 
+
+}
+
+%----------------------------------------------------------------------------------------
+%	 CV EDUCATION
+%----------------------------------------------------------------------------------------
+
+% creates a stretched box as cv entry headline followed by two paragraphs about 
+% the education you did
+% param 1:	education time i.e. 2014 or 2011-2014 etc.
+% param 2:	education name (what did you do?)
+% param 3:	institution (where did you study)
+%
+\newcommand{\cvedu}[3]
+{
+
+\begin{tabular*}{1\textwidth}{p{13.6cm}  x{3.9cm}}
+	\textbf{#2}\tab \small{(First Class Distinction)} & \tab\textcolor{sectcol}{#1} 
+\end{tabular*}
+
+	\vspace{-1pt}
+	\ \ \ \textcolor{bgcol}{\small{\textit{#3}}}
+	\ \ \ \vspace{10pt}
+
+}
+
+
+% creates a stretched box as 
+\newcommand{\cveventmeta}[2]
+{
+	\mbox{\mystrut \hspace{87pt}\textit{#1}}\\
+	#2
+}
+
+%----------------------------------------------------------------------------------------
+% CUSTOM STRUT FOR EMPTY BOXES
+%----------------------------------------- -----------------------------------------------
+\newcommand{\mystrut}{\rule[-.3\baselineskip]{0pt}{\baselineskip}}
+
+%----------------------------------------------------------------------------------------
+% CUSTOM LOREM IPSUM
+%----------------------------------------------------------------------------------------
+\newcommand{\lorem}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.}
+
+
+%============================================================================%
+%
+%
+%
+%	DOCUMENT CONTENT
+%
+%
+%
+%============================================================================%
+\begin{document}
+
+
+%use our custom fancy header definitions
+\pagestyle{fancy}	
+
+
+
+
+
+%----------------------------------------------------------------------------------------
+%	HEADER IMAGE
+%----------------------------------------------------------------------------------------
+
+%\begin{figure}[H]
+%\begin{flushright}
+%	\includegraphics[trim= 320 130 460 210,clip,width=0.2\linewidth]{myfoto.jpg}	%trimming relative to image size!
+%\end{flushright}
+%\end{figure}
+
+
+%---------------------------------------------------------------------------------------
+%	TITLE HEADLINE
+%----------------------------------------------------------------------------------------
+\vspace{-8pt}
+\begin{center}
+	\HUGE \textsc{Amey Jadiye} \textcolor{sectcol}{\rule[-1mm]{1mm}{0.9cm}} \textsc{Resume}\\[2pt]
+	\small Software Engineer and Consultant
+\end{center}
+
+
+
+\vspace{6pt}
+
+
+%---------------------------------------------------------------------------------------
+%	META SECTION
+%----------------------------------------------------------------------------------------
+\metasection{Pune, India}{\textbf{Status:} Associate Director @ UBS}
+\metasection{---}{\textbf{Fields:} Software Engineering, Consulting} 
+\metasection{ameyjadiye@gmail.com}{\textbf{Techs:} Java, Python, Linux, Git}
+\metasection{+91 738 777 0382}{\textbf{Activities:} CP, Open Source, Fitness}
+\vspace{-2pt}
+\textcolor{softcol}{\hrule}
+\vspace{6pt}
+
+\normalsize
+
+%---------------------------------------------------------------------------------------
+%	SUMMARAY (optional)
+%----------------------------------------------------------------------------------------
+\vspace{-6pt}
+\cvsection{Summary}
+
+\begin{itemize}
+\item Overall 10+ years of Java product engineering experience with Software development, 
+production deployment and project coordination - REST, SOA,
+MVCs, business services in java/j2ee technologies, UI, web services, different APIs and
+interfaces for high volume applications in Investment Banking, Advertisement and Production Engineering Domain.
+
+\item Adopted Agile (Sprint Planning, Demos and Scrum Stand Ups), DevOps, Continuous Integration (CI/CD),
+Object Oriented Programming, TDD methodologies for E2E software development.
+
+\item Strong hands on with Core Java 8/11 (Multi-threading, Collections Data Structures, Design Patterns,
+Exception Handling, Streams, Lamda Expressions, Concurrent Libraries).
+
+\item Experienced building products with Spring v4.x Framework, Spring RESTful Services, Kafka, IBM MQ
+Swagger REST API documentation, Hibernate, Spring Boot framework, Spring Batch, Spring Integration, 
+Spring Annotation driven configuration, REST etc.
+
+\item Strong with NoSQL JSON based document stores like distributed MongoDB, Apache Solr, Hazelcast , In Memory Computation.
+
+\item Hands on with build automation DevOps tools – Maven, Gradle, Jenkins CI/CD Pipeline, GIT branching
+and release, Fork Pull workflow, Docker/kubernetes containerization, AWS Console.
+
+\item Exposure to Micro-Services architecture, Service Discovery, Auto Scaling/Down Scaling, Event Driven
+Pattern, Aggregate containers logging with ELK Stack - designing and developing E2E Distributed and
+Highly Available (HA) services.
+
+\item Experienced writing Unit Test case automation builds, Spring Automated Integration test suites,
+Application performance Optimization and Profiling, Mockito Object Mocking framework.
+
+\item Active open-source contributor to Apache Software Foundation, \href{http://github.com/ameyjadiye/}{Github} and \href{https://stackoverflow.com/users/2664649/amey-jadiye}{Stackoverflow}.
+\end{itemize} 
+
+\ \\
+%============================================================================%
+%
+%	CV SECTIONS AND EVENTS (MAIN CONTENT)
+%
+%============================================================================%
+
+%---------------------------------------------------------------------------------------
+%	EXPERIENCE
+%----------------------------------------------------------------------------------------
+\cvsection{Experience}
+
+\ \\ \\
+
+\cvevent{2020 - Present}
+{Associate Director}
+{UBS, Pune}
+{
+\begin{itemize}
+
+\item	Leading a team of enthusiastic engineers working on delivering MiFID 2 regulatory reporting solution. 
+	The system handles input from multiple front-office systems and captures exceptions arising from them, all of them then reports to regulators
+	
+\item	System uses microservices like architecture built on top of Spring Boot, connected with Kafka to exchange JSON messages. 
+	UI is built with Angular for actions, approvals from users.
+
+	
+\item	All the application is recently migrated from on-prem to Azure Kubernaties Servies, Oracle is replaced with Azure Postgres.
+
+		
+\item \textbf{Tech Stack} - Java 8, Spring Boot 2, Spring Integration, Kafka, Docker/K8, AKS, Cassandra, Oracle/Postgres, Angular, Python, Bash.
+
+\end{itemize}
+
+}
+
+\ \\ \\
+\ \\ \\
+
+
+\cvevent{2015 - 2020}
+{Assistant Vice President}
+{Credit Suisse, Pune}
+{
+\begin{itemize}
+
+\item Have been working on strategic projects for one of the most critical application in Prime
+Services which daily processes more than 120k transaction across different product types
+like Equity, Options, Fixed Income, Foreign Exchange, Repos, Mortgage Based Securities 
+and the system also process wire transfers worth 4 billion dollars every day. SME For Cash Wire system.	
+
+\item Technically driving projects demonstrating ability to work above and beyond current
+responsibilities. On many occasion, I have challenged existing design/architecture and provided
+numerous improvements and innovative solutions. Changed design of many components
+over period of time to improve performance, bring efficiencies and provide better operational
+control and stability for applications. Developed utilities to reduce manual effort for
+Development and QA team members.
+
+\item Part of GM TechEnclave India program and closely working with Core Engineering and GM
+India Architecture team. Have completed proof of concept for SOLACE messaging and Productionised it. 
+PBS was the first application in Global Market to use SOLACE successfully in production. 
+Worked with Global Market India Architecture group for containerization of phoenix application using
+Docker.
+
+\item \textbf{Tech Stack} - Java 8, Spring JMS, Spring Rest, Spring Boot, Spring Integration, Spring Batch, Hibernate, Weblogic, Docker/K8, Oracle, Sybase, EJB, Jsp, jBPM, Python, Bash.
+
+\end{itemize}
+
+}
+
+\ \\ \\
+
+\cvevent{2013 - 2015}
+{Team Leader}
+{Aretove Technologies, Pune}
+{
+\begin{itemize}
+
+\item Created and maintaining \textbf{20+ AppNenxus cloud servers} along with very high end 12 AWS servers which are getting around a 5 billion requests in a day.
+
+\item Processed and analyzed \textbf{Terabytes} of data stored in \textbf{HDFS} with the help of \textbf{Apache Hive} and \textbf{Map reduce} 
+technology and dumping analyzed data to mysql for the reporting.
+
+\item Maintaining around 100 Million documents using \textbf{Apache SOLR}, experience in
+development, deployment and maintenance of 8 server Solr cloud backed-up with 3
+zookeepers.
+\item Built the \textbf{Machine learning} system with help of apache lucene/SOLR for document
+classification. Post processing the data with help of Web crawler and keep indexed data for the
+serving to billions of requests.
+\item Maintaining the Gigabytes of analyzed data on In Memory tools like
+memcached,custom cache built in \textbf{C} to serve requests strictly in \textbf{microseconds}.
+Understanding the crucial functionality from client, document it and passing to co-
+workers.
+\item Writing the well maintained, structured, robust code according to software engineering
+in \textbf{C, Core Java, Spring framework, HDFS, Apache Hive, XML, JAX-RS, JAXB, Java Mail, Java
+Multithreading, Shell scripts, Python} for the different functionality working in sync.
+Oversee workflow for design, development, and deployment Testing, Process,
+Learning, UI, etc.
+\item Executed and oversee work efforts to deliver timely and quality results.
+Plan and facilitate review, refinement, analyze cross-impact and prioritization of
+new functionality idea.
+\item Writing the technical design document for the back office team on low level,
+creating the architecture of the new functionality using the J2EE standards and software
+engineering.
+\item Work directly with management, front office team, infrastructure team to ensure that
+Web-site operate at peak efficiency.
+\item Coach teams in enhancing the readability, extensibility/reusability and
+testability of code and modules/packages. Propagate and guide teams to use refactoring techniques and debugging
+techniques.
+\item Provide development support for improvement initiatives.Developed tools to help the development community adherence to best practice
+guidelines. Performing the through testing before releasing the project to production.
+\item Automate manual processes that require manual intervention.
+Mentor junior associates and college recruits to adhere to software quality and
+guidelines and adopt efficient tools.
+
+\end{itemize}
+}
+
+\ \\ 
+
+\cvevent{2010 - 2013}
+{Software Engineer}
+{Atos India, Chennai}
+{
+
+\begin{itemize}
+\item Understanding the crucial supply chain and capacity management functionality from
+client and writing the low level requirement document for the team of developers.
+Oversee workflow for design, development, and deployment Testing, Process, Learning,
+UI, etc.
+\item Execute and oversee work efforts to deliver timely and quality results.
+Plan and facilitate review, refinement, analyze cross-impact and prioritization of new
+functionality Idea
+\item Writing the technical design document for the back office team on low level, creating
+the architecture of the new functionality using the J2EE standards and software
+engineering.
+\item Work directly with management, front office team , infrastructure team to ensure that
+Web-site operate at peak efficiency
+\item Creating the data models with Hibernate ORM to fit into robust functionality of DCP ,
+Extensively worked with HQL and hibernate criteria queries.
+Provide initiative status updates including delivery dates, roll-out plans, issue escalation
+and change management.
+\item Serve as a liaison to the offsite champions. Coordinate tasks and activities with offsite
+champions to ensure that tools and processes are effectively communicated and
+adopted within the offsite communities.
+\item Coach teams in enhancing the readability, extensibility/reusability and testability of
+code and modules/packages.
+\item Gather offsite feedback, pain points/opportunities for improvements
+Propagate and guide teams to use refactoring techniques and debugging techniques.
+Provide development support for improvement initiatives.
+Develop tools to help the development community adherence to best practice
+guidelines
+\item Automate manual processes that require manual intervention
+Mentor junior associates and college recruits to adhere to software quality and
+guidelines and adopt efficient tools.
+\item Served as an analyst/Developer the Brokerage team's J2EE application
+Analyze the existing system UI, WebServices, core Java code and EJBs to accommodate
+a multi-million dollar change of Vendor
+
+\item Responsible for code asset management for the application and promotes reuse.
+Standardize a lot of java code and include JUnit testing after the fact.
+Get an overall picture of the code and design to refactor them with reusability and
+maintainability in mind
+\item Document each proposed change to be able to perform unit/integrated completed
+system testing once coded.
+
+\item \textbf{Tech Stack} - JDK 1.6, J2EE, Hibernate, Struts 1.2.9, Spring 2.5,
+Spring-Batch, Tomcat, Oracle 10g, Display tag, Maven.
+
+\end{itemize}
+}
+
+%\textcolor{softcol}{\hrule}
+\ \\
+%
+\cvevent{2008 - 2010}
+{Student Assistant / Programmer}
+{RC Patel Institute of Technology}
+{
+\begin{itemize}
+	\item Delveloped the required informative sites for college ex. for various events, mass data collection portals etc.
+	\item Developed Complex Feedback System for college which include collecting requirements from Staff of college and release application with agile methodologies.
+	\item All the application developed for college were in PHP, AJAX, MYSQL \& HTML/CSS and still support and consultancy is being provided to college.
+\end{itemize}
+
+}
+
+\ \\ \\
+\ \\ \\
+\ \\ \\
+
+\cvsection{Achievement}
+
+\begin{itemize}
+\item Techgig Code Gladiator Finalist, AIR 178 (2019).
+\item Credit Suisse Advent Of Code, Top 10 (2019).
+\item Global Market APAC Star Award. (2017).
+\item Block-Chain Hackathon winner, Credit Suisse(2017).
+\item Credit Suisse, India Hackathon winner (2015).
+\item Ranked In Top 3 India level Atos Employee Skill assessment (2013).
+\item Consistent Performer Rating, Atos India (2011, 2012, 2013).
+\item Excellence Award, Atos India(2011).
+\item University Topper 1st in Physics (June 2007).
+\item College Topper 1st in Physics, 2nd in Math (June 2006).
+\end{itemize}
+
+
+%---------------------------------------------------------------------------------------
+%	EDUCATION SECTION
+%--------------------------------------------------------------------------------------
+\cvsection{Education}
+
+\cvedu{2010}{BE Computer Engineering}{North Maharashtra University}
+
+%\textcolor{softcol}{\hrule}
+
+%
+\cvedu{2006}{HSC Board}{RC Patel Jr. College, Shirpur}
+
+%\textcolor{softcol}{\hrule}
+
+%
+\cvedu{2004}{SSC Board}{MJ Fule Highschool, Shirpur}
+
+\ \\ \\
+
+%---------------------------------------------------------------------------------------
+%	PERSONAL DETAILS
+%--------------------------------------------------------------------------------------
+\cvsection{Personal Details}
+
+\ \\
+\begin{itemize}
+
+\item \textbf{NAME} \tab Amey Shamkant Jadiye
+\item \textbf{ADDRESS} \tab D311, Royal Court, Thergaon, Pune.
+\item \textbf{CONTACT NO.} \tab +91-738777382
+\item \textbf{E-MAIL} \tab ameyjadiye@gmail.com
+\item \textbf{DATE OF BIRTH} \tab 9\textsuperscript{th} December 1988
+\item \textbf{SEX} \tab Male
+\item \textbf{LANGUAGE KNOWN} \tab Marathi, English, Hindi
+
+\end{itemize}
+
+\ \\ \\
+I hereby declare that the above written particulars are true to the best of my
+knowledge and belief.
+\\ \\
+Amey Jadiye
+
+
+
+%--------------------------------------------------------------------------------------------------
+%	ARTIFICIAL FOOTER (fancy footer cannot exceed linewidth) 
+%--------------------------------------------------------------------------------------------------
+
+\null
+\vspace*{\fill}
+\hspace{-0.25\linewidth}\colorbox{white}{\makebox[1.5\linewidth][c]{\mystrut  \textnormal{\textcolor{sectcol}{}  \textcolor{sectcol}{github.com/ameyjadiye}}}}
+
+
+%============================================================================%
+%
+%
+%
+%	DOCUMENT END
+%
+%
+%
+%============================================================================%
+\end{document}

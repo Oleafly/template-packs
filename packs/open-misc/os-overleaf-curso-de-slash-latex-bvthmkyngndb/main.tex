@@ -1,0 +1,307 @@
+\documentclass[11pt,twoside,a4paper]{article}
+
+\usepackage[spanish,activeacute]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{a4}
+\usepackage[spanish]{layout}
+\setlength{\oddsidemargin}{25mm}
+\setlength{\evensidemargin}{25mm}
+\setlength{\voffset}{6mm}
+\setlength{\textwidth}{330pt}
+\setlength{\footskip}{6mm}
+\setlength{\textheight}{562pt}
+\setlength{\marginparwidth}{35pt}
+\setlength{\marginparsep}{10pt}
+\setlength{\headheight}{15pt}
+\usepackage[T1]{fontenc}
+\usepackage{eurosym}
+\usepackage{url}
+\usepackage{graphicx} % Para incluir imágenes
+\usepackage{wrapfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{fixltx2e} % para los subíndices
+\usepackage{color}
+\usepackage{lettrine} % para letras capitales de inicios
+\usepackage{setspace}
+\usepackage{pdflscape} % Para entorno landscape y páginas en apaisado
+\usepackage{draftwatermark}
+\SetWatermarkText{\textsc{Borrador}}
+\SetWatermarkScale{1.2}
+\SetWatermarkLightness{.9}
+%%%%%%%%%%%
+% fancyhdr %
+%%%%%%%%%%%%
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{} % Borramos las cabeceras por defecto
+\fancyhf{} % Borramos todas las cabeceras y estilos por defecto
+\fancyhead[RO,LE]{\textbf{Notas sobre \LaTeX}}
+\fancyfoot{} % Borramos pies de página por defecto
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[CE,CO]{Adolfo Antón Bravo}
+\fancyfoot[RE,LO]{Curso de \LaTeX}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\begin{document}
+\title{Formatos en \LaTeX}
+\author{Adolfo Antón Bravo}
+\maketitle{}
+\section{El formato de fuente}
+\label{sec:formato}
+
+\subsection{Caracteres especiales}
+\label{sec:caracteres}
+\LaTeX distingue entre mayúsculas y minúsculas cuando escribimos intrucciones, así que hay que tener cuidado al escribirlas. Por ejemplo, \textbackslash LaTeX sirve para insertar el logotipo de \LaTeX en nuestros documentos.
+También podemos escribir ``entre comillas'' -aunque al principio resulta un poco extraño-. Existen ademaás muchos otros símbolos que podemos añadir: \%, \$, \copyright, \ldots
+
+\subsection{Espacios y saltos de línea}
+\label{sec:espacioslinea}
+
+También es posible añadir espacios \hspace{2cm} entre palabras, aunque no suele utilizarse demasiado.
+Para saltar de párrafo utilizamos la orden \texttt{\textbackslash par} o simplemente dejamos una línea en blanco.
+
+\subsection{El tamaño de la fuente}
+\label{sec:fuente}
+
+También podemos utilizar distintos tamaños de fuente que siempre dependerán de la clase del documento y de su configuración.
+
+Existe letra \tiny minúscula, \scriptsize tamaño nota \footnotesize pie de página, \small pequeña, 
+ormalsize normal, \large grande, \Large más grande, \LARGE todavía más grande, \huge enorme y \Huge súper enorme. 
+
+\subsection{El estilo de la fuente}
+\label{sec:estilo}
+
+ormalsize
+Además, podemos escribir en \textbf{negrita}, \textit{cursiva}, \emph{enfatizado}, \uppercase{todo en mayúscula}, \textsc{capitalizado o versales}, \texttt{tamaño fijo}, \ldots
+
+\subsection{Subíndices y superíndices}
+\label{sec:subysuper}
+
+La fórmula del ácido sulfúrico es H\textsubscript{2}SO\textsubscript{4}. Y la famosa fórmula de Einstein es \textit{E=mc\textsuperscript{2}}
+
+\subsection{Color}
+\label{sec:color}
+Para escribir con color debemos utilizar el paquete \color{red}\huge color
+
+ormalsize
+
+\color{black}
+\section{El formato de párrafo}
+\label{sec:formatoparrafo}
+
+\subsection{Cajas de texto}
+\label{sec:cajastexto}
+\mbox{Mi texto normal}
+
+\makebox[10cm][r]{Mi texto alineado a la derecha}
+
+\makebox[10cm][s]{Mi texto estirado para ocupar la caja}
+
+\framebox[5cm][c]{Texto centrado con borde}
+
+\framebox[10cm][s]{Una caja que ocupa exactamente lo que ocupa el texto}
+
+\framebox[1.5\width][c]{Una caja que ocupa 1,5 veces más que lo que ocupa el texto}
+
+\framebox[0.5\width][l]{Una caja que ocupa la mitad (0.5) de lo que ocupa el texto}
+
+\framebox[0.3\linewidth][c]{Una caja que ocupa un tercio (0.3) de la página}
+
+\subsection{Bordes y sombreado de cajas}
+\label{sec:bordesysombreadocajas}
+{\fboxsep 8pt \fboxrule 1pt \fbox{
+    \parbox[b]{10cm}{Esta es una caja con borde de 1 punto y margen de 8 puntos}
+    } % Cierra fbox
+} % cierra el grupo
+
+\subsection{Color de las cajas}
+\label{sec:colorcajas}
+
+Podemos colocar las cajas con \textbf{fcolorbox}:
+
+\colorbox{red}{texto escrito en negro dentro de una caja de color rojo}
+\\
+
+\fcolorbox{blue}{white}{
+    \parbox[b]{.2\linewidth}{texto escrito en negro dentro de una caja de párrafo de color negro con borde azul}
+}
+
+
+\subsection{Alineación de las cajas}
+\label{sec:alineacioncajas}
+
+Para mostrar la alineación de las cajas utilizaremos cajas de párrafo (\texttt{parbox} con ancho de \texttt{0.3 linewidth}:
+
+\parbox[b]{0.3\linewidth}{\raggedright{Caja de párrafo a la izqda. con texto alineado a la izqda.}}
+\parbox[b]{0.3\linewidth}{\centering Caja de párrafo centrada con texto centrado}
+\parbox[b]{0.3\linewidth}{\raggedleft{Caja de párrafo a la dcha. con texto alineado a la dcha.}}
+
+\subsection{Espaciado entre párrafos}
+\label{sec:espaciadoparrafos}
+
+Podemos saltar de párrafo dejando una línea en blanco con \texttt{par}\par Y de página con con \texttt{newpage}
+ewpage{}
+Ésta es otra página. y también podemos saltar de línea sin saltar de párrafo con \texttt{newline} o dos barras invertidas.
+ewline{} Esto es un salto de línea. Puede observarse que en los saltos de línea no se indenta mientras que en los saltos de párrafo, sí.
+
+Entre los párrafos puede haber espacios pequeños:\smallskip{}
+
+Espacios medios:
+\medskip{}
+
+O espacios grandes:
+\bigskip{}
+
+También podemos dejar el espacio que queramos con \texttt{vspace}\vspace{4cm}
+
+Acabamos de dejar 4 cm. de espacio.
+\subsection{Letras capitales}
+\label{sec:letrascapitales}
+\lettrine{E}{n un lugar de la Mancha}, de cuyo nombre no quiero acordarme, no ha mucho que vivía un hidalgo de los de lanza en astillero\ldots{}
+
+\subsection{Interlineado}
+\label{sec:interlineado}
+
+Normalmente hay que dejar a \LaTeX{} realizar el interlineado dependiendo del tipo de documento.
+
+\doublespacing
+Pero también podemos modificarlo con el paquete \texttt{setspace}. Por ejemplo, este párrafo tiene espaciado doble.
+
+\singlespacing
+Ahora volvemos al espaciado normal mediante la instrucción \texttt{singlespacing}. A partir de ahora el resto del texto tiene espaciado normal.
+
+\section{Entornos y listas}
+\label{sec:entornosylistas}
+
+Modificar el formato de párrafo directamente es muy complicado. Mejor utilizar entornos.
+
+\subsection{Entornos de alineación}
+\label{sec:entornoalineacion}
+
+El texto que escribimos dentro de este entorno está alineado a la izquierda y queda irregulas por la derecha. Como se puede ver, es distinto a la alineación justificada que \LaTeX{} utiliza por defecto.
+
+\begin{flushright}
+  El texto que escribimos dentro de este entorno está alineado por la derecha, por lo que queda irregular por la izquierda.
+\end{flushright}
+
+\begin{center}
+  Este texto queda centrado.\\
+Como siempre, podemos cambiar de líena sin cambiar de párrafo utilizando las dos barras invertidas.
+\end{center}
+
+\subsection{Entorno para crear cajas de párrafos}
+\label{sec:entornocajasparrafos}
+Mucho más sencillo que \texttt{parbox}:
+
+\begin{minipage}[l]{0.4\linewidth}
+Esta es una caja de texto que ocupa el 40\%
+\end{minipage}
+\hfill{}
+\begin{minipage}[r]{0.4\linewidth}
+  Esta es otra caja de texto que ocupa el otro 40\%. Para separarlas podemos utilizar \texttt{hfill}
+\end{minipage}
+
+\subsection{Entornos para citas y versos}
+\label{sec:entornoscitasyversos}
+
+\subsubsection{Quote}
+\label{sec:quote}
+
+Una de las reglas de ortografía de la letra ``b'' dice:
+\begin{quote}
+  Se escribe ``b'' delante de cualquier consonante
+\end{quote}
+
+\subsubsection{Quotation}
+\label{sec:quotation}
+
+A la pregunta \textbf{¿cómo ayuda la tecnología móvil a las organizacioens en su objetivo de lograr eficiencia operacional?}, Jorge contesto:
+\begin{quotation}
+  Les ayuda a hacer primordialmente dos cosas.
+En primer lugar, los empleados pueden obtener información de producto e indicadores de rendimiento en tiempo real, en cualquier momento y desde cualquier lugar. Esto acelera el proceso de toma de decisiones.
+Y en segundo lugar, la movilidad mejora la comunicación con los empleados, clientes, socios y participantes de la cadena de suministros.
+\end{quotation}
+
+\subsubsection{Verse}
+\label{sec:verse}
+
+\large Rima XXIII
+
+ormalsize
+\begin{verse}
+  Por una mirada, un mundo;\\
+  por una sonrisa, un cielo;\\
+  por un beso\ldots{} yo no sé\\
+  qué te diera por un beso.
+\end{verse}
+
+\subsection{Verbatim}
+\label{sec:verbatim}
+\scriptsize
+\begin{verbatim}
+var sumar = function (a, b) {
+ return a + b; // Suma los números
+}
+var c = sumar(2,3);
+\end{verbatim}
+
+ormalsize
+
+\subsection{Listas y descripciones}
+\label{sec:listasdescripciones}
+
+\subsubsection{Listas con viñetas}
+\label{sec:listasviñetas}
+
+Los cuatro puntos cardinales principales son:
+\begin{itemize}
+\item Norte
+\item Sur
+\item Este
+\item Oeste
+\end{itemize}
+
+\subsubsection{Listas numeradas}
+\label{sec:listasnumeradas}
+
+Los planetas del Sistema Solar, ordenados por proximidad al Sol, son:
+\begin{enumerate}
+\item Mercurio
+\item Venus
+\item Tierra
+\item Marte\ldots{}
+\end{enumerate}
+
+\subsubsection{Listas de definiciones}
+\label{sec:listasdefiniciones}
+
+Una célula animal se compone de las siguientes partes:
+\begin{description}
+\item[Membrana] Es el límite externo de la célula
+\item[Citoplasma] Es el volumen de la célula entre la membrana y el núcleo
+\item[Núcleo] Es el orgánulo membranoso que se encuentra en el centro de la célula
+\end{description}
+
+ewpage{}
+\section{Estructura de página}
+\label{sec:estructurapagina}
+\layout{}
+%\includegraphics{estructura-pagina-izqda.png}
+
+\thispagestyle{empty}
+%\includegraphics{estructura-pagina-dcha.png}
+\begin{landscape}
+\thispagestyle{empty}
+  \subsection{Página en apaisado}
+  \label{sec:apaisado}
+Esta sección la veremos apaisada
+  
+\end{landscape}
+
+ewpage
+Aquí volvemos a la normalidad
+
+\end{document}
+

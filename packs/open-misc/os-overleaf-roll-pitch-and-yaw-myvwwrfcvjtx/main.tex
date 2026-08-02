@@ -1,0 +1,107 @@
+\documentclass[compress,9pt]{beamer}
+
+\usepackage{pgfpages}
+
+
+\usepackage{tikz}   %TikZ is required for this to work.  Make sure this exists before the next line
+\usepackage{tikz-3dplot} %requires 3dplot.sty to be in same directory, or in your LaTeX installation
+
+
+\begin{document}
+	
+	\section{Magnetic Roll, Pitch and Yaw}
+	\begin{frame}[fragile]
+		\begin{figure}[H]
+			\centering
+			% Select a perspective
+			%\tdplotsetmaincoords{65}{105}
+			%\tdplotsetmaincoords{65}{235}
+			\tdplotsetmaincoords{65}{205}
+			\begin{tikzpicture}[scale=1,tdplot_main_coords,>=latex,line join=bevel]
+			% Parameters ---------------------
+			% Coordinates parameters	
+			\pgfmathsetmacro{\sizeCoordX}{4.2}
+			\pgfmathsetmacro{\sizeCoordY}{4.2}
+			\pgfmathsetmacro{\sizeCoordZ}{4.2}
+			\coordinate (O) at (0,0,0);
+			
+			
+			% Figures ---------------------
+			% Coordinates
+			\draw[->] (O) -- (\sizeCoordX,0,0) node[anchor=east]{$X$};
+			\draw[->] (O) -- (0,\sizeCoordY,0) node[anchor=north]{$Y$};
+			\draw[->] (O) -- (0,0,\sizeCoordZ) node[anchor=south]{$Z$};
+			% \draw[dashed] (O) -- (-0.7*\sizeCoordX,0,0);
+			% \draw[dashed] (O) -- (0,-0.7*\sizeCoordY,0);
+			% \draw[dashed] (O) -- (0,0,-\sizeCoordZ);
+			\pause
+			% Create a new rotated system in the center
+			%\tdplotsetrotatedcoords{45}{-60}{-30}
+			\tdplotsetrotatedcoords{65}{-40}{-30}
+			\draw[thick,tdplot_rotated_coords,->, color=darkgray] (0,0,0) -- (\sizeCoordX,0,0) node[anchor=north east]{$\mathbf{e_E}$};
+			\draw[very thick,tdplot_rotated_coords,->, color=darkgray] (0,0,0) -- (0,\sizeCoordY,0) node[anchor=north]{$\mathbf{e_N}$};
+			\draw[thick,tdplot_rotated_coords,->, color=darkgray] (0,0,0) -- (0,0,\sizeCoordZ) node[anchor=south east]{$\mathbf{e_Z}$};
+			
+			\pause
+			% Draw a box around East direction
+			\tdplottransformrotmain{\sizeCoordX}{0}{0}
+			% Draw box
+			\draw[dotted] (\tdplotresx,\tdplotresy,\tdplotresz) -- (\tdplotresx,\tdplotresy,0);
+			\draw[dotted] (\tdplotresx,\tdplotresy,\tdplotresz) -- (\tdplotresx,0,\tdplotresz);
+			\draw[dotted] (\tdplotresx,\tdplotresy,\tdplotresz) -- (0,\tdplotresy,\tdplotresz);
+			\draw[dotted] (\tdplotresx,\tdplotresy,0) -- (\tdplotresx,0,0);
+			\draw[dotted] (\tdplotresx,\tdplotresy,0) -- (0,\tdplotresy,0);
+			\draw[dotted] (\tdplotresx,0,\tdplotresz) -- (0,0,\tdplotresz);
+			\draw[dotted] (\tdplotresx,0,\tdplotresz) -- (\tdplotresx,0,0);
+			\draw[dotted] (0,\tdplotresy,\tdplotresz) -- (0,0,\tdplotresz);
+			\draw[dotted] (0,\tdplotresy,\tdplotresz) -- (0,\tdplotresy,0);
+			\draw[dotted] (0,0,0) -- (\tdplotresx,0,0);
+			
+			% Transforms a coordinate from the rotated coordinate frame to the main coordinate frame. Results at (\tdplotresx,\tdplotresy,\tdplotresz)
+			\tdplottransformrotmain{0}{\sizeCoordY}{0}
+			% Draw North box
+			\draw[dotted] (\tdplotresx,\tdplotresy,\tdplotresz) -- (\tdplotresx,\tdplotresy,0);
+			\draw[dotted] (\tdplotresx,\tdplotresy,\tdplotresz) -- (\tdplotresx,0,\tdplotresz);
+			\draw[dotted] (\tdplotresx,\tdplotresy,\tdplotresz) -- (0,\tdplotresy,\tdplotresz);
+			\draw[dotted] (\tdplotresx,\tdplotresy,0) -- (\tdplotresx,0,0);
+			\draw[dotted] (\tdplotresx,\tdplotresy,0) -- (0,\tdplotresy,0);
+			\draw[dotted] (\tdplotresx,0,\tdplotresz) -- (0,0,\tdplotresz);
+			\draw[dotted] (\tdplotresx,0,\tdplotresz) -- (\tdplotresx,0,0) node[anchor= north west]{$x_N$};
+			\draw[dotted] (0,\tdplotresy,\tdplotresz) -- (0,0,\tdplotresz) node[anchor= south west]{$z_N$};
+			\draw[dotted] (0,\tdplotresy,\tdplotresz) -- (0,\tdplotresy,0) node[anchor= south east]{$y_N$};
+			\draw[dotted] (0,0,0) -- (\tdplotresx,0,0);
+			
+			% Draw arcs ---------------------------------
+			%
+			\pause
+			\draw[dashed] (0,0,0) -- (0,\tdplotresy,\tdplotresz);
+			% Calculate (0,y,z) polar coordinates
+			\tdplotgetpolarcoords{0.001}{\tdplotresy}{\tdplotresz}
+			\pgfmathsetmacro{\radius}{sqrt{((\tdplotresy)^2 + (\tdplotresz)^2)}}
+			%syntax: \tdplotdrawarc[coordinate frame, draw options]{center point}{r}{angle start}{angle end}{label options}{label}
+			\tdplotsetthetaplanecoords{90}
+			\tdplotdrawarc[thick,tdplot_rotated_coords,thick,-stealth,blue]{(0,0,0)}{\radius}{0}{\tdplotrestheta}{anchor=north west}{$\theta_{x}$}
+			%
+			\pause
+			\draw[dashed] (0,0,0) -- (\tdplotresx,0,\tdplotresz);
+			% Calculate (x,0,z) polar coordinates
+			\tdplotgetpolarcoords{\tdplotresx}{0}{\tdplotresz}
+			\pgfmathsetmacro{\radius}{sqrt{((\tdplotresx)^2 + (\tdplotresz)^2)}}
+			%syntax: \tdplotdrawarc[coordinate frame, draw options]{center point}{r}{angle start}{angle end}{label options}{label}
+			\tdplotsetthetaplanecoords{180}
+			\tdplotdrawarc[thick,tdplot_rotated_coords,thick,-stealth,blue]{(0,0,0)}{\radius}{90}{\tdplotrestheta}{anchor=north west}{$\theta_{y}$}
+			%
+			\pause
+			\draw[dashed] (0,0,0) -- (\tdplotresx,\tdplotresy,0);
+			% Calculate (x,y,0) polar coordinates
+			\tdplotgetpolarcoords{\tdplotresx}{\tdplotresy}{0}
+			\pgfmathsetmacro{\radius}{sqrt{((\tdplotresx)^2 + (\tdplotresy)^2)}}
+			%%%% %syntax: \tdplotdrawarc[coordinate frame, draw options]{center point}{r}{angle start}{angle end}{label options}{label}
+			\tdplotsetthetaplanecoords{0}
+			\tdplotdrawarc[thick,thick,-stealth,blue]{(0,0,0)}{\radius}{90}{\tdplotresphi}{anchor=north west}{$\theta_{z}$}
+			\end{tikzpicture}
+		\end{figure}
+	\end{frame}
+	
+		
+\end{document}

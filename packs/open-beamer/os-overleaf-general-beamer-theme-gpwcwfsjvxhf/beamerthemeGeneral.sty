@@ -1,0 +1,46 @@
+%% This part modified from beamerthemeTaiwan.sty by Hsuan-Tien Lin
+\DeclareOptionBeamer{compress}{\beamer@compresstrue}
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\usecolortheme{LightBlue}
+\usefonttheme{Large}
+\useinnertheme{circles}
+\useoutertheme{SimpleInfo}
+
+% faded color in head
+\AtBeginDocument{%
+  {
+    \usebeamercolor{section in head/foot}
+  }
+  
+  \pgfdeclareverticalshading{beamer@headfade}{\paperwidth}
+  {%
+    color(0cm)=(bg);
+    color(2cm)=(section in head/foot.bg)%
+  }
+
+  \setbeamercolor{section in head/foot}{bg=}
+}
+
+\addtoheadtemplate{\pgfuseshading{beamer@headfade}\vskip-2cm}{}
+
+% adjust title
+\setbeamertemplate{frametitle}
+{
+  \begin{center}
+    \vbox{\strut\insertframetitle\strut}
+  \end{center}
+  \vspace*{-1ex}
+}
+
+% \setbeamertemplate{footline}[page number] 
+\setbeamertemplate{navigation symbols}{} 
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[default]
+
+\mode
+<all>

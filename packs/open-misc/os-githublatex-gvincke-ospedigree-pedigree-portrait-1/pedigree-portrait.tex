@@ -1,0 +1,223 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{xcolor} % Required for specifying colors by name
+\usepackage{tikz}
+\usepackage[top=1.5cm, bottom=0cm, left=0.5cm, right=0.5cm]{geometry}
+\usetikzlibrary{plotmarks,positioning,calc,shapes,shadows,arrows,shapes.multipart,decorations.text}
+\usepackage{fontawesome}
+\usepackage{ccicons}
+\usepackage{hyperref}
+\hypersetup{hidelinks,pagebackref=true,hyperindex=true,colorlinks=false,breaklinks=true,linkcolor=black,urlcolor=black,pdftitle={Open Source Pigeon Pedigree Template},pdfauthor={Grégoire Vincke}}
+\begin{document}
+\newcommand{\link}[4][0.2]{\draw[-] ($(#2.east)!#1!(#2.#4 east)$) .. controls ([xshift=0.5cm] $(#2.east)!#1!(#2.#4 east)$) and ([xshift=-0.5cm] #3.west) .. (#3.west);}
+
+\begin{tikzpicture}[auto,node distance=0.5cm,
+bird/.style={
+	rectangle split,
+	rectangle split parts=2,
+	draw=black,
+	rounded corners,
+	text width=4cm
+},
+oldbird/.style={
+	draw=black,
+	rounded corners,
+	text width=3cm,
+	%text height=0.45cm,
+	text depth = 0.2 cm
+},
+fancier/.style={
+	rectangle split,
+	rectangle split parts=5,
+	draw=black,
+	rounded corners,
+	text width=6cm
+}
+]
+\node (p) [bird,text width=4cm]{
+	\nodepart{one}\textbf{\faicon{mars}} / \textbf{\faicon{venus}}  :
+	\nodepart{two}~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~   
+};
+
+\node (f) [bird,above right = 0.5 cm and 0.5cm of p.north, anchor=south]{
+	\nodepart{one}\textbf{\faicon{mars}}~:
+	\nodepart{two}~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~  
+};
+\draw[-] (p.north) .. controls ([xshift=-0.1cm] p.north) and ([xshift=0.1cm] f.south) .. (f.south);
+
+	\node (ff) [bird,right=0.5cm of f.north east, anchor=north west]{
+		\nodepart{one}\textbf{\faicon{mars}}~:
+		\nodepart{two}~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ 
+	};
+	\link{f}{ff}{north}
+		\node (fff) [bird,text width=3cm,right=0.5cm of ff.north east, anchor=north west]{
+			\nodepart{one}\textbf{\faicon{mars}}~:
+			\nodepart{two}~ \\ ~ \\ ~  
+		};
+		\link{ff}{fff}{north}
+		
+			\node (ffff) [oldbird,right=1cm of fff.north east, anchor=north west]{
+				\textbf{\faicon{mars}}~:
+			};
+			\link{fff}{ffff}{north}
+			
+			\node (mfff) [oldbird,right=1cm of fff.south east, anchor=south west]{
+				\textbf{\faicon{venus}}~:
+			};
+			\link{fff}{mfff}{south}
+		
+		\node (ffm) [bird,text width=3cm,right=0.5cm of ff.south east, anchor=south west]{
+			\nodepart{one}\textbf{\faicon{venus}}~:
+			\nodepart{two}~ \\ ~ \\ ~ 
+		};
+		\link{ff}{ffm}{south}
+		
+			\node (fffm) [oldbird,right=1cm of ffm.north east, anchor=north west]{
+				\textbf{\faicon{mars}}~:
+			};
+			\link{ffm}{fffm}{north}
+			
+			\node (mffm) [oldbird,right=1cm of ffm.south east, anchor=south west]{
+				\textbf{\faicon{venus}}~:
+			};	
+			\link{ffm}{mffm}{south}
+	
+	\node (mf) [bird,below=0.5cm of ff.south, anchor=north]{
+		\nodepart{one}\textbf{\faicon{venus}}~:
+		\nodepart{two}~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~  
+	};
+	\link{f}{mf}{south}
+	
+		\node (fmf) [bird,text width=3cm,right=0.5cm of mf.north east, anchor=north west]{
+			\nodepart{one}\textbf{\faicon{mars}}~:
+			\nodepart{two}~ \\ ~ \\ ~  
+		};
+		\link{mf}{fmf}{north}
+		
+			\node (ffmf) [oldbird,right=1cm of fmf.north east, anchor=north west]{
+				\textbf{\faicon{mars}}~:
+			};
+			\link{fmf}{ffmf}{north}
+			
+			\node (mfmf) [oldbird,right=1cm of fmf.south east, anchor=south west]{
+				\textbf{\faicon{venus}}~:
+			};
+			\link{fmf}{mfmf}{south}
+		
+		\node (mmf) [bird,text width=3cm,right=0.5cm of mf.south east, anchor=south west]{
+			\nodepart{one}\textbf{\faicon{venus}}~:
+			\nodepart{two}~ \\ ~ \\ ~ 
+		};
+		\link{mf}{mmf}{south}
+		
+			\node (fmmf) [oldbird,right=1cm of mmf.north east, anchor=north west]{
+				\textbf{\faicon{mars}}~:
+			};
+			\link{mmf}{fmmf}{north}
+			
+			\node (mmmf) [oldbird,right=1cm of mmf.south east, anchor=south west]{
+				\textbf{\faicon{venus}}~:
+			};
+			\link{mmf}{mmmf}{south}
+
+\node (m) [bird,below right = 0.5 cm and 0.5cm of p.south, anchor=north]{
+	\nodepart{one}\textbf{\faicon{venus}}~:
+	\nodepart{two}~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~  
+};
+\draw[-] (p.south) .. controls ([xshift=-0.1cm] p.south) and ([xshift=0.1cm] m.north) .. (m.north);
+	
+	\node (mm) [bird,right=0.5cm of m.south east, anchor=south west]{
+		\nodepart{one}\textbf{\faicon{venus}}~:
+		\nodepart{two}~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~  
+	};
+	\link{m}{mm}{south}
+	
+		\node (fmm) [bird,text width=3cm,right=0.5cm of mm.north east, anchor=north west]{
+			\nodepart{one}\textbf{\faicon{mars}}~:
+			\nodepart{two}~ \\ ~ \\ ~   
+		};
+		\link{mm}{fmm}{north}
+		
+			\node (ffmm) [oldbird,right=1cm of fmm.north east, anchor=north west]{
+				\textbf{\faicon{mars}}~:
+			};
+			\link{fmm}{ffmm}{north}
+			
+			\node (mfmm) [oldbird,right=1cm of fmm.south east, anchor=south west]{
+				\textbf{\faicon{venus}}~:
+			};
+			\link{fmm}{mfmm}{south}
+		
+		\node (mmm) [bird,text width=3cm,right=0.5cm of mm.south east, anchor=south west]{
+			\nodepart{one}\textbf{\faicon{venus}}~:
+			\nodepart{two}~ \\ ~ \\ ~ 
+		};
+		\link{mm}{mmm}{south}
+		
+			\node (fmmm) [oldbird,right=1cm of mmm.north east, anchor=north west]{
+				\textbf{\faicon{mars}}~:
+			};
+			\link{mmm}{fmmm}{north}
+			%\draw [link] (mmm.east) -| ($(mmm.east)!0.5!(fmmm.west)$) |- (fmmm.west);
+			
+			\node (mmmm) [oldbird,right=1cm of mmm.south east, anchor=south west]{
+				\textbf{\faicon{venus}}~:
+			};
+			\link{mmm}{mmmm}{south}
+			
+	\node (fm) [bird,above=0.5cm of mm.north, anchor=south]{
+		\nodepart{one}\textbf{\faicon{mars}}~:
+		\nodepart{two}~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~ \\ ~   
+	};
+	\link{m}{fm}{north}
+	
+		\node (ffm) [bird,text width=3cm,right=0.5cm of fm.north east, anchor=north west]{
+			\nodepart{one}\textbf{\faicon{mars}}~:
+			\nodepart{two}~ \\ ~ \\ ~   
+		};
+		\link{fm}{ffm}{north}
+		
+			\node (fffm) [oldbird,right=1cm of ffm.north east, anchor=north west]{
+				\textbf{\faicon{mars}}~:
+			};
+			\link{ffm}{fffm}{north}
+			
+			\node (mffm) [oldbird,right=1cm of ffm.south east, anchor=south west]{
+				\textbf{\faicon{venus}}~:
+			};
+			\link{ffm}{mffm}{south}
+		
+		\node (mfm) [bird,text width=3cm,right=0.5cm of fm.south east, anchor=south west]{
+			\nodepart{one}\textbf{\faicon{venus}}~:
+			\nodepart{two}~ \\ ~ \\ ~ 
+		};
+		\link{fm}{mfm}{south}
+		
+			\node (fmfm) [oldbird,right=1cm of mfm.north east, anchor=north west]{
+				\textbf{\faicon{mars}}~:
+			};
+			\link{mfm}{fmfm}{north}
+			
+			\node (mmfm) [oldbird,right=1cm of mfm.south east, anchor=south west]{
+				\textbf{\faicon{venus}}~:
+			};
+			\link{mfm}{mmfm}{south}
+		
+\node (fancier) [fancier, right=0.5cm of p.east, anchor=west]{
+	\nodepart{one}\textbf{\faicon{user}}~:
+	\nodepart{two}\textbf{\faicon{envelope-o}}~: ~ \\ ~ \\ ~
+	\nodepart{three}\textbf{\faicon{phone}}~:
+	\nodepart{four}\textbf{\faicon{at}}~:
+	\nodepart{five}\textbf{\faicon{calendar}}~:
+};
+
+\node (copyr) [right= 0.5 cm of fancier.east, anchor=west, text width=7.5cm] {\href{https://github.com/gvincke/ospedigree}{Open Source Pedigree \\ \ccby{} Grégoire Vincke, 2021} \\ ~ \\  {\tiny Licence : \url{https://creativecommons.org/licenses/by/2.0/be/}
+\\  {\tiny Source code on : \url{https://github.com/gvincke/ospedigree}}  \\ }};
+
+\end{tikzpicture}
+
+
+\end{document}

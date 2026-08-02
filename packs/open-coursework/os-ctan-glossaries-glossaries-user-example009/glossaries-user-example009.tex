@@ -1,0 +1,41 @@
+% This file is embedded in glossaries-user.pdf 
+% Example 9 UTF-8 and xindy
+% Label: "ex:xindyutf8"
+% arara: pdflatex
+% arara: makeglossaries
+% arara: pdflatex
+% arara: pdfcrop
+\documentclass[12pt]{article}
+\pagestyle{empty}
+\usepackage[T1]{fontenc}
+\usepackage[main=english,brazilian]{babel}
+\usepackage[xindy]{glossaries}
+\newglossary*{dictionary}{\glossaryname}
+\makeglossaries
+\newglossaryentry{élite}{name={élite},
+description={select group or class}}
+\newglossaryentry{elephant}{name={elephant},
+description={large animal with trunk and tusks}}
+\newglossaryentry{elk}{name={elk}, description={large deer}} 
+
+\newglossaryentry{água}{name={água},
+type={dictionary},
+description={water}}
+\newglossaryentry{árvore}{name={árvore},
+type={dictionary},
+description={tree}}
+\newglossaryentry{ano}{name={ano},
+type={dictionary},
+description={year}} 
+\begin{document}
+\section{English}
+An \gls{elk} and an \gls{elephant} belonged to an \gls{élite} group. 
+
+\printglossary 
+
+\selectlanguage{brazilian}
+\section{Brasileiro}
+A \gls{árvore} tive \gls{água} este \gls{ano}. 
+
+\printglossary[type=dictionary] 
+\end{document}

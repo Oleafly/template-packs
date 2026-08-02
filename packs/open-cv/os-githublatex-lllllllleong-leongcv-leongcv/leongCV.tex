@@ -1,0 +1,285 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages
+\usepackage[
+    ignoreheadfoot,
+    top=2 cm,
+    bottom=2 cm,
+    left=2 cm,
+    right=2 cm,
+    footskip=1.0 cm
+]{geometry}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{primaryColor}{RGB}{0, 0, 0}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{amsmath}
+\definecolor{linkColor}{RGB}{0, 0, 180}
+\usepackage[
+    pdftitle={Leong Yin Chan's CV},
+    pdfauthor={Leong Yin Chan},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=linkColor,
+    linkcolor=linkColor,
+    citecolor=linkColor,
+    filecolor=linkColor,
+    menucolor=linkColor,
+    pdfborderstyle={/S/U/W 1},
+    urlbordercolor=white
+]{hyperref}
+\usepackage[pscoord]{eso-pic}
+\usepackage{calc}
+\usepackage{bookmark}
+\usepackage{lastpage}
+\usepackage{changepage}
+\usepackage{paracol}
+\usepackage{ifthen}
+\usepackage{needspace}
+\usepackage{iftex}
+
+% Ensure PDF is machine readable/ATS parsable
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Document settings
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt}
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\columnsep}{0.15cm}
+\pagenumbering{gobble}
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+\titlespacing{\section}{-1pt}{0.3 cm}{0.2 cm}
+
+% Custom environments
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$}
+
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+}
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+}
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{0 cm + 0.00001 cm}{0 cm + 0.00001 cm}
+}{
+    \end{adjustwidth}
+}
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 6 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+}
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+}
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+}
+
+\newcommand{\placelastupdatedtext}{
+  \AddToShipoutPictureFG*{
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+        \small\color{gray}\textit{Last updated in September 2024}\hspace{\widthof{Last updated in September 2024}}
+    }}}%
+  }%
+}
+
+\let\hrefWithoutArrow\href
+\renewcommand{\labelitemi}{\textbf{--}}
+
+\begin{document}
+\newcommand{\AND}{\unskip
+    \cleaders\copy\ANDbox\hskip\wd\ANDbox
+    \ignorespaces
+}
+\newsavebox\ANDbox
+\sbox\ANDbox{$|$}
+
+\begin{header}
+    \centering
+    \fontsize{20pt}{20pt}\selectfont \textbf{Leong Yin Chan}
+    \par
+    \normalsize
+    \mbox{\hrefWithoutArrow{mailto:chanleongyin8@gmail.com}{Email}}%
+    \kern 5pt \AND \kern 5pt
+    \mbox{0481 575 872}%
+    \kern 5pt \AND \kern 5pt
+    \textbf{\mbox{\hrefWithoutArrow{https://github.com/Lllllllleong}{GitHub}}}%
+    \kern 5pt \AND \kern 5pt
+    \textbf{\mbox{\hrefWithoutArrow{https://www.whyhireleong.com/}{Website}}}%
+    \kern 5pt \AND \kern 5pt
+    \mbox{\hrefWithoutArrow{https://www.linkedin.com/in/leongyinchan/}{LinkedIn}}%
+
+\end{header}
+
+\vspace{0.1cm}
+
+\section{Summary}
+Backend and Cloud Engineer based in Sydney with a year of experience building Go services on GCP. I'm a Google Cloud Certified Professional Cloud Developer and have worked across the stack, from infrastructure-as-code to API design. I came to engineering from a quantitative background, which shows up in how I think about performance, reliability, and cost.
+\section{Experience}
+\vspace{0.1cm}
+
+\begin{onecolentry}
+    \textbf{Software Engineer (Contract) | }\href{https://www.ai-no-te.io/}{\textbf{Union Mate}} \hfill \textit{Feb 2025 – Jan 2026} \\
+\end{onecolentry}
+
+\vspace{0.1cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Migrated 5 Python services to Go on Cloud Run, reducing memory per instance and cold-start latency. Added bounded worker pools to cap concurrency under burst traffic. Combined, the changes brought P99 under 300ms ($\sim$60\% improvement) and cut monthly GiB-seconds by $\sim$40\%.
+        \item Modernised deployment security by replacing long-lived keys with OIDC federation.
+        \item Built the document ingestion pipeline for the SaaS prototype. Benchmarked chunking strategies and embedding models against a client-validated golden dataset, iterating until retrieval quality passed client acceptance.
+    \end{highlights}
+\end{onecolentry}
+
+\section{Projects}
+\vspace{0.1cm}
+
+\begin{onecolentry}
+    \href{https://github.com/Lllllllleong/wazePoliceScraperGCP}{\textbf{Real-time Waze Alert Scraper and Analytics Dashboard}}\textbf{ | Go, Terraform}
+\end{onecolentry}
+
+
+\vspace{0.1cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Automated the archival of cold Firestore data to GCS, reducing NoSQL read operations by up to 86\% per request.
+        \item Imported existing GCP resources into reusable Terraform modules.
+        \item Developed Go REST APIs with token-bucket rate limiting to guard resources.
+        \item Implemented integration tests using Firestore emulators.
+
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.2cm}
+
+\begin{onecolentry}
+    \href{https://www.whyhireleong.com/}{\textbf{WhyHireLeong.com}}\textbf{ | Go, TypeScript, Next.js}
+\end{onecolentry}
+
+\vspace{0.1cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Implemented a chat interface using Next.js and streaming response handlers to render LLM tokens immediately upon generation.
+    \end{highlights}
+\end{onecolentry}
+
+\section{Skills}
+\vspace{0.1cm}
+
+\begin{onecolentry}
+    \begin{tabularx}{\linewidth}{@{} l X @{}}
+        \textbf{Languages:}           & Go, Java, SQL, Python \\[0.2cm]
+        \textbf{Cloud \& Infrastructure:} & Cloud Run, Firestore (NoSQL), GCS, Vertex AI, Pub/Sub, IAM \& Security Policies \\[0.2cm]
+        \textbf{DevOps, Tools \& Concepts:}     & Terraform, Docker, GitHub Actions, RAG, Git  \\[0.2cm]
+        \textbf{Certifications:}      & Google Cloud Certified – Professional Cloud Developer      \\[0.2cm]
+    \end{tabularx}
+\end{onecolentry}
+
+\section{Education}
+\vspace{0.1cm}
+
+\textbf{The Australian National University}\hfill{} \hrefWithoutArrow{https://gitlab.com/llllllllleong/my-individual-works}{Coursework}%
+
+
+\vspace{0.1cm}
+
+\hspace{0.5cm}{Bachelor of Actuarial Studies}\hfill{} \textit{Graduated Jan 2025}
+
+\vspace{0.1cm}
+
+\hspace{0.5cm}{Bachelor of Finance (Quantitative Finance)}\hfill{} \textit{Graduated Jan 2025}
+
+\section{Leadership \& Professional Development}
+\vspace{0.1cm}
+
+\begin{onecolentry}
+    \textbf{Senior Resident | The Australian National University}\hfill \textit{Jan 2023 – Dec 2023}
+\end{onecolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Managed escalation and incident response across a residential cohort of 26.
+        \item Earned two scholarships (\$16,000 in 2023; \$4,000 in 2020) for contributions to collegiate life and academic excellence.
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.1 cm}
+
+\begin{twocolentry}{\textit{Jul 2020 – May 2022}}
+    \textbf{Administrative Support Assistant | Singapore Armed Forces}
+\end{twocolentry}
+
+\vspace{0.10 cm}
+
+\begin{onecolentry}
+    \begin{highlights}
+        \item Managed scheduling and end-to-end logistics for officer training programs and service medal ceremonies, ensuring operational readiness and adherence to protocol.
+    \end{highlights}
+\end{onecolentry}
+
+\vspace{0.1cm}
+
+\section{}
+\vspace{0.1cm}
+
+\end{document}

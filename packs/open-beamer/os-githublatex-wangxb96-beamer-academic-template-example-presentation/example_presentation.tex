@@ -1,0 +1,258 @@
+% --- LaTeX Presentation Template - Complete Example ---
+
+% --- Set document class ---
+
+% Remove "handout" when presenting to include pauses
+\documentclass[aspectratio=169, dvipsnames]{beamer}
+\usetheme{default}
+
+% Make content that is hidden by pauses "transparent"
+\setbeamercovered{transparent}
+
+% --- Slide layout settings ---
+
+% Set line spacing
+\renewcommand{\baselinestretch}{1.15}
+
+% Set left and right text margins
+\setbeamersize{text margin left=12mm, text margin right=12mm}
+
+% Remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% Allow local line spacing changes
+\usepackage{setspace}
+
+% Change itemized list bullets to circles
+\setbeamertemplate{itemize item}{$\bullet$}
+\setbeamertemplate{itemize subitem}{$\circ$}
+
+% --- Color and font settings ---
+
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{float}
+\usepackage{natbib}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{dsfont}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{euscript}
+
+% Bibliography style
+\bibliographystyle{plain}
+
+% Slide title background color
+\setbeamercolor{frametitle}{bg=blue!10, fg=black}
+
+% Colors: block title and background
+\setbeamercolor{block title}{fg=white, bg=cyan!50!black}
+\setbeamercolor{block body}{bg=cyan!10}
+
+% --- Title and author information ---
+
+\title{Example Beamer Presentation}
+\author{Your Name}
+\date{November 2025}
+
+% --- Custom footline ---
+\setbeamertemplate{footline}{%
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{author in head/foot}%
+            \usebeamerfont{author in head/foot}\insertshortauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{title in head/foot}%
+            \usebeamerfont{title in head/foot}\insertshorttitle
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.5ex,dp=1ex,center]{date in head/foot}%
+            \insertframenumber{} / \inserttotalframenumber
+        \end{beamercolorbox}%
+    }%
+    \vskip0pt%
+}
+
+% --- Document begins here ---
+
+\begin{document}
+
+% Title slide
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Table of contents
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+% --- Section 1: Introduction ---
+
+\section{Introduction}
+
+\begin{frame}{Welcome}
+    \begin{itemize}
+        \item This is an example presentation using the Beamer template
+        \pause
+        \item Demonstrates various features and content types
+        \pause
+        \item Shows best practices for academic presentations
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Key Features}
+    \begin{columns}
+        \column{0.48\textwidth}
+        \textbf{Design Features:}
+        \begin{itemize}
+            \item Clean 16:9 layout
+            \item Custom footline
+            \item Progressive reveal
+            \item Color themes
+        \end{itemize}
+        
+        \column{0.48\textwidth}
+        \textbf{Content Support:}
+        \begin{itemize}
+            \item Mathematics
+            \item Algorithms
+            \item Figures \& tables
+            \item Citations
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+% --- Section 2: Mathematical Content ---
+
+\section{Mathematical Content}
+
+\begin{frame}{Equations}
+    Inline equations are easy: $E = mc^2$
+    
+    \vspace{1em}
+    
+    Display equations with numbering:
+    \begin{equation}
+        \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
+    \end{equation}
+    
+    \vspace{1em}
+    
+    Multiple equations:
+    \begin{align}
+        f(x) &= x^2 + 2x + 1 \\
+        g(x) &= (x+1)^2
+    \end{align}
+\end{frame}
+
+\begin{frame}{Advanced Math}
+    Matrix notation:
+    \begin{equation}
+        \mathbf{A} = \begin{bmatrix}
+            a_{11} & a_{12} & \cdots & a_{1n} \\
+            a_{21} & a_{22} & \cdots & a_{2n} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            a_{m1} & a_{m2} & \cdots & a_{mn}
+        \end{bmatrix}
+    \end{equation}
+    
+    \vspace{1em}
+    
+    Probability notation:
+    \begin{equation}
+        P(X = x) = \frac{e^{-\lambda}\lambda^x}{x!}, \quad x \in \{0, 1, 2, \ldots\}
+    \end{equation}
+\end{frame}
+
+% --- Section 3: Algorithms ---
+
+\section{Algorithms}
+
+\begin{frame}{Algorithm Example}
+    \begin{algorithm}[H]
+        \caption{Gradient Descent}
+        \begin{algorithmic}[1]
+            \State \textbf{Input:} Initial point $x_0$, learning rate $\alpha$, iterations $T$
+            \State \textbf{Output:} Optimized point $x^*$
+            \For{$t = 1$ to $T$}
+                \State Compute gradient $\nabla f(x_t)$
+                \State Update: $x_{t+1} \gets x_t - \alpha \nabla f(x_t)$
+            \EndFor
+            \State \textbf{return} $x^* = x_T$
+        \end{algorithmic}
+    \end{algorithm}
+\end{frame}
+
+% --- Section 4: Visual Content ---
+
+\section{Visual Content}
+
+\begin{frame}{Tables}
+    \begin{table}
+        \centering
+        \caption{Experimental Results}
+        \begin{tabular}{lccc}
+            \toprule
+            \textbf{Method} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} \\
+            \midrule
+            Baseline & 85.3 & 82.1 & 87.2 \\
+            Method A & 89.7 & 88.3 & 90.5 \\
+            \textbf{Our Method} & \textbf{92.4} & \textbf{91.8} & \textbf{93.1} \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}{Block Environments}
+    \begin{block}{Definition}
+        A \textbf{metric space} is a set $X$ equipped with a function $d: X \times X \to \mathbb{R}$ satisfying certain properties.
+    \end{block}
+    
+    \vspace{1em}
+    
+    \begin{alertblock}{Important Note}
+        Always verify convergence conditions before applying iterative methods.
+    \end{alertblock}
+    
+    \vspace{1em}
+    
+    \begin{exampleblock}{Example}
+        The Euclidean space $\mathbb{R}^n$ with distance $d(\mathbf{x}, \mathbf{y}) = \|\mathbf{x} - \mathbf{y}\|_2$ is a metric space.
+    \end{exampleblock}
+\end{frame}
+
+% --- Section 5: Conclusion ---
+
+\section{Conclusion}
+
+\begin{frame}{Summary}
+    \begin{itemize}
+        \item This template provides a clean, professional presentation format
+        \item Supports mathematics, algorithms, figures, and tables
+        \item Easy to customize colors and layout
+        \item Suitable for academic talks and conferences
+    \end{itemize}
+    
+    \vspace{2em}
+    
+    \begin{center}
+        \Large Thank you for your attention!
+    \end{center}
+\end{frame}
+
+\begin{frame}{Questions?}
+    \begin{center}
+        \Huge Questions?
+        
+        \vspace{2em}
+        
+        \large Contact: your.email@university.edu
+    \end{center}
+\end{frame}
+
+\end{document}

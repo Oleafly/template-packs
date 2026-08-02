@@ -1,0 +1,208 @@
+% ---------------------------------------------------------
+% DATE FORMAT CONVENTION
+% ---------------------------------------------------------
+% Dates in this template follow the format "mmm yyyy"
+% (first three letters of the month + four-digit year).
+%
+% This format is intentionally chosen to:
+% - keep all date ranges on a single line without wrapping,
+% - ensure consistent visual alignment across entries,
+% - remain language-neutral and internationally readable,
+% - balance compactness with full clarity of the time period.
+%
+% Example: "Jan 2021 -- Dec 2023"
+%
+% Using full month names or numeric formats may cause
+% line breaks or misalignment in the date column.
+% ---------------------------------------------------------
+
+
+\documentclass[11pt,a4paper]{article}
+
+% ---------- BASIC ----------
+\usepackage[margin=2.0cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{ragged2e}
+\usepackage[british]{babel}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% ---------- COLOR ----------
+\definecolor{SoftBlue}{HTML}{245EA8} % Primary accent color
+
+% ---------- DATE COLUMN WIDTH ----------
+\newlength{\datecolw}
+\setlength{\datecolw}{4.0cm} % Fixed width for date column
+
+% ---------- SECTION HEADING ----------
+\newcommand{\cvsection}[1]{%
+  \vspace{0pt}%
+  {\large\bfseries\color{SoftBlue} #1}\\[-2ex]%
+  {\color{SoftBlue}\rule{\linewidth}{0.4pt}}\\[0.2ex]%
+}
+
+% ---------- SUMMARY BLOCK ----------
+\newcommand{\summaryblock}[1]{%
+  {\color{SoftBlue}\rule{\linewidth}{0.4pt}}\\[2pt]%
+  {\small #1}\par
+  \vspace{1pt}{\color{SoftBlue}\rule{\linewidth}{0.4pt}}\\[2pt]%
+}
+
+% ---------- ENTRY MACRO ----------
+\newcommand{\entry}[4]{%
+  \noindent
+  \begin{tabularx}{\textwidth}{@{}p{\datecolw}@{}X@{}}
+    \raisebox{0.10ex}{\small\color{SoftBlue}#1} &
+    \textbf{\raisebox{0.10ex}{#2}}\\[-0.3ex]
+    & {#3}
+  \end{tabularx}
+
+  \vspace{-2pt}
+  \begin{list}{\textcolor{black!80}{\large\textbullet}}{%
+      \setlength{\leftmargin}{\datecolw}
+      \setlength{\labelsep}{1.0em}
+      \setlength{\itemsep}{0.5pt}
+      \setlength{\parsep}{0pt}
+  }
+    #4
+  \end{list}
+  \vspace{6pt}
+}
+
+\begin{document}
+\pagestyle{empty}
+
+% ---------- HEADER ----------
+\begin{center}
+  {\LARGE\bfseries\itshape\color{SoftBlue} Your Name}\\[3pt]
+  Your Address Line, City, Country\\
+  Your Phone Number \;|\; \href{mailto:your.email@domain.com}{your.email@domain.com}\\
+  GitHub: \href{https://github.com/your-username}{github.com/your-username}
+\end{center}
+
+% ---------- SUMMARY ----------
+\summaryblock{%
+Your professional summary text goes here. Replace this placeholder with a concise overview of your experience, background and focus areas. This text mirrors the original structure and length.
+}
+
+% ---------- WORK EXPERIENCE ----------
+\cvsection{Work Experience}
+
+\entry
+{mmm yyyy -- mmm yyyy}
+{Your Job Title — Your Area}
+{Company Name, City, Country}
+{
+\item Your responsibility description goes here
+\item Your analytical or review-related task description goes here
+\item Your support or interaction description goes here
+\item Your stakeholder or documentation-related description goes here
+}
+
+\entry
+{mmm yyyy -- mmm yyyy}
+{Your Job Title — Your Area}
+{Company Name, City, Country}
+{
+\item Your monitoring or analysis description goes here
+\item Your review or validation task description goes here
+\item Your documentation or support description goes here
+\item Your internal process or control-related description goes here
+}
+
+\entry
+{mmm yyyy -- mmm yyyy}
+{Your Job Title — Your Area}
+{Company Name, City, Country}
+{
+\item Your transaction or portfolio review description goes here
+\item Your analysis or assessment description goes here
+\item Your documentation or policy alignment description goes here
+\item Your control testing or walkthrough description goes here
+\item Your reporting or stakeholder communication description goes here
+}
+
+\entry
+{mmm yyyy -- mmm yyyy}
+{Your Job Title — Your Area}
+{Company Name, City, Country}
+{
+\item Your technical or analytical task description goes here
+\item Your testing or validation description goes here
+\item Your modelling or reporting support description goes here
+}
+
+\entry
+{mmm yyyy -- mmm yyyy}
+{Your Job Title — Your Area}
+{Company Name, City, Country}
+{
+\item Your support or administrative description goes here
+\item Your combination of work and studies description goes here
+}
+
+\entry
+{mmm yyyy -- mmm yyyy}
+{Your Job Title — Your Area}
+{Company Name, City, Country}
+{
+\item Your data analysis or audit support description goes here
+}
+
+\entry
+{mmm yyyy -- mmm yyyy}
+{Your Job Title}
+{Institution Name, Country}
+{
+\item Your academic or research support description goes here
+}
+
+% ---------- PROFESSIONAL TRAINING ----------
+\cvsection{Professional Training \& Development}
+
+\entry
+{mmm yyyy -- Present}
+{Your Training or Development Title}
+{}
+{
+\item Your learning or upskilling description goes here
+\item Your completed courses or topics description goes here
+\item Your language or additional studies description goes here
+\item Your self-directed practice description goes here
+}
+
+% ---------- EDUCATION ----------
+\cvsection{Education}
+
+\textbf{University or Institution Name}\\
+\textit{Your Degree or Qualification}\\
+Graduated: mmm yyyy\\
+Focus: Your focus area one, focus area two, focus area three
+
+% ---------- SKILLS ----------
+\cvsection{Skills}
+
+\textbf{IT}\\[-2pt]
+Your Skill, Your Skill, Your Skill, Your Skill
+
+\vspace{4pt}
+
+\textbf{Languages}\\[-2pt]
+Your Language, Your Language, Your Language
+
+% ---------- PROJECTS ----------
+\cvsection{Projects (GitHub)}
+
+\textbf{Your Project Title}\\[-2pt]
+Your project description goes here. This text mirrors the original structure and explains purpose, scope and outcome in placeholder form.
+
+GitHub: \href{https://github.com/your-username}{github.com/your-username}
+
+\end{document}

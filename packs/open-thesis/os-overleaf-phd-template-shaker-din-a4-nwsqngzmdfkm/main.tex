@@ -1,0 +1,201 @@
+%%%%%%%%%%%%%%%%%%%% MAIN DOCUMENT SETTINGS %%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt, a4paper, twoside, titlepage, showtrims]{scrbook} % Set fontsize here!
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel} % Set to German
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%% LINE SPACING: 1.3 %%%%%%%%%%%%%%%%%%%%
+\usepackage{setspace}
+\setstretch{1.3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Margins: top=left=right=bottom = 2cm %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Top Margin
+\setlength{\hoffset}{-0.2in}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{0cm}
+% Right Margin
+\setlength{\voffset}{-0.2in}
+\setlength{\topmargin}{0cm}
+\setlength{\marginparsep}{0cm}
+\setlength{\marginparwidth}{2cm}
+\setlength{\headsep}{0.3cm}
+\setlength{\headheight}{0.6cm}
+% Bottom Margin
+\setlength{\textwidth}{16.93cm}
+\setlength{\textheight}{24.8cm} % 29.7cm - 2cm\hoffset - 2cm\unten - 0.3cm\headsep - 0.6cm \headheight
+\setlength{\footskip}{0cm}
+\setlength{\paperheight}{29.7cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% Table of Content %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Level print
+\setcounter{tocdepth}{2} % 0: Just chapters; 1: Sections; 2: Subsections; 3: Subsubsections
+% Add text "Appendix" to table-of-content and change Appendix to German "Inhaltsverzeichnis" %%%%%%%
+\makeatletter
+\g@addto@macro\appendix{%
+  \cleardoublepage
+  \addtocontents{toc}{\protect\contentsline{chapter}{Anhang}{}{}}%
+}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% BOOKMARK: in pdf-file %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[
+  open=false,
+  openlevel=2,
+  atend,
+  numbered
+]{bookmark}
+\bookmarksetup{
+  numbered,
+  addtohook={%
+    \ifnum\bookmarkget{level}>1 %
+      \bookmarksetup{numbered=false}%
+    \fi
+  },
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%% SETTINGS FOR HEADINGS %%%%%%%%%%%%%%%%%%%%%%%%
+% CHAPTER HEADING
+\addtokomafont{chapter}{\LARGE}
+\addtokomafont{chapter}{\rmfamily}
+\addtokomafont{chapter}{\bfseries}
+\renewcommand*{\chapterheadstartvskip}{\vspace*{-1.2cm}}    % Start of Chapter-Heading
+\renewcommand*{\chapterheadendvskip}{\vspace*{12pt}}        % Space after Chapter-Heading
+% SECTION HEADING
+\addtokomafont{section}{\Large}         % Fontsize
+\addtokomafont{section}{\rmfamily}      % Serif
+\addtokomafont{section}{\bfseries}      % Bold
+% SUBSECTION HEADING
+\addtokomafont{subsection}{\large}      % Fontsize
+\addtokomafont{subsection}{\rmfamily}   % Serif
+\addtokomafont{subsection}{\bfseries}   % Bold
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%% SETTINGS FOR HEADER (NO FOOTERS) %%%%%%%%%%%%%%%%%%%%%%%%
+    % Fancy *headers* are only needed on pages after first of chapter.
+    \usepackage{nameref}
+    \usepackage{fancyhdr}
+    \pagestyle{fancy}
+    \renewcommand{\chaptermark}[1]{ \markboth{#1}{} }
+    \fancyhf{}
+    \fancyhead[LO]{\ifnum\value{chapter}>0 \thechapter.\ \fi\leftmark}
+    \fancyhead[RO, LE]{\thepage}
+    \fancyhead[RE]{
+ouppercase{\rightmark}}
+    \fancypagestyle{plain}{
+        \fancyhf{}
+        \fancyfoot[C]{}
+        \renewcommand{\headrulewidth}{0pt}
+    }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%% OTHER USEFUL PACKAGES %%%%%%%%%%%%%%%%%%%%%%%% 
+\usepackage{hyperref}
+%\usepackage{showframe}
+\usepackage{lipsum}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+\title{Title}
+
+
+
+\begin{document}
+
+
+\begin{titlepage}
+    \sffamily
+   \begin{center}
+       \vspace*{1cm}
+
+       \textbf{Thesis Title}
+
+       \vspace{1.5cm}
+        Von der Fakultät für Maschinenbau \\
+        der Technischen Universität Carolo-Wilhelmina zu Braunschweig \\
+        \vspace{0.5cm}
+        zur Erlangung der Würde \\
+        \vspace{0.5cm}
+        einer Doktor-Ingenieurin oder eines Doktor-Ingenieurs (Dr.-lng.) \\
+        \vspace{0.5cm}
+        genehmigte Dissertation
+        
+
+
+       \vfill
+            
+    \begin{flushleft}
+    \begin{tabbing}
+        von: \hspace*{9em} \= Max Mustermann \\
+        geboren in (Geburtsort): \> Neustadt \\ \\
+        eingereicht am: \> 01.01.2021 \\
+        mündliche Prüfung am: \> 01.01.2021 \\ \\
+        Vorsitz: \> Prof. Dr. Max Mustermann\\
+        Gutachter: \>  Prof. Dr. Max Mustermann
+    \end{tabbing}
+    \end{flushleft}
+        \vspace{2.5cm}
+        2021
+        \vspace{1.5cm}
+            
+   \end{center}
+\end{titlepage}
+
+
+\tableofcontents
+
+\chapter{Einleitung}
+\footnote{footnotes working fine}
+\lipsum[3-10]
+
+\chapter{Stand der Technik}
+\footnote{footnotes working fine}
+\lipsum[3-11]
+\section{Unterkapitel}
+\lipsum[3-16]
+\section{Unterkapitel}
+\subsection{Unter-Unterkapitel}
+\lipsum[3-5]
+
+\chapter{Forschungsfrage}
+\lipsum[3]
+\section{Unterkapitel}
+\lipsum[3]
+\subsection{Unter-Unterkapitel}
+\lipsum[3]
+
+\chapter{Material und Methoden}
+\footnote{footnotes working fine}
+\lipsum[3-21]
+\section{Unterkapitel}
+\lipsum[3-21]
+\section{Unterkapitel}
+\subsection{Unter-Unterkapitel}
+
+\chapter{Hauptteil}
+\footnote{footnotes working fine}
+\lipsum[3-21]
+\section{Unterkapitel}
+\lipsum[3-21]
+\section{Unterkapitel}
+\subsection{Unter-Unterkapitel}
+
+\chapter{Zusammenfassung und Fazit}
+\footnote{footnotes working fine}
+\lipsum[3-21]
+\section{Unterkapitel}
+\lipsum[3-21]
+\section{Unterkapitel}
+\subsection{Unter-Unterkapitel}
+
+\appendix
+\chapter{Anhang}
+\chapter{Anhang}
+\section{Unterkapitel}
+\subsection{Unter-Unterkapitel}
+\chapter{Anhang}
+\section{Unterkapitel}
+\subsection{Unter-Unterkapitel}
+
+\end{document}

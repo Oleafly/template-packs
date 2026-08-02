@@ -1,0 +1,323 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{enumitem}
+\usepackage{tabu}
+\usepackage{fixltx2e}
+\usepackage{xcolor}
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%If you want to title your bold things something different just make another thing exactly like this but replace "problem" with the name of the thing you want, like theorem or lemma or whatever
+
+\newenvironment{nscenter}
+ {\parskip=0pt\par\nopagebreak\centering}
+ {\par\noindent\ignorespacesafterend}
+ 
+\def\SPSB#1#2{\rlap{\textsuperscript{\textcolor{black}{#1}}}\SB{#2}}
+
+ 
+\begin{document}
+ %Good resources for looking up how to do stuff:
+%Binary operators: http://www.access2science.com/latex/Binary.html
+%General help: http://en.wikibooks.org/wiki/LaTeX/Mathematics
+ 
+\title{Math 310 Homework 4}
+\author{Jacob Shiohira}
+\maketitle
+
+\noindent
+\textit{Note:} This homework took a total of 6 hours. I initially did it alone, but I did review with Jacob Warner.
+
+\begin{problem}{1}
+Which of the following numbers are prime? \\
+
+\noindent
+\textit{Note:} Theorem 1.10 says let $n > 1$. If $n$ has no positive prime factor less than or equal to $\sqrt{n}$, then $n$ is prime.
+
+\begin{center}
+\begin{enumerate}[label=(\alph*)]
+\item 701 - According to Theorem 1.10, $n > 1$ and $\sqrt{701} \approx 26.4764$. Then, $2,3,5,7,11,13,17,19,23$ are all the prime numbers less than $\sqrt{701}$ but none are factors of $701$. Thus, $701$ is prime. 
+
+\item 1009 - According to Theorem 1.10, $n > 1$ and $\sqrt{1009} \approx 31.7648$. Then, $2,3,5,7,11,13,17,19,23,$ \\
+$29,31$ are all the prime numbers less than $\sqrt{1009}$ but none are factors of $1009$. Thus, $1009$ is prime. 
+
+\item 1949 - According to Theorem 1.10, $n > 1$ and $\sqrt{1949} \approx 44.1475$. Then, $2,3,5,7,11,13,17,19,23,$ \\
+$29,31,37,41,43$ are all the prime numbers less than $\sqrt{1949}$ but none are factors of $1949$. Thus, $1949$ is prime. 
+
+\item 1951- According to Theorem 1.10, $n > 1$ and $\sqrt{1951} \approx 44.1701$. Then, $2,3,5,7,11,13,17,19,23,$ \\
+$29,31,37,41,43$ are all the prime numbers less than $\sqrt{1951}$ but none are factors of $1951$. Thus, $1951$ is prime. 
+
+\end{enumerate}
+\end{center}
+\end{problem}
+
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+
+\begin{problem}{2}
+Let $p$ be an integer other than $0, \pm 1$ with this property: Whenever $b$ and $c$ are integers such that $p|bc$, then $p|b$ or $p|c$. Prove that $p$ is prime. [$Hint:$ If $d$ is a divisor of $p$, say $p=dt$, then $p|d$ or $p|t$. Show that this implies $d= \pm p$ or $d= \pm 1$. \\
+
+\noindent
+Consider $p \in \Z$, $p \neq 0, \pm 1$. Assume that there are integers $b$ and $c$ such that $p|bc$, and therefore, $p|b$ or $p|c$. We then want to show that $p$ is a prime number. Consider $p>1$, and remember that $p$ is said to be prime if and only if $-p$ is prime. Suppose there exist integers $d, t$ such that $p=dt$, 
+
+\begin{center} 
+$0<d \leq p$ and $0<t \leq p$.
+\end{center}
+
+\noindent
+By assumption $p|d$ or $p|t$. Thus, $d=p$ and $t=1$ or $d=1$ and $t=p$. \\
+
+\noindent
+This then implies that the only positive divisors of $p$ are $1$ and $p$; therefore, the only divisors of $p$ are $\pm 1$ and $\pm p$. So, $p$ is prime. \qedsymbol
+\end{problem}
+
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+
+\begin{problem}{3}
+Prove that $(a,b)=1$ if and only if there is no prime $p$ such that $p|a$ and $p|b$. \\
+
+\noindent
+Let $a,b,p \in \Z$, $p \neq 0, \pm 1$. Since the proposition features a biconditional, the proof proceeds into the following cases
+
+\begin{center}
+\begin{enumerate}
+\item If $(a,b)=1$, then there is no prime $p$ such that $p|a$ and $p|b$.
+\item If there is no prime $p$ such that $p|a$ and $p|b$, then $(a,b)=1$.
+\end{enumerate}
+\end{center}
+
+\noindent
+We will proceed with two following cases by assuming the "if" part of the statement is true and trying to deduce the "then" part of the statement. \\
+
+\noindent
+\textbf{Case I} If $(a,b)=1$, then there is no prime $p$ such that $p|a$ and $p|b$. \\
+
+\noindent
+Suppose $(a,b)=1$. We then want to show that there is no prime $p$ such that $p|a$ and $p|b$. We say $a$ and $b$ are relatively prime since the gcd$(a,b)=1$. By definition, $1$ is the largest integer that divides both $a$ and $b$. Assume that $p|(a,b)$ and therefore $p|1$. However, it was said that $p \neq 0, \pm 1$ and thus $p>1$. Therefore, there is no prime $p$ such that $p|a$ and $p|b$. \\
+
+\noindent
+\textbf{Case II} If there is no prime $p$ such that $p|a$ and $p|b$, then $(a,b)=1$. \\
+
+\noindent
+We move forward with proof by contrapositive. Suppose there is no prime $p$ such that $p|a$ and $p|b$. We then want to show that $(a,b)=1$. Assume there exists an integer $c$ such that $c|a$ and $c|b$. Then, we know $c|p$. Well, we know that $p \geq 2$ but that $p$ does not divide $a$ and $p$ does not divide $b$. So, by assumption of $p>1$ and by requirement of gcd, $0<c<p$, where $p>1$. Thus, $c$ must equal $1$ where gcd$(a,b)=1$.
+
+\end{problem}
+
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+
+\begin{problem}{4}
+Prove that $a|b$ if and only if $a^2|b^2$. [$Hint:$ Exercise 19] \\
+
+\noindent
+Let $a,b \in \Z$. Since the proposition features a biconditional, the proof proceeds in the following cases
+
+\begin{center}
+\begin{enumerate}
+\item If $a|b$, then $a^2|b^2$,
+\item If $a^2|b^2$, then $a|b$.
+\end{enumerate}
+\end{center}
+
+\noindent
+We will proceed with two following cases by assuming the "if" part of the statement is true and trying to deduce the "then" part of the statement. \\
+
+\noindent
+\textbf{Case I} If $a|b$, then $a^2|b^2$. \\
+
+\noindent
+Assume $a|b$. By the definition of divisibility, $b=ak$ for some $k \in \Z$. Then, if both sides are squared, we get
+
+\begin{align*}
+b^2 & = (ak)^2 \\
+& = a^2k^2
+\end{align*}
+
+\noindent
+We get the most recent result because multiplication is distributive. Further, since the integers are closed under multiplication and addition, we know that $k^2$ also results in an integer. So, again by the definition of divisibility, $a^2|b^2$. \\
+
+\noindent
+\textbf{Case II} If $a^2|b^2$, then $a|b$. \\
+
+\noindent
+By the fundamental theorem of arithmetic,
+
+\begin{center}
+\begin{tabular}{cc}
+ $a=p^{r_1}_1p^{r_2}_2 \cdot \cdot \cdot p^{r_k}_k$ & $b=p^{s_1}_1p^{s_2}_2 \cdot \cdot \cdot p^{s_k}_k$ \\
+\end{tabular}
+\end{center}
+
+\noindent
+where $p^{r_1}_1p^{r_2}_2 \cdot \cdot \cdot p^{r_k}_k$ and $b=p^{s_1}_1p^{s_2}_2 \cdot \cdot \cdot p^{s_k}_k$ are positive, distinct primes and $r_i, s_i \geq 0$. From \textit{Exercise 19}, we know $a|b$ if $r_i \leq s_i$ for all $i$. So, it follows that $a^2=p^{2r_1}_1p^{2r_2}_2 \cdot \cdot \cdot p^{2r_k}_k$ and $b^2=p^{2s_1}_1p^{2s_2}_2 \cdot \cdot \cdot p^{2s_k}_k$. Since we assumed that $a^2|b^2$, then, we see that $2r_i \leq 2s_i$ for all $i$ (again, Exercise 19). By dividing by $2$ on both sides, we see that $r_i \leq s_i$ follows for all $i$. Thus, $a|b$. \\
+
+\noindent
+We have seen that $a|b \Longrightarrow a^2|b^2$ from Case I and $a^2|b^2 \Longrightarrow a|b$ from Case II. Thus, by combining those two results, we get that $a|b$ if and only if $a^2|b^2$. \qedsymbol
+\end{problem}
+
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+
+\begin{problem}{5}
+Prove that for all  $n \geq 1$, 
+
+\begin{center}
+$\sum\limits_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}$.
+\end{center}
+
+\noindent
+We will proceed using induction. First, we will show that the proposition holds for the base case ($n=1$) and then see that the proposition holds for all $n$. \\
+
+\noindent
+\textbf{Base Case}: $n=1$ \\
+
+\noindent
+The sum of $i$ from $1$ to $1$ is in fact just $1$. Additionally, by plugging into the right hand side of the equation, we get 
+
+\begin{center}
+$\frac{1(2)(3)}{6}=1$.
+\end{center}
+
+\noindent
+Thus, the proposition holds for the base case. \\
+
+\noindent
+\textbf{Inductive Case}: For $m>1$ and $1 \leq k \leq m$, suppose \\
+\begin{center}
+$\sum\limits_{i=1}^k i^2 = \frac{k(k+1)(2k+1)}{6}$.
+\end{center}
+
+\noindent
+Then, for $m+1$, we want to show that $\sum\limits_{i=1}^{m+1} i^2 = \frac{(m+1)(m+2)(2m+3)}{6}=\frac{2m^3+9m^2+13m+6}{6}$. Well, 
+
+\begin{equation}
+\sum\limits_{i=1}^{m+1} i^2 = [1^2 + 2^2 + ... + m^2] + (m+1)^2.
+\end{equation}
+
+\noindent
+Thus, by using the inductive hypothesis, we get
+\begin{align*}
+\sum\limits_{i=1}^{m+1} i^2 & = \sum\limits_{i=1}^{m} i^2 + (m+1)^2 \\
+& = \frac{m(m+1)(2m+1)}{6} + (m+1)^2 \\
+& = \frac{2m^3+3m^2+m}{6} + \frac{6(m^2+2m+1)}{6} \\
+& = \frac{(2m^3+3m^2+m)+(6m^2+12m+6)}{6} \\
+& =\frac{2m^3+9m^2+13m+6}{6}.
+\end{align*}
+
+\noindent
+The proposition holds for all $1 \leq k \leq m+1$, so the proposition must hold for all $n$. \qedsymbol
+
+\end{problem}
+
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+
+\begin{problem}{6}
+\noindent
+Use induction to prove that for all $n \geq 1$,
+\begin{center}
+$\frac{d}{dx}(x^n)=nx^{n-1}$.
+\end{center}
+
+\noindent
+(Use the fact that $\frac{d}{dx}(x)=1$ and the product rule $\frac{d}{dx}(fg)=f\frac{dg}{dx}+g\frac{df}{dx}$.) \\
+
+\noindent
+We will proceed using induction. First, we will show that the proposition holds for the base case ($n=1$) and then see that the proposition holds for all $n$. \\
+
+\noindent
+\textbf{Base Case}: $n=1$ \\
+
+\noindent
+Remember that we are using the fact that $\frac{d}{dx}(x)=1$, which proves the left side of the equation holds. Then, we look at the right side of the equation,
+
+\begin{center}
+$1x^{1-1}=1x^0=1$.
+\end{center}
+
+\noindent
+Thus, the proposition holds for the base case $n=1$. \\
+
+\noindent
+\textbf{Inductive Case}: For $m>1$ and $1 \leq k \leq m$, suppose \\
+\begin{center}
+$\frac{d}{dx}(x^k)=kx^{k-1}$.
+\end{center}
+
+\noindent
+Then, we want to show that for $m+1$, $\frac{d}{dx}(x^{m+1})=\frac{d}{dx}(x^mx^1)$. We will now utilize the product rule, as stated above. 
+
+\begin{align*}
+\frac{d}{dx}(x^mx) & =x^m\frac{dx}{dx} + \frac{d}{dx}(x^m)x. \\
+\end{align*}
+\noindent
+By using the inductive hypothesis,
+
+\begin{align*}
+\frac{d}{dx}(x^mx) & =x^m\frac{d}{dx} + \frac{d}{dx}(x^m)x \\
+& =x^m1 + (mx^{m-1})x \\
+& =x^m + mx^{m-1+1} \\
+& =(1+m)x^{m} \\
+& =(m+1)x^{(m+1)-1}
+\end{align*}
+
+\noindent
+The proposition holds for all $1 \leq k \leq m+1$, so the proposition must hold for all $n$. \qedsymbol
+\end{problem}
+
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+
+
+\begin{problem}{7}
+Prove or disprove: If $n$ is an integer and $n>2$, then there exists a prime $p$ such that $n<p<n!$. \\
+
+\noindent
+Suppose $n$ is an integer and $n>2$. We then want to show that there exists a prime $p$ such that $n<p<n!$. We are trying to prove a property for all $n$, thus we will proceed by induction. \\
+
+\noindent
+\textit{Base Case} Since we assumed $n>2$, our base case is represented by $n=3$. For $n=3$, we need to find a prime $p$ such that $3<p<3 \cdot 2 \cdot 1=3!=6$. Well, $5$ is a prime integer that satisfies the inequality. Thus, the proposition holds for the base case of $n=3$. \\
+
+\noindent
+\textit{Inductive Step} Suppose $m \geq 3$ and for all $3 \leq k \leq m$, there exists a prime $p$ that satisfies $k<p<k!$. We then want to show that the proposition holds for $m+1$ by showing there exists a prime $p$ such that $(m+1)<p<(m+1)!$.
+
+\begin{align*}
+(m+1) & < (m+1)! \\
+(m+1) & < (m+1)m! \\
+1 & < m!
+\end{align*}
+
+\noindent
+The proposition holds for all $3 \leq k \leq m+1$, so the proposition must hold for all $n$. \qedsymbol
+ \end{problem}
+
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+% ================================================================================================
+
+\end{document} 

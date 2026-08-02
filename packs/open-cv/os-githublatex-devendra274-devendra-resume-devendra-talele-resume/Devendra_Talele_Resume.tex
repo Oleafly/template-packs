@@ -1,0 +1,418 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=1.5 cm, % seperation between body and page edge from the top
+    bottom=1 cm, % seperation between body and page edge from the bottom
+    left=2 cm, % seperation between body and page edge from the left
+    right=2 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 0, 0} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={John Doe's CV},
+    pdfauthor={John Doe},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage{charter}
+
+% Some settings:
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\pagenumbering{gobble} % no page numbering
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0 cm + 0.00001 cm
+    }{
+        0 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{0.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+    \put(
+        \LenToUnit{\paperwidth-2 cm-0 cm+0.05cm},
+        \LenToUnit{\paperheight-1.0 cm}
+    ){\vtop{{\null}\makebox[0pt][c]{
+        \small\color{gray}\textit{Last updated in September 2024}\hspace{\widthof{Last updated in September 2024}}
+    }}}%
+  }%
+}%
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{$|$}
+
+    \begin{header}
+        \fontsize{25 pt}{25 pt}\selectfont {\hrefWithoutArrow{https://github.com/Devendra274/devendra-resume}{Devendra Talele}}
+
+        \vspace{7 pt}
+
+        \normalsize
+        \mbox{Pune, Maharashtra}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{mailto:devendra.talele95@gmail.com}{devendra.talele95@gmail.com}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{tel:+91-846-945-51-43}{8469455143}}\\%
+
+        \vspace{3 pt}
+
+        \mbox{\hrefWithoutArrow{https://www.linkedin.com/in/devendra-talele}{linkedin.com/in/devendra-talele}}%
+        \kern 5.0 pt%
+        \AND%
+        \kern 5.0 pt%
+        \mbox{\hrefWithoutArrow{https://github.com/Devendra274}{github.com/Devendra274}}%
+    \end{header}
+
+    \vspace{5 pt - 0.3 cm}
+
+    \section{Technical Skills}
+        
+        \begin{onecolentry}
+            \textbf{Languages:} Java 8/17/21, Python Scripting, SQL
+        \end{onecolentry}
+
+        \vspace{0.15 cm}
+
+        \begin{onecolentry}
+            \textbf{Frameworks:} RESTful APIs, SpringBoot, Spring Data JPA, Hibernate, Spring Cloud, Microservices, OpenAPI
+        \end{onecolentry}
+
+        \vspace{0.15 cm}
+
+        \begin{onecolentry}
+            \textbf{Database/Cache:} MySQL, SQL Server, Oracle SQL Developer, Hazelcast Cache
+        \end{onecolentry}
+
+        \vspace{0.15 cm}
+
+        \begin{onecolentry}
+            \textbf{Testing:} JUnit, Mockito, WireMock, REST Assured, JaCoCo, Karate (Integration Testing), PITest (Mutation Testing)
+        \end{onecolentry}
+
+        \vspace{0.15 cm}
+
+        \begin{onecolentry}
+            \textbf{GCP Cloud:} Cloud Function, Cloud Storage, Cloud SQL, Cloud Scheduler, Compute Engine, Cloud Pub/Sub, Container Registry, GKE (Google Kubernetes Engine)
+        \end{onecolentry}
+
+        \vspace{0.15 cm}
+
+        \begin{onecolentry}
+            \textbf{CI/CD Tools:} Jenkins, Ansible, SonarQube
+        \end{onecolentry}
+
+        \vspace{0.15 cm}
+
+        \begin{onecolentry}
+            \textbf{Containers Tools:} Docker, Kubernetes
+        \end{onecolentry}
+
+        \vspace{0.15 cm}
+
+        \begin{onecolentry}
+            \textbf{Others:} Maven, JFrog Artifactory, HTTP Client, IntelliJ, JIRA, Linux
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+        
+    
+    \section{Professional Experience \hspace{0.3 cm} 5 years 4 months}
+        
+        \begin{twocolentry}{
+            Mar 2025 – Present
+        }
+            \textbf{Senior Software Engineer}, EPAM Systems -- Pune, MH\end{twocolentry}
+        \textbf{Client:} Mastercard
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Contributing as java full-stack backend engineer towards platform modernization for payment instrument in financial services domain.
+                \item Developed a core payments module that securely enrolls customer cards, implementing advanced encryption techniques to protect sensitive data.
+                \item Managed the development of an orphan scheduler to safely and permanently purge millions of orphaned cards whose retention timestamp has surpassed the specified time and ensuring strict compliance with data retention policies for India on-soil cards.
+                \item Leveraged modern testing frameworks to build a comprehensive suite of automated integration tests using the Karate framework, achieving end-to-end API coverage. Validated data integrity by performing direct database assertions, ensuring system reliability and adherence to business logic.
+                \item Accelerated development workflows by leveraging AI-powered coding assistants and modern IDE features.
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.35 cm}
+
+        \begin{twocolentry}{
+            Nov 2021 – Mar 2025
+        }
+            \textbf{Senior Software Engineer}, LTIMindtree -- Pune, MH\end{twocolentry}
+        \textbf{Client:} Nordea Bank Abp
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Fund Distribution Platform [FDP] is a robust Wealth \& Asset Management platform supporting high-volume, low- latency trading across multiple asset classes, including stocks, bonds, currencies, and commodities, with key components like Trade Order Management, Market Data Feed, and Risk Management.
+                \item Experienced on event driven architecture and microservices pattern like Strangler, Service Registry and Discovery, Circuit Breaker, SAGA, CQRS.
+                \item Designed and implemented high-performance RESTful APIs using Spring Boot and OpenAPI specifications, reducing development time and improving startup time, enhancing overall system efficiency.
+                \item Migrated a legacy monolith to modern microservices (Java 21/Spring Boot 3.3) using the Strangler Fig Pattern.
+                \item Optimized core backend microservices and enhanced system observability with structured logging in Spring Boot, improving throughput, adding diagnostics, and reducing downtime by 30\% through proactive bug resolution.
+                \item Built a Caching Service to boost system efficiency by 25\%, improving client satisfaction by 15%.
+                \item Improved code quality and reduced vulnerabilities by implementing SonarQube for continuous code analysis.
+                \item Executed PoC/analysis and developments over complex solutions for the business.
+                \item Integrated Distributed Request Tracing in microservices using Spring Boot 3, Micrometer Tracing and Splunk which enabled seamless monitoring, debugging, and enhanced the effectiveness of inter-service communication.
+                \item Maintained comprehensive Unit Testing with Junit, Mockito, WireMock and Integration Tests with REST-Assured, achieving 95\% code coverage and a 40\% reduction in post-release defects.
+                \item Streamlined CI/CD processes by implementing a Jenkins pipeline, simplifying build and deployment workflows for high- throughput and low-latency applications.
+                \item Developments and L3 Support for an Investment Banking product.
+                \item Received recognition twice from the Engineering Manager for consistent contribution and improvements delivered for FDP application.
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.35 cm}
+
+
+
+        \begin{twocolentry}{
+            Mar 2021 – Nov 2021
+        }
+            \textbf{Software Developer}, IKS Health -- Mumbai, MH\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Contributed to developing Optimix, a Revenue Cycle Management (RCM) platform that automates Accounts Receivable, Billing, Patient Payments, and Pre-authorization tasks and enhancing operational efficiency.
+                \item Implemented secure Authentication and Authorization using Spring Security in API Gateway.
+                \item Integrated GCP Cloud Functions triggered by Cloud Storage events to store document in non-editable and encrypted format.
+                \item Created Cloud Function to transfer data from BigQuery to Cloud SQL for MySQL
+                \item Developed a Python script for bulk data validation on customer CSV files, guaranteeing data accuracy prior to insertion into the database.
+                \item Diagnosed and resolved production issues to maintain system stability and reliability.
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.35 cm}
+
+        \begin{twocolentry}{
+            Aug 2018 – Aug 2019
+        }
+            \textbf{Analyst}, Shree Krishna Engineers -- Vadodara, GJ\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Ticket Master is a monolith workflow management solution application to streamline maintenance operations for manufacturing machines, centralizing processes and automating communication with production managers.
+                \item Defined use cases, requirements to enhance design and implement RESTful APIs using Java 8, Spring Boot and Unit Tests with JUnit.
+
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+        
+
+    \section{Projects}
+
+        \begin{onecolentry}
+            \textbf{Project Management System}
+        \end{onecolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Architected PMS, a secure web application for project, tasks and session management.
+                \item Implemented user authentication and authorization using Spring Security and JWT for secure access.
+                \item Integrated Swagger for API interaction and documentation, enhancing development transparency and usability.
+                \item Tracked the entire project life cycle and held accountable for work being accomplished by each team.
+                \item \textbf{Tools Used:} Java 8, Spring Boot, JPA, JUnit, MySQL
+                \item \textbf{GitHub Link:} \href{https://github.com/Devendra274/Project_Management_System}{github.com/Devendra274/Project-Management-System}
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.3 cm}
+
+        \begin{onecolentry}
+            \textbf{PDF to Image Converter}
+        \end{onecolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Protected sensitive file information through the implementation of the AES-256 encryption algorithm.
+                \item Stored encrypted files in Google Cloud Storage, triggering Cloud Functions to convert PDFs into individual images in another bucket.
+                \item \textbf{Tools Used:} Python, GCP Cloud Function, GCP Cloud Storage
+                \item \textbf{GitHub Link:} \href{https://github.com/Devendra274/PDF_To_Image_Converter}{github.com/Devendra274/PDF-To-Image-Converter}
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.3 cm}
+
+        \begin{onecolentry}
+            \textbf{Document Parser}
+        \end{onecolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Developed a File Parser to extract key-value entities from scanned patient forms with over 75\% accuracy, saving them as JSON, validating the data, and generating reports.
+                \item \textbf{Tools Used:} Python, Google Cloud Platform, Document AI
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+    
+    \section{Education}
+        
+        \begin{twocolentry}{
+            Jan 2020 – Jan 2021
+        }
+        \textbf{CDAC ACTS}, PG Diploma in Advance Computing (PG-DAC), Pune, MH \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Grade: A 
+            \end{highlights}
+
+        \end{onecolentry}
+
+        \vspace{0.20 cm}
+
+        \begin{twocolentry}{
+            Jun 2012 – Jun 2016
+        }
+            \textbf{Babaria Institute of Technology (GTU)}, Bachelor of Engineering, Vadodara, GJ\end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item CGPA: 7.72 
+            \end{highlights}
+            
+        \end{onecolentry}
+
+    
+
+\end{document}

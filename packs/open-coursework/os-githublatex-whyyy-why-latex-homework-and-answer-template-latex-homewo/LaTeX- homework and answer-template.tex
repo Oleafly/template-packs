@@ -1,0 +1,140 @@
+\documentclass{article}
+\usepackage[UTF8]{ctex}   %中文
+\ctexset{
+	proofname = \heiti{证明}
+}
+\usepackage{moreenum}
+\usepackage{mathtools}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{amsmath,amsthm}
+\usepackage{booktabs}
+\usepackage{fancyhdr} % 页眉页脚
+\usepackage{lastpage} % 获得总页数
+
+\raggedright % 防止右边界越界
+
+% 首行缩进设置
+\usepackage{indentfirst}
+\usepackage{amssymb}
+\setlength{\parindent}{0em}  %不缩进
+
+%页眉页脚
+\pagestyle{fancy}
+\lhead{}                     %页眉左   
+\chead{\bfseries 数理方程B}  %中                      
+\rhead{\small\leftmark}     %右                           
+\cfoot{\thepage\ of \pageref{LastPage}}   %当前页面of总页码
+\rfoot{}                                             \lfoot{}                                             
+\renewcommand{\headrulewidth}{0.5pt}%改为0pt即可去掉页眉下面的横线
+%\setlength{\skip\footins}{0.5cm}    %脚注与正文的距离           
+%\renewcommand{\footnotesize}{}      %设置脚注字体大小           
+\renewcommand{\footrulewidth}{0pt}  %脚注线的宽度  
+
+
+% 封面
+\title{\textbf{\underline{数理方程 作业1}}} %标题
+\date{}              %日期 为空则不写日期 否则自动
+\author{}            %作者
+
+
+% 正文
+
+\begin{document}
+	\large
+	\maketitle
+	%题目
+	\paragraph{5.}{\scriptsize \large 证明：\[u = f(x,y)\]满足方程 }           	
+	 \large  \[ xu_x-yu_y=0 \]
+	 
+	%证明
+    \begin{proof}
+ 	\begin{equation}
+	\large
+	\begin{aligned}
+	 u_x&=yf'(xy) \\
+	   u_y&=xf'(xy) \\
+	 \therefore xu_x &-yu_y=0 \\
+	 \end{aligned}
+	\end{equation}
+   \end{proof}
+	
+  %下一题
+
+	\paragraph{6.}{\large 设u=u(x,y,z),求下列方程的通解:}\\
+
+	{\large \  (1) $ u_y + a(x,y)u = 0 $;}\\
+	{\large \ (2) $ u_{xy} + u_y  = 0 $;  }\\
+% 	{\large \ (3)$  u_{tt}= a^{2}u_{xx} + 3x^{2}$  (设$u=u(x,t)  $).	}\\
+	~\\
+
+解：\large (1)由方程,
+\begin{flushleft}
+	$\begin{aligned}
+	\frac{{\partial u}}{{\partial y}} &=  - au\\
+	\frac{1}{u}\frac{{\partial u}}{{\partial y}} &=  - a\\
+    \frac{\partial }{{\partial y}}\ln |u| &=  - a\\
+	\ln|u|& = \int 
+	{\frac{\partial }{{\partial {\rm{y}}}}\ln udy + \varphi (x) =  - \int {a(x,y)dy} }  + \varphi (x)\\
+	&u =  \pm f(x)\exp \{  - \int {a(x,y)dy} \} .其中f(x) = {e^{\varphi (x)}}
+	\end{aligned}$		
+	\end{flushleft}
+
+
+~\\
+(2)\setlength{\parindent}{2em}
+ \large
+  
+   令 $ p(x,y) = {u_y}(x,y)$,则	\\
+	
+	$\begin{aligned}
+	 &{p_x} + p = 0\\
+     &\therefore {(\ln|p|)_x} =  - 1\\
+     &\therefore p = \varphi (y){e^{ - x}}\\
+     &\therefore {u_y} = \varphi (y){e^{ - x}}\\
+     &\therefore	 u = f(y){e^{ - x}} + g(x) \\
+     \end{aligned}$
+
+	\paragraph{7.}
+	{\large 设有一根具有绝热的侧表面的均匀细杆, 它的初始温度为$ \varphi(x) $, 两端满足下列边界条件之一:\\
+		(1)	一端 (x = 0) 绝热, 另一端 (x = l) 保持常温$ u_0 $; \\
+		(2)	两端分别有恒定的热流密度 $ q_1  $ 及$  q_2  $进入;\\
+		(3)	一端 (x = 0) 温度为$  \mu(t) $, 另一端 (x = l) 与温度为 $ \theta(t)  $的介质有热交换,\\
+		试分别写出上述三种热过程的定解问题.\\
+	}
+~\\
+     \setlength{\parindent}{0em}
+     解：\large
+     泛定方程为:$ 	{u_t} = {a^2}{u_{xx}} $\\
+     \setlength{\parindent}{2em}
+     初始条件为:$ 	u(0,x) = \varphi (x) $\\
+     边界条件分别为：\\
+
+	$	\begin{aligned}
+     (1)&{u_x}(t,0) = 0,{u_x}(t,l) = {u_0}\\
+     (2)&{u_x}(t,0) =  - \frac{{{q_1}}}{k},{u_x}(t,l) = \frac{{{q_2}}}{k}\\
+     (3)&u(t,0) = \mu (t),(k{u_x} + hu){|_{x = l}} = h(l)\theta (t)
+	\end{aligned}$
+~\\
+   \paragraph{8.}
+   {\large 一根长为 l 而两端 (x = 0 和 x = l) 固定的弦, 用手把它的中点朝横向拨开距离 h, 然后放手任其自由振动, 试写出此弦振动的定解问题\\	
+   }
+~\\
+   \setlength{\parindent}{0em}
+	解：
+    \large
+    \[
+     \left\{ \begin{array}{l}
+     {u_{tt}} = {a^2}{u_{xx}}\\
+      u(0,x) = \left\{ {\begin{array}{*{20}{l}}
+  	        {\frac{{2h}}{l}x{{\qquad\quad}\text{if}}\ 0 \le x \le \frac{l}{2},}\\
+	        {\frac{{2h}}{l}(l - x) \ \ \ \text{if}\ \frac{l}{2} < x \le l,}
+         	\end{array}} \right.\\
+      {u_t}(0,x) = 0,u(t,0) = u(t,l) = 0
+      \end{array}\right.
+     \]
+
+\end{document}

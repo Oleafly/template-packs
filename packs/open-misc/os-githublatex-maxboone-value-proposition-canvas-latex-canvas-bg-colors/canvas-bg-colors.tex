@@ -1,0 +1,180 @@
+% !TEX program = xelatex
+
+\documentclass{article}
+
+% adapted canvas from the Value Proposition Canvas by Osterwalder
+% (Wiley / Strategyzer)
+% https://www.strategyzer.com/canvas/value-proposition-canvas
+
+\usepackage[a3paper,landscape,margin=0in]{geometry}
+\usepackage[dutch]{babel}
+\usepackage{enumitem}
+\usepackage{fontspec}
+\usepackage{fontawesome5}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\pagenumbering{gobble} % supress page numbers
+
+\usepackage{xcolor}
+\usepackage[outline]{contour}
+
+\usepackage{tikz}
+
+\title{\vspace{-1em}Value Proposition Canvas (Osterwalder)}
+\author{Requirements Engineering, Groep 2}
+\date{
+  \textbf{\color{black!50}Versie:} \today
+}
+
+\usetikzlibrary{shapes,shapes.multipart}
+
+\begin{document}
+
+\maketitle
+
+\centering
+
+\def\layersep{49em}
+\def\layerwidth{49em}
+\linespread{1.5}
+
+\vfill
+
+\makebox[\textwidth][c]{
+  \begin{tikzpicture}
+    
+    % CUSTOMER CIRCLE
+    \begin{scope}[xshift=0.5\textwidth]
+        \def\R{0.5*\layerwidth}
+
+        \node [
+            circle, 
+            draw, 
+            minimum width=\layerwidth, 
+            outer sep=0,
+            line width=0.4em
+        ] (a) {};
+
+        \draw [line width=.2em] (a.center) -- (60:\R);
+        \draw [->, line width=.2em] (a.center) -- (180:1.2*\R);    
+        \draw [line width=.2em] (a.center) -- (300:\R);
+        
+        % Jobs
+        %\draw[line width=.4em, fill=green!30] (0,0) --  (-60:\R) arc(-60:60:\R) -- cycle;
+        
+        % Gains
+        %\draw[line width=.4em, fill=green!30] (0,0) --  (60:\R) arc(60:180:\R) -- cycle;
+        
+        % Pains
+        %\draw[line width=.4em, fill=green!30] (0,0) --  (180:\R) arc(180:300:\R) -- cycle;
+
+        % Customer Jobs
+        \node [
+            text width=18em,
+            minimum height=24em,
+            text centered
+        ] at (0:\R/2) {
+            \faIcon{tasks} \\
+            {\huge Taken \\}
+            {\large (Customer Jobs)}
+        };
+
+        % Gains
+        \node [
+            text width=21em,
+            text centered,
+            minimum height=20em,
+        ] at (120:\R/2) {
+            \faIcon[regular]{grin-wink} \\
+            {\huge Verbeteringen \\}
+            {\large (Gains)}
+        };
+
+        % Pains
+        \node [
+            text width=21em,
+            text centered,
+            minimum height=20em,
+        ] at (240:\R/2) {
+            \faIcon[regular]{tired} \\
+            {\huge Verslechteringen \\}
+            {\large (Pains)}
+        };
+
+        \node [circle, fill=white] at (0:0) {
+            \huge\faIcon[regular]{smile-beam}%
+        };
+
+    \end{scope}
+
+
+    % GIFT BOX
+    \node [
+        rectangle, 
+        draw, 
+        minimum width=\layerwidth, 
+        minimum height=\layerwidth,
+        outer sep=0,
+        line width=0.4em
+    ] (b) {};
+    
+    % gain creators bg
+    %\node[anchor=north east,draw,line width=.2em,fill=green!30,trapezium,trapezium left angle=-45,trapezium right angle=0,minimum width=0.99*\layerwidth,] at (b.north east) {};
+    
+    % pain relievers bg
+    %\node[anchor=south east,draw,line width=.2em,fill=green!30,trapezium, trapezium left angle=45,trapezium right angle=0,minimum width=0.99*\layerwidth,] at (b.south east) {};
+    
+    % products and services bg
+    %\node[anchor=south,draw,line width=.2em,fill=green!30,regular polygon,regular polygon sides=3,rotate=-90,minimum width=1.15*\layerwidth,yscale=0.58,] at (b.west) {};
+
+    \draw [->, line width=.2em] (b.center) -- (0:0.6*\layerwidth);
+    \draw [line width=.2em] (b.center) -- (135:0.706*\layerwidth);
+    \draw [line width=.2em] (b.center) -- (225:0.706*\layerwidth);
+
+    % Gain Creators
+    \node [ 
+        text width=0.5*\layerwidth,
+        minimum height=0.45*\layerwidth,
+        text centered
+    ] at (45:0.35*\layerwidth) {
+        \faIcon{chart-line} \\
+        {\huge Winstgevers \\}
+        {\large (Gain Creators)}
+    };
+
+    % Products and Services
+    \node [
+        rectangle,
+        anchor=west,
+        text width=0.35*\layerwidth,
+        text centered,
+        minimum height=18em,
+        outer sep=0
+    ] at (180:0.495*\layerwidth) {
+        \faIcon{concierge-bell} \\
+        {\huge Producten~\& \\ diensten} \\
+        {\large (Products and Services)}
+    };
+
+    % Pain Relievers
+    \node [ 
+        text width=0.5*\layerwidth,
+        minimum height=0.45*\layerwidth,
+        text centered
+    ] at (315:0.35*\layerwidth) {
+        \faIcon{capsules} \\ 
+        {\huge Pijnverlichters \\}
+        {\large (Pain Relievers)}
+    };
+
+    \node [circle, fill=white] at (0:0) {
+        \Huge\faIcon{gift}
+    };
+
+  \end{tikzpicture}
+}
+
+\vfill
+
+\end{document}

@@ -1,0 +1,497 @@
+\documentclass[11pt]{article} % 12 point doesn't fit on one page
+\usepackage[paperwidth=8.5in,paperheight=11in,margin=0.45in]{geometry} 
+\usepackage[USenglish]{babel}
+\usepackage{colortbl}
+\usepackage[final]{microtype}
+\usepackage[nodayofweek,level]{datetime} %obsolete--datetime2 is the replacement
+\usepackage{calc}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{ifthen}
+\usepackage{upgreek}
+
+% Use \darkerColor for column headings and \lighterColor for 
+% highlighted text; for other colors, see \usepackage[dvipsnames]{xcolor}
+\newcommand{\darkerColor}{blue!25}
+\newcommand{\lighterColor}{blue!15}
+
+% macros for a.m. and p.m.
+\newcommand\AM{a.m.} %https://www.unk.edu/ccr/news-internal-communication/writing-style-guide.php
+\newcommand\PM{p.m.}
+% no page numbers
+\pagestyle{empty}
+
+% Counter for homework
+\newcounter{hw}\setcounter{hw}{0}
+\newcommand{\hw}{%\
+\setcounter{hw}{\value{hw}+1}
+\textbf{ HW  \thehw}}
+
+% Counter for exams
+\newcounter{ex}\setcounter{ex}{0}
+\newcommand{\ex}{%\
+\setcounter{ex}{\value{ex}+1}
+\textbf{ \cellcolor{\lighterColor} Exam \theex}}
+
+% Counter for weeks
+\newcounter{wk}\setcounter{wk}{0}
+\newcommand{\wk}{%\
+\setcounter{wk}{\value{wk}+1}
+\thewk \,\,}
+
+% Format a holiday
+\newcommand{\holiday}[1]{\textbf{No class} (#1)}
+
+% see https://www.unk.edu/ccr/marketing-advertising/branding-and-identity-marks/typefaces.php
+% see also https://tug.org/FontCatalogue/utopia-fouriermath/
+\usepackage{fourier}
+\usepackage[T1]{fontenc}
+
+% see https://tex.stackexchange.com/questions/325133/advdate-in-tables-does-not-advance-date-correctly
+% see also  https://pastebin.com/raw/7pVPQweM
+% see https://tex.stackexchange.com/questions/236193/equivalent-of-newdateformat-in-datetime2
+% apparently datetime has been replaced....
+\usepackage{advdate}
+\newdateformat{mydate}{\THEDAY\ \shortmonthname[\THEMONTH]}
+\makeatletter
+\renewcommand\AdvanceDate[1][\@ne]{%
+  \global\advance\day#1 \FixDate
+  \global\advance\day\z@
+  \global\advance\month\z@
+  \global\advance\year\z@}
+\makeatother
+
+%nweek: format the first week of the term--it does advance the date
+%mweek  format the a class day with out a date or a horizontal line
+%eweek  format the last class day of a week (draws a horizontal line)
+\newcommand{\nweek}[3]{\wk & \mydate\today  &  #1 & #2 & #3 \AdvanceDate[2] \\}
+\newcommand{\mweek}[3]{ &  & #1 & #2 & #3 \AdvanceDate[2]  \\}
+\newcommand{\eweek}[3]{ &  & #1 & #2 & #3 \AdvanceDate[3] \\ \hline}
+
+% Print the heading for the course calendar heading
+\newcommand{\tablehead}[5]
+{\textbf{\cellcolor{\darkerColor}{#1}} & 
+ \textbf{\cellcolor{\darkerColor}{#2}} & 
+ \textbf{\cellcolor{\darkerColor}{#3}} & 
+ \textbf{\cellcolor{\darkerColor}{#4}} & 
+ \textbf{\cellcolor{\darkerColor}{#5}} \\ \hline \hline}
+  
+% Set this to a message for a review day
+\newcommand{\review}{Exam review or catch up}
+
+% Set this to a message for a final review day
+\newcommand{\finalreview}{Final Exam review or catch up}
+
+% Set this to a message about an exam day
+\newcommand{\examday}{\textbf{Exam Day} (\mydate\today)}
+
+% Message about final exam--the argument is the class time down to
+% half hour; so 8:05 --> 800; 9:10 --> 900, and etc.
+\newcommand{\finalExamMWF}[1]{\textbf{Final Exam} \finalMWF{#1}}
+\newcommand{\finalExamTTh}[1]{\textbf{Final Exam} \finalTTh{#1}}
+% Printed at the top of a course calendar--it also resets the ex, hw
+% and wk counters.
+\newcommand{\calendarHead}[2]{%
+  \setcounter{ex}{0}
+  \setcounter{hw}{0}
+  \setcounter{wk}{0}
+  \large
+   \begin{flushleft}
+    \textbf{Class Calendar} \\
+    #1 #2
+  \end{flushleft}
+  \normalsize}
+
+% Final exam day for MWF classes--round class time down to
+% half hour. I think the em-dash is correct; see
+% https://tex.stackexchange.com/questions/3819/dashes-vs-vs 
+  \newcommand{\finalMWF}[1]
+  {
+    \ifthenelse{\equal{#1}{800}}{Monday 8:00 \AM---10:00 \AM}{}
+    \ifthenelse{\equal{#1}{900}}{Wednesday 8:00 \AM---10:00 \AM}{}
+    \ifthenelse{\equal{#1}{1000}}{Monday 10:30 \AM---12:30 \PM}{}
+    \ifthenelse{\equal{#1}{1100}}{Wednesday 10:30 \AM---12:30 \PM}{}
+    \ifthenelse{\equal{#1}{1200}}{Monday 1:00 \PM---3:00 \PM}{}
+    \ifthenelse{\equal{#1}{100}}{Wednesday  1:00 \PM---3:00 \PM}{}
+    \ifthenelse{\equal{#1}{200}}{Monday 3:30 \PM---5:30 \PM}{}
+    \ifthenelse{\equal{#1}{300}}{Wednesday 3:30 \PM---5:30 \PM}{}
+    \ifthenelse{\equal{#1}{400}}{Tuesday 3:30 \PM---5:30 \PM}{}
+  }
+
+  \newcommand{\finalTTh}[1]
+  {
+    \ifthenelse{\equal{#1}{800}}{Tuesday 8:00 \AM---10:00 \AM}{}
+    \ifthenelse{\equal{#1}{930}}{Thursday 8:00 \AM---10:00 \AM}{}
+    \ifthenelse{\equal{#1}{1100}}{Tuesday 10:30 \AM---12:30 \PM}{}
+    \ifthenelse{\equal{#1}{1230}}{Thursday 10:30 \AM---12:30 \PM}{}
+    \ifthenelse{\equal{#1}{200}}{Tuesday 1:00 \PM---3:00 \PM}{}
+    \ifthenelse{\equal{#1}{330}}{Thursday 1:00 \PM---3:00 \PM}{}
+  }
+
+\begin{document}
+
+\begin{flushleft}
+\large
+\textbf{Course Calendar for MATH 102} \\
+\normalsize
+Academic years 2023--2024 and 2024--2025
+\end{flushleft}
+
+\noindent In spring 2023, the ad hoc MATH 102 Standardization Committee (Emily, Paul, Nathan, Patty, Derek,
+and Barton (chair)) selected a new MATH 102 textbook and constructed a course calendar for the new textbook. The course 
+calendar is a modified calendar written by Paul.
+
+The textbook and the course calendar was approved by the department on 11 April 2023. 
+The calendars for terms following fall 2023 were appended after approval,
+but these calendars differ only in starting dates and such.  Notes:
+
+\begin{itemize}
+
+\item Our aim is to build a reasonably paced course calendar that
+be followed without rushing through last handful of
+sections. 
+
+\item Some sections are marked for two class periods. We might be
+mistaken about which sections need more time, but at least those
+sections that span two class periods provide the schedule with
+buffers. 
+
+\item Course instructors should meet toward the end of each term 
+and to make needed tweaks to the calendar.
+
+\item The textbook is \emph{College Algebra}, Version $\lfloor \uppi \rfloor$,
+Corrected Edition, by Carl Stitz and Jeff Zeager.
+
+\item The plan is to use this textbook and  course calendar (possibly tweaked) 
+for AY  2023--2024 and AY 2024--2025.
+
+\item This calendar has four midterm examinations and weekly homework 
+ assignments, but instructors are free to modify the course 
+ assessments both in number and type.
+
+\item Each week of the calendar is spread over three rows, making the calendar natural
+ for a MWF class and a bit less natural for a TTh section.
+
+\item These calendars were made using automatic date arithmetic in La\TeX.
+There is also a feature that given the course time, it automatically
+looks up the correct final exam day. 
+
+\item If you are a La\TeX\/ user and would like to modify the class
+calendar, Barton will try to answer your questions.
+
+
+\end{itemize}
+\vfill
+\newpage
+ % Set to first day of the term--correct for fall 2023
+\SetDate[21/08/2023] 
+\calendarHead{Fall}{2023}
+
+\begin{center}
+\begin{tabular}  {|l|l|l|l|l|}
+\hline
+\tablehead{Week}{Week of}{Sections}{Topics}{Assessments}
+% Week one
+\nweek{1.1}{Sets of Real Numbers and the Cartesian Coordinate Plane}{}
+\mweek{1.2}{Relations}{}
+\eweek{1.3}{Introduction to Functions}{\hw}
+% Week 2
+\nweek{1.4}{Function Notation}{}
+\mweek{1.5}{Function Arithmetic}{}
+\eweek{1.6}{Graphs of Functions}{\hw}
+% Week 3
+\nweek{}{ \holiday{Labor Day}}{} 
+\mweek{1.7}{Transformations}{}
+\eweek{2.1}{Linear Functions}{\hw}
+% Week 4
+\nweek{2.2}{Absolute Value Functions}{}
+\mweek{1.1---2.2}{\review}{}
+\eweek{}{\examday}{\ex}
+% Week 5
+ \nweek{2.3}{Quadratic Functions}{}
+ \mweek{2.4}{ Inequalities with Absolute Value and Quadratic Functions}{}
+ \eweek{2.4}{Inequalities with Absolute Value and Quadratic Functions}{\hw}
+ % Week 6
+\nweek{3.1}{Graphs of Polynomials}{}
+\mweek{3.2}{The Factor Theorem and the Remainder Theorem}{}
+\eweek{3.3}{Real Zeros of Polynomials}{\hw}
+%Week 7
+\nweek{4.1}{Introduction to Rational Functions}{}
+\mweek{4.2}{Graphs of Rational Functions}{}
+\eweek{4.3}{Rational Inequalities and Applications}{\hw}
+% Week 8
+\nweek{4.3}{Rational Inequalities and Applications}{}
+\mweek{2.3---4.3}{\review}{}
+\eweek{}{\examday}{\ex}
+% Week 9
+\nweek{}{\holiday{Fall Break}}{}   
+\mweek{5.1}{Function Composition}{}
+\eweek{5.2}{Inverse Functions}{\hw}
+% Week 10
+\nweek{6.1}{Introduction to Exponential and Logarithmic Functions}{}
+ \mweek{6.1}{Introduction to Exponential and Logarithmic Functions}{}
+\eweek{6.2}{Properties of Logarithms}{\hw}
+% Week 11
+\nweek{6.2}{Properties of Logarithms}{}
+ \mweek{6.3}{Exponential Equations and Inequalities}{}
+  \eweek{6.4}{Logarithmic Equations and Inequalities}{\hw}
+  % Week 12
+  \nweek{5.1---6.4}{\review}{}
+  \mweek{}{\examday}{\ex}
+ \eweek{6.5}{Applications of Exponential and Logarithmic Functions}{}
+ % Week 13
+\nweek{6.5}{Applications of Exponential and Logarithmic Functions}{}
+\mweek{8.1}{Systems of Linear Equations: Gaussian Elimination}{}
+\eweek{8.1}{Systems of Linear Equations: Gaussian Elimination}{\hw}
+% Week 14
+\nweek{8.2}{Systems of Linear Equations: Augmented Matrices}{\hw}
+\mweek{}{\holiday{Thanksgiving}}{}
+\eweek{}{\holiday{Thanksgiving}}{}
+% Week 15
+\nweek{9.1}{Sequences}{}
+\mweek{6.5---9.1}{\review}{}
+\eweek{}{\examday}{\ex}
+% Week 16
+\nweek{9.2}{Summation Notation}{}
+\mweek{9.2}{Summation Notation}{}
+\eweek{1.1---9.2}{\finalreview}{}
+\nweek{}{\finalExamMWF{800}}{\textbf{ \cellcolor{\lighterColor} Final Exam} } \hline
+\end{tabular}
+\end{center}
+\vfill 
+\newpage
+
+% Set to first day of the term--correct for fall 2024
+\SetDate[26/08/2024] 
+\calendarHead{Fall}{2024}
+
+\begin{center}
+\begin{tabular}  {|l|l|l|l|l|}
+\hline
+\tablehead{Week}{Week of}{Sections}{Topics}{Assessments}
+% Week one
+\nweek{1.1}{Sets of Real Numbers and the Cartesian Coordinate Plane}{}
+\mweek{1.2}{Relations}{}
+\eweek{1.3}{Introduction to Functions}{\hw}
+% Week 2
+\nweek{1.4}{Function Notation}{}
+\mweek{1.5}{Function Arithmetic}{}
+\eweek{1.6}{Graphs of Functions}{\hw}
+% Week 3
+\nweek{}{ \holiday{Labor Day}}{} 
+\mweek{1.7}{Transformations}{}
+\eweek{2.1}{Linear Functions}{\hw}
+% Week 4
+\nweek{2.2}{Absolute Value Functions}{}
+\mweek{1.1---2.2}{\review}{}
+\eweek{}{\examday}{\ex}
+% Week 5
+ \nweek{2.3}{Quadratic Functions}{}
+ \mweek{2.4}{ Inequalities with Absolute Value and Quadratic Functions}{}
+ \eweek{2.4}{Inequalities with Absolute Value and Quadratic Functions}{\hw}
+ % Week 6
+\nweek{3.1}{Graphs of Polynomials}{}
+\mweek{3.2}{The Factor Theorem and the Remainder Theorem}{}
+\eweek{3.3}{Real Zeros of Polynomials}{\hw}
+%Week 7
+\nweek{4.1}{Introduction to Rational Functions}{}
+\mweek{4.2}{Graphs of Rational Functions}{}
+\eweek{4.3}{Rational Inequalities and Applications}{\hw}
+% Week 8
+\nweek{4.3}{Rational Inequalities and Applications}{}
+\mweek{2.3---4.3}{\review}{}
+\eweek{}{\examday}{\ex}
+% Week 9
+\nweek{}{\holiday{Fall Break}}{}   
+\mweek{5.1}{Function Composition}{}
+\eweek{5.2}{Inverse Functions}{\hw}
+% Week 10
+\nweek{6.1}{Introduction to Exponential and Logarithmic Functions}{}
+ \mweek{6.1}{Introduction to Exponential and Logarithmic Functions}{}
+\eweek{6.2}{Properties of Logarithms}{\hw}
+% Week 11
+\nweek{6.2}{Properties of Logarithms}{}
+ \mweek{6.3}{Exponential Equations and Inequalities}{}
+  \eweek{6.4}{Logarithmic Equations and Inequalities}{\hw}
+  % Week 12
+  \nweek{5.1---6.4}{\review}{}
+  \mweek{}{\examday}{\ex}
+ \eweek{6.5}{Applications of Exponential and Logarithmic Functions}{}
+ % Week 13
+\nweek{6.5}{Applications of Exponential and Logarithmic Functions}{}
+\mweek{8.1}{Systems of Linear Equations: Gaussian Elimination}{}
+\eweek{8.1}{Systems of Linear Equations: Gaussian Elimination}{\hw}
+% Week 14
+\nweek{8.2}{Systems of Linear Equations: Augmented Matrices}{\hw}
+\mweek{}{\holiday{Thanksgiving}}{}
+\eweek{}{\holiday{Thanksgiving}}{}
+% Week 15
+\nweek{9.1}{Sequences}{}
+\mweek{6.5---9.1}{\review}{}
+\eweek{}{\examday}{\ex}
+% Week 16
+\nweek{9.2}{Summation Notation}{}
+\mweek{9.2}{Summation Notation}{}
+\eweek{1.1---9.2}{\finalreview}{}
+\nweek{}{\finalExamMWF{800}}{\textbf{ \cellcolor{\lighterColor} Final Exam} } \hline
+\end{tabular}
+\end{center}
+\vfill 
+\newpage
+
+% Set to first day of the term--correct for spring 2024
+\SetDate[22/01/2024] 
+\calendarHead{Spring}{2024}
+
+\begin{center}
+\begin{tabular}  {|l|l|l|l|l|}
+\hline
+\tablehead{Week}{Week of}{Sections}{Topics}{Assessments}
+% Week one
+\nweek{1.1}{Sets of Real Numbers and the Cartesian Coordinate Plane}{}
+\mweek{1.2}{Relations}{}
+\eweek{1.3}{Introduction to Functions}{\hw}
+% Week 2
+\nweek{1.4}{Function Notation}{}
+\mweek{1.5}{Function Arithmetic}{}
+\eweek{1.6}{Graphs of Functions}{\hw}
+% Week 3
+\nweek{1.7}{Transformations}{}
+\mweek{2.1}{Linear Functions}{}
+\eweek{2.2}{Absolute Value Functions}{\hw}
+% Week 4
+\nweek{1.1---2.2}{\review}{}
+\mweek{}{\examday}{\ex}
+\eweek{2.3}{Quadratic Functions}{}
+ % Week 5
+ \nweek{2.4}{ Inequalities with Absolute Value and Quadratic Functions}{}
+ \mweek{2.4}{Inequalities with Absolute Value and Quadratic Functions}{}
+\eweek{3.1}{Graphs of Polynomials}{\hw}
+ % Week 6
+\nweek{3.2}{The Factor Theorem and the Remainder Theorem}{}
+\mweek{3.3}{Real Zeros of Polynomials}{}
+\eweek{4.1}{Introduction to Rational Functions}{\hw}
+%Week 7
+\nweek{4.2}{Graphs of Rational Functions}{}
+\mweek{2.3--4.2}{\review}{}
+\eweek{}{\examday}{\ex}
+% Week 8
+
+\nweek{}{\holiday{Spring Break}}{}
+\mweek{}{\holiday{Spring Break}}{}
+\eweek{}{\holiday{Spring Break}}{}
+% Week 9
+\nweek{4.3}{Rational Inequalities and Applications}{}
+\mweek{4.3}{Rational Inequalities and Applications}{}
+\eweek{5.1}{Function Composition}{\hw}
+% Week 10
+\nweek{5.1}{Function Composition}{}
+\mweek{5.2}{Inverse Functions}{}
+\eweek{6.1}{Introduction to Exponential and Logarithmic Functions}{\hw}
+% Week 11 
+\nweek{6.1}{Introduction to Exponential and Logarithmic Functions}{}
+\mweek{6.2}{Properties of Logarithms}{}
+\eweek{6.2}{Properties of Logarithms}{\hw}
+% Week 12
+\nweek{4.3---6.2}{\review}{}
+\mweek{}{\examday}{\ex}
+\eweek{6.3}{Exponential Equations and Inequalities}{\hw}
+% Week 13
+\nweek{6.4}{Logarithmic Equations and Inequalities}{}
+\mweek{6.5}{Applications of Exponential and Logarithmic Functions}{}
+\eweek{6.5}{Applications of Exponential and Logarithmic Functions}{\hw}
+% Week 14
+\nweek{8.1}{Systems of Linear Equations: Gaussian Elimination}{}
+\mweek{8.1}{Systems of Linear Equations: Gaussian Elimination}{}
+\eweek{8.2}{Systems of Linear Equations: Augmented Matrices}{\hw}
+% Week 15
+\nweek{6.3---8.2}{\review}{}
+\mweek{}{\examday}{\ex}
+\eweek{9.1}{Sequences}{}
+% Week 16
+\nweek{9.2}{Summation Notation}{}
+\mweek{9.2}{Summation Notation}{}
+\eweek{1.1---9.2}{\finalreview}{}
+\nweek{}{\finalExamMWF{800}}{\textbf{ \cellcolor{\lighterColor} Final Exam} } \hline
+\end{tabular}
+\end{center}
+\vfill 
+\newpage
+
+% Set to first day of the term--correct for spring 2024
+\SetDate[21/01/2025] 
+\calendarHead{Spring}{2025}
+
+\begin{center}
+\begin{tabular}  {|l|l|l|l|l|}
+\hline
+\tablehead{Week}{Week of}{Sections}{Topics}{Assessments}
+% Week one
+\nweek{1.1}{Sets of Real Numbers and the Cartesian Coordinate Plane}{}
+\mweek{1.2}{Relations}{}
+\eweek{1.3}{Introduction to Functions}{\hw}
+% Week 2
+\nweek{1.4}{Function Notation}{}
+\mweek{1.5}{Function Arithmetic}{}
+\eweek{1.6}{Graphs of Functions}{\hw}
+% Week 3
+\nweek{1.7}{Transformations}{}
+\mweek{2.1}{Linear Functions}{}
+\eweek{2.2}{Absolute Value Functions}{\hw}
+% Week 4
+\nweek{1.1---2.2}{\review}{}
+\mweek{}{\examday}{\ex}
+\eweek{2.3}{Quadratic Functions}{}
+ % Week 5
+ \nweek{2.4}{ Inequalities with Absolute Value and Quadratic Functions}{}
+ \mweek{2.4}{Inequalities with Absolute Value and Quadratic Functions}{}
+\eweek{3.1}{Graphs of Polynomials}{\hw}
+ % Week 6
+\nweek{3.2}{The Factor Theorem and the Remainder Theorem}{}
+\mweek{3.3}{Real Zeros of Polynomials}{}
+\eweek{4.1}{Introduction to Rational Functions}{\hw}
+%Week 7
+\nweek{4.2}{Graphs of Rational Functions}{}
+\mweek{2.3--4.2}{\review}{}
+\eweek{}{\examday}{\ex}
+% Week 8
+
+\nweek{}{\holiday{Spring Break}}{}
+\mweek{}{\holiday{Spring Break}}{}
+\eweek{}{\holiday{Spring Break}}{}
+% Week 9
+\nweek{4.3}{Rational Inequalities and Applications}{}
+\mweek{4.3}{Rational Inequalities and Applications}{}
+\eweek{5.1}{Function Composition}{\hw}
+% Week 10
+\nweek{5.1}{Function Composition}{}
+\mweek{5.2}{Inverse Functions}{}
+\eweek{6.1}{Introduction to Exponential and Logarithmic Functions}{\hw}
+% Week 11 
+\nweek{6.1}{Introduction to Exponential and Logarithmic Functions}{}
+\mweek{6.2}{Properties of Logarithms}{}
+\eweek{6.2}{Properties of Logarithms}{\hw}
+% Week 12
+\nweek{4.3---6.2}{\review}{}
+\mweek{}{\examday}{\ex}
+\eweek{6.3}{Exponential Equations and Inequalities}{\hw}
+% Week 13
+\nweek{6.4}{Logarithmic Equations and Inequalities}{}
+\mweek{6.5}{Applications of Exponential and Logarithmic Functions}{}
+\eweek{6.5}{Applications of Exponential and Logarithmic Functions}{\hw}
+% Week 14
+\nweek{8.1}{Systems of Linear Equations: Gaussian Elimination}{}
+\mweek{8.1}{Systems of Linear Equations: Gaussian Elimination}{}
+\eweek{8.2}{Systems of Linear Equations: Augmented Matrices}{\hw}
+% Week 15
+\nweek{6.3---8.2}{\review}{}
+\mweek{}{\examday}{\ex}
+\eweek{9.1}{Sequences}{}
+% Week 16
+\nweek{9.2}{Summation Notation}{}
+\mweek{9.2}{Summation Notation}{}
+\eweek{1.1---9.2}{\finalreview}{}
+\nweek{}{\finalExamMWF{800}}{\textbf{ \cellcolor{\lighterColor} Final Exam} } \hline
+\end{tabular}
+\end{center}
+\end{document}
+    

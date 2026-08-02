@@ -1,0 +1,162 @@
+% Instructions: you don't need to change anything in the macros, but
+% feel free to define new commands as you wish. Starting from the main
+% body, change the specs (e.g., your
+% name). use \begin{solution} \end{solution} environment to write your
+% solutions. Don't forget to list your collaborators.
+
+\documentclass[12pt,addpoints,answers]{exam}
+%============Macros==================%
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+%--------------Cosmetic----------------%
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{fullpage}
+\usepackage{microtype}
+\usepackage{xspace}
+\usepackage[svgnames]{xcolor}
+\usepackage[sc]{mathpazo}
+\usepackage{enumitem}
+\setlist[enumerate]{itemsep=1pt,topsep=2pt}
+\setlist[itemize]{itemsep=1pt,topsep=2pt}
+%----------Header--------------------%
+\def\course{CSCE629 Analysis of Algorithms}
+\def\term{Texas A\&M U, Fall 2019}
+\def\prof{Lecturer: Fang Song}
+\newcommand{\handout}[5]{
+   \renewcommand{\thepage}{\arabic{page}}
+   \begin{center}
+   \framebox{
+      \vbox{
+    \hbox to 5.78in { \hfill \large{\course} \hfill }
+       \vspace{2mm}
+       \hbox to 5.78in { {\Large \hfill \textbf{#5}  \hfill} }
+       \vspace{2mm}
+       \hbox to 5.78in { \term \hfill \emph{#2}}
+       \hbox to 5.78in { {#3 \hfill \emph{#4}}}
+      }
+   }
+   \end{center}
+   \vspace*{4mm}
+}
+\newcommand{\hw}[4]{\handout{#1}{#2}{#3}{#4}{Homework #1}}
+
+%-----defs and commands-----%
+%\def\mG{[\textbf{G}]\xspace}
+\def\veps{\varepsilon}
+\newcommand{\bit}{\{0,1\}}
+\newcommand{\negl}{\text{negl}}
+\newcommand{\corr}[1]{{\color{blue}{#1}}}
+\newcommand{\alg}[1]{\textsf{#1}}
+%=======Main document==============%
+\begin{document}
+
+%----Specs: change accordingly-----%
+\newif\ifstudent % comment out false
+\studenttrue 
+% \studentfalse
+
+\def\hwnum{4}
+\def\issuedate{09/20/19}
+\def\duedate{10am, 09/27/19} % 
+\def\yourname{your name} % put your name here
+%------------------------------%
+
+\ifstudent
+\hw{\hwnum}{\issuedate}{Student: \yourname}{Due: \duedate}%
+\else
+\hw{\hwnum}{\issuedate}{\prof}{Due: \duedate}%
+\fi
+
+\noindent \textbf{Instructions.}
+
+\begin{itemize} 
+\item Typeset your submission by \LaTeX, and submit in PDF
+  format. Your solutions will be graded on \emph{correctness} and
+  \emph{clarity}. You should only submit work that you believe to be
+  correct, and you will get significantly more partial credit if you
+  clearly identify the gap(s) in your solution. You may opt for the
+  ``I’ll take 15\%'' option (details in Syllabus).
+\item You may collaborate with others on this problem set.  However,
+  you must \textbf{{write up your own solutions}} and \textbf{{list
+      your collaborators and any external sources}} for each
+  problem. Be ready to explain your solutions orally to a course staff
+  if asked.
+\item For problems that require you to provide an algorithm, you must
+  give a precise description of the algorithm, together with a proof
+  of correctness and an analysis of its running time. You may use
+  algorithms from class as subroutines. You may also use any facts
+  that we proved in class or from the book.
+\end{itemize}
+
+\noindent This assignment contains \numquestions\ questions,
+\numpages\ pages for the total of \numpoints \ points and
+\numbonuspoints\ bonus points. A random subset of the problems will be
+graded. \medskip
+
+\newpage
+
+\begin{questions}
+
+\def\scc{\text{SCC}}  
+\question (Component graph) Given a directed graph $G=(V,E)$, we
+  define another graph $G^{\scc} =(V^\scc, E^\scc)$ called the
+  \emph{component graph} as follows. Suppose that $G$ has strongly
+  connected components $C_1, C_2, \ldots, C_k$. The vertex set
+  $V^\scc$ is $\{v_1,\ldots,v_k\}$ where $v_i\in C_i$. There is an
+  edge $ (v_i,v_j) \in E^\scc$ if $G$ contains a directed edge
+  $x\to y$ for some $x\in C_i$ and some $y\in C_j$. Alternatively,
+  imagine contracting all edges whose incident vertices are within the
+  same strongly connected component of $G$, and the resulting graph
+  will be $G^\scc$.
+  \begin{parts}
+  \part[10] Prove or disapprove that $G^\scc$ is a DAG.
+    
+    \bonuspart[10] Give an $O(|V|+|E|)$-time algorithm to compute the
+    component graph of a directed graph $G = (V,E)$.
+    
+  \end{parts}
+\newpage
+
+\question[10] (Singly connected graph) A directed graph $G=(V,E)$ is
+  \emph{singly} connected if $G$ contains at most one simple (i.e. no
+  vertex repeated) path from $u$ to $v$ for all vertices $u,v\in V
+  $. Give an efficient algorithm to determine whether or not a
+  directed graph is singly connected.
+
+\newpage
+  
+\question (Semi-connected graphs) A directed graph $G$ is
+  \emph{semi-connected} if, for every pair of vertices $u$ and $v$,
+  either $u$ is reachable from $v$ or $v$ is reachable from $u$ (or
+  both).
+  \begin{parts}
+  \part[5] Give an example of a DAG with a unique source (a source is
+    a vertex with no entering edges) that is \textbf{not}
+    semi-connected.
+  \part[10] Describe and analyze an algorithm to determine whether a
+    given DAG is semi-connected. 
+    \part[10] 
+      Describe and analyze an algorithm to determine whether an
+      arbitrary directed graph is semi-connected.
+  \end{parts}
+
+\newpage  
+
+\question An \emph{Euler tour} of a strongly connected, directed graph
+  $G = (V, E)$ is a cycle that traverses each \emph{edge} of $G$
+  exactly once, although it may visit a vertex more than once.
+
+  \begin{parts}
+  \part[10] Show that $G$ has an Euler tour if and only if
+    $\text{in-degree}(v) = \text{out-degree}(v)$ for each vertex 
+    $v \in V$.
+  \part[10] Describe an $O(|E|)$-time algorithm to find an Euler tour
+    of $G$ if one exists.
+  \end{parts}
+
+ 
+\end{questions}
+
+
+\end{document}

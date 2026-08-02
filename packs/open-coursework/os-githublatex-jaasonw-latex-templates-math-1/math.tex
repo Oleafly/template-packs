@@ -1,0 +1,47 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, fancyhdr}
+\usepackage[margin = 1in]{geometry}
+
+\def\class{CLASS}
+\def\header{TITLE}
+\def\first{FIRST}
+\def\last{LAST}
+
+\fancypagestyle{useheader}
+{
+    \fancyhf{}
+    \setlength{\headsep}{\baselineskip}
+    \lhead{\class}
+    \chead{\header}
+    \rhead{\last, \first}
+    \cfoot{\thepage}
+}
+
+% draws a black square for proofs
+\newcommand{\qed}{\hfill$\blacksquare$}
+
+% args: (equation (aligns at & sign: x &= y), explanation)
+\newcommand{\step}[2]{#1 && \text{#2}\\}
+
+% args: (number, question, steps, explanation)
+\newenvironment{problem}[4]{
+    \begin{enumerate}
+        \item[\bfseries{#1}] #2
+        \begin{align*}
+            #3
+        \end{align*}
+        #4
+    \end{enumerate}
+}
+
+\begin{document}
+\pagestyle{useheader}
+
+\begin{problem}{1} {Question} {
+    \step{y &= mx + b}{Step 1}
+    \step{y - b &= mx}{Step 2}
+}
+{Explanation Paragraph}
+\end{problem}
+
+\end{document}

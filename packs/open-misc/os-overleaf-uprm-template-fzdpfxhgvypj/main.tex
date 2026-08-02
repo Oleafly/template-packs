@@ -1,0 +1,112 @@
+
+%____________________DOCUMENT PREAMBLE_________________________________
+\documentclass[12pt]{report}
+\usepackage{appendix}
+\usepackage{graphicx}
+\usepackage{sidecap}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{supertabular}
+\usepackage{array}
+\usepackage{threeparttable}
+\usepackage{booktabs}
+\usepackage[margin=3cm]{geometry}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage[version=3]{mhchem}  %Chemical compounds \ce{(NH4)2SO4}.
+%\usepackage{fixltx2e}
+\usepackage{indentfirst}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{pdflscape}
+\usepackage{lipsum}
+\usepackage{blindtext}
+\usepackage[nottoc]{tocbibind}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.7}
+\usepackage{tikz}
+\renewcommand{\bibname}{References} % or other title eg. Bibliography
+\bibliographystyle{ieeetr} %styles: abbrv, acm, alpha, apalike, ieeetr, plain, siam, unsrt.
+\hbadness=99999
+%_____________________________________________________________
+
+\begin{document}
+\frenchspacing %override to remove double space after periods.
+
+%__________   TITLE PAGE   _________________________________________
+
+\include{prelim/portada5}  %decide if you have a 3, 4 or 5-member committee.
+
+ewpage
+
+%____PRELIMINARY PAGES: ABSTRACT, ACKNOWLEDGMENTS, DEDICATION________
+
+\pagenumbering{roman}
+\setcounter{page}{2}
+\doublespacing
+
+ewpage
+
+\include{prelim/abstract} %edit abstract.tex
+
+ewpage
+
+\include{prelim/acknowledgment} %acknowledgment and dedication, edit acknowledgment.tex
+
+ewpage
+
+%_____________set TOC and subsection depth___________________________________
+
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+%____________________________________________________________________________
+
+\tableofcontents			
+
+\listoftables 						
+\listoffigures
+\include{prelim/acronyms} %edit acronyms.tex
+\addcontentsline{toc}{section}{ACRONYMS}
+
+\include{prelim/symbols}
+\addcontentsline{toc}{section}{SYMBOLS}
+
+
+ewpage
+
+\vspace*{7in}
+\begin{center}
+Copyright \copyright
+\\
+Your Name Here %%%
+\\
+20XX
+\end{center}
+\pagebreak
+
+\pagestyle{headings}
+
+\pagenumbering{arabic}
+\include{chapters/capitulo1}
+\include{chapters/capitulo2}
+\include{chapters/capitulo3}
+\include{chapters/capitulo4}
+\include{chapters/capitulo5}
+\include{chapters/capitulo6}
+\include{chapters/capitulo7}
+\include{chapters/conclusion}
+
+\appendix
+\chapter*{APPENDICES}
+\addcontentsline{toc}{chapter}{APPENDICES}
+% Appendices are just more chapters, with different labeling (letters instead of numbers).
+\include{chapters/AppendixA}
+\include{chapters/AppendixB}
+
+\bibliography{referencias} 
+%\include{backmatter}
+			
+\end{document}

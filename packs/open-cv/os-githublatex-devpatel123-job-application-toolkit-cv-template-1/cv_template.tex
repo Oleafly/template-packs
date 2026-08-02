@@ -1,0 +1,208 @@
+%-------------------------
+% CV template
+% Adapted from Jake Gutierrez's resume template (MIT License)
+%   https://github.com/jakegut/resume
+%
+% Adapted for XeTeX / Tectonic:
+%   - removed \input{glyphtounicode} and \pdfgentounicode=1 (pdfTeX only)
+%   - plain bold section headings instead of small caps
+%
+% Compile with:  tectonic cv_template.tex
+%-------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage{libertinus}          % CV body font. Alternatives: newpxtext (Palatino),
+                                 % XCharter, lmodern. Avoid heavy fonts: they crowd the page.
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section headings: plain bold with a rule underneath.
+% NOTE: do not add \uppercase here. In a titlesec spec it grabs the next brace
+% group it finds, which can be a later command's argument, and breaks the build.
+\titleformat{\section}{
+  \vspace{-4pt}\bfseries\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+\begin{document}
+
+%----------HEADING----------
+% Set the tagline to the exact title of the role you are applying for.
+% Link the word "LinkedIn" rather than printing a raw URL.
+\begin{center}
+    \textbf{\Huge FULL NAME} \\ \vspace{2pt}
+    \small ROLE TITLE YOU ARE APPLYING FOR \\ \vspace{3pt}
+    \small
+    City, Country $|$ 000 000 0000 $|$
+    \href{mailto:you@example.com}{\underline{you@example.com}} $|$
+    \href{https://www.linkedin.com/in/yourprofile/}{\underline{LinkedIn}}
+\end{center}
+
+%-----------SUMMARY-----------
+% 3-5 lines. Lead with what this specific role values most.
+% State what you have actually done, not adjectives about yourself.
+\section{Summary}
+\small{One or two sentences on who you are and your strongest relevant capability. Then
+concrete evidence: what you have built, measured, led, or shipped. Close with direction
+or intent that connects to this role. Avoid the banned vocabulary listed in the writing
+rules doc. Note that a literal underscore needs escaping in LaTeX: type it as
+\textbackslash\_ or the build fails with ``Missing \$ inserted''.}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {University Name}{20XX -- 20XX}
+      {Degree Title, Specialisation, GPA X.X}{City, Country}
+      \resumeItemListStart
+        \resumeItem{Coursework: list only the courses relevant to this role.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {Previous School}{20XX}
+      {Qualification; notable results}{City, Country}
+  \resumeSubHeadingListEnd
+
+%-----------HONOURS & AWARDS-----------
+% Keep awards in their own section here rather than buried as an education bullet.
+\section{Honours \& Awards}
+ \begin{itemize}[leftmargin=0.15in]
+    \small
+    \item \textbf{Award or Programme Name}, Awarding Body (Year): one line on what it was and why it was competitive.
+    \item \textbf{Second Award}, Awarding Body (Year): one line of context.
+ \end{itemize}
+
+%-----------PROJECTS-----------
+% Pick the 3-4 projects that match this JD. If page 2 has room, add a fourth or
+% fifth that covers a JD keyword the others miss. Reframe the same real projects
+% per role rather than writing new ones.
+\section{Projects}
+    \resumeSubHeadingListStart
+
+      \resumeProjectHeading
+          {\textbf{Project Name} $|$ \emph{Tech, Tools, Methods} $|$ Your Role}{Year}
+          \resumeItemListStart
+            \resumeItem{What you built and the outcome, with a number where one exists. End on a concrete result, never a vague "-ing" phrase.}
+            \resumeItem{A second bullet covering a different capability this JD asks for.}
+            \resumeItem{A third if this is the most relevant project.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Project Name} $|$ \emph{Tech, Tools}}{Year}
+          \resumeItemListStart
+            \resumeItem{One strong bullet is enough for a supporting project.}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+% Group by theme, and name the groups using the JD's own vocabulary.
+% Order groups by what this role values most.
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Most Relevant Group}{: the tools and methods this JD names, that you genuinely have} \\ \vspace{2pt}
+     \textbf{Second Group}{: ...} \\ \vspace{2pt}
+     \textbf{Programming}{: languages, strongest first} \\ \vspace{2pt}
+     \textbf{Ways of Working}{: e.g. requirements gathering, documentation, testing, stakeholder communication} \\ \vspace{2pt}
+     \textbf{Also}{: secondary tools worth listing}
+    }}
+ \end{itemize}
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Job Title}{20XX -- Present}
+      {Employer}{City, Country}
+      \resumeItemListStart
+        \resumeItem{What you did, framed toward what this role values.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Job Title}{Mon 20XX -- Mon 20XX}
+      {Employer}{City, Country}
+      \resumeItemListStart
+        \resumeItem{Keep dates in one consistent format throughout.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------LEADERSHIP & COMMUNITY-----------
+% Include the full section by default. Only compress it when genuinely
+% squeezing onto one page.
+\section{Leadership \& Community}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Role}{20XX -- Present}
+      {Organisation}{City, Country}
+      \resumeItemListStart
+        \resumeItem{Describe the function in plain English. Translate any internal or cultural organisation names a hiring manager would not recognise.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {Role}{20XX -- Present}
+      {Organisation}{City, Country}
+      \resumeItemListStart
+        \resumeItem{...}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-------------------------------------------
+\end{document}

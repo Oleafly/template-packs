@@ -1,0 +1,253 @@
+% =============================================================================
+%  template for beamer slides - derived from paradigm's presentation slides
+%  (c) 2014 Daniel Thau (paradigm)
+%  Modifications (c) 2014 Chris Wallace, both under the Apache v2 license
+% =============================================================================
+
+% aspect ratio options:
+% 169, 1610, 149, 54, 43, 32 (default is 4:3)
+
+\documentclass[aspectratio=169]{beamer}                  % beamer class, good for slides
+\usepackage[T1]{fontenc}                % use a modern scalable font
+\usepackage{lmodern}                    % Latin Modern font
+\usepackage{xifthen}                    % \ifthenelse
+\usepackage{listings}                   % code formatting
+\usepackage{booktabs}                   % fancy tables
+\usepackage{varioref}                   % fancy cross referencing
+\usepackage{textcomp}                   % fancy upquotes in listings
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%  Theming
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%
+% pastel color palette- edited by notorious
+%
+
+\usetheme{default}                       % default beamer theme (clean, empty)
+\beamertemplatenavigationsymbolsempty    % remove nav symbols
+
+\definecolor{fore}{RGB}{249,242,215}     % foreground color, off-white
+\definecolor{back}{RGB}{51,51,51}        % background color, gray
+\definecolor{title}{RGB}{125,200,100}    % title color, pastel green
+\definecolor{keywords}{RGB}{255,157,180} % code keyword color, pastel pink
+\definecolor{comments}{RGB}{200,110,200} % code comment color, pastel purple
+\definecolor{item}{RGB}{50,150,140}      % item color, pastel blue
+
+\setbeamercolor{titlelike}{fg=title}          % titles use title color
+\setbeamercolor{normal text}{fg=fore,bg=back} % text is fore on back
+\setbeamercolor{block title}{fg=comments}     % block titles are comment color
+\setbeamercolor{section in toc}{fg=comments}  % toc uses title color
+\setbeamercolor{item}{fg=item}                % itemize symbol color
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%  code listing
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%
+% beamer and listings don't play super well together
+% best to define code *outside* of a frame and then call it, like so:
+%
+% \defverbatim[colored]\code{           % define code out of frame
+% \begin{lstlisting}
+%  -- code goes here --
+% \end{lstlisting}
+% } % end of stored code
+%
+% \begin{frame}
+% \frametitle{title}
+% \code % call code in frame
+% \end{frame}
+%
+% alternatively, one could use \frame[fragile]
+% see fslide below
+%
+
+\lstset{                                    % listings settings
+	language=Java,                          % Java by default, pick one
+	upquote=true,                           % do NOT use "
+	tabsize=4,                              % tabs are 4 spaces
+	basicstyle=\ttfamily,                   % code is typewriter-style (monospace)
+	keywordstyle=\color{keywords},          % keywords use keyword color
+	commentstyle=\color{comments},%\emph    % comments use comment color
+	showspaces=false,                       % show no spaces
+	showstringspaces=false,                 % show no spaces inside quotes
+	morekeywords={mod,doc,switch,case,otherwise}, % added keywords (to highlight)
+}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%  code result environment
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%
+% code is often paired with there result, but has to be entered outside of
+% frame.  use code from outside frame (\code), paired with result
+%
+
+\newenvironment{coderesult}{
+	\begin{block}{Code}      % block, called Code
+		\code                % print \code
+	\end{block}
+	\ttfamily
+	\begin{block}{Result}    % block, called Result
+	}{                           % result argument is here
+	\end{block}
+}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%  section slide command
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%
+% new command to draw a simple line.  it will be as long as available,
+% and 1pt wide.  used for some stylizing
+%
+
+\newcommand{\srule}{
+	\rule{\textwidth}{1pt}\\
+}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%  section break command
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%
+% new command to create a title page for a particular section
+%
+
+\newcommand{\sectionslide}[1]{
+	\begin{frame}
+		\Huge
+		\begin{center}
+			#1
+		\end{center}
+	\end{frame}
+
+}
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%  custom slide environment
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%
+% essentially frame, but automatically adds section and possibly subsection as
+% title.  also increases default font size
+%
+% method to detect subsection presence is kind of hacky:
+% find it's width. if it has any width, it exists.
+%
+
+% variable to hold subsection's width
+\newlength{\subsecwidth}
+
+% slide environment - frame, plus automatic title
+\newenvironment{slide}{
+	\begin{frame}                                    % frame
+		\settowidth{\subsecwidth}{\insertsubsection} % find subsection width
+		\ifthenelse{\dimtest{\subsecwidth}{<}{1pt}}{ % no subsection
+			\frametitle{\insertsection\\             % insert *just* section
+				\vspace{-1ex}                            % move next line up a bit
+				\color{fore}\srule                       % pretty line
+				\par                                     % remove excess spacing
+				\vspace{-3ex}                            % remove excess spacing
+			}
+		}{                                           % subsection exists
+			\frametitle{\insertsection\ -- \insertsubsection\\ % sec - subsec
+				\vspace{-1ex}                            % move next line up a bit
+				\color{fore}\srule                       % pretty line
+				\par                                     % remove excess spacing
+				\vspace{-3ex}                            % remove excess spacing
+			}
+		}
+		\Large                                       % make font in slide Large
+	}{
+	\end{frame}
+}
+
+% \frame needs [fragile] to handle lstlisting, but setting this is funky.  \fslide is a work-around
+
+% variable to hold subsection's width
+\newenvironment{fslide}{
+	%\begin{frame}[fragile]
+	\settowidth{\subsecwidth}{\insertsubsection} % find subsection width
+	\ifthenelse{\dimtest{\subsecwidth}{<}{1pt}}{ % no subsection
+		\frametitle{\insertsection\\             % insert *just* section
+			\vspace{-1ex}                            % move next line up a bit
+			\color{fore}\srule                       % pretty line
+			\par                                     % remove excess spacing
+			\vspace{-3ex}                            % remove excess spacing
+		}
+	}{                                           % subsection exists
+		\frametitle{\insertsection\ -- \insertsubsection\\ % sec - subsec
+			\vspace{-1ex}                            % move next line up a bit
+			\color{fore}\srule                       % pretty line
+			\par                                     % remove excess spacing
+			\vspace{-3ex}                            % remove excess spacing
+		}
+	}
+	\Large                                       % make font in slide Large
+}{
+	%\end{frame}
+}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%  title page
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%
+% simple command to both set the section and display a lone frame indicating
+% the new section
+%
+
+\newcommand{\titleslide}[1]{
+	\section{#1}             % set the section based on argument
+	\begin{slide}
+		\begin{center}
+			\color{comments}
+			\Huge            % Huge font size
+			#1               % print new section's title
+		\end{center}
+	\end{slide}
+}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%  formatting commands
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+%\renewcommand{\thefootnote}{\fnsymbol{footnote}} % fancy symbols for footnotes
+%\newcommand{\cmd}[1]{\texttt{#1}} % fancy symbols for footnotes
+% place at end of slide/frame to disable beamer vertical alignment
+\newcommand{\disablevertalign}{\vskip0pt plus 1filll}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+%  title block
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+\title{Title}                                   % title
+\author{
+	Author Name\\                               % author
+	Company/University\\                        % organization/division
+	Division Name
+}
+\date{\today}
+
+% =============================================================================
+%  actual document begins here
+% =============================================================================
+
+\begin{document}
+
+
+\begin{frame}                           % title slide
+	\titlepage                          % title page (title, author, date)
+\end{frame}
+
+\section{Example Section}
+\begin{slide}
+	This is an example slide
+	\begin{itemize}
+		\item test item
+	\end{itemize}
+
+\end{slide}
+
+\subsection{Example Subsection}
+\begin{slide}
+	\begin{itemize}
+		\item More bullets in a subsection
+	\end{itemize}
+\end{slide}
+
+\end{document}

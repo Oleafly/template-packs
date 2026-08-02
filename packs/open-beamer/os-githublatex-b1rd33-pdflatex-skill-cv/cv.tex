@@ -1,0 +1,140 @@
+% Modern CV/Resume Template
+% Compile: pdflatex cv.tex (single pass)
+\documentclass[10pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[margin=0.6in,top=0.5in,bottom=0.5in]{geometry}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{textcase}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{hyperref}
+
+% Colors
+\definecolor{primary}{HTML}{1A1A2E}
+\definecolor{accent}{HTML}{0F3460}
+\definecolor{linkblue}{HTML}{2563EB}
+\definecolor{subtlegray}{HTML}{6B7280}
+
+\hypersetup{colorlinks=true,urlcolor=linkblue}
+
+% No page numbers (single page)
+\pagestyle{empty}
+
+% No paragraph indent
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% Section formatting
+\titleformat{\section}
+    {\large\bfseries\color{primary}}
+    {}{0em}{\MakeTextUppercase}
+    [\vspace{-6pt}{\color{accent}\rule{\textwidth}{1pt}}]
+\titlespacing{\section}{0pt}{8pt}{4pt}
+
+% Custom commands
+\newcommand{\cventry}[4]{%
+    \textbf{#1} \hfill \textcolor{subtlegray}{#2}\\
+    \textit{\textcolor{accent}{#3}} \hfill \textcolor{subtlegray}{#4}\\[2pt]
+}
+\newcommand{\skill}[1]{\colorbox{primary!8}{\small\strut #1}}
+
+\begin{document}
+
+% ============================
+% HEADER
+% ============================
+\begin{center}
+    {\LARGE\bfseries\textcolor{primary}{Alex Chen}}\\[4pt]
+    {\large Senior Software Engineer}\\[6pt]
+    \textcolor{subtlegray}{%
+        \faIcon{map-marker-alt} San Francisco, CA \quad
+        \faIcon{envelope} \href{mailto:alex.chen@email.com}{alex.chen@email.com} \quad
+        \faIcon{phone} +1 (555) 234-5678
+    }\\[2pt]
+    \textcolor{subtlegray}{%
+        \faIcon{linkedin} \href{https://linkedin.com/in/alexchen}{linkedin.com/in/alexchen} \quad
+        \faIcon{github} \href{https://github.com/alexchen}{github.com/alexchen} \quad
+        \faIcon{globe} \href{https://alexchen.dev}{alexchen.dev}
+    }
+\end{center}
+
+\vspace{4pt}
+
+% ============================
+% SUMMARY
+% ============================
+\section{Summary}
+
+Software engineer with 8 years of experience building distributed systems at scale. Led teams of 5--12 engineers shipping products to 50M+ users. Deep expertise in Go, Python, and cloud-native architectures.
+
+% ============================
+% EXPERIENCE
+% ============================
+\section{Experience}
+
+\cventry{Senior Software Engineer}{San Francisco, CA}{Stripe --- Platform Infrastructure}{Jan 2023 -- Present}
+\begin{itemize}[leftmargin=12pt,nosep,topsep=2pt]
+    \item Designed and built the next-generation API gateway handling 400K requests/sec with p99 latency under 15ms, reducing infrastructure cost by 30\%
+    \item Led a team of 8 engineers to migrate 200+ microservices to a new service mesh, completing 3 months ahead of schedule
+    \item Authored internal RFC for distributed tracing standard, adopted company-wide across 1,200+ services
+    \item Mentored 4 junior engineers, 2 of whom were promoted to mid-level within 18 months
+\end{itemize}
+
+\vspace{4pt}
+
+\cventry{Software Engineer}{San Francisco, CA}{Airbnb --- Search \& Discovery}{Mar 2020 -- Dec 2022}
+\begin{itemize}[leftmargin=12pt,nosep,topsep=2pt]
+    \item Built real-time search ranking pipeline processing 2B events/day using Kafka and Flink, improving search relevance by 12\%
+    \item Implemented A/B testing framework for search experiments, reducing experiment setup time from 2 weeks to 2 hours
+    \item Optimized Elasticsearch cluster performance, reducing query latency by 45\% and saving \$800K/year in compute
+\end{itemize}
+
+\vspace{4pt}
+
+\cventry{Software Engineer}{Seattle, WA}{Amazon --- AWS Lambda}{Jun 2018 -- Feb 2020}
+\begin{itemize}[leftmargin=12pt,nosep,topsep=2pt]
+    \item Developed cold start optimization reducing Lambda initialization time by 60\% for containerized runtimes
+    \item Built automated capacity planning system, preventing 15+ potential outages in first year
+\end{itemize}
+
+% ============================
+% EDUCATION
+% ============================
+\section{Education}
+
+\cventry{M.S. Computer Science}{Stanford, CA}{Stanford University --- Systems \& Networking}{2016 -- 2018}
+
+\vspace{2pt}
+
+\cventry{B.S. Computer Science, \textit{magna cum laude}}{Berkeley, CA}{UC Berkeley}{2012 -- 2016}
+
+% ============================
+% SKILLS
+% ============================
+\section{Technical Skills}
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+    \textbf{Languages} & \skill{Go} \skill{Python} \skill{Rust} \skill{TypeScript} \skill{Java} \skill{SQL} \\[6pt]
+    \textbf{Infrastructure} & \skill{Kubernetes} \skill{Terraform} \skill{AWS} \skill{GCP} \skill{Docker} \skill{Helm} \\[6pt]
+    \textbf{Data} & \skill{PostgreSQL} \skill{Redis} \skill{Kafka} \skill{Elasticsearch} \skill{DynamoDB} \skill{Flink} \\[6pt]
+    \textbf{Practices} & \skill{System Design} \skill{Distributed Systems} \skill{CI/CD} \skill{Observability} \skill{Tech Leading} \\
+\end{tabularx}
+
+% ============================
+% PROJECTS & TALKS
+% ============================
+\section{Selected Projects \& Talks}
+
+\begin{itemize}[leftmargin=12pt,nosep,topsep=2pt]
+    \item \textbf{GoBench} (\href{https://github.com/alexchen/gobench}{github.com/alexchen/gobench}) --- Open-source Go benchmarking framework, 2.4K stars
+    \item \textbf{KubeCon 2025}: ``Zero-Downtime Migrations at Scale'' --- 800+ attendees, \href{https://youtube.com/watch?v=example}{recording}
+    \item \textbf{Blog}: ``Why We Chose gRPC Over REST'' --- 45K views on engineering blog
+\end{itemize}
+
+\end{document}

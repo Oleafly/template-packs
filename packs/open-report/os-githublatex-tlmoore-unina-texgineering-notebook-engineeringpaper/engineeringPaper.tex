@@ -1,0 +1,63 @@
+\documentclass[10pt]{article}
+
+% Packages
+\usepackage{tikz, background, titling, setspace}
+\usepackage[%left=2cm, right=1.25cm, top=1.88cm, bottom=3.75cm,
+            paperheight=20.7cm, paperwidth=15.7cm]{geometry}
+\usepackage{tabu}
+\usetikzlibrary{calc}
+
+% Entire document sans serif
+\renewcommand{\familydefault}{\sfdefault}
+
+\backgroundsetup{%
+ position=current page.center,
+ angle=0,
+ scale=1,
+ contents={%
+  \begin{tikzpicture}%
+    [
+      normal lines/.style={green!50!black, thin},
+      grid lines/.style={gray!50, very thin},
+      every node/.append style={black, align=center, opacity=1}
+    ]
+%% DRAW GRID LINES
+    \foreach \y in {1.0, 1.33,...,18.82} { \draw[grid lines] (1.75cm,\y cm) -- (14.45cm,\y cm); }
+    \foreach \x in {1.75, 2.10,...,14.45}{ \draw[grid lines] (\x cm,1.0cm) -- (\x cm,18.82cm); }
+    \draw[normal lines] (1.75cm,0cm) -- (1.75cm,20.7cm); % Left margin solid line
+    \draw[normal lines] (14.45cm,0cm) -- (14.45cm,20.7cm); % Right margin solid line
+    \draw[normal lines] (0cm,18.82cm) -- (15.7cm,18.82cm); % Top solid line
+    \draw[normal lines] (0cm,1.0cm) -- (15.7cm, 1.0cm); % Bottom margin line
+    \draw[normal lines] (5.3cm,18.82cm) -- (5.3cm, 20.7cm); % inner box left line 
+    \draw[normal lines] (10.7cm,18.82cm) -- (10.7cm, 20.7cm); % inner box right line 
+%% INSERT THE NOTEBOOK YEAR | NUMBER
+    \node (t) [font=\small, anchor=center] at (3.55cm, 19.7cm) {\textbf{2024 $|$ Notebook \# 2}};
+%% INSERT THE PAGE NUMBER
+    \node (t) [font=\normalsize, anchor=center] at (15.08cm, 0.5cm) {\textbf{\thepage}};
+  \end{tikzpicture}%
+}}
+
+% Code to repeat a code X number of times
+\usepackage{xparse}
+\ExplSyntaxOn
+\box_new:N \l_krirkrirk_box
+\NewDocumentEnvironment{RepeatedBlock}{m +b}{
+  \box_clear:N \l_krirkrirk_box
+  \vbox_set:Nn \l_krirkrirk_box {#2}
+  \prg_replicate:nn {#1} {\box_use:N \l_krirkrirk_box }
+}{}
+\ExplSyntaxOff
+
+
+% ===========================================================================
+\begin{document}
+\pagestyle{empty}
+
+~~
+
+\begin{RepeatedBlock}{5075}
+\clearpage
+~
+\end{RepeatedBlock}
+
+\end{document}

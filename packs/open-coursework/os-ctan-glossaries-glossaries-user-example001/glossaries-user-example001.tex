@@ -1,0 +1,44 @@
+% This file is embedded in glossaries-user.pdf 
+% Example 1 Simple document with no glossary
+% Label: "ex:simplenogloss"
+% arara: pdflatex
+% arara: pdfcrop
+\documentclass[12pt]{article}
+\pagestyle{empty}
+\usepackage[
+ sort=none % no sorting or indexing required
+ ] {glossaries} 
+
+\newglossaryentry
+{cafe}% label
+ {% definition:
+ name={café},
+ description={small restaurant selling refreshments}
+} 
+
+\setacronymstyle{long-short} \newacronym
+{html}% label
+ {HTML}% short form
+ {hypertext markup language}% long form
+ 
+
+\newglossaryentry
+{pi}% label
+ {% definition:
+ name={\ensuremath{\pi}},
+ description={Archimedes' Constant}
+} 
+
+% This is a trivial example. For a real document I recommend you use siunitx for units
+ \newglossaryentry
+ {distance}% label
+ {% definition:
+ name={distance},
+ description={the length between two points},
+ symbol={m}
+} 
+\begin{document}
+First use: \gls{cafe}, \gls{html}, \gls{pi}. Next use: \gls{cafe}, \gls{html}, \gls{pi}. 
+
+\Gls{distance} (\glsentrydesc{distance}) is measured in \glssymbol{distance}. 
+\end{document}

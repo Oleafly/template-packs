@@ -1,0 +1,67 @@
+\documentclass{standalone}
+\usepackage{hyperref}
+\usepackage{tikz}
+
+\usetikzlibrary{positioning, shapes.geometric, arrows.meta}
+
+\begin{document}
+
+\tikzset{
+	message/.style={
+			draw,
+			rectangle,
+			rounded corners,
+			text width=7cm,
+			align=left
+		},
+	assistant/.style={
+			message,
+			anchor=north west,
+			fill=blue!30
+		},
+	user/.style={
+			message,
+			anchor=north east,
+			fill=blue!70,
+			text=white
+		},
+}
+
+\newcommand{\chat}[1]{
+	\begin{tikzpicture}[node distance=0.5cm]
+		\node (assistant) at (0,0) {};
+		\node (user) at (10,0) {};
+		\foreach \who/\what [count=\i, remember=\i as \lasti (initially 0)] in #1 {
+				\ifnum\i=1
+					\node[\who] (\i) at (\who) {\what};
+				\else
+					% use remember keyword instead
+					%\pgfmathtruncatemacro{\j}{\i-1}
+					\node[below=of \lasti.south -| \who, \who] (\i) {\what};
+				\fi
+			}
+	\end{tikzpicture}
+}
+
+\chat{{
+assistant/{Hi, how can I help you?},
+user/{Hi tikzGPT! I need a cool tikz graphic, that draws me a chat with a LLM assistant!},
+assistant/{No problem, just watch this tutorial:\\\url{https://www.youtube.com/watch?v=dQw4w9WgXcQ}}
+}}
+
+% if you want to draw each node manually:
+% \begin{tikzpicture}[node distance=0.5cm]
+% 	\node[draw, circle] (left) at (0,0) {};
+% 	\node[draw, circle] (right) at (10,0) {};
+% 
+% 	\node[assistant] (msg1) at (left) {Hi, how can I help you?};
+% 
+% 	\node[below=of msg1.south -| right, user] (msg2) {I need a cool tikz graphic!};
+% 
+% 	\node[below=of msg2.south -| left, assistant] (msg3) {No problem, just watch this tutorial:\\
+% 		\url{https://www.youtube.com/watch?v=dQw4w9WgXcQ}};
+% 
+% 
+% \end{tikzpicture}
+
+\end{document}

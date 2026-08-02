@@ -1,0 +1,214 @@
+
+% https://github.com/deluf/bare-metal-cv/
+
+% --- DOCUMENT SETTINGS ---
+
+\documentclass[11pt]{article} 
+% This line defines the overall class (type) of the LaTeX document.
+% Different classes have different default settings, commands, margins, fonts, and behavior.
+% Common classes are "book", "letter" and "article".
+% The latter is the most appropriate for short documents such as a CV/resume
+
+\pagestyle{empty}
+% No headers, no footers, no bullshit (e.g., removes the page number when using the "article" class)
+
+\setlength{\parindent}{0pt} 
+% Disables automatic paragraph indentation (i.e., does not indent the first word of each new line)
+
+% --- PACKAGES ---
+
+% Packages expand the functionality of plain LaTeX. We are only going to use the bare minimum:
+\usepackage{charter}    % A better looking font (IMO, feel free to remove)
+\usepackage{geometry}   % A standard package for adjusting the layout of the document
+\usepackage{hyperref}   % Clickable links/urls
+\usepackage{enumitem}   % Gives fine control over lists
+
+% --- PACKAGES SETTINGS ---
+
+\geometry{
+    letterpaper,
+    % "letterpaper" is the US standard for printable paper. 
+    % The rest of the world uses "a4paper", which is slightly taller and narrower.
+    % Not that big of a deal IMO, no one prints CVs nowadays. Change only if you have a reason to
+    left=0.075\paperwidth,
+    right=0.075\paperwidth,
+    top=0.05\paperheight,
+    bottom=0.05\paperheight
+    % Margins are expressed in percentages relative to the paper dimensions.
+    % You can also specify the margins in millimiter (mm), inches (in) or points (pt)
+}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\setlist[itemize]{
+    % A slightly smaller bullet point instead, raised to be center aligned with the text
+    label=\raisebox{1pt}{\footnotesize\textbullet},
+    topsep=0pt,       % No space above/below the list
+    itemsep=0pt,      % No space between items
+    parsep=0pt,       % No space within items
+    leftmargin=20pt   % Reduced space left to the bullet point
+}
+
+% --- CUSTOM COMMANDS ---
+
+\newcommand
+{\opensection}[1]{
+    \uppercase{#1}  % The section title (passed as the only [1] argument)
+    \vspace{3pt}    % Vertical space to separate from the section above
+    \hrule          % An horizontal line
+    \begin{center}  % Slightly offset the contents of the section
+    \begin{minipage}[]{0.975\textwidth}
+}
+
+\newcommand
+{\closesection}{
+    \end{minipage}
+    \end{center}
+}
+
+\newcommand
+{\smallvspace}{
+    \vspace{5pt}
+}
+% Custom vspace command used for consistent spacing across the document
+
+% --- BODY ---
+
+\begin{document} % The actual content starts here - the ones above are just settings
+
+% --- NAME & CONTACTS ---
+
+\begin{center} 
+    
+    {\LARGE \textbf{FirstName LastName} } \\
+    % Use a big (\LARGE) font size and bold (\textbf) font weight for the title (\\ means line break).
+    % For a full list of possible font sizes, check: https://www.overleaf.com/learn/latex/Font_sizes%2C_families%2C_and_styles#Putting_it_all_together
+    
+    \smallvspace
+    
+    % For this section, restrict the horizontal space to 90% of the document body (\textwidth).
+    % Adjust the percentage as needed (completely remove the minipage to use all available width)
+    \begin{minipage}{0.9\textwidth}
+        +00 000 000 0000 \hfill 
+        \href{https://github.com/you}{github.com/you} \hfill 
+        \href{https://yourwebsite.org}{yourwebsite.org} \hfill
+        \href{https://linkedin.com/in/you}{linkedin.com/in/you} \hfill 
+        email@example.com
+    \end{minipage}
+
+    % Notes:
+    % \hfill expands to as much horizontal space as needed to fill a whole line
+    % \href syntax is: \href{true url}{display text}
+
+\end{center}
+
+% If your links don't fit on a single line, you can build pretty much any layout
+%  using \hspace{} \hfill \\ and \vspace (anyway you can ask any LLM to do that)
+
+% --- EXPERIENCE ---
+
+\opensection{Experience}
+
+\textbf{Company name} \hfill Jan 2025 - Current \\
+Job title \hfill City, State
+\begin{itemize}
+    \item Accomplished X by implementing Y which led to Z
+    \item Increased test coverage of the Android app by 80\%, which reduced bug tickets from users by 50\% 
+    % Note how you must escape (prefix with \) the % symbols otherwise they are interpreted as comments
+    \item Built a Node.js API and microservice from scratch with 70\% + unit test coverage to serve 100,000+ users
+\end{itemize}
+
+\smallvspace
+
+\textbf{Company name} \hfill Jun 2023 - Sept 2023 \\
+Job title \hfill City, State 
+\begin{itemize}
+    \item Reduced android client size by 4.2 MBs, which is correlated to a 0.4\% increase in signups
+    \item Helped the team achieve a X\% increase in velocity through the use of the burndown chart and Jira
+    \item Developed and deployed an machine learning model to mitigate first-party fraud by \$2.7M in Q4\texttt{'}19
+\end{itemize}
+
+\closesection
+
+% --- EDUCATION ---
+
+\opensection{Education}
+
+\textbf{University name} \hfill May 2026 \\
+Degree name \hfill City, State
+\begin{itemize}
+    \item Final grade / GPA / Thesis title
+    \item Track / Relevant coursework
+\end{itemize}
+
+% Note: if you type " (e.g., in the thesis title), LaTeX will probably substitute it
+%  with some kind of "smart" or "fancy" quote instead. To force plain ASCII " you can
+%  user \verb|"| or \texttt{"}
+
+\smallvspace
+
+\textbf{University name} \hfill Sept 2023 \\
+Degree name \hfill City, State
+\begin{itemize}
+    \item Final grade / GPA / Thesis title
+    \item Track / Relevant coursework
+\end{itemize}
+
+\closesection
+
+% --- PROJECTS ---
+
+\opensection{Projects}
+
+\textbf{Project name} | \textit{Tech stack}
+\hfill [\href{https://github.com/you}{github.com/you/a}] \\
+Developed an open-source library with Y+ GitHub stars that solves Z problem
+
+\smallvspace
+
+\textbf{Project name} | \textit{Tech stack}
+\hfill [\href{https://github.com/you}{github.com/you/b}] \\
+Created a monitoring dashboard for CI/CD pipelines; downloaded X times; adopted by Y enterprise teams
+
+\smallvspace
+
+\textbf{Project name} | \textit{Tech stack}
+\hfill [\href{https://github.com/you}{github.com/you/c}] \\
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam lobortis facilisis sem. Nullam nec mi et neque pharetra sollicitudin. Praesent imperdiet mi nec ante. Donec ullamcorper, felis non sodales commodo, lectus velit ultrices augue, a dignissim nibh lectus placerat pede
+
+\closesection
+
+% --- ACHIEVEMENTS ---
+
+\opensection{Achievements}
+
+\begin{itemize}
+    \item Volunteered for X cause, raised Y\$
+    \item X player ranked among top Y\% in Z year ratings
+    \item Competed in X, achieved score Y (top Z\% out of W participants)
+    \item Awarded scholarship X of Y\$ for Z reason
+\end{itemize}
+
+\closesection
+
+% --- EXTRACURRICULAR ---
+
+\opensection{Extracurricular}
+
+\textbf{Skills}: Cloud computing (Hadoop, Spark), object-oriented programming (Java, C++), linux systems, functional programming (Erlang, Haskell)
+
+\smallvspace
+
+\textbf{Languages}: Italian (native), Ukrainian (native), English (full professional proficiency)
+
+\smallvspace
+
+\textbf{Personal interests}: Trekking, rowing, mixed martial arts, fishing
+
+\closesection
+
+\end{document}

@@ -1,0 +1,101 @@
+\documentclass[11pt]{exam}
+\usepackage[utf8]{inputenc}		% Caracteres latinos
+\usepackage[spanish]{babel}		% Idioma español
+\usepackage{geometry}			% Organizar el documento
+\usepackage{graphicx}			% Incluir gráficos
+\usepackage{makecell}			% Para personalizar las celdas de una tabla
+\usepackage[nohdr]{mathexam}	% Añadimos el paquete mathexam (sin header)
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+%\usepackage[]{mathptmx}        % A free version o Times Roman with mathematical symbols
+%\usepackage{pzc}               % fuente cursiva (conjuntos) Zapf Chancery
+%\usepackage{showframe}
+%\usepackage{lipsum}
+
+% DOCUMENTACIÓN DE LA CLASE EXAM
+% http://ftp.inf.utfsm.cl/pub/tex-archive/macros/latex/contrib/exam/examdoc.pdf
+% DOCUMENTACIÓN DE LA CLASE MATHEXAM
+% http://ctan.dcc.uchile.cl/macros/latex/contrib/mathexam/doc/mathexam.pdf
+
+% Definimos la geometría de la primera página
+\geometry{
+	a4paper,                    % Tamaño del documento
+	hmargin = {1.5cm, 0.5cm}, 	% Margen horizontal izquierdo, derecho
+	vmargin = {0.5cm, 1cm},	    % Margen vertical superior, inferior
+	headsep = 4mm,				% Separación entre el encabezado y el texto
+	head = 2.5cm,				% Tamaño del encabezado
+	% marginparsep = 5mm, 		% Seperación entre las notas y el texto
+	% marginpar = 1.5cm,		% Tamaño de las notas
+	includeall,                 % incluye el encabezado, footer y notas dentro del tamaño del documento
+	nomarginpar,	            % Elimina las notas
+	foot = 1cm,                 % Tamaño del footer
+	twoside,                	% Habilita el modo de impresión a doble cara
+}
+
+\selectlanguage{spanish}        % Selecciona el idioma
+
+\pagestyle{headandfoot}         % Nuestro examen tendrá encabezado y pié
+
+% DEFINIMOS EL ENCABEZADO
+\header{
+\begin{tabular}{l c c c l}
+            \makecell{\includegraphics[height=2.5cm]{logo.png}} &
+            \makecell{\textbf{IPEA 215} \\Raúl Scalabrini Ortiz} &
+            \makecell{Examen} &
+            \makecell{Curso\\1er Año} &
+            \makecell[l]{Apellido y Nombre:\enspace\makebox[2in]{\hrulefill}\\Fecha: \today}
+        \end{tabular}}{}{}
+
+% DEFINIMOS EL PIE
+\rfoot{Página \thepage\ de 
+umpages}
+
+% DOCUMENTO
+\begin{document}
+
+\ExamInstrBox{\centering Por favor, muestre todo el desarrollo de su trabajo! No se dará crédito a las respuestas que no tengan trabajo de apoyo. Escriba las respuestas en los espacios provistos. Tiene 1 hora y 20 minutos para completar este examen.}
+
+\pointpoints{punto}{puntos}
+\pointformat{\bfseries\boldmath(\thepoints)}
+\begin{questions}
+    \question[1] ¿Qué gusto tiene la sal?
+    
+    \question[10] Contestar las siguientes preguntas:
+    \begin{parts}
+        \part[5]    ¿Qué es una fracción equivalente?
+        \part[5]    De un ejemplo de suma de fracciones.
+    \end{parts}
+    
+    \question[30] Resolver los siguientes cálculos combinados:
+    \begin{parts}
+        \part[10]    $ -3 + \frac{1}{2} \cdot 5= $
+        \part[10]    $ x^2-1=0 $
+        \part[10]    $ a_n = \frac{1}{n} + 3 \cdot \frac{1}{n} $
+    \end{parts}
+\end{questions}
+
+% Geometría para la otra carilla
+
+ewgeometry{
+	hmargin = {1.5cm, 0.5cm},
+	vmargin = {0.5cm, 1cm},
+	%nofoot,			% Elimina el pié
+	nohead,			% Elimina el encabezado
+	nomarginpar,	% Elimina las notas
+	includeall,
+}% \savegeometry{geometria_1}
+
+\pagestyle{foot}    % El estilo de ésta página sólo constará de pié de página
+\runningfooter{}{}{Página \thepage\ de 
+umpages}
+
+
+%\lipsum[1-5]
+
+% \restoregeometry
+% \loadgeometry{geometria_1}
+
+
+\end{document}

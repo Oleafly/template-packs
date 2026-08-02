@@ -1,0 +1,145 @@
+% ------------------------------------------------------------------
+% ------------------------------------------------------------------
+% Modelo para trabalho de disciplina do PPGEE-IFPB
+% Autor: Gabriel Gutierrez P. Soares
+% Data: 21 de abril de 2021
+%
+% Se você está vendo esse projeto no Overleaf, clique no Menu
+% (botão no canto superior esquerdo), e em seguida no link 
+% "Copy Project" para criar uma cópia editável na sua conta.
+% Essa opção só vai aparecer se você estiver logado no Overleaf.
+%
+% Baseado na classe abntex2: https://www.abntex.net.br/
+% e no seu Modelo de Artigo Científico
+% ------------------------------------------------------------------
+% ------------------------------------------------------------------
+\documentclass[
+	% -- opções da classe memoir --
+	article,			% indica que é um artigo acadêmico
+	12pt,				% tamanho da fonte
+	oneside,			% para impressão apenas frente. Oposto a twoside
+	a4paper,			% tamanho do papel. 
+	% -- opções da classe abntex2 --
+	chapter=TITLE,		% títulos de capítulos em letras maiúsculas
+	section=TITLE,		% títulos de seções em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções em letras maiúsculas
+	%subsubsection=TITLE % títulos de subsubseções em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	brazil				% o último idioma é o principal do documento
+	]{abntex2}
+\usepackage{newtxtext,newtxmath}    % fonte Times New Roman
+\usepackage[T1]{fontenc}        % codificação dos caracteres no PDF
+\usepackage[utf8]{inputenc}     % codificação do arquivo
+\usepackage{graphicx}           % inclusão de figuras
+\usepackage[num]{abntex2cite}   % citações ABNT sistema numérico
+\usepackage{indentfirst}        % indentar 1o. parágrafo
+\usepackage{parskip}            % espaço entre parágrafos
+\usepackage{microtype} 			% para melhorias de justificação
+\usepackage{color}
+\usepackage[section]{placeins}  % comando \FloatBarrier
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{caption, subcaption}
+
+
+\titulo{Título do Trabalho}
+\autor{Nome do Autor 1 \and Nome do Autor 2}
+
+
+% Títulos de capítulos, seções etc. em fonte serifada
+\renewcommand{\ABNTEXchapterfont}{\rmfamily}
+
+% ---
+% Formatação de referências
+% ---
+\citebrackets[]
+\makeatletter
+\renewcommand{\@biblabel}[1]{[#1]\quad}
+\makeatother
+\AtBeginDocument{\citeoption{abnt-emphasize=bf}}
+\renewcommand{\citeonline}[1]{\citeauthoronline{#1} \cite{#1}}
+% ---
+
+
+% ---
+% Configurações do PDF
+% ---
+\makeatletter
+\hypersetup{
+    pdftitle={\@title}, 
+    pdfauthor={\@author},
+    pdfsubject={},
+    pdfcreator={LaTeX with abnTeX2},
+    pdfkeywords={}, 
+    colorlinks=true,    % false: boxed links; true: colored links
+    linkcolor=black,    % color of internal links
+    citecolor=black,    % color of links to bibliography
+    filecolor=black,    % color of file links
+    urlcolor=black,
+    bookmarksdepth=4
+}
+\makeatother
+% ---
+
+% ---
+% Altera as margens padrões
+% ---
+\setlrmarginsandblock{3cm}{3cm}{*}
+\setulmarginsandblock{3cm}{3cm}{*}
+\checkandfixthelayout
+% ---
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+% Recuo da primeira linha do parágrafo
+\setlength{\parindent}{1.3cm}
+% Espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}
+\OnehalfSpacing                 % espaço entre linhas 1,5
+% ---
+
+% Configuração pacote enumitem (itemize, enumerate)
+\setlist{parsep=0pt, leftmargin=1.3cm}
+
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+% Seleciona o idioma do documento (conforme pacotes do babel)
+\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+\include{capa}
+
+\include{resumos}
+
+% Sumário
+\tableofcontents*
+
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+\include{conteudo}
+
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+
+% Referências bibliográficas
+\bibliography{referencias}
+
+\end{document}

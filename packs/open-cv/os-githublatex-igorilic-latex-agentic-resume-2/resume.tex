@@ -1,0 +1,198 @@
+% =============================================================================
+%  latex-agentic — single-page resume template
+%  Engine: XeLaTeX ONLY (compile with `latexmk` or `make pdf`).
+%
+%  Design goals:
+%    * One page, clear visual hierarchy, a single tasteful accent colour.
+%    * ATS-friendly: real selectable text, standard section names, no tables
+%      for the main content flow, no icon fonts used as content.
+%    * Portable: built on the stock `article` class plus widely available
+%      packages — NO exotic resume document classes. Works on any TeX Live.
+%
+%  HOW TO EDIT (read this!):
+%    1. Replace the persona block under "PERSONAL DETAILS" with your own.
+%    2. Each \role / \entry / bullet is plain text — just overwrite it.
+%    3. Keep it to one page: trim bullets before shrinking fonts.
+%    4. The accent colour is one line (\definecolor{accent}); change it freely.
+% =============================================================================
+\documentclass[a4paper,11pt]{article}
+
+% --- Geometry: tight, even margins for a dense but breathable single page ---
+\usepackage[
+  top=1.4cm, bottom=1.4cm, left=1.6cm, right=1.6cm
+]{geometry}
+
+% --- Fonts (XeLaTeX / fontspec) ---------------------------------------------
+% A sans-serif face reads as modern and stays crisp on screen and in print.
+% We try several fonts in order and use the first one that exists, so this
+% file compiles whether or not you have the "nice" fonts installed:
+%
+%   1. Source Sans 3 / Source Sans Pro  (clean humanist sans, may need install)
+%   2. Lato                             (ships with TeX Live: tlmgr "lato")
+%   3. TeX Gyre Heros                   (ships with TeX Live; Helvetica-like)
+%   4. Latin Modern Sans                (always present — last resort)
+%
+% \IfFontExistsTF tests by font *name* first; for the TeX Live faces we fall
+% back to testing by *filename*, which always resolves inside the TeX tree.
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+
+\IfFontExistsTF{Source Sans 3}{%
+  \setmainfont{Source Sans 3}%
+}{\IfFontExistsTF{Source Sans Pro}{%
+  \setmainfont{Source Sans Pro}%
+}{\IfFontExistsTF{Lato}{%
+  \setmainfont{Lato}%
+}{\IfFontExistsTF{texgyreheros-regular.otf}{%
+  \setmainfont{TeX Gyre Heros}[%
+    Path=, % resolved via the TeX tree
+    Extension=.otf,
+    UprightFont=texgyreheros-regular,
+    BoldFont=texgyreheros-bold,
+    ItalicFont=texgyreheros-italic,
+    BoldItalicFont=texgyreheros-bolditalic]%
+}{%
+  \setmainfont{Latin Modern Sans}% always available
+}}}}
+
+% --- Colour, sectioning, lists, links ---------------------------------------
+\usepackage{xcolor}
+% Accent colour — one tasteful blue-teal. Change these RGB values to rebrand.
+\definecolor{accent}{HTML}{1F6F8B}
+\definecolor{rulegrey}{HTML}{D0D5DA}
+\definecolor{textgrey}{HTML}{444B52}
+
+\usepackage{titlesec}   % custom, compact section headings
+\usepackage{enumitem}   % tight, configurable lists
+\usepackage{microtype}  % subtle spacing polish
+\usepackage[autostyle=true]{csquotes}
+
+% hyperref LAST. colorlinks keeps the PDF clean (no boxes) and ATS-safe.
+\usepackage[
+  unicode=true,
+  hidelinks,            % no coloured boxes; links still clickable
+  pdftitle={Jane Doe — Software Engineer},
+  pdfauthor={Jane Doe}
+]{hyperref}
+
+% --- Section heading style: accent text + a thin full-width rule ------------
+% Note: the heading text is upper-cased via the 4th argument (\MakeUppercase
+% wraps only the title), NOT via a prefix in the format spec — otherwise the
+% colour names in the trailing rule would be upper-cased too and break.
+\titleformat{\section}
+  {\color{accent}\large\bfseries}             % look (no uppercase here)
+  {}{0pt}                                      % no number, no label sep
+  {\MakeUppercase}                             % apply uppercase to title only
+  [\vspace{-0.55em}{\color{rulegrey}\titlerule[1pt]}] % rule under heading
+\titlespacing*{\section}{0pt}{0.9em}{0.5em}
+
+% --- Reusable building blocks (edit content, not these macros) --------------
+% \entry{Title}{Right-hand note (e.g. dates)}{Subtitle / employer}{Location}
+\newcommand{\entry}[4]{%
+  \par\smallskip
+  \noindent\textbf{#1}\hfill{\color{textgrey}\small #2}\\[1pt]
+  {\color{accent}\small #3}\hfill{\color{textgrey}\small\itshape #4}\par
+}
+
+% Compact bullet list used under each entry.
+\newlist{points}{itemize}{1}
+\setlist[points]{
+  leftmargin=1.2em, topsep=2pt, itemsep=1.5pt, parsep=0pt,
+  label={\color{accent}\textbullet}
+}
+
+% A "Skills"-style labelled line: \skillline{Languages}{Go, Python, ...}
+\newcommand{\skillline}[2]{%
+  \noindent\textbf{#1:}~{#2}\par\smallskip%
+}
+
+\setlength{\parindent}{0pt}
+\pagestyle{empty}  % no page numbers on a one-pager
+
+\begin{document}
+
+% =============================================================================
+%  HEADER — name, role, and a single contact line with live links.
+%  The contact line uses \href so email/GitHub/LinkedIn are clickable in the
+%  PDF while still printing as plain, ATS-readable text.
+% =============================================================================
+% The new-resume skill replaces the sample name "Jane Doe" with the candidate's
+% name (here and in the hyperref pdftitle/pdfauthor above). Editing by hand?
+% Just overwrite it.
+{\Huge\bfseries\color{accent} Jane Doe}\\[2pt]
+{\large\color{textgrey} Senior Software Engineer}\\[6pt]
+{\small
+  \href{mailto:jane.doe@example.com}{jane.doe@example.com}
+  \quad\textbar\quad +1 (555) 010-2920
+  \quad\textbar\quad San Francisco, CA
+  \\[2pt]
+  \href{https://github.com/janedoe}{github.com/janedoe}
+  \quad\textbar\quad
+  \href{https://www.linkedin.com/in/janedoe}{linkedin.com/in/janedoe}
+  \quad\textbar\quad
+  \href{https://janedoe.dev}{janedoe.dev}%
+}
+
+% =============================================================================
+\section{Summary}
+% 2–3 lines. Lead with seniority + specialism + a headline result.
+Backend-leaning full-stack engineer with 8 years building reliable,
+high-throughput services. Ship-focused, pragmatic about trade-offs, and happy
+mentoring. Reduced infrastructure spend by 30\% while improving p99 latency on
+a platform serving 4M daily users.
+
+% =============================================================================
+\section{Experience}
+% Reverse-chronological. Quantify outcomes ("by 30\%", "to 120ms") — numbers
+% survive ATS parsing and catch a human reader's eye.
+
+\entry{Senior Software Engineer}{2021 -- Present}{Northwind Systems}{San Francisco, CA}
+\begin{points}
+  \item Led the migration of a monolith to 12 Go microservices, cutting
+        mean deploy time from 40 minutes to under 6 and halving on-call pages.
+  \item Designed an event-driven billing pipeline (Kafka, PostgreSQL) handling
+        2M events/day with 99.98\% delivery accuracy.
+  \item Mentored 5 engineers; introduced a code-review rubric that dropped
+        post-release defects by 22\% quarter over quarter.
+\end{points}
+
+\entry{Software Engineer}{2017 -- 2021}{Cobalt Labs}{Austin, TX}
+\begin{points}
+  \item Built the company's first public REST + GraphQL API, adopted by 80+
+        external partners within a year.
+  \item Cut median API latency from 310ms to 120ms by introducing read
+        replicas and a Redis caching layer.
+  \item Automated the release pipeline (CI/CD), enabling daily deploys and
+        reducing manual release effort by roughly 15 hours per week.
+\end{points}
+
+% =============================================================================
+\section{Education}
+\entry{B.Sc. in Computer Science}{2013 -- 2017}{University of Example}{Boston, MA}
+\begin{points}
+  \item Graduated with honours (GPA 3.8/4.0); focus on distributed systems.
+\end{points}
+
+% =============================================================================
+\section{Skills}
+% Grouped, compact lines. Keep them scannable; lead with your strongest stack.
+\skillline{Languages}{Go, Python, TypeScript, SQL, Bash}
+\skillline{Backend}{gRPC, REST, GraphQL, Kafka, PostgreSQL, Redis}
+\skillline{Infrastructure}{Docker, Kubernetes, Terraform, AWS, GitHub Actions}
+\skillline{Practices}{TDD, observability (OpenTelemetry), code review, mentoring}
+
+% =============================================================================
+\section{Projects}
+\entry{ledgerlite — open-source double-entry ledger}{2023}{github.com/janedoe/ledgerlite}{}
+\begin{points}
+  \item A 4k-line Go library for embedded accounting; 1.2k GitHub stars and
+        used in production by three startups.
+\end{points}
+
+\entry{texwatch — incremental LaTeX rebuilder}{2022}{github.com/janedoe/texwatch}{}
+\begin{points}
+  \item A tiny file-watcher that rebuilds LaTeX projects on save; featured in a
+        popular newsletter, 600+ stars.
+\end{points}
+
+\end{document}

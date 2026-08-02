@@ -1,0 +1,261 @@
+% PhD Annual Progress Report — elegant template
+% Edit or compile online at https://letx.app
+% Compile: latexmk -pdf main.tex  (pdflatex, zero errors)
+
+\documentclass[11pt, a4paper]{article}
+
+% ── Packages ────────────────────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lato}
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage[
+  top=22mm, bottom=22mm,
+  left=22mm, right=22mm
+]{geometry}
+
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{hyperref}
+
+% ── Colour palette ───────────────────────────────────────────────────────────
+\definecolor{accent}{HTML}{1B4F8A}      % deep slate-blue (single accent)
+\definecolor{accentlt}{HTML}{D9E6F5}    % very light tint for header bg
+\definecolor{neutral}{HTML}{4A4A4A}     % body text grey
+\definecolor{rulecolor}{HTML}{BBCFE8}   % light rule / table line colour
+
+% Fix parskip / tabular misalignment (AGY_BRIEF rule 3)
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+% ── Typography ───────────────────────────────────────────────────────────────
+\color{neutral}
+\hypersetup{colorlinks=true, urlcolor=accent, linkcolor=accent}
+
+% ── Section headings (titlesec) ──────────────────────────────────────────────
+\titleformat{\section}
+  {\large\bfseries\color{accent}}
+  {}
+  {0pt}
+  {}
+  [\vspace{1pt}{\color{rulecolor}\hrule height 0.8pt}\vspace{4pt}]
+
+\titlespacing*{\section}{0pt}{14pt}{4pt}
+
+% ── Helper macros ─────────────────────────────────────────────────────────────
+% Key/value info box row — baseline-l key column (AGY_BRIEF rule 2)
+\newcommand{\inforow}[2]{%
+  \textcolor{accent}{\textbf{#1}} & #2 \\[2pt]
+}
+
+% Status badge
+\newcommand{\done}{\textcolor{white}{\bfseries\footnotesize\ Completed\ }}
+\newcommand{\inprog}{\textcolor{white}{\bfseries\footnotesize\ In Progress\ }}
+\newcommand{\pending}{\textcolor{white}{\bfseries\footnotesize\ Planned\ }}
+
+\newcommand{\statbadge}[1]{%
+  \ifnum1=1
+    \expandafter\csname stat@#1\endcsname
+  \fi
+}
+\newcommand{\statCompleted}{%
+  \colorbox{accent!80!black}{\done}}
+\newcommand{\statInProgress}{%
+  \colorbox{accent}{\inprog}}
+\newcommand{\statPlanned}{%
+  \colorbox{neutral!60}{\pending}}
+
+% Supervisor comments box — named 'rvcomment' to avoid collision (AGY_BRIEF rule 4)
+\tcbuselibrary{skins, breakable}
+\newtcolorbox{rvcomment}{
+  enhanced,
+  breakable,
+  colback=accentlt,
+  colframe=accent,
+  leftrule=3pt,
+  toprule=0pt,
+  bottomrule=0pt,
+  rightrule=0pt,
+  arc=0pt,
+  left=8pt, right=8pt,
+  top=7pt, bottom=7pt,
+  fontupper=\small,
+}
+
+% ── Title block ──────────────────────────────────────────────────────────────
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries\color{accent} PhD Annual Progress Report}\\[4pt]
+  {\small\color{neutral!80} School of Computing \& Information Science\enspace·\enspace
+   University of Edinburgh}\\[6pt]
+  {\color{rulecolor}\rule{\linewidth}{1.2pt}}
+\end{center}
+
+\vspace{3pt}
+
+% ── Info table (baseline l-column, NOT p{}, per AGY_BRIEF rule 2) ────────────
+\begin{tabularx}{\linewidth}{@{}>{\color{accent}\bfseries}l@{\hspace{10mm}}>{\raggedright\arraybackslash}X@{}}
+  \inforow{Student}         {Amara J.\ Osei}
+  \inforow{Student ID}      {s2184739}
+  \inforow{Programme}       {PhD Computer Science}
+  \inforow{Primary Supervisor}{Prof.\ Elena V.\ Marchetti}
+  \inforow{Second Supervisor}{Dr.\ Ryu Tanaka}
+  \inforow{Year of Study}   {Year 2 of 4}
+  \inforow{Reporting Period}{January 2025 – June 2025}
+  \inforow{Submission Date} {4 July 2025}
+\end{tabularx}
+
+\vspace{2pt}
+{\color{rulecolor}\hrule height 0.6pt}
+\vspace{8pt}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{Research Objectives}
+
+My thesis investigates \textbf{privacy-preserving federated learning for clinical NLP}:
+specifically, how language models can be fine-tuned across hospital siloes without
+centralising patient data. The three core objectives are:
+
+\begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=2pt]
+  \item Design and evaluate a differentially-private federated fine-tuning protocol for
+        clinical BERT-style models across heterogeneous data distributions.
+  \item Quantify the utility–privacy trade-off on two real-world cohorts (MIMIC-III
+        discharge summaries; NHS Scotland free-text notes).
+  \item Develop a lightweight audit mechanism enabling regulators to verify differential-privacy
+        guarantees without accessing raw model weights.
+\end{enumerate}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{Progress This Period}
+
+\textbf{Literature \& baseline.}\enspace
+Completed a systematic review of 78 papers on federated NLP and clinical text mining.
+Established a centralised (non-private) fine-tuning baseline: Bio-BERT achieves
+F\textsubscript{1}\,=\,0.847 on NER of clinical entities in MIMIC-III held-out test
+set, confirming the upper bound for subsequent federated experiments.
+
+\textbf{DP-Fed implementation.}\enspace
+Implemented \textsc{DP-FedAvg} with Gaussian noise mechanism in PyTorch +
+\textsc{Flower} (fl.dev). Ran ablations over privacy budgets
+$\varepsilon \in \{1, 2, 4, 8\}$ with $\delta = 10^{-5}$.
+At $\varepsilon = 4$ the federated model recovers 96.1\% of baseline F\textsubscript{1}.
+
+\textbf{Audit prototype.}\enspace
+Drafted design for a zero-knowledge proof–based audit log;
+cryptographic primitives selected; implementation begins Q3 2025.
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{Milestones \& Timeline}
+
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\linewidth}{@{}lX>{\centering\arraybackslash}l@{}}
+  \toprule
+  \textbf{\color{accent}Milestone} &
+  \textbf{\color{accent}Target Date} &
+  \textbf{\color{accent}Status} \\
+  \midrule
+  Literature review \& systematic survey        & March 2025      & \statCompleted \\
+  Centralised baseline model                    & March 2025      & \statCompleted \\
+  DP-FedAvg implementation \& ablations         & June 2025       & \statCompleted \\
+  NHS Scotland data access agreement            & August 2025     & \statInProgress \\
+  ZK-proof audit prototype (v1)                 & October 2025    & \statPlanned \\
+  First conference paper submitted              & November 2025   & \statPlanned \\
+  Transfer viva (18-month review)               & January 2026    & \statPlanned \\
+  Full thesis draft                             & December 2026   & \statPlanned \\
+  \bottomrule
+\end{tabularx}
+\renewcommand{\arraystretch}{1}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{Publications \& Presentations}
+
+\begin{description}[leftmargin=0pt, labelindent=0pt, itemsep=3pt, topsep=2pt]
+  \item[\textcolor{accent}{Workshop paper (under review)}]
+        A.~Osei, E.~V.~Marchetti, R.~Tanaka.
+        ``Differentially-Private Federated Fine-Tuning of Clinical Language Models.''
+        \textit{PrivateNLP @ ACL 2025}, Vienna, Austria. (Notification: Aug 2025.)
+
+  \item[\textcolor{accent}{Poster}]
+        A.~Osei. ``Privacy Budgets in Federated Clinical NLP.''
+        \textit{Edinburgh Doctoral Research Conference}, March 2025.
+        \textbf{Best Poster Award — School of Computing.}
+
+  \item[\textcolor{accent}{Internal seminar}]
+        Presented progress to the NLP \& Healthcare reading group (May 2025, 25 attendees).
+\end{description}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{Challenges}
+
+\begin{itemize}[leftmargin=*, itemsep=1pt, topsep=2pt]
+  \item \textbf{Data access delays.}\enspace Negotiations with NHS Scotland's Information
+        Governance team have taken longer than anticipated. A revised data-sharing agreement
+        is expected by July 2025; contingency plan uses synthetic EHR data if approval extends
+        past August 2025.
+
+  \item \textbf{Compute constraints.}\enspace Large-scale $\varepsilon$-sweep experiments
+        require significant GPU time. EPSRC Cloud allocation (Tier 2) has been applied for;
+        interim experiments run on the School's 4×A100 cluster.
+
+  \item \textbf{ZK-proof complexity.}\enspace Adapting Groth16 proofs to floating-point
+        DP noise accounting is non-trivial; additional reading on arithmetic circuits
+        planned for Q3.
+\end{itemize}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{Plan for Next Period (July – December 2025)}
+
+\begin{enumerate}[leftmargin=*, itemsep=1pt, topsep=2pt]
+  \item Finalise NHS Scotland data access and conduct cross-silo experiments on real
+        clinical text (\textit{target: September 2025}).
+  \item Complete ZK-proof audit prototype and benchmark overhead
+        (\textit{target: October 2025}).
+  \item Submit conference paper to PrivateNLP@ACL or EMNLP 2025 workshop
+        (\textit{target: November 2025}).
+  \item Begin writing Chapter 3 (federated protocol) of thesis
+        (\textit{target: December 2025}).
+  \item Prepare 18-month transfer viva documents (\textit{target: January 2026}).
+\end{enumerate}
+
+% ═══════════════════════════════════════════════════════════════════════════════
+\section{Supervisor's Comments}
+
+\begin{rvcomment}
+\textbf{Prof.\ Elena V.\ Marchetti} \hfill \textit{Primary Supervisor}\\[4pt]
+Amara has made excellent progress during this reporting period, particularly in
+establishing a rigorous centralised baseline and completing a thorough systematic
+review ahead of schedule. The DP-FedAvg results are promising and clearly
+demonstrate methodological competence. I am satisfied with the quality and pace
+of work.
+
+The principal concern for the next period is the NHS Scotland data access timeline;
+I encourage Amara to continue pressing Information Governance and to begin parallel
+experiments on the synthetic cohort so that momentum is not lost.
+The zero-knowledge audit extension is ambitious but well-motivated — I suggest
+scoping the initial prototype narrowly (single-layer noise accounting) to de-risk
+the November submission deadline.\\[6pt]
+
+\textbf{Dr.\ Ryu Tanaka} \hfill \textit{Second Supervisor}\\[4pt]
+Progress is on track. I concur with the above and add that the poster award
+recognition is a positive sign of communication quality. I look forward to
+reviewing the ZK-proof design document in September.\\[6pt]
+
+\rule{\linewidth}{0.4pt}\\[3pt]
+\textit{Supervisor signature:}\quad\underline{\hspace{50mm}}\quad
+\textit{Date:}\quad\underline{\hspace{28mm}}
+\end{rvcomment}
+
+\vspace{6pt}
+\noindent\textit{Student signature:}\quad\underline{\hspace{50mm}}\quad
+\textit{Date:}\quad\underline{\hspace{28mm}}
+
+\end{document}

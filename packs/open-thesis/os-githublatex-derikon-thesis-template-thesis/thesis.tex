@@ -1,0 +1,166 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[a4paper, 11pt, DIV9, headinclude, footinclude, onecolumn, normalheadings, headsepline, parindent, ngerman, bibliography=totoc, numbers=noenddot]{scrreprt}%{scrbook}
+
+
+
+% ================== - PACKAGES - ===================
+
+\usepackage[utf8]{inputenc}		% encoding
+\usepackage[T1]{fontenc}			% loading fonts
+\usepackage{geometry}			% page formats
+\usepackage{babel}				% languages
+\usepackage{blindtext}			% lorem ipsum
+\usepackage{lmodern}			% Latin modern
+\usepackage{microtype}			% 
+\usepackage{textcomp}			%
+\usepackage{gensymb}			% symbols
+\usepackage[%
+	table
+	]{xcolor}					% colors
+\usepackage{listings}			% syntax-highlighting
+\usepackage{wrapfig}			% images in text
+\usepackage{svg}				%
+\usepackage{graphicx} 			%
+\usepackage{subfig}				% multiple graphics per figure
+\usepackage{rotating}			% rotate images and text
+\usepackage[%					
+	labelfont=bf,
+	font={sl,small},
+	justification=justified,
+	%parskip=5pt
+	]{caption}					% figure captions
+\usepackage{mdwlist}			% formatting lists
+\usepackage{paralist}			% formatting lists
+\usepackage{amsmath,amssymb} 	% mathematic expressions and symbols
+\usepackage{multirow}			% multiple rows in table cells
+\usepackage{array}				% cell alignment in cells
+\usepackage[%
+	locale=DE
+	]{siunitx}					% text alignment in tables
+\usepackage{dcolumn}			% alignment in table cells
+\usepackage{booktabs}			% lines in tables
+%\usepackage{abstract}			% 
+\usepackage{csquotes}			% citation
+\usepackage[%
+	style=numeric-comp,			% use numbers
+	backend=bibtex,
+	sorting=ydnt,				% sort by date
+	maxbibnames=30,			% show all authors
+	url=true,
+	doi=false,
+	isbn=false,
+	backref
+	]{biblatex} 					% references
+\usepackage[%
+	nottoc,
+	numbib
+	]{tocbibind}				% table of content
+\usepackage[%
+	acronym,
+	toc,
+	translate=babel
+	]{glossaries}				%
+\usepackage{pdfpages}			% load PDF
+\usepackage{varioref}			%
+\usepackage{hyperref}			%
+\usepackage{cleveref}			%
+\usepackage{tabularx}			% extended functions for tables
+
+
+
+
+% ================== - DEFINITIONS - ===================
+
+% colors
+\definecolor{middlegray}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{orange}{rgb}{0.8,0.3,0.3}
+\definecolor{yac}{rgb}{0.6,0.6,0.1}
+
+% mathematic expressions
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\dark}{dark}
+\DeclareMathOperator*{\mean}{mean}
+\DeclareMathOperator*{\Sim}{Sim}
+
+% syntax-highlighting
+\lstset{
+	breaklines=true,
+	backgroundcolor=\color{lightgray},
+   	basicstyle=\scriptsize\ttfamily,
+   	keywordstyle=\bfseries\ttfamily\color{orange},
+   	stringstyle=\color{blue}\ttfamily,
+   	commentstyle=\color{middlegray}\ttfamily,
+   	emph={square}, 
+   	emphstyle=\color{blue}\texttt,
+   	emph={[2]root,base},
+   	emphstyle={[2]\color{yac}\texttt},
+   	showstringspaces=false,
+   	flexiblecolumns=false,
+   	tabsize=4,
+   	numbers=left,
+   	numberstyle=\tiny,
+   	numberblanklines=false,
+   	stepnumber=1,
+   	numbersep=10pt,
+   	xleftmargin=20pt,
+	aboveskip=5mm,
+	belowskip=5mm
+}
+
+\pagestyle{headings}
+\setcounter{secnumdepth}{2}
+%\setcounter{tocdepth}{4} 
+
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\makeglossaries
+\include{chp/acronyms}
+
+\bibliography{literature}
+
+\graphicspath{{./img/}}
+
+% ====================================================
+%					- END OF PREAMBLE -
+% ====================================================
+
+
+
+\begin{document}
+	
+	\include{chp/cover}
+	
+	\begingroup
+		\renewcommand*{\chapterpagestyle}{empty}
+		\pagestyle{empty}
+		\tableofcontents
+		\clearpage
+	\endgroup
+	\setlength\parindent{0pt}
+	
+	% uncomment for document class book
+	%\frontmatter
+	
+	\begingroup     
+		\let\clearpage\relax        
+		\printglossaries
+	\endgroup
+	
+	\include{chp/intro/introduction_motivation}
+	
+	% uncomment for document class book
+	%\mainmatter
+	
+	\include{chp/theory_related_work/theory_related_work}
+	\include{chp/conclusion}
+	
+	%\listoffigures
+	\printbibliography
+	
+	\appendix
+	\include{chp/appendix/appendix}
+	\include{chp/appendix/eigenstaendigkeitserklaerung}
+	
+\end{document}

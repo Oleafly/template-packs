@@ -1,0 +1,51 @@
+\documentclass[compress,9pt]{beamer}
+
+\usepackage{tikz}   %TikZ is required for this to work.  Make sure this exists before the next line
+
+\begin{document}
+	
+	\section{Area aproximation: Rectangles + Triangles }
+	\begin{frame}[fragile]{Area $\approxeq$ Rectangles + Triangles}
+		\begin{figure}[h]
+			\centering
+			\pgfmathsetmacro{\circleRadius}{4}
+			\resizebox{0.5\textwidth}{!}{
+				\begin{tikzpicture}
+				% Draw X axis
+				\draw[thick,->] (0,0) -- (\circleRadius+0.3,0) node[anchor=north west]{$t$};
+				% Draw X axis labels
+				\foreach \x in {0,...,\circleRadius}
+				{
+					\draw (\x,0) -- (\x,-3pt) node[anchor=north] {$t_\x$};
+				}
+				% Draw Y axis
+				\draw[thick,->] (0,0) -- (0,\circleRadius+0.3) node[anchor=south east]{$\omega$};
+				% Draw a quarter of circle
+				\draw[red,thick] (0,0\circleRadius) arc[start angle=90, end angle=0, radius=\circleRadius];
+				% Draw trapeziums
+				\foreach \thisX in {1,...,\circleRadius}
+				{
+					% Calculate rectangle points
+					\pgfmathsetmacro{\thisAngle}{acos((\thisX)/\circleRadius)}
+					\pgfmathsetmacro{\thisY}{\circleRadius*sin(\thisAngle)}
+					% Calculate triangle points
+					\pgfmathsetmacro{\previousAngle}{acos((\thisX-1)/\circleRadius)}
+					\pgfmathsetmacro{\previousY}{\circleRadius*sin(\previousAngle)}
+					% Draw triangle
+					\draw[dashed, fill=blue!30] (\thisX-1,\previousY) -- (\thisX-1,\thisY) -- (\thisX,\thisY) -- cycle;
+					% Draw rectangle
+					\draw[fill=gray!30] (\thisX-1,0) rectangle (\thisX,\thisY);
+					% draw y axis labels
+					\draw (0,\thisY) -- (-3pt,\thisY) node[anchor=east] {$\omega_\thisX$};
+				}
+				\end{tikzpicture}
+			}
+		\end{figure}	
+		
+		\begin{equation}\label{eq:omega2phiTrapezIni}
+		\boldsymbol{\theta}_k \approx \boldsymbol{\theta}_{k-1} + (t_k - t_{k-1}) \boldsymbol{\omega}_{k-1} + \frac{1}{2} (t_k - t_{k-1}) (\boldsymbol{\omega}_{k} - \boldsymbol{\omega}_{k-1}),\quad k \ge 1
+		\end{equation}
+	\end{frame}
+	
+		
+\end{document}

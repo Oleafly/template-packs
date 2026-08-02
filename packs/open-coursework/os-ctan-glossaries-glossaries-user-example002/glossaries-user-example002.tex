@@ -1,0 +1,42 @@
+% This file is embedded in glossaries-user.pdf 
+% Example 2 Simple document with unsorted glossaries
+% Label: "ex:simpleunsrt"
+% arara: pdflatex
+% arara: pdfcrop
+\documentclass[12pt]{article}
+\pagestyle{empty}
+\usepackage[ sort=none,% no sorting or indexing required
+ abbreviations,% create list of abbreviations
+ symbols,% create list of symbols
+ postdot, % append a full stop after the descriptions
+ stylemods,style=index % set the default glossary style
+ ]{glossaries-extra} 
+
+\newglossaryentry % glossaries.sty
+{cafe}% label
+ {% definition:
+ name={café},
+ description={small restaurant selling refreshments}
+} 
+
+\setabbreviationstyle{long-short}% glossaries-extra.sty
+\newabbreviation % glossaries-extra.sty
+{html}% label
+ {HTML}% short form
+ {hypertext markup language}% long form
+ % requires glossaries-extra.sty 'symbols' option
+ \glsxtrnewsymbol [description={Archimedes' constant}]% options
+ {pi}% label
+ {\ensuremath{\pi}}% symbol
+ % This is a trivial example. For a real document I recommend you use siunitx for units
+ \newglossaryentry % glossaries.sty
+{distance}% label
+ {% definition:
+ name={distance}, description={the length between two points}, symbol={m} } 
+\begin{document}
+First use: \gls{cafe}, \gls{html}, \gls{pi}. Next use: \gls{cafe}, \gls{html}, \gls{pi}. 
+
+\Gls{distance} is measured in \glssymbol{distance}.
+\printunsrtglossaries % list all defined entries
+ 
+\end{document}

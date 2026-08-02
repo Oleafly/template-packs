@@ -1,0 +1,110 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2.5cm, top=2cm]{geometry}
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage{lmodern}
+\usepackage{xcolor}
+
+\definecolor{accent}{HTML}{2E4057}
+\hypersetup{hidelinks}
+
+% ── Header / footer ───────────────────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Your Name \\ Student ID: 12345678}
+\chead{\textbf{Assignment N}}
+\rhead{COSC/MTH XXXX \\ \today}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Problem / Solution environments ──────────────────────────────────────────
+\newcounter{problem}
+\setcounter{problem}{0}
+
+\newenvironment{problem}[1][]{%
+  \refstepcounter{problem}%
+  \vspace{6pt}%
+  \noindent\rule{\linewidth}{0.6pt}\\[-4pt]
+  \noindent\textbf{\color{accent}Problem~\theproblem}%
+  \ifx\relax#1\relax\else\ \textit{(#1)}\fi\par\smallskip
+}{%
+  \par\noindent\rule{\linewidth}{0.4pt}\vspace{4pt}%
+}
+
+\newenvironment{solution}{%
+  \par\medskip\noindent\textit{Solution.}\enspace\ignorespaces
+}{%
+  \hfill$\blacksquare$\par\medskip
+}
+
+% ── Math shortcuts ────────────────────────────────────────────────────────────
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\eps}{\varepsilon}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+% ── Document ──────────────────────────────────────────────────────────────────
+\title{\textbf{Assignment N}\\[4pt]\large COSC/MTH XXXX --- Course Name}
+\author{Your Name \\ \small Student ID: 12345678}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{problem}[5 marks]
+  Prove that $\sqrt{2}$ is irrational.
+\end{problem}
+
+\begin{solution}
+  Suppose for contradiction that $\sqrt{2} = p/q$ with $p, q \in \Z$, $q \neq 0$,
+  and $\gcd(p, q) = 1$. Then $2q^2 = p^2$, so $p^2$ is even, hence $p$ is even.
+  Write $p = 2k$; then $2q^2 = 4k^2$, giving $q^2 = 2k^2$, so $q$ is also even.
+  This contradicts $\gcd(p,q) = 1$.
+\end{solution}
+
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{problem}[3 marks]
+  Let $G = (V, E)$ be a finite simple graph with $n$ vertices.
+  Show that $G$ has at least two vertices of the same degree.
+\end{problem}
+
+\begin{solution}
+  The degree of any vertex lies in $\{0, 1, \ldots, n-1\}$, giving $n$ possible
+  values for $n$ vertices. However, degrees $0$ and $n-1$ cannot both be achieved
+  simultaneously (if one vertex is adjacent to all others, no vertex is isolated).
+  Hence the degrees live in a set of at most $n-1$ distinct values, so by the
+  Pigeonhole Principle at least two vertices share a degree.
+\end{solution}
+
+% ─────────────────────────────────────────────────────────────────────────────
+
+\begin{problem}[4 marks]
+  State and prove the AM-GM inequality for two non-negative reals.
+\end{problem}
+
+\begin{solution}
+  \textbf{Claim:} For $a, b \geq 0$, $\dfrac{a+b}{2} \geq \sqrt{ab}$.
+
+  \medskip
+  Since $(\sqrt{a} - \sqrt{b})^2 \geq 0$, expanding gives
+  $a - 2\sqrt{ab} + b \geq 0$, i.e.\ $a + b \geq 2\sqrt{ab}$.
+  Dividing by $2$ yields the result. Equality holds iff $\sqrt{a} = \sqrt{b}$,
+  i.e.\ $a = b$.
+\end{solution}
+
+\end{document}
