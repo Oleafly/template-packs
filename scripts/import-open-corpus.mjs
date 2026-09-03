@@ -14,9 +14,11 @@ import {
 } from 'node:fs';
 import { join, basename, dirname } from 'node:path';
 
-const DATASET =
-  process.env.DATASET_ROOT ||
-  './dataset';
+const DATASET = process.env.DATASET_ROOT;
+if (!DATASET) {
+  console.error('Set DATASET_ROOT to the directory that holds the open corpus dataset.');
+  process.exit(2);
+}
 const PACKS = join(process.cwd(), 'packs');
 
 const ALLOWED = new Set([
