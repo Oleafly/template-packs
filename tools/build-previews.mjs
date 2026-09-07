@@ -1,16 +1,18 @@
 // Compiles every pack template and renders a 600px-wide page-1 preview.png.
 // Usage: node tools/build-previews.mjs [packs/<pack>/<template> ...]
 // With no args, processes every template under packs/. Requires pdftoppm,
-// plus tectonic and typst binaries (paths via TECTONIC / TYPST env vars,
-// defaulting to the localeaf sidecars).
+// plus the relevant compiler. Set TECTONIC, TYPST, or PANDOC to override paths.
 import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 const LOCALEAF = resolve(process.env.LOCALEAF_DIR ?? "../localeaf");
-const TECTONIC = process.env.TECTONIC ?? join(LOCALEAF, "src-tauri/binaries/tectonic-aarch64-apple-darwin");
-const TYPST = process.env.TYPST ?? join(LOCALEAF, "src-tauri/binaries/typst-aarch64-apple-darwin");
+const tectonicSidecar = join(LOCALEAF, "src-tauri/binaries/tectonic-aarch64-apple-darwin");
+const typstSidecar = join(LOCALEAF, "src-tauri/binaries/typst-aarch64-apple-darwin");
+const TECTONIC = process.env.TECTONIC ?? (existsSync(tectonicSidecar) ? tectonicSidecar : "tectonic");
+const TYPST = process.env.TYPST ?? (existsSync(typstSidecar) ? typstSidecar : "typst");
+const PANDOC = process.env.PANDOC ?? "pandoc";
 
 function templateDirs() {
   if (process.argv.length > 2) return process.argv.slice(2).map((p) => p.replace(/\/$/, ""));
@@ -38,9 +40,15 @@ for (const dir of templateDirs()) {
   const work = mkdtempSync(join(tmpdir(), "tpl-preview-"));
   try {
     cpSync(dir, work, { recursive: true });
-    const pdf = join(work, main.replace(/\.(tex|typ)$/, ".pdf"));
+    const pdf = join(work, main.replace(/\.(tex|typ|md)$/, ".pdf"));
     if (manifest.engine === "typst") {
       execFileSync(TYPST, ["compile", join(work, main), pdf], { stdio: "pipe", timeout: 120_000 });
+    } else if (manifest.engine === "markdown") {
+      execFileSync(PANDOC, [main, "--standalone", "--citeproc", `--pdf-engine=${TECTONIC}`, "--output", pdf], {
+        stdio: "pipe",
+        timeout: 300_000,
+        cwd: work,
+      });
     } else {
       execFileSync(TECTONIC, ["--outdir", work, join(work, main)], {
         stdio: "pipe",
