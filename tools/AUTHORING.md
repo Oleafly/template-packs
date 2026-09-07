@@ -3,7 +3,7 @@
 Each template lives at `packs/<pack-id>/<template-id>/` and contains:
 
 - `template.json` (manifest, schema below)
-- the main document (`main.tex` or `main.typ`)
+- the main document (`main.tex`, `main.typ`, or `main.md`)
 - optional extra files (`refs.bib`, class/style files you are allowed to redistribute)
 - `preview.png` (generated, never hand made)
 
@@ -16,7 +16,7 @@ Each template lives at `packs/<pack-id>/<template-id>/` and contains:
   "category": "one of: Journals & Conferences | Theses & Reports | CVs & Resumes | Assignments | Presentations | Posters | Letters | Books | Newsletters | Calendars | Bibliographies | Business | Creative",
   "description": "One sentence, plain language, no em dashes.",
   "main_doc": "main.tex",
-  "engine": "xetex",            // "xetex" for LaTeX via Tectonic, "typst" for Typst
+  "engine": "xetex",            // "xetex" for LaTeX, "typst" for Typst, "markdown" for Pandoc
   "ats_profile": null,           // only resumes: "friendly" | "design-forward" | null
   "default_color": "#RRGGBB",   // pick a tasteful accent per template
   "license": { "spdx": "CC0-1.0", "author": "Oleafly", "url": "https://github.com/Oleafly/template-packs" },
@@ -35,3 +35,22 @@ Each template lives at `packs/<pack-id>/<template-id>/` and contains:
 6. When a template emulates a well-known venue or design (NeurIPS, ACL, AltaCV, Jake's resume, Friggeri), name it honestly with "-style" and do NOT copy proprietary style files or text. Recreate the look with standard packages. Exception: files whose license allows redistribution (e.g. MIT) may be vendored with the license kept in the manifest and a LICENSE note.
 7. Keep each template to one page or a small number of pages; the preview shows page 1, so page 1 must look great and representative.
 8. `id` in the manifest must equal the folder name, and `order` values must be unique inside your pack.
+
+## Markdown and local tools
+
+Markdown starters use `main.md`, `engine: "markdown"`, and
+`requires.engine: "pandoc"`. Keep the source readable in a plain text editor.
+YAML metadata can set a title, page margins, and other Pandoc options.
+Keep tables, examples, and any bibliography files inside the template folder.
+
+The preview builder uses Pandoc with Tectonic for Markdown PDFs. It uses
+Tectonic directly for LaTeX and the Typst CLI for Typst. Install `pdftoppm`
+to render the first page. Tools are found on `PATH`; `TECTONIC`, `TYPST`,
+and `PANDOC` can override their paths. Existing sidecars under `LOCALEAF_DIR`
+are still supported.
+
+After compiling new templates, run `node gen-catalog.mjs` and
+`node tools/build-template-index.mjs` to update the downloads and indexes.
+Use `node tools/build-template-index.mjs --refresh-gallery` after the
+website publishes new detail pages. Website links are based on its sitemap,
+so unpublished pages are marked as not listed.

@@ -4,6 +4,11 @@ import { join } from "node:path";
 
 const BASE = "https://raw.githubusercontent.com/Oleafly/template-packs/main";
 const PACK_META = {
+  "markdown-starters": {
+    label: "Markdown research starters",
+    description: "A research brief, literature review, and technical report in plain Markdown for Pandoc or your editor of choice.",
+    category: "Theses & Reports",
+  },
   "venue-classes": {
     label: "Journal & conference classes",
     description: "REVTeX, ACS achemso, Elsevier, ACM sigconf, IEEEtran, and Typst journal starters.",
@@ -16,7 +21,7 @@ const PACK_META = {
   },
   "slides-posters": {
     label: "Slides & posters",
-    description: "Metropolis beamer deck, tikzposter portrait and landscape, and a better-poster layout.",
+    description: "Metropolis beamer deck, tikzposter portrait and landscape, a better-poster layout, and a Typst research poster.",
     category: "Presentations",
   },
   "conference-preprints": {
@@ -28,7 +33,7 @@ const PACK_META = {
   "academic-writing": {
     label: "Academic writing pack",
     description:
-      "Research and grant proposals, registered reports, literature reviews, application materials, and traditional, publication-based, minimal, and bilingual theses.",
+      "Research and grant proposals, reviewer responses, registered reports, literature reviews, application materials, and traditional, publication-based, minimal, and bilingual theses.",
     category: "Theses & Reports",
   },
   coursework: {
@@ -46,7 +51,7 @@ const PACK_META = {
   "reports-lab": {
     label: "Lab & technical reports",
     description:
-      "Lab reports, scientific and technical reports, project and internship reports, and an annual report.",
+      "Lab reports, scientific and technical reports, project and internship reports, an annual report, and a Typst data analysis report.",
     category: "Theses & Reports",
   },
   "business-documents": {
