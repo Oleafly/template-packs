@@ -1,0 +1,18 @@
+#let labels = (
+  locale: "en",
+  university_name: "The University of Melbourne",
+  thesis_submission_line: "A thesis submitted in fulfilment of the requirements",
+  thesis_degree_line: "for the degree of",
+  thesis_department_line: "in the",
+  supervisor_label: "Supervisor",
+  co_supervisor_label: "Co-supervisor",
+  submission_date_label: "Submitted on",
+  abstract: "Abstract",
+  keywords: "Keywords",
+  acknowledgements: "Acknowledgements",
+  declaration: "Declaration",
+  table_of_contents: "Table of Contents",
+  list_of_figures: "List of Figures",
+  list_of_tables: "List of Tables",
+  list_of_algorithms: "List of Algorithms",
+)

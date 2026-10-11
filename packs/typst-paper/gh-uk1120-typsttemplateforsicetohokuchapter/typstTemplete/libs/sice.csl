@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" default-locale="en-US">
+  <info>
+    <title>The Society of Instrument and Control Engineers Template</title>
+    <title-short>SICE</title-short>
+    <!-- idを消すとエラー -->
+    <id>SICETemplate</id>
+    <category citation-format="numeric"/>
+    <summary>計測自動制御学会の引用フォーマット</summary>
+  </info>
+  <!-- 版 -->
+  <macro name="edition">
+    <choose>
+      <if type="bill book chapter graphic legal_case legislation motion_picture paper-conference report song" match="any">
+        <choose>
+          <if is-numeric="edition">
+            <group delimiter=" ">
+              <number variable="edition" form="ordinal"/>
+              <text term="edition" form="short"/>
+            </group>
+          </if>
+          <else>
+            <text variable="edition" text-case="capitalize-first" suffix="."/>
+          </else>
+        </choose>
+      </if>
+    </choose>
+  </macro>
+  <!-- 出版年 -->
+  <macro name="issued">
+    <date variable="issued" prefix="(" suffix=")">
+      <date-part name="year" form="long"/>
+    </date>
+  </macro>
+  <!-- 著者 -->
+  <macro name="author">
+    <choose>
+      <if match="any" variable="language">
+        <names variable="author">
+          <name initialize-with=". " delimiter=", "/>
+          <label form="short" prefix=", "/>
+          <substitute>
+            <names variable="editor"/>
+          </substitute>
+        </names>
+      </if>
+      <else>
+        <names variable="author">
+          <name initialize-with=". " delimiter=", "/>
+          <label form="short" prefix=", "/>
+          <substitute>
+            <names variable="editor"/>
+          </substitute>
+        </names>
+      </else>
+    </choose>
+  </macro>
+  <!-- 編集者 -->
+  <macro name="editor">
+    <names variable="editor">
+      <name initialize-with=". " delimiter=", " and="text"/>
+      <label form="short" prefix=", "/>
+    </names>
+  </macro>
+  <!-- 引用箇所情報 -->
+  <macro name="locators">
+    <group delimiter=" ">
+      <text macro="edition"/>
+      <group>
+        <text term="volume" form="short" text-case="capitalize-first"/> 
+        <!-- capitalize-first"で単語頭を大文字にできる -->
+        <number variable="volume" form="numeric" font-weight="bold"/>
+      </group>
+      <group>
+        <text term="edition" form="short" text-case="capitalize-first"/>
+        <number variable="edition" form="numeric"/>
+      </group>
+      <group delimiter=" ">
+        <text term="issue" form="short" text-case="capitalize-first"/>
+        <number variable="issue" form="numeric"/>
+      </group>
+    </group>
+  </macro>
+  <!-- 書籍名 -->
+  <macro name="title">
+    <choose>
+      <if type="bill book graphic legal_case legislation motion_picture song" match="any">
+        <text variable="title"/>
+      </if>
+      <else>
+        <text variable="title"/>
+        <!-- <text variable="title" quotes="true"/> -->
+      </else>
+    </choose>
+  </macro>
+  <!-- 出版者 -->
+  <macro name="publisher">
+    <group delimiter=", ">
+      <text variable="publisher"/>
+      <text variable="publisher-place"/>
+    </group>
+  </macro>
+  <!-- イベント -->
+  <macro name="event">
+    <choose>
+      <if type="paper-conference">
+        <choose>
+          <if variable="container-title">
+            <group delimiter=", ">
+              <text variable="container-title"/>
+              <text variable="event-place"/>
+            </group>
+          </if>
+          <else>
+            <group delimiter=", ">
+              <text variable="event"/>
+              <text variable="event-place"/>
+            </group>
+          </else>
+        </choose>
+      </if>
+    </choose>
+  </macro>
+  <!-- サイトアクセス -->
+  <macro name="access">
+    <choose>
+      <if type="webpage" match="any">
+        <date variable="accessed" prefix="Accessed on ">
+          <date-part name="day" suffix="."/>
+          <date-part name="month" form="numeric-leading-zeros" suffix="."/>
+          <date-part name="year" form="long"/>
+        </date>
+        <text variable="URL" prefix=" URL: "/>
+      </if>
+    </choose>
+  </macro>
+  <!-- ページ -->
+  <macro name="page">
+    <group delimiter=" ">
+      <text variable="page"/>
+    </group>
+  </macro>
+  <!-- 文中引用形式 -->
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout prefix="" suffix=")" delimiter=", "  vertical-align="sup">
+      <text variable="citation-number" vertical-align="sup"/>
+    </layout>
+  </citation>
+  <!-- 文末引用形式 -->
+  <bibliography entry-spacing="0" second-field-align="flush">
+    <layout suffix=".">
+      <!-- 引用番号形式 -->
+      <text variable="citation-number" suffix=")"/>
+      <!-- 著者表記形式 -->
+      <text macro="author" suffix="："/>
+      <!-- 引用文献の種類による書式 -->
+      <choose>
+        <if type="article-journal">
+          <group delimiter=", ">
+            <text macro="title"/>
+            <text variable="container-title" font-style="italic" form="short"/>
+            <text macro="locators"/>
+            <text macro="page"/>
+          </group>
+          <text macro="issued" prefix=" "/>
+        </if>
+        <else-if type="paper-conference">
+          <group delimiter=", ">
+            <text macro="title"/>
+            <text macro="event"/>
+            <text macro="locators"/>
+            <text macro="page"/>
+          </group>
+          <text macro="issued" prefix=" "/>
+        </else-if>
+        <else-if type="book" match="any">
+          <group delimiter=", " suffix=", ">
+            <text macro="title"/>
+            <text macro="locators"/>
+          </group>
+          <text macro="page"/>
+          <text macro="publisher"/>
+          <text macro="issued" prefix=" "/>
+        </else-if>
+        <else-if type="webpage">
+          <group delimiter=", " suffix=".">
+            <text macro="title"/>
+            <text macro="publisher"/>
+            <text macro="access"/>
+          </group>
+        </else-if>
+        <else-if type="patent">
+          <text macro="title" suffix=", "/>
+          <text variable="number"/>
+          <text macro="issued"/>
+        </else-if>
+        <else-if type="article-magazine article-newspaper broadcast interview manuscript map patent personal_communication song speech thesis webpage" match="any">
+          <group delimiter=", ">
+            <text macro="title"/>
+            <text variable="container-title" font-style="italic"/>
+            <text macro="locators"/>
+            <text macro="publisher"/>
+            <text macro="page"/>
+            <text macro="issued"/>
+          </group>
+        </else-if>
+        <else>
+          <group delimiter=", ">
+            <text macro="title"/>
+            <text variable="container-title"/>
+            <text macro="locators"/>
+            <text macro="publisher"/>
+            <text macro="page"/>
+            <text macro="issued"/>
+          </group>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>

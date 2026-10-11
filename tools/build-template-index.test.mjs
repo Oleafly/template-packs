@@ -15,13 +15,15 @@ test("template labels cannot introduce table columns, links, or HTML", () => {
 
 test("only published entries receive website links", () => {
   const templates = [
-    { name: "Published", id: "published", path: "packs/a/published", main_doc: "main.tex", preview: true },
-    { name: "New", id: "new", path: "packs/b/new", main_doc: "main.md", preview: false },
+    { name: "Published", id: "published", path: "packs/a/published", main_doc: "main.tex", preview: "packs/a/published/preview.png" },
+    { name: "New", id: "new", path: "packs/b/new", main_doc: "main.md", preview: null },
+    { name: "Shared", id: "shared", path: "packs/c/shared", main_doc: "main.typ", preview: "previews/c/shared/page-1.webp" },
   ];
   const result = table(templates, new Set(["published"]), "../");
   assert.match(result, /https:\/\/oleafly.com\/templates\/published\//);
   assert.doesNotMatch(result, /https:\/\/oleafly.com\/templates\/new\//);
   assert.match(result, /\[Preview\]\(\.\.\/packs\/a\/published\/preview.png\)/);
+  assert.match(result, /\[Preview\]\(\.\.\/previews\/c\/shared\/page-1.webp\)/);
   assert.match(result, /\[New\]\(\.\.\/packs\/b\/new\/main.md\).*Not included.*Not listed/);
 });
 
@@ -43,7 +45,7 @@ test("template discovery rejects missing sources and unknown engines", () => {
 });
 
 test("source filenames with spaces and parentheses remain clickable", () => {
-  const result = table([{ name: "Sample", id: "sample", path: "packs/example/sample", main_doc: "draft (2).tex", preview: false }], new Set());
+  const result = table([{ name: "Sample", id: "sample", path: "packs/example/sample", main_doc: "draft (2).tex", preview: null }], new Set());
   assert.match(result, /draft%20%282%29\.tex/);
 });
 

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  biblatex `style=alphabetic` for Typst: trigraph labels via `citation-label`.
+  `hanging-indent` rather than `second-field-align`, which would make Typst
+  back-link the label. cleanthesis.typ fills the bracketed markers in.
+-->
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0"
+       demote-non-dropping-particle="sort-only" default-locale="en-US">
+  <info>
+    <title>Alphanumeric (Clean Thesis)</title>
+    <id>http://www.zotero.org/styles/alphanumeric-cleanthesis</id>
+    <link href="http://www.zotero.org/styles/alphanumeric-cleanthesis" rel="self"/>
+    <category citation-format="label"/>
+    <updated>2024-01-01T00:00:00+00:00</updated>
+  </info>
+
+  <macro name="author">
+    <choose>
+      <if variable="author">
+        <names variable="author">
+          <name and="text" delimiter=", "/>
+        </names>
+      </if>
+      <else-if variable="editor">
+        <names variable="editor">
+          <name and="text" delimiter=", "/>
+        </names>
+      </else-if>
+    </choose>
+  </macro>
+
+  <macro name="title">
+    <choose>
+      <if type="book thesis report manuscript" match="any">
+        <text variable="title" font-style="italic"/>
+      </if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="access">
+    <group delimiter=" ">
+      <group delimiter=" ">
+        <text value="url:" font-variant="small-caps"/>
+        <text variable="URL"/>
+      </group>
+      <group prefix="(visited on " suffix=")">
+        <date variable="accessed" form="text"/>
+      </group>
+    </group>
+  </macro>
+
+  <citation collapse="year" disambiguate-add-year-suffix="true">
+    <layout delimiter=" ">
+      <group prefix="[" suffix="]">
+        <text variable="citation-label"/>
+        <text variable="year-suffix"/>
+      </group>
+    </layout>
+  </citation>
+
+  <bibliography entry-spacing="0" hanging-indent="true">
+    <sort>
+      <key macro="author"/>
+      <key variable="title"/>
+      <key variable="issued"/>
+    </sort>
+    <layout suffix=".">
+      <group>
+        <group prefix="⟪[" suffix="]⟫">
+          <text variable="citation-label"/>
+          <text variable="year-suffix"/>
+        </group>
+        <group delimiter=" ">
+          <group delimiter=". ">
+            <text macro="author"/>
+            <text macro="title"/>
+            <group delimiter=", ">
+              <text variable="publisher"/>
+              <date variable="issued">
+                <date-part name="year"/>
+              </date>
+            </group>
+            <text macro="access"/>
+          </group>
+          <text variable="citation-key" prefix="⟦" suffix="⟧"/>
+        </group>
+      </group>
+    </layout>
+  </bibliography>
+</style>

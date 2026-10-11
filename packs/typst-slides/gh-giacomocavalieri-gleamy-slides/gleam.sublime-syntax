@@ -1,0 +1,90 @@
+%YAML 1.2
+---
+name: Gleam
+file_extensions:
+  - gleam
+scope: source.gleam
+contexts:
+  main:
+    - match: '"'
+      scope: string.begin.gleam
+      push: double_quoted_string
+
+    - match: '//'
+      scope: comment.gleam
+      push: line_comment
+
+    - match: '{.*?}'
+      scope: type.gleam
+
+    - match: '\b@(internal|external|target)\b'
+      scope: annotation.gleam
+
+    - match: 'fn'
+      scope: keyword.gleam
+      push: fn_declaration
+
+    - match: '\b(case|fn|if|import|let|assert|pub|type|opaque|const|todo|as)\b'
+      scope: keyword.gleam
+
+    - match: '->'
+      scope: arrow.gleam
+
+    - match: '\.\.'
+      scope: splat.gleam
+
+    - match: '\|>'
+      scope: operator.pipe.gleam
+
+    - match: '(&lt;=\.|&gt;=\.|==\.|!=\.|&lt;\.|&gt;\.|\+\.|\-\.|/\.|\*\.|%\.)'
+      scope: operator.float.gleam
+
+    - match: '(&lt;=|&gt;=|==|!=|&lt;|&gt;|\+|\-|/|\*|%)'
+      scope: operator.int.gleam
+
+    - match: '(&amp;&amp;|\|\|)'
+      scope: operator.bool.gleam
+
+    - match: '='
+      scope: operator.equality.gleam
+
+    - match: '\b(-)?[0-9._]+\b'
+      scope: constant.numeric.gleam
+
+    - match: '\b[A-Z][a-z0-9]*\b'
+      scope: type.gleam
+
+    - match: '\b[a-z][a-z0-9]*\.\b'
+      scope: module.gleam
+      push: module_access
+
+    - match: '[a-z][A-Za-z0-9_]*'
+      scope: iden.gleam
+
+    - match: '_[a-z]*'
+      scope: ignored.gleam
+
+  double_quoted_string:
+    - meta_scope: string.gleam
+    - match: '\\.'
+      scope: escaped.gleam
+    - match: '"'
+      scope: string.end.gleam
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line.gleam
+    - match: $
+      pop: true
+
+  module_access:
+    - match: '\b[a-z][a-z0-9]*\b'
+      scope: call.gleam
+    - match: '(\(|\s|$)'
+      pop: true
+
+  fn_declaration:
+    - match: '\b[a-z][a-z0-9]*\b'
+      scope: call.gleam
+    - match: '\('
+      pop: true

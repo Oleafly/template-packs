@@ -1,0 +1,39 @@
+erDiagram
+  @param layoutDirection LR
+  @param edgeType ortho
+
+  %% 図全体のレイアウト
+  @param diagramPadding 12
+  @param ranksep 110
+  @param edgesep 24
+
+  %% テーブルのレイアウト
+  @param minEntityWidth 180
+  @param entityPaddingX 12
+  @param entityPaddingY 8
+  @param fontSize 13
+
+  %% モノクロ印刷用の色
+  @param fill #ffffff
+  @param stroke #000000
+  @param edgeColor #000000
+  @param textColor #000000
+  @param attributeFill #ffffff
+  @param labelBackground #ffffff
+  @param borderRadius 0
+
+  USERS {
+    BIGINT id PK
+    VARCHAR name
+    VARCHAR email
+    TIMESTAMP created_at
+  }
+
+  ORDERS {
+    BIGINT id PK
+    BIGINT user_id FK
+    DECIMAL order_amount
+    TIMESTAMP created_at
+  }
+
+  USERS ||--o{ ORDERS : places

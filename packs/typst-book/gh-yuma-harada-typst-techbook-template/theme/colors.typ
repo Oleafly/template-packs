@@ -1,0 +1,5 @@
+#let ink = luma(0%)
+#let ink-muted = luma(35%)
+#let border = luma(70%)
+#let surface = luma(95%)
+#let surface-strong = luma(88%)

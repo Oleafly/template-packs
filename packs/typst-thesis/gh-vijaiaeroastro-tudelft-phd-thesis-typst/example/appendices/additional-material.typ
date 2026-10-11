@@ -1,0 +1,1 @@
+This appendix demonstrates lettered appendix chapters. It can hold derivations, additional validation, source-code excerpts, questionnaires, or supplementary figures that would interrupt the main narrative.

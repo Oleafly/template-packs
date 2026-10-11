@@ -75,13 +75,13 @@ const PACK_META = {
   "open-venue": {
     label: "Open journal & conference templates",
     description:
-      "Openly licensed journal and conference paper templates from public sources (GitHub, Overleaf Gallery, Typst Universe).",
+      "Openly licensed journal and conference paper templates from public sources such as GitHub and Typst Universe.",
     category: "Journals & Conferences",
   },
   "open-cv": {
     label: "Open CV & resume templates",
     description:
-      "Openly licensed CV and resume templates from public sources (GitHub, Overleaf Gallery, Typst Universe).",
+      "Openly licensed CV and resume templates from public sources such as GitHub and Typst Universe.",
     category: "CVs & Resumes",
   },
   "open-thesis": {
@@ -147,9 +147,10 @@ const PACK_META = {
 };
 
 const catalog = [];
+const directoryPacks = new Set(Object.keys(JSON.parse(readFileSync("tools/directory-packs.json", "utf8"))));
 for (const packId of readdirSync("packs").sort()) {
   const packDir = join("packs", packId);
-  if (!statSync(packDir).isDirectory()) continue;
+  if (!statSync(packDir).isDirectory() || directoryPacks.has(packId)) continue;
   const files = [];
   let bytes = 0;
   let count = 0;

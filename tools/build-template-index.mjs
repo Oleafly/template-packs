@@ -16,6 +16,8 @@ export function escapeCell(value) {
 
 export function readTemplates(root = ROOT) {
   const templates = [];
+  const directoryPacksFile = join(root, "tools", "directory-packs.json");
+  const directoryPacks = new Set(existsSync(directoryPacksFile) ? Object.keys(JSON.parse(readFileSync(directoryPacksFile, "utf8"))) : []);
   for (const pack of readdirSync(join(root, "packs"), { withFileTypes: true })) {
     if (!pack.isDirectory()) continue;
     for (const folder of readdirSync(join(root, "packs", pack.name), { withFileTypes: true })) {
@@ -25,7 +27,9 @@ export function readTemplates(root = ROOT) {
       if (!["xetex", "pdflatex", "latex", "xelatex", "lualatex", "typst", "markdown"].includes(manifest.engine)) throw new Error(`Unknown engine: ${path}`);
       const engine = manifest.engine === "typst" ? "typst" : manifest.engine === "markdown" ? "markdown" : "latex";
       if (!existsSync(join(root, path, manifest.main_doc))) throw new Error(`Missing source: ${path}/${manifest.main_doc}`);
-      templates.push({ ...manifest, group: engine, pack: pack.name, path, preview: existsSync(join(root, path, "preview.png")) });
+      const sharedPreview = `previews/${pack.name}/${folder.name}/page-1.webp`;
+      const preview = existsSync(join(root, path, "preview.png")) ? `${path}/preview.png` : existsSync(join(root, sharedPreview)) ? sharedPreview : null;
+      templates.push({ ...manifest, group: engine, pack: pack.name, path, preview, directory: directoryPacks.has(pack.name) });
     }
   }
   return templates.sort((a, b) => a.name.localeCompare(b.name, "en") || a.id.localeCompare(b.id, "en"));
@@ -35,7 +39,7 @@ export function table(templates, gallery, prefix = "") {
   const rows = templates.map((template) => {
     const path = prefix + urlPath(template.path);
     const main = urlPath(template.main_doc);
-    const preview = template.preview ? `[Preview](${path}/preview.png)` : "Not included";
+    const preview = template.preview ? `[Preview](${prefix}${urlPath(template.preview)})` : "Not included";
     const website = gallery.has(template.id) ? `[View](https://oleafly.com/templates/${encodeURIComponent(template.id)}/)` : "Not listed";
     return `| [${escapeCell(template.name)}](${path}/${main}) | [Files](${path}/) | ${preview} | ${website} |`;
   });
@@ -46,7 +50,7 @@ export function buildDocuments(templates, gallery) {
   const files = new Map();
   const summary = ENGINES.map(([key, label]) => {
     const group = templates.filter((template) => template.group === key);
-    return `| [${label}](docs/templates-${key}.md) | ${group.length.toLocaleString("en-US")} | ${group.filter((template) => template.preview).length} |`;
+    return `| [${label}](docs/templates-${key}.md) | ${group.length.toLocaleString("en-US")} | ${group.filter((template) => template.preview).length.toLocaleString("en-US")} |`;
   });
   const blocks = [
     "## Template index",
@@ -56,7 +60,7 @@ export function buildDocuments(templates, gallery) {
   ];
   for (const [key, label] of ENGINES) {
     const group = templates.filter((template) => template.group === key);
-    const starters = group.filter((template) => template.preview && !template.pack.startsWith("open-"));
+    const starters = group.filter((template) => template.preview && !template.pack.startsWith("open-") && !template.directory);
     blocks.push(`<details>\n<summary>${label}: ${starters.length} starters with previews</summary>\n\n${table(starters, gallery)}\n\n[Browse all ${group.length.toLocaleString("en-US")} ${label} templates](docs/templates-${key}.md).\n\n</details>`);
     files.set(`docs/templates-${key}.md`, [
       `# ${label} templates`,

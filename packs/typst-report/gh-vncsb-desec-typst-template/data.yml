@@ -1,0 +1,91 @@
+---
+companyName: 'Evil corp'
+startDate:
+  year: 2024
+  month: 9
+  day: 23
+endDate:
+  year: 2024
+  month: 10
+  day: 1
+scope:
+  - id: '255.255.255.255'
+    type: 'Blackbox'
+vulnerabilities:
+  - location: '255.255.255.255'
+    system: 'Windows'
+    id: 'MS17-010'
+    severity: 'Critical'
+    description: 'Conhecido como EternalBlue, essa vulnerabilidade no SMBv1 permite a execução de código remotamente a nível de administrador, a partir do envio de pacotes manipulados.'
+    impact: 'A exploração dessa vulnerabilidade permite o comprometimento completo desta máquina.'
+    recommendations:
+      - 'Aplicar os patches e atualizações necessárias para a correção da vulnerabilidade'
+      - 'Atualização do sistema operacional (Windows) para uma versão mais recente'
+    references:
+      - 'https://learn.microsoft.com/pt-br/security-updates/SecurityBulletins/2017/ms17-010'
+      - 'https://www.100security.com.br/ms17-010'
+  - location: '255.255.255.255'
+    system: 'Linux Kernel'
+    id: '2009-2692'
+    severity: 'High'
+    description: 'Em algumas versões o kernel do linux permite a execução de código arbitrário explorando a função sock_sendpage().'
+    impact: 'Esta vulnerabilidade permite escalar os privilégios de um usuário comum e executar código para se tornar root (administrador) da máquina alvo'
+    recommendations:
+      - 'Atualização do sistema operacional para uma versão mais recente'
+    references:
+      - 'https://nvd.nist.gov/vuln/detail/CVE-2009-2692'
+      - 'https://www.exploit-db.com/exploits/9545'
+  - location: '255.255.255.255'
+    system: 'Foxmail'
+    id: 'CWE-312'
+    severity: 'Medium'
+    description: 'Foram encontradas informações sensíveis no diretório de backup'
+    impact: 'As credenciais encontradas no backup podem ser usadas para comprometer mais partes do sistema e aprofundar o impacto'
+    recommendations:
+      - 'Não enviar ou armazenar credenciais e informações sensíveis em texto não criptografado'
+    references:
+      - 'https://cwe.mitre.org/data/definitions/312.html'
+  - location: '255.255.255.255'
+    system: 'Geral'
+    id: 'CWE-1391'
+    severity: 'Medium'
+    description: 'Uso de credenciais ou senhas muito simples.'
+    impact: 'Senhas fracas facilitam o comprometimento da conta pelo uso de estratégias de força bruta.'
+    recommendations:
+      - 'Impor políticas de senha mais fortes'
+    references:
+      - 'https://cwe.mitre.org/data/definitions/1391.html'
+  - location: '255.255.255.255'
+    system: 'Geral'
+    id: 'CWE-1391'
+    severity: 'High'
+    description: 'Uso de credenciais ou senhas muito simples.'
+    impact: 'Senhas fracas facilitam o comprometimento da conta pelo uso de estratégias de força bruta.'
+    recommendations:
+      - 'Impor políticas de senha mais fortes'
+    references:
+      - 'https://cwe.mitre.org/data/definitions/1391.html'
+  - location: '255.255.255.255'
+    system: 'SCP'
+    id: 'CWE-261'
+    severity: 'High'
+    description: 'O armazenamento de credenciais feito pelo WinSCP2 possibilita a extração de senhas caso não haja uma senha mestre.'
+    impact: 'Qualquer usuário com acesso ao computador pode extrair as senhas e informações salvas, podendo extender o ataque a outras partes do sistema.'
+    recommendations:
+      - 'Desabilitar o armazenamento de credenciais e informações sensíveis'
+      - 'Caso não seja possível desabilitar o armazenamento, habilitar o uso de senha mestre'
+    references:
+      - 'https://cwe.mitre.org/data/definitions/261.html'
+      - 'https://winscp.net/eng/docs/faq_password'
+      - 'https://github.com/anoopengineer/winscppasswd'
+  - location: '255.255.255.255'
+    system: 'Geral'
+    id: 'CWE-266'
+    severity: 'High'
+    description: 'O usuário suporte pode executar nmap como administrador.'
+    impact: 'O nmap possui a capacidade de executar um shell carregando os privilégios, permitindo neste caso um usuário comum executar comandos como administrador.'
+    recommendations:
+      - 'Impossibilitar o usuário de executar nmap como administrador'
+    references:
+      - 'https://cwe.mitre.org/data/definitions/266.html'
+      - 'https://gtfobins.github.io/gtfobins/nmap/#sudo'

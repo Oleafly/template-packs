@@ -1,0 +1,14 @@
+#import "../style/default_set.typ": *
+#align(center)[
+  = Abstract <abstract>
+]
+#text(style: "italic")[
+  /* abstract start */
+  The ABSTRACT is to be in fully justified italicized text, at the top of the left-hand column, below the author and affiliation information.
+  Use the word "Abstract" as the title, in 12-point Times, boldface type, centered relative to the column, initially capitalized.
+  The abstract is to be in 10-point, single-spaced type.
+  Leave two blank lines after the Abstract, then begin the main text.
+  Look at previous #confName abstracts to get a feel for style and length.
+  /* abstract end */
+]
+#v(2em)

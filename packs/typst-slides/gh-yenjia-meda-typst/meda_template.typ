@@ -1,0 +1,15 @@
+#import "slides.typ": (
+  typslides,
+  front-slide,
+  title-slide,
+  end-slide,
+  slide,
+  blank-slide,
+  bibliography-slide,
+  framed,
+  stress,
+  bluey,
+  reddy,
+  greeny,
+  dusky,
+)

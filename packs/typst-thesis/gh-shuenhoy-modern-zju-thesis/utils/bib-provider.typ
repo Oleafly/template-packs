@@ -1,0 +1,27 @@
+#import "./citext/lib.typ": *
+#import "./citext/lib.typ": gb-t-7714-2015-numeric-bilingual
+
+#let bib-provider(bibsource, mode: "", csl: gb-t-7714-2015-numeric-bilingual, options: (:)) = {
+  if csl == auto {
+    csl = gb-t-7714-2015-numeric-bilingual
+  }
+  let typstbib = bibliography(bytes(bibsource), style: "gb-7714-2015-numeric", title: none)
+  let hiddenbib = [
+    #show bibliography: none // to provide hint in the editor
+    #typstbib
+  ]
+  if mode == "bilingual" {
+    assert(false, "The 'bilingual' mode is deprecated. Please use the 'citext' mode instead.")
+  } else if (mode == "citext") {
+    let bib = init-citation(bibsource, csl: csl)
+
+    (
+      bibcontent: extbib(bib, ..options),
+      bibshow: show-extcite.with(bib: bib, gen-id: true),
+      hiddenbib: hiddenbib,
+      new-bib: new-citext-session,
+    )
+  } else if (mode == "partbib") {
+    assert(false, "The 'partbib' mode is deprecated. Please use the 'citext' mode instead.")
+  }
+}

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" default-locale="pl">
+  <info>
+    <title>ANS WI — styl harwardzki</title>
+    <id>https://ans-ns.edu.pl/styles/ans-wi-harvard</id>
+    <updated>2026-10-07T00:00:00+00:00</updated>
+  </info>
+  <locale xml:lang="pl">
+    <terms>
+      <term name="et-al">i in.</term>
+      <term name="and">i</term>
+      <term name="editor" form="short">red.</term>
+      <term name="page" form="short">s.</term>
+      <term name="in">w:</term>
+    </terms>
+  </locale>
+
+  <macro name="autor-sort">
+    <names variable="author">
+      <name name-as-sort-order="all" sort-separator=", " initialize-with="." delimiter="; "/>
+      <substitute>
+        <names variable="editor">
+          <name name-as-sort-order="all" sort-separator=", " initialize-with="." delimiter="; "/>
+        </names>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="autorzy">
+    <names variable="author">
+      <name name-as-sort-order="all" sort-separator=", " initialize-with="." delimiter="; "/>
+      <et-al prefix=" "/>
+      <substitute>
+        <names variable="editor">
+          <name name-as-sort-order="all" sort-separator=", " initialize-with="." delimiter="; "/>
+          <label form="short" prefix=" (" suffix=")."/>
+        </names>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="rok">
+    <group prefix=" (" suffix=")">
+      <date variable="issued">
+        <date-part name="year"/>
+      </date>
+      <text variable="year-suffix"/>
+    </group>
+  </macro>
+
+  <macro name="wydawca">
+    <group delimiter=": ">
+      <text variable="publisher-place"/>
+      <text variable="publisher"/>
+    </group>
+  </macro>
+
+  <macro name="data-dostepu">
+    <date variable="accessed" prefix=", data pobrania [" suffix="]">
+      <date-part name="day" form="numeric-leading-zeros" suffix="."/>
+      <date-part name="month" form="numeric-leading-zeros" suffix="."/>
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <citation
+    et-al-min="4"
+    et-al-use-first="1"
+    et-al-subsequent-min="3"
+    et-al-subsequent-use-first="1"
+    disambiguate-add-year-suffix="true"
+    collapse="year"
+    cite-group-delimiter=", "
+  >
+    <sort>
+      <key variable="author"/>
+      <key variable="issued"/>
+    </sort>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=", ">
+        <names variable="author">
+          <name form="short" delimiter=", "/>
+          <et-al prefix=" "/>
+          <substitute>
+            <names variable="editor">
+              <name form="short" delimiter=", "/>
+            </names>
+            <text variable="title" form="short"/>
+          </substitute>
+        </names>
+        <group delimiter="">
+          <date variable="issued">
+            <date-part name="year"/>
+          </date>
+          <text variable="year-suffix"/>
+        </group>
+        <text variable="locator"/>
+      </group>
+    </layout>
+  </citation>
+
+  <bibliography hanging-indent="true" et-al-min="99" et-al-use-first="99">
+    <sort>
+      <key macro="autor-sort"/>
+      <key variable="issued"/>
+      <key variable="title"/>
+    </sort>
+    <layout suffix=".">
+      <choose>
+        <if type="chapter">
+          <group delimiter=" ">
+            <text macro="autorzy"/>
+            <text macro="rok" suffix="."/>
+          </group>
+          <text variable="title" font-style="italic" prefix=" " suffix="."/>
+          <group delimiter=" " prefix=" ">
+            <text term="in" text-case="capitalize-first"/>
+            <names variable="editor">
+              <name delimiter=", " initialize-with="."/>
+              <label form="short" prefix=" (" suffix="),"/>
+            </names>
+            <text variable="container-title" font-style="italic"/>
+            <text variable="page" prefix="(s. " suffix=")."/>
+          </group>
+          <text macro="wydawca" prefix=" "/>
+        </if>
+        <else-if type="article-journal">
+          <group delimiter=" ">
+            <text macro="autorzy"/>
+            <text macro="rok" suffix="."/>
+          </group>
+          <text variable="title" font-style="italic" prefix=" " suffix="."/>
+          <group prefix=" ">
+            <text variable="container-title" suffix=","/>
+            <group prefix=" ">
+              <text variable="volume"/>
+              <text variable="issue" prefix=" (" suffix=")"/>
+            </group>
+            <text variable="page" prefix=", "/>
+          </group>
+        </else-if>
+        <else-if type="webpage">
+          <group delimiter=" ">
+            <text macro="autorzy"/>
+            <text macro="rok" suffix="."/>
+          </group>
+          <text variable="title" font-style="italic" prefix=" " suffix="."/>
+          <text variable="publisher" prefix=" " suffix="."/>
+          <text variable="URL" prefix=" Pobrane z: "/>
+          <text macro="data-dostepu"/>
+        </else-if>
+        <else>
+          <group delimiter=" ">
+            <text macro="autorzy"/>
+            <text macro="rok" suffix="."/>
+          </group>
+          <text variable="title" font-style="italic" prefix=" " suffix="."/>
+          <text macro="wydawca" prefix=" "/>
+          <text variable="page" prefix=", "/>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>

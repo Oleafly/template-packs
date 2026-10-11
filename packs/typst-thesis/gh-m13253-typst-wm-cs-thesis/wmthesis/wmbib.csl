@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0.2"
+  default-locale="en-US">
+  <info>
+    <title>W&amp;M Thesis Bibliography</title>
+    <id>bf619fee-9d5f-43dd-a01f-91a9fded1baa</id>
+    <category citation-format="numeric"/>
+    <category field="science"/>
+    <rights license="https://opensource.org/license/MIT">MIT</rights>
+  </info>
+
+  <!-- Serial comma only for 3+ names. -->
+  <macro name="author">
+    <names variable="author">
+      <name font-variant="small-caps" and="text" delimiter=", "
+            delimiter-precedes-last="contextual" initialize="false"/>
+      <substitute>
+        <names variable="editor">
+          <name font-variant="small-caps" and="text" delimiter=", "
+                delimiter-precedes-last="contextual" initialize="false"/>
+          <label form="long" prefix=", "/>
+        </names>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="editor-long">
+    <names variable="editor">
+      <name and="text" delimiter=", " delimiter-precedes-last="contextual"
+            initialize="false"/>
+      <label form="long" prefix=", "/>
+    </names>
+  </macro>
+
+  <macro name="title-plain">
+    <text variable="title" text-case="sentence"/>
+  </macro>
+
+  <macro name="title-italic">
+    <text variable="title" font-style="italic"/>
+  </macro>
+
+  <macro name="date">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="edition">
+    <group delimiter=" ">
+      <text variable="edition"/>
+      <text term="edition"/>
+    </group>
+  </macro>
+
+  <macro name="pages">
+    <group delimiter=" ">
+      <label variable="page" form="long"/>
+      <text variable="page"/>
+    </group>
+  </macro>
+
+  <macro name="vol-num-pages">
+    <group delimiter=":">
+      <group>
+        <text variable="volume"/>
+        <text variable="issue" prefix="(" suffix=")"/>
+      </group>
+      <text variable="page"/>
+    </group>
+  </macro>
+
+  <macro name="volume-and-series">
+    <group delimiter=", ">
+      <group delimiter=" ">
+        <text term="volume"/>
+        <text variable="volume"/>
+      </group>
+      <group delimiter=" ">
+        <text value="of"/>
+        <text variable="collection-title" font-style="italic"/>
+      </group>
+    </group>
+  </macro>
+
+  <macro name="chapter-and-pages">
+    <group delimiter=", ">
+      <group delimiter=" ">
+        <text term="chapter"/>
+        <text variable="chapter-number"/>
+      </group>
+      <text macro="pages"/>
+    </group>
+  </macro>
+
+  <macro name="in-booktitle">
+    <group delimiter=", ">
+      <group delimiter=" ">
+        <text term="in" text-case="capitalize-first"/>
+        <text variable="container-title" font-style="italic"/>
+      </group>
+      <text macro="editor-long"/>
+    </group>
+  </macro>
+
+  <!-- Depending on Typst / Hayagriva version, BibTeX school / institution /
+       organization may be mapped to "publisher" or "authority". -->
+  <macro name="school-or-institution">
+    <choose>
+      <if variable="publisher">
+        <text variable="publisher"/>
+      </if>
+      <else>
+        <text variable="authority"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Everything after the title block, except the trailing publisher and note. -->
+  <macro name="container-info">
+    <choose>
+      <if type="article-journal article-magazine article-newspaper" match="any">
+        <group delimiter=", ">
+          <text variable="container-title" font-style="italic"/>
+          <text macro="vol-num-pages"/>
+          <text macro="date"/>
+        </group>
+      </if>
+      <else-if type="book">
+        <choose>
+          <if variable="author" match="none">
+            <group delimiter=", ">
+              <text macro="volume-and-series"/>
+              <text variable="publisher-place"/>
+              <text macro="date"/>
+            </group>
+          </if>
+          <else>
+            <group delimiter=", ">
+              <text macro="volume-and-series"/>
+              <text variable="publisher"/>
+              <text variable="publisher-place"/>
+              <text macro="edition"/>
+              <text macro="date"/>
+            </group>
+          </else>
+        </choose>
+      </else-if>
+      <else-if type="chapter">
+        <choose>
+          <if variable="container-title">
+            <group delimiter=", ">
+              <text macro="in-booktitle"/>
+              <text macro="volume-and-series"/>
+              <text macro="chapter-and-pages"/>
+              <text variable="publisher"/>
+              <text variable="publisher-place"/>
+              <text macro="date"/>
+            </group>
+          </if>
+          <else>
+            <group delimiter=", ">
+              <text macro="volume-and-series"/>
+              <text variable="publisher"/>
+              <text variable="publisher-place"/>
+              <text macro="edition"/>
+              <text macro="date"/>
+            </group>
+          </else>
+        </choose>
+      </else-if>
+      <else-if type="paper-conference">
+        <group delimiter=", ">
+          <text macro="in-booktitle"/>
+          <text macro="volume-and-series"/>
+          <text macro="pages"/>
+          <text variable="publisher-place"/>
+          <text macro="date"/>
+        </group>
+      </else-if>
+      <else-if type="report">
+        <group delimiter=", ">
+          <group delimiter=" ">
+            <!-- Genre defaults to "technical report". Title-case it. -->
+            <choose>
+              <if variable="genre">
+                <text variable="genre" text-case="capitalize-all"/>
+              </if>
+              <else>
+                <text value="Technical Report"/>
+              </else>
+            </choose>
+            <text variable="number"/>
+          </group>
+          <text macro="school-or-institution"/>
+          <text variable="publisher-place"/>
+          <text macro="date"/>
+        </group>
+      </else-if>
+      <else-if type="thesis">
+        <group delimiter=", ">
+          <!-- Typst / Hayagriva have no way to distinguish @mastersthesis and @phdthesis.
+               Hayagriva sets a default "type" to "Master's thesis".
+               Please set "type = {PhD thesis}" in the BibTeX file to change it. -->
+          <choose>
+            <if variable="genre">
+              <text variable="genre"/>
+            </if>
+            <else>
+              <text value="PhD thesis"/>
+            </else>
+          </choose>
+          <text macro="school-or-institution"/>
+          <text variable="publisher-place"/>
+          <text macro="date"/>
+        </group>
+      </else-if>
+      <else-if type="manuscript">
+        <group delimiter=", ">
+          <text variable="note"/>
+          <text macro="date"/>
+        </group>
+      </else-if>
+      <else-if type="document">
+        <group delimiter=", ">
+          <text variable="note"/>
+          <text variable="publisher"/>
+          <text variable="publisher-place"/>
+          <text macro="edition"/>
+          <text macro="date"/>
+        </group>
+      </else-if>
+      <else>
+        <group delimiter=", ">
+          <text macro="school-or-institution"/>
+          <text variable="publisher-place"/>
+          <text macro="edition"/>
+          <text macro="date"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Publisher after the date for conference papers and books without unknown authors. -->
+  <macro name="trailing-publisher">
+    <choose>
+      <if type="paper-conference">
+        <text variable="publisher"/>
+      </if>
+      <else-if type="book">
+        <choose>
+          <if variable="author" match="none">
+            <text variable="publisher"/>
+          </if>
+        </choose>
+      </else-if>
+    </choose>
+  </macro>
+
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter=", ">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+
+  <bibliography second-field-align="flush">
+    <sort>
+      <key macro="author"/>
+      <key variable="issued"/>
+      <key variable="title"/>
+    </sort>
+    <layout suffix=".">
+      <text variable="citation-number" prefix="[" suffix="]"/>
+      <group delimiter=". " suffix=".">
+        <text macro="author"/>
+        <choose>
+          <!-- Test "chapter" before "book": hayagriva's "book" also matches
+               anthology / proceedings, so an incollection's parent would
+               otherwise be caught by type="book". -->
+          <if type="chapter">
+            <choose>
+              <if variable="container-title" match="none">
+                <group delimiter=", ">
+                  <text macro="title-italic"/>
+                  <text macro="chapter-and-pages"/>
+                </group>
+              </if>
+              <else>
+                <text macro="title-plain"/>
+              </else>
+            </choose>
+          </if>
+          <else-if type="book">
+            <text macro="title-italic"/>
+          </else-if>
+          <else-if type="thesis">
+            <!-- Typst / Hayagriva cannot distinguish @mastersthesis and @phdthesis.
+                 The original template renders @mastersthesis as upright and @phdthesis as italic.
+                 We set both to italic. -->
+            <text macro="title-italic"/>
+          </else-if>
+          <else-if type="article-journal article-magazine article-newspaper paper-conference report manuscript document" match="any">
+            <text macro="title-plain"/>
+          </else-if>
+          <else>
+            <text macro="title-italic"/>
+          </else>
+        </choose>
+        <text macro="container-info"/>
+        <text macro="trailing-publisher"/>
+        <!-- manuscript and document render their note inline in container-info. -->
+        <choose>
+          <if type="manuscript document" match="none">
+            <text variable="note"/>
+          </if>
+        </choose>
+      </group>
+    </layout>
+  </bibliography>
+</style>

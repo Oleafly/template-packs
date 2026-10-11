@@ -1,0 +1,1 @@
+#let bibl = bibliography("chapters/biblio.bib", title: [Список литературы], style: "chapters/gost-r-7-0-5-2008-numeric.csl", full: true)

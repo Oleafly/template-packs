@@ -1,0 +1,184 @@
+# Default thesis format -- the full schema, and the only place defaults live.
+#
+# Load order, later wins:  default.yml  <-  schools/<school>.yml  <-  config.yml
+#
+# A school preset (schools/<school>.yml) must set `university` and
+# `university-en`, and otherwise states only the keys where that university
+# differs from this file. Nested tables merge key by key, so overriding
+# `layout.margin.top` leaves the other margins alone. Every key used anywhere
+# must exist here: a typo is an error, not a silently ignored setting.
+#
+# Units are given in the comments; values are bare numbers.
+
+# Placeholders: a school preset must replace both.
+university: "○○○○大學"
+university-en: "○○○○ University"
+
+layout:
+  language: "chinese" # chinese | english
+  paper: "a4"
+  font-latin: ["EB Garamond", "Tinos"] # a family or a list; Tinos backs up EB Garamond
+  font-cjk: ["TW-MOE-Std-Kai", "DFKai-SB"] # DFKai-SB misplaces punctuation
+  font-size: 12 # pt
+  line-height: 1.5 # x font size, i.e. 行高 1.5
+  par-spacing: 1.2 # em, the gap between two paragraphs
+  first-line-indent: ~ # em; ~ auto-picks 2 for chinese, 1.5 for english; 0 disables it
+  first-line-indent-all: false # true also indents the first paragraph after a heading
+  footnote-numbering: "1" # 1 | a | A | i | I | *, passed straight to typst
+  footnote-per-chapter: false # true restarts footnote numbering at each chapter
+  equation-numbering: "1" # 1 | a | A | i | I | *, the running number inside an equation's numbering
+  equation-per-chapter: false # true numbers equations "章.流水號" (e.g. (3.1)) and resets each chapter
+  justify: true
+  title-spread: 0.5 # em, the gap a ~ opens up
+  caption-position: # top | bottom, independently for each kind
+    image: "bottom"
+    table: "bottom"
+    code: "bottom"
+  line-box: # em; top - bottom = 1em keeps line-height exact
+    top: 0.88
+    bottom: -0.12
+  margin: # cm
+    top: 3
+    bottom: 2
+    left: 3
+    right: 3
+  heading:
+    size: [18, 16, 14, 12] # pt, levels 1-4
+    weight: "regular"
+    align: ["center", "center", "left", "left"] # left | center | right
+    line-height: 1.2 # x font size, inside a heading
+    gap-above: [1, 0.8, 0.8, 0.6] # em
+    gap-below: [1, 0.5, 0.4, 0.3] # em
+    number-gap: [1, 1, 0, 0] # em, between the number and the title
+
+# ~ spreads the characters apart, as in latex
+titles:
+  toc: "目~次"
+  lof: "圖~次"
+  lot: "表~次"
+
+sections: # unnumbered level-1 headings
+  abstract: "摘要"
+  abstract-en: "Abstract"
+  acknowledgement: "致謝"
+  denotation: "符號列表"
+  keywords-label: "關鍵字："
+  keywords-label-en: "Keywords:"
+  keywords-sep: "、"
+  keywords-sep-en: ", "
+
+page-number:
+  position: "bottom" # top | bottom
+  align: "center" # left | center | right
+  format: "{page}" # e.g. "第 {page} 頁"; "" hides the displayed page number
+
+cross-ref: # @heading references; C=chapter, S=section, B=subsection
+  numbering: ~ # ~ follows layout.language: 一 for Chinese, 1 for English
+  chapter: "第{C}章"
+  section: "第{C}章第{S}節"
+  subsection: "第{C}章第{S}節第{B}小節" # "C.S.B" also works
+
+outline:
+  depth: 3
+  indent: 1 # em, one CJK char per level
+  title-size: 16 # pt, 目次/圖次/表次
+  page-numbering: "i" # front matter
+  body-numbering: "1" # main matter
+  entry-gap: 1 # em above a level-1 entry
+  entry-bold: true
+
+cover:
+  size: # pt
+    org: 18 # 校/院/系所 + 學位論文
+    org-en: 14
+    university-en: 16
+    title: 20 # 論文中文題名
+    title-en: 16 # 論文英文題名, uses layout.font-latin
+    author: 18
+    advisor: 18
+    date: 18
+  weight:
+    org: "bold"
+    org-en: "regular"
+    university-en: "bold"
+    title: "bold"
+    title-en: "bold"
+    author: "regular"
+    advisor: "regular"
+    date: "regular"
+  gap: 1 # em, fixed gaps near the top
+  flex: 1 # fr, elastic gaps lower down
+  margin: # cm; ~ falls back to layout.margin (bottom mirrors the cover's own top)
+    top: ~
+    bottom: ~
+    left: ~
+    right: ~
+  date-zh: "{era}{roc}{year-unit}{month}{month-unit}"
+  date-en: "{month-name}, {year}"
+  advisor-zh: "{label}{advisor}{doctor}"
+  advisor-en: "{label} {advisor} {doctor}"
+
+verification: # 口試委員會審定書
+  size: # pt
+    university: 24
+    title: 26
+    thesis-title: 20
+    body: 16
+  weight:
+    university: "bold"
+    title: "regular"
+    thesis-title: "bold"
+    body: "regular"
+  title: "口~試~委~員~會~審~定~書"
+  degree-line: "{university}{degree}學位{type}" # also {institute}
+  statement: "本論文係{author}君（{id}）在{university}{institute}完成之{degree}學位{type}，於民國{roc}年{month}月{day}日承下列考試委員審查通過及口試及格，特此證明"
+  flex: 2 # fr between blocks
+  flex-end: 1 # fr at the bottom
+  grid:
+    columns: [1.5, 3.5] # fr
+    rows: [4.5, 2.5, 4.5, 4.5, 4.5] # em
+    gutter: 5 # %, between a pair of rules
+    rule: 90 # %, width of the first rule
+    rule-pair: 100 # %, width of each paired rule
+    director-indent: 0.2 # em
+    director-offset: [1, 0.5] # em, dx dy
+
+# the language-paired keys (advisor-label, doctor, chapter, section, figure,
+# table -- each with an -en counterpart) live in /i18n/zh.yml and /i18n/en.yml
+# instead; lib/config.typ splices them in here before this file is read
+strings:
+  era: "中華民國"
+  era-offset: 1911 # roc year = ce year - offset
+  year-unit: "年"
+  month-unit: "月"
+  day-unit: "日"
+  committee: "口試委員："
+  committee-advisor: "（指導教授）"
+  director: "所長："
+  appendix: ["附錄 ", ""] # wraps an appendix number, e.g. 附錄 A
+  subsection: "、" # follows the level-3 number
+  months:
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+
+watermark: # drawn centred behind every main-matter page, with `just release`
+  image: ~ # e.g. "/assets/watermarks/nccu.pdf"; ~ means none
+  width: 100 # % of the page width; height follows the aspect ratio
+  opacity: 100 # %, how dark the mark prints; 50 washes it out by half
+
+bibliography:
+  path: ["/contents/back/references.bib"] # .bib or hayagriva .yml; a string also works
+  style: "apa" # any built-in CSL name (apa, ieee, mla, chicago-author-date, vancouver, ...) or a path to a custom .csl file
+  title: "參~考~文~獻"
+  color: "#0000ff" # cite/ref link colour
+  full: false # true lists uncited entries too

@@ -29,12 +29,12 @@ Example data and correspondence are labeled so you can replace them with your ow
 
 ## Template index
 
-This collection contains **1,789 templates**. Choose an engine for the full index, or open a starter table below.
+This collection contains **3,991 templates**. Choose an engine for the full index, or open a starter table below.
 
 | Engine | Templates | With previews |
 | --- | ---: | ---: |
-| [LaTeX](docs/templates-latex.md) | 810 | 105 |
-| [Typst](docs/templates-typst.md) | 976 | 5 |
+| [LaTeX](docs/templates-latex.md) | 807 | 807 |
+| [Typst](docs/templates-typst.md) | 3,181 | 3,181 |
 | [Markdown](docs/templates-markdown.md) | 3 | 3 |
 
 Template names open the main source file. **All files** opens the complete folder, including any supporting files. **Website** links go to published gallery pages. Community imports and newly added templates may not be listed there yet.
@@ -150,7 +150,7 @@ Template names open the main source file. **All files** opens the complete folde
 | [Worksheet](packs/coursework/worksheet/main.tex) | [Files](packs/coursework/worksheet/) | [Preview](packs/coursework/worksheet/preview.png) | [View](https://oleafly.com/templates/worksheet/) |
 | [Year Calendar](packs/creative-misc/calendar-year/main.tex) | [Files](packs/creative-misc/calendar-year/) | [Preview](packs/creative-misc/calendar-year/preview.png) | [View](https://oleafly.com/templates/calendar-year/) |
 
-[Browse all 810 LaTeX templates](docs/templates-latex.md).
+[Browse all 807 LaTeX templates](docs/templates-latex.md).
 
 </details>
 
@@ -165,7 +165,7 @@ Template names open the main source file. **All files** opens the complete folde
 | [Typst Modern CV](packs/resume-plus/typst-modern-cv/main.typ) | [Files](packs/resume-plus/typst-modern-cv/) | [Preview](packs/resume-plus/typst-modern-cv/preview.png) | [View](https://oleafly.com/templates/typst-modern-cv/) |
 | [Typst Research Poster](packs/slides-posters/typst-research-poster/main.typ) | [Files](packs/slides-posters/typst-research-poster/) | [Preview](packs/slides-posters/typst-research-poster/preview.png) | Not listed |
 
-[Browse all 976 Typst templates](docs/templates-typst.md).
+[Browse all 3,181 Typst templates](docs/templates-typst.md).
 
 </details>
 
@@ -265,3 +265,9 @@ license that replaces those individual terms.
 External packages and fonts have their own licenses. A template named after
 a venue, institution, or established design is not an endorsement. Check the
 current official requirements before a final submission.
+
+Some imported templates came with no license at all. Their manifests say
+"Unlicensed (no license stated)" and `SOURCE.json` links back to where the
+template came from. If one of them is yours and you want it taken down,
+[open an issue](https://github.com/Oleafly/template-packs/issues) with the
+folder name and we'll remove it, no questions asked.

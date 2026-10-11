@@ -1,0 +1,3 @@
+#let fonts = (
+  body: "Carlito",
+)

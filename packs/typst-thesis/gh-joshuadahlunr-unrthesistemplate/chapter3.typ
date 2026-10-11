@@ -1,0 +1,6 @@
+= Challenges and Motivations <chapter:motivation>
+
+// This chapter has all the background needed to explain everything else...
+// Remember your audience - you are writing for a first semester graduate student...
+
+#lorem(50)

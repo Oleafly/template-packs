@@ -1,0 +1,5 @@
+#include "part1/01-context.typ"
+#include "part1/02-related-work.typ"
+#include "part1/03-objectives.typ"
+#include "part1/04-methodology.typ"
+#include "part1/05-outline.typ"

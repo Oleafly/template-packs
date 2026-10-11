@@ -1,0 +1,3 @@
+- Redacta aquí la primera conclusión de la práctica.
+- Redacta aquí la segunda conclusión de la práctica.
+- Redacta aquí la tercera conclusión de la práctica.

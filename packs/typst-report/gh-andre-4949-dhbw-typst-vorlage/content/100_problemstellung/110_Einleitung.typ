@@ -1,0 +1,2 @@
+== Einleitung
+Die Einleitung soll den Ausgangspunkt der Arbeit umreißen, in kurzer Form zur Problemstellung hinführen und das Interesse der lesenden Person für die Arbeit wecken. Allgemeine Einleitung ins Thema, keine Unternehmens- oder Produktbeschreibungen, Organigramme u.ä., wenn diese nicht direkt zum Thema führen. Ziele und Vorgehensweise nicht vermischen.

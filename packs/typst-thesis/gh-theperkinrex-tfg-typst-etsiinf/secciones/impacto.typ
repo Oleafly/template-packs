@@ -1,0 +1,15 @@
+= Análisis de impacto
+En este capítulo se realizará un análisis del impacto potencial de los resultados obtenidos durante la realización del trabajo, en los diferentes contextos para los que se aplique: #footnote[Téngase en cuenta que no se espera que un trabajo tenga impacto en todos los contextos]
+
+
+- Personal
+- Empresarial
+- Social
+- Económico
+- Medioambiental
+- Cultural
+
+En dicho análisis se destacarán los beneficios esperados, así como también los posibles *efectos adversos*.
+Además, se harán notar aquellas decisiones tomadas a lo largo del trabajo que tienen como base la consideración del impacto.
+
+Se recomienda analizar también el potencial impacto respecto a los Objetivos de Desarrollo Sostenible (ODS), de la Agenda 2030, que sean relevantes para el trabajo realizado (#link("https://www.un.org/sustainabledevelopment/es/objetivos-de-desarrollo-sostenible/")[ver enlace])

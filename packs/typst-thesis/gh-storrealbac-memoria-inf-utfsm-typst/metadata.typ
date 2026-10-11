@@ -1,0 +1,7 @@
+#let titulo = "Título de la memoria"
+#let ciudad = "Valparaíso"
+#let nombreAlumno = "Nombre del alumno"
+#let nombreProfesor = "Nombre del profesor guía"
+#let nombreCorreferente = "Nombre del correferente"
+#let mesExamen = "Diciembre"
+#let anioExamen = "20XX"

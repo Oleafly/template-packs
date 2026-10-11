@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only">
+  <info>
+    <title>Japanese Report CSL</title>
+    <title-short>ja-report</title-short>
+    <id>https://github.com/shiguri-01/report-csl</id>
+    <link href="https://github.com/shiguri-01/report-csl" rel="self"/>
+    <author>
+      <name>shiguri</name>
+    </author>
+    <category citation-format="numeric"/>
+    <category field="generic-base"/>
+    <summary>レポート用CSLファイル。日本語の文章で使用することを想定。</summary>
+    <updated>2025-07-25T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/publicdomain/zero/1.0/">This work is licensed under a CC0 1.0 Universal Public Domain Dedication</rights>
+  </info>
+
+  <macro name="pages">
+    <group delimiter=" ">
+      <label variable="page" form="short"/>
+      <text variable="page"/>
+    </group>
+  </macro>
+
+   <macro name="issued-data-year">
+    <date variable="issued" prefix="（" suffix="）">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="issued-data-full">
+    <date variable="issued">
+      <date-part name="year" suffix="年"/>
+      <date-part name="month" suffix="月" form="numeric"/>
+      <date-part name="day" suffix="日" form="numeric"/>
+    </date>
+  </macro>
+
+  <macro name="accessed-date">
+    <date variable="accessed" prefix="（参照 " suffix="）">
+      <date-part name="year" suffix="年"/>
+      <date-part name="month" suffix="月" form="numeric"/>
+      <date-part name="day" suffix="日" form="numeric"/>
+    </date>
+  </macro>
+
+  <!-- 引用部分 -->
+  <citation collapse="citation-number" et-al-min="11" et-al-use-first="10">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout vertical-align="sup" delimiter=",">
+      <text variable="citation-number" prefix="[" suffix="]"/>
+    </layout>
+  </citation>
+
+  <!-- 参考文献リスト -->
+  <bibliography et-al-min="11" et-al-use-first="10" second-field-align="flush">
+    <layout suffix="．">
+      <text variable="citation-number" prefix="[" suffix="] "/>
+      <choose>
+        <!-- 書籍 -->
+        <if type="book">
+          <group delimiter="：">
+            <names variable="author" delimiter="，">
+              <name delimiter="，" sort-separator="" initialize="false"/>
+            </names>
+            <text variable="title" prefix="「" suffix="」"/>
+          </group>
+          <text variable="publisher" prefix="，"/>
+          <text macro="pages" prefix="，"/>
+          <text macro="issued-data-year"/>
+        </if>
+
+        <!-- 学術論文 -->
+        <else-if type="article-journal">
+          <group delimiter="：">
+            <names variable="author" delimiter="，">
+              <name delimiter="，" sort-separator="" initialize="false"/>
+            </names>
+            <text variable="title" prefix="「" suffix="」"/>
+          </group>
+          <text variable="container-title" prefix="，"/>
+          <text variable="volume" prefix="，" suffix=" 巻"/>
+          <text variable="issue" prefix="，" suffix=" 号"/>
+          <text macro="pages" prefix="，"/>
+          <text macro="issued-data-year"/>
+        </else-if>
+
+        <!-- 会議論文 -->
+        <else-if type="paper-conference">
+          <group delimiter="：">
+            <names variable="author" delimiter="，">
+              <name delimiter="，" sort-separator="" initialize="false"/>
+            </names>
+            <text variable="title" prefix="「" suffix="」"/>
+          </group>
+          <text variable="container-title" prefix="，"/>
+          <text macro="pages" prefix="，"/>
+          <text macro="issued-data-year"/>
+        </else-if>
+
+        <!-- Webサイト -->
+        <else-if type="webpage">
+          <group delimiter="：">
+            <names variable="author" delimiter="，">
+              <name delimiter="，" sort-separator="" initialize="false"/>
+            </names>
+            <text variable="title" prefix="「" suffix="」"/>
+          </group>
+          <choose>
+            <!-- container-title（サイト名）がある場合 -->
+            <if variable="container-title">
+              <text variable="container-title" prefix="，"/>
+            </if>
+          </choose>
+          <text macro="issued-data-full" prefix="，"/>
+          <text variable="URL" prefix="，"/>
+          <text macro="accessed-date"/>
+        </else-if>
+
+        <!-- 新聞・Web記事 -->
+        <else-if type="article-newspaper">
+          <group delimiter="：">
+            <names variable="author" delimiter="，">
+              <name delimiter="，" sort-separator="" initialize="false"/>
+            </names>
+            <text variable="title" prefix="「" suffix="」"/>
+          </group>
+          <text variable="container-title" prefix="，"/>
+          <text macro="issued-data-full" prefix="，"/>
+          <text variable="URL" prefix="，"/>
+          <text macro="accessed-date"/>
+        </else-if>
+
+        <!-- その他 -->
+        <else>
+          <group delimiter="：">
+            <names variable="author" delimiter="，">
+              <name delimiter="，" sort-separator="" initialize="false"/>
+            </names>
+            <text variable="title" prefix="「" suffix="」"/>
+          </group>
+          <text variable="container-title" prefix="，"/>
+          <text macro="pages" prefix="，"/>
+          <text macro="issued-data-year"/>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>

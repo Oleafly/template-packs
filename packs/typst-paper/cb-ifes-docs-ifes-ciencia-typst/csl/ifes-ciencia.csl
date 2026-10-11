@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl"
+       version="1.0"
+       class="in-text"
+       default-locale="pt-BR"
+       demote-non-dropping-particle="never">
+  <info>
+    <title>Revista Ifes Ciência — autor-data</title>
+    <title-short>Ifes Ciência</title-short>
+    <id>https://codeberg.org/ifes-docs/ifes-ciencia-typst/csl/ifes-ciencia</id>
+    <link href="https://codeberg.org/ifes-docs/ifes-ciencia-typst" rel="self"/>
+    <link href="https://citationstyles.org/" rel="documentation"/>
+    <author>
+      <name>Ifes Docs project contributors</name>
+    </author>
+    <category citation-format="author-date"/>
+    <category field="generic-base"/>
+    <summary>
+      Journal-local CSL style for the author-date and reference subset
+      required by ifes-ciencia-spec v0.1.0.
+    </summary>
+    <updated>2026-08-19T00:00:00+00:00</updated>
+  </info>
+
+  <locale xml:lang="pt-BR">
+    <terms>
+      <term name="month-01" form="short">jan.</term>
+      <term name="month-02" form="short">fev.</term>
+      <term name="month-03" form="short">mar.</term>
+      <term name="month-04" form="short">abr.</term>
+      <term name="month-05" form="short">maio</term>
+      <term name="month-06" form="short">jun.</term>
+      <term name="month-07" form="short">jul.</term>
+      <term name="month-08" form="short">ago.</term>
+      <term name="month-09" form="short">set.</term>
+      <term name="month-10" form="short">out.</term>
+      <term name="month-11" form="short">nov.</term>
+      <term name="month-12" form="short">dez.</term>
+      <term name="et-al">et al.</term>
+    </terms>
+  </locale>
+
+  <!-- Sorting and author rendering. -->
+  <macro name="author-sort">
+    <names variable="author">
+      <name name-as-sort-order="all"
+            sort-separator=", "
+            initialize="false"
+            delimiter="; "/>
+      <substitute>
+        <text variable="event-title"/>
+        <text variable="event"/>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short"
+            initialize-with=". "
+            delimiter="; "
+            delimiter-precedes-last="never"/>
+      <et-al font-style="italic"/>
+      <substitute>
+        <text variable="event-title" form="short"/>
+        <text variable="event" form="short"/>
+        <text variable="title" form="short"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="author-bibliography">
+    <names variable="author">
+      <name name-as-sort-order="all"
+            sort-separator=", "
+            initialize="false"
+            delimiter="; "
+            delimiter-precedes-last="always">
+        <name-part name="family" text-case="uppercase"/>
+        <name-part name="given"/>
+      </name>
+      <substitute>
+        <names variable="editor">
+          <name name-as-sort-order="all"
+                sort-separator=", "
+                initialize="false"
+                delimiter="; "
+                delimiter-precedes-last="always">
+            <name-part name="family" text-case="uppercase"/>
+            <name-part name="given"/>
+          </name>
+        </names>
+      </substitute>
+    </names>
+  </macro>
+
+  <!-- Dates and citation locators. -->
+  <macro name="issued-year">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text value="[S.d.]"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="issued-date">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="day" suffix=" "/>
+          <date-part name="month" form="short" suffix=" "/>
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text value="[S.d.]"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="citation-locator">
+    <group delimiter=" ">
+      <label variable="locator" form="short"/>
+      <text variable="locator"/>
+    </group>
+  </macro>
+
+  <!-- Publication data. -->
+  <macro name="title">
+    <choose>
+      <if type="book thesis report" match="any">
+        <text variable="title" font-weight="bold"/>
+      </if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="publisher">
+    <choose>
+      <if variable="publisher-place">
+        <text variable="publisher-place"/>
+      </if>
+      <else>
+        <text value="[S.l.]"/>
+      </else>
+    </choose>
+    <text value=": "/>
+    <choose>
+      <if variable="publisher">
+        <text variable="publisher"/>
+      </if>
+      <else>
+        <text value="[S.n.]"/>
+      </else>
+    </choose>
+    <text value=", "/>
+    <text macro="issued-year"/>
+  </macro>
+
+  <!--
+    Hayagriva maps BibLaTeX institution to CSL authority in the current
+    interoperability layer. Prefer publisher when it is explicitly present,
+    then authority.
+  -->
+  <macro name="institution">
+    <choose>
+      <if variable="publisher">
+        <text variable="publisher"/>
+      </if>
+      <else-if variable="authority">
+        <text variable="authority"/>
+      </else-if>
+      <else>
+        <text value="[instituição não informada]"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Online access. -->
+  <macro name="doi">
+    <choose>
+      <if variable="DOI">
+        <text variable="DOI" prefix="DOI: " suffix="."/>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="access">
+    <choose>
+      <if variable="URL">
+        <text variable="URL" prefix=" Disponível em: " suffix="."/>
+        <choose>
+          <if variable="accessed">
+            <date variable="accessed" prefix=" Acesso em: " suffix=".">
+              <date-part name="day" suffix=" "/>
+              <date-part name="month" form="short" suffix=" "/>
+              <date-part name="year"/>
+            </date>
+          </if>
+        </choose>
+      </if>
+    </choose>
+  </macro>
+
+  <!-- Periodical article fields. -->
+  <macro name="article-data">
+    <text variable="container-title" font-weight="bold"/>
+    <choose>
+      <if variable="publisher-place">
+        <text variable="publisher-place" prefix=", "/>
+      </if>
+    </choose>
+    <choose>
+      <if variable="volume">
+        <text variable="volume" prefix=", v. "/>
+      </if>
+    </choose>
+    <choose>
+      <if variable="issue">
+        <text variable="issue" prefix=", n. "/>
+      </if>
+    </choose>
+    <choose>
+      <if variable="page">
+        <text variable="page" prefix=", p. "/>
+      </if>
+    </choose>
+    <text macro="issued-date" prefix=", "/>
+  </macro>
+
+  <!-- Conference/event fields. -->
+  <macro name="event-name">
+    <choose>
+      <if variable="event-title">
+        <text variable="event-title" text-case="uppercase"/>
+      </if>
+      <else-if variable="event">
+        <text variable="event" text-case="uppercase"/>
+      </else-if>
+    </choose>
+  </macro>
+
+  <macro name="event-year">
+    <choose>
+      <if variable="event-date">
+        <date variable="event-date">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text macro="issued-year"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="event-place">
+    <choose>
+      <if variable="event-place">
+        <text variable="event-place"/>
+      </if>
+      <else-if variable="publisher-place">
+        <text variable="publisher-place"/>
+      </else-if>
+      <else>
+        <text value="[S.l.]"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="event-heading">
+    <text macro="event-name"/>
+    <choose>
+      <if variable="issue">
+        <text variable="issue" prefix=", " suffix="."/>
+      </if>
+    </choose>
+    <text macro="event-year" prefix=", "/>
+    <text macro="event-place" prefix=", "/>
+  </macro>
+
+  <!-- Citation policy. -->
+  <citation et-al-min="4"
+            et-al-use-first="1"
+            collapse="year"
+            disambiguate-add-year-suffix="true">
+    <sort>
+      <key macro="author-sort"/>
+      <key variable="issued"/>
+      <key variable="title"/>
+    </sort>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=", ">
+        <text macro="author-short"/>
+        <text macro="issued-year"/>
+        <text macro="citation-locator"/>
+      </group>
+    </layout>
+  </citation>
+
+  <!-- Bibliography policy. -->
+  <bibliography hanging-indent="false"
+                line-spacing="1"
+                entry-spacing="0">
+    <sort>
+      <key macro="author-sort"/>
+      <key variable="title"/>
+      <key variable="issued"/>
+    </sort>
+    <layout suffix=".">
+      <choose>
+        <if type="article-journal article-magazine article-newspaper"
+            match="any">
+          <choose>
+            <if variable="author">
+              <text macro="author-bibliography" suffix=". "/>
+            </if>
+          </choose>
+          <text macro="title" suffix=". "/>
+          <text macro="article-data" suffix=". "/>
+          <text macro="doi"/>
+          <choose>
+            <if variable="URL">
+              <text macro="access"/>
+            </if>
+          </choose>
+        </if>
+
+        <else-if type="paper-conference">
+          <text macro="author-bibliography" suffix=". "/>
+          <text macro="title" suffix=". In: "/>
+          <text macro="event-heading" suffix=". "/>
+          <text variable="container-title" font-weight="bold" suffix=". "/>
+          <text macro="publisher"/>
+          <choose>
+            <if variable="page">
+              <text variable="page" prefix=". p. "/>
+            </if>
+          </choose>
+          <choose>
+            <if variable="DOI">
+              <text value=". "/>
+              <text macro="doi"/>
+            </if>
+          </choose>
+          <choose>
+            <if variable="URL">
+              <text macro="access"/>
+            </if>
+          </choose>
+        </else-if>
+
+        <else-if variable="event-title event" match="any">
+          <text macro="event-heading" suffix=". "/>
+          <text macro="title" suffix=". "/>
+          <text macro="publisher"/>
+          <choose>
+            <if variable="URL">
+              <text value="."/>
+              <text macro="access"/>
+            </if>
+          </choose>
+        </else-if>
+
+        <else-if type="book">
+          <choose>
+            <if variable="author">
+              <text macro="author-bibliography" suffix=". "/>
+            </if>
+          </choose>
+          <text macro="title" suffix=". "/>
+          <choose>
+            <if variable="edition">
+              <text variable="edition" suffix=". ed. "/>
+            </if>
+          </choose>
+          <text macro="publisher"/>
+          <choose>
+            <if variable="URL">
+              <text value="."/>
+              <text macro="access"/>
+            </if>
+          </choose>
+        </else-if>
+
+        <else-if type="thesis">
+          <text macro="author-bibliography" suffix=". "/>
+          <text macro="title" suffix=". "/>
+          <text macro="issued-year" suffix=". "/>
+          <text variable="genre" suffix=" – "/>
+          <text macro="institution" suffix=", "/>
+          <text variable="publisher-place" suffix=", "/>
+          <choose>
+            <if variable="note">
+              <text variable="note"/>
+            </if>
+            <else>
+              <text macro="issued-year"/>
+            </else>
+          </choose>
+          <choose>
+            <if variable="URL">
+              <text value="."/>
+              <text macro="access"/>
+            </if>
+          </choose>
+        </else-if>
+
+        <else-if type="report">
+          <choose>
+            <if variable="author">
+              <text macro="author-bibliography" suffix=". "/>
+            </if>
+          </choose>
+          <text macro="title" suffix=". "/>
+          <choose>
+            <if variable="publisher-place">
+              <text variable="publisher-place" suffix=": "/>
+            </if>
+            <else>
+              <text value="[S.l.]: "/>
+            </else>
+          </choose>
+          <text macro="institution" suffix=", "/>
+          <text macro="issued-year"/>
+          <choose>
+            <if variable="URL">
+              <text value="."/>
+              <text macro="access"/>
+            </if>
+          </choose>
+        </else-if>
+
+        <else>
+          <choose>
+            <if variable="author">
+              <text macro="author-bibliography" suffix=". "/>
+              <text macro="title" suffix=". "/>
+            </if>
+            <else>
+              <text macro="title" suffix=". "/>
+            </else>
+          </choose>
+          <choose>
+            <if variable="publisher-place publisher" match="any">
+              <text macro="publisher"/>
+            </if>
+            <else>
+              <text macro="issued-year"/>
+            </else>
+          </choose>
+          <choose>
+            <if variable="DOI">
+              <text value=". "/>
+              <text macro="doi"/>
+            </if>
+          </choose>
+          <choose>
+            <if variable="URL">
+              <text macro="access"/>
+            </if>
+          </choose>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>

@@ -1,0 +1,11 @@
+#import "glossary.typ": *
+
+= Introduction
+
+The increasing sophistication of cyber threats demands equally advanced training methodologies. Current cyber security education faces significant challenges in providing realistic, engaging scenarios that prepare students for real-world situations. Traditional training exercises often rely on static or predictable scenarios that fail to capture the dynamic nature of modern cyber threats.
+
+Most current cyber security training exercises are based on static or heuristically randomized scenarios, limiting realism and learning engagement. In particular, the bots currently in use have limited conversational fidelity #cite(<schreuders_hackerbot_2018>). Narrative content is not always generated using AI, and even when it is generated this way the models and techniques are sometimes outdated for example using older models such as GPT-2 #cite(<zacharis_aicef_2023>). Scenarios generated using current methods can also have low variety making them predictable.
+
+A significant research gap exists in leveraging state-of-the-art generative AI models for comprehensive cyber security education. While some systems incorporate basic AI elements, none fully exploit the potential of modern large language models (LLMs) for dynamic scenario generation, realistic chatbot interactions, and automated vulnerability creation. This thesis addresses this gap by exploring how frontier open generative AI models can enhance realism and immersion in cyber security training.
+
+The proposed PhD thesis will cover the uses of Generative AI models such as #acronym("llm") and image generators in educational cyber security simulations including hacking challenges such as #acronym("ctf") and #acronym("koth"). This will include using #acronym("llm")s to generate narrative content (thematic learning scenario content), provide realistic chatbots for students to interact with, and even generate randomized challenges such as unique malware for malware analysis challenges or randomly generated insecure systems and software.

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" default-locale="en-US">
+  <info>
+    <title>IEEE (Full Authors — UCSD Dissertation)</title>
+    <id>https://standardmodel.bio/csl/ieee-full-authors</id>
+    <updated>2026-06-26T00:00:00+00:00</updated>
+    <summary>Numeric [n] style; et-al threshold lifted so all authors always print.</summary>
+  </info>
+  <!-- No et-al-min/et-al-use-first: with neither set, CSL never abbreviates an
+       author list, which is what the UCSD manual requires. These were previously
+       set to 99, which still truncated papers with 100+ authors (routine for
+       large consortia) and silently dropped the trailing authors. -->
+  <macro name="author">
+    <names variable="author">
+      <name and="text" delimiter=", " initialize-with=". "/>
+    </names>
+  </macro>
+  <macro name="issued-year">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+  <citation collapse="citation-number">
+    <layout prefix="[" suffix="]" delimiter="], [">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+  <bibliography second-field-align="flush">
+    <layout>
+      <text variable="citation-number" prefix="[" suffix="] "/>
+      <text macro="author" suffix=", "/>
+      <text variable="title" quotes="true" suffix=", "/>
+      <text variable="container-title" font-style="italic" suffix=", "/>
+      <text macro="issued-year" suffix="."/>
+    </layout>
+  </bibliography>
+</style>

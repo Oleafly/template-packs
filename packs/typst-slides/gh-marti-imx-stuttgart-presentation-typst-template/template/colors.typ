@@ -1,0 +1,5 @@
+#let PUIblue = rgb("#004191")
+#let PUIlightblue = rgb("#657C9D")
+#let CAIlightblue = rgb("#2BA0B0")
+#let PUIgray = rgb("#F1F0EC")
+#let Thealgray = rgb("#23373b")

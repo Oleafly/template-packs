@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never">
+  <info>
+    <title>Laporan Hasil Aktualisasi - BPS/LAN</title>
+    <id>http://www.zotero.org/styles/laporan-aktualisasi</id>
+    <category citation-format="author-date"/>
+    <summary>Gaya sitasi untuk Laporan Hasil Aktualisasi Pelatihan Dasar CPNS.
+      Format: Penulis. Tahun. Judul. Tempat: Penerbit.</summary>
+    <updated>2026-07-23T00:00:00+00:00</updated>
+  </info>
+  <locale xml:lang="id">
+    <terms>
+      <term name="et-al">dkk.</term>
+      <term name="retrieved">diperoleh</term>
+      <term name="from">melalui</term>
+      <term name="internet">situs internet</term>
+      <term name="edition">edisi</term>
+      <term name="in">dalam</term>
+      <term name="no date">tanpa tahun</term>
+    </terms>
+  </locale>
+  <!-- Author macro -->
+  <macro name="author">
+    <names variable="author">
+      <name and="text" delimiter-precedes-last="always" initialize-with=". " name-as-sort-order="all"/>
+      <label form="short" prefix=" (" suffix=")"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text variable="publisher"/>
+        <text macro="title"/>
+      </substitute>
+    </names>
+  </macro>
+  <!-- Author for in-text citation -->
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" and="text" delimiter=", " initialize-with=". "/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text variable="title" form="short"/>
+      </substitute>
+    </names>
+  </macro>
+  <!-- Title macro -->
+  <macro name="title">
+    <choose>
+      <if type="book thesis report" match="any">
+        <text variable="title" font-style="normal"/>
+      </if>
+      <else-if type="article-journal article-magazine" match="any">
+        <text variable="title" font-style="normal"/>
+      </else-if>
+      <else>
+        <text variable="title" font-style="normal"/>
+      </else>
+    </choose>
+  </macro>
+  <!-- Year macro - NO parentheses for bibliography -->
+  <macro name="issued-bib">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text term="no date"/>
+      </else>
+    </choose>
+  </macro>
+  <!-- Year macro - WITH parentheses for in-text citation -->
+  <macro name="issued-intext">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text term="no date"/>
+      </else>
+    </choose>
+  </macro>
+  <!-- Publisher: Place.Publisher -->
+  <macro name="publisher">
+    <group delimiter=", ">
+      <text variable="publisher"/>
+      <text variable="publisher-place"/>
+    </group>
+  </macro>
+  <!-- Container title (journal name etc.) -->
+  <macro name="container">
+    <choose>
+      <if type="article-journal article-magazine" match="any">
+        <text variable="container-title" font-style="normal"/>
+      </if>
+    </choose>
+  </macro>
+  <!-- Volume/pages for articles -->
+  <macro name="locators">
+    <choose>
+      <if type="article-journal article-magazine" match="any">
+        <group delimiter=", ">
+          <group>
+            <text variable="volume"/>
+            <text variable="issue" prefix="(" suffix=")"/>
+          </group>
+          <text variable="page"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
+  <!-- Access (URL/DOI) -->
+  <macro name="access">
+    <choose>
+      <if variable="DOI">
+        <text variable="DOI" prefix=" https://doi.org/"/>
+      </if>
+      <else-if variable="URL">
+        <group delimiter=". ">
+          <text term="retrieved" text-case="capitalize-first"/>
+          <text term="from" suffix=": "/>
+          <text variable="URL"/>
+        </group>
+      </else-if>
+    </choose>
+  </macro>
+  <!-- In-text citation: (Author, Year) -->
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-year-suffix="true">
+    <sort>
+      <key macro="author-short"/>
+      <key macro="issued-intext"/>
+    </sort>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=", ">
+        <text macro="author-short"/>
+        <text macro="issued-intext"/>
+      </group>
+    </layout>
+  </citation>
+  <!-- Bibliography: Author. Year. Title. Place: Publisher. -->
+  <bibliography hanging-indent="true" entry-spacing="0" line-spacing="1">
+    <sort>
+      <key macro="author"/>
+      <key macro="issued-bib" sort="ascending"/>
+    </sort>
+    <layout suffix=".">
+      <!-- Author -->
+      <text macro="author" suffix=". "/>
+      <!-- Year (no parentheses) -->
+      <text macro="issued-bib" suffix=". "/>
+      <!-- Title -->
+      <text macro="title" suffix=". "/>
+      <!-- Container (journal name) -->
+      <text macro="container" suffix=". "/>
+      <!-- Volume, issue, pages -->
+      <text macro="locators" suffix=". "/>
+      <!-- Publisher / Place -->
+      <text macro="publisher" suffix="."/>
+      <!-- Access -->
+      <text macro="access"/>
+      <!-- DOI at end -->
+      <choose>
+        <if variable="DOI" match="any">
+          <text variable="DOI" prefix=" https://doi.org/"/>
+        </if>
+      </choose>
+    </layout>
+  </bibliography>
+</style>

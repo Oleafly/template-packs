@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" default-locale="de-DE" demote-non-dropping-particle="sort-only" page-range-format="expanded">
+  <!-- ==========================================================================
+       FOM Chicago-Style (Kurzbeleg mit Stichwort)
+       nach: FOM-Leitfaden zur formalen Gestaltung von Seminar- und
+       Abschlussarbeiten (Stand Januar 2024), Kapitel 2.6 und 3.2
+
+       Kurzbeleg:            Mayer, D., Finanzinvestitionen, 2019[, S. 438]
+       Literaturverzeichnis: Scholz, Christian (Personal, 2014):
+                             Personalmanagement, 6. Aufl., München: Vahlen, 2014
+
+       Das "Stichwort" wird aus dem BibTeX-Feld `shorttitle` gelesen
+       (Zotero/Better BibTeX: "Kurztitel"). Fehlt es, wird der volle Titel
+       verwendet. Internetquellen werden ans Ende sortiert (Leitfaden 2.6).
+       Einträge enden ohne Punkt; die Fußnoten-Interpunktion ("Vgl. ... .")
+       übernehmen die Template-Funktionen #vgl und #zit.
+       ========================================================================== -->
+  <info>
+    <title>FOM Chicago-Style (Fußnoten-Kurzbeleg mit Stichwort)</title>
+    <id>https://github.com/fom-typst-template/fom-chicago</id>
+    <link href="https://github.com/fom-typst-template" rel="self"/>
+    <category citation-format="note"/>
+    <updated>2026-07-13T00:00:00+00:00</updated>
+  </info>
+
+  <!-- Verfasser im Kurzbeleg: "Mayer, D."; ab 3 Verfassern "et al./u. a." -->
+  <macro name="autoren-kurz">
+    <names variable="author">
+      <name name-as-sort-order="all" sort-separator=", " delimiter=", " initialize-with=". " et-al-min="3" et-al-use-first="1"/>
+      <substitute>
+        <text macro="herausgeber-kurz"/>
+        <text value="o. V."/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="herausgeber-kurz">
+    <names variable="editor" suffix=" (Hrsg.)">
+      <name name-as-sort-order="all" sort-separator=", " delimiter=", " initialize-with=". " et-al-min="3" et-al-use-first="1"/>
+    </names>
+  </macro>
+
+  <!-- Verfasser im Literaturverzeichnis: vollständige Nennung aller Namen -->
+  <macro name="autoren-voll">
+    <names variable="author">
+      <name name-as-sort-order="all" sort-separator=", " delimiter=", "/>
+      <substitute>
+        <text macro="herausgeber"/>
+        <text value="o. V."/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="herausgeber">
+    <names variable="editor" suffix=" (Hrsg.)">
+      <name name-as-sort-order="all" sort-separator=", " delimiter=", "/>
+    </names>
+  </macro>
+
+  <!-- Stichwort: Kurztitel (shorttitle), sonst voller Titel -->
+  <macro name="stichwort">
+    <text variable="title" form="short"/>
+  </macro>
+
+  <!-- Jahr mit Buchstaben-Zusatz (a, b, ...) bei gleichem Jahr, sonst "o. J." -->
+  <macro name="jahr">
+    <choose>
+      <if variable="issued">
+        <group>
+          <date variable="issued">
+            <date-part name="year"/>
+          </date>
+          <text variable="year-suffix"/>
+        </group>
+      </if>
+      <else>
+        <group>
+          <text value="o. J."/>
+          <text variable="year-suffix"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="jahr-ohne-suffix">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text value="o. J."/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Auflage: nur angeben, wenn vorhanden (d. h. nicht 1. Auflage) -->
+  <macro name="auflage">
+    <choose>
+      <if is-numeric="edition">
+        <group delimiter=". ">
+          <number variable="edition"/>
+          <text value="Aufl."/>
+        </group>
+      </if>
+      <else>
+        <text variable="edition"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Erscheinungsort: Verlag -->
+  <macro name="verlagsangabe">
+    <group delimiter=": ">
+      <text variable="publisher-place"/>
+      <text variable="publisher"/>
+    </group>
+  </macro>
+
+  <!-- "type" im .bib-Eintrag überschreibt das Label "S." (z. B. "Art." bei
+       Zeitschriften ohne Seitenzählung, die stattdessen Artikelnummern
+       vergeben, etwa MDPI-Journale). -->
+  <macro name="seiten">
+    <choose>
+      <if variable="genre">
+        <group delimiter=" ">
+          <text variable="genre"/>
+          <text variable="page"/>
+        </group>
+      </if>
+      <else>
+        <group delimiter=" ">
+          <text value="S."/>
+          <text variable="page"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="online-datum">
+    <!-- Teil-Prefixe statt eines Datums-`delimiter`: fehlen Monat/Tag (z. B.
+         Quellen, von denen nur das Jahr bekannt ist), bleibt sonst ein
+         hängender Bindestrich stehen ("(2022-)"). -->
+    <date variable="issued" prefix="(" suffix=")">
+      <date-part name="year"/>
+      <date-part name="month" form="numeric-leading-zeros" prefix="-"/>
+      <date-part name="day" form="numeric-leading-zeros" prefix="-"/>
+    </date>
+  </macro>
+
+  <macro name="zugriff">
+    <date variable="accessed" prefix="[Zugriff " suffix="]">
+      <date-part name="year"/>
+      <date-part name="month" form="numeric-leading-zeros" prefix="-"/>
+      <date-part name="day" form="numeric-leading-zeros" prefix="-"/>
+    </date>
+  </macro>
+
+  <!-- Freie Anmerkung aus dem .bib-Feld `note` – wird, sofern vorhanden, nach
+       einem Gedankenstrich an den Eintrag angehängt (z. B. "– E-Book-Ausgabe
+       (Apple Books)" oder "– zitiert nach Medina"). hayagriva bildet auch die
+       BibTeX-Felder `annotation`/`annote` und `addendum` auf diese CSL-Variable
+       ab (Vorrang hat `note`); `abstract` und `keywords` bleiben unberührt. -->
+  <macro name="anmerkung">
+    <text variable="note" prefix="– "/>
+  </macro>
+
+  <!-- Internetquellen ans Ende des Literaturverzeichnisses (Leitfaden 2.6) -->
+  <macro name="typ-rang">
+    <choose>
+      <if type="webpage post-weblog post" match="any">
+        <text value="2"/>
+      </if>
+      <else>
+        <text value="1"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Kurzbeleg: Mayer, D., Finanzinvestitionen, 2019, S. 438 -->
+  <citation disambiguate-add-year-suffix="true">
+    <layout delimiter="; ">
+      <group delimiter=", ">
+        <text macro="autoren-kurz"/>
+        <text macro="stichwort"/>
+        <text macro="jahr"/>
+        <text variable="locator"/>
+      </group>
+    </layout>
+  </citation>
+
+  <!-- Literaturverzeichnis (Leitfaden 2.6, Beispiel in Anhang 13) -->
+  <bibliography hanging-indent="true" entry-spacing="1" line-spacing="1">
+    <sort>
+      <key macro="typ-rang"/>
+      <key macro="autoren-voll"/>
+      <key variable="issued" sort="ascending"/>
+    </sort>
+    <layout>
+      <group delimiter=" ">
+        <group delimiter=" ">
+        <!-- Autorenposition kursiv (nur im Literaturverzeichnis): der
+             alphabetisierte Name bis vor die Klammer. Gilt über `autoren-voll`
+             automatisch auch für institutionelle Verfasser, für "o. V." und für
+             Herausgeberbände, bei denen der Herausgeber an der Autorenposition
+             steht. Der Kurzbeleg (`autoren-kurz`) und der Herausgeber nach
+             "in:" im Sammelwerk-Zweig bleiben normal; die Sortierung ist
+             unberührt, weil Formatierung nicht auf <sort><key> wirkt. -->
+          <text macro="autoren-voll" font-style="italic"/>
+          <group prefix="(" suffix="):" delimiter=", ">
+            <text macro="stichwort"/>
+            <text macro="jahr"/>
+          </group>
+        </group>
+        <choose>
+          <!-- Aufsätze in Sammelwerken, Kommentaren, Festschriften -->
+          <if type="chapter paper-conference entry-encyclopedia entry-dictionary" match="any">
+            <group delimiter=", ">
+              <text variable="title"/>
+              <group delimiter=" ">
+                <text value="in:"/>
+                <text macro="herausgeber"/>
+              </group>
+              <text variable="container-title"/>
+              <text macro="auflage"/>
+              <text macro="jahr-ohne-suffix"/>
+              <text macro="seiten"/>
+            </group>
+          </if>
+          <!-- Zeitschriften- und Zeitungsartikel -->
+          <else-if type="article-journal article-magazine article-newspaper" match="any">
+            <group delimiter=", ">
+              <text variable="title"/>
+              <group delimiter=" ">
+                <text value="in:"/>
+                <text variable="container-title"/>
+              </group>
+              <group delimiter=" ">
+                <number variable="volume"/>
+                <date variable="issued" prefix="(" suffix=")">
+                  <date-part name="year"/>
+                </date>
+              </group>
+              <group delimiter=" ">
+                <text value="Nr."/>
+                <number variable="issue"/>
+              </group>
+              <text macro="seiten"/>
+            </group>
+          </else-if>
+          <!-- Internetquellen -->
+          <else-if type="webpage post-weblog post" match="any">
+            <group delimiter=" ">
+              <group delimiter=", ">
+                <text variable="title"/>
+                <text variable="URL" prefix="&lt;" suffix="&gt;"/>
+              </group>
+              <text macro="online-datum"/>
+              <text macro="zugriff"/>
+            </group>
+          </else-if>
+          <!-- Hochschulschriften -->
+          <else-if type="thesis report" match="any">
+            <group delimiter=", ">
+              <text variable="title"/>
+              <text variable="genre"/>
+              <text macro="verlagsangabe"/>
+              <text macro="jahr-ohne-suffix"/>
+            </group>
+          </else-if>
+          <!-- Monographien und Sammelwerke -->
+          <else>
+            <group delimiter=", ">
+              <text variable="title"/>
+              <text macro="auflage"/>
+              <text macro="verlagsangabe"/>
+              <text macro="jahr-ohne-suffix"/>
+            </group>
+          </else>
+        </choose>
+        <text macro="anmerkung"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>

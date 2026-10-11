@@ -1,0 +1,93 @@
+// tag::DE[]
+#import "../lib.typ": arc42help
+= Einführung und Ziele <section-introduction-and-goals>
+
+#arc42help[
+  Beschreibt die wesentlichen Anforderungen und treibenden Kräfte, die bei der Umsetzung der Softwarearchitektur und Entwicklung des Systems berücksichtigt werden müssen.
+
+  Dazu gehören:
+
+  - zugrunde liegende Geschäftsziele,
+  - wesentliche Aufgabenstellungen,
+  - wesentliche funktionale Anforderungen,
+  - Qualitätsziele für die Architektur und
+  - relevante Stakeholder und deren Erwartungshaltung.
+]
+
+== Aufgabenstellung
+
+#arc42help[
+  *Inhalt*
+
+  Kurzbeschreibung der fachlichen Aufgabenstellung, treibenden Kräfte, Extrakt (oder Abstract) der Anforderungen.
+  Verweis auf (hoffentlich vorliegende) Anforderungsdokumente (mit Versionsbezeichnungen und Ablageorten).
+
+  *Motivation*
+
+  Aus Sicht der späteren Nutzung ist die Unterstützung einer fachlichen Aufgabe oder Verbesserung der Qualität der eigentliche Beweggrund, ein neues System zu schaffen oder ein bestehendes zu modifizieren.
+
+  *Form*
+
+  Kurze textuelle Beschreibung, eventuell in tabellarischer Use-Case Form.
+  Sofern vorhanden, sollte die Aufgabenstellung Verweise auf die entsprechenden Anforderungsdokumente enthalten.
+
+  Halten Sie diese Auszüge so knapp wie möglich und wägen Sie Lesbarkeit und Redundanzfreiheit gegeneinander ab.
+
+  _Weiterführende Informationen:_ Siehe #link("https://docs.arc42.org/section-1/")[Anforderungen und Ziele] in der online-Dokumentation (auf Englisch!).
+]
+
+== Qualitätsziele
+
+#arc42help[
+  *Inhalt*
+
+  Die Top-3 bis Top-5 der Qualitätsanforderungen für die Architektur, deren Erfüllung oder Einhaltung den maßgeblichen Stakeholdern besonders wichtig sind.
+  Gemeint sind hier wirklich Qualitätsziele, die nicht unbedingt mit den Zielen des Projekts übereinstimmen.
+  Beachten Sie den Unterschied.
+
+  Hier ein Überblick möglicher Themen (basierend auf dem ISO 25010 Standard):
+
+  #figure(
+    image("../images/01_2_iso-25010-topics-DE-2023.drawio.png", width: 100%),
+    caption: [Kategorien von Qualitätsanforderungen],
+  )
+
+  *Motivation*
+
+  Weil Qualitätsziele grundlegende Architekturentscheidungen oft maßgeblich beeinflussen, sollten Sie die für Ihre Stakeholder relevanten Qualitätsziele kennen, möglichst konkret und operationalisierbar.
+
+  *Form*
+
+  Tabellarische Darstellung der Qualitätsziele mit möglichst konkreten Szenarien, geordnet nach Prioritäten.
+]
+
+== Stakeholder
+
+#arc42help[
+  *Inhalt*
+
+  Expliziter Überblick über die Stakeholder des Systems -- über alle Personen, Rollen oder Organisationen --, die
+
+  - die Architektur kennen sollten oder
+  - von der Architektur überzeugt werden müssen,
+  - mit der Architektur oder dem Code arbeiten (z.B. Schnittstellen nutzen),
+  - die Dokumentation der Architektur für ihre eigene Arbeit benötigen,
+  - Entscheidungen über das System und dessen Entwicklung treffen.
+
+  *Motivation*
+
+  Sie sollten die Projektbeteiligten und -betroffenen kennen, sonst erleben Sie später im Entwicklungsprozess Überraschungen.
+  Diese Stakeholder bestimmen unter anderem Umfang und Detaillierungsgrad der von Ihnen zu leistenden Arbeit und Ergebnisse.
+
+  *Form*
+
+  Tabelle mit Rollen- oder Personennamen, sowie deren Erwartungshaltung bezüglich der Architektur und deren Dokumentation.
+]
+
+#table(
+  columns: (1fr, 1fr, 2fr),
+  table.header[*Rolle*][*Kontakt*][*Erwartungshaltung*],
+  [_\<Rolle-1>_], [_\<Kontakt-1>_], [_\<Erwartung-1>_],
+  [_\<Rolle-2>_], [_\<Kontakt-2>_], [_\<Erwartung-2>_],
+)
+// end::DE[]
