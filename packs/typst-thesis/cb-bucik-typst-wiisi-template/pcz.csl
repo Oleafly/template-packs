@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0.1" default-locale="pl-PL">
+  <info>
+    <title>Polish IEEE Numeric (Custom)</title>
+    <id>http://www.example.com/styles/polish-ieee-numeric</id>
+    <link href="http://www.example.com/styles/polish-ieee-numeric" rel="self"/>
+    <author>
+      <name>Generated</name>
+    </author>
+    <category citation-format="numeric"/>
+    <summary>Numeric bracket citations with a Polish-style bibliography.</summary>
+    <updated>2026-06-23T00:00:00+00:00</updated>
+  </info>
+
+  <locale xml:lang="pl">
+    <terms>
+      <term name="accessed">stan na dzień</term>
+      <term name="in">w</term>
+      <term name="page" form="short">str.</term>
+      <term name="editor" form="verb-short">Eds.</term>
+    </terms>
+  </locale>
+
+  <!-- Authors: "Surname I., Surname I., ..." -->
+  <macro name="author">
+    <names variable="author">
+      <name and="text" delimiter=", " initialize-with="." name-as-sort-order="all" sort-separator=" "/>
+      <substitute>
+        <names variable="editor"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="editor">
+    <names variable="editor">
+      <label form="verb-short" text-case="capitalize-first" suffix=" "/>
+      <name and="text" delimiter=", " initialize-with="." sort-separator=" "/>
+    </names>
+  </macro>
+
+  <macro name="title">
+    <text variable="title" font-style="italic"/>
+  </macro>
+
+  <macro name="container">
+    <choose>
+      <if type="chapter paper-conference" match="any">
+        <group delimiter=", ">
+          <text variable="container-title" prefix="w: "/>
+          <text macro="editor"/>
+          <text variable="publisher"/>
+          <text variable="publisher-place"/>
+        </group>
+      </if>
+      <else>
+        <group delimiter=" ">
+          <text variable="container-title"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="publisher">
+    <group delimiter=": ">
+      <text variable="publisher-place"/>
+      <text variable="publisher"/>
+    </group>
+  </macro>
+
+  <macro name="issued-year">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="pages">
+    <group delimiter=" ">
+      <label variable="page" form="short"/>
+      <text variable="page"/>
+    </group>
+  </macro>
+
+  <macro name="access">
+    <group delimiter=" ">
+      <text variable="URL"/>
+      <group prefix=", " delimiter=": ">
+        <text term="accessed" text-case="lowercase"/>
+        <date variable="accessed" delimiter=".">
+          <date-part name="day"/>
+          <date-part name="month" form="numeric"/>
+          <date-part name="year"/>
+        </date>
+      </group>
+    </group>
+  </macro>
+
+  <!-- In-text citations: [n] -->
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter="], [">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+
+  <!-- Bibliography: [n] Author, Title, Container/Publisher, Year. -->
+  <bibliography second-field-align="flush" entry-spacing="0" line-spacing="1">
+    <layout>
+      <text variable="citation-number" prefix="[" suffix="] "/>
+      <group delimiter=", " suffix=".">
+        <text macro="author"/>
+        <text macro="title"/>
+        <text macro="container"/>
+        <text macro="publisher"/>
+        <text macro="pages"/>
+        <text macro="issued-year"/>
+        <text macro="access"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>

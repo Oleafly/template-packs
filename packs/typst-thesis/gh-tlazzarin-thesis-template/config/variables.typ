@@ -1,0 +1,14 @@
+#let myLang = "it" // it/en only
+#let myName = "Mario Rossi"
+#let myMatricola = "1234567"
+#let myTitle = "Titolo della tesi."
+#let myProf = "Prof. Supervisor"
+#let myCompany = "Azienda SRL"
+#let myLocation = "Padova"
+#let myAY = "2024-2025"
+#let myTime = "Luglio 2025"
+#let myTutor = "Tutor aziendale"
+#let myUni = "Università degli studi di Padova"
+#let myDepartment = [Dipartimento di Matematica 'Tullio Levi-Civita']
+#let myFaculty = "Corso di Laurea in Informatica"
+#let myDegree = "Tesi di laurea triennale"

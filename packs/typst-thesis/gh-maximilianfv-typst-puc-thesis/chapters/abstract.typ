@@ -1,0 +1,5 @@
+The abstract must contain between 100 and 300 words. The abstract must be written in English and Spanish. In the case of doctoral theses, the layout of the abstract page is different, so please check the template provided by the OGRS.
+
+#v(1fr)
+#set par(first-line-indent: 0pt) // \noindent
+*Keywords*: thesis template, document writing, *(Write here the keywords relevant and strictly related to the topic of the thesis)*.

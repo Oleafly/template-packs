@@ -1,0 +1,7 @@
+= Final copy
+
+You must include your signed IEEE copyright release form when you submit your finished paper.
+We MUST have this form before your paper can be published in the proceedings.
+
+Please direct any questions to the production editor in charge of these proceedings at the IEEE Computer Society Press:
+#link("https://www.computer.org/about/contact").

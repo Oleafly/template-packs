@@ -1,0 +1,138 @@
+storage:
+  # prettier-ignore
+  wallet: [
+    ¤, ₠, ₳, ¢, ₵, ₡, \$, ₯, ֏, \u07FE,
+    €, ₣, ₲, ₭, ₾, ₦, £, ₶, ₷, ₽,
+    ₴, ₤, ₺, ₹, ₩, ¥, 円, 元, ₫, ₮,
+    ₸, ₪, ₼, ₨, ₧, ₱, \uFDFC, ₿, руб\.?, RUB,
+    USD, EUR, GBP, JPY, CHF, CAD, AUD, NZD, PLN, HUF,
+    BRL, CNY, TWD, SGD, MYR, IDR, THB, VND, KRW, PKR,
+    INR, ILS, QAR, SAR, AED, OMR, YER, JOD, IQD, KWD,
+    BHD, TND, EGP, SYP, LBP, CZK, SEK, NOK, DKK, HRK,
+    RSD, BGN, RON, UAH, KZT, GEL, AMD, MXN, CLP, COP,
+    ARS, ZAR, TRY, PHP, NGN, USDT, BTC, ETH, XRP, SOL,
+    BNB, USDC
+  ]
+  temperature-scales: [
+    # Самодостаточные символы Юникода для температурных шкал
+    # Stand-alone Unicode symbols for temperature scales
+    ℃, ℉, K,
+    # Комбинированные символы Юникода для температурных шкал
+    # Combined Unicode symbols for temperature scales
+    °C, °F,                   # Celsius, Fahrenheit
+    °D, °L, °N,               # Delisle, Leiden, Newton
+    °W, °Da, °H,              # Wedgewood, Dalton, Hook
+    °R, "°R[eé]", "°R[oø]",   # Rankine, Réaumur, Rømer
+  ]
+  # Note: russian inner quotes may conflict with english quotes
+  # Russian inner closing quote [ “ ] === English opening quote [ “ ]
+  # Default set focused to Russian, you may change it
+  left-sided-punctuation: [
+    ¡, ¿, ⸘, ⸮, ‹, «, „, ‘,
+  ]
+  right-sided-punctuation: [
+    ‼, ⁇, ⁈, ⁉, ":", ;, \., ",", \!, \?, …, ›, », “, ’
+  ]
+  spaces: [
+    \u0020, \u00A0, \u2002, \u2003, # Space, No-break space, En space, Em space
+    \u2004, \u2005, \u2006, # Three-per-em space, Four-per-em space, Six-per-em space
+    \u2007, \u2008, \u2009, # Figure space, Punctuation space, Thin space
+    \u200A, \u200B, \uFEFF, # Hair space, Zero width space, No-break zero width space
+    \u205F, \u3000, # Medium math space, Ideographic space
+  ]
+
+rules: [
+    # Убрать повторение пробелов
+    # Remove multiple spaces
+    ["[ ]{2,}", " "],
+
+    # Убрать пробел после левосторонних знаков препинания
+    # Remove space after left-sided punctuation
+    ["([${left-sided-punctuation}])[ ]", "$1"],
+
+    # Убрать пробел перед правосторонними знаками препинания
+    # Remove space before right-sided punctuation
+    ["[ ](${right-sided-punctuation})", "$1"],
+
+    # Неразрывный пробел после длинного тире в начале строки
+    # No-break space after em dash at the beginning of the line
+    ["^(—)[ ]", "$1\u00A0"],
+
+    # Неразрывный пробел перед длинным тире между словами
+    # No-break space before em dash between words
+    ["(.)[ ](—)[ ]", "$1\u00A0$2 ", "$1(not-in:${right-sided-punctuation})"],
+
+    # Неразрывный пробел перед и после длинного тире в атрибуции
+    # No-break space before and after em dash in attribution
+    ["(${right-sided-punctuation})[ ](—)[ ]", "$1\u00A0$2\u00A0"],
+
+    # Знак умножения между числами: «3×4», «1920×1080»
+    # Multiplication sign between numbers
+    ["(\\d)[ ]?[xXхХ][ ]?(\\d)", "$1\u00D7$2"],
+
+    # Номер с неразрывным пробелом
+    # Number with no-break space
+    ["([№#])[ ](\\d)", "$1\u00A0$2"],
+
+    # Неразрывный пробел между числом и символом валюты
+    # No-break space between number and currency symbol
+    ["(\\d)[ ](${wallet})", "$1\u00A0$2"],
+
+    # Неразрывный пробел между символов валюты и чсилом
+    # No-break space between currency symbol and number
+    ["(${wallet})[ ](\\d)", "$1\u00A0$2"],
+
+    # Неразрывный пробел между числом и символом температурной шкалы
+    # No-break space between number and temperature scale symbol
+    ["(\\d)[ ](${temperature-scales})", "$1\u00A0$2"],
+
+    # ====================================================
+    # Правила для русского языка
+    # ====================================================
+
+    # Вынос точки за пределы закрывающей кавычки
+    ["\\.([»“])", "$1."],
+
+    # Инициалы перед фамилией: «И. И. Иванов»
+    [
+      "([A-ZА-ЯЁ]\\.)[ ]([A-ZА-ЯЁ]\\.)[ ]([A-ZА-ЯЁ][a-zа-яё]+)",
+      "$1\u2009$2\u2009$3",
+    ],
+
+    # Инициалы после фамилии: «Иванов И. И.»
+    [
+      "([A-ZА-ЯЁ][a-zа-яё]+)[ ]([A-ZА-ЯЁ]\\.)[ ]([A-ZА-ЯЁ]\\.)",
+      "$1\u2009$2\u2009$3",
+    ],
+
+    # Неразрывный пробел после односложных частиц
+    ["([ ])(б|бы|ж|же|ли|ль)([^а-яА-ЯёЁ]|$)", "$1$2\u00A0$3"],
+
+    # Неразрывный пробел после коротких предлогов и союзов
+    [
+      "([ ])(за|из|до|об|на|но|не|ни|то|от|по|со|или|для|над|под|при|что|если|через|после|перед)([ ])",
+      "$1$2\u00A0",
+    ],
+
+    # Неразрывный пробел в «т. д.», «т. п.», «т. е.», «т. к.», «т. н.»
+    ["т\\.[ ]([депкн])\\.", "т.\u2009$1."],
+
+    # Неразрывный пробел в «до н. э.» / «н. э.»
+    ["(н)\\.[ ](э)\\.", "$1.\u2009$2."],
+
+    # «гл.», «рис.», «с.», «стр.», «табл.» перед номером
+    ["(гл|рис|ил|табл|стр|с)\\.[ ](\\d)", "$1.\u00A0$2"],
+
+    # «п.» и «пп.» перед номером
+    ["(пп?)\\.[ ](\\d)", "$1.\u00A0$2"],
+
+    # Неразрывный пробел после односимвольного слова
+    # No-break space after one-letter word
+    ["(^|[^а-яА-ЯёЁa-zA-Z])([а-яА-ЯёЁa-zA-Z])([ ])", "$1$2\u00A0"],
+
+    # Неразрывный пробел между числом и единицей измерения
+    [
+      "(\\d)[ ](кг|г|мг|т|км|м|см|мм|л|мл|Вт|кВт|МВт|ГВт|Гц|МГц|ГГц|%|‰|‱)",
+      "$1\u00A0$2",
+    ],
+  ]

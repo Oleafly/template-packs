@@ -168,7 +168,7 @@ export function hostedEntry(entry, place, hasPreview) {
   return hosted;
 }
 
-export function buildIndex({ universe, github = [], inventory = [], descriptions = {}, fontPacks, checked, hosted = null, hasPreview = () => false }) {
+export function buildIndex({ universe, github = [], inventory = [], descriptions = {}, fontPacks, checked, hosted = null, hasPreview = () => false, excluded = {} }) {
   const packs = familyToPack(fontPacks);
   const universeEntries = universe
     .filter((result) => result.ok && typeof result.name === "string" && typeof result.version === "string")
@@ -182,7 +182,7 @@ export function buildIndex({ universe, github = [], inventory = [], descriptions
     .map((record) => [record, results.get(record.repo)])
     .filter(([, result]) => result?.ok && typeof result.commit === "string")
     .map(([record, result]) => repositoryEntry(record, result, descriptions[record.repo], packs));
-  const compiled = [...universeEntries, ...repositoryEntries];
+  const compiled = [...universeEntries, ...repositoryEntries].filter((entry) => !excluded[entry.id]);
   const entries = (hosted ? compiled.filter((entry) => hosted[entry.id]).map((entry) => hostedEntry(entry, hosted[entry.id], hasPreview)) : compiled)
     .sort((a, b) => a.id.localeCompare(b.id));
   const checkedRepos = candidates.filter((record) => results.has(record.repo)).length;
@@ -209,6 +209,7 @@ function main() {
     fontPacks: readJson(path.join(dataDir, "font-packs.json"), []),
     checked: process.argv[2] || new Date().toISOString().slice(0, 10),
     hosted: readJson(path.join(dataDir, "hosted.json"), null),
+    excluded: readJson(path.join(dataDir, "excluded.json"), {}),
     hasPreview: (pack, template) => existsSync(path.join(repoRoot, "previews", pack, template, "thumb.webp")),
   });
   writeFileSync(path.join(dataDir, "index.json"), `${JSON.stringify(index, null, 1)}\n`);

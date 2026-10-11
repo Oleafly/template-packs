@@ -1,0 +1,15 @@
+#let acronyms = (
+  API: "Application Programming Interface",
+  REST: "Representational State Transfer",
+  ERP: "Enterprise Resource Planning",
+  LLM: "Large Language Model",
+  AI: "Artificial Intelligence",
+  KI: "Künstliche Intelligenz",
+  PoC: "Proof of Concept",
+  CAP: "Cloud Application Programming Model",
+  BTP: "Business Technology Platform",
+  SDK: "Software Development Kit",
+  CDS: "Core Data Services",
+  OData: "Open Data Protocol",
+  AI-SDK: "Cloud Software Development Kit (SDK) for AI",
+)

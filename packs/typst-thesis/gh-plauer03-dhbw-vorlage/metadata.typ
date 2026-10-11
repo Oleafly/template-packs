@@ -1,0 +1,15 @@
+#let meta = (
+  logo: "/flyleaf/dhbw_logo.png",
+  title: "Evaluierung der EPLAN-API zur terminologischen Bearbeitung von Projektinhalten",
+  type: "Projektarbeit (T3_3000)",
+  studyprogram: "Elektrotechnik",
+  university: "Dualen Hochschule Baden-Württemberg Karlsruhe",
+  author: "Pascal Lauer",
+  submission: "11.05.2026",
+  duration: "12 Wochen",
+  mnr: "5558179",
+  course: "TEL23AT",
+  company: "ARKU Maschinenbau GmbH",
+  company_address: "76532 Baden-Baden",
+  supervisor: "B. Eng. Adrian Fleig",
+)

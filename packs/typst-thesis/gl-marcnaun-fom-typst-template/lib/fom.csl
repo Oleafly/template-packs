@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" version="1.0" demote-non-dropping-particle="never" default-locale="de-DE">
+
+  <info>
+    <title>FOM Hochschule (Deutsch)</title>
+    <id>fom-hochschule-de</id>
+    <link href="http://www.fom.de" rel="self"/>
+    <author>
+      <name>Marc Naun</name>
+    </author>
+    <category citation-format="note"/>
+    <category field="generic-base"/>
+    <updated>2026-05-19T00:00:00+00:00</updated>
+  </info>
+
+  <!-- ─── Locale overrides ──────────────────────────────────────────────── -->
+  <locale xml:lang="de">
+    <terms>
+      <term name="et-al">et al.</term>
+      <term name="and">&amp;</term>
+      <term name="page" form="short">S.</term>
+      <term name="editor" form="short">Hrsg.</term>
+      <term name="edition" form="short">Aufl.</term>
+      <term name="accessed">Abruf</term>
+      <term name="no date">o. J.</term>
+      <term name="in">in</term>
+    </terms>
+  </locale>
+
+  <!-- ─── Macros ────────────────────────────────────────────────────────── -->
+
+  <!--
+    author-cite: used in footnote citations.
+    Format: Nachname, V. (& Nachname2, V2.) (Jahr), S. X.
+    3+ authors → Nachname et al.
+  -->
+  <macro name="author-cite">
+    <names variable="author">
+      <name
+        form="long"
+        name-as-sort-order="all"
+        sort-separator=", "
+        delimiter=" &amp; "
+        delimiter-precedes-last="never"
+        initialize="true"
+        initialize-with=". "
+        et-al-min="3"
+        et-al-use-first="1"
+      />
+      <et-al term="et-al" font-style="italic"/>
+      <substitute>
+        <names variable="editor"/>
+        <text variable="title" form="short"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <!--
+    author-bib: used in the bibliography (Quellenverzeichnis).
+    Format: Nachname, Vorname (& Nachname2, V2.) (Jahr).
+    First author: full given name. Subsequent authors: initial only.
+    3+ authors → first author et al.
+  -->
+  <macro name="author-bib">
+    <names variable="author">
+      <name
+        form="long"
+        name-as-sort-order="all"
+        sort-separator=", "
+        delimiter=" &amp; "
+        delimiter-precedes-last="never"
+        initialize="false"
+        initialize-with=". "
+        et-al-min="3"
+        et-al-use-first="1"
+      />
+      <et-al term="et-al" font-style="italic"/>
+      <substitute>
+        <names variable="editor"/>
+        <text variable="title" form="short"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="editor">
+    <names variable="editor">
+      <name
+        form="long"
+        name-as-sort-order="first"
+        sort-separator=", "
+        delimiter=" &amp; "
+        delimiter-precedes-last="never"
+        initialize="false"
+        initialize-with=". "
+      />
+      <label form="short" prefix=" (" suffix=")"/>
+    </names>
+  </macro>
+
+  <macro name="year">
+    <choose>
+      <if variable="issued">
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </if>
+      <else>
+        <text term="no date" text-case="lowercase"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="year-paren">
+    <text macro="year" prefix="(" suffix=")"/>
+  </macro>
+
+  <macro name="title">
+    <choose>
+      <if type="book report" match="any">
+        <text variable="title" font-style="italic"/>
+      </if>
+      <else-if type="chapter paper-conference" match="any">
+        <text variable="title"/>
+      </else-if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="edition">
+    <choose>
+      <if is-numeric="edition">
+        <group delimiter=" ">
+          <number variable="edition" form="ordinal"/>
+          <text term="edition" form="short"/>
+        </group>
+      </if>
+      <else>
+        <text variable="edition"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="publisher">
+    <group delimiter=": ">
+      <text variable="publisher-place"/>
+      <text variable="publisher"/>
+    </group>
+  </macro>
+
+  <macro name="page-cite">
+    <group>
+      <label variable="locator" form="short" suffix=" "/>
+      <text variable="locator"/>
+    </group>
+  </macro>
+
+  <!-- ─── Citation (footnote) ───────────────────────────────────────────── -->
+  <!-- year-paren is intentionally NOT used here: Typst's prose form already -->
+  <!-- wraps the year in parentheses; using year-paren would double them.    -->
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-year-suffix="true">
+    <layout delimiter="; ">
+      <group>
+        <text macro="author-cite"/>
+        <text macro="year"/>
+        <choose>
+          <if variable="locator">
+            <text prefix=", " macro="page-cite"/>
+          </if>
+        </choose>
+      </group>
+    </layout>
+  </citation>
+
+  <!-- ─── Bibliography ──────────────────────────────────────────────────── -->
+  <bibliography entry-spacing="0" line-spacing="1" hanging-indent="true">
+    <sort>
+      <key macro="author-bib"/>
+      <key macro="year"/>
+    </sort>
+    <layout suffix=".">
+
+      <!-- Journal article -->
+      <choose>
+        <if type="article-journal article-magazine article-newspaper" match="any">
+          <group delimiter=" ">
+            <text macro="author-bib"/>
+            <text macro="year-paren" suffix="."/>
+            <text variable="title" suffix=","/>
+            <text term="in" font-style="italic"/>
+            <text variable="container-title" font-style="italic" suffix=","/>
+            <group delimiter=", ">
+              <group>
+                <text term="volume" form="short" suffix=" "/>
+                <text variable="volume"/>
+              </group>
+              <group>
+                <text term="issue" form="short" suffix=" "/>
+                <text variable="issue"/>
+              </group>
+              <group>
+                <label variable="page" form="short" suffix=" "/>
+                <text variable="page"/>
+              </group>
+            </group>
+          </group>
+        </if>
+
+        <!-- Book / monograph -->
+        <else-if type="book" match="any">
+          <group delimiter=" ">
+            <text macro="author-bib"/>
+            <text macro="year-paren" suffix="."/>
+            <text macro="title" suffix=","/>
+            <text macro="edition" suffix=","/>
+            <text macro="publisher"/>
+          </group>
+        </else-if>
+
+        <!-- Chapter in edited volume -->
+        <else-if type="chapter paper-conference" match="any">
+          <group delimiter=" ">
+            <text macro="author-bib"/>
+            <text macro="year-paren" suffix="."/>
+            <text variable="title" suffix=","/>
+            <text term="in" font-style="italic"/>
+            <text macro="editor" suffix=":"/>
+            <text variable="container-title" font-style="italic" suffix=","/>
+            <text macro="edition" suffix=","/>
+            <text macro="publisher" suffix=","/>
+            <group>
+              <label variable="page" form="short" suffix=" "/>
+              <text variable="page"/>
+            </group>
+          </group>
+        </else-if>
+
+        <!-- Report / working paper -->
+        <else-if type="report" match="any">
+          <group delimiter=" ">
+            <text macro="author-bib"/>
+            <text macro="year-paren" suffix="."/>
+            <text macro="title" suffix=","/>
+            <text variable="genre" suffix=","/>
+            <text variable="number" suffix=","/>
+            <text macro="publisher"/>
+          </group>
+        </else-if>
+
+        <!-- Webpage / online resource -->
+        <else-if type="webpage post post-weblog" match="any">
+          <group delimiter=" ">
+            <text macro="author-bib"/>
+            <text macro="year-paren" suffix="."/>
+            <text variable="title" suffix=","/>
+            <text variable="URL" prefix="URL: "/>
+            <group prefix="(" suffix=")">
+              <text term="accessed" suffix=": "/>
+              <date variable="accessed">
+                <date-part name="day" suffix="."/>
+                <date-part name="month" form="numeric" suffix="."/>
+                <date-part name="year"/>
+              </date>
+            </group>
+          </group>
+        </else-if>
+
+        <!-- Fallback -->
+        <else>
+          <group delimiter=" ">
+            <text macro="author-bib"/>
+            <text macro="year-paren" suffix="."/>
+            <text macro="title" suffix=","/>
+            <text macro="publisher"/>
+          </group>
+        </else>
+      </choose>
+
+    </layout>
+  </bibliography>
+
+</style>

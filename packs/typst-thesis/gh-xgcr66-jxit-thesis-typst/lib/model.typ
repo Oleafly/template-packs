@@ -1,0 +1,11 @@
+// 可序列化的语义块：Typst 与 Word 共用。自定义 Typst 宏不在 Word 转换范围内。
+#let p(text) = (kind: "paragraph", text: text)
+#let h2(text) = (kind: "heading", level: 2, text: text)
+#let h3(text) = (kind: "heading", level: 3, text: text)
+#let chapter(title, blocks) = (title: title, blocks: blocks)
+#let cite(number) = (kind: "citation", number: number)
+#let rich(parts) = (kind: "rich", parts: parts)
+#let fig(caption, path, width: 14.0) = (kind: "figure", caption: caption, path: path, width: width)
+#let tab(caption, header, rows) = (kind: "table", caption: caption, header: header, rows: rows)
+#let code(text) = (kind: "code", text: text)
+#let page-break() = (kind: "pagebreak")

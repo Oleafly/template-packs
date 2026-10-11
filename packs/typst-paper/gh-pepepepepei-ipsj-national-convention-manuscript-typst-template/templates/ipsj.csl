@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" default-locale="ja-JP">
+  <info>
+    <title>IPSJ</title>
+    <id></id>
+  </info>
+
+  <macro name="author">
+    <names variable="author" suffix="：">
+      <name initialize="true" initialize-with=". " name-as-sort-order="all"/>
+    </names>
+  </macro>
+  <macro name="volume">
+    <text variable="volume" prefix="Vol. " suffix=", "/>
+  </macro>
+  <macro name="number">
+    <text variable="issue" prefix="No. " suffix=", "/>
+  </macro>
+  <macro name="page">
+    <label plural="never" suffix=". " variable="page" form="short"/>
+    <text variable="page"/>
+  </macro>
+  <macro name="issued">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+  <macro name="access">
+    <group delimiter=", ">
+      <text variable="URL" prefix=" "/>
+      <group>
+        <text term="accessed" text-case="lowercase" prefix="(" suffix=" "/>
+        <date variable="accessed" suffix=")">
+          <date-part name="year" range-delimiter="-" suffix="-"/>
+          <date-part name="month" form="numeric-leading-zeros" range-delimiter="-" strip-periods="true" suffix="-"/>
+          <date-part name="day" form="numeric-leading-zeros"/>
+        </date>
+      </group>
+    </group>
+  </macro>
+
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout delimiter=", " prefix="[" suffix="]">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+
+  <bibliography entry-spacing="0" second-field-align="flush">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout suffix="">
+      <text variable="citation-number" prefix="[" suffix="]"/>
+      <text macro="author"/>
+      <group delimiter=", ">
+        <text variable="title"/>
+        <text variable="container-title"/>
+        <text macro="volume"/>
+        <text macro="number"/>
+        <text macro="page"/>
+        <text macro="issued"/>
+        <text macro="access"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>

@@ -1,0 +1,5 @@
+#let heiti = ("Times New Roman", "SimHei", "SimHei")
+#let songti = ("Times New Roman", "STSong", "STSong")
+#let zhongsong = ("Times New Roman","STZhongsong", "SimSun")
+#let kaiti = ("Times New Roman", "KaiTi", "KaiTi")
+#let fangsong = ("Times New Roman", "FangSong")

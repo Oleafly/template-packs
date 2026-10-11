@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" default-locale="en-US">
+  <info>
+    <title>Numeric Brackets with Spaced Citation Groups</title>
+    <id>https://example.local/numeric-brackets-spaced</id>
+    <link href="https://example.local/numeric-brackets-spaced" rel="self"/>
+    <author>
+      <name>Local thesis template</name>
+    </author>
+    <category citation-format="numeric"/>
+    <updated>2026-05-17T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+
+  <macro name="author">
+    <names variable="author">
+      <name initialize-with=". " delimiter=", " and="text"/>
+      <label form="short" prefix=", "/>
+      <substitute>
+        <names variable="editor"/>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="issued">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="title">
+    <text variable="title" quotes="true"/>
+  </macro>
+
+  <macro name="doi-url">
+    <choose>
+      <if variable="DOI">
+        <text variable="DOI" prefix="doi: "/>
+      </if>
+      <else-if variable="URL">
+        <text variable="URL" prefix="Available: "/>
+      </else-if>
+    </choose>
+  </macro>
+
+  <macro name="journal-details">
+    <group delimiter=", ">
+      <text variable="container-title" font-style="italic"/>
+      <group delimiter=" ">
+        <text term="volume" form="short"/>
+        <text variable="volume"/>
+      </group>
+      <group delimiter=" ">
+        <text term="issue" form="short"/>
+        <text variable="issue"/>
+      </group>
+      <group delimiter=" ">
+        <text term="page" form="short"/>
+        <text variable="page"/>
+      </group>
+      <text macro="issued"/>
+      <text macro="doi-url"/>
+    </group>
+  </macro>
+
+  <macro name="publisher">
+    <group delimiter=", ">
+      <text variable="publisher-place"/>
+      <text variable="publisher"/>
+      <text macro="issued"/>
+    </group>
+  </macro>
+
+  <macro name="book-details">
+    <group delimiter=". ">
+      <text variable="title" font-style="italic"/>
+      <text variable="edition" suffix=" ed"/>
+      <text macro="publisher"/>
+      <text macro="doi-url"/>
+    </group>
+  </macro>
+
+  <macro name="conference-details">
+    <group delimiter=", ">
+      <text variable="container-title" prefix="in "/>
+      <group delimiter=" ">
+        <text term="page" form="short"/>
+        <text variable="page"/>
+      </group>
+      <text macro="issued"/>
+      <text macro="doi-url"/>
+    </group>
+  </macro>
+
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout prefix="[" suffix="]" delimiter=", ">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+
+  <bibliography second-field-align="flush" entry-spacing="0">
+    <layout suffix=".">
+      <text variable="citation-number" prefix="[" suffix="]"/>
+      <text macro="author" suffix=", "/>
+      <choose>
+        <if type="book">
+          <text macro="book-details"/>
+        </if>
+        <else-if type="paper-conference">
+          <text macro="title" suffix=", "/>
+          <text macro="conference-details"/>
+        </else-if>
+        <else>
+          <text macro="title" suffix=", "/>
+          <text macro="journal-details"/>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>

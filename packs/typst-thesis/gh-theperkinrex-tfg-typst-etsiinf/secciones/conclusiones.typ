@@ -1,0 +1,4 @@
+= Conclusiones y trabajo futuro
+
+Resumen de resultados obtenidos en el trabajo, conclusiones sobre los mismos y
+potencial trabajo futuro si existiera.

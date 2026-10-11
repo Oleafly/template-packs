@@ -1,0 +1,101 @@
+%YAML 1.2
+---
+name: Hedy
+file_extensions:
+  - hedy
+scope: source.hedy
+
+contexts:
+  main:
+    # Comments
+    - match: '#.*$'
+      scope: comment.line.number-sign.python
+
+    # Decorators
+    - match: '@[A-Za-z_][A-Za-z0-9_\.]*'
+      scope: meta.annotation.python
+
+    # Class definitions
+    - match: '\b(class)\s+([A-Za-z_][A-Za-z0-9_]*)'
+      captures:
+        1: keyword.declaration.class.python
+        2: entity.name.class.python
+
+    # Function definitions
+    - match: '\b(def)\s+([A-Za-z_][A-Za-z0-9_]*)'
+      captures:
+        1: keyword.declaration.function.python
+        2: entity.name.function.python
+
+    # Keywords
+    - match: '\b(False|None|True)\b'
+      scope: constant.language.python
+
+    - match: '\b(voeg|add|en|and|vraag|ask|kies|at|zwart|black|blauw|blue|bruin|brown|roep|call|wis|clear|kleur|color|def|definieer|define|echo|alsanders|elif|anders|else|false|voor|for|vooruit|forward|uit|from|grijs|gray|groen|green|als|if|in|invoer|input|is|links|left|lengte|length|niet in|not in|of|or|oranje|orange|roze|pink|speel|play|ingedrukt|pressed|print|paars|purple|willekeurig|random|bereik|range|rood|red|verwijder|remove|herhaal|repeat|return|rechts|right|slaap|sleep|stap|step|keer|times|tot|to|toe aan|to|true|draai|turn|zolang|while|wit|white|met|with|geel|yellow)\b'
+      scope: keyword.control.python
+
+    # Built-in types
+    - match: '\b(bool|bytes|dict|float|int|list|set|str|tuple)\b'
+      scope: support.type.python
+
+    # Numbers
+    - match: '\b\d+(\.\d+)?([eE][+-]?\d+)?\b'
+      scope: constant.numeric.python
+
+    # Strings
+    - include: strings
+
+    # Operators
+    - match: '==|!=|<=|>=|<|>|\+|\-|\*|/|%|\*\*|//|='
+      scope: keyword.operator.python
+
+    # Function calls
+    - match: '\b([A-Za-z_][A-Za-z0-9_]*)\s*(?=\()'
+      scope: entity.name.function.call.python
+
+  strings:
+    # Triple-quoted strings
+    - match: "'''"
+      scope: punctuation.definition.string.begin.python
+      push: triple_single_string
+
+    - match: '"""'
+      scope: punctuation.definition.string.begin.python
+      push: triple_double_string
+
+    # Single-line strings
+    - match: "'"
+      scope: punctuation.definition.string.begin.python
+      push: single_string
+
+    - match: '"'
+      scope: punctuation.definition.string.begin.python
+      push: double_string
+
+  single_string:
+    - meta_scope: string.quoted.single.python
+    - match: '\\.'
+      scope: constant.character.escape.python
+    - match: "'"
+      scope: punctuation.definition.string.end.python
+      pop: true
+
+  double_string:
+    - meta_scope: string.quoted.double.python
+    - match: '\\.'
+      scope: constant.character.escape.python
+    - match: '"'
+      scope: punctuation.definition.string.end.python
+      pop: true
+
+  triple_single_string:
+    - meta_scope: string.quoted.multi.python
+    - match: "'''"
+      scope: punctuation.definition.string.end.python
+      pop: true
+
+  triple_double_string:
+    - meta_scope: string.quoted.multi.python
+    - match: '"""'
+      scope: punctuation.definition.string.end.python
+      pop: true

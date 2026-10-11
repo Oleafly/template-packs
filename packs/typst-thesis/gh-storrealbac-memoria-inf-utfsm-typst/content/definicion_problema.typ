@@ -1,0 +1,29 @@
+#heading(numbering: "1")[Definición del Problema]
+
+Se debe definir el problema, es importante no confundir definir el problema con describir la solución. Por ejemplo: "diseñar una arquitectura e implementar una plataforma ..." es una solución, no un problema.
+
+Algunos elementos que podrían ir en este capítulo son (no es necesario que vayan todos):
+
+- Breve descripción del contexto donde se realizará la memoria (organización, línea dentro de la Informática en la que se basa, etc.)
+- ¿Qué y cómo se realiza actualmente la situación que mejorarás con tu memoria?
+- ¿Qué actores o usuarios están involucrados?
+- ¿Qué dificultades tienen esos actores actualmente? ¿cuántos son? (ideal si se pueden poner estadísticas para así saber si existe un mercado razonable para la solución que propondrás en tu memoria, en el fondo saber cuántas personas u organizaciones tienen el mismo problema que estás definiendo)
+- ¿Qué podría pasar si en el corto o mediano plazo no se solucionan esas dificultades (¿es decir, si no se hiciera tu memoria, qué pasaría?; en el fondo justificar por qué conviene hacer tu memoria, ¿cuál es la motivación o interés de hacerla?).
+- ¿Qué competencia existe actualmente? (a lo mejor ya existe una solución al problema, pero por qué no sirve, o por qué tu solución sería mejor, también se puede enfocar a si este problema existe en otras realidades y cómo ha sido solucionado allí).
+- Precisar los objetivos y alcances de la memoria (o solución al problema).
+
+En este capítulo, de ser necesario puede usar referencias bibliográficas (velar porque sean recientes), una cita de ejemplo @schwab2002cure y otras más @georget1994study @beaumont1990patient.
+
+Recuerde poner notas al pie de página que sean explicativas #footnote[Este es un ejemplo de una nota al pie de página. Puede indicar alguna URL, definiciones, aclarar alguna información pertinente del texto, citar algunas referencias, etc.].
+
+== Subsección de Prueba
+
+Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+
+=== Subsubsección de Prueba
+
+Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
+
+=== Otra Subsubsección de Prueba
+
+Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.

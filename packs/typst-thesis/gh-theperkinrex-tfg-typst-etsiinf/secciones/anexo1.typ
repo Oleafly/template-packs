@@ -1,0 +1,4 @@
+= Primer anexo
+Este capítulo (anexo) es opcional, y se escribirá de acuerdo con las indicaciones del Tutor.
+
+== Sección en el anexo

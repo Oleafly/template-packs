@@ -1,0 +1,22 @@
+#heading(numbering: "1")[Validación de la Solución]
+
+Se debe validar la solución propuesta. Esto significa probar o demostrar que la solución propuesta es válida para el entorno donde fue planteada.
+
+Tradicionalmente es una etapa crítica, pues debe comprobarse por algún medio que vuestra propuesta es básicamente válida. En el caso de un desarrollo de software es la construcción y sus pruebas; en el caso de propuestas de modelos, guías o metodologías podrían ser desde la aplicación a un caso real hasta encuestas o entrevistas con especialistas; en el caso de mejoras de procesos u optimizaciones, podría ser comparar la situación actual (previa a la memoria) con la situación final (cuando la memoria está ya implementada) en base a un conjunto cuantitativo de indicadores o criterios.
+
+== Ejemplo de Como Citar Tablas
+
+Se colocó una tabla que se puede referenciar también desde el texto (Ver @table:coloquios).
+
+#figure(
+  table(
+    columns: (1fr, 1fr),
+    stroke: 0.5pt,
+    [*Título Coloquio*], [*Presentador, País*],
+    ["Sensible, invisible, sometimes tolerant, heterogeneous, decentralized and interoperable... and we still need to assure its quality..."], [Guilherme Horta Travassos, Brasil.],
+    ["Dispersed Multiphase Flow Modeling: From Environmental to Industrial Applications"], [Orlando Ayala, EE.UU.],
+    ["Líneas de Producto Software Dinámicas para Sistemas atentos el Contexto"], [Rafael Capilla, España.],
+    [...], [...],
+  ),
+  caption: [Coloquios del Ciclo de Charlas Informática. Fuente: Elaboración Propia.],
+) <table:coloquios>

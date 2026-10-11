@@ -1,0 +1,5 @@
+#import "../template/lib.typ": LaTeX
+
+= Sklepne ugotovitve
+
+Izbira #LaTeX ali ne #LaTeX je seveda prepuščena vam samim. Res je, da so prvi koraki v #LaTeX#[-u] težavni. Ta dokument naj vam služi kot začetna opora pri hoji.

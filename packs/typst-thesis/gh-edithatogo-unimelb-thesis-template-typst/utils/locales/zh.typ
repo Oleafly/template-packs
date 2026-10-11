@@ -1,0 +1,18 @@
+#let labels = (
+  locale: "zh",
+  university_name: "墨尔本大学",
+  thesis_submission_line: "论文提交以满足以下要求",
+  thesis_degree_line: "学位",
+  thesis_department_line: "学院",
+  supervisor_label: "导师",
+  co_supervisor_label: "联合导师",
+  submission_date_label: "提交日期",
+  abstract: "摘要",
+  keywords: "关键词",
+  acknowledgements: "致谢",
+  declaration: "声明",
+  table_of_contents: "目录",
+  list_of_figures: "图目录",
+  list_of_tables: "表目录",
+  list_of_algorithms: "算法目录",
+)

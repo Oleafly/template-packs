@@ -1,0 +1,430 @@
+%YAML 1.2
+---
+# RBS syntax highlighting for Sublime Text 3/4
+# Scope design follows the default Ruby and TypeScript grammars where sensible.
+# This is a pragmatic, hand-written grammar aimed at common RBS usage. It can be
+# extended with more precise type parsing as needed.
+name: RBS
+file_extensions:
+  - rbs
+scope: source.rbs
+
+variables:
+  ident: "[A-Za-z_][A-Za-z0-9_]*"
+  const: "(?:[A-Z][A-Za-z0-9_]*)(?:::[A-Z][A-Za-z0-9_]*)*"
+  modulepath: "(?:::)?(?:[A-Z][A-Za-z0-9_]*)(?:::[A-Z][A-Za-z0-9_]*)*"
+  method_name: "[A-Za-z_][A-Za-z0-9_]*[!?=]?"
+  type_var: "[A-Z][A-Za-z0-9_]*"
+
+contexts:
+  main:
+    - include: comments
+    - include: blocks
+    - include: top-level-keywords
+    - include: visibility
+    - include: attributes
+    - include: alias
+    - include: include-extend-prepend
+    - include: def-signature
+    - include: literals
+    - include: types
+    - include: punctuation
+
+  comments:
+    - match: "#"
+      scope: punctuation.definition.comment.rbs
+      push:
+        - meta_scope: comment.line.number-sign.rbs
+        - match: '\n'
+          pop: true
+
+  blocks:
+    # class Foo[T] < Bar
+    - match: '^(\s*)(class)\b'
+      captures:
+        2: storage.type.class.rbs
+      push:
+        - meta_scope: meta.class.rbs
+        - include: class-header-rest
+        - include: block-body
+        - match: '^(\s*)(end)\b'
+          captures:
+            2: keyword.control.end.rbs
+          pop: true
+    # module Foo
+    - match: '^(\s*)(module)\b'
+      captures:
+        2: storage.type.module.rbs
+      push:
+        - meta_scope: meta.module.rbs
+        - include: module-header-rest
+        - include: block-body
+        - match: '^(\s*)(end)\b'
+          captures:
+            2: keyword.control.end.rbs
+          pop: true
+    # interface _Foo
+    - match: '^(\s*)(interface)\b'
+      captures:
+        2: storage.type.interface.rbs
+      push:
+        - meta_scope: meta.interface.rbs
+        - include: interface-header-rest
+        - include: block-body
+        - match: '^(\s*)(end)\b'
+          captures:
+            2: keyword.control.end.rbs
+          pop: true
+
+  class-header-rest:
+    - include: generics
+    - match: "{{modulepath}}"
+      scope: entity.name.type.class.rbs
+    - match: '\s*<\s*'
+      scope: keyword.operator.relational.rbs
+      push:
+        - include: types
+        - match: '(?=\s*$|\s#|$)'
+          pop: true
+
+  module-header-rest:
+    - include: generics
+    - match: "{{modulepath}}"
+      scope: entity.name.type.module.rbs
+
+  interface-header-rest:
+    - match: "{{ident}}"
+      scope: entity.name.type.interface.rbs
+    - include: generics
+
+  block-body:
+    - include: comments
+    - include: visibility
+    - include: attributes
+    - include: include-extend-prepend
+    - include: alias
+    - include: def-signature
+    - include: type-alias
+    - include: constants-and-vars
+    - include: literals
+    - include: types
+
+  visibility:
+    - match: '^(\s*)(public|private|protected)\b'
+      captures:
+        2: storage.modifier.visibility.rbs
+
+  include-extend-prepend:
+    - match: '^(\s*)(include|extend|prepend)\b'
+      captures:
+        2: keyword.other.rbs
+      push:
+        - include: types-simple
+        - match: "$"
+          pop: true
+
+  attributes:
+    - match: '^(\s*)(attr_(?:reader|writer|accessor))\b'
+      captures:
+        2: support.function.attribute.rbs
+      push:
+        - include: attr-args
+        - match: "$"
+          pop: true
+  attr-args:
+    - include: comments
+    - match: ":"
+      scope: punctuation.separator.annotation.rbs
+      push:
+        - include: types
+        - match: '(?=\s*$)'
+          pop: true
+    - match: "{{ident}}"
+      scope: variable.other.member.rbs
+    - match: ","
+      scope: punctuation.separator.sequence.rbs
+
+  alias:
+    # method alias: alias new create
+    - match: '^(\s*)(alias)\b'
+      captures:
+        2: keyword.other.alias.rbs
+      push:
+        - match: "{{method_name}}"
+          scope: entity.name.function.alias.rbs
+        - match: '\s+'
+          scope: text.whitespace
+        - match: "{{method_name}}"
+          scope: entity.name.function.rbs
+        - match: "$"
+          pop: true
+
+  def-signature:
+    # def foo: (A, ?B, *C, D: E, &block) -> R
+    - match: '^(\s*)(def)\b'
+      captures:
+        2: storage.type.function.rbs
+      push:
+        - meta_scope: meta.function.signature.rbs
+        - match: '(self\.)?{{method_name}}'
+          captures:
+            1: variable.language.self.rbs
+            0: entity.name.function.rbs
+        - include: generic-params
+        - match: ":"
+          scope: punctuation.separator.annotation.rbs
+        - include: param-list
+        - match: "->"
+          scope: keyword.operator.arrow.rbs
+        - include: types
+        - match: '(?=\s*(?:;|$))'
+          pop: true
+        - match: ";"
+          scope: punctuation.separator.sequence.rbs
+          push:
+            - include: def-signature # allow multiple overloads on one line
+            - match: "(?=^|$)"
+              pop: true
+
+  generic-params:
+    # e.g., def foo[T, in U, out V]
+    - match: '\['
+      scope: punctuation.section.brackets.begin.rbs
+      push:
+        - meta_scope: meta.generic.parameters.rbs
+        - match: '(in|out)\b'
+          scope: storage.modifier.variance.rbs
+        - match: "{{type_var}}"
+          scope: entity.name.type.parameter.rbs
+        - match: ',|\|'
+          scope: punctuation.separator.sequence.rbs
+        - match: '\]'
+          scope: punctuation.section.brackets.end.rbs
+          pop: true
+
+  param-list:
+    - match: '\('
+      scope: punctuation.section.parens.begin.rbs
+      push:
+        - meta_scope: meta.parameters.rbs
+        - include: comments
+        - match: '\)'
+          scope: punctuation.section.parens.end.rbs
+          pop: true
+        - include: block-param
+        - include: kwarg
+        - include: splats
+        - include: types
+        - match: '{{ident}}\s*:'
+          captures:
+            0: variable.parameter.keyword.rbs
+          push:
+            - match: ":"
+              scope: punctuation.separator.key-value.rbs
+            - include: types
+            - match: '(?=,|\))'
+              pop: true
+        - match: "{{ident}}"
+          scope: variable.parameter.rbs
+        - match: ","
+          scope: punctuation.separator.sequence.rbs
+
+  block-param:
+    - match: "&{{ident}}"
+      scope: variable.parameter.block.rbs
+
+  kwarg:
+    - match: '{{ident}}\s*:'
+      scope: variable.parameter.keyword.rbs
+
+  splats:
+    - match: '\*\*{{ident}}'
+      scope: variable.parameter.keyword-splat.rbs
+    - match: '\*{{ident}}'
+      scope: variable.parameter.splat.rbs
+    - match: '\?{{ident}}'
+      scope: variable.parameter.optional.rbs
+
+  type-alias:
+    # type Name = A | B
+    - match: '^(\s*)(type)\b'
+      captures:
+        2: storage.type.alias.rbs
+      push:
+        - meta_scope: meta.type.alias.rbs
+        - match: "{{ident}}"
+          scope: entity.name.type.alias.rbs
+        - include: generics
+        - match: "="
+          scope: keyword.operator.assignment.rbs
+        - include: types
+        - match: "$"
+          pop: true
+
+  generics:
+    # class Foo[T, in U, out V]
+    - match: '\['
+      scope: punctuation.section.brackets.begin.rbs
+      push:
+        - meta_scope: meta.generic.declaration.rbs
+        - match: '(in|out)\b'
+          scope: storage.modifier.variance.rbs
+        - match: "{{type_var}}"
+          scope: entity.name.type.parameter.rbs
+        - match: ","
+          scope: punctuation.separator.sequence.rbs
+        - match: '\]'
+          scope: punctuation.section.brackets.end.rbs
+          pop: true
+
+  constants-and-vars:
+    - match: "@@{{ident}}"
+      scope: variable.other.class.rbs
+    - match: "@{{ident}}"
+      scope: variable.other.instance.rbs
+    - match: '\${{ident}}'
+      scope: variable.other.global.rbs
+    - match: "{{const}}"
+      scope: constant.other.rbs
+
+  types:
+    - include: comments
+    - include: function-type
+    - include: literal-types
+    - include: generic-type-app
+    - include: simple-type
+    - include: unions-intersections
+    - include: tuple-type
+    - include: record-type
+    - include: proc-type
+
+  types-simple:
+    - include: simple-type
+    - include: generic-type-app
+
+  simple-type:
+    - match: '(?:self)\b'
+      scope: variable.language.self.rbs
+    - match: "(?:::)?{{const}}"
+      scope: entity.name.type.rbs
+    - match: "{{type_var}}"
+      scope: entity.name.type.parameter.rbs
+
+  generic-type-app:
+    # Array[String], Hash[Symbol, Integer]
+    - match: '(?:::)?{{const}}\['
+      captures:
+        0: entity.name.type.rbs
+      push:
+        - meta_scope: meta.type.application.rbs
+        - match: '\['
+          scope: punctuation.section.brackets.begin.rbs
+        - include: types
+        - match: ","
+          scope: punctuation.separator.sequence.rbs
+        - match: '\]'
+          scope: punctuation.section.brackets.end.rbs
+          pop: true
+
+  unions-intersections:
+    - match: '\|'
+      scope: keyword.operator.union.rbs
+    - match: "&"
+      scope: keyword.operator.intersection.rbs
+
+  tuple-type:
+    - match: '\['
+      scope: punctuation.section.brackets.begin.rbs
+      push:
+        - meta_scope: meta.type.tuple.rbs
+        - include: types
+        - match: ","
+          scope: punctuation.separator.sequence.rbs
+        - match: '\]'
+          scope: punctuation.section.brackets.end.rbs
+          pop: true
+
+  record-type:
+    # { foo: String, bar?: Integer }
+    - match: '\{'
+      scope: punctuation.section.braces.begin.rbs
+      push:
+        - meta_scope: meta.type.record.rbs
+        - match: '{{ident}}\?'
+          scope: variable.other.member.optional.rbs
+        - match: "{{ident}}"
+          scope: variable.other.member.rbs
+        - match: ":"
+          scope: punctuation.separator.key-value.rbs
+        - include: types
+        - match: ","
+          scope: punctuation.separator.sequence.rbs
+        - match: '\}'
+          scope: punctuation.section.braces.end.rbs
+          pop: true
+
+  function-type:
+    # ^(A, B) -> R  or  ^() -> void
+    - match: '\^'
+      scope: keyword.operator.proc.rbs
+      push:
+        - meta_scope: meta.type.function.rbs
+        - include: param-list
+        - match: "->"
+          scope: keyword.operator.arrow.rbs
+        - include: types
+        - match: '(?=\s|[,\]])'
+          pop: true
+
+  proc-type:
+    - include: function-type
+
+  literal-types:
+    - match: '\bnil\b'
+      scope: constant.language.nil.rbs
+    - match: '\bbool\b'
+      scope: storage.type.primitive.rbs
+    - match: '\bvoid\b'
+      scope: storage.type.primitive.rbs
+    - match: '\buntyped\b'
+      scope: storage.type.primitive.rbs
+    - match: '\btrue\b|\bfalse\b'
+      scope: constant.language.boolean.rbs
+    - match: ':(?:{{ident}}|"[^"]*")'
+      scope: constant.other.symbol.rbs
+    - match: '(?<!\.)\b[0-9]+(?:_[0-9]+)*(?:\.[0-9]+(?:_[0-9]+)*)?\b'
+      scope: constant.numeric.rbs
+    - match: '"'
+      scope: punctuation.definition.string.begin.rbs
+      push:
+        - meta_scope: string.quoted.double.rbs
+        - match: '\\.'
+          scope: constant.character.escape.rbs
+        - match: '"'
+          scope: punctuation.definition.string.end.rbs
+          pop: true
+    - match: '\/'
+      scope: punctuation.definition.string.begin.rbs
+      push:
+        - meta_scope: string.regexp.rbs
+        - match: '\\.'
+          scope: constant.character.escape.rbs
+        - match: '\/[a-z]*'
+          scope: punctuation.definition.string.end.rbs
+          pop: true
+
+  top-level-keywords:
+    - match: '\b(end)\b'
+      scope: keyword.control.end.rbs
+
+  punctuation:
+    - match: ":"
+      scope: punctuation.separator.key-value.rbs
+    - match: "->"
+      scope: keyword.operator.arrow.rbs
+    - match: "="
+      scope: keyword.operator.assignment.rbs
+    - match: ","
+      scope: punctuation.separator.sequence.rbs
+    - match: '[\[\]{}()]'
+      scope: punctuation.section.rbs

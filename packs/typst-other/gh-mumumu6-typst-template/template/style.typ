@@ -1,0 +1,260 @@
+#import "code.typ": *
+#import "components.typ": *
+#import "callout.typ": *
+#import "theorem.typ": *
+#import "config-state.typ": *
+#import "@preview/quick-maths:0.2.1": shorthands
+
+#let config(
+  lang: "ja",
+  seriffont: "New Computer Modern", // or "Libertinus Serif" or "Source Serif Pro"
+  seriffont-cjk: "Harano Aji Mincho", // or "Yu Mincho" or "Hiragino Mincho ProN"
+  sansfont: "Source Sans 3", // or "Arial" or "New Computer Modern Sans" or "Libertinus Sans"
+  sansfont-cjk: "Harano Aji Gothic", // or "Yu Gothic" or "Hiragino Kaku Gothic ProN"
+  paper: "a4", // "a*", "b*", or (paperwidth, paperheight) e.g. (210mm, 297mm)
+  paper-margin: (top: 20mm, bottom: 27mm, left: 20mm, right: 20mm),
+  page-number: "1",
+  numbering-headings: "1.1.1",
+  indent-length: 0em,
+  heading-bibliography: "参考文献",
+  fontsize: 10pt,
+  baselineskip: auto,
+  lines-per-page: auto,
+  book: false,
+  cols: 1,
+  non-cjk: "latin-in-cjk",
+  all-display-style: false,
+  cjkheight: 0.88, // height of CJK in em
+  bibliography-style: "sist02",
+  callout-font: "Source Sans Pro",
+  callout-text-color: rgb("#222"),
+  callout-default-kind: "info",
+  show-header: false,
+  header-start: 2, // ヘッダーを表示し始めるページ番号
+  author: none,
+  id: none,
+  title: "",
+  subtitle: "",
+  date: datetime
+    .today()
+    .display(
+      "[year]年[month repr:numerical padding:none]月[day padding:none]日",
+    ),
+  abstract: [],
+  title-type: 1,
+  show_chapter_in_header: false,
+  body,
+) = {
+  // 名前と学籍番号はここで管理
+  config-state.update(_ => (
+    author: author,
+    id: id,
+    title: title,
+    subtitle: subtitle,
+    date: date,
+    abstract: abstract,
+    title-type: title-type,
+  ))
+
+  if baselineskip == auto { baselineskip = 1.45 * fontsize }
+  set columns(gutter: 2em)
+  set page(
+    paper: paper,
+    margin: paper-margin,
+    columns: cols,
+    numbering: page-number,
+  )
+  set text(
+    lang: lang,
+    font: ((name: seriffont, covers: non-cjk), seriffont-cjk),
+    weight: 400,
+    size: fontsize,
+    top-edge: cjkheight * fontsize,
+  )
+  set par(
+    first-line-indent: indent-length,
+    justify: true,
+    spacing: baselineskip - cjkheight * fontsize, // space between paragraphs
+    leading: baselineskip - cjkheight * fontsize, // space between lines
+  )
+  set heading(numbering: numbering-headings)
+  show heading: set text(
+    font: ((name: sansfont, covers: non-cjk), sansfont-cjk),
+    weight: 450,
+  )
+
+  show heading.where(level: 1): it => {
+    block(
+      above: 2 * baselineskip - (cjkheight - 0.2) * fontsize,
+      below: 1.5 * baselineskip - (cjkheight + 0.2) * fontsize,
+      breakable: false,
+      sticky: true,
+    )[
+      #set par(first-line-indent: 1em)
+      #set text(size: 1.4 * fontsize)
+      #if it.numbering != none {
+        counter(heading).display()
+        h(1em)
+      }
+      #it.body
+    ]
+  }
+  show heading.where(level: 2): it => block(
+    above: 2 * baselineskip - (cjkheight - 0.1) * fontsize,
+    below: 1.5 * baselineskip - (cjkheight + 0.1) * fontsize,
+    breakable: false,
+    sticky: true,
+  )[
+    #set text(size: 1.2 * fontsize)
+    #if it.numbering != none {
+      counter(heading).display()
+      h(1em)
+    }
+    #it.body
+  ]
+
+  show heading.where(level: 3): it => block(
+    above: 2 * baselineskip - (cjkheight + 0.2) * fontsize,
+    below: 1.2 * baselineskip - (cjkheight) * fontsize,
+    breakable: false,
+    sticky: true,
+  )[
+    #set text(size: 1.1 * fontsize)
+    #if it.numbering != none {
+      counter(heading).display()
+      h(1em)
+    }
+    #it.body
+  ]
+
+  // show strong: set text(
+  //   font: ((name: sansfont, covers: non-cjk), sansfont-cjk),
+  // )
+  show emph: set text(
+    font: ((name: seriffont, covers: non-cjk), seriffont-cjk),
+    weight: 400,
+  )
+  set quote(block: true)
+  show quote.where(block: true): set pad(left: 2em, right: 0em)
+  show quote.where(block: true): set block(
+    spacing: 1.5 * baselineskip - cjkheight * fontsize,
+  )
+  show enum: set block(spacing: 1.5 * baselineskip - cjkheight * fontsize)
+  show list: set block(spacing: 1.5 * baselineskip - cjkheight * fontsize)
+  show terms: set block(spacing: 1.5 * baselineskip - cjkheight * fontsize)
+  show math.equation.where(block: true): set block(
+    spacing: 1.5 * baselineskip - cjkheight * fontsize,
+  )
+  set list(marker: (text(12pt, [•], baseline: -1pt), text(12pt, [◦], baseline: 1pt))) // listのマーカーの高さの変更
+  set block(spacing: 1.5 * baselineskip - cjkheight * fontsize)
+  set terms(indent: 2em, separator: h(1em, weak: true))
+  set enum(indent: 0.722em)
+  set list(indent: 0.722em)
+  set table(stroke: 0.04em)
+  show table: set text(top-edge: (1.9 * cjkheight - 1) * fontsize)
+  show table.cell: set align(center + horizon) // tableで数値を中央に
+  set table(align: center)
+  set footnote.entry(indent: 1.6em)
+  show figure.where(kind: table): set figure.caption(position: top)
+  show ref: set text(fill: rgb("#0000ff")) // 参照の色を変更
+  show link: set text(fill: rgb("#0000ff")) // リンクの色を変更
+
+  show raw.where(block: false): it => {
+    set text(
+      size: 0.94em,
+      fill: rgb("#333"),
+    )
+
+    // boxの微調整
+    box(
+      fill: luma(95%), // 背景色 codeblockと揃えている
+      radius: 2pt,
+      inset: (top: 0em, bottom: 0em, left: 0.6em, right: 0.6em),
+      outset: (top: 0em, bottom: 0em, left: -0.3em, right: -0.3em),
+      height: cjkheight * fontsize + 0.55em,
+    )[#it]
+  }
+
+  // code.typの設定を反映
+  show: apply-codly
+
+  // 参考文献
+  set bibliography(style: "sist02")
+
+  // display styleで表示するかどうか
+  show: body => {
+    if all-display-style {
+      show math.equation.where(block: false): it => math.display(it)
+      show math.integral: math.display
+      body
+    } else { body }
+  }
+
+  // ヘッダーの表示
+
+  show: body => {
+    if show-header {
+      set page(margin: (top: 25mm, bottom: 15mm), header: context {
+        let page-number = counter(page).at(here()).at(0)
+
+        let chapter-title = none
+
+        if show_chapter_in_header {
+          let headings = query(heading.where(level: 1))
+          let first-on-page = none
+          let last-before = none
+
+          for item in headings {
+            let item-page = item.location().page()
+            if item-page == page-number and first-on-page == none {
+              first-on-page = item
+            }
+            if item-page < page-number {
+              last-before = item
+            }
+          }
+
+          let current = if first-on-page != none { first-on-page } else { last-before }
+
+          if current != none {
+            chapter-title = [
+              #if current.numbering != none {
+                [
+                  #counter(heading).at(current.location()).at(0)
+                  #h(0.5em)
+                ]
+              }
+              #current.body
+            ]
+          }
+        }
+
+        if page-number >= header-start {
+          // ページを飛ばせるように
+          [
+            #set text(size: 10pt)
+            #chapter-title
+            #h(1fr) #id #h(1em) #author  #v(-0.8em)
+
+            #line(length: 100%, stroke: 1.5pt + luma(60%))
+          ]
+        }
+      })
+      body
+    } else { body }
+  }
+
+  show: shorthands.with(
+    ($+-$, $plus.minus$),
+  )
+
+  // コールアウトのデフォルト値の設定
+  callout-init(
+    kind: callout-default-kind,
+    font: callout-font,
+    text-color: callout-text-color,
+  )
+
+  // finally
+  body
+}

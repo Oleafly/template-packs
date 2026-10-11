@@ -1,0 +1,5 @@
+#let ModeDebug = "ModeDebug"
+#let ModeRelease = "ModeRelease"
+#let TendMix = "TendMix"
+#let TendJava = "TendJava"
+#let TendCSharp = "TendCSharp"

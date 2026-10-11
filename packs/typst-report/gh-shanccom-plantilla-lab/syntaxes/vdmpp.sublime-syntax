@@ -1,0 +1,73 @@
+%YAML 1.2
+---
+# Sintaxis para VDM++ (Vienna Development Method++).
+# Typst no incluye VDM++ por defecto, así que se carga desde template.typ
+# mediante `set raw(syntaxes: "syntaxes/vdmpp.sublime-syntax")`.
+# Los colores provienen de las *scopes* estándar del tema por defecto de Typst.
+name: VDM++
+file_extensions:
+  - vdmpp
+scope: source.vdmpp
+
+contexts:
+  main:
+    - include: comments
+    - include: strings
+    - include: numbers
+    - include: declarations
+    - include: keywords
+    - include: identifiers
+
+  comments:
+    - match: '(--)'
+      push: line-comment
+    - match: '(/\*)'
+      push: block-comment
+  line-comment:
+    - meta_scope: comment.line.vdmpp
+    - match: '$'
+      pop: true
+  block-comment:
+    - meta_scope: comment.block.vdmpp
+    - match: '(\*/)'
+      pop: true
+
+  strings:
+    - match: '"'
+      push: string
+  string:
+    - meta_scope: string.quoted.double.vdmpp
+    - match: '"'
+      pop: true
+
+  numbers:
+    - match: '\b(?:0[xX][0-9A-Fa-f]+|\d+(?:\.\d+)?(?:[eE][+-]?\d+)?)\b'
+      scope: constant.numeric.vdmpp
+
+  declarations:
+    - match: '\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\s*:)'
+      captures:
+        1: entity.name.variable.vdmpp
+    - match: '\b([a-zA-Z_][a-zA-Z0-9_]*)\s*(?=\s*\()'
+      captures:
+        1: entity.name.function.vdmpp
+
+  keywords:
+    - match: '\b(types|values|functions|operations|traces|state|init|definitions|class|end|public|private|protected|instancevariables|static)\b'
+      scope: keyword.other.declaration.vdmpp
+    - match: '\b(if|then|else|elseif|cases|other|forall|exists|let|in|be|st|while|for|return|not|and|or|implies|div|mod)\b'
+      scope: keyword.control.vdmpp
+    - match: '\b(pre|post|inv|rd|wr|measure|newtype|struct)\b'
+      scope: keyword.other.vdmpp
+    - match: '\b(true|false|nil|self)\b'
+      scope: constant.language.vdmpp
+    - match: '\b(seq|seq1|set|set1|map|inmap|invmap|nat|nat1|int|real|bool|char|token|rat|mk_token)\b'
+      scope: storage.type.vdmpp
+    - match: '\b(mk_|is_|dcl|new)\b'
+      scope: support.function.vdmpp
+    - match: '(:=|->>|->\||->|<:|>:|>=|<=|<>|=|\+|-|\*|/|union|inter|dunion|dinter|subset|psubset|power)'
+      scope: keyword.operator.vdmpp
+
+  identifiers:
+    - match: '[a-zA-Z_][a-zA-Z0-9_]*'
+      scope: variable.other.vdmpp

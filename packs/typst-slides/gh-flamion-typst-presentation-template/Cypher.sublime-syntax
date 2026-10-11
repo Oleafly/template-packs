@@ -1,0 +1,105 @@
+%YAML 1.2
+---
+name: Cypher
+file_extensions: [cypher, cql]
+scope: source.cypher
+
+contexts:
+  main:
+    - include: comments
+    - include: strings
+    - include: keywords
+    - include: functions
+    - include: labels
+    - include: relationship-types
+    - include: parameters
+    - include: properties
+    - include: numbers
+    - include: operators
+    - include: punctuation
+
+  comments:
+    - match: //
+      scope: punctuation.definition.comment.cypher
+      push:
+        - meta_scope: comment.line.double-slash.cypher
+        - match: $
+          pop: true
+    - match: /\*
+      scope: punctuation.definition.comment.cypher
+      push:
+        - meta_scope: comment.block.cypher
+        - match: \*/
+          scope: punctuation.definition.comment.cypher
+          pop: true
+
+  strings:
+    - match: '"'
+      scope: punctuation.definition.string.begin.cypher
+      push:
+        - meta_scope: string.quoted.double.cypher
+        - match: '"'
+          scope: punctuation.definition.string.end.cypher
+          pop: true
+        - match: \\.
+          scope: constant.character.escape.cypher
+    - match: "'"
+      scope: punctuation.definition.string.begin.cypher
+      push:
+        - meta_scope: string.quoted.single.cypher
+        - match: "'"
+          scope: punctuation.definition.string.end.cypher
+          pop: true
+        - match: \\.
+          scope: constant.character.escape.cypher
+
+  keywords:
+    - match: (?i)\b(MATCH|OPTIONAL\s+MATCH|WHERE|RETURN|WITH|UNWIND|CREATE|MERGE|DELETE|DETACH\s+DELETE|SET|REMOVE|ORDER\s+BY|LIMIT|SKIP|UNION|ALL|AS|DISTINCT|CALL|YIELD|IN|IS|NOT|AND|OR|XOR|NULL|TRUE|FALSE|CASE|WHEN|THEN|ELSE|END|FOREACH|ON\s+CREATE|ON\s+MATCH|LOAD\s+CSV|FROM|HEADERS|FIELDTERMINATOR|PERIODIC\s+COMMIT|STARTS\s+WITH|ENDS\s+WITH|CONTAINS|ASC|DESC|BY|INDEX|ON|DROP|CONSTRAINT|UNIQUE|EXISTS)\b
+      scope: keyword.control.cypher
+
+  functions:
+    - match: (?i)\b(count|sum|avg|min|max|collect|head|tail|last|length|size|type|id|labels|keys|nodes|relationships|range|abs|ceil|floor|round|sqrt|sign|rand|log|log10|exp|e|sin|cos|tan|asin|acos|atan|atan2|degrees|radians|pi|haversine|toInteger|toFloat|toString|toBoolean|toLower|toUpper|trim|ltrim|rtrim|left|right|substring|replace|split|reverse|toString|string|integer|float|boolean|point|distance|shortestPath|allShortestPaths|reduce|extract|filter|any|all|none|single|coalesce|startNode|endNode|properties|timestamp|datetime|localdatetime|localtime|time|date|duration)\b(?=\s*\()
+      scope: support.function.cypher
+
+  labels:
+    - match: '(?<=[(,\s]|^)(:)([A-Za-z_][A-Za-z0-9_]*)'
+      captures:
+        1: punctuation.separator.cypher
+        2: entity.name.type.cypher
+
+  relationship-types:
+    - match: '\[(?:[A-Za-z_][A-Za-z0-9_]*)?(:)([A-Za-z_][A-Za-z0-9_]*)(?:\*[0-9]*(?:\.\.[0-9]*)?)?\]'
+      captures:
+        1: punctuation.separator.cypher
+        2: entity.name.type.cypher
+    - match: '-\[(?:[A-Za-z_][A-Za-z0-9_]*)?(:)([A-Za-z_][A-Za-z0-9_]*)(?:\*[0-9]*(?:\.\.[0-9]*)?)?\]->'
+      captures:
+        1: punctuation.separator.cypher
+        2: entity.name.type.cypher
+
+  parameters:
+    - match: \$[A-Za-z_][A-Za-z0-9_]*
+      scope: variable.parameter.cypher
+
+  properties:
+    - match: '\b([A-Za-z_][A-Za-z0-9_]*)\s*:'
+      captures:
+        1: variable.other.property.cypher
+
+  numbers:
+    - match: \b-?(0x[0-9a-fA-F]+|[0-9]+(\.[0-9]+)?([eE][+-]?[0-9]+)?)\b
+      scope: constant.numeric.cypher
+
+  operators:
+    - match: (<--|-->|<-|-\[|-\]->|\[|\]|--|->|<-)
+      scope: keyword.operator.cypher
+    - match: (=~|<=|>=|<>|<|>|=|\+|-|\*|/|%|\^|\|)
+      scope: keyword.operator.cypher
+
+  punctuation:
+    - match: '[\(\)\{\}]'
+      scope: punctuation.section.cypher
+    - match: '[,;]'
+      scope: punctuation.separator.cypher
+    - match: '\.'
+      scope: punctuation.accessor.cypher

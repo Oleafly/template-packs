@@ -1,0 +1,18 @@
+model User {
+  id        Int   @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  orders    Order[]
+
+  @@map("users")
+}
+
+model Order {
+  id     Int  @id @default(autoincrement())
+  userId Int  @map("user_id")
+  amount Float
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("orders")
+}

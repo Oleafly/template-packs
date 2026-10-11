@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="en-US">
+  <info>
+    <title>IAC 2026 numeric manuscript style (unofficial)</title>
+    <id>https://github.com/chantakan/iac-manuscript-typst</id>
+    <updated>2026-09-09T00:00:00+00:00</updated>
+    <category citation-format="numeric"/>
+  </info>
+  <locale><terms><term name="editor" form="short"><single>Ed.</single><multiple>Eds.</multiple></term></terms></locale>
+  <macro name="author"><names variable="author"><name initialize-with="." delimiter=", "/><substitute><names variable="editor"/><text variable="title"/></substitute></names></macro>
+  <macro name="year"><date variable="issued"><date-part name="year"/></date></macro>
+  <macro name="editors"><names variable="editor"><name initialize-with="." delimiter=", "/><label form="short" prefix=" (" suffix=")"/></names></macro>
+  <citation><layout prefix="[" suffix="]" delimiter=","><text variable="citation-number"/></layout></citation>
+  <bibliography hanging-indent="true" entry-spacing="0" line-spacing="1">
+    <layout suffix=".">
+      <text variable="citation-number" prefix="[" suffix="] "/>
+      <text macro="author" suffix=", "/>
+      <text variable="title"/>
+      <choose>
+        <if type="article-journal article-magazine article-newspaper" match="any">
+          <group prefix=", " delimiter=" "><text variable="container-title" form="short"/><text variable="volume"/><text macro="year" prefix="(" suffix=")"/><text variable="page"/></group>
+        </if>
+        <else-if type="paper-conference">
+          <choose>
+            <if variable="note"><text variable="note" prefix=", "/></if>
+            <else><group prefix=", " delimiter=", "><text variable="event-title"/><text variable="event-place"/><text macro="year"/></group></else>
+          </choose>
+        </else-if>
+        <else-if variable="container-title">
+          <group prefix=", in: " delimiter=", "><text macro="editors"/><text variable="container-title"/><text variable="publisher"/><text variable="publisher-place"/><text macro="year"/><text variable="page" prefix="pp. "/></group>
+        </else-if>
+        <else-if type="book">
+          <group prefix=", " delimiter=", "><number variable="edition" form="long-ordinal" suffix=" ed."/><text variable="publisher"/><text variable="publisher-place"/><text macro="year"/></group>
+        </else-if>
+        <else>
+          <date variable="issued" prefix=" " delimiter=" "><date-part name="day"/><date-part name="month"/><date-part name="year"/></date>
+          <text variable="URL" prefix=", "/>
+          <date variable="accessed" prefix=", (accessed " suffix=")" delimiter="."><date-part name="day" form="numeric-leading-zeros"/><date-part name="month" form="numeric-leading-zeros"/><date-part name="year" form="short"/></date>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>

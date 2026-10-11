@@ -162,3 +162,16 @@ test("once templates are hosted, only hosted ones are listed and they point at t
   assert.equal(kept.preview_url, "https://raw.githubusercontent.com/Oleafly/template-packs/main/previews/typst-thesis/tu-kept/page-1.webp");
   assert.equal(kept.credit_url, "https://typst.app/universe/package/kept");
 });
+
+test("templates the owner left out never reach the index", () => {
+  const index = buildIndex({
+    universe: [
+      { name: "kept", version: "1.0.0", ok: true, categories: ["thesis"] },
+      { name: "dropped", version: "1.0.0", ok: true, categories: ["paper"] },
+    ],
+    fontPacks,
+    checked: "2026-10-10",
+    excluded: { "universe:dropped": "left out by the owner" },
+  });
+  assert.deepEqual(index.entries.map((entry) => entry.id), ["universe:kept"]);
+});

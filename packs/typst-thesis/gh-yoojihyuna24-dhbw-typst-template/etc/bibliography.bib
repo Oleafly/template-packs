@@ -1,0 +1,165 @@
+% ═══════════════════════════════════════════════════════════════════════════
+% Literaturdatenbank (BibLaTeX-Format) — H 3.11
+%
+% Regeln aus den Hinweisen:
+% - Kurzbeleg im Fließtext nach dem Autor-Jahr-System, hier über APA 7
+%   (etc/dhbw_style.csl). Zulässig sind ebenso DGPs oder DIN ISO 690:2010 —
+%   entscheidend ist die konsistente Anwendung EINES Systems.
+% - Es werden ausschließlich Quellen aufgeführt, die im Text zitiert wurden.
+%   Typst übernimmt das automatisch: Nicht zitierte Einträge erscheinen nicht.
+% - Der Verlag wird angegeben, die ISBN NICHT.
+% - Bei DOI-fähigen Quellen (Online-Artikel, Fachzeitschriften) wird die DOI
+%   ergänzt. Alle anderen digitalen Quellen kommen als PDF in die Beigaben-ZIP.
+% - Zur Begriffsdefinition sind Fachbücher Online-Lexika vorzuziehen; ein
+%   Online-Lexikon darf nur EINEN Eintrag im Literaturverzeichnis haben.
+%
+% Zitiert wird im Text über den Schlüssel des Eintrags (das Wort direkt hinter
+% der geschweiften Klammer, z. B. "Freund2014"). Die Beispiele dazu stehen in
+% chapters/00_beispiele.typ und im README — in dieser Datei wird das
+% Klammeraffen-Zeichen bewusst vermieden, weil ältere BibTeX-Parser es auch in
+% Kommentarzeilen als Beginn eines neuen Eintrags lesen.
+%
+% ───────────────────────────────────────────────────────────────────────────
+% EMPFEHLUNG: Diese Datei nicht von Hand pflegen, sondern von Zotero
+% automatisch aktuell halten lassen. Einmal einrichten, danach nie wieder
+% anfassen — jede Änderung in Zotero landet sofort in dieser Datei.
+%
+% Schritt für Schritt:
+%  1. Zotero installieren (zotero.org) und den Browser-Connector dazu.
+%  2. Erweiterung "Better BibTeX for Zotero" (BBT) holen:
+%     retorque.re/zotero-better-bibtex → .xpi-Datei herunterladen →
+%     in Zotero: Bearbeiten/Extras → Add-ons → Zahnrad → "Install Add-on
+%     From File…" → .xpi auswählen → Zotero neu starten.
+%  3. Zitierschlüssel festlegen: Einstellungen → Better BibTeX → Citation Keys.
+%     Bewährt ist "auth + year", damit Schlüssel wie `Freund2014` entstehen.
+%     Genau diesen Schlüssel verwendest du dann in Typst zum Zitieren.
+%  4. In Zotero eine eigene Sammlung für die Arbeit anlegen, z. B. "PA2".
+%  5. Quellen sammeln: per Connector aus dem Browser, oder in Zotero über
+%     "Hinzufügen nach Identifikator" mit DOI/ISBN. Danach jeden Eintrag
+%     prüfen — Verlag, Auflage, DOI, vollständige Autorennamen (H 3.11).
+%  6. Automatischen Export einrichten: Rechtsklick auf die Sammlung →
+%     "Sammlung exportieren…" → Format "Better BibLaTeX" →
+%     Häkchen bei "Keep updated" → als etc/bibliography.bib in diesem Repo
+%     speichern und die Datei ersetzen.
+%     Ab jetzt schreibt Zotero jede Änderung automatisch in die Datei; Typst
+%     kompiliert beim nächsten Speichern mit der neuen Fassung.
+%     (Registrierte Auto-Exporte siehst du unter Einstellungen → Better
+%     BibTeX → Automatic Export.)
+%  7. PDFs von Online-Quellen in Zotero anhängen — die brauchst du laut H 3.11
+%     für den Ordner "Elektronische Quellen" in der Beigaben-ZIP.
+%
+% Alternative: Citavi kann ebenfalls BibTeX exportieren, aktualisiert die Datei
+% aber nicht automatisch — dann nach jeder Änderung neu exportieren.
+% ───────────────────────────────────────────────────────────────────────────
+%
+% Praxistipps für dieses Format:
+% - Kein LaTeX in den Feldern (kein \, kein \& …) — der Text wird 1:1 gesetzt.
+% - Beiträge in Sammelwerken als Typ "inbook" eintragen (nicht "incollection").
+% - Beim Typ "online" möglichst das vollständige Datum angeben
+%   (date = 2011-01-03); ist nur das Jahr bekannt, den Typ "report" nehmen.
+% - Die Beispieleinträge unten zeigen je Quellentyp die Mindestfelder. Sie
+%   erscheinen nur im Literaturverzeichnis, wenn sie im Text zitiert werden —
+%   beim Umstieg auf den Zotero-Export ersetzt du die Datei einfach komplett.
+% ═══════════════════════════════════════════════════════════════════════════
+
+% ─── Monographie ───────────────────────────────────────────────────────────
+@book{Freund2014,
+  author    = {Freund, Jakob and Rücker, Bernd},
+  title     = {Praxishandbuch BPMN 2.0},
+  edition   = {4., aktualisierte Auflage},
+  year      = {2014},
+  publisher = {Hanser},
+  address   = {München}
+}
+
+% ─── Beitrag in einem Sammelwerk ───────────────────────────────────────────
+@inbook{Meuser2009,
+  author    = {Meuser, Michael and Nagel, Ulrike},
+  editor    = {Pickel, Susanne and Pickel, Gert},
+  title     = {Das Experteninterview — konzeptionelle Grundlagen und methodische Anlage},
+  booktitle = {Methoden der vergleichenden Politik- und Sozialwissenschaft},
+  pages     = {465--479},
+  year      = {2009},
+  publisher = {VS Verlag für Sozialwissenschaften},
+  address   = {Wiesbaden}
+}
+
+% ─── Zeitschriftenartikel mit DOI ──────────────────────────────────────────
+@article{Hevner2004,
+  author  = {Hevner, Alan R. and March, Salvatore T. and Park, Jinsoo and Ram, Sudha},
+  title   = {Design Science in Information Systems Research},
+  journal = {MIS Quarterly},
+  volume  = {28},
+  number  = {1},
+  pages   = {75--105},
+  year    = {2004},
+  doi     = {10.2307/25148625}
+}
+
+% ─── Konferenzbeitrag ──────────────────────────────────────────────────────
+@inproceedings{Peffers2007,
+  author    = {Peffers, Ken and Tuunanen, Tuure and Rothenberger, Marcus A.},
+  title     = {A Design Science Research Methodology for Information Systems Research},
+  booktitle = {Proceedings of the 2. International Conference on Design Science Research},
+  pages     = {45--77},
+  year      = {2007},
+  publisher = {Springer}
+}
+
+% ─── Internetquelle (Datum möglichst vollständig angeben) ──────────────────
+@online{OMG2011,
+  author  = {{Object Management Group}},
+  title   = {Business Process Model and Notation (BPMN), Version 2.0},
+  date    = {2011-01-03},
+  url     = {https://www.omg.org/spec/BPMN/2.0/},
+  urldate = {2026-01-15}
+}
+
+% ─── Studie / Report einer Institution (nur Jahr bekannt) ──────────────────
+@report{Bitkom2024,
+  author      = {{Bitkom e. V.}},
+  title       = {Künstliche Intelligenz in der deutschen Wirtschaft},
+  type        = {Studienbericht},
+  institution = {Bitkom e. V.},
+  address     = {Berlin},
+  year        = {2024},
+  url         = {https://www.bitkom.org/},
+  urldate     = {2026-01-15}
+}
+
+% ─── Norm ──────────────────────────────────────────────────────────────────
+@manual{DINISO690,
+  author    = {{DIN Deutsches Institut für Normung}},
+  title     = {DIN ISO 690:2010. Information und Dokumentation — Richtlinien für Titelangaben und Zitierung von Informationsressourcen},
+  publisher = {Beuth},
+  address   = {Berlin},
+  year      = {2014}
+}
+
+% ─── Abschlussarbeit ───────────────────────────────────────────────────────
+% Hinweis: Hochschule mit in das Feld `type` schreiben — so erscheint sie im
+% Literaturverzeichnis in der von APA vorgesehenen Klammer.
+@thesis{Musterfrau2025,
+  author = {Musterfrau, Julia},
+  title  = {Prozessautomatisierung im Mittelstand},
+  type   = {Bachelorarbeit, Duale Hochschule Baden-Württemberg Karlsruhe},
+  year   = {2025}
+}
+
+% ─── Firmeninternes, unveröffentlichtes Dokument ───────────────────────────
+% Hinweis: Unveröffentlichte Unterlagen des Dualen Partners nur zitieren, wenn
+% die Freigabe vorliegt; ggf. ist ein Sperrvermerk erforderlich (H 3.2).
+@unpublished{Musterfirma2025,
+  author = {{Musterfirma AG}},
+  title  = {Prozesshandbuch Auftragsabwicklung},
+  note   = {Firmeninternes Dokument},
+  year   = {2025}
+}
+
+% ─── Interview / eigene Erhebung ───────────────────────────────────────────
+@misc{Expertmann2026,
+  author = {Expertmann, Hans},
+  title  = {Interview zum aktuellen Fertigungsprozess},
+  note   = {Persönliches Interview, Protokoll siehe Anlage 1},
+  date   = {2026-03-12}
+}

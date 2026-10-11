@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" default-locale="id-ID">
+  <info>
+    <title>PENS Citation Style (E-Boy Ultimate Fix)</title>
+    <id>http://www.zotero.org/styles/pens-custom-v2</id>
+    <link href="http://www.zotero.org/styles/pens-custom-v2" rel="self"/>
+    <author>
+      <name>Politeknik Elektronika Negeri Surabaya</name>
+    </author>
+    <updated>2026-05-21T00:00:00+00:00</updated>
+  </info>
+
+  <citation>
+    <layout prefix="[" suffix="]" delimiter=", ">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+
+  <bibliography second-field-align="flush">
+    <layout suffix=".">
+      <text variable="citation-number" suffix=". "/>
+      
+      <group delimiter=", ">
+        
+        <names variable="author">
+          <name and="text" delimiter-precedes-last="never"/>
+        </names>
+        
+        <text variable="title" font-weight="bold"/>
+        
+        <choose>
+          
+          <if type="article-journal article article-magazine article-newspaper" match="any">
+            <choose>
+              <if variable="volume">
+                <group delimiter=", ">
+                  <text variable="container-title" font-style="italic"/>
+                  <group delimiter=" ">
+                    <text value="Vol."/>
+                    <text variable="volume"/>
+                  </group>
+                  <group delimiter=" ">
+                    <text value="No."/>
+                    <text variable="issue"/>
+                  </group>
+                  <group delimiter=" ">
+                    <text value="Hal."/>
+                    <text variable="page"/>
+                  </group>
+                  <text variable="publisher"/>
+                </group>
+              </if>
+              <else>
+                <group delimiter=", ">
+                  <text variable="container-title" font-style="italic"/>
+                  <date variable="issued">
+                    <date-part name="day" suffix="/"/>
+                    <date-part name="month"/>
+                  </date>
+                  <group delimiter=" ">
+                    <text value="Edisi"/>
+                    <text variable="issue"/>
+                    <text variable="edition"/>
+                  </group>
+                </group>
+              </else>
+            </choose>
+          </if>
+
+          <else-if type="paper-conference chapter" match="any">
+            <group delimiter=", ">
+              <text variable="container-title" font-style="italic"/>
+              <text variable="publisher-place"/>
+              <group delimiter=" ">
+                <text value="Hal."/>
+                <text variable="page"/>
+              </group>
+            </group>
+          </else-if>
+
+          <else-if type="book">
+            <group delimiter=", ">
+              <text variable="publisher" font-style="italic"/>
+              <group delimiter=" ">
+                <text value="Edisi"/>
+                <text variable="edition"/>
+              </group>
+            </group>
+          </else-if>
+
+          <else-if type="thesis">
+            <group delimiter=", ">
+              <text variable="genre"/>
+              <text variable="publisher" font-style="italic"/>
+            </group>
+          </else-if>
+
+          <else-if type="webpage post-weblog post" match="any">
+            <group delimiter=", ">
+              <text variable="publisher"/>
+              <text variable="container-title"/>
+              <text variable="URL" font-style="italic"/>
+              <group delimiter=" ">
+                <text value="Diakses tanggal."/>
+                <date variable="accessed">
+                  <date-part name="day" suffix=" "/>
+                  <date-part name="month" suffix=" "/>
+                  <date-part name="year"/>
+                </date>
+              </group>
+            </group>
+          </else-if>
+
+          <else>
+            <group delimiter=", ">
+              <text variable="container-title" font-style="italic"/>
+              <text variable="publisher"/>
+            </group>
+          </else>
+
+        </choose>
+        
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+        
+      </group>
+    </layout>
+  </bibliography>
+</style>

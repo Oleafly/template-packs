@@ -1,0 +1,112 @@
+# Configuration of Traveler's Notebook inserts.
+# All dimensions in millimetres, colours as "#rrggbb".
+# Some values can be overridden from the CLI: --input format=passport --input pages=16
+
+[insert]
+format = "regular"   # regular | passport | pocket
+pages = 32           # default page count for simple inserts (grids)
+lang = "en"          # pl | en: language of the text printed on pages
+
+[formats.regular]
+width = 110
+height = 210
+
+[formats.passport]
+width = 89
+height = 124
+
+[formats.pocket]
+width = 90
+height = 140
+# Two spreads one above the other on portrait A4; the sheet is cut in half.
+# The fold runs along the long side of A4, i.e. along the grain of copy paper.
+stacked = true
+
+[margins]
+# "inner" = spine side, "outer" = outer edge
+top = 8
+bottom = 11
+inner = 8
+outer = 7
+
+[grid]
+type = "dots"        # dots | lines | squares | blank | isometric | hex | staff | graph | margin-lines | calligraphy | seyes | tab | storyboard | split
+# 0.6 mm / #666666: at 600 dpi the halftone raster loses small light shapes.
+# The previous 0.35 mm / #b4b4b4 printed as a blank sheet (2026-09-22).
+spacing = 5.0
+dot_diameter = 0.6
+line_width = 0.12    # for lines/squares
+color = "#666666"
+# accent: margin line (margin-lines, seyes), bold lines of graph paper,
+# calligraphy baseline, storyboard frames. Palette: config/palette.json
+accent = "#000000"
+
+[ink]
+# colour of text and lines printed on pages (headings, calendar).
+# A non-grey colour turns on the colour raster in `just prepare` (see [printer] color).
+text = "#000000"
+line = "#000000"
+line_width = 0.15
+
+[font]
+# Built into Typst: "Libertinus Serif", "New Computer Modern", "DejaVu Sans Mono"
+# Typewriter (in fonts/): "Courier Prime", "Special Elite", "Cutive Mono"
+family = "Special Elite"
+size = 8             # pt
+
+[page_numbers]
+enabled = true
+size = 6.5           # pt
+color = "#000000"
+from_edge_x = 6      # distance from the outer edge
+from_edge_y = 9      # distance of the number's centre from the bottom edge (must be >= unprintable + 1.75)
+
+[calendar]
+year = 2027
+week_start = "monday"  # monday | sunday: first day of the week in calendars
+
+[printer]
+# Samsung CLX-3300 (drukarka.local). Measured with printer-test.typ 2026-09-22:
+# TOP 4.5, BOTTOM 3.0, LEFT 7.0, RIGHT 4.5 mm. The edges that actually constrain
+# the insert are TOP/BOTTOM; LEFT/RIGHT have 38.5 mm to spare.
+# 7.0 = the max of all four: a conservative value, so that the printable-area
+# frame in calibration.typ (drawn symmetrically) prints in full.
+sheet_width = 297    # landscape A4
+sheet_height = 210
+unprintable = 7.0
+# raster in `just prepare`: "auto" = colour when any insert colour isn't
+# a grey (grid.color, grid.accent, ink.*, page_numbers.color); "gray" | "color" forces it.
+# Colour printing verified on drukarka_local with the color-test sheet (2026-09-30).
+color = "auto"
+
+[duplex]
+# Offset of the back of a sheet (pages 2, 4 ... in the impose/print-even PDF).
+# dx > 0 moves right, dy > 0 moves down (in the back side's coordinates).
+# NOTE: these values only hold for the stack-flipping procedure
+# described in the README (no rotating). With a different flip they go the wrong way.
+# 2026-09-28, drukarka_local queue (PostScript), measured on the pocket calibration
+# (portrait sheet, where the offset = (dy, -dx)). The AirPrint queue gave dx=8, dy=2:
+# the two queues place the image differently, so never mix fronts and backs between them.
+# Tests on a portrait sheet (back offset -> measured back misalignment):
+#   (1,-4) -> 1 left, 4 down;  (2,0) -> 3 right, 2 up;  (-1,-2) -> 1 left, vertical perfect;
+#   (0,-2) -> lines up (small misalignment below 1 mm)
+# The last two: sheet on top of a few blank ones, straightened, guides pushed up.
+# Not yet confirmed by printing for a landscape sheet (regular/passport).
+dx = 2.0
+dy = 0.0
+even_reverse = true  # print-even with sheets in reverse order (verified 2026-09-22)
+rotate_back = false  # rotate backs by 180° if they come out upside down
+max_sheets = 12      # warn when a signature is thicker
+
+[marks]
+enabled = true
+color = "#8a8a8a"
+width = 0.2
+length = 5           # cut marks outside the insert
+gap = 2              # distance from the insert edge
+# When there's no room above the insert (regular: 210 mm = A4 height), marks
+# are drawn in a band at the sheet edge, inside the insert's margin:
+# band_start is deliberately NOT raised to unprintable: the band lies at the
+# TOP/BOTTOM edges, where the real margin is 4.5 and 3.0 mm, not the 7.0 mm on the LEFT.
+band_start = 5.8     # from the sheet edge
+band_length = 2.0
