@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { execFile } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -30,27 +30,44 @@ export function previewDir(root, pack, template) {
   return join(root, "previews", pack, template);
 }
 
-export function compileCommand(manifest, work) {
+function pandocTectonic() {
+  const dir = mkdtempSync(join(tmpdir(), "pandoc-engine-"));
+  const link = join(dir, "tectonic");
+  symlinkSync(TECTONIC, link);
+  return link;
+}
+
+const PANDOC_TECTONIC = TECTONIC.endsWith("/tectonic") || TECTONIC === "tectonic" ? TECTONIC : pandocTectonic();
+
+function latexmkCommand(main, work, flavor) {
+  const stem = "oleafly-preview";
+  return {
+    file: LATEXMK,
+    args: ["-norc", "-interaction=nonstopmode", ...LATEXMK_FLAVORS[flavor], `-jobname=${stem}`, main.split("/").pop()],
+    cwd: dirname(join(work, main)),
+    pdf: join(dirname(join(work, main)), `${stem}.pdf`),
+  };
+}
+
+export function compileCommands(manifest, work) {
   const main = manifest.main_doc;
   const pdf = join(work, ".oleafly-preview.pdf");
   if (manifest.engine === "typst") {
     const fonts = FONT_PATHS.flatMap((path) => ["--font-path", path]);
-    return { file: TYPST, args: ["compile", "--root", work, ...fonts, "--font-path", work, join(work, main), pdf], cwd: dirname(join(work, main)), pdf };
+    return [{ file: TYPST, args: ["compile", "--root", work, ...fonts, "--font-path", work, join(work, main), pdf], cwd: dirname(join(work, main)), pdf }];
   }
   if (manifest.engine === "markdown") {
-    return { file: PANDOC, args: [main, "--standalone", "--citeproc", `--pdf-engine=${TECTONIC}`, "--output", pdf], cwd: work, pdf };
+    return [{ file: PANDOC, args: [main, "--standalone", "--citeproc", `--pdf-engine=${PANDOC_TECTONIC}`, "--output", pdf], cwd: work, pdf }];
   }
   const flavor = manifest.requires?.tex_flavor;
   if (manifest.requires?.engine === "latexmk" && LATEXMK_FLAVORS[flavor]) {
-    const stem = ".oleafly-preview";
-    return {
-      file: LATEXMK,
-      args: ["-norc", "-interaction=nonstopmode", ...LATEXMK_FLAVORS[flavor], `-jobname=${stem}`, main],
-      cwd: dirname(join(work, main)),
-      pdf: join(dirname(join(work, main)), `${stem}.pdf`),
-    };
+    return [latexmkCommand(main, work, flavor)];
   }
-  return { file: TECTONIC, args: ["-X", "compile", "--outdir", work, main], cwd: work, pdf: join(work, main.replace(/\.tex$/, ".pdf")) };
+  const fallback = LATEXMK_FLAVORS[manifest.engine] ? manifest.engine : "pdflatex";
+  return [
+    { file: TECTONIC, args: ["-X", "compile", "--outdir", work, main], cwd: work, pdf: join(work, main.replace(/\.tex$/, ".pdf")) },
+    latexmkCommand(main, work, fallback),
+  ];
 }
 
 const STORE = process.env.TEMPLATE_FILES_STORE ?? join(ROOT, "..", "third-party-cdn", "template-files");
@@ -76,11 +93,19 @@ async function renderPreview(templateDir, outDir) {
   try {
     cpSync(templateDir, work, { recursive: true });
     await restoreRemoteFiles(manifest, work);
-    const command = compileCommand(manifest, work);
-    await run(command.file, command.args, { cwd: command.cwd, timeout: 300_000, maxBuffer: 64 * 1024 * 1024 }).catch((error) => {
-      if (!existsSync(command.pdf)) throw error;
-    });
-    if (!existsSync(command.pdf)) throw new Error("no PDF");
+    let produced = null;
+    let lastError = null;
+    for (const command of compileCommands(manifest, work)) {
+      await run(command.file, command.args, { cwd: command.cwd, timeout: 300_000, maxBuffer: 64 * 1024 * 1024 }).catch((error) => {
+        lastError = error;
+      });
+      if (existsSync(command.pdf)) {
+        produced = command;
+        break;
+      }
+    }
+    if (!produced) throw lastError ?? new Error("no PDF");
+    const command = produced;
     const png = join(work, ".oleafly-page");
     await run("pdftoppm", ["-png", "-f", "1", "-l", "1", "-singlefile", "-scale-to-x", String(PAGE_WIDTH * 2), "-scale-to-y", "-1", command.pdf, png]);
     mkdirSync(outDir, { recursive: true });
