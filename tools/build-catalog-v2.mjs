@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const BASE = "https://raw.githubusercontent.com/Oleafly/template-packs/main";
 const COVERS = 4;
-const SKIPPED_FILES = new Set([".DS_Store"]);
+const SKIPPED_FILES = new Set([".DS_Store", ".git"]);
 
 export function encodePath(path) {
   return path

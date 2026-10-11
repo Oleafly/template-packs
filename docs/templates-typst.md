@@ -2,7 +2,7 @@
 
 [Back to the collection](../README.md#template-index) · [Browse the website gallery](https://oleafly.com/templates/)
 
-3,182 templates. Click a name to read the main source, or **Files** to get the complete template. Check its manifest and any upstream instructions for the license, packages, fonts, and compiler it needs. Imported entries can include package examples as well as complete documents.
+3,181 templates. Click a name to read the main source, or **Files** to get the complete template. Check its manifest and any upstream instructions for the license, packages, fonts, and compiler it needs. Imported entries can include package examples as well as complete documents.
 
 Previews are linked where the repository includes a rendered image. Website links appear only for published gallery pages; **Not listed** means that this entry is available here as source, without a gallery page.
 
@@ -492,7 +492,6 @@ Previews are linked where the repository includes a rendered image. Website link
 | [cv](../packs/typst-cv/gh-inglor-cv/cv.typ) | [Files](../packs/typst-cv/gh-inglor-cv/) | [Preview](../previews/typst-cv/gh-inglor-cv/page-1.webp) | Not listed |
 | [cv](../packs/typst-cv/gh-leoraclet-cv/typst/cv.typ) | [Files](../packs/typst-cv/gh-leoraclet-cv/) | [Preview](../previews/typst-cv/gh-leoraclet-cv/page-1.webp) | Not listed |
 | [cv](../packs/typst-cv/gh-llmslop-cv/main_2lang.typ) | [Files](../packs/typst-cv/gh-llmslop-cv/) | [Preview](../previews/typst-cv/gh-llmslop-cv/page-1.webp) | Not listed |
-| [cv](../packs/typst-cv/gh-noxsios-cv/cv.typ) | [Files](../packs/typst-cv/gh-noxsios-cv/) | [Preview](../previews/typst-cv/gh-noxsios-cv/page-1.webp) | Not listed |
 | [cv](../packs/typst-cv/gh-pacokleitz-cv/cv.typ) | [Files](../packs/typst-cv/gh-pacokleitz-cv/) | [Preview](../previews/typst-cv/gh-pacokleitz-cv/page-1.webp) | Not listed |
 | [CV](../packs/typst-cv/gh-adwiteeymauriya-cv/main.typ) | [Files](../packs/typst-cv/gh-adwiteeymauriya-cv/) | [Preview](../previews/typst-cv/gh-adwiteeymauriya-cv/page-1.webp) | Not listed |
 | [CV](../packs/typst-cv/gh-asciimoth-cv/CV.typ) | [Files](../packs/typst-cv/gh-asciimoth-cv/) | [Preview](../previews/typst-cv/gh-asciimoth-cv/page-1.webp) | Not listed |
