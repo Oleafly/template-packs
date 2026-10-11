@@ -1,0 +1,70 @@
+% !Mode:: "TeX:UTF-8"
+\documentclass[type=doctor,openany,pifootnote]{shuthesis}
+% 选项:
+%  type=[master|profmaster|doctor], % 必选
+%  secret,                          % 可选 (如果论文需要保密, 这一项需要打开)
+%  pifootnote,                      % 可选（建议打开）
+%  openany|openright,               % 可选 (章首页是右开还是任意开, 默认是右开)
+%  nocolor                          % 提交最终版本时请打开此选项
+\usepackage{shuthesis}
+% \usepackage{newtxmath}
+\graphicspath{{figures/}}
+
+\begin{document}
+\frontmatter
+\shusetup{
+  %%%%%%%% 1. 配置里面不要出现空行. 2. 不需要的配置信息可以删除. %%%%%%%%%%%
+  secretlevel={公开},             % 秘级
+  % 中文信息
+  ctitle={上海大学研究生(硕博)学位\texorpdfstring{\\}{} 论文 \LaTeX\ 模板使用示例文档 v\version},
+  cdisciplines={工学},
+  cdepartment={计算机工程与科学学院},
+  cmajor={计算机应用技术},
+  cauthor={Zhenyu Zhang},
+  csupervisor={xxx},
+  id={21820256},
+  catalognumber={TP391},
+  cdate={2023 年 12 月},
+  coverdate={\zhdigits{2023}年\zhnumber{12}月},
+  % 英文信息
+  etitle={An Introduction to \LaTeX{} Thesis Template of Shanghai University v\version},
+  edisciplines={Engineering},
+  edepartment={School of Computer Engineering and Science},
+  emajor={Technology of Computer Application},
+  eauthor={Zhenyu Zhang},
+  esupervisor={xxx},
+  edate={December, 2023},
+  % 是否在目录显示摘要
+  showabstract={true},
+}
+
+\input{data/abstract}
+\makefirstpage                         % 生成带有学校 logo 的封面
+\makecover
+
+\tableofcontents                       % 目录
+
+\input{data/denotation}                % 符号对照表
+
+% 正文部分
+\mainmatter
+\include{data/chap01}
+\include{data/chap02}
+\include{data/chap03}
+\include{data/chap04}
+\listoffigures                        % 插图索引
+\listoftables                         % 表格索引
+
+% 参考文献. 
+\bibliographystyle{gbt7714-2025-numeric}
+\bibliography{reference/refs}
+
+\include{data/publications}           % 发表论文清单
+\include{data/acknowledgement}        % 致谢
+
+\backmatter
+\begin{appendix}
+\input{data/appendix}
+\end{appendix}
+
+\end{document}

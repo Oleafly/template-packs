@@ -1,0 +1,370 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NAISTロボットラーニング研究室向け修士論文スタイルファイル
+%                                             Ver. 1.0      Jan. 11, 2024
+%
+%
+% このファイルは以下の二つのファイルを統合し，ロボットラーニング研究室向けに最適化したものです．
+% 1. naist-mcommon.sty: master's thesis common style in NAIST 
+% 2. naist-jmthesis.sty: master's thesis style in NAIST
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{Master's Thesis / Master's Report Style for Robot Learning Lab@NAIST}
+
+% Section Header
+%       from jarticle.sty, however, ``.'' was appended to right after
+%       section numbers. 
+% \typeout{section}
+\def\@sect#1#2#3#4#5#6[#7]#8{\ifnum #2>\c@secnumdepth
+     \def\@svsec{}\else 
+     \refstepcounter{#1}\edef\@svsec{\csname the#1\endcsname
+      \ifnum #2=1.\fi\hskip 0.6em }\fi
+     \@tempskipa #5\relax
+      \ifdim \@tempskipa>\z@ 
+        \begingroup #6\relax
+          \@hangfrom{\hskip #3\relax\@svsec}{\interlinepenalty \@M #8\par}%
+        \endgroup
+       \csname #1mark\endcsname{#7}\addcontentsline
+         {toc}{#1}{\ifnum #2>\c@secnumdepth \else
+                      \protect\numberline{\csname the#1\endcsname
+                       \ifnum #2=1.\fi}\fi
+                    #7}\else
+        \def\@svsechd{#6\hskip #3\@svsec #8\csname #1mark\endcsname
+                      {#7}\addcontentsline
+                           {toc}{#1}{\ifnum #2>\c@secnumdepth \else
+                             \protect\numberline{\csname the#1\endcsname
+                              \ifnum #2=1.\fi}\fi
+                       #7}}\fi
+     \@xsect{#5}}
+
+% title page items
+% \typeout{commands...}
+\newcommand{\doctitle}[1]{
+    \def\doctitlestr{#1}
+    \def\mastersthesis{1}
+    \def\mastersreport{2}
+    \def\jdoctitle{\ifcase\doctitlestr\or{修士論文}\or{課題研究}\fi}
+    \def\jdoctype{\ifcase\doctitlestr\or{論文}\or{報告書}\fi}
+    \def\jdocname{\ifcase\doctitlestr\or{修士論文}\or{課題研究の報告書}\fi}
+    \def\edoctitle{\ifcase\doctitlestr\or{Master's Thesis}\or{Master's Report}\fi}
+}
+%
+\def\titlestr{タイトル}
+\renewcommand{\title}[1]{
+    \def\titlestr{#1}
+}
+\def\etitlestr{Title}
+\newcommand{\etitle}[1]{
+    \def\etitlestr{#1}
+}
+%
+\def\authorstr{私が著者だ．}
+\renewcommand{\author}[1]{
+    \def\authorstr{#1}
+}
+\def\eauthorstr{I am the author}
+\newcommand{\eauthor}[1]{
+    \def\eauthorstr{#1}
+}
+%
+\def\esyearstr{}
+\newcommand{\esyear}[1]{
+    \def\esyearstr{#1}
+}
+\def\jsyearstr{}
+\newcommand{\jsyear}[1]{
+    \def\jsyearstr{#1}
+}
+%
+\def\smonthstr{}
+\newcommand{\smonth}[1]{
+    \def\smonthstr{#1}
+}
+% 
+\def\sdaystr{}
+\newcommand{\sday}[1]{
+    \def\sdaystr{#1}
+}
+%
+\def\datestr{\jsyearstr\,年\hspace{.3em}\nobreak%
+\smonthstr\,月\hspace{.3em}\nobreak\sdaystr\,日}
+%
+\def\edatestr{
+\ifcase\smonthstr\or
+ January\or February\or March\or April\or May\or June\or
+ July\or August\or September\or October\or November\or December\fi
+ \space\sdaystr, \esyearstr}
+%
+\newcommand{\program}[1]{
+    \def\programstr{#1}
+    \def\ise{1}
+    \def\ds{2}
+    \def\dgi{3}
+    \def\jprogramstr{\ifcase\programstr\or{情報理工学プログラム}\or{データサイエンスプログラム}\or{デジタルグリーンイノベーションプログラム}\fi}
+}
+
+% typeout{committee members' page items}
+\newcommand{\major}[1]{
+    \def\majorstr{#1}
+    \def\engineering{1}
+    \def\science{2}
+    \def\jmajorstr{\ifcase\majorstr\or{工学}\or{理学}\fi}
+    \def\emajorstr{\ifcase\majorstr\or{ENGINEERING}\or{SCIENCE}\fi}
+}
+\def\firstcmember{}
+\def\firstposition{}
+\def\secondcmember{}
+\def\secondposition{}
+\def\thirdcmember{} 
+\def\thirdposition{}
+\def\fourthcmember{}
+\def\fourthposition{}
+\def\fifthcmember{}
+\def\fifthposition{}
+\def\sixthcmember{}
+\def\sixthposition{}
+\def\seventhcmember{}
+\def\seventhposition{}
+\def\eighthcmember{}
+\def\eighthposition{}
+%
+\newcommand{\cmembers}[8]{
+    \def\firstcmember{#1}
+    \def\firstposition{#2}
+    \def\secondcmember{#3}
+    \def\secondposition{#4}
+    \def\thirdcmember{#5}
+    \def\thirdposition{#6}
+    \def\fourthcmember{#7}
+    \def\fourthposition{#8}
+    \addcmembers
+}
+\newcommand{\addcmembers}[8]{
+    \def\fifthcmember{#1}
+    \def\fifthposition{#2}
+    \def\sixthcmember{#3}
+    \def\sixthposition{#4}
+    \def\seventhcmember{#5}
+    \def\seventhposition{#6}
+    \def\eighthcmember{#7}
+    \def\eighthposition{#8}
+}
+
+% \typeout{abstract page items...}
+% \typeout{keywords}
+\def\keywordsstr{キーワード1, キーワード2}
+\newcommand{\keywords}[1]{
+    \def\keywordsstr{#1}
+}
+
+% \typeout{ekeywords}
+\def\ekeywordsstr{keyword1, keyword2}
+\newcommand{\ekeywords}[1]{
+    \def\ekeywordsstr{#1}
+}
+
+% \typeout{abstract}
+\def\abstracttext{これは内容梗概です．}
+\renewcommand{\abstract}[1]{
+        \def\abstracttext{#1}
+}
+\newcommand{\jabstractpage}{
+    \begin{center}
+        \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+        \Large\bf \titlestr\footnote[1]
+                {奈良先端科学技術大学院大学 先端科学技術研究科 \jdoctitle,
+                \datestr.}
+        \renewcommand{\thefootnote}{\arabic{footnote}}
+    \end{center}
+    \vspace*{1mm}
+    \begin{center}
+        \large\authorstr
+    \end{center}
+    \vspace*{10mm}
+    \begin{center}
+    {\bf 内容梗概}
+    \end{center}
+    \vspace*{2mm}
+    \par
+    \abstracttext
+    \vspace*{5mm}
+    \begin{flushleft}
+            {\bf キーワード}
+    \end{flushleft}
+    \keywordsstr
+}
+
+% \typeout{eabstract}
+\def\eabstracttext{This is the abstract.}
+\newcommand{\eabstract}[1]{
+    \def\eabstracttext{#1}
+}
+\newcommand{\eabstractpage}{
+    \begin{center}
+        \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+        \Large\bf \etitlestr\footnote[1]
+            {{\edoctitle},
+            Graduate School of Science and \mbox{Technology,}
+            Nara Institute of Science and Technology,
+            {\edatestr}.}
+        \renewcommand{\thefootnote}{\arabic{footnote}}
+    \end{center}
+    \vspace*{1mm}
+    \begin{center}
+        \large\eauthorstr
+    \end{center}
+    \vspace*{10mm}
+    \begin{center}
+        {\bf Abstract}
+    \end{center}
+    \vspace*{2mm}
+    \par
+    \eabstracttext
+    \vspace*{5mm}
+    \begin{flushleft}
+        {\bf Keywords:}
+    \end{flushleft}
+    \ekeywordsstr
+}
+
+% \typeout{toc}
+\newcommand{\toc}{
+    \newpage
+    \tableofcontents
+}
+
+% Figure and Table Caption
+%       from jarticle.sty, however, `` ''(blank) was used instead of 
+%       ``:'' to separate figure/table numbers and captions.
+\long\def\@makecaption#1#2{
+ \vskip 10pt 
+ \setbox\@tempboxa\hbox{#1 \ #2}
+ \ifdim \wd\@tempboxa >\hsize #1 \ #2\par \else \hbox
+to\hsize{\hfil\box\@tempboxa\hfil} 
+ \fi}
+
+% References (bug fix jarticle.sty)
+%
+% \typeout{reference}
+\def\thebibliography#1{\section*{参考文献\markboth
+ {参 考 文 献}{参 考 文 献}\addcontentsline{toc}{section}{参考文献}}\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+ \def\newblock{\hskip .11em plus .33em minus -.07em}
+ \sloppy
+ \sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist
+
+% page layout
+\topmargin=0.5cm
+\textheight=20.5cm                      % 高さ
+\textwidth=14.5cm                       % 横幅 (約３６文字)
+\oddsidemargin=0.6cm                    % 左の空きの幅
+\evensidemargin=-3.8cm                  % 右の空きの幅
+\parindent 1em                          % 字下げ 1文字
+\renewcommand{\baselinestretch}{1.2}    % 行間
+
+% \typeout{pagestyle}
+\def\yes{1}
+
+\def\@evenhead{}%
+\def\@oddhead{}%
+\def\@oddfoot{\hfill\thepage\hfill}%
+\def\@evenfoot{\hfill\thepage\hfill}%
+
+% \typeout{titlepage}
+\renewcommand{\titlepage}{
+    \newpage
+    \thispagestyle{empty}
+    \vspace*{9mm}
+    \begin{center}
+        \Large\bf\jdoctitle
+    \end{center}
+    \vspace*{27mm}
+    \begin{center}
+        \Large\bf\titlestr
+    \end{center}
+    \vspace*{40mm}
+    \begin{center}
+        {\large\bf\authorstr} \\
+        奈良先端科学技術大学院大学 \\
+        先端科学技術研究科 \\
+        \jprogramstr \\
+    \end{center}
+    \begin{center}
+        主指導教員: 松原 崇充\\
+        ロボットラーニング研究室（情報科学領域）
+    \end{center}
+    \vspace*{5mm}
+    \begin{center}
+        \datestr 提出
+    \end{center}
+    \vspace*{\fill}
+}
+
+% \typeout{committee members page}
+\newcommand{\cmemberspage}{
+    \newpage
+    \thispagestyle{empty}
+    \vspace*{\fill}
+    \begin{center}
+        本{\jdoctype}は奈良先端科学技術大学院大学先端科学技術研究科に \\
+        修士（\jmajorstr）
+        授与の要件として提出した\jdocname
+        である．
+
+        \bigskip
+
+        \authorstr
+
+        \bigskip\bigskip
+        \begin{tabular}{lll}
+        \multicolumn{2}{l}{審査委員：} \\
+            主査\hspace{10truemm} & \firstcmember  & \firstposition \\
+            & \secondcmember & \secondposition \\
+            & \thirdcmember & \thirdposition \\
+            & \fourthcmember & \fourthposition \\
+            & \fifthcmember & \fifthposition \\
+            & \sixthcmember & \sixthposition \\
+            & \seventhcmember & \seventhposition \\
+            & \eighthcmember & \eighthposition
+        \end{tabular}
+        \end{center}
+}
+
+% \typeout{abstract pages}
+\newcommand{\firstabstract}{
+    \newpage
+    \pagenumbering{roman}
+    \jabstractpage
+}
+\newcommand{\secondabstract}{
+    \newpage
+    \eabstractpage
+}
+
+% typeout{acknowledgements}
+\newcommand{\acknowledgements}{
+    \newpage
+    \section*{謝辞\addcontentsline{toc}{section}{謝辞}}
+}
+
+% typeout{yet another reference}
+\newcommand{\reference}{
+    \newpage
+    \section*{参考文献\addcontentsline{toc}{section}{参考文献}}
+}
+
+% typeout{appendix}
+\renewcommand{\appendix}{\par
+    \setcounter{section}{0}
+    \setcounter{subsection}{0}
+    \def\thesection{\Alph{section}}
+    \newpage
+    \section*{付録\addcontentsline{toc}{section}{付録}}
+}
+
+% 図表をfig, tableに
+\renewcommand{\figurename}{Fig}
+\renewcommand{\tablename}{Table}

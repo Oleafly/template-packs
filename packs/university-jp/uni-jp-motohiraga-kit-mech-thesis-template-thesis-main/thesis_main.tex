@@ -1,0 +1,95 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 京都工芸繊維大学 機械工学課程／機械物理学専攻・機械設計学専攻
+%% 卒業論文・修士論文の執筆要綱もとに作成した LaTeX テンプレートです
+%% by Motoaki Hiraga (ver.1.0, Oct. 22nd, 2024)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[uplatex,dvipdfmx]{kit_mech_thesis}
+% \documentclass[lualatex]{kit_mech_thesis}
+
+%%%%%%% ユーザ設定 %%%%%%%
+%%%% 必要なパッケージをここに追加する
+\usepackage{amsmath,amssymb}
+\usepackage{url}
+% \usepackage{bm}
+% \usepackage{siunitx}
+
+%%%% 例で使用したパッケージ（不必要なら削除して良い）
+\usepackage{booktabs} % 表の見た目をよくするパッケージ
+\usepackage{lipsum} % 欧文ダミーテキストを生成するパッケージ
+\usepackage{bxtexlogo} % LaTeX 関連のロゴを表示するためのパッケージ
+\usepackage{xcolor} % 文字などに色を付けるパッケージ
+\usepackage{fancyvrb} % \footnote で verbatim 環境を使うためのパッケージ
+\VerbatimFootnotes
+\usepackage{upquote} % verbatim 環境での引用符の表示用パッケージ
+\usepackage{enumitem} % 箇条書きの調整用パッケージ
+
+
+%%%%%%% 卒論・修論の中表紙用データの読み込み %%%%%%%
+\input{src/thesis_data.tex}
+
+
+%%%%%%% 論文の内容はここから %%%%%%%
+\begin{document}
+
+\frontmatter % \mainmatterが始まるまでページ番号を付けない 
+
+%%%%% 内表紙 %%%%%
+\input{kit_mech_thesis_cover/title.tex}
+
+%%%%% 論文概要 %%%%%
+\input{src/abstract.tex}
+%%%%% 目次 %%%%%
+\tableofcontents
+\clearpage
+
+\mainmatter % ページ番号1がここから始まる
+
+%%%%% 本文 %%%%%
+\input{src/sec_descr.tex}
+% \input{src/sec_1.tex}
+% \input{src/sec_2.tex}
+
+
+%%%%% 謝辞 %%%%%
+\input{src/acknowledge.tex}
+\clearpage
+
+%%%%% 参考文献 %%%%%
+\addcontentsline{toc}{section}{\bibname} % 参考文献を目次に追加
+
+%% BibTeX 使用者 %%
+\bibliographystyle{kit_mech_thesis}
+\bibliography{example} % ご自身のbibファイル名を入れる
+
+%% 手入力愛好者 %%
+% \begin{thebibliography}{10}
+%     \bibitem{bib1}
+%     日本太郎, 赤坂次郎, 粘弾性流のレオロジ方程式に関する研究, 
+%     日本機械学会論文集, 70--578, (1967), 359--363.
+%     \bibitem{bib2}
+%     R. E. Edwards, et al., Waterhammer Analysis of Pump System, 
+%     Trans. ASME, Ser.E., 30--3, (1969), 384--390.
+%     \bibitem{bib3}
+%     青山四郎, 自動制御理論, 
+%     (1968), 294-300, 機学社.
+%     \bibitem{bib4}
+%     W. R. Ahrendt and J. F. Taplin, Automatic Feedback Control, 
+%     (1968), 31-40, McGraw-Hill, N.Y.
+% \end{thebibliography}
+
+\clearpage
+
+\backmatter % 章と図表の通し番号をリセット（主に付録のための処理）
+
+%%%%% 付録 %%%%%
+\appendix
+\renewcommand{\thefigure}{\Alph{section}\arabic{figure}} % 図の番号を A1, A2, A3, ... に変更
+\renewcommand{\thetable}{\Alph{section}\arabic{table}} % 表の番号を A1, A2, A3, ... に変更
+% \renewcommand{\thefigure}{\Alph{figure}} % 図の番号を A, B, C, ... に変更
+% \renewcommand{\thetable}{\Alph{table}} % 表の番号を A, B, C, ... に変更
+\input{src/appx_example}
+
+
+\end{document}

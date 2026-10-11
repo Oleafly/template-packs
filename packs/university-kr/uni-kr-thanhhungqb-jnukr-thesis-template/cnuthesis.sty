@@ -1,0 +1,121 @@
+\ProvidesPackage{cnuthesis}
+
+\usepackage[a4paper,top=35mm,bottom=25mm,left=35mm,right=30mm,footskip=10mm]{geometry}
+\usepackage{iftex}
+\ifpdftex
+    \usepackage[utf8]{inputenc}
+    \usepackage{kotex}
+    \usepackage{mathptmx}
+    %\usepackage{fourier}
+\else
+    \usepackage{fontspec}
+    \setmainfont{[Batang.ttf]}
+\fi     
+
+%\usepackage[utf8]{inputenc}
+\RequirePackage{graphicx}
+\RequirePackage{afterpage}
+
+\RequirePackage{natbib}
+\RequirePackage{setspace} 
+\usepackage{ifthen}
+
+\def\@school{Graduate School, Chonnam National University}
+\newcommand{\school}[1]{
+  \def\@school{#1}
+}
+\def\@department{Department of Artificial Intelligence}
+\newcommand{\department}[1]{
+  \def\@department{#1}
+}
+\def\@graduateDate{August 2021}
+\newcommand{\graduateDate}[1]{
+  \def\@graduateDate{#1}
+}
+\def\@advisor{Professor Kxx}
+\newcommand{\advisor}[1]{
+  \def\@advisor{#1}
+}
+\def\@degreename{Doctor of Engineering}
+\newcommand{\degreename}[1]{
+  \def\@degreename{#1}
+}
+\def\@degreemajor{Artificial Intelligence Convergence}
+\newcommand{\degreemajor}[1]{
+  \def\@degreemajor{#1}
+}
+\def\@committeef{fcmn}
+\newcommand{\committeef}[1]{
+  \def\@committeef{#1}
+}
+\def\@committeesc{scmn}
+\newcommand{\committeesc}[1]{
+  \def\@committeesc{#1}
+}
+\def\@committeetr{trmd}
+\newcommand{\committeetr}[1]{
+  \def\@committeetr{#1}
+}
+\def\@committeefo{noname}
+\newcommand{\committeefo}[1]{
+  \def\@committeefo{#1}
+}
+\def\@committeefi{noname}
+\newcommand{\committeefi}[1]{
+  \def\@committeefi{#1}
+}
+
+\makeatletter         
+\renewcommand\maketitle{
+\thispagestyle{empty}
+\newgeometry{top=45mm,bottom=40mm,left=35mm,right=30mm}
+\linespread{2}
+\begin{center}
+    {\fontsize{14}{17}\selectfont Doctoral Dissertation}\\[1.5cm]
+    \ifpdftex
+        {\fontsize{26}{31.2}\selectfont \textbf{\@title}}\\[3cm]
+    \else 
+        {\fontsize{26}{31.2}\selectfont\fontspec{HYMJRE.TTF} \textbf{\@title}}\\[3cm]
+    \fi 
+    {\fontsize{16}{19.2}\selectfont \@department}\\[0.5cm]
+    {\fontsize{16}{19.2}\selectfont \@school}\\[1.5cm]
+    {\fontsize{16}{19.2}\selectfont \@author}\\\vfill
+    {\fontsize{16}{19.2}\selectfont \@graduateDate}\\
+\end{center}
+\clearpage
+\thispagestyle{empty}
+\begin{center}
+    \ifpdftex
+        {\fontsize{26}{31.2}\selectfont \textbf{\@title}}\\[2cm]
+    \else 
+        {\fontsize{26}{31.2}\selectfont\fontspec{HYMJRE.TTF} \textbf{\@title}}\\[2cm]
+    \fi 
+    {\fontsize{16}{19.2}\selectfont \@department}\\[0.5cm]
+    {\fontsize{16}{19.2}\selectfont \@school}\\[1.5cm]
+    {\fontsize{16}{19.2}\selectfont \@author}\\[1.5cm]
+    {\fontsize{16}{19.2}\selectfont Supervised by \@advisor}\\[2cm]
+    {\fontsize{12}{16}\selectfont A dissertation submitted in partial fulfillment of the requirements for the}\\
+    %{\fontsize{12}{16}\selectfont \@degreename~in \@degreemajor~~~~~~~~~~~~~~}\\[1.5cm]
+    {\fontsize{12}{16}\selectfont \@degreename~in \@degreemajor}\\[1.5cm]
+\end{center}%}
+\begin{tabular}{l l}
+    \multicolumn{2}{l}{{\hspace{1cm}\fontsize{16}{19.2}\selectfont Committee in Charge:}}  \\[0.5cm]
+     \hspace{3.5cm}\@committeef & \rule{3.5cm}{0.15mm} \\[0.25cm]
+     \hspace{3.5cm}\@committeesc & \rule{3.5cm}{0.15mm}\\[0.25cm]
+     \hspace{3.5cm}\@committeetr & \rule{3.5cm}{0.15mm}
+     \ifthenelse{\equal{\@committeefo}{noname}} {}{
+        \\[0.25cm]\hspace{3.5cm}\@committeefo & \rule{3.5cm}{0.15mm}
+    }
+     \ifthenelse{\equal{\@committeefi}{noname}} {}{
+        \\[0.25cm]\hspace{3.5cm}\@committeefi & \rule{3.5cm}{0.15mm}    
+     }
+\end{tabular}
+\restoregeometry
+\clearpage
+} 
+
+\makeatother
+
+%\linespread{1} % without any package.
+
+

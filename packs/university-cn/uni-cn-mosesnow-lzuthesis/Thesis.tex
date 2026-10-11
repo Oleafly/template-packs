@@ -1,0 +1,600 @@
+% !Mode:: "TeX:UTF-8"   %%winedt 以utf8编码打开
+% Can only be compiled with xelatex+bibtex
+
+%双行标题
+\documentclass[twoside,longtitle]{LZUthesis}
+%单行标题
+%\documentclass[twoside]{LZUthesis}
+
+\usepackage{float}
+\usepackage{fancybox}
+\usepackage{calc}
+\usepackage{mathdots}
+\usepackage{graphicx}
+\usepackage{listings}
+
+%声明图片后缀名
+\DeclareGraphicsExtensions{.pdf,.eps}
+
+\makeatletter
+
+% 设置图形文件的搜索路径
+\graphicspath{{figures/}}
+
+% 小节标题靠左对齐
+\CTEXsetup[format+={\flushleft}]{section}
+
+% 取消链接的颜色（黑白打印时启用）
+%\hypersetup{colorlinks=false}
+
+%使文档居中，打印时应注释掉
+\evensidemargin 0.93 true cm
+\setlength{\hoffset}{-0.3 cm}
+
+%允许equationarray分页换行
+\allowdisplaybreaks
+
+%使字体清晰，且透明位图不会使页面文字粗细不一
+\usepackage{eso-pic}
+\AddToShipoutPicture{%
+\special{pdf: put @thispage <</Group << /S /Transparency /I true /CS /DeviceRGB>> >>}%
+}
+
+%页面背景色
+%\definecolor{yellow}{rgb}{0.99,0.99,0.70}
+%\pagecolor{yellow}
+
+%浮动项超链接正确跳转
+\usepackage[all]{hypcap}
+
+\makeatother
+
+
+\begin{document}
+
+%分类号；一般不要求学生填写
+\classification{}
+
+%密级；申请保密后需填写
+\confidential{}
+
+%中文标题
+\title{兰州大学研究生学位论文}
+
+%中文标题第二行，题目较短时删除之，并去除文档类选项 longtitle
+\titleadd{\LaTeX{}模板简介}
+
+%英文标题
+\englishtitle{Introduction to the \LaTeX{} Template of}
+
+%英文题目第二行，题目较短时删除之，并去除文档类选项 longtitle
+\englishtitleadd{Lanzhou University Thesis}
+
+%作者汉语姓名
+\author{XXX}
+
+%专业
+\major{物理学•理论物理}
+
+%学位
+\degree{博士}
+
+%研究方向
+\direction{XXXX}
+
+%导师姓名+职称
+\advisor{某某某~教授}
+
+%论文工作起止年月
+\datebeginAndEnd{2012年9月至2015年5月}
+
+%论文提交日期
+\submitdate{}
+
+%答辩日期
+\defenddate{}
+
+%学位授予日期
+\degreedate{}
+
+%左侧页眉
+\lzuthesis{兰州大学博士学位论文}
+
+%生成封面
+\maketitle
+
+%生成声明页
+\makestatement
+
+%前文-罗马页码
+\frontmatter\pagenumbering{Roman}
+
+%中文摘要
+\begin{abstract}
+本文是兰州大学学位论文的\LaTeX{} (包含LyX)模板及其使用说明。除了介绍文档类LZUthesis的用法外，本文还是一份简要的学位论文写作指南。
+\end{abstract}
+
+%中文关键词
+\keywords{兰州大学，学位论文，\LaTeX{}模板，LyX模板}
+
+%英文摘要
+\begin{englishabstract}
+This paper is a \LaTeX{} (include LyX) thesis template of Lanzhou University. Besides the usage of the LaTeX document class LZUthesis, a brief guideline for writing the thesis is also included.
+\end{englishabstract}
+
+%英文关键词
+\englishkeywords{Lanzhou University, Thesis, \LaTeX{} Template, LyX Template}
+
+%自动生成章节目录以及pdf书签
+\tableofcontents{}
+
+
+%正文部分-数字页码
+\mainmatter
+
+%正文页眉页脚样式
+\pagestyle{lzu}
+
+
+\chapter{引言\label{chap:intro}}
+
+虽然兰州大学研究生院制定了\href{http://ge.lzu.edu.cn/degree/xwsq/lwgf/201103/1186.htm}{学位论文撰写要求}，但只提供了\href{http://ge.lzu.edu.cn/degree/xwsq/lwgf/201103/1187.htm}{~Word 模板}。广大理科生更加青睐的\LaTeX{}却没有标准模板。\href{http://blog.sciencenet.cn/home.php?mod=space&uid=117412&do=blog&id=512804}{LZUthesis~} 宏包是赵振华以中科院学位论文宏包\href{http://www.ctex.org/PackageCASthesis}{~CASthesis~}作为基础模板，根据兰州大学研究生院学位论文撰写要求修改的。作者对LZUthesis宏包进行了进一步修改(主要变更见附录~\ref{chap:changelog}~及\href{https://github.com/mosesnow/LZUthesis/commits/master}{~Github~})，使之更加符合兰大学位论文的撰写要求，并制作了相应的LyX模板。
+
+宏包底层使用的是Xe\LaTeX{}，而不是CJK方案，原因在于：
+\begin{enumerate}
+\item Xe\LaTeX{}支持系统字体，对中文友好。
+\item Xe\LaTeX{}支持unicode，可编译各国文字。
+\item Xe\LaTeX{}支持常见的图片格式，如：pdf、eps、jpg、png 等。
+\end{enumerate}
+
+
+模板使用LyX的优点是所见即所得，比较直观，缺点是\TeX{}中一些复杂功能难以实现。另外LyX可以导出标准的\TeX{}代码(参见第~\ref{sec:export}~节)，方便转入\TeX{}编辑器继续撰写。
+
+青睐\TeX{}模板的用户，直接编辑模板根目录下的Thesis.tex即可。注意它不是Thesis.lyx直接导出的，如果要使用此模板，不要让LyX导出\TeX{}时覆盖此文件。
+
+
+\chapter{系统配置}
+
+\texttt{LZUthesis}宏包使用了宏包amsmath、amsthm、amsfonts、amssymb、bm、ctex 和hyperref。目前大多数的\TeX{}系统中都包含有这些宏包。但是中文字体在各个系统中却不尽相同：Windows 下使用C\TeX{} 套装一般不需要额外配置字体，但Linux 和Mac一般情况下需要设定中文字体，中文字体名称可通过命令~\lstinline!sudo fc-list :lang=zh-cn!~ 查看，具体配置见本章内容。请注意字体设定可能要根据你自己系统的中文字体做相应调整。
+
+
+\section{Windows配置}
+\begin{itemize}
+\item 安装C\TeX{}套装，最新的版本可以从\href{http://www.ctex.org}{~www.ctex.org} 网站下载。
+\item 安装完成后，把所有宏包升级到最新(开始菜单--CTEX--Update(Admin))。
+\item 安装LyX，最新的LyX安装包可以从\href{http://www.lyx.org/Download}{~www.lyx.org/Download} 下载。
+\end{itemize}
+
+\section{Linux配置}
+
+软件安装以ubuntu为例，其他发行版应根据具体情况安装。
+\begin{itemize}
+\item 安装texlive以及texlive-lang-cjk。
+
+
+\doublebox{\begin{minipage}[t]{0.86\textwidth}%
+\begin{lstlisting}[language=bash,breaklines=true]
+sudo apt-get install texlive texlive-xetex
+sudo apt-get install texlive-lang-cjk
+\end{lstlisting}
+%
+\end{minipage}}
+
+\item 安装LyX。
+
+
+\doublebox{\begin{minipage}[t]{0.86\textwidth}%
+\begin{lstlisting}[language=bash,breaklines=true]
+sudo apt-get install lyx
+\end{lstlisting}
+%
+\end{minipage}}
+
+\item 中文字体设置
+
+\begin{enumerate}
+\item 文档类选项(文档--首选项--文档类)中添加选项{[}nofonts{]}
+\item 导言区(文档--首选项--\LaTeX{}导言区)中添加(Forked from\href{https://bitbucket.org/kevinyounglzu/latextemplateoflzuthesis}{~Kevin Young's tempalte})
+
+
+\tiny
+\begin{center}
+\hrule
+
+
+\begin{verbatim}
+
+
+\setCJKmainfont[BoldFont=文泉驿微米黑,ItalicFont=文泉驿正黑] {文泉驿正黑} \setCJKsansfont{文泉驿微米黑}
+\setCJKmonofont{文泉驿等宽正黑}
+\setCJKfamilyfont{zhsong}{文泉驿正黑}
+\setCJKfamilyfont{zhhei}{文泉驿微米黑}
+\setCJKfamilyfont{zhfs}{文泉驿等宽微米黑}
+\setCJKfamilyfont{zhkai}{文泉驿等宽正黑}
+\newcommand*{\songti}{\CJKfamily{zhsong}} % 宋体
+\newcommand*{\heiti}{\CJKfamily{zhhei}}   % 黑体
+\newcommand*{\kaishu}{\CJKfamily{zhkai}}  % 楷书
+\newcommand*{\fangsong}{\CJKfamily{zhfs}} % 仿宋
+
+
+\end{verbatim}
+
+
+\hrule
+\end{center}
+\normalsize
+
+\end{enumerate}
+\end{itemize}
+
+\section{Mac配置}
+\begin{itemize}
+\item 安装Mac\TeX{}，最新安装文件可以从\href{https://tug.org/mactex/}{~https://tug.org/mactex/}
+网站下载。
+\item 安装LyX，最新的LyX安装包可以从\href{http://www.lyx.org/Download}{~www.lyx.org/Download} 下载。
+\item 中文字体设置
+
+\begin{enumerate}
+\item 文档类选项(文档--首选项--文档类)中添加选项{[}nofonts{]}
+\item 导言区(文档--首选项--\LaTeX{}导言区)中添加(Forked from\href{https://bitbucket.org/kevinyounglzu/latextemplateoflzuthesis}{~Kevin Young's tempalte})
+
+
+\tiny
+\begin{center}
+\hrule
+
+
+\begin{verbatim}
+
+
+\setCJKmainfont[BoldFont=Heiti SC Light,ItalicFont=Kaiti SC]   {Songti SC Light}
+\setCJKsansfont{Heiti SC Light} \setCJKmonofont{Songti SC Light}
+\setCJKfamilyfont{zhsong}{Songti SC Light}
+\setCJKfamilyfont{zhhei}{Heiti SC Light}
+\setCJKfamilyfont{zhfs}{STFangsong}
+\setCJKfamilyfont{zhkai}{Kaiti SC}
+\newcommand*{\songti}{\CJKfamily{zhsong}} % 宋体
+\newcommand*{\heiti}{\CJKfamily{zhhei}}   % 黑体
+\newcommand*{\kaishu}{\CJKfamily{zhkai}}  % 楷书
+\newcommand*{\fangsong}{\CJKfamily{zhfs}} % 仿宋
+
+
+\end{verbatim}
+
+
+\hrule
+\end{center}
+\normalsize
+
+\end{enumerate}
+\end{itemize}
+
+
+
+
+\chapter{模版使用}
+
+
+\section{模板文件结构\label{sec:files}}
+
+整个模板根目录的文件列表如下：
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+LZUthesis.cls & ---LZUthesis宏包 & \textcolor{red}{{*}} & \textcolor{magenta}{\$}\tabularnewline
+\hline
+LZUthesis.cfg & ---LZUthesis宏包配置文件 & \textcolor{red}{{*}} & \textcolor{magenta}{\$}\\
+\hline
+LZUthesis.layout & ---LZUthesis的LyX布局文件 & \textcolor{red}{{*}} & \textcolor{magenta}{\$}\\
+\hline
+CASmthesis.cls & ---CASthesis宏包 & \textcolor{red}{{*}} & \textcolor{magenta}{\$}\\
+\hline
+CASmthesis.cfg & ---CASthesis宏包配置文件 & \textcolor{red}{{*}} & \textcolor{magenta}{\$}\\
+\hline
+lzubib.bst & ---引文样式文件 & \textcolor{red}{{*}} & \textcolor{magenta}{\$}\\
+\hline
+bib/thesis.bib & ---bib数据库 & \textcolor{red}{{*}} & \textcolor{magenta}{\$}\\
+\hline
+figures/lzu.pdf & ---兰州大学校名标准字 & \textcolor{red}{{*}} & \textcolor{magenta}{\$}\\
+\hline
+Thesis.lyx & ---LyX模板主文件 & \textcolor{red}{{*}} & -\\
+\hline
+Envelope.lyx & ---A3封面LyX模板 & \textcolor{red}{{*}} & -\\
+\hline
+spine.lyx & ---书脊LyX模板 & \textcolor{red}{{*}} & -\\
+\hline
+Thesis.tex & ---\TeX{}模板主文件 & - & \textcolor{magenta}{\$}\\
+\hline
+Makefile & ---Makefile文件 & - & -\\
+\hline
+gbt7714-2005.bst & ---符合国标gbt7714-2005的引文样式文件 & - & -\\
+\hline
+\end{tabular}
+
+注：\textcolor{red}{{*}}表示LyX模板必须的文件，\textcolor{magenta}{\$} 表示\LaTeX{}模板必须的文件。
+
+
+\section{基本设置}
+\begin{enumerate}
+\item 模版默认使用的文档类选项(文档--首选项--文档类--自定义)是twoside,~longtitle，即双面，长标题。
+
+\begin{enumerate}
+\item 双面：此时页码、页边距以及章开始页等会对奇偶页区别设置，可更改为oneside。
+\item 长标题：若标题较短时应去除选项longtitle，并删除中英文标题的第二行。
+\end{enumerate}
+\item 图片搜索路径默认设置为模板根目录下的figures/。
+\item bib数据库默认设置为模板根目录下的bib/thesis.bib。
+\end{enumerate}
+
+\section{示例}
+
+论文中最常使用的一些功能在本节中给出示例，其他LyX功能的使用详见帮助-- 用户手册，\TeX{}使用则可参考The \TeX{}book\cite{Knut04-T}。
+
+
+\subsection{公式}
+
+自旋玻色模型的哈密顿量为
+\begin{equation}
+\hat{H}=\frac{\epsilon}{2}\hat{\sigma}_{z}-\frac{\Delta}{2}\hat{\sigma}_{x}+\sum_{k}\omega_{k}\hat{b}_{k}^{\dagger}\hat{b}_{k}+\sum_{k}\frac{g_{k}}{2}\hat{\sigma}_{z}(\hat{b}_{k}+\hat{b}_{k}^{\dagger})\label{eq:sbm}
+\end{equation}
+
+
+
+\subsection{表格}
+
+前五个希腊字母
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Alpha & Beta & Gamma & Delta & Theta\\
+\hline
+$\alpha$ & $\beta$ & $\gamma$ & $\delta$ & $\theta$\\
+\hline
+$A$ & $B$ & $\Gamma$ & $\Delta$ & $\Theta$\\
+\hline
+\end{tabular}
+\par\end{centering}
+
+\protect\caption{希腊字母表\label{tab:Greek}}
+
+
+\end{table}
+
+
+
+\subsection{图形}
+兰州大学校名标准字
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[width=0.618\textwidth]{figures/lzu}
+\par\end{centering}
+
+\protect\caption{兰州大学校名标准字\label{fig:lzu}}
+\end{figure}
+
+
+
+\subsection{引用}
+
+
+\subsubsection{交叉引用}
+
+对所有需要引用的公式、表格、图形，执行插入--标签后，即可使用插入-- 交叉引用自动产生引用。
+\begin{itemize}
+\item 哈密顿量见方程~(\ref{eq:sbm})。
+\item 希腊字母表见表~\ref{tab:Greek}。
+\item 校名标准字如图~\ref{fig:lzu}。
+\end{itemize}
+
+\subsubsection{文献引用}
+
+将引文的bib数据库(默认文件名为thesis.bib)放入模板根目录下的bib 文件夹，即可通过插入--文献引用自动产生引文。
+\begin{itemize}
+\item Journal：An article\cite{Liu13PRA-A}。
+\item Book：C\TeX{} FAQ\cite{Wu05-C}。
+\end{itemize}
+
+\subsection{Makefile}
+
+Makefile(Forked from\href{https://bitbucket.org/kevinyounglzu/latextemplateoflzuthesis}{~Kevin Young's tempalte})仅限\LaTeX{}模板编译使用，适合Linux和Mac用户使用。
+\begin{enumerate}
+\item make：只编译源文件，快速调试用。
+\item make ref：包含引用的完整编译。
+\item make clean：清除临时文件。
+\end{enumerate}
+
+\section{注意事项}
+\begin{enumerate}
+\item 模板目录下的必须文件(见第~\ref{sec:files}~节)注意不要删除。
+\item 请尽量升级\TeX{}宏包到最新，一些旧包会使排版稍微不正常。截止到\today ，此模板在最新宏包下工作正常。
+\item Bibkey中不能有中文字符。
+\item LyX中必须用空格时，尽量用\textasciitilde{}或(插入--格式-- 强制间距~) 代替，不用空格的原因是：LyX不会中文断句，使用空格将使得LyX编辑界面混乱。
+\item Hyperref已经在模板中声明过，如果在LyX中执行插入--超链接会造成冲突(直接编辑\TeX{}代码无此问题)，这时只能通过插入\TeX{} 代码的方式使用，比如：\lstinline!\href{https://www.google.com}{Google}!。
+\item LyX中，enumerate环境结束后，必须先添加一个分割线环境才能换行，具体参见第\ref{chap:intro}章中列表结束后的蓝色分割线(蓝色分割线仅现于LyX)。
+\end{enumerate}
+
+\section{论文打印}
+
+
+\subsection{文档设置}
+\begin{enumerate}
+\item 按需选取twoside或者oneside的选项。
+\item 文档类notypeinfo选项去除typeinfo。
+\item 启用导言区(文档--首选项--\LaTeX{}导言区)的~\lstinline!\hypersetup{colorlinks=false}!以取消链接的颜色。
+\item 预留左侧装订线：注释掉导言区中如下两行
+
+
+\doublebox{\begin{minipage}[t]{0.86\textwidth}%
+\begin{lstlisting}[language=bash,breaklines=true]
+\evensidemargin 0.93 true cm
+\setlength{\hoffset}{-0.3 cm}
+\end{lstlisting}
+%
+\end{minipage}}
+
+\end{enumerate}
+
+\subsection{书脊生成}
+\begin{enumerate}
+\item spine.lyx生成竖排的书脊文字。
+\item Envelope.lyx生成含书脊的封皮，纸张大小A3+。
+\item 若中文标题中含有英文，需要将导言区(文档--首选项--\LaTeX{} 导言区)中的\lstinline!\shuji! 替换为如下样式：
+\small
+\begin{verbatim}
+\shuji[某\hspace{0.3em}\raisebox{-5pt}{English}\hspace{-0.1em}~某]
+\end{verbatim}
+\normalsize
+本文标题中的\LaTeX{}即是如此处理，对于全中文标题的情况可做上面的相反替换。
+\end{enumerate}
+
+\chapter{进阶功能}
+
+
+\section{导出\protect\TeX{}\label{sec:export}}
+
+文件-导出-\LaTeX{}(Xe\TeX{})，可导出为tex文件进行进一步编辑，该tex 文件的编译顺序为: Xe\LaTeX{}--Bib\TeX{}--Xe\LaTeX{}--Xe\LaTeX{}。 注意LyX 默认会自动将图片转换为pdf格式，造成一些图片有两个版本，不处理也不会有影响。若想处理，建议保留pdf版本的，因为Xe\LaTeX{}处理pdf图片时，编译速度快；若选择保留其他格式，应在tex文件正文前声明图片的后缀名，比如：\lstinline!\DeclareGraphicsExtensions{.pdf,.eps}!
+
+
+\section{导入Bibitem到正文}
+
+如果需要在没有bib文件的情况下也可编译，则首先把导出的tex文件完整编译一次，再将生成的bbl文件内容拷贝到tex正文中替换掉如下两行即可
+
+\doublebox{\begin{minipage}[t]{0.86\textwidth}%
+\begin{lstlisting}[language=bash,breaklines=true]
+\bibliographystyle{lzubib}
+\bibliography{bib/thesis}
+\end{lstlisting}
+%
+\end{minipage}}
+
+
+\section[修复stemV问题]{修复stemV问题\footnote{此问题已在修复透明位图导致文字粗细不一的问题时同时得到解决。}}
+
+由于中文字体某些参数设置不当，\LaTeX{}生成的pdf在Adobe阅读器下中文字体(特别是宋体与仿宋)会稍显模糊，可通过修改stemV值改善。
+\begin{enumerate}
+\item 下载并安装\href{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
+{~pdftk free}
+\item cmd中切换到pdf所在目录，执行
+
+
+\doublebox{\begin{minipage}[t]{0.86\textwidth}%
+\begin{lstlisting}[language=bash,breaklines=true]
+pdftk in.pdf output out.pdf uncompress
+\end{lstlisting}
+%
+\end{minipage}}
+
+\item 用文本编辑器编辑out.pdf，查找并修改simsun与fangsong的stemV 值为50，保存。
+\item 执行以下命令，得到final.pdf
+
+
+\doublebox{\begin{minipage}[t]{0.86\textwidth}%
+\begin{lstlisting}[language=bash,breaklines=true]
+pdftk out.pdf output final.pdf compress
+\end{lstlisting}
+%
+\end{minipage}}
+
+\end{enumerate}
+
+\section{自动生成成果页}
+\begin{enumerate}
+\item 此方法仅适用于\LaTeX{}模板。
+\item 导言中添加：
+
+
+\doublebox{\begin{minipage}[t]{0.86\textwidth}%
+\begin{verbatim}
+%%自动生成发表文章目录
+\usepackage[resetlabels]{multibib}
+%把参考文献加入目录中，但排除目录本身
+\usepackage[nottoc]{tocbibind}
+\newcites{phd}{在学期间的研究成果}
+\end{verbatim}
+\end{minipage}}
+
+\item 在参考文献列表后添加
+
+
+\doublebox{\begin{minipage}[t]{0.86\textwidth}%
+\begin{verbatim}
+%%自动生成发表文章目录
+%此处插入所有发表文章的bibkey
+\nocitephd{Liu13PRA-A}
+%定义引文样式为lzubib
+\bibliographystylephd{lzubib}
+%发表文章的bib库
+\bibliographyphd{bib/thesis}
+\end{verbatim}%
+\end{minipage}}
+
+\item 此种情况使用makefile不能完整编译，但WinEdt可以完整编译。执行顺序为:
+
+
+Xe\LaTeX{}--Bib\TeX{}--Xe\LaTeX{}--Xe\LaTeX{}。
+
+
+命令行下手动编译时需要额外执行\lstinline!BibTeX phd.aux!。
+
+\end{enumerate}
+
+
+
+%附录部分
+\appendix
+
+%自动生成参考文献列表，需要模板根目录下有：bib/thesis.bib
+\bibliographystyle{lzubib}
+\bibliography{bib/thesis}
+
+
+%发表文章目录
+\begin{publications}{99}
+\item Ji-Hong Zhang, \textbf{Ling-Yun Wu}, and Xiang-Sun Zhang, \textit{Reconstruction of DNA sequencing by hybridization}, \href{http://link.aps.org/doi/10.1103/PhysRevA.87.052139}{Bioinformatics, \textbf{19}(1): 14-21.} (2013).
+\item \textbf{吴凌云}, \href{http://www.ctex.org/CTeXFAQ}{\textit{CTEX FAQ (常见问题集)}}, (2004).
+\end{publications}
+
+
+%致谢
+\begin{thanks}
+Ajouter de la vie aux jours lorsqu'on ne peut plus ajouter de jours
+à la vie.
+
+\begin{flushright}
+---Jean Bernard
+\par\end{flushright}
+\end{thanks}
+
+
+\chapter{v1.0主要变更\label{chap:changelog}}
+\begin{enumerate}
+\item 修复目录中摘要和abstract超链接的错误
+\item 修复长标题在摘要部分只显示第一行
+\item 修复中英文摘要第一行不缩进
+\item 修复页眉上不显示完整标题
+\item 页眉改为双线
+\item 替换lzu.eps为清晰版本
+\item 添加lyx模板
+\item 修正行间距
+\item 设置Twoside时页码在装订线右侧，oneside时居中
+\item 调整封面、声明页布局
+\item 修正章标题为三号字
+\item 改变图表的编号格式为2-1
+\item 修正致谢页的字体及行距
+\item 修正一些中文字段，如摘要、Key words、在学期间的研究成果等
+\item 修改小节标题为不缩进
+\item 添加A3封面，书脊
+\item 修改bst样式文件
+\item 调小装订线距离为0.6cm
+\item 致谢、成果偶数页留白
+\item 单独定义makestatement
+\item 合并cls文件，longtitle作为类选项进入
+\item 更改各处全标题的调用
+\item 成果页格式调整为与参考文献相同
+\item 摘要重定义为chapter，间距微调
+\item chapter标题上下间距微调
+\item 去除摘要、Abstract、目录的页眉
+\end{enumerate}
+
+\end{document}

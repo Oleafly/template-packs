@@ -1,0 +1,238 @@
+%!TeX program = xelatex
+\documentclass[12pt,hyperref,a4paper,UTF8]{ctexart}
+\usepackage{SMUReport}
+
+%% --- 请在此处粘贴上面的【代码高亮设置】 ---
+%% 如果你已经把设置放入了 SMUReport.sty，则忽略此步
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+%% ---------------------------------------
+
+%%-------------------------------正文开始---------------------------%%
+\begin{document}
+
+%%-----------------------封面--------------------%%
+%%-----------------------封面--------------------%%
+\cover
+\newpage
+
+%%------------------摘要-------------%%
+% 1. 摘要和目录页通常归为前言部分，使用罗马数字页码
+\pagenumbering{Roman} 
+\setcounter{page}{1}
+
+\begin{abstract}
+    % 将摘要加入目录（可选）
+    \addcontentsline{toc}{section}{摘要} 
+    本文档旨在作为一份使用指南...（此处省略）...
+\end{abstract}
+
+% 此时页脚是 'i'。如果你想让摘要页完全不显示页码，可以用 \thispagestyle{empty}
+% 但注意，下一页（目录）会变成 'ii'。如果想让目录从 'i' 开始，需要在目录处再次重置。
+
+%%--------------------------目录页------------------------%%
+\newpage
+\tableofcontents
+
+%%------------------------正文页从这里开始-------------------%
+\newpage
+
+%================ 设置第一页为GITHUB REPO ================
+\fancypagestyle{firstpage}{%
+  % 1. 先保留页眉设置 (把 SMUReport.sty 里的页眉代码复制过来)
+  \fancyhead[L]{\footnotesize \fangsong 上海海事大学模板}
+  \fancyhead[R]{\footnotesize \fangsong \leftmark}
+  
+  % 2. 恢复页眉的横线 
+  \renewcommand{\headrulewidth}{0.5pt} 
+  
+  % 3. 设置页脚
+  \fancyfoot[C]{\thepage} % 中间保留页码
+  \fancyfoot[R]{ GitHub: \url{https://github.com/nihao230/SMU_Course_Template_Latex}} % 右侧加链接
+  % 注意：如果链接太长，建议用 \tiny 缩小字体，防止和页码重叠
+}
+
+% ... (在正文第一页使用)
+\thispagestyle{firstpage}
+
+% 2. 【关键修正】这里必须切换回阿拉伯数字，否则正文会全是罗马数字
+\pagenumbering{arabic} 
+\setcounter{page}{1} 
+
+% 应用自定义的第一页页脚（包含Github链接）
+% 注意：\thispagestyle 必须放在 \pagenumbering 之后，否则可能失效
+\thispagestyle{firstpage} 
+
+\section{模版使用说明}
+本模板主要适用于课程平时论文及期末论文。默认设置如下：
+\begin{itemize}
+    \item 页边距：2.5cm
+    \item 字体：中文宋体，英文 Times New Roman
+    \item 字号：12pt（小四）
+\end{itemize}
+
+\subsection{文件结构}
+\begin{table}[!htbp]
+    \centering
+    \begin{tabular}{l | l}
+    \hline
+        文件名 & 说明 \\
+        \hline
+        \texttt{main.tex}  & 主编译文件（即当前文件） \\
+        \texttt{reference.bib} & 参考文献数据文件 \\
+        \texttt{SMUReport.sty}  & 样式控制文件（页眉、标题、代码设置等）\\
+        \texttt{figures/}  & 图片存放文件夹 \\
+        \hline
+    \end{tabular}
+    \caption{文件组成说明}
+\end{table}
+
+\section{代码插入功能 (多语言支持)}
+本模版已集成 \texttt{listings} 宏包，支持语法高亮。使用 \verb|\begin{lstlisting}[language=...]| 即可。
+
+\subsection{C++ 代码示例}
+引用 C++ 代码时，设置 \texttt{language=C++}：
+
+\begin{lstlisting}[language=C++, caption={C++ Hello World 示例}, label={code:cpp}]
+#include <iostream>
+#include <vector>
+
+// 这是一个C++注释
+int main() {
+    std::vector<std::string> msg = {"Hello", "SMU"};
+    for (const auto& word : msg) {
+        std::cout << word << " ";
+    }
+    std::cout << std::endl;
+    return 0;
+}
+\end{lstlisting}
+
+\subsection{Python 代码示例}
+引用 Python 代码时，设置 \texttt{language=Python}：
+
+\begin{lstlisting}[language=Python, caption={Python 列表推导式}, label={code:py}]
+import numpy as np
+
+def calculate_area(r):
+    """ 计算圆的面积 """
+    return np.pi * r**2
+
+# 生成列表
+radius_list = [1, 2, 3, 4, 5]
+areas = [calculate_area(r) for r in radius_list]
+print(f"Areas: {areas}")
+\end{lstlisting}
+
+\subsection{Matlab 代码示例}
+引用 Matlab 代码时，设置 \texttt{language=Matlab}：
+
+\begin{lstlisting}[language=Matlab, caption={Matlab 绘图脚本}, label={code:matlab}]
+% 清除工作区
+clc; clear; close all;
+
+t = 0:0.01:2*pi;
+y = sin(t);
+
+figure(1);
+plot(t, y, 'LineWidth', 2);
+title('Sine Wave');
+xlabel('Time (s)');
+ylabel('Amplitude');
+grid on;
+\end{lstlisting}
+
+\section{页码设置教程}
+很多课程对页码的起始位置有不同要求，以下是两种最常见的配置方法，请根据需求在 \texttt{main.tex} 中调整。
+
+\subsection{方案一：页码从正文第一页开始（当前默认）}
+这种方案下，目录页通常使用罗马数字（i, ii），或者不标页码，正文第一页标记为第 1 页。
+
+\textbf{实现代码：}
+\begin{lstlisting}[language=TeX]
+% --- 在目录页之前 ---
+\newpage
+\pagenumbering{Roman} % 目录页使用罗马数字
+\tableofcontents
+
+% --- 在正文第一章之前 ---
+\newpage
+\pagenumbering{arabic} % 切换回阿拉伯数字
+\setcounter{page}{1}   % 强制将当前页设置为第1页
+\section{第一章}
+\end{lstlisting}
+
+\subsection{方案二：页码从目录页开始计数}
+这种方案下，目录页即为第 1 页，后续正文顺延（例如目录是 1-2 页，正文从第 3 页开始）。
+
+\textbf{实现代码：}
+\begin{lstlisting}[language=TeX]
+% --- 在目录页之前 ---
+\newpage
+\pagenumbering{arabic} % 直接使用阿拉伯数字
+\setcounter{page}{1}   % 目录页设为第1页
+\tableofcontents
+
+% --- 在正文第一章之前 ---
+\newpage
+% 此时不需要任何设置，页码会自动顺延
+\section{第一章}
+\end{lstlisting}
+
+\section{其他常用功能}
+
+\subsection{文本框}
+使用 \verb|\tbox| 命令插入重点提示：
+\tbox{
+    这是一个圆角灰底的文本框，适合放置结论、定义或重要提示。
+}
+
+\subsection{公式与图表}
+行内公式示例：$E = mc^2$。
+
+行间公式示例：
+\begin{equation}
+    J(\theta) = \frac{1}{2m} \sum_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)})^2
+\end{equation}
+
+校徽图片引用如 \autoref{SJTU} 所示。
+
+\begin{figure}[!htbp]
+    \centering
+    % 请确保 figures 目录下有该图片，或者替换为你自己的图片
+    \includegraphics[width =.3\textwidth]{figures/smu_logo.pdf} 
+    \caption{上海海事大学校徽}
+    \label{SMU}
+\end{figure}
+
+\section{参考文献引用}
+使用 \verb|\cite{}| 进行引用。例如：
+本文参考了关于对抗攻击的研究\cite{ExampleRef1}，以及相关的深度学习理论\cite{ExampleRef2}。
+
+%%----------- 参考文献 -------------------%%
+\reference
+
+\end{document}

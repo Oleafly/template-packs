@@ -1,0 +1,182 @@
+%% main.tex —— 东北财经大学研究生学位论文 LaTeX 模板（示例文档）
+%% 编译：XeLaTeX 连续编译 3 次，或直接运行 ./compile.sh
+%%
+%% 说明：本文件是一份「示例论文」，题目、作者、导师、数据等全部为虚构，
+%%       仅用于演示模板排版。请将各处替换为你自己的真实内容。
+
+%% ============================================================
+%% 学位类型：只改这一处即可在 学硕 / 专硕 / 博士 之间切换
+%% ============================================================
+\documentclass[master]{dufethesis}
+% master     —— 学术硕士（默认）：封面中间为「一级学科名称 / 二级学科名称」
+% profmaster —— 专业硕士：封面中间为「学科专业名称 / 所在学院名称」
+% doctor     —— 博士：封面顶部显示「博士学位论文」
+
+%% ============================================================
+%% 排版基础设施（一般无需改动）
+%% ============================================================
+%% 自绘 algorithm / breakablealgorithm 浮动环境（兼容缺失 algorithm.sty 的精简发行版）
+\newcounter{algctr}[chapter]
+\renewcommand{\thealgctr}{\thechapter.\arabic{algctr}}
+\newenvironment{algorithm}[1][H]{%
+  \begin{figure}[#1]\refstepcounter{algctr}\centering\small%
+  \begin{minipage}{0.94\textwidth}\hrule height 0.6pt\vspace{0.4em}%
+}{%
+  \vspace{0.4em}\hrule height 0.4pt\end{minipage}\end{figure}%
+}
+\newenvironment{breakablealgorithm}{%
+  \dufealgneedspace
+  \refstepcounter{algctr}%
+  \enlargethispage{1.2\baselineskip}%
+  \par\addvspace{0.6em}\begingroup\small\setstretch{1.3}\setlength{\parskip}{0pt}%
+  \noindent\rule{\textwidth}{0.6pt}\par%
+}{%
+  \par\vspace{0.1em}\noindent\rule{\textwidth}{0.4pt}%
+  \endgroup\addvspace{0.6em}%
+}
+\newcommand{\dufealgneedspace}{%
+  \par\begingroup
+  \dimen0=\pagegoal \advance\dimen0 by -\pagetotal
+  \ifdim\dimen0<10\baselineskip\pagebreak\fi
+  \endgroup
+}
+\newcommand{\algcaption}[1]{%
+  \noindent\hbox to\textwidth{\hfil\textbf{算法~\thealgctr~~#1}\hfil}\par\nopagebreak[4]%
+  \noindent\rule{\textwidth}{0.3pt}\par\nopagebreak[4]\vspace{0.45em}\nopagebreak[4]%
+}
+
+%% 图 / 表「资料来源」标注（小五宋体，置于图表左下方）
+\newcommand{\dufesource}[1]{\par\vspace{3pt}\noindent{\xiaowu\songti\parbox{\textwidth}{#1}}}
+
+%% 正文作者-年份引用：用 \citep{键} 标注；参考文献列表仍按学校要求用 [N] 编号。
+%% 维护引用库：\addcite{键}{作者, 年份}，需与下方 references 列表一一对应。
+\makeatletter
+\newcommand{\addcite}[2]{\@namedef{cite@#1}{#2}}
+\newcommand{\thesiscite}[1]{\@ifundefined{cite@#1}{\textbf{[?#1]}}{\@nameuse{cite@#1}}}
+\newcommand{\citep}[1]{（\dufe@citep#1,\@nil）}
+\def\dufe@citep#1,#2\@nil{%
+  \thesiscite{#1}%
+  \if\relax\detokenize{#2}\relax\else；\dufe@citep#2\@nil\fi}
+\makeatother
+
+%% 允许 TeX 额外拉伸段落间距，缓解 CJK+英文混排造成的少量 overfull
+\emergencystretch=2em
+\tolerance=2000
+
+%% ============================================================
+%% 引用库（示例）—— 每条对应下方 references 列表中的一项
+%% ============================================================
+\addcite{xugc2023digital}{许宪春和张美慧, 2023}
+\addcite{liwei2022region}{李伟, 2022}
+\addcite{smith2020measure}{Smith and Jones, 2020}
+\addcite{chen2019cluster}{Chen et al., 2019}
+
+%% ============================================================
+%% 论文信息（示例：请全部替换为你自己的信息）
+%% ============================================================
+\schoolcode{10173}                 % 学校编码（固定）
+\classno{}                         % 分类号（留空，提交时填写）
+\secretlevel{}                     % 密级（公开论文留空）
+\studentid{2024110001}             % 学号
+\udc{}                             % UDC（留空，提交时填写）
+
+\title{数字经济发展水平测度与区域差异研究}
+\entitle{Measurement and Regional Disparity of Digital Economy Development}
+\author{张三}
+\supervisor{李四}
+\supervisortitle{教授}
+
+%% 学硕 / 博士 显示以下两项：
+\major{应用经济学}                  % 一级学科
+\submajor{统计学}                   % 二级学科
+
+%% 专硕 显示以下三项（选择 profmaster 时生效）：
+\proftype{应用统计}                 % 学科专业名称
+\college{统计与数学学院}             % 所在学院名称
+\submitdate{2025年5月}              % 论文提交日期
+
+\defenddate{2025年5月}             % 论文答辩时间
+
+\begin{document}
+
+%% ===== 封面 =====
+\makecover
+
+%% ===== 前置部分（罗马数字页码）=====
+\frontmatter
+
+%% ----- 中文摘要 -----
+\begin{cabstract}
+数字经济已成为推动高质量发展的重要引擎，科学测度其发展水平并刻画区域差异，对优化资源配置具有重要意义。本文以虚构的省际面板数据为例，从数字基础设施、数字产业化、产业数字化与数字治理四个维度构建数字经济发展水平综合指标，采用熵值法确定权重，并结合泰尔指数对区域差异进行分解。
+
+研究发现，样本期内数字经济发展水平总体呈上升趋势，但区域间不平衡特征明显，差异主要来源于组间差距。基于上述结果，本文从基础设施补短板、产业协同与制度供给等方面提出对策建议。
+
+需要特别说明的是：本摘要与全文内容均为模板演示用的虚构示例，不代表任何真实研究结论；请在使用本模板时替换为实际内容。摘要应具有独立性和自含性，硕士论文一般 1500 字左右，博士论文 3000 字左右，且不出现图、表与数学公式。
+\end{cabstract}
+\ckeywords{数字经济，综合测度，区域差异，熵值法，泰尔指数}
+
+%% ----- 英文摘要 -----
+\begin{eabstract}
+The digital economy has become a key engine of high-quality development, and measuring its level while characterizing regional disparities is of great significance for optimizing resource allocation. Using fictitious provincial panel data as an example, this paper constructs a composite index of digital-economy development from four dimensions---digital infrastructure, digital industrialization, industrial digitalization, and digital governance---determines the weights via the entropy method, and decomposes regional disparities using the Theil index.
+
+The results show an overall upward trend over the sample period, alongside pronounced regional imbalance driven mainly by between-group gaps. Corresponding policy implications are then discussed.
+
+Please note that the abstract and the entire document are fictitious examples for template demonstration only and do not represent any real research findings. Replace them with your own content when using this template.
+\end{eabstract}
+\ekeywords{Digital Economy, Composite Measurement, Regional Disparity, Entropy Method, Theil Index}
+
+%% ----- 目录 -----
+\tableofcontents
+
+%% 图表目录（博士论文一般需要，按需取消注释）
+% \listoffigures
+% \listoftables
+
+%% ===== 正文部分（阿拉伯数字页码）=====
+\mainmatter
+
+\include{chapters/chapter1}     % 第1章 绪论
+\include{chapters/chapter2}     % 第2章 文献综述与理论基础
+\include{chapters/chapter3}     % 第3章 研究设计与测度方法
+\include{chapters/chapter4}     % 第4章 实证分析
+\include{chapters/chapter5}     % 第5章 研究结论与展望
+
+%% ===== 附录（属于正文编号体系：附录 A、附录 B……，故置于 \backmatter 之前）=====
+\appendix
+\include{chapters/appendix}
+
+%% ===== 后置部分（参考文献、后记等，章节不再编号）=====
+\backmatter
+
+%% ----- 在学期间发表的科研成果（仅博士论文需要，按需取消注释）-----
+% \begin{publications}
+% \textbf{一、发表的学术论文}
+%
+% 1. 作者姓名. 论文标题[J]. 期刊名称, 2024, (1): 1-10.
+% \end{publications}
+
+%% ----- 参考文献（与上方 \addcite 一一对应）-----
+\begin{references}
+    \item 许宪春，张美慧. 中国数字经济规模测算研究与展望[M]. 北京：中国统计出版社，2023. 35-58.
+    \item 李伟. 区域数字经济发展水平测度与差异分解[J]. 统计研究，2022，39（6）：45-58.
+    \item 王明亮. 关于中国学术期刊标准化数据库系统工程的进展[EB/OL]. http://www.example.org/digital.html，2023-06-01/2023-09-10.
+    \item 张华. 数字经济与区域协调发展[N]. 经济日报，2023-03-12（10）.
+    \item {\enref Smith, J., and Jones, K., 2020, "Measuring the Digital Economy", Journal of Economic Statistics, Vol.38, No.2, PP120-145.}
+    \item {\enref Chen, L., Wang, M., and Liu, P., 2019, Cluster Analysis for Regional Development, Springer Press.}
+    % 添加更多参考文献……硕士论文不少于 40 项，博士论文不少于 100 项
+\end{references}
+
+%% ----- 后记 -----
+\begin{acknowledgements}
+本论文是在导师李四教授的悉心指导下完成的。从选题、框架到反复修改，导师严谨的治学态度和诲人不倦的精神令我受益匪浅，在此谨致以最诚挚的谢意。
+
+感谢学院各位老师在课程学习与开题过程中给予的宝贵建议，感谢同窗好友的讨论与帮助，也感谢家人一路以来的理解与支持。
+
+（本后记为模板示例文字；后记语言宜简明诚恳，字数 400 字左右。）
+\end{acknowledgements}
+\ackauthor{张三}{2025年5月}
+
+%% ===== 原创性声明与授权书 =====
+\makedeclaration
+
+\end{document}

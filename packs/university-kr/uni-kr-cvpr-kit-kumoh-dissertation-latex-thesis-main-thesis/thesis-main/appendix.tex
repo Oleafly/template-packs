@@ -1,0 +1,54 @@
+\begin{appendices}
+
+% Appendix floats and equations use appendix letters, e.g., Figure A.1.
+\renewcommand{\thefigure}{\Alph{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\Alph{chapter}.\arabic{table}}
+\renewcommand{\theequation}{\Alph{chapter}.\arabic{equation}}
+
+%Some Table of Contents entry formatting
+\addtocontents{toc}{\protect\renewcommand{\protect\cftchappresnum}{\appendixname\space}}
+\addtocontents{toc}{\protect\renewcommand{\protect\cftchapnumwidth}{7em}}
+
+%Begin individual appendices, separated as chapters
+
+\chapter{Experimental Equipment}
+
+In \Cref{fig:figure-appendix},
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\afterpage{
+	\clearpage
+	\begin{figure}[ht]
+		\includegraphics[width=\textwidth]{figures/stage-of-a-bubble.png}
+		\caption{Stage of a bubble}
+		\label{fig:figure-appendix}
+	\end{figure}
+	\clearpage
+}
+
+\chapter{Data Processing}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Monospace font Test
+
+\texttt{PPO Algorithm in Pseudocode.}
+
+Bold and Monospace Test
+
+\textbf{\texttt{PPO Algorithm in Pseudocode.}}
+
+\begin{algorithm}
+	\caption{PPO}
+	\begin{algorithmic}[1]
+		\For {$iteration=1,2,\ldots$}
+			\For {$actor=1,2,\ldots,N$}
+				\State Run policy $\pi_{\theta_{old}}$ in environment for $T$ time steps
+				\State Compute advantage estimates $\hat{A}_{1},\ldots,\hat{A}_{T}$
+			\EndFor
+			\State Optimize surrogate $L$ wrt. $\theta$, with $K$ epochs and minibatch size $M\leq NT$
+			\State $\theta_{old}\leftarrow\theta$
+		\EndFor
+	\end{algorithmic}
+\end{algorithm}
+
+\end{appendices}

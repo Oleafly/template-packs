@@ -1,0 +1,223 @@
+\ProvidesPackage{mythesis}
+
+\providecommand{\mypdfauthor}{}
+\providecommand{\mypdftitle}{}
+\providecommand{\mypdfsubject}{}
+\providecommand{\mypdfkeywords}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                              Packages                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[english]{babel} % language
+\usepackage[utf8]{inputenc} % input encoding
+\usepackage[T1]{fontenc}    % font encoding
+\usepackage{xcolor}         % colors
+\usepackage{scrlayer-scrpage}       % page style, necessary for head-/footline
+\usepackage{cite}           % bibtex
+\usepackage{varwidth}       % format reviewers
+\usepackage{listings}       % code listings
+\usepackage{caption}        % fancy captions, necessary for algo listing
+\usepackage{subcaption}     % subfigures
+\usepackage{tikz}           % tikz
+\usepackage{pgfplots}       % plots
+\usepackage{pgfplotstable}  % tables
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{stmaryrd}       % Math symbols
+\usepackage{mathabx}        % Math symbols
+\usepackage{galois}         % Galois connection symbol
+\usepackage[final]{pdfpages}% include statement
+\usepackage{environ}        % fancier environments for refactor env
+\usepackage{xspace}         % spacing after mapping
+\usepackage{placeins}       % float barrier
+\usepackage{datetime}       % draft infos
+\usepackage{wrapfig}        % wrapped figures
+\usepackage[textsize=footnotesize]{todonotes}  % fancier TODOs
+\usepackage{booktabs}
+\usepackage{blindtext}      % lorem ipsum
+\usepackage{colortbl}
+\usepackage[]{units}
+\usepackage{enumerate}
+\usepackage[pdftex,
+            pdfauthor={\mypdfauthor},
+            pdftitle={\mypdftitle},
+            pdfsubject={\mypdfsubject},
+            pdfkeywords={\mypdfkeywords}
+            ]{hyperref}       % clickable references, pdf info
+
+\usepackage{apalike}
+\let\bibhang\relax
+\usepackage{natbib} % allow citet and citep
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           Configuration                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\setkomafont{title}{\Huge\rmfamily\bfseries}
+
+\renewcommand*\chapterheadstartvskip{\vspace*{.07\textheight}}
+\renewcommand*\chapterheadendvskip{\vspace*{.05\textheight}}
+
+\setkomafont{chapter}{\Huge\rmfamily\scshape}
+\setkomafont{section}{\Large\rmfamily}
+\setkomafont{subsection}{\large\rmfamily}
+\setkomafont{subsubsection}{\bfseries\rmfamily}
+\setkomafont{paragraph}{\bfseries\rmfamily}
+
+\setkomafont{chapterentry}{\bfseries\rmfamily}
+\setkomafont{descriptionlabel}{\bfseries\rmfamily}
+
+
+\definecolor{mygray}{rgb}{0.7,0.7,0.7}
+\definecolor{mygreen}{rgb}{0.35, 0.71, 0.0}
+\lstset{%
+    basicstyle=\scriptsize,
+    language=C,
+    frame=single,
+    keywordstyle=\bfseries,
+    numbers=left,
+    numberstyle=\tiny\color{mygray},
+    mathescape,
+}
+
+% LLVM IR language definition, taken from the LLVM repo and probably outdated by now
+\lstdefinelanguage{llvm}{
+    sensitive=true,
+    alsoletter={\%},
+    % comments.
+    %    ; line comment
+    comment=[l]{;},
+    % strings.
+    %    "foo"
+    string=[b]{"},
+    % instructions.
+    %    ref: http://llvm.org/docs/LangRef.html#instruction-reference
+    keywords=[1]{
+add, addrspacecast, alloca, and, ashr, atomicrmw, bitcast, br, call, cmpxchg,
+extractelement, extractvalue, fadd, fcmp, fdiv, fence, fmul, fpext, fptosi,
+fptoui, fptrunc, frem, fsub, getelementptr, icmp, indirectbr, insertelement,
+insertvalue, inttoptr, invoke, landingpad, load, lshr, mul, or, phi, ptrtoint,
+resume, ret, sdiv, select, sext, shl, shufflevector, sitofp, srem, store, sub,
+switch, to, trunc, udiv, uitofp, unreachable, urem, va_arg, xor, zext
+    },
+    % directives.
+    %    ref: http://llvm.org/docs/LangRef.html
+    keywords=[2]{
+acq_rel, acquire, addrspace, alias, align, alignstack, alwaysinline, any,
+anyregcc, appending, arcp, arm_aapcs_vfpcc, arm_aapcscc, arm_apcscc, asm,
+atomic, attributes, available_externally, blockaddress, builtin, byval, c,
+catch, cc, ccc, cleanup, cold, coldcc, comdat, common, constant, datalayout,
+declare, default, define, dereferenceable, dllexport, dllimport, eq, exact,
+exactmatch, extern_weak, external, externally_initialized, false, fast, fastcc,
+filter, gc, ghccc, global, hidden, inalloca, inbounds, initialexec, inlinehint,
+inreg, intel_ocl_bicc, inteldialect, internal, jumptable, largest, linkonce,
+linkonce_odr, localdynamic, localexec, max, min, minsize, module, monotonic,
+msp430_intrcc, musttail, naked, nand, ne, nest, ninf, nnan, noalias, nobuiltin,
+nocapture, noduplicate, noduplicates, noimplicitfloat, noinline, nonlazybind,
+nonnull, noredzone, noreturn, nounwind, nsw, nsz, null, nuw, oeq, oge, ogt, ole,
+olt, one, opaque, optnone, optsize, ord, personality, prefix, preserve_allcc,
+preserve_mostcc, private, prologue, protected, ptx_device, ptx_kernel, readnone,
+readonly, release, returned, returns_twice, samesize, sanitize_address,
+sanitize_memory, sanitize_thread, section, seq_cst, sge, sgt, sideeffect,
+signext, singlethread, sle, slt, spir_func, spir_kernel, sret, ssp, sspreq,
+sspstrong, tail, target, thread_local, triple, true, type, ueq, uge, ugt, ule,
+ult, umax, umin, undef, une, unnamed_addr, uno, unordered, unwind, uselistorder,
+uselistorder_bb, uwtable, volatile, weak, weak_odr, webkit_jscc, x,
+x86_64_sysvcc, x86_64_win64cc, x86_fastcallcc, x86_stdcallcc, x86_thiscallcc,
+x86_vectorcallcc, xchg, zeroext, zeroinitializer
+    },
+    % types.
+    %    ref: http://llvm.org/docs/LangRef.html#type-system
+    keywords=[3]{
+i1, i2, i3, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, i14, i15, i16, i17, i18,
+i19, i20, i21, i22, i23, i24, i25, i26, i27, i28, i29, i30, i31, i32, i33, i34,
+i35, i36, i37, i38, i39, i40, i41, i42, i43, i44, i45, i46, i47, i48, i49, i50,
+i51, i52, i53, i54, i55, i56, i57, i58, i59, i60, i61, i62, i63, i64, i80, i512,
+void, half, float, double, fp128, x86_fp80, ppc_fp128, x86_mmx, label, metadata
+    },
+}
+
+\usepackage{textcomp}
+
+% TODO: Add support for digits.
+%\definecolor{digits}{RGB}{0,0,128} % dark blue
+
+\definecolor{comment}{RGB}{0,128,0}     % dark green
+\definecolor{string}{RGB}{255,0,0}      % red
+\definecolor{instruction}{RGB}{0,0,255} % blue
+\definecolor{directive}{RGB}{128,0,128} % purple
+\definecolor{register}{RGB}{128,0,0}    % dark red
+
+\lstdefinestyle{nasm}{
+    commentstyle=\color{comment},
+    stringstyle=\color{string},
+    keywordstyle=\bfseries,%\color{instruction},
+    keywordstyle=[2]\bfseries,%{directive},
+    keywordstyle=[3]\bfseries,%\color{register},
+    basicstyle=\footnotesize\ttfamily,
+    numbers=left,
+    numberstyle=\tiny,
+    numbersep=5pt,
+    frame=lines,
+    breaklines=true,
+    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    showstringspaces=false,
+    upquote=true,
+    tabsize=8,
+}
+
+
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{arrows,automata,decorations.markings}
+\usetikzlibrary{shapes.misc}
+
+\pgfplotsset{width=10cm,compat=1.12}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                              Commands                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\itodo[1]{\todo[inline]{#1}}
+
+\newcommand\cn{\todo[backgroundcolor=violet!50, linecolor=violet]{citation needed!}}
+
+\newcommand\nat{\mathbb{N}}
+
+\newcommand\powset[1]{\mathcal{P}(#1)}
+
+\newcommand\assign{\leftarrow}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[chapter]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                             Page Style                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{scrheadings}
+\renewcommand\chapterpagestyle{scrheadings}
+% \ihead{}
+% \chead{}
+% \ohead{}
+% \ohead{}
+% \ifoot{}
+% \cfoot{\pagemark}
+% \ofoot{}
+
+
+\ifdraft
+\newcommand{\mytxt}{\yyyymmdddate\today~--- \currenttime}
+\ifoot{\textcolor{red}{Draft: \mytxt}}
+\ihead{\textcolor{red}{Draft: \mytxt}}
+\fi
+
+\setcounter{tocdepth}{1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         Widows and orphans                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clubpenalty10000
+\widowpenalty10000
+\displaywidowpenalty=10000
+

@@ -1,0 +1,121 @@
+%%
+%% osuka-sugimoto-lab.sty
+%%
+%%2022/01/14　古い記述を浪花が修正しています
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%	caption表示変更					             %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%caption系の設定
+\usepackage{caption}
+
+%\usepackage{subcaption}
+\usepackage[subrefformat=parens]{subcaption}
+\captionsetup{compatibility=false}
+%\captionsetup{format=hang,font=bf,width=\columnwidth} %サブキャプションを太文字にしたいときはこっち
+\captionsetup{format=hang,font=rm,width=\columnwidth} %サブキャプションを普通にしたいときはこっち
+\captionsetup[table]{position=top}
+%\captionsetup[subtable]{textfont=sf}
+\captionsetup[subfigure]{labelformat=simple}
+\renewcommand{\thesubfigure}{(\alph{subfigure})}
+
+\newcommand{\labfig}[1]{\label{fig:#1}}
+\newcommand{\labtab}[1]{\label{tab:#1}}
+\newcommand{\labeq}[1]{\label{eq:#1}}
+\newcommand{\labsec}[1]{\label{sec:#1}}
+
+\newcommand{\reffig}[1]{\textbf{Fig.~}\ref{fig:#1}}
+\newcommand{\reftab}[1]{\textbf{Table~}\ref{tab:#1}}
+\newcommand{\refeq}[1]{\textbf{eq.~}(\ref{eq:#1})}
+\newcommand{\refsec}[1]{\ref{sec:#1}}
+
+\def\fnum@figure{{\textbf{Fig.~}}\thefigure : }
+\def\fnum@table{{\textbf{Table~}}\thetable : }
+
+\long\def\@caption#1[#2]#3{\par\addcontentsline{\csname
+  ext@#1\endcsname}{#1}{\protect\numberline{\csname 
+  the#1\endcsname}{\ignorespaces #2}}\begingroup
+    \@parboxrestore			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \normalsize				%%  caption文字サイズ設定  %%
+%    \footnotesize			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \small
+    \@makecaption{\csname fnum@#1\endcsname}{\ignorespaces #3}\par
+  \endgroup}
+
+\long\def\@makecaption#1#2{% 図・表の見出しを作る命令
+   \vskip \p@			% 10pt 下に進む 
+   \setbox\@tempboxa\hbox{#1 #2}% 「図1 何々」の形の箱を作る
+   \ifdim \wd\@tempboxa >\hsize % 箱が 1 行に入りきらないなら
+     \begin{list}{#1}{
+       %\leftmargin 2zw \itemindent 0ex \labelsep 1ex%
+       \leftmargin 4em \itemindent 0ex \labelsep 1ex %2行目以降の字下げ幅？
+       \labelwidth \leftmargin%
+       \addtolength{\labelwidth}{-\itemindent}%
+       \addtolength{\labelwidth}{-\labelsep}%
+       \rightmargin=\leftmargini%
+       \addtolength{\rightmargin}{-\itemindent}}%
+       \item #2		% 通常の段組として組む（うそ）
+     \end{list}\par%
+   \else			% そうでなければ
+       \hbox to\hsize{\hfil\box\@tempboxa\hfil}% 箱を中央揃えで出力  
+   \fi}
+
+
+
+%\def\eqnarray{%
+%   \stepcounter{equation}%
+%   \def\@currentlabel{\p@equation\theequation}%
+%   \global\@eqnswtrue
+%   \m@th
+%   \global\@eqcnt\z@
+%   \tabskip\@centering
+%   \let\\\@eqncr
+%   $$\everycr{}\halign to\displaywidth\bgroup
+%       \hskip\@centering$\displaystyle\tabskip\z@skip{##}$\@eqnsel
+%      &\global\@eqcnt\@ne\hskip .8\arraycolsep \hfil${##}$\hfil %% \tw@
+%      &\global\@eqcnt\tw@ \hskip .8\arraycolsep                 %% 
+%         $\displaystyle{##}$\hfil\tabskip\@centering
+%      &\global\@eqcnt\thr@@ \hb@xt@\z@\bgroup\hss##\egroup
+%         \tabskip\z@skip
+%      \cr
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%	構成調整					             %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% backmatterの後に\appendixを入れると章番号が入らなくなるのを修正
+\renewcommand{\appendix}{\par
+  \@mainmattertrue  %これが必要
+  \setcounter{chapter}{0}%
+  \setcounter{section}{0}%
+  \gdef\@chapapp{\appendixname}%
+  \gdef\@chappos{}%
+  \gdef\thechapter{\@Alph\c@chapter}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%フロートの設定：なるべく図が入るようにしています
+\renewcommand{\topfraction}{1.0}
+\renewcommand{\bottomfraction}{1.0}
+\renewcommand{\dbltopfraction}{1.0}
+\renewcommand{\textfraction}{0.0}
+\renewcommand{\dblfloatpagefraction}{1.0}
+\setcounter{topnumber}{6}
+\setcounter{bottomnumber}{4}
+\setcounter{totalnumber}{12}
+\renewcommand{\floatpagefraction}{.5}	%図表だけのページは少なくともこれだけを図表が占める
+
+%%%%%その他全体レイアウトの細かい設定
+
+\renewcommand{\bibname}{参考文献}	%jsbookの引用文献を参考文献に変える
+% |\floatsep| は，ページ上部あるいは下部のフロート間の距離です．
+% |\textfloatsep| は，ページ上部あるいは下部のフロートと本文との距離です．
+% |\intextsep| は，本文の途中に出力されるフロートと本文との距離です．
+% 各基本設定は12pt(多分)
+
+\setlength{\floatsep}{12pt}
+\setlength{\textfloatsep}{12pt}
+\setlength{\intextsep}{12pt}
+

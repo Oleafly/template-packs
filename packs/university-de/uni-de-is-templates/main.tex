@@ -1,0 +1,207 @@
+\RequirePackage[immediate]{silence}
+\WarningFilter{scrbook}{Usage of package}
+\WarningFilter{microtype}{You are using the}
+\WarningFilter{biblatex}{No driver for entry type 'legislation'.}
+%\WarningFilter{todonotes}{The length marginparwidth}
+\documentclass[paper=A4,
+               fontsize=12pt,
+               pagesize,
+               DIV=12,
+               open=any,
+               listof=totoc,
+               parskip=half,
+               oneside,
+               twoside=true, % Auskommentieren, wenn nur ein einseitges Layout gewünscht ist
+               %draft,	% show over/underful boxes
+               numbers=noenddot,
+               headsepline]
+              {scrbook}
+
+
+% =================================================================
+% QUICK START: PUT YOUR PERSONAL INFROMATION HERE
+% =================================================================
+
+% 1. TITLE & PERSONAL INFORMATION
+\newcommand{\mytitle}{Dissertation Title}
+\newcommand{\mysubtitle}{Dissertation Subtitle}
+\newcommand{\myplaintitle}{Dissertation Plain Title} % Plain Title = nur Text, keine LaTeX Befehle wie z. B. \textbf{}...
+\newcommand{\myplainsubtitle}{Dissertation Plain Subtitle}
+\newcommand{\mytitlede}{Dissertation Title in German}
+\newcommand{\myname}{Max Mustermann}
+\newcommand{\myplace}{Geburtsort}
+\newcommand{\mydissplace}{Wohnort}
+\newcommand{\mydissyear}{20XX}
+\newcommand{\mydissmonth}{September}
+\newcommand{\mydean}{Prof. Dr. Nicole Koschate-Fischer} % Vorsitzende/r des Promotionsorgans (Stand: 2025)
+\newcommand{\myreferee}{Prof. Dr. Martin Matzner}
+\newcommand{\mycoreferee}{Prof. Dr. XYZ}
+\newcommand{\mydispudate}{DD.MM.20YY}
+\newcommand{\mypubyear}{20XX}
+
+% 2. PUBLICATIONS
+\newcommand{\yearoffirstpub}{2020} % Year of first own publication, required to make list of publications
+\newcommand{\mypubs}{Paper2017Lorem,Paper2016Lorem} % bib keys of your publications, that you want to be included in the list of publications at the end
+
+% -------------------
+% | Preamble & Mods |
+% -------------------
+\include{helper/Preamble}
+\include{helper/Publications}
+\include{helper/Acronyms}
+
+% -----------------------
+% | Load Bibliographies |
+% -----------------------
+\addbibresource{bibtex/References.bib}		% References used in A-Part and B-Part
+\addbibresource{bibtex/Publications.bib} 	% References to own publications
+%\addbibresource{full.bib}
+
+% ------------------------------------------
+% | Highlight Overful Lines with Black Box |
+% ------------------------------------------
+
+% \overfullrule=1mm
+
+% =================================================================
+% QUICK START: USE THE TOGGLES FOR CONTROLLING WHAT IS COMPILED
+% =================================================================
+
+\newtoggle{PrintVersion}	% Flag for toggling final stuff
+\newtoggle{A-Part}			% Flag for toggling A-Part
+\newtoggle{B-Part} 			% Flag for toggling B-Part
+
+% toggles either true or false to in/exclude final stuff/A/B-Part
+% Toggle für Buch (true) vs. Korrekturexemplar (false): Ändert folgendes
+%% Buch hat 2 leere Seiten am Anfang, da der Bucheinband davor kommt
+%% Buch hat die "Acknowledgements" mit drin
+%% Buch hat den CV und Publikationsliste am Ende der Diss mit drin
+
+% Print Version ("Vollzug") includes CV and Acknowledgements
+
+%\toggletrue{PrintVersion}
+\togglefalse{PrintVersion}
+
+% Which part of the dissertation to compile? (Use this to save time)
+
+\toggletrue{A-Part}
+%\togglefalse{A-Part}
+
+\toggletrue{B-Part}
+%\togglefalse{B-Part}
+
+% ---------------------
+% | Begin of Document |
+% ---------------------
+\begin{document}
+\hypersetup{pageanchor=false}
+\input{helper/Titlepage}
+\frontmatter
+\pagenumbering{roman}	% set page numbers roman
+%\pagestyle{twosided}
+
+% -------------------------
+% | Preface (not required) |
+% -------------------------
+% \iftoggle{PrintVersion}{
+% 	\input{chapters/00_Preface}
+% }
+
+% -------------------
+% | Summary         |
+% -------------------
+\input{chapters/00_Summary}
+
+% -------------------
+% | ToC / LoF / LoT |
+% -------------------
+\hypersetup{pageanchor=true}
+\microtypesetup{protrusion=false} % disable for ToC
+\singlespacing		% change spacing to singlespacing
+\cleardoublepage
+\bookmarksetup{startatroot} % fix bookmark in PDF file
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents	% Table of Contents
+\listoffigures		% List of Figures
+\listoftables		% List of Tables
+\microtypesetup{protrusion=true} % enable again
+
+% --------------
+% |  Acronyms  |
+% --------------
+\chapter{List of Abbreviations}	% List of Abbreviations
+\chaptermark{List of Abbreviations}
+% \pagestyle{acronyms}
+{\sffamily\printacronyms[name=List of Abbreviations, heading=none]}
+
+\onehalfspacing	% change \%spacing back to onehalfspacing
+
+% ------------
+% |  A Part  |
+% ------------
+\mainmatter
+\pagenumbering{gobble}  % disable page numbering
+% \pagestyle{twosided}
+
+\cleardoublepage
+\setpartpreamble[u][\textwidth]{
+	\vspace*{3cm}
+	
+	% \centering
+	% \textit{``Motivational quote, if you like.''}
+	
+	% \vspace*{0.2cm}
+	% Albert Einstein
+}
+\part[Research Overview]{Research Overview}
+\cleardoublepage
+
+%\thispagestyle{empty}  % no header or footer with fancyhead
+\pagenumbering{arabic}  % set page numbering to arabic, so Intro starts at page 1
+
+\iftoggle{A-Part}{
+	\input{chapters/01_A-Part}
+}
+
+% ------------
+% |  B Bart  |
+% ------------
+\cleardoublepage
+
+
+%\thispagestyle{empty}
+\iftoggle{B-Part}{
+	\input{chapters/91_B-Part}
+}
+
+% ----------------
+% |  References  |
+% ----------------
+\cleardoublepage
+\bookmarksetup{startatroot} % fix bookmark in PDF file
+\begingroup
+%\tolerance=300
+%\emergencystretch=3em
+\Urlmuskip=0mu plus 1mu
+%\raggedright
+%\RaggedRight
+\sloppy
+%\nocite{*} % to show all citations
+%\AtNextBibliography{\small} 
+\printbibliography[heading=bibintoc,section=0]
+%\printbibliography[title={Further Reading},notcategory=cited]	% uncited literature
+\endgroup
+
+% ----------------
+% |  Backmatter  |
+% ----------------
+\backmatter
+\iftoggle{PrintVersion}{
+	\input{chapters/97_CV}
+	\input{chapters/98_Publications}
+}
+
+% ---------------------
+% |  End of Document  |
+% ---------------------
+\end{document}

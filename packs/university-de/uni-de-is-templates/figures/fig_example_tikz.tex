@@ -1,0 +1,86 @@
+\begin{figure}[htb]
+
+\centering
+
+%you can define custom objects/nodes in tikz
+\tikzstyle{block} = [draw, fill=white, rectangle, 
+    minimum height=4em, minimum width=7em, align=center]
+\tikzstyle{title} = [draw, fill=white, rectangle, 
+    minimum height=3em, minimum width=10em, draw=white,font=\bfseries]
+\tikzstyle{header} = [draw, fill=white, rectangle, 
+    minimum height=2.5em, minimum width=41em, align=center]
+\tikzstyle{rqs} = [draw, fill=white, rectangle, 
+    minimum height=2.5em, minimum width=20em, align=center]
+\tikzstyle{rq} = [draw, fill=white, rectangle, 
+    minimum height=1.5em, minimum width=2em, align=center]
+\tikzstyle{publication} = [draw, fill=white, rectangle, 
+    minimum height=1.5em, minimum width=2em, align=center,dashed]
+
+\begin{adjustbox}{width=\textwidth} % this sizes the figure to the width of the topicge
+% Part A
+\begin{tikzpicture} %
+[align=center,node distance=1.5em,every label/.append style={font=\footnotesize}]]
+
+\node (titleA) [title] {Part A: Overview};
+\node (intro) [block, below left=of titleA,anchor=north west,label={Section 1}] {\nameref{cha:introduction}}; % you can automatically pull the chapter name
+\node (background) [block, right=of intro,label={Section 2}] {\hyperref[cha:background]{Research} \\\hyperref[cha:background]{Background}}; % however, if you need a line break you have to manually define the chapter name
+\node (design) [block,  right=of background,label={Section 3}] {\hyperref[cha:research-design]{Research} \\\hyperref[cha:research-design]{Methodology}};
+\node (results) [block,  right=of design,label={Section 4}] {\hyperref[cha:research-results]{Research} \\\hyperref[cha:research-results]{Results}};
+\node (conclusion) [block,  right=of results,label={Section 5}] {\nameref{cha:conclusion}};
+
+\draw (titleA.east) -- (conclusion.east |- {{(0,0)}});
+\draw [line width=1mm,left to reversed-] (titleA.north west) -- (conclusion.north east |- titleA.north east);
+% \end{tikzpicture}
+
+% % Part B
+% \begin{tikzpicture} %
+
+\node (titleB) [title, below=7em of titleA] {Part B: Publications};
+\draw (titleB.east) -- (conclusion.east |- titleB);
+\draw [line width=1mm,left to reversed-] (titleB.north west) -- (conclusion.north east |- titleB.north east);
+
+\node  (topic) [header, below=6em of intro.south west,anchor=west] {Some cool overarching topic};
+
+\node  (rq1) [rqs, below=3em of topic.south west,anchor=west,label={RQ\ref{rq:it}}] {Fancy Research Question};
+
+\node  (rq2) [rqs, right=1em of rq1,anchor=west,label={RQ\ref{rq:it-really}}] {Another Fancy Research Question};
+
+\node (entity1) [block, below right=4em and 0.75em of rq1,anchor=center] {Concept 1};
+
+\node (entity2) [block, below=10em of entity1,anchor=center] {Concept 2};
+
+\draw [->] (entity2) -- (entity1);
+
+\node (entity3) [block] at  (intro |- entity2) {Concept 3};
+
+\draw [->] (entity3) -- (entity2);
+
+\node (entity4) [block] at  (conclusion |- entity2) {Concept 4};
+
+\draw [->] (entity2) -- (entity4);
+
+\draw [->] (entity1) -- (entity3);
+
+\draw [->] (entity4) -- (entity1);
+
+
+%Publications
+
+\node (p1) [publication, below left=of topic.east, anchor=north] {\refPubPaperTwoThousandSixteen};
+\node (p3) [publication, below left=of rq1.east, anchor=north] {\refPubPaperTwoThousandSixteen};
+\node (p3b) [publication, anchor=center] at  ($(entity3)!0.5!(entity1)$)  {\refPubPaperTwoThousandSixteen};
+\node (p2) [publication, left=of p3.west, anchor=center] {\refPubPaperTwoThousandSixteen};
+\node (p2b) [publication, anchor=center] at  ($(entity3)!0.5!(entity2)$) {\refPubPaperTwoThousandSixteen};
+\node (p4) [publication, anchor=center] at  ($(entity4)!0.5!(entity2)$) {\refPubPaperTwoThousandSixteen};
+\node (p5) [publication, below left=of rq2.east, anchor=north] {\refPubPaperTwoThousandSixteen};
+\node (p6) [publication, anchor=center] at  ($(entity2)!0.5!(entity1)$) {\refPubPaperTwoThousandSixteen};
+\node (p7) [publication, anchor=center] at  ($(entity4)!0.5!(entity1)$){\refPubPaperTwoThousandSixteen};
+
+
+
+
+\end{tikzpicture}
+\end{adjustbox}
+    \caption{Structure of this thesis}
+    \label{fig:topicrta:structure}
+\end{figure}

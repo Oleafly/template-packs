@@ -1,0 +1,196 @@
+%-- !TEX base = mythesis-eng.tex
+%-- mythesis-eng_Guide.tex BEGIN -----------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Guidelines for \LaTeX~Thesis Template}	\label{chap:Guide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+	{\bf Note:} 
+	This document was originally written in Korean and then translated into English by a machine, followed by manual revisions by myself. 
+	You are kindly asked to take this into consideration.\\
+	This document was compiled using PdfLaTeX in TeXstudio version 4.8.7, with TeX Live 2020 as a \LaTeX~engine. 
+	It is therefore recommended to use these or later versions of both the \LaTeX~editor and engine to ensure full compatibility.
+\end{quote}
+
+This \LaTeX~thesis template follows the standard thesis submission guidelines of Korea University of Technology and Education \cite{ThesisGuide}.
+
+To compile this \LaTeX~thesis template, it is required to use the class file \verb|koreatechthesis.cls|, which implements the official thesis format of KoreaTech \cite{ThesisTemplate}.
+This class file must be located in the same folder as the TeX base file \verb|mythesis-eng.tex|. 
+The correct output will be generated when the compilation is performed from the TeX base file.
+
+To provide an example of efficient thesis management, this template organizes each chapter in a separate \verb|*.tex| file using the \verb|\include| command.
+For instance, Chapter \ref{chap:Guide} is written in \verb|mythesis-eng_Guide.tex|, allowing for organized and modular chapter-wise file management. 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Document Formatting and documentclass}	\label{sec:Guide_Documentclass}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The TeX base file \verb|mythesis-eng.tex| begins with the \verb|\documentclass{korea| \verb|techthesis}| command.
+The class file \verb|koreatechthesis.cls| is designed to accept three categories of options.
+In terms of language, it allows the use of either the \verb|kor| or \verb|eng| option.
+For example, to write your thesis in English, the command should be written as \verb|\documentclass[eng]{koreatechthesis}|.
+The remaining two types of options will be explained in the following subsections.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{oneside vs. twoside}	\label{sec:Guide_Documentclass_SideOption}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+When the \verb|twoside| option is specified in the class file, that is, \verb|\documentclass| \verb|[twoside,eng]{koreatechthesis}|, it follows the conventional typesetting practices used in printed books.
+In most commercially published books, chapters and tables of contents typically begin on odd-numbered (right-hand) pages.
+Consequently, the even-numbered page preceding a new chapter may sometimes appear as a blank page, depending on the layout of the previous chapter.
+The \verb|twoside| option precisely follows this convention. 
+If you intend to print your final thesis double-sided, then enable this option.
+For clarity, consider Chapter \ref{chap:Guide} in this template --- its preceding page is a blank page under the \verb|twoside| option.
+Another examples can be found in the front matter of this template, where all even-numbered pages appear as blank pages.
+If you imagine printing this file double-sided, then the reason for this formatting will become clear.
+
+To print single-sided, the \verb|oneside| option may be used. 
+In this case, all blank pages that would appear with the \verb|twoside| option are removed.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{bfive vs. afour}	\label{sec:Guide_Documentclass_PaperOption}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This section explains the \verb|bfive| and \verb|afour| options.
+According to the official thesis guidelines \cite{ThesisGuide}, the final version of your thesis must be printed on B5 size paper ($182 \times 257\,{\rm mm}$)%
+\footnote{%
+	The size of A4 paper appears to be standardized internationally.
+	It conforms to the ISO international standard, with dimensions of $210 \times 297\,{\rm mm}$.
+	In contrast, the situation is different for B5 paper.
+	In Korea, most of the publishing industry seems to follow the Japanese Industrial Standard (JIS) which defines B5 paper as $182 \times 257\,{\rm mm}$.
+	Unfortunately, \LaTeX~adheres to the ISO international standard under which B5 paper measures $176 \times 250\,{\rm mm}$.
+	This \LaTeX~template is configured to use the JIS standard B5 paper size in accordance with \cite{ThesisGuide}.
+}.
+To produce it in B5 format, the \verb|bfive| option should be used.
+Note however that while generating a PDF with this option presents no issues, printing on physical papers requires a printer that supports B5 paper size and has B5 sheets loaded in its tray.
+
+\begin{figure}[tp]
+	\centering%
+	\begin{tikzpicture}[>=stealth]
+		% bfive
+		\draw[fill=black!15,opacity=0,fill opacity=0.5]	(0.21,-0.3) -- (2.94,-0.3) -- (2.94,-4.155) -- (0.21,-4.155) -- cycle;
+		\draw	(0.8,-4.23) node[anchor=south] {\small\verb|bfive|};
+		
+		\draw	(0.21,0.1) -- (0.21,0.4);
+		\draw	(2.94,0.1) -- (2.94,0.4);
+		\draw[<->]	(0.21,0.25) -- (2.94,0.25);
+		\draw	(1.575,0.25)	node[anchor=south]	{{\footnotesize $182\,{\rm mm}$}};
+		\draw[<->]	(2.94,0.25) -- (3.15,0.25);
+		\draw[<-]	(3.045,0.32) -- (3.3,0.6) -- (4.4,0.6);
+		\draw	(3.95,0.6)	node[anchor=south]	{{\footnotesize $14\,{\rm mm}$}};
+		
+		\draw	(-0.1,-0.3) -- (-0.4,-0.3);
+		\draw	(-0.1,-4.155) -- (-0.4,-4.155);
+		\draw[<->]	(-0.25,-0.3) -- (-0.25,-4.155);
+		\draw	(-0.45,-2.0)	node[rotate=-90]	{{\footnotesize $257\,{\rm mm}$}};
+		\draw[<->]	(-0.25,0) -- (-0.25,-0.3);
+		\draw[<-]	(-0.32,-0.15) -- (-0.8,0.4) -- (-2.0,0.4);
+		\draw	(-1.5,0.4)	node[anchor=south]	{{\footnotesize $20\,{\rm mm}$}};
+		
+		% afour
+		\draw	(0,0) -- (3.15,0) -- (3.15,-4.455) -- (0,-4.455) -- cycle;
+		\draw	(2.6,-4.53) node[anchor=south] {\small\verb|afour|};
+		
+		\draw	(0,0.1) -- (0,0.9);
+		\draw	(3.15,0.1) -- (3.15,0.9);
+		\draw[<->]	(0,0.75) -- (3.15,0.75);
+		\draw	(1.575,0.75)	node[anchor=south]	{{\footnotesize $210\,{\rm mm}$}};
+		
+		\draw	(-0.1,0) -- (-0.9,0);
+		\draw	(-0.1,-4.455) -- (-0.9,-4.455);
+		\draw[<->]	(-0.75,0) -- (-0.75,-4.455);
+		\draw	(-0.95,-2.3)	node[rotate=-90]	{{\footnotesize $297\,{\rm mm}$}};
+		
+		% contents
+		\node[text width=2.47cm,anchor=north west,align=justify]	at	(0.21,-0.3) {\footnotesize The content you have written appears only within the gray B5-sized box.};
+	\end{tikzpicture}
+	\caption{Comparison between afour and bfive options}%
+	\label{fig:B5vsA4}
+\end{figure}
+
+Since most people print on A4 paper, the \verb|afour| option is also provided for convenience.
+When the \verb|afour| option is specified in \verb|koreatechthesis.cls|, the output is generated with dimensions that precisely match those of standard A4 paper.
+This means it can be printed easily on most commonly available printers.
+However, as illustrated in Figure \ref{fig:B5vsA4}, the actual content is confined to the gray B5-sized area centered on the A4 page.
+Therefore, even though you switch back and forth between the \verb|bfive| and \verb|afour| options, the layout of your content --- such as equations, figures, and tables --- will remain unchanged.
+So, feel free to switch between the two options whenever necessary.
+
+The following is a summary of Sections \ref{sec:Guide_Documentclass_SideOption} and \ref{sec:Guide_Documentclass_PaperOption}.
+
+\begin{thm}	\label{thm:ClassOptions}
+	Regarding to this \LaTeX~template, if you intend to print
+	\begin{itemize}
+		\item	the final version of your thesis for \emph{double-sided} printing, then use\\
+				\verb|\documentclass[bfive,twoside,eng]{koreatechthesis}|
+		\item 	the final version of your thesis for \emph{single-sided} printing, then use\\
+				\verb|\documentclass[bfive,oneside,eng]{koreatechthesis}|
+		\item 	an intermediate draft for review purposes, then use\\
+				\verb|\documentclass[afour,twoside,eng]{koreatechthesis}|\\
+				or \verb|\documentclass[afour,oneside,eng]{koreatechthesis}|
+	\end{itemize}	
+	Options other than these are not supported.
+\end{thm}
+
+\begin{proof}
+	The proof of Theorem \ref{thm:ClassOptions} is omitted.
+\end{proof}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Miscellaneous}	\label{sec:Guide_Etc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This section briefly introduces a few notes related to this \LaTeX~template.
+First, if your thesis has a subtitle, then you can use the \verb|\subtitle| command in the preamble of the TeX base file \verb|mythesis-eng.tex|.
+If it has no subtitle, simply leave the argument of \verb|\subtitle| empty --- that is, write it as \verb|\subtitle{}|.
+
+The approval page, which contains the signatures of the committee members, is designed to require \emph{handwritten names and signatures} from each committee member.
+In accordance with the university regulations, the number of committee members, including the chair, must be no fewer than three and no more than five.
+Therefore, this template is constructed to allow flexible adjustment of the number of committee members according to the actual composition of the committee.
+Indeed, by specifying an appropriate integer as the argument of \verb|\numberofcommitteemembers| in the preamble of the TeX base file \verb|mythesis-eng.tex|, signature fields for that number of committee members (including the chair) will be generated.
+A more precise description is given below.
+\begin{lem}
+	Let $n$ be the integer you specified as the argument of the command \verb|\numberofcommitteemembers|.
+	Then, the signature fields for
+	\begin{enumerate}[label=(\alph*)]
+		\item 	three committee members if $n < 3$,
+		\item 	five committee members if $n > 5$, and
+		\item 	exactly $n$ committee members otherwise
+	\end{enumerate}
+	will be generated on the approval page.
+\end{lem}
+
+Chapters and sections are structured using the commands \verb|\chapter| and \verb|\section|, respectively.
+The section depth can go down to the subsubsection level.
+In other words, the hierarchy of chapters and sections supported by this \LaTeX~template is as follows.
+\begin{verbatim}
+	\chapter
+	\section
+	\subsection
+	\subsubsection
+\end{verbatim}
+However, according to \cite{ThesisGuide} and the official university template \cite{ThesisTemplate} based on it, titles created using \verb|\subsubsection| are not included in the Table of Contents.
+Accordingly, this \LaTeX~template is designed to include only up to the \verb|\subsection| level in the Table of Contents.
+
+In the preamble of \verb|mythesis-eng.tex|, the \verb|\newtheorem| command is used to define new environments for theorems and definitions.
+In this setup, the numbering for the environments is based on the chapter level.
+If you prefer to number them by section instead, you can simply change the option \verb|chapter| to \verb|section|.
+
+This \LaTeX~template uses the \verb|hyperref| package.
+As a result, red and green boxes are generated in the output PDF, and clicking these boxes will correctly navigate to the linked locations.
+Of course, these boxes are not printed when the PDF is sent to a physical printer.
+
+% This \LaTeX~template does not enforce a particular style for the bibliography.
+% Therefore, you should write the \verb|thebibliography| section in \verb|mythesis-eng.tex| as specified in \cite{ThesisGuide}.
+
+The unofficial template can use a .bib file like \cite{2024RN790combo}.

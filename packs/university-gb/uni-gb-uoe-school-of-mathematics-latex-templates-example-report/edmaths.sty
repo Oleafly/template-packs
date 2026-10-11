@@ -1,0 +1,254 @@
+%% Package `edmaths' v1.0.0
+%% File edmaths.sty
+%% Copyright 2025 Josh Fogg
+%%
+%% edmaths.sty is a LaTeX style file for typesetting reports and theses in the
+%% School of Mathematics at the University of Edinburgh. Suitable for use for
+%% theses, yearly reports, and undergraduate projects. Part of the more general
+%% `edmaths' package. See README.md for usage instructions.
+%%
+%% This work may be distributed and/or modified under the conditions of the
+%% LaTeX Project Public License, either version 1.3 of this license or (at
+%% your option) any later version.
+%%
+%% The latest version of this license is in http://latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
+%% 
+%% This work has the LPPL maintenance status `maintained' and the current
+%% maintainer of this work is Josh Fogg. Originally written by Thomas Koeppe in
+%% 2007/07, it has since been updated by Josh Fogg from 2020 onwards.
+%%
+%% This work consists of the file edmaths.sty.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{edmaths}[2025-09-03 Edinburgh maths thesis/report style v1.0.0]
+\RequirePackage{geometry,ifthen,setspace,amsmath,amsthm,amscd,amssymb}
+
+
+
+% PAGE SIZE AND MARGINS
+% These settings control the size of the page and its margins. All measurements are
+% compliant wih the school's typesetting requirements.
+
+% For physical hardback binding, the University printing service demands 4cm inner
+% and 2.5cm outer margins. FThis is specified below as 25mm margins on both sides
+% plus a 15mm binding offset. 
+
+\geometry{
+	a4paper,
+	inner         = 25mm,    % inner margin if two-sided, left if one-sided.
+	outer         = 25mm,    % outer margin if two-sided, right if one-sided
+	bindingoffset = 15mm,	 % leaves space for physical binding
+	top           = 20mm,    % top margin
+	bottom        = 40mm,    % bottom margin
+	headheight    = 6mm,     % size of header
+	headsep       = 6mm,     % distance from top of text to top of header
+	nomarginpar   = true,    % zero space allocated for margin notes
+	heightrounded = true     % prevents vbox errors due to textheight not being equal to height of inter number of lines.
+}
+
+% The following is removed in favour of the `report' class options "oneside/twoside".
+% \@twosidefalse \@mparswitchfalse  % Single-sided by default
+
+
+
+% PACKAGE OPTIONS
+% These options can be selected wihin \usepackage[...]{edmaths} to modify the
+% appearance of different parts of the document.
+
+% Options relating to external packages
+\newboolean{with-fourier}   % Use the `fourier' package for Adobe Utopia font
+\newboolean{with-cmbright}   % Use the `cmbright' package for Computer Modern Bright (sans serif) font
+\newboolean{with-comicsans}   % :)
+\newboolean{with-hyperref}  % Use the `hyperref' package for hyperlinks and bookmarks, all black
+\newboolean{with-colour}    % Add sane colours to the hyperref links
+\newboolean{with-fancyhdr}  % Use the `fancyhdr' package to provide header and footer
+\DeclareOption{fourier}{\setboolean{with-fourier}{true}}
+\DeclareOption{cmbright}{\setboolean{with-cmbright}{true}}
+\DeclareOption{comicsans}{\setboolean{with-comicsans}{true}}
+\DeclareOption{hyperref}{\setboolean{with-hyperref}{true}}
+\DeclareOption{colour}{\setboolean{with-colour}{true}}
+\DeclareOption{fancyhdr}{\setboolean{with-fancyhdr}{true}}
+
+% Options relating to document type (thesis, report, etc)
+\ifthenelse{\isundefined{\degreetext}}{\newcommand{\degreetext}{Specify a degree option!}}{}
+\DeclareOption{phd}{\renewcommand{\degreetext}{Doctor of Philosophy}}
+\DeclareOption{firstyear}{\renewcommand{\degreetext}{First-Year Report\\Maxwell Institute Graduate School}}
+\DeclareOption{secondyear}{\renewcommand{\degreetext}{Second-Year Report\\Maxwell Institute Graduate School}}
+\DeclareOption{thirdyear}{\renewcommand{\degreetext}{Third-Year Report\\Maxwell Institute Graduate School}}
+\DeclareOption{y4project}{\renewcommand{\degreetext}{Year 4 Project\\School of Mathematics}}
+\DeclareOption{mmath}{\renewcommand{\degreetext}{Master of Mathematics with Honours \\ School of Mathematics}}
+\DeclareOption{masterph}{\renewcommand{\degreetext}{Master of Philosophy}}
+\DeclareOption{mastersc}{\renewcommand{\degreetext}{Master of Science by Research}}
+
+% Options relating to stretchfactor (used for line spacing)
+\ifthenelse{\isundefined{\stretchfactor}}{\newcommand{\stretchfactor}{1}}{}
+\DeclareOption{single}{\renewcommand{\stretchfactor}{1}}
+\DeclareOption{onehalf}{\renewcommand{\stretchfactor}{1.5}}
+\DeclareOption{double}{\renewcommand{\stretchfactor}{2}}
+
+% Options relating to having single or double sided documents
+% \DeclareOption{oneside}{\@twosidefalse \@mparswitchfalse}  % Single-sided by default
+% \DeclareOption{twosides}{\@twosidetrue \@mparswitchtrue}
+
+
+\ProcessOptions
+
+% If with-fourier selected, use the Adobe Utopia font.
+\ifthenelse{\boolean{with-fourier}}{
+    \RequirePackage{cmap}
+    \RequirePackage{fourier}
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage{microtype}
+} {}
+
+% If with-cmbright selected, use the (sans-serif) Computer Modern Bright font.
+\ifthenelse{\boolean{with-cmbright}}{
+    % NOTE if it doesn't compile, make sure you have CM Bright installed!
+    \RequirePackage{cmap}
+    \RequirePackage{cmbright}
+    \RequirePackage[T1]{fontenc}
+    \RequirePackage{microtype}
+} {}
+
+% :)
+\ifthenelse{\boolean{with-comicsans}}{
+    % NOTE must be compiled with xelatex or luatex
+    \usepackage{fontspec}
+    \setmainfont{Comic Sans MS}
+} {}
+
+% If with-hyperref selected, configure its default settings
+\ifthenelse{\boolean{with-hyperref}}{
+    \RequirePackage[dvipsnames]{xcolor}
+    \RequirePackage[pdftitle={\@title}, pdfauthor={\@author}, pdfcreator={PDFLaTeX with edmaths}, pdfpagelayout=OneColumn, colorlinks=true, linkcolor=black, urlcolor=black, citecolor=black]{hyperref}
+    % If with-colour selected, use it to make hyperlinks blue not black
+    \ifthenelse{\boolean{with-colour}}{
+        \hypersetup{linkcolor=Sepia, urlcolor=NavyBlue, citecolor=Sepia}
+    } {}
+} {}
+
+% If with-fancyhdr selected, use it to provide fancier headers and footers
+\ifthenelse{\boolean{with-fancyhdr}}{
+    \RequirePackage{fancyhdr}
+    % Define a short title for use in headers if title is too long. Default is the same as title. Usage: use command \shortitle{<your short title here>} *after* calling edmaths.
+    \newcommand\@shorttitle{\@title}
+    \newcommand\shorttitle[1]{\renewcommand\@shorttitle{#1}}
+    \pagestyle{fancy}
+    \fancyhf{}
+    % if \fancyhead or \fancyfoot are used without `twoside` in \documentclass{...} then
+    % fancyhdr will complain that the 'E' used here is useless, so need to condition.
+    \if@twoside%
+        %%% put the stuff for true here (twoside=true)
+        \fancyhead[RO,LE]{\thepage}
+        \fancyfoot[RO,LE]{\thepage}
+        \fancyhead[LO]{\it\@shorttitle}
+        \fancyhead[RE]{\@author}
+        \fancyfoot[RE,LO]{}
+    \else%
+        %%% put the stuff for false here (twoside=false)
+        \fancyhead[LO]{\it\@shorttitle~~$\cdot$~~\@author}
+        \fancyhead[R]{\thepage}
+        \fancyfoot[R,LO]{}
+    \fi%  
+} {}
+
+% Set the line spacing
+\setstretch{\stretchfactor}
+
+
+
+% DOCUMENT COMPONENTS
+% Provides the formatting for the required document components. Specifically, these are
+% the titlepage, declaration, dedication, abstract, and undergraduate project fulfilment.
+
+\renewcommand{\maketitle}{%
+    \begin{titlepage}
+        \singlespacing
+        \addtolength{\oddsidemargin}{-0.75cm}
+        \begin{center}
+            \null\vskip 4.1cm
+            \begin{minipage}[t][7.6cm]{10.5cm}
+                \begin{center}
+                    {\LARGE\textbf{\@title}\par}
+                    {\Large\textit{\@author}\par}
+                \end{center}
+            \end{minipage}
+            \vfill
+            {\Large\degreetext \par The University of Edinburgh \par\@date \par}
+        \end{center}
+    \end{titlepage}
+    % For two-sided documents it's required that a blank page follow the title page. For
+    % one-sided documents it's required that the title page contribute to the page count.
+    \if@twoside
+        \thispagestyle{empty}
+        \cleardoublepage
+    \else
+        \addtocounter{page}{1}
+    \fi
+}
+
+
+% Declaration style for everything except year 4 projects
+\newcommand{\declaration}[1]{
+    % Doesn't need a chapter number or adding to the contents page
+    \chapter*{Declaration}
+    % Must always be single spaced
+    \begin{singlespace}
+        \def\param{#1}
+        \ifx\param\empty
+            I declare that this thesis was composed by myself
+            and that the work contained therein is my own,
+            except where explicitly stated otherwise in the text.
+        \else
+            {#1}
+        \fi
+    \end{singlespace}
+    {\raggedleft\vspace{2cm}(\textit{\@author})}
+}
+
+
+% Declaration style for year 4 project, argument is degree programme (e.g. MMath)
+\newcommand{\yfourdeclaration}[1]{
+    \vfill
+    \noindent
+    This project report is submitted in partial fulfilment
+    of the requirements for the degree of \textit{#1}.
+}
+
+
+\renewenvironment{abstract}{
+    % Abstracts don't need a chapter number...
+    \chapter*{\abstractname}
+}{
+    % ...but do need adding to the contents page.
+    \addcontentsline{toc}{chapter}{\abstractname}
+}
+
+
+\newenvironment{laysummary}{
+    % A lay summary is required for PhD theses and is not included in the page count. We treat it in a similar way to the abstract here.
+    \chapter*{Lay Summary}
+}{
+    \addcontentsline{toc}{chapter}{Lay Summary}
+}
+
+
+\newenvironment{acknowledgements}{
+    % Acknowledgements environment similar to abtract and lay summary.
+    \chapter*{Acknowledgements}
+}{
+    \addcontentsline{toc}{chapter}{Acknowledgements}
+}
+
+
+\newcommand{\dedication}[1]{%
+    % Handled dedications (e.g. 'For Alex', not acknowledgements)
+    \clearpage
+    \thispagestyle{plain}
+    \vspace*{7cm}
+    \begin{center}
+        \Large\it #1
+    \end{center}
+}

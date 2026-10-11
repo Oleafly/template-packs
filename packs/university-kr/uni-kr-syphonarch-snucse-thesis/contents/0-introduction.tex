@@ -1,0 +1,32 @@
+\chapter{Introduction}\label{chap:introduction}
+
+Clustering is a fundamental task in data analysis and machine learning, with applications in diverse fields such as image segmentation, natural language processing, financial modeling, and bioinformatics \cite{Xu2005Survey}. Among clustering methods, $k$-means \cite{MacQueen1967} is one of the most widely used algorithms due to its conceptual simplicity and computational efficiency. However, finding the optimal solution to the $k$-means problem is NP-hard in general for \(d\)-dimensional data \cite{nphard}, prompting practical implementations to rely on heuristic approaches such as Lloyd’s algorithm \cite{lloyd,max}.
+
+One-dimensional (1D) clustering problems arise frequently in a wide range of real-world scenarios, including social network analysis, bioinformatics, and the retail market \cite{Arnaboldi_2016,genomemining,retail}. For this special case, there have been significant advances in achieving globally optimal solutions efficiently. Wang and Song \cite{wang1ddp} introduced a \(O(k \cdot n^2)\) dynamic programming algorithm for the 1D $k$-means problem, and Grønlund et al. \cite{fastexactkmeans} later improved this to \(O(n)\), demonstrating that optimal clustering can be computed in linear time for one dimension.
+
+While globally optimal algorithms for the 1D $k$-means problem exist, they are not always suitable for scenarios where speed and scalability are paramount. In many real-world applications—particularly those involving large datasets or latency-critical tasks—achieving a near-optimal solution quickly can be more valuable than computing the exact global minimum. Practical libraries, such as \texttt{scikit-learn}'s $k$-means \cite{sklearn}, do not exploit the structure of 1D data and instead treat it as a general case, leaving room for further optimization. Under such conditions, improving Lloyd’s algorithm for 1D data provides a route to faster performance.
+
+This thesis presents a novel set of algorithms that optimize Lloyd’s algorithm for the 1D setting. By carefully exploiting the properties of sorted data, these methods achieve logarithmic runtime, dramatically reducing computational costs while maintaining high-quality clustering outcomes. The contributions include the following:
+
+
+\begin{enumerate}[leftmargin=*]
+\item \textbf{An optimized $k$-means++ initialization and Lloyd’s algorithm} for approximating general \(k\)-cluster problems in one dimension. By carefully leveraging the properties of sorted data, the proposed approach replaces the linear dependence on the dataset size \(n\) with logarithmic factors, resulting in substantial runtime improvements. Specifically, the greedy $k$-means++ initialization achieves a time complexity of \(O(l \cdot k^2 \cdot \log n)\), where \(l\) is the number of local trials, followed by Lloyd’s algorithm iterations with \(O(i \cdot k \cdot \log n)\), where $i$ is the number of iterations. Additional preprocessing, such as sorting and prefix sum calculations, contributes \(O(n \log n)\) and \(O(n)\), respectively, when required.
+
+This method improves upon standard $k$-means implementations, where greedy $k$-means++ initialization requires \(O(l \cdot k \cdot n)\) time, and Lloyd's algorithm iterations require \(O(i \cdot k \cdot n)\). By reducing the dependence on \(n\), the dataset size, the proposed optimizations achieve significant speedups, as experimentally demonstrated in Section~\ref{sec:runtime_performance}.
+
+\item \textbf{A binary search-based algorithm for the two-cluster case}, which achieves \(O(\log n)\) runtime and deterministically converges to a Lloyd’s algorithm solution, skipping iterative refinements entirely. Additional preprocessing costs include \(O(n)\) for prefix sums and \(O(n \log n)\) for sorting, if not already provided. While the global minimum is not guaranteed, this method is highly desirable for scenarios requiring very fast and deterministic clustering.
+\end{enumerate}
+
+
+Along with the thesis, a complete library implementation in Python 3 is provided, optimized with Numba just-in-time (JIT) compilation \cite{numba} to enable efficient integration into various applications.
+
+Benchmarks against the highly optimized and widely used \texttt{scikit-learn} $k$-means implementation \cite{sklearn} highlight the efficiency of these algorithms, as detailed in Section~\ref{sec:runtime_performance}. The results demonstrate the following:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Orders-of-magnitude speedups}, even when including preprocessing steps such as sorting and prefix sum calculations.
+    \item \textbf{Equivalent or comparable clustering results} in terms of within-cluster sum of squares (WCSS), the objective function of K-means.
+\end{itemize}
+
+The proposed algorithms also find utility in emerging and highly relevant applications such as \textbf{quantization for large language models (LLMs)}, where efficient quantization can be achieved by running 1D $k$-means clustering on model weights \cite{sqllm}. In particular, cutting-edge quantization methods like Any-Precision LLM \cite{anyprec} rely on repeated executions of the two-cluster approach to hierarchically subdivide clusters of weights. The novel algorithm presented here is exceptionally well-suited for such scenarios, providing over a \textbf{300-fold speedup} compared to \texttt{scikit-learn}, as demonstrated in Section~\ref{sec:llm_quantization}. This practical importance is underscored by the direct use of the proposed library implementation, \texttt{flash1dkmeans}, within the official Any-Precision LLM implementation\footnote{\url{https://github.com/SNU-ARC/any-precision-llm}}.
+
+Overall, this thesis contributes both theoretical advancements and practical tools for one-dimensional $k$-means clustering. By providing a rigorous theoretical foundation and an optimized implementation, the proposed methods demonstrate the feasibility and efficiency of adapting $k$-means and Lloyd’s algorithm to the one-dimensional setting. These contributions establish not only a proof of concept but also a practical solution ready for deployment in diverse computational tasks.

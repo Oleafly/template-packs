@@ -1,0 +1,90 @@
+\documentclass{chi_thesis}
+\author{Muster Mustermann}
+\title{The Title of  my Project is quite awesome}
+\firstprof{Prof. Dr. Muster Mustermann}
+%\firstprofname{Erstprüfer} % gibt es auch für secondprofname und betreuername
+\secondprof{Prof. Dr. Muster Mustermann}
+\thirdprof{Prof. Dr. Muster Mustermann}
+\betreuer{M.Sc. Muster Mustermann}
+\art{Project Work}
+\studiengang{My Degree Program (M.Sc.)}
+\date{01.01.2020} %change to date of submit
+\keywords{Keywords}
+\matrikelnummer{12345678}
+% weitere Befehle, welche nicht erklärt werden: titletext, logo, faculty, institution
+
+
+\usepackage[nopostdot,nonumberlist,acronym]{glossaries}
+%\makeglossaries
+\makenoidxglossaries
+\input{content/Acronyms.tex}
+
+
+\begin{document}
+
+\frontmatter
+\selectlanguage{english}
+\Titlepage
+\cleardoublepage
+\SELBSTAENDIGKEIT
+\fancyfoot[C]{\thepage}
+\input{content/00_Abstract.tex}
+\tableofcontents
+% Hier können weitere Verzeichnisse kommen
+
+
+
+%% sorgt dafür, dass Verzeichnisse nicht auf ungeraden Seiten erscheinen, sondern nacheinander.
+\makeatletter
+\@openrightfalse
+\makeatother
+
+% Hier kommt das Abbildungsverzeichnis.
+\listoffigures
+
+% Hier kommt eine Liste der Tabellen.
+\listoftables
+
+% Codeverzeichnis
+%\renewcommand*{\lstlistlistingname}{Code Directory}
+%\lstlistoflistings
+
+\printnoidxglossaries
+
+
+\makeatletter
+\@openrighttrue
+\makeatother
+
+\mainmatter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HAUPTTEIL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% binden sie hier Ihre LaTeX Dateien ein.
+
+\input{content/01_Figures.tex}
+\input{content/02_Tables.tex}
+\input{content/03_Maths.tex}
+\input{content/04_Code.tex}
+\input{content/05_Flow.tex}
+\input{content/06_Bib.tex}
+\input{content/07_Others.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ANHÄNGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% binden sie hier Ihre LaTeX Dateien ein, welche zum Anhang gehören.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand\bibname{References}
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{unsrt}
+\bibliography{HOT.bib}
+
+
+
+\appendix
+\input{content/Appendix_A.tex}
+\input{content/Appendix_B.tex}
+
+\end{document}

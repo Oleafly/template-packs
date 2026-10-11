@@ -1,0 +1,259 @@
+\chapter{Latex部分代码示例}
+\thispagestyle{main}
+
+
+\section{字体设置}
+
+在这个模板中，涉及到的中文字体包括宋体，黑体，楷体以及隶书。由于本项目面向整个互联网，因此这里使用的字体都是免费开源的。
+
+尽管笔者尝试选择了最接近的字体，但难免会存在一些细微的区别。对一些要求较高的同学，可以自行寻找一些允许个人免费使用的字体。比如在Windows系统中，``C:$\backslash$Windows$\backslash$Fonts''文件夹下就有一些可用的字体文件。具体的对应关系如下：
+\begin{table}[!ht]
+\centering
+\caption{字体信息}
+\begin{tabular}{ccll}
+    \toprule
+    序号 & 字体类型 & 字体文件       & 项目中的字体定义  \\
+    \midrule
+    1   & 宋体    & simsun.ttc    & $\backslash$song  \\
+    2   & 黑体    & simhei.ttf    & $\backslash$hei   \\
+    3   & 楷体    & simkai.ttf    & $\backslash$kai   \\
+    4   & 隶书    & SIMLI.TTF     & $\backslash$li    \\
+    \bottomrule
+\end{tabular}
+\end{table}
+理论上，将新的字体文件放入主目录中，并对./configs/theme.tex中的命令进行修改即可。需要修改的命令如下所示：
+
+$\backslash$setCJKfamilyfont\{song\}\{\lm{simsun.ttc}\}[Path=fonts/,AutoFakeSlant,AutoFakeBold=\{2\}]；
+
+$\backslash$setCJKfamilyfont\{hei\}\{\lm{simhei.ttf}\}[Path=fonts/,AutoFakeSlant,AutoFakeBold=\{2\}]；
+
+$\backslash$setCJKfamilyfont\{kai\}\{\lm{simkai.ttf}\}[Path=fonts/,AutoFakeSlant,AutoFakeBold=\{2\}]；
+
+$\backslash$setCJKfamilyfont\{li\}\{\lm{SIMLI.TTF}\}[Path=fonts/,AutoFakeSlant,AutoFakeBold=\{2\}]；
+
+$\backslash$setCJKmainfont\{\lm{simsun.ttc}\}[Path=fonts/,AutoFakeSlant,AutoFakeBold=\{2\}]；
+
+$\backslash$setCJKsansfont\{\lm{simsun.ttc}\}[Path=fonts/,AutoFakeSlant,AutoFakeBold=\{2\}]。
+
+$\backslash$setCJKmonofont\{\lm{simsun.ttc}\}[Path=fonts/,AutoFakeSlant,AutoFakeBold=\{2\}]。
+
+\section{一些有用的工具}
+
+LaTeX基本命令使用教程：https://blog.csdn.net/gentleman\_qin/article/details/79963396。
+
+在线表格可视化网站：https://tablesgenerator.com/。
+
+在线公式生成网站：https://www.latexlive.com/home。
+
+
+\section{图片}
+
+\subsection{单张图片示例}
+
+\textbf{注意，图片的标题在下面。}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=2.5in]{images/blackhole.jpeg}
+    \caption{黑洞}
+    \label{fig:blackhole}
+\end{figure}
+图~\ref{fig:blackhole}是关于黑洞的图片。
+
+\subsection{多张图片示例}
+
+\begin{figure*}[!ht]
+    \centering
+    \subfloat[图片1。]{
+        \includegraphics[width = 0.45\textwidth]{example-image}
+    }
+    \hfill
+    \subfloat[图片2]{
+        \includegraphics[width = 0.45\textwidth]{example-image}
+    }
+    \\
+    \subfloat[图片3。]{
+        \includegraphics[width = 0.45\textwidth]{example-image}
+    }
+    \hfill
+    \subfloat[图片4。]{
+        \includegraphics[width = 0.45\textwidth]{example-image}
+    }
+    \caption{多张图片}
+    \label{fig:example}
+\end{figure*}
+图~\ref{fig:example}是多张图片的并列。$\mathcal{X}$
+
+
+\section{表格}
+
+\textbf{注意，表格的标题在上面。}
+\begin{table}[!ht]
+\centering
+\caption{一个表的实例}
+\begin{tabular}{cccccc}
+    \toprule
+    序号 & 姓名 & 性别 & 年龄 & 身高/cm & 体重/kg \\
+    \midrule
+    1 & 张三 & M & 16 & 163 & 50 \\
+    2 & 王红 & F & 15 & 159 & 47 \\
+    3 & 李二 & M & 17 & 165 & 52 \\
+    \bottomrule
+\end{tabular}
+\label{tab:tabobj}
+\end{table}
+表~\ref{tab:tabobj}是一个实例。
+
+
+\section{简单的数学公式和定理}
+
+一些基本的数学符号：$\Gamma\Theta\Lambda\Xi\Pi\alpha\beta\gamma\delta$。
+
+\begin{theo} [存在性定理]
+\label{thm:alpha}
+    xxxxx
+\end{theo}
+
+定理~\ref{thm:alpha}如上所示。公式~\ref{eq:alpha}如下所示。
+
+\begin{equation}
+\label{eq:alpha}
+    \alpha=\sqrt[n]{\Re}.
+\end{equation}
+
+
+\section{伪代码实例}
+
+\subsection{使用algorithmic包}
+
+\begin{algorithm}[!ht]
+\caption{algorithmic示例}
+\begin{algorithmic}[1] %[1] 能够显示行号
+    \REQUIRE $n \geq 1$                  %输入条件
+    \ENSURE $Sum = 1 + \cdots + n$       %输出
+    \STATE $Sum \leftarrow 0$            %\STATE 命名演示
+    \IF {$n < 1$}                        %条件语句
+        \PRINT {Input Error}                 %打印语句
+    \ELSE
+        \FOR {$i = 0$ to n}          %FOR循环结构
+            \STATE $Sum = Sum + i$\\
+            \STATE $i = i + 1$
+        \ENDFOR
+    \ENDIF
+    \RETURN $Sum$
+\end{algorithmic}
+\label{alg}
+\end{algorithm}
+
+算法\ref{alg}表示前n个数字的累加。
+
+
+\section{枚举列表}
+
+\subsection{普通列表}
+
+\begin{itemize}
+    \item 列表项目1；
+    \item 列表项目2；
+    \item 列表项目3。
+\end{itemize}
+
+\subsection{有序列表}
+
+\begin{enumerate}
+    \item 有序列表项目1；
+    \item 有序列表项目2；
+    \item 有序列表项目3。
+\end{enumerate}
+
+
+\section{脚注}
+
+脚注示例\footnote{这是脚注示例。}。
+
+
+\section{文献引用}
+
+默认的参考文献引用方法是$\backslash$cite\{\}，例如一些文献~\cite{kearns1994introduction,shalev2014understanding}。
+
+也可以使用非上标的引用形式$\backslash$norcite\{\}，例如，论文~\norcite{mohri2018foundations}提出了。。。
+
+
+\section{参考文献}
+
+\subsection{BibTeX引用}
+
+以笔者所熟悉的计算机系为例，大部分同学可能会使用\textbf{google scholar}或是\textbf{dblp}查找文献。两者最大的区别是，作者的``姓(last name)''与``名(first name)''顺序。一般情况下，\textbf{google scholar}是先姓后名，而\textbf{dblp}往往是先名后姓，而后者更符合国外的书写习惯。
+
+幸运的是，本文所使用的参考文献工具可以自动兼容上述两个平台，从而达到，先输出完整的姓，再输出缩写的名，符合国家标准。
+
+对于其他平台上获取的引用，如果最终的参考文献出现姓名顺序问题时，建议检查相关的引用信息是否正确。
+
+\subsection{关于中文文献的引用}
+
+对于中文文献，建议增加参数“language={zh}”。对于超过3个作者以上的中文参考文献，第四位及以后的作者需要被省略，并增加“等”字。这个参数能够规避中文参考文献中出现“et al.”的错误。
+
+例如接下来的这个文献：
+
+@article\{郑一力2017,
+
+  \hspace{2em} title=\{基于多特征降维的植物叶片识别方法\},
+  
+  \hspace{2em} author=\{郑一力 and 钟刚亮 and 王强 and 赵玥 and 赵燕东\},
+  
+  \hspace{2em} journal=\{农业机械学报\},
+  
+  \hspace{2em} volume=\{48\},
+  
+  \hspace{2em} number=\{3\},
+  
+  \hspace{2em} pages=\{30--37\},
+  
+  \hspace{2em} year=\{2017\},
+  
+  \hspace{2em} \textbf{language=\{zh\}}
+  
+\}
+
+\subsection{关于英文姓名的大小写问题}
+
+部分用户曾反馈，\textbf{为什么参考文献中的作者的名全部是大写？}
+不得不承认，仅首字母大写的书写方式更加好看。但根据中国国家标准《GB/T 7714-2015: 信息与文献 参考文献著录规则》，名的全部大写才是符合规范的。因此，本项目将继续以该国标作为标准进行完善。
+
+考虑到部分同学可能有特殊需要，如果希望格式改成首字母大写其余小写的形式，可以在gbt7714-2015.bst文件中第637行的“"u" change.case\$ 'lastname :=”改成“"t" change.case\$ 'lastname :=”即可。
+
+在本条目更新之前，一些同学已经发现了这个小诀窍，为大家的聪明才智鼓掌。
+
+
+\section{关于图、表标题的一些其他应用}
+
+如果在图片、表格的标题中需要用到较长的内容解释结果，或者内容中包含引用，建议使用``$\backslash$caption[<短标题>]\{<长标题>\}''命令。可选的参数短标题用于图表目录，而长标题中可以进行长达多段的叙述。而标签$\backslash$label需要放在caption后面，或者短标题或长标题中。实际效果如下表所示：
+
+\begin{table}[!ht]
+\centering
+\caption[这是表目录中的标题]{这是正文中表格的标题，也可以正常使用引用论文\cite{kearns1994introduction}。}
+\begin{tabular}{ccc}
+    \toprule
+    序号 & 姓名 & 薪水 \\
+    \midrule
+    1 & Mark    & $\$5,000$   \\
+    2 & Carly   & $\$8,000$    \\
+    3 & Carter  & $\$6,500$    \\
+    \bottomrule
+\end{tabular}
+\\
+\begin{flushleft}
+\wuhao 注：这是注释，可以对图或者表进行更多的解释。
+\end{flushleft}
+\label{tab:example}
+\end{table}
+在表~\ref{tab:example}中，引用如果放在了短标题中，会在正文前先对引用进行编号，导致引用排序出现问题，望知晓。
+
+此外，部分作者可能会遇到需要对图或表进行更详细说明的情况。在这个示例中，增加了文本框以实现对表格的更多解释，供同学们参考。
+
+% \subsection{引用附录中的章节}
+
+% 通过引入新的自定义命令，$\backslash$newcommand\{$\backslash$appref\}[2]\{$\backslash$hyperref[\#2]\{\#1\}\}，可以手动实现对附录的引用。
+
+% 在需要引用的地方，使用命令：$\backslash$appref\{``显示的标题''\}\{``引用编号''\}即可显示出想要的结果。
+
+% PS：有点复杂，但是目前没有找到更好的解决方案。

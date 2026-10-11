@@ -1,0 +1,75 @@
+%====================== 数学环境 / 定理 / 算法 ======================%
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{cases}
+\usepackage{cancel}
+
+% 定理环境
+% plain：定理类（定理/引理/命题/推论）内容为斜体
+% 注意：中文字体通常没有真正的 Italic，这里的“斜体”表现为倾斜，属于正常现象。
+
+% 只给“定理”单独定义一个样式：去掉编号后的英文句点
+\newtheoremstyle{theoremnopunct}
+  {\topsep}
+  {\topsep}
+  % {\itshape}
+    {\normalfont}
+  {}
+  {\bfseries}
+  {}
+  {5pt plus 1pt minus 1pt}
+  {}
+
+
+
+\theoremstyle{theoremnopunct}
+\newtheorem{theorem}{定理}[chapter]
+\newtheorem{example}{算例}[chapter]
+\theoremstyle{plain}
+\newtheorem{lemma}{引理}[chapter]
+\newtheorem{proposition}{命题}[chapter]
+\newtheorem{corollary}{推论}[chapter]
+
+% definition：定义类（定义/例）内容为正体
+\theoremstyle{definition}
+\newtheorem{definition}{定义}[chapter]
+
+
+% remark：说明类（注）内容为正体
+\theoremstyle{remark}
+\newtheorem{remark}{注}[chapter]
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}%
+  \normalfont
+  \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item[\hskip\labelsep
+        \bfseries #1\@addpunct{.}]%
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+
+
+% 编号：按章
+\numberwithin{equation}{chapter}
+\numberwithin{figure}{chapter}
+\numberwithin{table}{chapter}
+
+% 图表/公式编号格式：章-序（如 1-1）
+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
+\renewcommand{\theequation}{\arabic{chapter}-\arabic{equation}}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+
+%====================== 算法（algorithm） ======================%
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\floatname{algorithm}{算法}
+\algrenewcommand\algorithmicrequire{\textbf{输入：}}
+\algrenewcommand\algorithmicensure{\textbf{输出：}}

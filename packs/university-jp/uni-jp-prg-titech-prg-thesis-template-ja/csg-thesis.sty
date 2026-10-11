@@ -1,0 +1,86 @@
+%
+% This is a file `csg-thesis.sty'.
+%
+\NeedsTeXFormat{pLaTeX2e}
+\ProvidesPackage{csg-thesis}[2004/04/09 CSG Thesis Style]
+
+% definitions
+\def\title#1{\def\@title{#1}}	
+\def\author#1{\def\@author{#1}}	
+\def\date#1{\def\@date{#1}}
+\def\department#1{\def\@department{#1}}
+\def\schoolyear#1{\def\@schoolyear{#1}}
+\def\stnumber#1{\def\@stnumber{#1}}
+\def\supervisor#1{\def\@supervisor{#1}}
+\def\degree#1{\def\@degree{#1}}
+
+\renewcommand\maketitle{
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \begingroup
+      \def\baselinestretch{1}
+      \@normalsize
+      \topmargin=1.25in
+      \headheight=0pt
+      \headsep=0pt
+      \@tempdima=\paperwidth
+      \advance\@tempdima by -\textwidth
+      \divide\@tempdima by 2
+      \advance\@tempdima by -1in
+      \oddsidemargin=\@tempdima
+      \let\evensidemargin=\oddsidemargin
+      \newcommand\@large{\@setfontsize\large\@xivpt{18}}
+      \newcommand\@Large{\@setfontsize\Large\@xviipt{22}}
+      \newcommand\@LARGE{\@setfontsize\LARGE\@xxpt{25}}
+      \newcommand\@huge{\@setfontsize\huge\@xxvpt{30}}
+      \begin{center}
+        %
+        % \vbox to のあとの数値を変更すればレイアウトの微調整ができる
+        %
+        \vbox to 1.1in{%
+          \vfil
+          {\@Large \@schoolyear 度 \@degree 論文}\\
+          \vfil}%
+        \vbox to 3.0in{%
+          {\@huge \@title}\\
+          \vfil}%
+        \vbox to 1.8in{%
+          {\@Large \@department}\\[8pt]
+          {\@Large 学籍番号 \@stnumber}\\[12pt]
+          {\@LARGE \@author}\\[12pt]
+          \vfil}%
+        \vbox to 1.4in{%
+          {\@Large 指導教員}\\[12pt]
+          {\@Large \@supervisor}\\
+          \vfil}%
+        \vbox to 0.5in{%
+          {\@Large \@date}\\
+          \vfil}%
+      \end{center}
+    \endgroup
+  \end{titlepage}}
+
+%
+% 概要、謝辞のページにはページ番号を割り当てないようにもできる
+%
+%\def\abstract{%
+%\titlepage
+%\chapter*{概要}}
+%\def\endabstract{\thispagestyle{empty}\endtitlepage}
+%
+%\def\acknowledgments{%
+%\titlepage
+%\chapter*{謝辞}}
+%\def\endacknowledgments{\thispagestyle{empty}\endtitlepage}
+
+\def\abstract{%
+\chapter*{概要}}
+\def\endabstract{\thispagestyle{empty}}
+
+\def\acknowledgments{%
+\chapter*{謝辞}}
+\def\endacknowledgments{\thispagestyle{empty}}
+
+\def\bibname{参考文献}
+
+%% End of file `csg-thesis.sty'

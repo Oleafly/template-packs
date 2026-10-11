@@ -1,0 +1,603 @@
+% 2015.07.10 Modified
+%
+% dthesis.tex
+%
+\documentclass[12pt]{jarticle} % Japanese
+% \documentclass[12pt]{article} % English
+% if there are problems in the above regarding fonts, use this
+% \documentclass[UTF8]{ctexart}
+
+\usepackage[utf8]{inputenc}
+%\usepackage{utf}
+\usepackage{naist-jdthesis} % Japanese
+% \usepackage{naist-dthesis} % English
+
+\usepackage{graphicx}
+
+%
+% Page style
+%
+\pagestyle{final}       % Camera-Ready
+%\pagestyle{draft}      % Draft
+%
+%
+\lang{Japanese} % Japanese
+% \lang{English} % English
+%
+% Student Number
+%
+\studentnumber{123456}
+%
+% Degree
+%
+\major{\engineering}    % Engineering
+%\major{\science}       % Science
+%
+% 日本語題目 (in LaTeX)
+%
+\title{太陽と月を利用した$\pi$の低速計算アルゴリズムに関する理論的研究}
+%
+% 日本語題目 (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は指定する必要なし。
+%       この情報は博士論文には現れませんが、管理のために必要です。
+%
+\ptitle{太陽と月を利用したpiの低速計算アルゴリズムに関する理論的研究}
+%
+% 英語題目 (in LaTeX)
+%
+\etitle{Theoretical Studies on Low-Speed Calculation Algorithms of $\pi$ \\
+Utilizing the Sun and the Moon}
+%
+% 英語題目 (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は指定する必要なし。
+%       この情報は博士論文には現れませんが、管理のために必要です。
+%
+\eptitle{Theoretical Studies on Low-Speed Calculation Algorithms of pi \\
+Utilizing the Sun and the Moon}
+%
+% 日本語氏名 (in LaTeX)
+%   （姓と名の間に空白を入れて下さい）
+%
+\author{奈良 先太郎}
+%
+% 日本語氏名 (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は指定する必要なし。
+%       この情報は博士論文には現れませんが、管理のために必要です。
+%
+\pauthor{}
+%
+% 欧文氏名 (in LaTeX)
+%   （first name, last name の順に記入し、先頭文字のみを大文字にする。）
+%
+\eauthor{Sentarou Nara}
+% 別の例: \eauthor{Kurt G\"{o}del}
+%
+%
+% 欧文氏名 (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は指定する必要なし。
+%       この情報は博士論文には現れませんが、管理のために必要です。
+%
+\epauthor{}
+% 別の例: \peauthor{Kurt Goedel}
+%
+%
+% 論文提出年月日
+%
+\syear{2025}
+\smonth{2}
+\sday{20}
+%
+% 専攻の選択
+%
+\department{\is}  % Information Science
+%\department{\bs}    % Biological Science
+%\department{\ms}   % Materials Science
+%
+%
+% 審査委員（日本語）
+%   （姓と名、名と称号の間に空白を入れて下さい）
+%
+%５人以上の場合，５人目以降は\addcmembers を使って宣言する。
+%最大で合わせて８人まで宣言可能。
+%主指導教員、副指導教員を明記する。両指導教員以外は委員。
+%学外審査委員は、大学名を明記する
+%
+% ４人の場合
+\cmembers{○○ ○○ 教授}{（主指導教員）}
+         {○○ ○○ 教授}{（副指導教員）}
+         {○○ ○○ 准教授}{（副指導教員）}
+         {○○ ○○ 准教授}{（△△大学）}
+%
+% ３人の場合
+%\cmembers{○○ ○○ 教授}{（主指導教員）}
+%         {○○ ○○ 教授}{（副指導教員）}
+%         {○○ ○○ 准教授}{（副指導教員）}
+%         {}{}
+%
+% ２人の場合
+%\cmembers{○○ ○○ 教授}{（主指導教員）}
+%         {○○ ○○ 教授}{（副指導教員）}
+%          {}{}
+%          {}{}
+%
+% ５人目の宣言
+%\addcmembers{55 55 准教授}{（□□大学）}
+%            {}{}
+%            {}{}
+%            {}{}
+%
+% ５〜６人目の宣言
+%\addcmembers{55 55 准教授}{（□□大学）}
+%            {66 66 准教授}{（□□大学）}
+%            {}{}
+%            {}{}
+%
+% ５〜７人目の宣言
+%\addcmembers{55 55 准教授}{（□□大学）}
+%            {66 66 准教授}{（□□大学）}
+%            {77 77 准教授}{（□□大学）}
+%            {}{}
+%
+% ５〜８人目の宣言
+%\addcmembers{55 55 准教授}{（□□大学）}
+%            {66 66 准教授}{（□□大学）}
+%            {77 77 准教授}{（□□大学）}
+%            {88 88 准教授}{（□□大学）}
+%
+%
+% 審査委員（英語）
+%     （first name, last name の順に記入し、先頭文字のみを大文字にする。
+%       first name と last name の間に空白、
+%       last name と 称号の間にカンマと空白を入れて下さい。）
+%
+% ５人以上の場合，５人目以降は\eaddcmembers を使って宣言する
+% Supervisor, Co-supervisor, and Member must be specified.
+% ４人の場合
+\ecmembers{Professor XXX XXX}{(Supervisor)}
+          {Professor XXX XXX}{(Co-supervisor)}
+          {Associate Professor XXX XXX}{(Co-supervisor)}
+          {Associate Professor XXX XXX}{(YY University)}
+%
+% ３人の場合
+%\ecmembers{Professor XXX XXX}{(Supervisor)}
+%          {Professor XXX XXX}{(Co-supervisor)}
+%          {Associate Professor XXX XXX}{(Co-supervisor)}
+%          {}{}
+%
+% ２人の場合
+% \ecmembers{Professor XXX XXX}{(Supervisor)}
+%           {Professor XXX XXX}{(Co-supervisor)}
+%           {}{}
+%           {}{}
+%
+% ５人目の宣言
+%\eaddcmembers{Professor 55 55}{(YY University)}
+%            {}{}
+%            {}{}
+%            {}{}
+%
+% ５〜６人目の宣言
+%\eaddcmembers{Professor 55 55}{(YY University)}
+%             {Professor 66 66}{(YY University)}
+%             {}{}
+%             {}{}
+%
+% ５〜７人目の宣言
+%\eaddcmembers{Professor 55 55}{(YY University)}
+%             {Professor 66 66}{(YY University)}
+%             {Professor 77 77}{(YY University)}
+%             {}{}
+%
+% ５〜８人目の宣言
+%\eaddcmembers{Professor 55 55}{(YY University)}
+%             {Professor 66 66}{(YY University)}
+%             {Professor 77 77}{(YY University)}
+%             {Professor 88 88}{(YY University)}
+%
+%
+%
+% キーワード５〜６個 (in LaTeX)
+%
+\keywords{$\pi$, 天文学, 数学, 計算機, アルゴリズム}
+%
+% キーワード５〜６個 (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は記入する必要なし。
+%       この情報は博士論文には現れませんが、管理のために必要です。
+%
+\pkeywords{pi, 天文学, 数学, 計算機, アルゴリズム}
+%
+% 5 or 6 Keywords (in LaTeX)
+%
+\ekeywords{$\pi$, astronomy, mathematics, computer, algorithm}
+%
+% 5 or 6 Keywords (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は記入する必要なし。
+%       この情報は博士論文には現れませんが、管理のために必要です。
+%
+\epkeywords{pi, astronomy, mathematics, computer, algorithm}
+%
+% 内容梗概 (in LaTeX)
+%
+%   注：本文が英語の論文の場合は、日本語の内容梗概はあってもなく
+%   てもかまいません。Abstractは必須です。
+%   注: 行の先頭が\\で始まらないようにすること。
+%
+\abstract{
+人類がこの地上に現われて以来、$\pi$の計算には多くの関心が払われてきた。
+
+本論文では、太陽と月を利用して$\pi$を低速に計算するための
+画期的なアルゴリズムを与える。
+
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+}
+%
+% 内容梗概 (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は記入する必要なし。
+%       この情報は博士論文には現れませんが、管理のために必要です。
+%       改行する箇所には空白行を入れる。
+%       行の先頭が\\で始まらないようにすること。
+%
+\pabstract{
+人類がこの地上に現われて以来、piの計算には多くの関心が払われてきた。
+
+本論文では、太陽と月を利用してpiを低速に計算するための
+画期的なアルゴリズムを与える。
+
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+ここには内容梗概を書く。ここには内容梗概を書く。ここには内容梗概を書く。
+}
+%
+% Abstract (in LaTeX)
+%　注：　英文のAbstract(eabstract)は、本文が日本語でも英語でも、かならず
+%    　　必要です。
+%  注: 　行の先頭が\\で始まらないようにすること。
+%
+\eabstract{
+The calculation of $\pi$ has been paid much attention since human beings
+appeared on the earth.
+
+This thesis presents novel low-speed algorithms to calculate
+$\pi$ utilizing the sun and the moon.
+
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+}
+%
+% Abstract (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は記入する必要なし。
+%       この情報は博士論文には現れませんが、管理のために必要です。
+%       改行する箇所には空白行を入れる。
+%       行の先頭が\\で始まらないようにすること。
+%
+\epabstract{
+The calculation of pi has been paid much attention since human beings
+appeared on the earth.
+
+This thesis presents novel low-speed algorithms to calculate
+pi utilizing the sun and the moon.
+
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+This is a sample abstract. This is a sample abstract. 
+}
+%%%%%%%%%%%%%%%%%%%%%%%%% document starts here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%
+% 表紙 および アブストラクト
+%
+\titlepage
+\cmemberspage
+\firstabstract
+\secondabstract
+%
+% 目次
+%
+\toc
+\newpage
+\listoffigures
+%\newpage
+\listoftables
+%
+% これ以降本文
+%
+\newpage
+\section{はじめに}
+\pagenumbering{arabic}
+
+はじめに はじめに はじめに はじめに はじめに はじめに はじめに はじめに 
+はじめに はじめに はじめに はじめに はじめに はじめに はじめに はじめに 
+はじめに はじめに はじめに はじめに はじめに はじめに はじめに はじめに 
+
+はじめに はじめに はじめに はじめに はじめに はじめに はじめに はじめに 
+はじめに はじめに はじめに はじめに はじめに はじめに はじめに はじめに 
+はじめに はじめに はじめに はじめに はじめに はじめに はじめに はじめに 
+
+\ref{kako}節では、過去における研究について述べ、
+\ref{kadai}章では、現状と今後の課題について述べる。
+また、付録\ref{omake1}におまけその１を添付する。
+
+
+\subsection{過去における研究}
+\label{kako}
+
+
+\begin{figure*}[t]
+ \centering
+ % \includegraphics[width=0.8\textwidth,keepaspectratio,clip]{fig/cnn.eps}
+ \caption{Convolutional Neural Network (CNN)}
+ \label{fig:CNN}
+\end{figure*}
+
+過去における研究としては\cite{alex_nips12}などがある。
+
+過去における研究 過去における研究 過去における研究 
+過去における研究 過去における研究 過去における研究 過去における研究 
+過去における研究 過去における研究 過去における研究 過去における研究 
+
+過去における研究 過去における研究 過去における研究 過去における研究 
+過去における研究 過去における研究 過去における研究 過去における研究 
+過去における研究 過去における研究 過去における研究 過去における研究 
+過去における研究 過去における研究 過去における研究 過去における研究 
+過去における研究 過去における研究 過去における研究 過去における研究 
+
+過去における研究 過去における研究 過去における研究 過去における研究 
+過去における研究 過去における研究 過去における研究 過去における研究 
+過去における研究 過去における研究 過去における研究 過去における研究 
+過去における研究 過去における研究 過去における研究 過去における研究 
+過去における研究 過去における研究 過去における研究 過去における研究 
+
+\subsection{研究の目的と意義}
+
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+
+\begin{figure}
+\centerline{ここに図を書く}
+\caption{これは図の例}
+\end{figure}
+
+\begin{table}
+\centerline{ここに表を書く}
+\caption{これは表の例}
+\end{table}
+
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+研究の目的と意義 研究の目的と意義 研究の目的と意義 研究の目的と意義 
+
+研究の目的と意義研究の目的と意義研究の目的と意義研究の目的と意義 
+研究の目的と意義研究の目的と意義研究の目的と意義研究の目的と意義 
+研究の目的と意義研究の目的と意義研究の目的と意義研究の目的と意義 
+研究の目的と意義研究の目的と意義研究の目的と意義研究の目的と意義 
+
+研究の目的と意義研究の目的と意義研究の目的と意義研究の目的と意義 
+研究の目的と意義研究の目的と意義研究の目的と意義研究の目的と意義 
+研究の目的と意義研究の目的と意義研究の目的と意義研究の目的と意義 
+研究の目的と意義研究の目的と意義研究の目的と意義研究の目的と意義 
+
+研究の目的と意義研究の目的と意義研究の目的と意義研究の目的と意義 
+研究の目的と意義研究の目的と意義研究の目的と意義研究の目的と意義 
+研究の目的と意義研究の目的と意義研究の目的と意義研究の目的と意義 
+研究の目的と意義研究の目的と意義研究の目的と意義研究の目的と意義 
+
+
+\newpage
+
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+This page is written in English. This page is written in English. 
+
+
+\newpage
+\section{現状と今後の課題}
+\label{kadai}
+
+現状と今後の課題 現状と今後の課題 現状と今後の課題 現状と今後の課題 
+現状と今後の課題 現状と今後の課題 現状と今後の課題 現状と今後の課題 
+現状と今後の課題 現状と今後の課題 現状と今後の課題 現状と今後の課題 
+現状と今後の課題 現状と今後の課題 現状と今後の課題 現状と今後の課題 
+
+現状と今後の課題 現状と今後の課題 現状と今後の課題 現状と今後の課題 
+現状と今後の課題 現状と今後の課題 現状と今後の課題 現状と今後の課題 
+現状と今後の課題 現状と今後の課題 現状と今後の課題 現状と今後の課題 
+現状と今後の課題 現状と今後の課題 現状と今後の課題 現状と今後の課題 
+
+現状と今後の課題 現状と今後の課題 現状と今後の課題 現状と今後の課題 
+現状と今後の課題 現状と今後の課題 現状と今後の課題 現状と今後の課題 
+現状と今後の課題 現状と今後の課題 現状と今後の課題 現状と今後の課題 
+現状と今後の課題 現状と今後の課題 現状と今後の課題 現状と今後の課題 
+
+%
+% 謝辞
+%
+\acknowledgements
+
+Thank you. Thank you.
+%
+% 参考文献
+% ここでは \reference を使って、自分でリストを作るか、BibTeX を使って
+% リストをつくって下さい。この例では BibTeX を作るような形式になってい
+% ます。
+%
+\newpage
+% \reference
+\bibliographystyle{plain}
+\bibliography{dthesis}
+%
+% 付録
+%
+\appendix
+
+\section{おまけその１}
+\label{omake1}
+
+これはおまけです。これはおまけです。これはおまけです。これはおまけです。
+これはおまけです。これはおまけです。これはおまけです。これはおまけです。
+これはおまけです。これはおまけです。これはおまけです。これはおまけです。
+これはおまけです。これはおまけです。これはおまけです。これはおまけです。
+
+\begin{figure}
+\centerline{これはおまけの図です。}
+\caption{おまけの図}
+\end{figure}
+
+
+\section{おまけその２}
+
+これもおまけです。これもおまけです。これもおまけです。これもおまけです。
+これもおまけです。これもおまけです。これもおまけです。これもおまけです。
+これもおまけです。これもおまけです。これもおまけです。これもおまけです。
+これもおまけです。これもおまけです。これもおまけです。これもおまけです。
+
+\end{document}
+

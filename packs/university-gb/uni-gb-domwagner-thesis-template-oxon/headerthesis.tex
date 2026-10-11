@@ -1,0 +1,168 @@
+\usepackage[bottom=3.5cm]{geometry}
+\usepackage[inline]{enumitem}
+\setlist[enumerate,1]{label={(\roman*)}}
+\usepackage{emptypage}
+\usepackage{bussproofs}
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+\usepackage{breakcites}
+
+
+\ifdraft
+\usepackage[firstpage]{draftwatermark}
+\else
+\usepackage{style/titleoxon}
+\fi
+\usepackage{appendix}
+\usepackage{fancyhdr}
+\usepackage{etoolbox}
+\usepackage{imakeidx}
+\usepackage{nomencl}
+\makenomenclature
+
+% print nomenclature nicely
+\renewcommand*{\nompreamble}{\begin{multicols}{2}}
+  \renewcommand*{\nompostamble}{\end{multicols}}
+\setlength{\columnsep}{5em}
+  
+\renewcommand\labelitemi{$-$}
+
+\newcommand{\defi}[1]{\emph{#1\index{#1}}}
+\newcommand{\defia}[2]{\emph{#1\index{#2}}}
+\newcommand{\defis}[2]{\emph{#1\index{#2!#1}}}
+\newcommand{\defias}[3]{\emph{#1\index{#3!#2}}}
+\newcommand{\defic}[2]{\emph{#1\index{#1}\index{#2|see {#1}}}}
+\newcommand{\deficd}[4]{\emph{#1\index{#2}\index{#3|see {#2}}\index{#4|see {#2}}}}
+
+
+
+\newlist{thmlist}{enumerate}{1}
+\setlist[thmlist]{label=\textup{(\roman{thmlisti})},ref={(\roman{thmlisti})},noitemsep}
+
+
+\makeatletter
+
+\renewcommand{\p@thmlisti}{\perh@ps{\thetheorem}}
+\protected\def\perh@ps#1#2{\textup{#1#2}}
+\newcommand{\itemrefperh@ps}[2]{\textup{#2}}
+\newcommand{\itemref}[1]{\begingroup\let\perh@ps\itemrefperh@ps Part~\ref{#1}\endgroup}
+\newcommand{\itemrefs}[2]{\begingroup\let\perh@ps\itemrefperh@ps Parts~\ref{#1} and~\ref{#2}\endgroup}
+
+
+% theorems
+\declaretheorem[
+    name=Theorem,
+    Refname={Theorem,Theorems},
+    numberwithin=chapter]{theorem}
+\declaretheorem[
+    name=Lemma,
+    Refname={Lemma,Lemmas},
+    sibling=theorem]{lemma}
+\declaretheorem[
+    name=Proposition,
+    Refname={Proposition,Propositions},
+    sibling=theorem]{proposition}
+\declaretheorem[
+    name=Corollary,
+    Refname={Corollary,Corollaries},
+    sibling=theorem]{corollary}
+\declaretheorem[
+    name=Claim,
+    Refname={Claim,Claims}
+    ]{claim}
+\declaretheorem[
+    name=Fact,
+    Refname={Fact,Facts},
+    sibling=theorem]{fact}
+\declaretheorem[
+    name=Conjecture,
+    Refname={Conjecture,Conjectures},
+    sibling=theorem]{conjecture}
+\theoremstyle{definition}
+\declaretheorem[
+    name=Definition,
+    Refname={Definition,Definitions},
+    sibling=theorem]{definition}
+\declaretheorem[
+    name=Example,
+    Refname={Example,Examples},
+    sibling=theorem]{example}
+\declaretheorem[
+    name=Convention,
+    Refname={Convention,Conventions},
+    sibling=theorem]{convention}
+\theoremstyle{remark}
+\declaretheorem[
+    name=Remark,
+    Refname={Remark,Remarks},
+    sibling=theorem]{remark}
+
+\declaretheoremstyle[
+    spaceabove=-4pt, 
+    spacebelow=6pt, 
+    headfont=\it, 
+    bodyfont = \normalfont,
+    postheadspace=1em, 
+    qed=$\blacksquare$, 
+    headpunct={.}]{myproofstyle} %<---- change this name
+\declaretheorem[name={Proof}, style=myproofstyle, unnumbered]{claimproof}
+
+% reset claim counter at the beginning of each proof
+\let\oldproof\proof
+\let\oldendproof\endproof
+\def\proof{\setcounter{claim}{0}\begingroup\oldproof}
+\def\endproof{\oldendproof \endgroup}
+
+\usepackage[final,
+bookmarks,
+bookmarksopen,
+% bookmarksnumbered,
+colorlinks,
+final,
+linkcolor=oxlightblue,
+%citecolor=black!50!brown,
+citecolor=oxgold,
+%backref,
+pdfstartview=FitH ]{hyperref}
+% \fi
+\usepackage[capitalize]{cleveref}
+
+
+\Crefname{thm}{Theorem}{Theorems}
+\Crefname{cor}{Corollary}{Corollary}
+\Crefname{prop}{Proposition}{Propositions}
+\Crefname{claim}{Claim}{Claim}
+\Crefname{defn}{Definition}{Definitions}
+\Crefname{fact}{Fact}{Facts}
+\Crefname{conj}{Conjecture}{Conjectures}
+\Crefname{example}{Example}{Examples}
+\Crefname{convention}{Convention}{Conventions}
+\Crefname{lemma}{Lemma}{Lemmas}
+
+
+\addtotheorempostheadhook[theorem]{\crefalias{thmlisti}{theorem}}
+\addtotheorempostheadhook[lemma]{\crefalias{thmlisti}{lemma}}
+\addtotheorempostheadhook[proposition]{\crefalias{thmlisti}{proposition}}
+\addtotheorempostheadhook[corollary]{\crefalias{thmlisti}{corollary}}
+\addtotheorempostheadhook[claim]{\crefalias{thmlisti}{claim}}
+\addtotheorempostheadhook[fact]{\crefalias{thmlisti}{fact}}
+\addtotheorempostheadhook[conjecture]{\crefalias{thmlisti}{conjecture}}
+\addtotheorempostheadhook[example]{\crefalias{thmlisti}{example}}
+
+
+
+
+% Set high/infinite penalties for inappropriate line breaking.
+\binoppenalty=\maxdimen
+\relpenalty=\maxdimen
+\clubpenalty10000
+\widowpenalty10000
+\displaywidowpenalty=10000
+
+\fancyfoot{}
+\fancyhead[RO,LE]{\thepage}
+\fancyhead[LO]{\rightmark}
+\fancyhead[RE]{\leftmark}
+
+\allowdisplaybreaks
+
+\makeindex[intoc,title=Index]

@@ -1,0 +1,125 @@
+%%%% Originalvorlage von Friedrich Günther, angepasst von Alexander Rogovskyy 
+
+\documentclass[12pt, twocolumn=false, twoside=false, DIV=calc]{scrartcl} %Setup der Dokumentklasse; Schriftgröße, Zweispaltiger Satz (aus), Zweiseitiger Satz (aus), Satzspiegelberechnung (klassischer Buchsatzspiegel)
+
+\usepackage{iftex}
+\ifluatex
+	\usepackage{fontspec}
+\else
+	\usepackage[utf8]{inputenc} %Eingabekodierung nach UTF8-Unicode, Erlaubt direkte Eingabe von Umlauten etc.
+	\usepackage[T1]{fontenc} %Paket für verbesserten Schriftsupport
+\fi
+
+
+\usepackage[ngerman]{babel} %Neue deutsche Trennreglen, klappt auch mit Lua/Xe
+
+\usepackage{lmodern} %Wechsel zur Schrift "Latin Modern", eine verbesserte Version der Standard-TeX-Schrift "Computer Modern"
+\renewcommand{\bfdefault}{b} %Wechsel der Standard-Fettschrift
+
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes} %TODO's
+
+\usepackage{scrlayer-scrpage} %Zusatzpaket für die Dokumentklasse für Seitenkopf, Seitenfuß, ...
+\pagestyle{scrheadings} %Einstellung des Seitenstils
+\setkomafont{disposition}{\bfseries} %Überschriften in fett und mit Serifen 
+
+\usepackage{amsmath}
+\usepackage{mathtools, amssymb, dsfont, IEEEtrantools} %Pakete für Mathematik-Satz; erweitertes amsmath-Paket, Symbole (griechisches Alphabet etc.), passende doppelt gestrichene Buchstaben, Paket für verbessertes eqnarray
+\usepackage{xcolor} %Paket für Verwendung von Farben
+\usepackage{graphicx} %Paket zur Einbindung von Grafiken
+\usepackage{tikz} %Paket zur Erstellung von Vektorgrafiken und Diagrammen
+\usetikzlibrary{cd, babel} %TikZ-Paket "cd" zur Erstellung kommutativer Diagramme; babel ist nötig, damit das Paket in nicht-englischsprachigen Dokumenten funktioniert
+\usepackage[colorlinks=true, linktoc=all, linkcolor=red, urlcolor=red]{hyperref} %Paket für die Erstellung von Hyperlinks innerhalb des Dokuments inklusive "Farb-Setup"
+
+\usepackage{enumitem} %Paket für besser konfigurierbare Aufzählungen
+\setlist{listparindent=\parindent, parsep=0pt} %Standardeinstellung für Aufzählungen; gleicher Absatzeinzug wie im Dokument, kein zusätzlicher Abstand zwischen einzelnen Punkten
+
+\renewcommand{\labelenumi}{$\mathrm{(\roman{enumi})}$} %Erzwungen aufrechter kleiner römischer Bezeichner für Aufzählungen in erster Hierarchie-Ebene
+\renewcommand{\labelenumii}{$\mathrm{(\arabic{enumii})}$} %Erzwungen aufrechter arabischer Bezeichner für Aufzählungen in zweiter Hierarchie-Ebene
+\renewcommand{\labelenumiii}{$\mathrm{(\alph{enumiii})}$} %Erzwungen aufrechter kleiner lateinischer Bezeichner für Aufzählungen in dritter Hierarchie-Ebene
+
+\usepackage{nicefrac}
+\usepackage[style=german]{csquotes} %Paket für korrekte Anführungszeichen; Verwendung: \enquote{<Satz/Wörter/Wort>}, zum Beispiel \enquote{lustig}.
+
+\clubpenalty10000 %Setzt die Strafe für Schusterjungen und Hurenkindern auf die höchste Stufe, die LaTeX kennt -- verhindert diese Art von typographischen Schweinereien
+\widowpenalty10000
+
+\usepackage[amsmath, thmmarks, hyperref]{ntheorem} %Paket zur Definition mathematischer Umgebungen wie Satz, Definition, ...
+
+\theoremstyle{plain}
+\theoremheaderfont{\normalfont\bfseries}
+\theorembodyfont{\itshape}
+\theoremseparator{:}
+\theorempreskip{\topsep}
+\theorempostskip{\topsep}
+\theoremindent0cm
+\theoremnumbering{arabic}
+%\theoremsymbol{\ensuremath{\square}}
+\newtheorem*{Lemma}{Lemma}
+
+\theoremstyle{plain}
+\theoremheaderfont{\normalfont\bfseries}
+\theorembodyfont{\upshape}
+\theoremseparator{:}
+\theorempreskip{\topsep}
+\theorempostskip{\topsep}
+\theoremindent0cm
+\theoremnumbering{arabic}
+\theoremsymbol{}
+\newtheorem{Aufgabe}{Aufgabe}
+\newtheorem*{Loesung}{Lösung}
+\newtheorem*{Definition}{Definition}
+
+\theoremstyle{plain}
+\theoremheaderfont{\normalfont\bfseries}
+\theorembodyfont{\upshape}
+\theoremseparator{:}
+\theorempreskip{\topsep}
+\theorempostskip{\topsep}
+\theoremindent0cm
+\theoremnumbering{arabic}
+\theoremsymbol{\ensuremath{\square}}
+\newtheorem*{Proof}{Proof}
+
+%---------- Design ---------
+
+% Points in the topright corner
+% <dark magic>
+\makeatletter
+\newcommand{\Repeat}[1]{%
+    \expandafter\@Repeat\expandafter{\the\numexpr #1\relax}%
+}
+
+\def\@Repeat#1{%
+    \ifnum#1>0
+        \expandafter\@@Repeat\expandafter{\the\numexpr #1-1\expandafter\relax\expandafter}%
+    \else
+        \expandafter\@gobble
+    \fi
+}
+\def\@@Repeat#1#2{%
+    \@Repeat{#1}{#2}#2%
+}
+\makeatother
+% </dark magic>
+\newcounter{headertask}
+\setcounter{headertask}{\firsttask{}-1}
+\newcommand{\insertpoints}{\begin{tikzpicture}[remember picture,overlay]
+	\node[yshift=-7\baselineskip, xshift=0.7\paperwidth] at (current page.north west) [text width=5cm,text centered,above right]{\Large{\begin{tabular}{\Repeat{\numtasks}{c|}c}
+		\Repeat{\numtasks}{\stepcounter{headertask}\the\value{headertask} & }
+		$\displaystyle\sum$ \\ \hline \Repeat{\numtasks}{&} \end{tabular}}};
+\end{tikzpicture}%	
+}
+
+% Title, Authors etc.
+\newcommand{\inserthead}{
+\begin{center}
+	\textbf{\course{}} \\
+	\emph{\sheet{}}
+\end{center}
+
+\noindent\rule{\textwidth}{1pt}
+\small{\authors{}}
+}
+
+
+\setcounter{section}{\firsttask{}-1}

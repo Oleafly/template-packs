@@ -1,0 +1,377 @@
+% Page setup
+ %The following defines an A4 page with classical margin distribution according to the French canon des ateliers: https://tex.stackexchange.com/questions/249190/recommended-margin-and-binding-offset
+\usepackage[paperheight=297mm,paperwidth=210mm, bindingoffset=0mm,verbose,marginratio={4:6,5:7},textwidth=140mm,height=213mm,twoside, nomarginpar]{geometry}
+
+% Text and font-related packages
+\usepackage[utf8]{inputenc}
+\usepackage[german, english]{babel}
+\usepackage{newtxtext, newtxmath, cabin}
+\usepackage[scaled=0.8]{beramono}
+\usepackage[T1]{fontenc}
+\usepackage{anyfontsize}
+
+% Math, chemistry, table and figure-related packages
+\usepackage{bm}
+\usepackage{braket}
+\usepackage{dsfont}
+\usepackage{etaremune}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{multicol}
+\usepackage{slantsc}
+\usepackage[table]{xcolor}
+\usepackage{xstring}
+\usepackage[version=4]{mhchem}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{setspace}
+\usepackage{lipsum}
+\usepackage{enumitem}
+\usepackage{pdflscape}
+\usepackage{tocbasic}
+\usepackage{placeins}
+
+% Table of content style
+\DeclareTOCStyleEntry[beforeskip=6pt plus 1pt minus 1pt]{tocline}{chapter}
+
+\makeatletter
+
+% CAPTIONS
+\usepackage[font=small, labelfont=bf]{caption, subcaption}
+
+\def\sublabels#1{\foreach \sublabel in {a,b,...,j}
+    {\phantomsubcaption\label{#1_\sublabel}}}
+
+% GRAPHICS:
+\usepackage{tikz}
+
+\usetikzlibrary{positioning}
+
+
+% CHAPTER AND SECTION HEADINGS:
+\usepackage[immediate]{silence}
+\WarningFilter[temp]{latex}{Command} % silence the warning
+\usepackage{sectsty}
+\DeactivateWarningFilters[temp] % So nothing unrelated gets silenced
+\allsectionsfont{\sffamily}
+
+% EPIGRAPHS
+\usepackage{epigraph}
+\setlength{\epigraphwidth}{0.42\textwidth}
+\def\@epitext#1{%
+    \begin{minipage}{\epigraphwidth}
+        \begin{\textflush}
+            \itshape #1
+        \end{\textflush}
+        \vspace*{1ex}
+    \end{minipage}
+    }
+
+\def\@episource#1{%
+    \begin{minipage}{\epigraphwidth}
+        \begin{\sourceflush}
+            ---#1
+        \end{\sourceflush}
+    \end{minipage}
+    }
+
+% HEADERS AND FOOTERS
+\usepackage{fancyhdr}
+\usepackage[breakall, fit]{truncate}
+
+\pagestyle{fancy}
+
+\fancyhf{}
+
+\def\headerline#1{\MakeUppercase{\truncate{0.7\linewidth}{#1}}}
+
+\def\chaptermark#1{\markboth
+    {\if@mainmatter\thechapter\quad\fi\headerline{#1}}
+    {\headerline{#1}\if@mainmatter\quad\thechapter\fi}}
+
+\def\sectionmark#1{\markright
+    {\headerline{#1}\if@mainmatter\quad\thesection\fi}}
+
+\fancyhead[OL]\leftmark
+\fancyhead[ER]\rightmark
+\fancyhead[OR]\thepage
+\fancyhead[EL]\thepage
+
+\setlength\headheight{14pt}
+\def\headrulewidth{0.4pt}
+\def\footrulewidth{0pt}
+
+% COLORS
+\definecolor{linkcolor}{rgb}{0.5, 0.0, 0.0}
+\definecolor{basiccolor}{rgb}{0.1, 0.3, 0.5}
+\definecolor{commentcolor}{rgb}{0.5, 0.5, 0.5}
+\definecolor{identifiercolor}{rgb}{0.2, 0.2, 0.2}
+\definecolor{keywordcolor}{rgb}{0.0, 0.4, 0.8}
+\definecolor{numbercolor}{rgb}{0.5, 0.5, 0.5}
+\definecolor{stringcolor}{rgb}{0.0, 0.4, 0.8}
+
+% SOURCE CODE LISTINGS 
+\usepackage{listings}
+\lstdefinelanguage{f90}{
+    keywords = {
+        allocate,
+        enddo,
+        read,
+        external,
+        call,
+        size,
+        if,
+        then,
+        open,
+        write,
+        close,
+        endif,
+        module,
+        use,
+        only,
+        save,
+        integer,
+        allocatable,
+        real,
+        logical,
+        end,
+        complex,
+        do,
+        cycle,
+        character,
+        namelist,
+        return,
+        subroutine,
+        intent,
+        },
+    comment = [l]{!},
+    string = [d]',
+    morestring = [d]",
+    sensitive = false,
+    %
+    escapeinside = ||,
+    moredelim=**[is][\color{red}\underbar]{>>}{<<},
+    }
+
+\lstdefinelanguage{py}{
+    keywords = {
+        and,
+        as,
+        assert,
+        break,
+        class,
+        continue,
+        def,
+        del,
+        elif,
+        else,
+        except,
+        exec,
+        finally,
+        for,
+        from,
+        global,
+        if,
+        import,
+        in,
+        is,
+        lambda,
+        not,
+        or,
+        pass,
+        print,
+        raise,
+        return,
+        try,
+        while,
+        with,
+        yield,
+        },
+    comment = [l]{\#},
+    string = [b]',
+    morestring = [s]{r'}{'},
+    morestring = [b]",
+    morestring = [s]{r"}{"},
+    sensitive = true,
+    }
+
+\lstdefinelanguage{bash}{
+    keywords = {
+        in,
+        do,
+        done,
+        for,
+        mpirun,
+        python3,
+        tee,
+        test,
+        },
+    alsoletter = {., -, /, :},
+    comment = [l]{\#},
+    string = [b]',
+    morestring = [b]",
+    sensitive = true,
+    }
+
+\lstdefinelanguage{qe}{
+    comment = [l]{!},
+    string = [d]',
+    }
+
+\lstset{
+    basicstyle = \color{basiccolor} \ttfamily,
+    commentstyle = \color{commentcolor},
+    identifierstyle = \color{identifiercolor},
+    keywordstyle = \color{keywordcolor} \bfseries,
+    numberstyle = \color{numbercolor} \scriptsize,
+    stringstyle = \color{stringcolor},
+    %
+    numbers = left,
+    showstringspaces = false,
+    breaklines = false,
+    breakatwhitespace = true,
+    showlines = true,
+    %
+    aboveskip = 3mm,
+    belowskip = 3mm,
+    numbersep = 3mm,
+    }
+
+% Marco Daniel @ https://tex.stackexchange.com/questions/34094/suppress-line-numbering-for-specific-lines-in-listings-package
+
+\def\lstnew{%
+    \lst@AddToHook{OnNewLine}{%
+    \def\thelstnumber{+}%
+    \color{red}%
+    \definecolor{commentcolor}{named}{red}%
+    \definecolor{identifiercolor}{named}{red}%
+    \definecolor{keywordcolor}{named}{red}%
+    \definecolor{numbercolor}{named}{red}%
+    \definecolor{stringcolor}{named}{red}%
+    \advance\c@lstnumber-\@ne}}
+
+\def\lstold{\expandafter\gdef\csname\@lst hk@OnNewLine\endcsname{}}
+
+\newcommand\code[2][bash]{\text{\lstinline[language=#1]{#2}}}
+
+% ACRONYMS:
+\usepackage{acronym} % printonlyused, withpage
+\usepackage{letltxmacro}
+\renewcommand*{\aclabelfont}[1]{\textbf{\boldmath\acsfont{#1}}} %https://tex.stackexchange.com/questions/229930/bolding-math-acronyms
+
+
+\def\acromod#1{#1}
+
+\foreach \acromacro in {acro,acroplural} {
+    \expandafter\xdef\csname\acromacro new\endcsname##1{%
+        \noexpand\@ifnextchar[
+            {\csname\acromacro newopt\endcsname{##1}}
+            {\csname\acromacro newnop\endcsname{##1}}}
+    \expandafter\xdef\csname\acromacro newopt\endcsname##1[##2]##3{%
+        \csname\acromacro old\endcsname{##1}[##2]{%
+            \noexpand\protect\noexpand\acromod ##3}}
+    \expandafter\xdef\csname\acromacro newnop\endcsname##1##2{%
+        \csname\acromacro old\endcsname{##1}{%
+            \noexpand\protect\noexpand\acromod ##2}}
+    }
+
+\foreach \acrosuffix in {,f,l,s,p,fp,lp,sp,fi,lu} {
+    \edef\acromacro{ac\acrosuffix}
+    \edef\Acromacro{Ac\acrosuffix}
+    \protected\expandafter\xdef\csname \Acromacro\endcsname{%
+        \noexpand\@ifstar
+            {\csname @\Acromacro star\endcsname}
+            {\csname @\Acromacro nost\endcsname}}
+    \expandafter\xdef\csname @\Acromacro star\endcsname##1{%
+        {\noexpand\let\noexpand\acromod\noexpand\MakeUppercase%
+            \csname \acromacro\endcsname*{##1}}}
+    \expandafter\xdef\csname @\Acromacro nost\endcsname##1{%
+        {\noexpand\let\noexpand\acromod\noexpand\MakeUppercase%
+            \csname \acromacro\endcsname{##1}}}
+    }
+
+\def\ainclude#1{\include{#1}\input{#1.uac}}
+\def\tinclude#1{\include{#1}\input{#1.uac}}
+
+% DEDICATION page
+\newenvironment{dedication}
+  {
+   \thispagestyle{empty}
+   \vspace*{\stretch{1}}
+   \itshape             
+   \raggedleft
+  }
+  {\par
+   \vspace{\stretch{3}}
+   \clearpage          
+  }
+
+
+% BIBLIOGRAPHY: This uses APSREV 4.1 standards, change as needed
+\usepackage[numbers, sort&compress]{natbib}
+\bibliographystyle{apsrev4-1}
+
+\def\ccite#1{Ref\IfSubStr{#1}{,}{s}{}.~\citenum{#1}}
+\def\cfcite#1{\cf{\ccite{#1}}}
+
+% HYPERLINKS (shown in red color if print=true, otherwise they stay black)
+\ifprint
+\usepackage[pdfa, hidelinks, allcolors=linkcolor, backref=page, pdfencoding=auto]{hyperref}
+\else
+\usepackage[pdfa, colorlinks, allcolors=linkcolor, backref=page, pdfencoding=auto]{hyperref}
+\fi
+
+\def\backref#1{}
+\def\backrefalt#1#2#3#4{\ifcase#1 Not cited\or Cited on page~#2\else Cited on pages~#2\fi.}
+
+\backrefparscanfalse
+\def\BibitemShut#1{\csname bibitem#1\endcsname\backrefprint}%
+\usepackage{hypernat}
+
+% REFERENCES
+\usepackage[capitalise]{cleveref}
+
+\crefname{appendix}{App.}{Apps.}
+\crefname{chapter}{Chap.}{Chaps.}
+\crefname{equation}{Eq.}{Eqs.}
+\crefname{figure}{Fig.}{Figs.}
+\crefname{section}{Sec.}{Secs.}
+\crefname{table}{Tab.}{Tabs.}
+\Crefname{appendix}{Appendix}{Appendices}
+\Crefname{chapter}{Chapter}{Chapters}
+\Crefname{equation}{Equation}{Equations}
+\Crefname{figure}{Figure}{Figures}
+\Crefname{section}{Section}{Sections}
+\Crefname{table}{Table}{Tables}
+
+\creflabelformat{equation}{#2\textup{#1}#3}
+
+\def\creflastconjunction{, and~}
+
+\makeatother
+\def\see#1{(#1)}
+\def\cf#1{\see{cf.\@ #1}}
+\def\cfref#1{\cf{\cref{#1}}}
+\def\seeref#1{\see{\cref{#1}}}
+\makeatletter
+
+% Heiko Oberdiek @ https://tex.stackexchange.com/questions/340492/can-cref-be-made-to-ignore-spaces
+\let\org@@cref\@cref
+\renewcommand*{\@cref}[2]{%
+  \begingroup
+    \toks@={}%
+    \comma@parse{#2}\add@cref@item
+  \edef\process@me{\endgroup
+    \noexpand\org@@cref{#1}{\the\toks@}%
+  }\process@me
+}
+\newcommand*{\add@cref@item}[1]{%
+  \expandafter\ifx\expandafter\\\the\toks@\\%
+    \toks@{#1}%
+  \else
+    \toks@\expandafter{\the\toks@,#1}%
+  \fi
+}
+
+\makeatother

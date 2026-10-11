@@ -1,0 +1,389 @@
+﻿% !TeX program = xelatex
+% !TeX encoding = UTF-8
+% ============================================================================
+% 河南大学非全日制嵌入式专业《嵌入式系统》实验报告 LaTeX 模板
+% ============================================================================
+% 【给第一次使用 LaTeX 的同学】
+% 1. 本模板只有这一个 .tex 源文件，所有需要修改的内容都在本文件中。
+% 2. 请使用 XeLaTeX 编译，不能使用 pdfLaTeX，否则中文可能无法显示。
+% 3. 最先修改下方“第一部分：报告基本信息”，再依次替换正文示例。
+% 4. 实验图片统一放进 image 文件夹，不要删除 image/henan.png（校徽）。
+% 5. 一行以百分号开头的内容是注释，只用于说明，不会出现在 PDF 中。
+% 6. 文件必须保存为 UTF-8 编码。
+% ============================================================================
+
+\documentclass[UTF8,zihao=-4,a4paper,oneside]{ctexart}
+
+% ============================================================================
+% 第一部分：报告基本信息（每次实验主要修改这里）
+% ============================================================================
+% 只修改每对花括号 {} 中的文字，不要删除命令名、反斜杠或花括号。
+\newcommand{\SchoolName}{河南大学}
+\newcommand{\CollegeName}{XX 学院}
+\newcommand{\MajorName}{XX 专业}
+\newcommand{\CourseName}{嵌入式系统}
+\newcommand{\ReportName}{实验报告}
+\newcommand{\ExperimentTitle}{实验一：GPIO 输出与 LED 控制}
+\newcommand{\ExperimentSubtitle}{基于某某嵌入式开发板}
+\newcommand{\StudentName}{张三}
+\newcommand{\StudentID}{202600000000}
+\newcommand{\ClassName}{XX 班级}
+\newcommand{\TeacherName}{高伟}
+\newcommand{\CompleteDate}{\today} % 也可改成：2026 年 9 月 1 日
+
+% ============================================================================
+% 第二部分：宏包与排版设置（普通使用者一般不需要修改）
+% ============================================================================
+\usepackage{geometry}                  % 设置页边距
+\geometry{left=2.6cm,right=2.6cm,top=2.7cm,bottom=2.5cm,headheight=15pt}
+\usepackage{graphicx}                 % 插入图片
+\graphicspath{{image/}}               % 图片默认从 image 文件夹中查找
+\usepackage{xcolor}                   % 使用颜色
+\usepackage{booktabs}                 % 绘制三线表
+\usepackage{tabularx}                 % 自动调整宽度的表格
+\usepackage{array}                    % 增强表格功能
+\usepackage{amsmath,amssymb}          % 数学公式
+\usepackage{siunitx}                  % 规范书写物理量和单位
+\sisetup{per-mode=symbol}
+\usepackage{enumitem}                 % 设置列表格式
+\setlist{nosep,leftmargin=2em}
+\usepackage{float}                    % 提供 [H]，使图片尽量放在当前位置
+\usepackage{caption}                  % 设置图表标题
+\captionsetup{font=small,labelsep=quad}
+\usepackage{titlesec}                 % 设置章节标题样式
+\usepackage{fancyhdr}                 % 设置页眉页脚
+\usepackage{lastpage}                 % 在页脚显示总页数
+\usepackage{listings}                 % 插入并高亮源代码
+\usepackage{tikz}                     % 绘图，也用于校徽水印
+\usetikzlibrary{positioning}
+\usepackage{eso-pic}                  % 在每一页背景中放置水印
+\usepackage{hyperref}                 % 目录、引用和网址可点击
+\usepackage[nameinlink,noabbrev]{cleveref} % 使用 \cref 自动引用图、表、代码
+
+% 模板主色。需要更换颜色时，只修改 RGB 数值即可。
+\definecolor{HENUBlue}{RGB}{31,78,121}
+\definecolor{CodeBackground}{RGB}{247,247,247}
+\definecolor{CodeGreen}{RGB}{40,120,65}
+\definecolor{CodeRed}{RGB}{160,35,35}
+
+% PDF 链接颜色与元数据。
+\hypersetup{
+  colorlinks=true,
+  linkcolor=HENUBlue,
+  citecolor=HENUBlue,
+  urlcolor=HENUBlue,
+  pdfauthor={\StudentName},
+  pdftitle={\ExperimentTitle}
+}
+
+% 一级、二级标题格式。
+\titleformat{\section}
+  {\Large\bfseries\color{HENUBlue}}
+  {\colorbox{HENUBlue}{\textcolor{white}{\thesection}}}
+  {0.7em}{}
+  [\vspace{0.2em}\titlerule]
+\titleformat{\subsection}
+  {\large\bfseries\color{HENUBlue}}
+  {\thesubsection}{0.7em}{}
+
+% 页眉页脚。
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\CourseName}
+\fancyhead[C]{\ReportName}
+\fancyhead[R]{\SchoolName}
+\fancyfoot[C]{第 \thepage\ 页，共 \pageref*{LastPage} 页}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% 源代码显示格式。
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{CodeBackground},
+  keywordstyle=\bfseries\color{HENUBlue},
+  commentstyle=\itshape\color{CodeGreen},
+  stringstyle=\color{CodeRed},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=8pt,
+  frame=single,
+  rulecolor=\color{black!25},
+  breaklines=true,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+  tabsize=4,
+  captionpos=b
+}
+\renewcommand{\lstlistingname}{代码}
+
+% ============================================================================
+% 第三部分：河南大学校徽水印（一般不要修改）
+% ============================================================================
+% Watermark transparency is embedded in the PNG alpha channel.
+% This avoids the first-use opacity issue that can occur with XeLaTeX/TikZ.
+% Keep image/henan-watermark.png; width below controls watermark size.
+\newcommand{\HENUWatermark}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node at (current page.center)
+      {\includegraphics[width=0.42\paperwidth]{henan-watermark.png}};
+  \end{tikzpicture}%
+}
+
+% ============================================================================
+% 第四部分：文档正文
+% ============================================================================
+\begin{document}
+
+% 封面结束后才会启用中央水印，详见封面代码之后的说明。
+
+% ----------------------------------------------------------------------------
+% 封面：只显示顶部校徽，不显示页面中央水印。
+% ----------------------------------------------------------------------------
+\hypersetup{pageanchor=false} % 避免封面和目录的页码锚点重复
+\begin{titlepage}
+  \thispagestyle{empty}
+  \begin{center}
+    \vspace*{0.5cm}
+    \includegraphics[width=0.22\textwidth]{henan.png}\\[0.8cm]
+
+    {\zihao{1}\bfseries \SchoolName\par}
+    \vspace{0.7cm}
+    {\zihao{2}\bfseries \CourseName\,\ReportName\par}
+    \vspace{1.6cm}
+    {\zihao{3}\bfseries\color{HENUBlue} \ExperimentTitle\par}
+    \vspace{0.5cm}
+    {\zihao{-3} \ExperimentSubtitle\par}
+  \end{center}
+
+  \vfill
+  \begin{center}
+    \renewcommand{\arraystretch}{1.65}
+    \begin{tabular}{>{\bfseries}r l}
+      学校： & \SchoolName \\
+      学院： & \CollegeName \\
+      专业： & \MajorName \\
+      班级： & \ClassName \\
+      姓名： & \StudentName \\
+      学号： & \StudentID \\
+      指导教师： & \TeacherName \\
+      完成日期： & \CompleteDate \\
+    \end{tabular}
+  \end{center}
+  \vfill
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+% Enable the watermark only after the title page has been shipped out.
+% The watermark PNG already contains transparency; do not add TikZ opacity here.
+\AddToShipoutPictureBG{\HENUWatermark}
+
+% ----------------------------------------------------------------------------
+% 目录：章节标题改变后，通常要编译两次，目录页码才会完全更新。
+% ----------------------------------------------------------------------------
+\pagenumbering{Roman}
+\pagestyle{plain}
+\renewcommand{\contentsname}{目\quad 录}
+\tableofcontents
+\clearpage
+
+% 正文页码从 1 开始，恢复页眉页脚。
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\pagestyle{fancy}
+
+% ============================================================================
+% 以下是实验报告示例。请根据本次实验要求替换文字，不要直接保留示例数据。
+% 如果老师要求的章节名称不同，可以直接修改 \section{...} 中的文字。
+% ============================================================================
+
+\section{实验目的}
+% 写清楚完成实验后应掌握什么。建议使用具体、可验证的表述。
+\begin{enumerate}
+  \item 掌握嵌入式开发工程的创建、编译、下载和调试流程；
+  \item 理解 GPIO 端口的输入输出模式及关键配置参数；
+  \item 能够根据开发板原理图确定 LED 与处理器引脚的连接关系；
+  \item 编写 LED 周期性闪烁程序，并通过实际现象验证功能。
+\end{enumerate}
+
+\section{实验环境}
+% 型号与版本应写准确。不要只写“电脑一台、开发板一块”。
+\begin{table}[H]
+  \centering
+  \caption{实验软硬件环境}
+  \label{tab:environment}
+  \begin{tabularx}{0.9\textwidth}{>{\bfseries}l X}
+    \toprule
+    项目 & 型号或版本 \\
+    \midrule
+    处理器与开发板 & 请填写实际使用的处理器型号和开发板型号 \\
+    开发环境 & 请填写 IDE、编译器及版本 \\
+    调试工具 & 请填写调试器、串口工具或逻辑分析仪 \\
+    操作系统 & 请填写实验所用操作系统及版本 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\section{实验原理}
+\subsection{系统组成}
+% 这一节不是简单抄写教材。应结合本次实验说明处理器、外设和软件之间的关系。
+实验系统由嵌入式处理器、调试下载接口、LED 外设电路和上位机开发环境组成。处理器通过 GPIO 引脚控制 LED，程序经编译后由调试器下载到目标板中运行。
+
+\subsection{GPIO 工作原理}
+% 若引用数据手册中的结论，请在末尾的参考文献中列出来源。
+GPIO 通常可以配置为输入、推挽输出、开漏输出或复用功能等模式。本实验将连接 LED 的引脚配置为推挽输出。若 LED 为低电平点亮，其逻辑关系可表示为
+\begin{equation}
+  LED =
+  \begin{cases}
+    \text{点亮}, & V_{GPIO}=0,\\
+    \text{熄灭}, & V_{GPIO}=V_{DD}.
+  \end{cases}
+  \label{eq:led-logic}
+\end{equation}
+
+\section{系统设计}
+\subsection{硬件设计}
+% 插图方法：
+% 1. 把图片放入 image 文件夹；
+% 2. 将下面的 hardware-example.png 改为真实文件名；
+% 3. 删除前面的百分号即可显示图片。
+% 推荐 PNG/JPG 用于截图和照片，PDF 用于原理图或矢量图。
+%
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.82\textwidth]{hardware-example.png}
+%   \caption{与本实验相关的硬件原理图}
+%   \label{fig:hardware}
+% \end{figure}
+%
+% 正文引用图片时写：由\cref{fig:hardware}可知……
+
+根据开发板原理图确认 LED 所连接的处理器端口，并在表中记录。若 LED 与电源之间串联连接，则处理器输出低电平时可能形成电流通路，具体应以实际原理图为准。
+
+\begin{table}[H]
+  \centering
+  \caption{关键引脚连接}
+  \label{tab:pins}
+  \begin{tabular}{cccc}
+    \toprule
+    功能 & 处理器引脚 & 有效电平 & 备注 \\
+    \midrule
+    LED & PA5 & 低电平 & 示例，请按实际硬件修改 \\
+    调试串口 TX & PA9 & 高电平 & 可选 \\
+    调试串口 RX & PA10 & 高电平 & 可选 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{软件设计}
+程序首先初始化系统时钟和 GPIO，随后进入主循环，周期性翻转 LED 的输出电平。正式报告中建议在此插入本人绘制的程序流程图，并解释各模块之间的调用关系。
+
+\section{实验步骤与程序实现}
+\subsection{实验步骤}
+% 实验步骤应能让其他同学按照报告复现实验。
+\begin{enumerate}
+  \item 安装并配置课程要求的工具链，新建目标处理器工程；
+  \item 阅读芯片数据手册和开发板原理图，确定 LED 对应引脚；
+  \item 配置系统时钟和 GPIO 输出模式，编写主循环；
+  \item 编译工程，解决全部错误并检查重要警告；
+  \item 将程序下载到开发板，观察并记录实验现象；
+  \item 修改延时时间，对比 LED 闪烁频率的变化。
+\end{enumerate}
+
+\subsection{关键程序}
+% 只在正文中展示最关键的代码，并在代码后解释其作用。
+% language=C 也可按实际情况改成 C++、Python 等 listings 支持的语言。
+\begin{lstlisting}[language=C,caption={LED 控制核心逻辑},label={lst:led}]
+while (1) {
+    led_toggle();       // Toggle the GPIO output level
+    delay_ms(500U);     // Delay for 500 ms
+}
+\end{lstlisting}
+
+\cref{lst:led}每隔 \SI{500}{\milli\second} 翻转一次 LED 电平。实际项目中，阻塞式延时会占用处理器时间；后续可使用硬件定时器中断或 RTOS 延时机制进行改进。
+
+\section{实验结果与分析}
+\subsection{实验现象}
+% 这里必须放本人实际实验的照片、串口日志、示波器或逻辑分析仪结果。
+% 不要只写“实验成功”，也不要使用与实际平台无关的网络图片。
+程序下载后，LED 能够稳定、周期性闪烁。若高、低电平各保持 \SI{500}{\milli\second}，则理论周期和频率为
+\begin{equation}
+  T=t_{high}+t_{low}=\SI{1}{\second},\qquad
+  f=\frac{1}{T}=\SI{1}{\hertz}.
+\end{equation}
+
+% 下面是实验结果图片模板。放入真实图片后取消注释。
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.75\textwidth]{experiment-result.jpg}
+%   \caption{开发板实际运行结果}
+%   \label{fig:result}
+% \end{figure}
+
+\subsection{数据分析}
+% 测量值必须来自实际实验。相对误差=(测量值-理论值)/理论值×100%。
+\begin{table}[H]
+  \centering
+  \caption{理论值与测量值对比}
+  \label{tab:result}
+  \begin{tabular}{lccc}
+    \toprule
+    指标 & 理论值 & 测量值 & 相对误差 \\
+    \midrule
+    闪烁周期 & \SI{1.000}{\second} & 请填写 & 请填写 \\
+    GPIO 高电平电压 & 请填写 & 请填写 & 请填写 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{问题与解决过程}
+% 推荐按“现象—定位—原因—解决—验证”写，而不只是写最终答案。
+请记录实验中实际遇到的问题。例如：程序下载成功但 LED 不亮；随后核对原理图和 GPIO 配置，发现 LED 为低电平有效；修改初始输出电平后重新下载，LED 工作正常。
+
+\section{实验总结}
+% 总结应与前面的实验目的对应，不要大段重复实验步骤。
+本实验完成了 GPIO 输出与 LED 控制，熟悉了嵌入式工程从创建、编译、下载到调试的基本流程。通过核对原理图和观察实际现象，进一步理解了 GPIO 电平与外围电路之间的关系。后续可使用硬件定时器代替软件延时，以提高定时精度和处理器利用率。
+
+% ============================================================================
+% 参考文献（不需要时可以把本段全部注释掉）
+% ============================================================================
+% 正文引用示例：根据芯片数据手册\cite{datasheet}可知……
+% 每条 \bibitem 后的标签必须唯一。
+\clearpage
+\begin{thebibliography}{9}
+  \bibitem{datasheet}
+  芯片厂商名称. 目标处理器数据手册[Z]. 文档版本号, 2026.
+
+  \bibitem{textbook}
+  作者姓名. 嵌入式系统原理与应用[M]. 北京: 出版社名称, 2026.
+\end{thebibliography}
+
+% ============================================================================
+% 附录（不需要时可以删除或注释）
+% ============================================================================
+\appendix
+\section{完整程序代码}
+% 可直接在这里粘贴完整代码。若代码特别长，也可以作为独立工程随报告提交。
+\begin{lstlisting}[language=C,caption={完整程序结构示例}]
+#include <stdint.h>
+
+static void board_init(void) {
+    /* Initialize the clock and GPIO here. */
+}
+
+static void led_toggle(void) {
+    /* Toggle the actual LED pin here. */
+}
+
+int main(void) {
+    board_init();
+    while (1) {
+        led_toggle();
+        delay_ms(500U);
+    }
+}
+\end{lstlisting}
+
+\end{document}
+
+

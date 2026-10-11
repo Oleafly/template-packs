@@ -1,0 +1,40 @@
+% % 英文摘要环境定义（含\abstract和\keywords）
+% ===== 英文摘要环境定义 =====
+
+% 设置主字体和衬线字体
+\IfFontExistsTF{Arial}{%
+  \setmainfont{Arial}\setsansfont{Arial}%
+}
+{%
+  \setmainfont{TeX Gyre Heros}\setsansfont{TeX Gyre Heros}%
+}
+
+% ===== 英文摘要环境定义 =====
+\newenvironment{enabstract}{%
+    \clearpage
+    \thispagestyle{toastyle} % 摘要页页眉页脚样式
+    \vspace*{0pt} % 顶部间距
+    \begin{center}
+        \bfseries\rmfamily\fontsize{14}{0}\selectfont Abstract % 设置"Abstract"为 Arial 加粗，四号字，居中
+    \end{center}
+    \vspace{12pt} % 标题与正文间距
+    \rmfamily  % 恢复衬线字体（Arial）
+    \fontsize{12}{20}\selectfont % 设置正文为 Arial 字体，小四号字
+    \setlength{\baselineskip}{20pt} % 设置行距为固定值 20pt
+    \setlength{\parindent}{2em} % 设置首行缩进为 2 字符
+    \setlength{\parskip}{0pt} % 设置段落间距为 0
+    \justifying % 设置两端对齐
+}
+{%
+    \par
+}
+% ===== 关键词命令定义 =====
+\newcommand{\enkeywords}[1]{%
+    \par\vspace{12pt}
+    \noindent
+    \textbf{\fontsize{12}{20}\selectfont Keywords:} % 设置"Keywords"为加粗的 Times New Roman 字体，小四号字
+    \fontsize{12}{20}\selectfont\ #1 % 关键词内容为 Times New Roman 字体，小四号字
+}
+
+
+

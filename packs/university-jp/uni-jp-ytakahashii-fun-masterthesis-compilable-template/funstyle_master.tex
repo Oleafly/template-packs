@@ -1,0 +1,156 @@
+% # 公立はこだて未来大学・修士論文書式定義ファイル
+%
+% （https://github.com/kmiya/naist-thesis-tmpl を一部参照）
+% 
+% ## 改訂履歴：
+% - 2019/11/18 初版　作成者：三上貞芳
+
+% ## 使用法；
+% - main.texを参照してください．
+% - **このファイルを変更する必要はありません**
+
+\usepackage[dvipdfmx]{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\let\equation\gather
+\let\endequation\endgather
+\usepackage{fancybox}
+\usepackage[flushmargin,symbol]{footmisc}
+\usepackage[nottoc]{tocbibind}
+\usepackage[dvipdfmx,%
+ bookmarks=true,%
+ bookmarksnumbered=true,%
+ setpagesize=false,%
+ colorlinks=false,%
+ linkbordercolor={0.8 0.8 0.8},%
+ citebordercolor={0.8 0.8 0.8},%
+ pdfborder={0 0 0.6},%
+% urlcolor=black,linkcolor=black,citecolor=black,%
+ pdftitle={\etitle},
+ pdfauthor={\eauthor},
+ pdfsubject={\edoctitle},
+ pdfkeywords={\ekeywords}
+]{hyperref}
+\usepackage{pxjahyper}
+
+% ページレイアウト
+\textheight=20.6truecm          % 縦
+\textwidth=14.5truecm           % 横
+\oddsidemargin=0.6truecm        % 左マージン（1inオフセット後）
+\evensidemargin=-3.8truecm      % 右マージン（1inオフセット後）
+
+% フォント等調整
+% 参考文献
+\def\thebibliography#1{
+  \chapter*{
+    参考文献\markboth{参 考 文 献}{参 考 文 献}
+    % \addcontentsline{toc}{chapter}{参考文献} % エラーのため，\addcontentsline は main.tex に移動.
+  }
+  \list{[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+  \advance\leftmargin\labelsep
+  \usecounter{enumi}}
+  % \def\newblock{\hskip .11trueem plus .33trueem minus -.07trueem} % エラーのため削除
+  \sloppy
+  \sfcode`\.=1000\relax
+}
+\let\endthebibliography=\endlist
+
+% 章
+\makeatletter%%
+\def\@makechapterhead#1{\hbox{}%
+  \vskip-1\Cvs
+  {\parindent\z@
+%  \reset@font\LARGE\bfseries
+   \raggedright\reset@font\Large\bfseries% 左揃え
+   \ifnum \c@secnumdepth >\m@ne
+     \setlength\@tempdima{\linewidth}%
+     \vtop{\hsize\@tempdima%
+         \@chapapp\thechapter\@chappos\mbox{\ \ }%
+     #1}%
+   \else
+     #1\relax
+   \fi}\nobreak\vskip1\Cvs}
+\makeatother%%
+
+\makeatletter%%
+\def\@makeschapterhead#1{\hbox{}%
+  \vskip-1\Cvs
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \Large\headfont #1\par\nobreak
+    \vskip1\Cvs}}
+\makeatother%%
+
+% 節
+\makeatletter%%
+\renewcommand{\section}{%
+  \@startsection{section}% #1 見出し
+   {1}% #2 見出しのレベル
+   {\z@}% #3 横組みの場合，見出し左の空き(インデント量)
+   {1.5\Cvs \@plus.5\Cdp \@minus.2\Cdp}% #4 見出し上の空き
+   {.5\Cvs \@plus.3\Cdp}% #5 見出し下の空き (負の値なら見出し後の空き)
+  {\raggedright\reset@font\large\bfseries}% 左揃え
+}%
+\makeatother%%
+
+% 小節
+\makeatletter%%
+\renewcommand{\subsection}{%
+  \@startsection{subsection}% #1 見出し
+   {1}% #2 見出しのレベル
+   {\z@}% #3 横組みの場合，見出し左の空き(インデント量)
+   {1.5\Cvs \@plus.5\Cdp \@minus.2\Cdp}% #4 見出し上の空き
+   {.5\Cvs \@plus.3\Cdp}% #5 見出し下の空き (負の値なら見出し後の空き)
+  {\raggedright\reset@font\normalsize\bfseries}% 左揃え
+}%
+\makeatother%%
+
+% 表題
+\makeatletter
+\def\@startsection#1#2#3#4#5#6{%
+  \if@noskipsec \leavevmode \fi
+  \par
+  \@tempskipa #4\relax
+  \if@english \@afterindentfalse \else \@afterindenttrue \fi
+  \ifdim \@tempskipa <\z@
+    \@tempskipa -\@tempskipa \@afterindentfalse
+  \fi
+  \if@nobreak
+    \everypar{}%
+  \else
+    \addpenalty\@secpenalty
+    \ifdim \@tempskipa >\z@
+      \vskip\@tempskipa
+      \if@slide\else
+        \null
+        \vspace{-\baselineskip}%
+      \fi
+    \fi
+  \fi
+  \noindent
+  \@ifstar
+    {\@ssect{#3}{#4}{#5}{#6}}%
+    {\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}}
+\makeatother
+
+% 式番号
+\makeatletter
+  \renewcommand{\theequation}{%
+  \thesection.\arabic{equation}}
+    \@addtoreset{equation}{section}
+\makeatother
+
+
+% 図番号
+\makeatletter
+ \renewcommand{\thefigure}{%
+  \thechapter.\arabic{figure}}
+   \@addtoreset{figure}{chapter}
+ \makeatother
+\makeatletter
+
+% 目次に小節を表示
+\setcounter{tocdepth}{4}

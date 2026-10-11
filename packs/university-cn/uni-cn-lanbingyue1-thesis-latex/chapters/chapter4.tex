@@ -1,0 +1,460 @@
+% !Mode:: "TeX:UTF-8"
+
+\chapter{系统的总体设计}\label{ch:4}
+
+\section{系统架构与原理}
+
+本系统采用前后端分离架构。前端负责页面展示、表单交互、图表渲染和结果呈现，后端负责权限控制、业务编排、统计计算与数据持久化，数据库保存课程、学生、体测、成绩、请假和日志等业务数据。AI 能力嵌入后端服务流程，在完成取数和数据整理后再调用模型，AI 输出与系统内真实数据保持一致。管理员、教师和学生通过角色、课程和学号形成不同的数据视图，导入、录入、修正、算分和分析问答均落在同一业务链路中。
+
+AI 模块设计中，模型调用入口由后端统一封装，模型供应商、访问密钥、模型名称、最大输出长度和异常回退开关等配置集中管理。系统通过 Spring AI 接入 OpenAI 兼容模型服务，业务代码不直接依赖某一个具体供应商。AI 分析以统计结果或学生历史记录为输入，由后端整理提示信息后生成分析结论；AI 问答将学生查询、课程查询、成绩统计、排行筛选、请假记录和教师范围等能力封装为可调用的数据接口，由模型根据问题选择所需数据。两类功能都在服务端完成取数、模型调用、结果净化和日志留痕，前端不直接接触底层模型调用细节。
+
+系统整体交互可以概括为：客户端通过浏览器访问前端页面，前端向后端接口发起业务请求，后端完成权限校验、业务处理和数据库读写后返回结果，前端将结果渲染为列表、图表、表单或提示信息。系统架构如图 \ref{fig:separated-architecture} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{fig4_2_architecture.png}
+  \caption{前后端分离架构}
+  \label{fig:separated-architecture}
+\end{figure}
+
+\section{系统功能模块设计}
+
+\subsection{整体功能模块设计}
+
+系统功能围绕管理员端、教师端、学生端和 AI 模块展开。管理员端负责用户与角色管理、课程维护、教师分配、学生基础信息、数据导入导出、成绩统计、日志审计和 AI 分析结果管理。教师端负责本人课程查看、体测数据录入、批量导入、成绩复核和请假审批。学生端负责个人登录、历史体测查询、课程安排查看和请假申请。AI 模块负责班级统计分析、学生历史分析和基于业务数据的智能问答。整体功能模块如图 \ref{fig:overall-modules} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{fig4_3_modules.png}
+  \caption{整体功能模块设计图}
+  \label{fig:overall-modules}
+\end{figure}
+
+\subsection{教师与学生相关模块设计}
+
+教师与学生相关模块围绕课程和学生个人数据展开。教师登录后只能查看本人负责的课程，在课程范围内完成体测项目录入、体测模板导出、成绩导入、请假审批和课程结果复核。学生登录后只能访问与本人学号相关的数据，包括历史体测成绩、当前课程安排、体测时间安排和个人请假记录。
+
+该设计通过课程、学生和教师之间的关联关系控制业务边界，教师操作与课程归属保持一致，学生查询与个人身份保持一致，降低越权访问和误操作风险。教师模块与学生模块分别如图 \ref{fig:teacher-modules} 和图 \ref{fig:student-modules} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.62\textwidth]{fig4_4_teacher_modules.png}
+  \caption{教师模块设计图}
+  \label{fig:teacher-modules}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.42\textwidth]{fig4_4_student_modules.png}
+  \caption{学生模块设计图}
+  \label{fig:student-modules}
+\end{figure}
+
+\subsection{管理员模块设计}
+
+管理员模块建立在现有管理端业务之上。除用户、课程、成绩和日志等基础功能外，管理员端还增加 AI 分析记录查询和 AI 问答入口。该模块先按学期、课程、班级、学生或教师负责范围提取数据，再整理为模型可用的输入材料，使分析文本和问答结论具有明确来源。
+
+AI 分析模块对应班级统计分析与学生历史分析两类场景，AI 问答模块对应管理端对学生、课程、班级和学期数据的查询解释场景。两类功能复用现有成绩统计、体测历史查询和请假记录查询能力，生成结果统一保存至分析日志表。模型服务不可用时，后端保留规则化分析结果作为兜底输出，同时记录异常情况。管理员模块如图 \ref{fig:admin-ai-modules} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.88\textwidth]{fig4_5_admin_ai.png}
+  \caption{管理员模块设计图}
+  \label{fig:admin-ai-modules}
+\end{figure}
+
+\section{数据库设计}
+
+数据库设计按照需求分析、概念结构设计和逻辑结构设计展开。前文已完成需求分析，本节说明系统中的实体关系和各张业务表在数据库中的组织方式。
+
+\subsection{数据库结构设计}
+
+数据库概念结构围绕“权限管理、课程组织、学生体测、成绩计算、请假审批、智能分析”六类核心业务展开。系统中的核心实体包括学生、课程、教师用户、体测记录、成绩结果、请假记录和 AI 分析日志等对象，它们通过学号、课程号、课程 ID 和体测记录 ID 等字段形成业务关联。为便于说明，本文先给出数据库 E-R 总图，再按当前设计顺序给出学生、课程、体测数据、请假记录、体测成绩和用户的实体属性图，如图 \ref{fig:er-overall} 至图 \ref{fig:user-entity} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth,height=0.72\textheight,keepaspectratio]{fig4_6_er.png}
+  \caption{数据库设计 E-R 关系图}
+  \label{fig:er-overall}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth,height=0.68\textheight,keepaspectratio]{fig4_7_student.png}
+  \caption{学生实体属性图}
+  \label{fig:student-entity}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth,height=0.68\textheight,keepaspectratio]{fig4_8_course.png}
+  \caption{课程实体属性图}
+  \label{fig:course-entity}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth,height=0.68\textheight,keepaspectratio]{fig4_9_fitness.png}
+  \caption{体测数据实体属性图}
+  \label{fig:fitness-entity}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth,height=0.68\textheight,keepaspectratio]{fig4_10_leave.png}
+  \caption{请假记录实体属性图}
+  \label{fig:leave-entity}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth,height=0.68\textheight,keepaspectratio]{fig4_11_score.png}
+  \caption{体测成绩实体属性图}
+  \label{fig:score-entity}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth,height=0.68\textheight,keepaspectratio]{fig4_12_user.png}
+  \caption{用户实体属性图}
+  \label{fig:user-entity}
+\end{figure}
+
+\subsection{数据库设计理由}
+
+数据库设计围绕“业务闭环、权限隔离和追溯可查”三个原则展开，以下从核心设计决策说明设计理由。
+
+（1）体测记录与成绩结果分表。体测记录表（fitness）保存学生各项原始测试数据，成绩表（score）保存评分计算结果。分表的原因是：同一份体测记录可能因标准更新或数据修正需要重新计算成绩，分表后体测记录的修正不影响历史评分记录的可追溯性，成绩重新计算时只需更新成绩表，不必重写体测记录。
+
+（2）学生与系统用户分表。学生账号保存在独立的 student 表中，与 t\_sys\_user 表分离。原因是：学生人数远多于管理员和教师，其字段需求（学号、班级、身份证号、民族等）与系统用户字段差异较大。分表后学生密码独立管理，学生通过独立入口登录，避免学生账号混入后台用户体系增加权限管理复杂度。
+
+（3）教师与课程的关联。通过 course\_teacher 关联表建立课程与教师之间的多对多关系，关联表中设置 project\_permissions 字段记录教师负责的体测项目。原因是：一门课程可由多位教师共同负责，部分教师可能只负责特定项目（如一位负责耐力跑、另一位负责力量项目）。关联表方式既支持教师按课程过滤数据，也支持按项目粒度控制录入权限。
+
+（4）AI 分析日志统一留痕。AI 分析与 AI 问答的输出均写入 ai\_analysis\_log 表，通过字段区分分析类型。原因是：避免为每种 AI 功能建立独立日志表增加维护成本，统一日志表便于按时间、学生、课程或学期等维度集中查询所有 AI 操作的输入输出记录，有利于后续质量评估和问题追溯。
+
+（5）请假记录与课程和体测的联动。请假记录表同时关联学生和课程，设置审批状态和特殊标签字段。原因是：请假审批结果需要影响对应课程体测记录的处理方式，通过审批状态和特殊标签（兵役、免测）实现请假结果向体测备注的联动写回，不需要额外建立中间表或触发器。
+
+\subsection{数据库逻辑结构设计}
+
+数据库保存课程、体测、成绩和权限等基础数据，同时记录日志、教师分配、请假审批和 AI 分析结果。AI 问答没有单独设置知识库表或独立持久化表，回答直接从业务表取数并组织证据，留痕统一写入 AI 分析日志表。
+
+本系统数据库逻辑结构包括课程信息表、体测项目成绩表、体测评分表、学生基本信息表、系统操作日志表、角色表、用户表、用户角色关联表、课程教师关联表、学生请假/就医记录表和 AI 分析日志表。AI 分析日志表承担问答留痕任务，主要数据表设计如表 \ref{tab:course-table} 至表 \ref{tab:ai-log-table} 所示。
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newenvironment{dbtabular}{\begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}}{\end{tabularx}}
+\newcommand{\dbtablehead}{字段名称 & 字段类型 & 长度 & \makecell[c]{是否\\为空} & 备注 \\ \hline}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \caption{课程信息表}
+  \label{tab:course-table}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    id & bigint &  & NO & 课程ID \\ \hline
+    grade\_id & int &  & NO & 年级编号 \\ \hline
+    course\_no & varchar & 255 & NO & 课程编号 \\ \hline
+    course\_name & varchar & 50 & NO & 班级名称 \\ \hline
+    create\_time & timestamp &  & YES & 创建时间 \\ \hline
+    status & int &  & YES & 是否结束 \\ \hline
+    term & varchar & 255 & YES & 学期 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \caption{体测项目成绩表}
+  \label{tab:fitness-table}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    id & bigint &  & NO & 测试记录ID \\ \hline
+    student\_id & bigint &  & NO & 学生ID \\ \hline
+    course\_id & bigint &  & NO & 课程ID \\ \hline
+    height & decimal & 5,2 & YES & 身高（米） \\ \hline
+    weight & decimal & 5,2 & YES & 体重（千克） \\ \hline
+    vital\_capacity & int &  & YES & 肺活量（毫升） \\ \hline
+    run50m & decimal & 4,2 & YES & 50米跑成绩（秒） \\ \hline
+    long\_jump & decimal & 5,2 & YES & 立定跳远成绩（米） \\ \hline
+    \makecell[l]{sit\_and\_reach} & decimal & 4,1 & YES & 坐位体前屈成绩（厘米） \\ \hline
+    run800m & int &  & YES & 800米跑成绩（秒） \\ \hline
+    run1000m & int &  & YES & 1000米跑成绩（秒） \\ \hline
+    sit\_ups & int &  & YES & 一分钟仰卧起坐次数 \\ \hline
+    pull\_ups & int &  & YES & 引体向上次数 \\ \hline
+    remark & varchar & 500 & YES & 备注 \\ \hline
+    \makecell[l]{create\_time} & timestamp &  & YES & 测试时间 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \caption{体测评分表}
+  \label{tab:score-rule-table}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    id & bigint &  & NO & 成绩ID \\ \hline
+    fitness\_id & bigint &  & NO & 体测数据ID \\ \hline
+    weight\_score & int &  & YES & 体重评分 \\ \hline
+    weight\_level & varchar & 10 & YES & 体重等级 \\ \hline
+    \makecell[l]{vital\_capacity\\\_score} & int &  & YES & 肺活量评分 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \ContinuedFloat
+  \centering
+  \footnotesize
+  \caption[]{体测评分表（续）}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    \makecell[l]{vital\_capacity\\\_level} & varchar & 10 & YES & 肺活量等级 \\ \hline
+    run50m\_score & int &  & YES & 50米跑评分 \\ \hline
+    run50m\_level & varchar & 10 & YES & 50米跑等级 \\ \hline
+    long\_jump\_score & int &  & YES & 立定跳远评分 \\ \hline
+    long\_jump\_level & varchar & 10 & YES & 立定跳远等级 \\ \hline
+    \makecell[l]{sit\_and\_reach\\\_score} & int &  & YES & 坐位体前屈评分 \\ \hline
+    \makecell[l]{sit\_and\_reach\\\_level} & varchar & 10 & YES & 坐位体前屈等级 \\ \hline
+    run800m\_score & int &  & YES & 800米跑评分 \\ \hline
+    run800m\_level & varchar & 10 & YES & 800米跑等级 \\ \hline
+    run800m\_bonus & int &  & YES & 800米跑附加分 \\ \hline
+    run1000m\_score & int &  & YES & 1000米跑评分 \\ \hline
+    run1000m\_level & varchar & 10 & YES & 1000米跑等级 \\ \hline
+    run1000m\_bonus & int &  & YES & 1000米跑附加分 \\ \hline
+    sit\_ups\_score & int &  & YES & 仰卧起坐评分 \\ \hline
+    sit\_ups\_level & varchar & 10 & YES & 仰卧起坐等级 \\ \hline
+    sit\_ups\_bonus & int &  & YES & 仰卧起坐附加分 \\ \hline
+    pull\_ups\_score & int &  & YES & 引体向上评分 \\ \hline
+    pull\_ups\_level & varchar & 10 & YES & 引体向上等级 \\ \hline
+    pull\_ups\_bonus & int &  & YES & 引体向上附加分 \\ \hline
+    \makecell[l]{standard\_score} & double &  & YES & 标准分 \\ \hline
+    \makecell[l]{bonus\_score} & int &  & YES & 附加分 \\ \hline
+    \makecell[l]{total\_score} & decimal & 5,2 & YES & 总分 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \ContinuedFloat
+  \centering
+  \footnotesize
+  \caption[]{体测评分表（续）}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    \makecell[l]{total\_level} & varchar & 10 & YES & 总分等级 \\ \hline
+    \makecell[l]{create\_time} & timestamp &  & YES & 创建时间 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \caption{学生基本信息表}
+  \label{tab:student-table}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    id & bigint &  & NO & 学生ID \\ \hline
+    student\_no & varchar & 20 & NO & 学籍号 \\ \hline
+    student\_name & varchar & 50 & NO & 学生姓名 \\ \hline
+    password & varchar & 255 & YES & 学生登录密码（BCrypt） \\ \hline
+    gender & int &  & NO & 性别（男/女） \\ \hline
+    birth\_date & varchar & 255 & YES & 出生日期 \\ \hline
+    id\_card & varchar & 18 & YES & 身份证号 \\ \hline
+    nation\_code & varchar & 10 & YES & 民族代码 \\ \hline
+    student\_source & varchar & 50 & YES & 学生来源 \\ \hline
+    home\_address & varchar & 200 & YES & 家庭住址 \\ \hline
+    create\_time & timestamp &  & YES & 创建时间 \\ \hline
+    class\_no & varchar & 255 & YES & 班级编号 \\ \hline
+    class\_name & varchar & 255 & YES & 班级名称 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \caption{系统操作日志表}
+  \label{tab:log-table}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    id & bigint &  & NO & 日志ID \\ \hline
+    business\_type & tinyint &  & NO & 类型（0=其它,1=新增,2=修改,3=删除,4=授权,5=导出,6=导入,7=强退,8=生成代码,9=清空数据） \\ \hline
+    method & varchar & 100 & YES & 方法名称 \\ \hline
+    request\_method & varchar & 10 & YES & 请求方式 \\ \hline
+    description & varchar & 255 & YES & 描述 \\ \hline
+    req\_ip & varchar & 50 & YES & 请求IP \\ \hline
+    req\_param & varchar & 2000 & YES & 请求信息 \\ \hline
+    resp & text &  & YES & 响应信息 \\ \hline
+    error\_msg & varchar & 5000 & YES & 错误消息 \\ \hline
+    create\_id & bigint &  & YES & 创建者ID \\ \hline
+    create\_by & varchar & 12 & YES & 创建者名称 \\ \hline
+    create\_time & datetime &  & YES & 创建时间 \\ \hline
+    update\_id & bigint &  & YES & 修改者ID \\ \hline
+    update\_by & varchar & 12 & YES & 修改者名称 \\ \hline
+    update\_time & datetime &  & YES & 更新时间 \\ \hline
+    is\_deleted & tinyint &  & YES & 是否已删除：0->未删除；1->已删除 \\ \hline
+    delete\_time & datetime &  & YES & 删除时间 \\ \hline
+    oper\_name & varchar & 20 & YES & 操作人 \\ \hline
+    oper\_location & varchar & 200 & YES & 操作地点 \\ \hline
+    status & tinyint &  & YES & 状态 1-可用，2-禁用 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \caption{角色表}
+  \label{tab:role-table}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    id & bigint &  & NO & 角色ID \\ \hline
+    role\_name & varchar & 16 & NO & 角色名称 \\ \hline
+    role\_code & varchar & 64 & NO & 角色code \\ \hline
+    status & varchar & 1 & YES & 状态；1:可用，2:禁用 \\ \hline
+    role\_desc & varchar & 255 & YES & 角色描述 \\ \hline
+    type & tinyint &  & NO & 类型：1:公共角色；2:特殊角色 \\ \hline
+    create\_id & bigint &  & NO & 创建者ID \\ \hline
+    create\_by & varchar & 255 & NO & 创建者名称 \\ \hline
+    update\_id & bigint &  & YES & 修改者ID \\ \hline
+    update\_by & varchar & 255 & YES & 修改者名称 \\ \hline
+    create\_time & datetime &  & NO & 创建时间 \\ \hline
+    update\_time & datetime &  & YES & 更新时间 \\ \hline
+    is\_deleted & tinyint &  & YES & 是否已删除：0->未删除；1->已删除 \\ \hline
+    delete\_time & datetime &  & YES & 删除时间 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \caption{用户表}
+  \label{tab:user-table}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    id & bigint &  & NO & 用户ID \\ \hline
+    nick\_name & varchar & 30 & NO & 账户昵称 \\ \hline
+    user\_name & varchar & 30 & NO & 用户名 \\ \hline
+    password & varchar & 64 & NO & 密码 \\ \hline
+    status & varchar & 1 & NO & 状态；1:可用，2:禁用 \\ \hline
+    user\_phone & varchar & 20 & YES & 电话 \\ \hline
+    last\_login\_time & datetime &  & YES & 最后登录时间 \\ \hline
+    last\_login\_ip & varchar & 50 & YES & 最后登录IP \\ \hline
+    create\_id & bigint &  & YES & 创建者ID \\ \hline
+    create\_by & varchar & 12 & YES & 创建者名称 \\ \hline
+    create\_time & datetime &  & YES & 创建时间 \\ \hline
+    update\_id & bigint &  & YES & 修改者ID \\ \hline
+    update\_by & varchar & 12 & YES & 修改者名称 \\ \hline
+    update\_time & datetime &  & YES & 更新时间 \\ \hline
+    is\_deleted & tinyint &  & YES & 是否已删除：0未删除，1已删除 \\ \hline
+    delete\_time & datetime &  & YES & 删除时间 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \caption{用户角色关联表}
+  \label{tab:user-role-table}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    id & bigint &  & NO & 关联ID \\ \hline
+    user\_id & bigint &  & NO & 用户id \\ \hline
+    role\_id & bigint &  & NO & 角色id \\ \hline
+    create\_id & bigint &  & YES & 创建者ID \\ \hline
+    create\_by & varchar & 45 & YES & 创建者名称 \\ \hline
+    update\_id & bigint &  & YES & 修改者ID \\ \hline
+    update\_by & varchar & 45 & YES & 修改者名称 \\ \hline
+    create\_time & datetime &  & NO & 创建时间 \\ \hline
+    update\_time & datetime &  & YES & 更新时间 \\ \hline
+    is\_deleted & tinyint &  & NO & 是否已删除：0未删除，1已删除 \\ \hline
+    delete\_time & datetime &  & YES & 删除时间 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \caption{课程教师关联表}
+  \label{tab:course-teacher-table}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    id & bigint &  & NO & 关联ID \\ \hline
+    user\_id & bigint &  & NO & 教师用户ID \\ \hline
+    course\_id & bigint &  & NO & 课程ID \\ \hline
+    \makecell[l]{project\_\\permissions} & varchar & 500 & YES & 负责的体测项目，逗号分隔 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \caption{学生请假/就医记录表}
+  \label{tab:leave-table}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    id & bigint &  & NO & 请假ID \\ \hline
+    student\_no & varchar & 20 & NO & 学号 \\ \hline
+    course\_id & bigint &  & YES & 课程ID \\ \hline
+    leave\_type & varchar & 20 & NO & 请假类型 \\ \hline
+    start\_time & datetime &  & NO & 开始时间 \\ \hline
+    end\_time & datetime &  & YES & 结束时间 \\ \hline
+    reason & varchar & 255 & YES & 原因说明 \\ \hline
+    attachment & varchar & 500 & YES & 附件 \\ \hline
+    special\_tag & varchar & 20 & YES & 特殊申请标签：兵役/免测 \\ \hline
+    approval\_status & tinyint &  & NO & 审批状态：0待审批/1已通过/2已驳回 \\ \hline
+    approver\_id & bigint &  & YES & 审批人ID \\ \hline
+    approved\_time & datetime &  & YES & 审批时间 \\ \hline
+    approval\_remark & varchar & 255 & YES & 审批意见 \\ \hline
+    create\_time & datetime &  & NO & 创建时间 \\ \hline
+    update\_time & datetime &  & NO & 更新时间 \\ \hline
+  \end{tabularx}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \footnotesize
+  \caption{AI 分析日志表}
+  \label{tab:ai-log-table}
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabularx}{\textwidth}{|L{3.2cm}|C{1.6cm}|C{1.0cm}|C{1.4cm}|X|}
+    \hline
+    \dbtablehead
+    id & bigint &  & NO & 日志ID \\ \hline
+    student\_no & varchar & 20 & YES & 学生学号 \\ \hline
+    term & varchar & 32 & YES & 学期号 \\ \hline
+    course\_no & varchar & 64 & YES & 课程号 \\ \hline
+    input\_json & json &  & NO & AI输入快照 \\ \hline
+    output\_text & text &  & NO & AI输出文本 \\ \hline
+    output\_json & json &  & YES & 结构化输出（可选） \\ \hline
+    created\_at & datetime &  & NO & 创建时间 \\ \hline
+    is\_deleted & tinyint &  & NO & 是否已删除：0->未删除；1->已删除 \\ \hline
+    delete\_time & datetime &  & YES & 删除时间 \\ \hline
+  \end{tabularx}
+\end{table}
+
+本章说明了系统总体设计、功能划分和数据库组织，交代了角色边界、核心模块和主要数据结构之间的对应关系，为后续实现章节提供了整体基础。
+
+第 \ref{ch:5} 章将在本章基础上说明各模块的具体实现方式与关键处理流程。

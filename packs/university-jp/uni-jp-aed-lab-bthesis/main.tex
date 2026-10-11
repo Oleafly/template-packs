@@ -1,0 +1,48 @@
+\RequirePackage{plautopatch}
+\documentclass[12pt,a4paper,report,uplatex,dvipdfmx]{jsbook}
+\usepackage{mediathesis} % 卒論用パッケージ
+
+%%% 各種設定ファイル入力 %%%
+\input{src/config.tex}
+\input{src/preface.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ここより本文開始
+
+\begin{document}
+
+\pagewiselinenumbers		% 行番号付加 (本番印刷の際はコメントアウト)
+
+\MediaThesisTitle		% タイトル作成
+
+\pagenumbering{Roman}		% 目次用ページスタイル
+\tableofcontents		% 目次
+\listoffigures			% 図目次(必要に応じて有効化/無効化)
+%\listoftables			% 表目次(必要に応じて有効化/無効化)
+\clearpage
+\pagenumbering{arabic}		% 本文用ページスタイル
+\pagestyle{plain}		% 本文ページ番号位置
+\baselineskip=\bodylineskip	% 行間設定
+
+% ここから本文ファイルを挿入
+
+\input{introduction}		% 第1章
+\input{method}			% 第2章
+
+%%%%%%%%%%%%%%%%%%%
+% ここ以降は章番号をつけない
+\delchapnumber
+
+% 謝辞
+\input{thanks}			% 謝辞
+
+%参考文献 (bib ファイルを指定)
+\bibliography{BibTeX}		% BibTeXを使う場合の参考文献リスト
+
+% 付録には再び章番号をつける
+\undochapnumber
+% \appendix			% 付録 (もしあれば)
+% \input{appendix}		% 付録ファイルの挿入
+
+\end{document}

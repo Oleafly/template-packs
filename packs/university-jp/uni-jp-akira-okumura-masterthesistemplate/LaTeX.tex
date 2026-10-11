@@ -1,0 +1,264 @@
+\chapter{\LaTeX{}の使い方}
+本章では、\LaTeX{}の使い方を以下説明します。\textbf{\textsf{ここでの表示例は本PDFを読むだけではどのような\LaTeX{}コードに対応しているか分かりませんので、\texttt{main.tex}や\texttt{LaTeX.tex}の中身を参照してください。}}
+
+このPDF文書中に\texttt{command}のような書体で記載されているものは、\LaTeX{}ソース中で実際に入力するコマンドやファイル名を示しています。
+
+\section{改行の仕方}
+\LaTeX{}で生成されるPDF中に改行を入れるのは、ソースファイル中に改行を2つ連続で入れます。つまり、段落と段落の間に余計な空白行を入れます。「latex 改行」などで検索すると「\bs\bs と入力する」と説明が出てくる場合がありますが、これは強制改行のコマンドですので普通の文章中では使わないでください。
+
+また2連続の改行を入れると、段落先頭の字下げは自動で行われます。間違えて\bs\bs で強制改行をすると字下げが起きませんので注意してください（段落が変わったと見なされない）。
+
+\section{節の使い方}
+\texttt{\bs{}section}や\texttt{\bs{}subsection}を使うと「節」（section）と呼ばれる構造を作ることができます。長い章を分割して論理展開を分かりやすくする目的で使います。
+
+文中で節を参照するときは、\texttt{section}であっても\texttt{subsection}であっても「節」と呼び、「\ref{sec_figure}~節」や「第\ref{sec_figure}~節」のように書きます（\texttt{ref}コマンドの使用は次節参照）。章を参照するときは「\ref{chap_review}~章」や「第\ref{chap_review}~章」とします。
+
+\section{図の使い方}
+\label{sec_figure} % このようにラベルをつけることで、\refコマンドで節や図の番号を参照できます。
+
+論文中に図を入れるときは、\texttt{figure}環境を使用します。画像形式は図~\ref{fig_CTA}のようなJPEG（主に写真などに最適）やPNG（色数の少ない画像に最適）に加え、図~\ref{fig_histogram}のようにPDF（グラフなどに最適）も使うことができます。実際の使い方は、この\LaTeX{}のコードを読んでください。\textsf{\textbf{EPS形式はいまどき誰も使いません。古い\LaTeX{}の本の記述などに騙されないでください。}}
+
+\begin{figure} % 特に強い理由がない限り、[htbp]のような指定はしないでください。
+  \centering
+  % 図の横幅をちょうど良い具合に自分で調整します。
+  % 図中の文字を読めないような大きさにはしないでください。
+  \includegraphics[width=14cm]{fig/CTA.jpg}
+  % 図の説明が長い場合、[]で囲むことで短い図の説明を目次のみに表示できます。
+  \caption[CTAの完成想像図]{CTAの完成想像図（画像提供：G.~Pérez、IAC、SMM）。JPEG（ビットマップ画像）なので、出力PDFで拡大するとドットが見えます。}
+  % これで本文中から参照できます。
+  \label{fig_CTA}
+\end{figure}
+
+\begin{figure}
+  \centering
+  % PDFも使えます。
+  \includegraphics[width=14cm]{fig/histogram.pdf}
+  \caption[ガウシアンでヒストグラムをフィットした例]{ガウシアンでヒストグラムをフィットした例。PDF（ベクター画像）なので、出力PDFで拡大しても滑らかです。また文字列もPDF中で検索することができます。}
+  \label{fig_histogram}
+\end{figure}
+
+図を文中で参照したいときは\texttt{ref}コマンドを使用して、「図~\ref{fig_CTA}」のようにすることができます。この部分は\LaTeX{}中で実際には\texttt{図\~{}\bs{}ref\{fig\_CTA\}}と書いています。「図」と\texttt{\bs{}ref}の間に\texttt{\~{}}を入れるのは、「図」と図番号の間で改行を防ぐためです\footnote{このようにチルダを入れる手法は、人名の姓名の間で改行を防ぐのにも広く使われます。}。
+
+\texttt{figure}環境で図を挿入する場所は、初めてその図を言及する段落の直後、もしくは直前です。あまりに離れた場所に図を挿入すると読者はどこに図があるかを探さなくてはならず、読むのが困難になるからです。
+
+場合によっては複数の図を並べたいこともあるでしょう。そのようなときは、\texttt{subfigure}環境を使って図~\ref{fig_subfigure}のようにすることができます。\texttt{minipage}環境でも似たようなことができますが、\texttt{subfigure}を使うと小番号を自動で付与したり、「図~\ref{fig_subfigure_b}」のように、小番号を参照することができます。
+
+\begin{figure}
+  \centering
+  \subfigure[]{% {の直後に%を置くことで、改行をさせない（図(b)を改行させない）。
+    \includegraphics[width=.5\textwidth,clip]{fig/histogram.pdf}%
+    \label{fig_subfigure_a}%
+  }%
+  \subfigure[]{%
+    \includegraphics[width=.5\textwidth,clip]{fig/histogram.pdf}%
+    \label{fig_subfigure_b}%
+  }
+  \subfigure[]{%
+    \includegraphics[width=.5\textwidth,clip]{fig/histogram.pdf}%
+    \label{fig_subfigure_c}%
+  }%
+  \subfigure[]{%
+    \includegraphics[width=.5\textwidth,clip]{fig/histogram.pdf}%
+    \label{fig_subfigure_d}%
+  }
+  \caption[複数の図を並べた例]{複数の図を並べた例。(a)ガウシアンフィット。(b)同じもの。(c)これも同じもの。(d)これも同じもの。}
+\label{fig_subfigure}
+\end{figure}
+
+またせっかく図の並べ方が分かったので、同じ図をPDF、PNG、JPEGにして図~\ref{fig_formats}にて比較してみましょう。それぞれの画像の特徴が分かります。また図~\ref{fig_formats}は参考のため\texttt{subfigure}ではなく\texttt{minipage}環境を使って作ってあります。
+
+\begin{figure}
+  \begin{minipage}[b]{.3333\linewidth}
+    \leftline{(a)}
+    \centering
+    \includegraphics[width=\columnwidth]{fig/histogram.pdf}
+  \end{minipage}%
+  \begin{minipage}[b]{.3333\linewidth}
+    \leftline{(b)}
+    \centering
+    \includegraphics[width=\columnwidth]{fig/histogram_png.png}
+  \end{minipage}%
+  \begin{minipage}[b]{.3333\linewidth}
+    \leftline{(c)}
+    \centering
+    \includegraphics[width=\columnwidth]{fig/histogram_jpg.jpg}
+  \end{minipage}
+  \caption[異なる画像形式の比較]{異なる画像形式の比較。(a) PDF形式。拡大しても綺麗であり、文字も検索やコピーができる。(b) PNG形式。拡大するとビットマップ画像であることが分かる。文字を選択できない。(c) JPEG形式。PNGに比べ、JPEG圧縮特有のブロックノイズ、モスキートノイズが発生しており非常に汚いことが分かる。}
+  \label{fig_formats}
+\end{figure}
+
+\section{他の論文の図を使う場合の注意点}
+
+先行研究を引用する際などに他の論文から図や写真を引用することがあると思います。この場合、その図は自分が作成したものではないということがはっきり分かるようにしてください。具体的には、「先行研究で得られた結果 (Okumura 2016)。」ではなく「先行研究で得られた結果（Okumura (2016)から図を転載）。」のように明示しましょう。
+
+また、論文PDFから図の部分だけクロップしてくると、その図以外の情報もクロップした図に残り続けます。すなわち、外見上は図しか表示されていないにも関わらず、元の論文の文章などがそのままPDFに残ってしまいます。
+
+このようにクロップした図を修士論文中で使用すると、PDF内を検索した際に引用元論文の本文が検索結果に出てしまったり、添削をするために文章の一部にコメントをつけようとすると引用元論文の透明の本文にコメントがついてしまったりということがあります。
+
+これを回避するためには、いくつかの方法が考えられます。
+\begin{enumerate}
+\item Adobe Acrobat や Adobe Illustrator のようなソフトウェアを使用し、図以外の不要な箇所を削除する。
+\item arXiv に投稿されている \TeX{}ソースをダウンロードし、その中に含まれる図の元ファイルを使用する。例えば \url{https://arxiv.org/src/1512.04369}にアクセスすると{\texttt arXiv-1512.04369v1.tar.gz}というファイルが得られるため、これを展開する。
+\item {\bf 非推奨} スクリーンショットを撮る。（ただし文字を読める十分に大きい画像として保存すること）
+\end{enumerate}
+  
+
+\section{表の使い方}
+
+表~\ref{tab_cta}に、\LaTeX{}でどのように表を作成するかの例を示します。実際にどういう \LaTeX{}コードがこの表に対応するのかは、ファイルの中身を眺めてください。
+
+\begin{table} % 表も[htbp]のような場所指定は特に必要ない
+  \centering
+  % 表のキャプションは必ずその表の上に来ます。図の場合は下です。違いに気をつけてください。
+  \caption{CTA で使用される望遠鏡の性能諸元}
+  \footnotesize % 横幅のある表なので、文字サイズを小さくしています。通常は必要ありません。
+  \label{tab_cta} % ラベルのつけ方は図と同様です。
+  \begin{tabular}{lccccccc} % 列が何列あるかを示します。lcrはそれぞれ左・中央・右揃えの指定です。
+    \hline
+    &
+    \shortstack{大口径望遠鏡 \\ Large-Sized Telescope \\ (LST)} &
+    % 複数列を結合したいときは、multicolumnを使います。
+    \multicolumn{2}{c}{\shortstack{中口径望遠鏡 \\ Medium-Sized Telescope \\ (MST)}} &
+    \shortstack{SC 中口径望遠鏡 \\ Schwarzschild--Couder MST \\ (SC-MST)} &
+    \multicolumn{3}{c}{\shortstack{小口径望遠鏡 \\ Smalle-Sized Telescope \\ (SST)}} \\
+    & & FlashCam & NectarCAM & & GCT & ASTRI & 1M-SST \\
+    \hline
+    エネルギー範囲 & 20--200 GeV & \multicolumn{2}{c}{100 GeV -- 10 TeV} & 200 GeV -- 10 TeV & \multicolumn{3}{c}{5--300 TeV} \\
+台数（北半球）& 4 & \multicolumn{2}{c}{15} & 0 & \multicolumn{3}{c}{0} \\
+台数（南半球）& 4 & \multicolumn{2}{c}{24} & 24 & \multicolumn{3}{c}{70--90} \\
+鏡直径 &	23\,m & \multicolumn{2}{c}{12\,m} & 9.7\,m & 4\,m & 4\,m & 4\,m \\
+焦点距離 & 28\,m & \multicolumn{2}{c}{16\,m} & 5.6\,m & 2.3\,m & 2.15\,m & 5.6\,m \\
+視野 & 4.5$^\circ$ & \multicolumn{2}{c}{7.7$^\circ$} & 8$^\circ$ & 8.6$^\circ$ & 9.6$^\circ$ & 9$^\circ$ \\
+光学系 & 放物鏡 & \multicolumn{2}{c}{Davies--Cotton (DC)} & Schwarzschild--Couder (SC) & SC & SC & DC \\
+画素数 & 1,855 & 1,764 & 1,855 & 11,328 & 2,048 & 1,984 & 1,296\\
+\hline
+  \end{tabular}
+  \normalsize % 文字サイズを元に戻します
+\end{table}
+
+論文中で使う表の一般的な注意点として、あまり罫線をたくさん使いすぎないことです。日本では全てのセルの周辺に罫線を使う傾向があり、最悪、表~\ref{tab_cta_bad}のようになります。窮屈になるので、このような罫線の多用はやめましょう。
+
+\begin{table}
+  \centering
+  \caption{表~\ref{tab_cta}の悪い例}
+  \footnotesize
+  \label{tab_cta_bad}
+  \begin{tabular}{|l|c|cc|c|ccc|}
+    \hline
+    &
+    \shortstack{大口径望遠鏡 \\ Large-Sized Telescope \\ (LST)} &
+    % 複数列を結合したいときは、multicolumnを使います。
+    \multicolumn{2}{c|}{\shortstack{中口径望遠鏡 \\ Medium-Sized Telescope \\ (MST)}} &
+    \shortstack{SC 中口径望遠鏡 \\ Schwarzschild--Couder MST \\ (SC-MST)} &
+    \multicolumn{3}{c|}{\shortstack{小口径望遠鏡 \\ Smalle-Sized Telescope \\ (SST)}} \\
+    \hline
+    & & FlashCam & NectarCAM & & GCT & ASTRI & 1M-SST \\
+    \hline
+    エネルギー範囲 & 20--200 GeV & \multicolumn{2}{c|}{100 GeV -- 10 TeV} & 200 GeV -- 10 TeV & \multicolumn{3}{c|}{5--300 TeV} \\
+    \hline
+    台数（北半球）& 4 & \multicolumn{2}{c|}{15} & 0 & \multicolumn{3}{c|}{0} \\
+    \hline
+    台数（南半球）& 4 & \multicolumn{2}{c|}{24} & 24 & \multicolumn{3}{c|}{70--90} \\
+    \hline
+    鏡直径 &	23\,m & \multicolumn{2}{c|}{12\,m} & 9.7\,m & 4\,m & 4\,m & 4\,m \\
+    \hline
+    焦点距離 & 28\,m & \multicolumn{2}{c|}{16\,m} & 5.6\,m & 2.3\,m & 2.15\,m & 5.6\,m \\
+    \hline
+    視野 & 4.5$^\circ$ & \multicolumn{2}{c|}{7.7$^\circ$} & 8$^\circ$ & 8.6$^\circ$ & 9.6$^\circ$ & 9$^\circ$ \\
+    \hline
+    光学系 & 放物鏡 & \multicolumn{2}{c|}{Davies--Cotton (DC)} & Schwarzschild--Couder (SC) & SC & SC & DC \\
+    \hline
+    画素数 & 1,855 & 1,764 & 1,855 & 11,328 & 2,048 & 1,984 & 1,296\\
+    \hline
+  \end{tabular}
+  \normalsize % 文字サイズを元に戻します
+\end{table}
+
+\section{数式の使い方}
+
+\LaTeX{}を使う理由のひとつが、数式を綺麗に出力できるというのがあります。例えば中性パイ中間子$\pi^0$のガンマ線への二体崩壊であれば
+\begin{equation}
+  \pi^0 \rightarrow \gamma + \gamma
+  \label{eq_pizero}
+\end{equation}
+のように書けますし、もっとややこしい数式も色々と書けますが、詳細は「LaTeX 数式」などでインターネット上で検索してください。この例のように、本文中に数式を入れるときは\texttt{\$\$}でその式を囲み、独立した行に数式を書くときは\texttt{equation}や\texttt{align}\footnote{\texttt{amsmath}パッケージで使用可能です。}環境を使ってください。
+
+式番号を参照するときも図のときと同様に\texttt{ref}コマンドを使うことができますが、これだと自動で丸括弧がつかず、式~\ref{eq_pizero}のようになってしまいます。丸括弧を自動で入れるには\texttt{amsmath}パッケージの\texttt{refeq}コマンドを使用することで、式~\eqref{eq_pizero}のようになります。
+
+\subsection{斜体と立体}
+数式を書くときには「斜体」（italic）と「立体」（upright）の違いに気をつけてください。基本的に数式は斜体を使って書きます。何も考えずに\LaTeX{}を使えば全て斜体になります。
+
+ただし、次の2つの式を見比べてみてください。
+\begin{equation}
+  e^{ix}=cosx + isinx
+  \label{eq_italic}
+\end{equation}
+\begin{equation}
+  \mathrm{e}^{\mathrm{i}x}=\cos x + \mathrm{i}\sin x
+  \label{eq_upright}
+\end{equation}
+式~\eqref{eq_italic}は全ての文字が斜体で書かれていますが、式~\eqref{eq_upright}は$x$以外は立体です。このように、いくつかの文字では立体を使うのが一般的です。例えば$\log$、$\sin$、$\mathrm{e}$（自然対数の底）、$\mathrm{i}$（虚数単位）、$\mathrm{d}$（微分作用素）などは、それぞれ\texttt{\bs{}log}、\texttt{\bs{}sin}、\texttt{\bs{}mathrm\{e\}}、\texttt{\bs{}mathrm\{i\}}、\texttt{\bs{}mathrm\{d\}}などと入力することで書くことができます\footnote{自然対数の底や虚数単位の場合は、分野や国によって斜体にするかどうかの違いがあります。また微分作用素は斜体で$d$とする場合もありますが、立体にすることで長さを表すのに頻繁に使われる変数$d$と区別する効果があります。}。
+
+ここで\texttt{\bs{}mathrm}というコマンドが出てきましたが、これは数式中で文字を立体にするためのコマンドです。特定の文字を立体にするときだけでなく、変数名の添字を立体するときにも使います。例えばトリガー回数を示す変数は$N_\mathrm{trigger}$などと書くことがあると思いますが、このときに「trigger」の部分は変数ではありませんので、斜体にしません。
+
+\subsection{単位}
+数式中に単位を使うとき、\texttt{\bs{}mathrm}を使わずに$100 MeV$などとしてしまう間違いもよく見られます。このように斜体になったものは変数$M$と$e$と$V$の掛け算であり、単位ではありません。また100MeVのように単位と数値の間にスペースのない書き方をする人も見かけますが、これも間違いです。本文中に書くときは\texttt{100\bs{},MeV}とし、\texttt{equation}環境中では\texttt{100\bs{},\bs{}mathrm\{MeV\}}と書きます\footnote{余計なバックスラッシュとカンマは、数字と単位の間に適度な幅のスペースを入れるためです。普通にスペースを入力するのだと、この間隔が広くなりすぎたり単位だけ次の行に回されたりということが発生します。}。
+
+\LaTeX{}では\texttt{\%}の後ろをコメントとして扱いますので、95\,\%のようにパーセントの表示をしたい場合には\texttt{95\bs{},\bs{}\%}のように書きます。\%と数値の間にスペース（\texttt{\bs{},}）を入れるかどうかは、流派が2つありますが、国際単位系（SI）ではスペースを入れることになっています。私の周りでは入れない人も多いようです\footnote{入れない理由としては、\%は単位ではなく0.01という数だから、というものが挙げられます。投稿論文の場合は出版社の投稿規定に従います。また業界ごとの慣習もあります。よくわからなければスペースを入れておくと良いでしょう。}。
+
+さて、先に例に挙げた100\,MeV程度の単純な数値であればソースコードに\texttt{100\bs{},MeV}と書くのは難しくありませんが、より複雑な数値を書く場合は面倒ですし、余計な間違いが今夕します。これを解決するため\texttt{siunitx}\footnote{\url{https://ctan.org/pkg/siunitx}}パッケージというものが存在します。このテンプレートの\texttt{main.tex}ではこのパッケージを使用する設定にしていますので、実際に使った例を見てみましょう。
+\begin{gather}
+  \frac{\mathrm{d}N}{\mathrm{d}E}=\qty{2.83+-0.04e-11}{TeV^{-1}.cm^{-2}.s^{-1}} \\
+  \frac{\mathrm{d}N}{\mathrm{d}E}=2.83(4)\times10^{-11}\,\mathrm{TeV}^{-1}\,\mathrm{cm}^{-2}\,\mathrm{s}^{-1}
+\end{gather}
+上記2つの式の右辺の見た目は同一ですが、前者では\\\qquad\texttt{\bs{}qty\{2.83+-0.04e-11\}\{TeV\^{}\{-1\}.cm\^{}\{-2\}.s\^{}\{-1\}\}}\\と入力し、後者では\\\qquad\texttt{2.83(4)\bs{}times10\^{}\{-11\}\bs{},\bs{}mathrm\{TeV\}\^{}\{-1\}\bs{},\bs{}mathrm\{cm\}\^{}\{-2\}\bs{},\bs{}mathrm\{s\}\^{}\{-1\}}\\と入力しています。かなり簡便になったのが分かると思います。
+
+\subsection{化学式}
+
+化学式もその見た目に比べて書くのが面倒です。$\mathrm{H}_2\mathrm{O}$と記述するだけでも\texttt{\bs{}mathrm\{H\}\_2\bs{}mathrm\{O\}}と入力する必要があります。
+
+そこで\texttt{mhchem}パッケージ\footnote{\url{https://ctan.org/pkg/mhchem}}を利用すれば、複雑な化学式も簡単に入力できるようになります。\ce{^{137}Cs}の崩壊の式を書いてみましょう。詳細は\texttt{LaTeX.tex}の中身を読んでみてください。
+
+\begin{equation}
+\ce{^{137}_{55}Cs ->[\beta^{-}\,\qty{512.0}{keV}][\qty{30}{year}] ^{137\mathrm{m}}_{56}Ba ->[\gamma\,\qty{661.7}{keV}][\qty{2.552}{min}] ^{137}_{56}Ba}
+\end{equation}
+
+\section{引用の仕方}
+
+研究や論文というのは過去に誰かのやった研究を前提として新たに何かを進歩させるためにあります\footnote{「巨人の肩の上に立つ」とよく表現されます。}。しかしあなたの修士論文に全ての過去の研究を書くことはできませんので、引用という形式を使い他の論文をその事実の出典とします。
+
+ここで、「引用」と日本語で書いた場合には「quotation」と「citation」の2つの英語に翻訳され得ますが、我々の論文で通常用いるのは「citation」のほうです。著作権法などで問題になるのは「quotation」のほうなので、間違えないようにしてください。
+
+\LaTeX{}で\texttt{citep}コマンドや\texttt{citet}コマンドを使って論文を引用（cite）するときは、例えば次のようになります。
+
+\begin{quote} % ここで LaTeX の体裁を整えるために quote コマンドを使っていますが、ここは「引用」（quote）しているわけではりません。
+  宇宙線の全粒子スペクトルは図 XX に示すように$10^9$\,eVから$10^{20}$\,eVまでおよそ$-3$乗の冪で減少している\citep{Swordy2001}。$10^{12}$\,eV（1\,TeV）付近のガンマ線は超高エネルギーガンマ線と呼ばれ、様々な観測手法が提案されている\citep[例えば][を見よ]{Okumura2005}。この\citet{Okumura2005}の手法では\ldots
+% 複数の文献を一度に引用するには \citep{Swordy2001,Okumura2005}とすることもできます。
+\end{quote}
+ここでは引用（cite）を3回しており、それぞれ\texttt{citep}、\texttt{citep}、\texttt{citet}コマンドを使っています。
+
+\section{\BibTeX{}の使用}
+このテンプレートの場合、\pageref{page:bib}ページに「引用文献」という箇所があります。このページを手作業で間違いなく整形するのは面倒です。手でやる代わりに\BibTeX{}という仕組みを使います。\texttt{thesis.bib}というファイルに引用文献の必要な情報が書かれていますので、これを参考にして\BibTeX{}ファイルを作るか、論文をダウンロードするときに\texttt{.bib}ファイルもダウンロードできますので、それを使ってください\footnote{近年は「文献管理ソフト」と呼ばれるものが発達していますので、特に博士進学する学生は好きなものを入れてみてください。}。
+
+例えば\cite{PhysRevD.98.030001}を引用してみましょう。これに対応する部分は、\texttt{thesis.bib}の中の\texttt{@article\{PhysRevD.98.030001,}で始まる部分に書いてあります。これを手で入力するのは非効率ですし、入力間違いの温床になります。そのような場合、例えば\url{http://dx.doi.org/10.1103/PhysRevD.98.030001}を開き「Export Citation」というボタンから\BibTeX{}フォーマットの情報を入手しましょう。出版社によりますが、ほとんどの論文では\BibTeX{}ファイルをダウンロードできるようになっています。
+
+宇宙・素粒子系の論文で著者が数十名を超えるような場合、全ての著者を掲載すると紙面をそれだけで割いてしまいます。そのような場合は、必要に応じて\texttt{author = \{Tanabashi, M. and others\},}のように書き換えてください\footnote{このテンプレートでは同梱の\texttt{jecon.bst}を編集したもので対応していますので、各自でこの作業をする必要はありません。著者人数が多いときは自動で筆頭3名のみを表示するようにしてあります。もし\BibTeX{}のスタイルファイル（{\texttt .bst}）を独自のものにしたい場合は、注意してください。}。そうすると、著者情報が Tanabashi,~M.~et~al.\ という表示に変わります。
+
+\section{ヨーロッパ圏の人名など}
+ウムラウトなどの混じったヨーロッパ圏の人名を入力するには、例えばシュレーディンガーの場合、\LaTeX{}では\texttt{Shr\bs{}"\{o\}dinger}と入力することでShr\"{o}dingerと表示すると\LaTeX{}の教科書には書いてあります。しかしいちいちこんなことをするのは面倒ですので、\texttt{main.tex}に書いてある\texttt{\bs{}usepackage[utf8]\{inputenc\}}を使うことで、直接ウムラウトつきの文字を\LaTeX{}のソース中に書いてしまって問題ありません。「ö」と「\"{o}」は、この\LaTeX{}ソース中では違う入力方法で書かれていますが、出力は同一です。
+
+\section{\texttt{newcommand}}
+
+入力が長く、論文中で何度も繰り返し使うような入力はコマンドとして登録することができます。例えば\texttt{\bs{}HI\{\}}や\texttt{\bs{}bs\{\}}といったコマンドを\texttt{main.tex}で定義しており、これらの結果は「\HI{}」や「\bs{}」と表示されます。
+
+\section{\texttt{latexdiff}}
+
+修士論文の執筆中は必ずバックアップをとるようにするのは当然のこととして、\LaTeX{} のソースファイルなど一式を Git などのバージョン管理ソフトウェアでバージョン管理するようにしておきましょう。これは、指導教員に添削してもらう際に \texttt{latexdiff} コマンドを利用して、修正箇所・更新箇所を見やすくするためです。
+
+例えばこの修論テンプレートは GitHub 上で管理されており、同梱の\texttt{Makefile}を使って\\
+\texttt{\$ make diff}\\
+というコマンドを実行すると\texttt{main-diffHEAD.pdf}というファイルが生成されます。もし手元に\texttt{git clone}してある\LaTeX{}ファイルに修正が加えられている場合、この\texttt{main-diffHEAD.pdf}の中では削除箇所が小さい赤い明朝体で、追加箇所が青いゴシック体で表示されているはずです。この\texttt{Makefile}では Git のみに対応しています。
+
+Git の\texttt{HEAD}\footnote{最新の\texttt{commit}の場所です。}以外の\text{commit}と差分を取りたいときは、例えば\\
+\texttt{\$ make diff DIFFREV=3303f9e}\\
+とすれば、\texttt{main-diff3303f9e.pdf}というファイルが生成されます。

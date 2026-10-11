@@ -1,0 +1,310 @@
+% Dies ist eine Latex-Vorlage fuer Arbeiten am IFTE der TU Dresden
+% Die gezeigten Kopfzeilen etc. sind Layoutvorschläge, keine Richtlinien!
+
+\documentclass[%
+  paper=a4,
+  fontsize=12pt,
+  twoside=false,
+  headsepline=true,
+  numbers=noenddot]{scrartcl}
+\usepackage{ifthen}
+
+\newboolean{Diplomarbeit}
+\setboolean{Diplomarbeit}{false}
+
+\usepackage{setspace} % Änderung des Zeilenabstands
+
+% Sprache
+\usepackage[ngerman,silent]{babel} % für deutsches Inhaltsverzeichnis etc.
+\usepackage[utf8]{inputenc} % Unterstützung für deutsche Umlaute in der TeX-Datei
+
+% Font
+\usepackage[scaled=.98,space]{erewhon}
+\usepackage{zlmtt}
+\usepackage{tgheros}
+\usepackage[erewhon,vvarbb]{newtxmath}
+\usepackage[T1]{fontenc} % Korrekte Trennung von Wörtern mit Umlauten
+
+% Layout (siehe layout.tex)
+\input{layout}
+
+% Grafiken
+\usepackage{graphicx}
+\usepackage{pdfpages} % Einbinden von PDF-Dateien
+\usepackage{caption}
+\usepackage{float} % Positionierung von Bildern "hier" [H]
+
+% Mathematik
+\usepackage{amsmath}
+\usepackage{bm}                 % fette Symbole im Mathemodus
+\usepackage{siunitx}            % Angabe von SI-Einheiten
+\iflanguage{ngerman}{%
+  \usepackage{ziffer}           % kein Abstand nach Dezimalkomma
+  \addto\extrasngerman{\sisetup{locale=DE}}
+}{}
+
+% Tabellen
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{array} % Better tabulars
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\usepackage[NewCommands]{ragged2e} % Better raggedleft formating
+\newcolumntype{v}[1]{>{\PreserveBackslash{\raggedright}\hspace{0pt}}p{#1}}
+
+% Anhang (siehe appendix.tex)
+\input{appendix}
+
+% Links und Bookmarks im PDF
+\usepackage[%
+  final,
+  bookmarks=true,
+  bookmarksopen,
+  bookmarksnumbered=true,
+  linktoc=all,
+  hidelinks % Links nicht hervorheben
+]{hyperref}
+\usepackage{bookmark}
+
+% \cref gibt automatisch die Art des Ziels einer Referenz an, z.B. \cref{fig4} -> "Abbildung 4"
+% Man spart sich also das Tippen von "Abbildung".
+\usepackage[noabbrev]{cleveref} % unbedingt nach hyperref laden
+
+\begin{document}
+
+% Verwendung von kleingeschriebenen römischen Zahlen (i,ii,...) für alle Inhalte vor Abschnitt 1
+\pagenumbering{roman}
+
+% 1,5-facher Zeilenabstand
+\onehalfspacing
+
+% Titelseite
+% *****************************************************************************
+
+\input{titlepage} % siehe titlepage.tex
+
+% Aufgabenstellung
+% *****************************************************************************
+
+\cleardoublepage
+\thispagestyle{empty} % keine Kopf- und Fußzeile (Seitenzahl) anzeigen
+
+\noindent Anstatt dieser Seite ist die \underline{originale}, vom verantwortlichen Hochschullehrer unterzeichnete Aufgabenstellung einzubinden. Die weiteren abzugebenden Versionen der Diplomarbeit enthalten eine Kopie der Aufgabenstellung.
+
+Das Binden der \ifthenelse{\boolean{Diplomarbeit}}{Diplomarbeit}{Studienarbeit} hat so zu erfolgen, dass ein nachträglicher Seitenaustausch nicht möglich ist (keine Spiralbindung).
+
+\cleardoublepage
+
+%\includepdf{Aufgabe.pdf}
+%\includepdf[pages1-4]{ddd.pdf}
+
+% Selbstständigkeitserklärung
+% *****************************************************************************
+
+\section*{Selbstständigkeitserklärung}
+
+Hiermit versichere ich, dass ich die vorliegende Arbeit ohne unzulässige Hilfe Dritter und ohne Benutzung anderer als der angegebenen Hilfsmittel angefertigt habe; die aus fremden Quellen direkt oder indirekt übernommenen Gedanken sind als solche kenntlich gemacht. Bei der Auswahl und Auswertung des Materials sowie bei der Herstellung des Manuskripts habe ich Unterstützungsleistungen von folgenden Personen erhalten:
+
+\vspace*{1cm}
+\hspace*{2cm}xxxx
+
+\hspace*{2cm}xxxx
+
+\hspace*{2cm}xxxx
+
+\hspace*{2cm}xxxx
+\vspace*{1cm}
+
+\noindent Weitere Personen waren an der geistigen Herstellung der vorliegenden Arbeit nicht beteiligt.
+
+\noindent Der Text wurde von mir selbst verfasst; es erfolgte kein Einsatz von KI zum Erstellen dieses Textes.
+
+\noindent Mir ist bekannt, dass die Nichteinhaltung dieser Erklärung  zum nachträglichen
+\ifthenelse{\boolean{Diplomarbeit}}{Entzug des Diplomabschlusses}{Aberkennen der Prüfungsleistung} führen kann.
+
+\vspace*{2cm}
+\noindent Dresden, den xx.xx.xx \hspace{3cm} Unterschrift: \\
+
+\cleardoublepage
+
+% Kurzfassung
+% *****************************************************************************
+
+\section*{Kurzfassung}
+
+Die Kurzfassung in deutscher und englischer Sprache hat das Ziel, dem Leser Inhalt, Bedeutung und Einordnung der Arbeit in das Fachgebiet auf einer gesonderten Seite vorzustellen.
+
+\vspace*{2cm}
+
+\makeatletter
+\the@orig@section*{Abstract} % in layout.tex wurde der \section-Befehl umdefiniert; wir brauchen hier den originalen \section-Befehl, da der Abstract sonst auf einer neuen Seite erscheint
+\makeatother
+
+\cleardoublepage
+
+
+% Inhaltsverzeichnis
+% *****************************************************************************
+
+\tableofcontents
+
+
+% Abbildungsverzeichnis
+% *****************************************************************************
+
+\listoffigures
+
+
+% Tabellenverzeichnis
+% *****************************************************************************
+
+\listoftables
+
+% Zeichen, Benennungen und Einheiten
+% *****************************************************************************
+
+\section*{Zeichen, Benennungen und Einheiten}
+
+\subsection*{Abkürzungen}
+
+\begin{tabular}{ll}
+ADC&			Analog-Digital-Umsetzer\\
+DAC&			Digital-Analog-Umsetzer\\
+GPIO&			Programmierbarer Eingabe-/Ausgabekontakt eines Mikrocontrollers\\
+\end{tabular}
+
+\subsection*{Formelzeichen}
+
+\begin{tabular}{ll}
+  $A_\text{Pel}$ & Peltierfläche in \unit{\milli\metre\squared}\\
+  $A_\text{s}$ & Spannungsquerschnitt in \unit{\milli\metre\squared}\\
+\end{tabular}
+
+% Umstellung der Seitennummerierung von römisch auf arabisch
+\cleardoublepage
+\pagenumbering{arabic}
+
+% Einleitung
+% *****************************************************************************
+
+\section{Einleitung}
+
+Der Textteil beginnt mit der Einleitung. In dieser  sind die Zusammenhänge, die zur
+Formulierung der Aufgabe geführt haben (Motivation) klar und auch für einen "`Außenstehenden"' verständlich darzustellen. Ebenfalls sind hier die Einordnung der Arbeit in das
+Fachgebiet und die Nutzungsmöglichkeiten der Ergebnisse zu beschreiben. Wenn die
+Bearbeitung in einer Firma erfolgte, ist diese zu nennen.
+
+
+% Stand der Technik
+% *****************************************************************************
+\section{Stand der Technik}
+%\input{StandDerTechnik}
+
+Beispiel für physikalische Größen: \qty{120.2}{\milli\watt}. Bei Verwendung von \texttt{siunitx} wird ein Dezimalpunkt automatisch durch ein Dezimalkomma ersetzt.
+
+Das Paket \texttt{ziffer} sorgt weiterhin dafür, dass auch im normalen Mathemodus nach einem Dezimalkomma kein zusätzlicher Abstand eingefügt wird: $123,45$.
+
+Über den Befehl \texttt{\textbackslash{}text} kann Text in Formeln eingefügt werden: $A_\text{optimal}$.
+
+
+
+% Präzisierung der Aufgabenstelung
+% *****************************************************************************
+
+\section{Präzisierung der Aufgabenstellung}
+
+Voraussetzung für die Präzisierung der Aufgabenstellung ist die Analyse des internationalen
+Standes der Technik durch intensives Literatur- und Patentstudium zu
+bereits vorhandenen Lösungen, offenen Fragestellungen und möglichen Lösungswegen.
+
+Das Präzisieren der Aufgabenstellung erfolgt in Zusammenarbeit mit dem Betreuer und
+unter Beachtung des aktuellen internationalen Standes auf dem Arbeitsgebiet. Folgende
+Fragen sind zu klären:
+
+\begin{itemize}
+\item Ziel und Zweck der Arbeit,
+\item Ausgangspunkt und Abgrenzung des Themas,
+\item Art, Umfang, Form und Genauigkeit der zu erreichenden Arbeitsergebnisse,
+\item Teilziele, Mittel und Methoden der Bearbeitung, Abhängigkeit der Teilergebnisse
+voneinander.
+\end{itemize}
+
+
+% Hauptteil
+% *****************************************************************************
+
+\section{Erster Hauptabschnitt der Arbeit}
+\subsection{Abschnitt innerhalb des Kapitels}
+\subsubsection{Unterteilung innerhalb des Abschnitts}
+
+Eine wissenschaftliche Arbeit zeichnet sich durch eine erkenntnis- und ergebnisorientierte Darstellung der Realisierung der einzelnen Teilaufgaben aus, was sie deutlich von einem Tätigkeitsbericht (Praktikumsbericht) unterscheidet. Beispielsweise könnte hier die Dimensionierung der Komponenten der Teilaufgabe 1 vorgestellt werden.\\\\
+Hinweis zur Vorlage: Jeder Gliederungspunkt sollte mindestens eine Seite Text umfassen. Eine feinere Unterteilung der Überschriften als in diesem Beispiel sollte vermieden werden.
+Absätze sind durch die Formatvorlage durch einen größeren Abstand voneinander getrennt, um eine Abgrenzung optisch zu unterstützen.
+
+
+
+% Zusammenfassung
+% *****************************************************************************
+
+\section{Zusammenfassung}
+
+Die abschließende Zusammenfassung hebt problemorientiert die Eigenschaften eines
+Produktes, einer Lösungsmethode oder eines Programms hervor und zeigt Verbesserungen,
+offene Probleme, Schlussfolgerungen und konkrete Vorschläge für weitere Forschungsarbeiten auf.
+
+% Literaturverzeichnis
+% *****************************************************************************
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{section}{Literaturverzeichnis}
+\begin{thebibliography}{999}	%damit es im inhaltsverz steht
+\normalsize
+
+\subsection*{Bücher}	%  * nimmt nummerierung raus
+\bibitem {KR1} \textit{Krause, W.:} Gerätekonstruktion in Feinwerktechnik und Elektronik. 3.Aufl. 2011. [München, Wien]: Carl Hanser Verlag  - ISBN 3-446-19608-0
+
+
+\subsection*{Datenblätter}	%  * nimmt nummerierung raus
+
+\bibitem {SE05} LM1086.pdf Stand 2005: www.ti.com/lit/ds/symlink/lm1086.pdf\\ (27.05.2013)
+
+
+\subsection*{Internet}	%  * nimmt nummerierung raus
+
+\bibitem {St01} www.photoresearch.com/current/lrs455.asp (26.01.2013)
+
+
+\end{thebibliography}
+
+% Anhang
+% *****************************************************************************
+\clearpage
+\appendix % in appendix.tex wurde der \appendix-Befehl verändert, so dass an seiner Stelle automatisch die Verzeichnisse des Anhangs eingefügt werden
+
+\label{SecA}
+\section{Messungen}
+
+Achtung: Abbildungen und Tabellen im Anhang erscheinen \emph{nicht} im
+Abbildungs- bzw.\@ Tabellenverzeichnis im Hauptteil der Arbeit, sondern in den
+zugehörigen Verzeichnissen am Anfang des Anhangs!
+
+In der Datei \texttt{appendix.tex} können die Befehle \texttt{\textbackslash
+listofalofs} und \texttt{\textbackslash listofalots} auskommentiert werden, um
+kein Abbildungs- bzw.\@ Tabellenverzeichnis für den Anhang zu generieren.
+
+Zusätzlich kann die Definition des Befehls \texttt{\textbackslash
+useappendixtocs} angepasst werden, so dass Abbildungen und Tabellen im Anhang
+\emph{doch} in den Verzeichnissen im Hauptteil der Arbeit erscheinen (siehe
+\texttt{appendix.tex}).
+
+
+\label{SecA1}
+\subsection{xxxx}
+%\input{xxxx.tex}
+
+%% Falls noch etwas nach dem Anhang kommt:
+%\usestandardtocs
+%\bookmarksetup{startatroot} % siehe bookmark-Anleitung
+%\printindex % nur als Beispiel
+
+\end{document}

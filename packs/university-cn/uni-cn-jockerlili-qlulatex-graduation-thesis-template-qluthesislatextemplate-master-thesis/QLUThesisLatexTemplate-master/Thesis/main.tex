@@ -1,0 +1,118 @@
+% !Mode:: "TeX:UTF-8"
+% !TEX program = xelatex
+
+%%%%%%%%%% Port for macOS & Linux & Windows%%%%%%%%%%%
+% Modified: Qin Yubo
+% Modified: XLY23333
+
+%! ************************************************************* %!
+%!              _       __                 _                     %!
+%!             | |     / /___ __________  (_)___  ____ _         %!
+%!             | | /| / / __ `/ ___/ __ \/ / __ \/ __ `/         %!
+%!             | |/ |/ / /_/ / /  / / / / / / / / /_/ /          %!
+%!             |__/|__/\__,_/_/  /_/ /_/_/_/ /_/\__, /           %!
+%!                                             /____/            %!
+%!          如果您不知道如何修改LaTeX,请勿随意尝试修改本文件!           %!
+%! ************************************************************* %!
+
+\def\usewhat{xelatex}
+\documentclass[12pt,openany,oneside]{ctexbook}
+\input{setup/package}                                % 定义本文所使用宏包
+\graphicspath{{static/figures/}}                     % 定义所有的图像文件在 static/figures 子目录下
+\pgfplotsset{compat=1.18}
+\begin{document}                                     % 开始全文
+\input{setup/format}                                 % 完成对论文各个部分格式的设置
+\frontmatter   
+\pagenumbering{Roman} %目录部分用罗马数字编码                                      
+% 以下是论文导言部分，包括论文的封面，中英文摘要和中文目录
+\fancypagestyle{plain}{
+\fancyhf{}
+\renewcommand{\headrulewidth}{0 pt}
+\fancyfoot[C]{\songti\xiaowu~\thepage~}
+}
+% 直接从 Word 模板生成封面导出 pdf 似乎更方便
+\input{setup/cover}  % 封面 + 扉页
+\input{pages/aop}
+
+% 第 num 章的标题格式
+\renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\chaptername}{第\ \thechapter\ 章} 
+\ctexset{
+  chapter = {
+    format = \bfseries\huge,
+    name = {第,章},
+    number = \arabic{chapter}
+  }
+}
+
+%%%%%%%%%%   目录   %%%%%%%%%%
+
+\defaultfont
+\clearpage{\pagestyle{empty}\cleardoublepage}
+\setcounter{page}{1}                                 % 单独从 1 开始编页码
+\pagenumbering{arabic}  
+
+
+\titleformat{\chapter}{\centering\sanhao\heiti}{\chaptername}{2em}{} % 设置目录两字的格式
+\pdfbookmark[0]{目~~录}{mulu}
+
+\tableofcontents   
+
+\makeatletter                             % 中文目录
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyhead[C]{\songti\xiaowu \@cheading}            % 首页页眉格式
+    \fancyfoot[C]{\songti\xiaowu ~\thepage~}           % 首页页脚格式
+    \renewcommand{\headrulewidth}{0.5pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+\makeatother
+\thispagestyle{plain}
+
+\mainmatter\defaultfont\sloppy\raggedbottom
+\makeatletter
+\fancypagestyle{plain}{                              % 设置开章页眉页脚风格
+    \fancyhf{}
+    \fancyhead[C]{\songti\xiaowu \@cheading}            % 首页页眉格式
+    \fancyfoot[C]{\songti\xiaowu ~\thepage~}           % 首页页脚格式
+    \renewcommand{\headrulewidth}{0.5pt}
+    \renewcommand{\footrulewidth}{0pt}
+}
+\makeatother
+\setcounter{page}{1}                                 % 单独从 1 开始编页码
+\pagenumbering{Roman}   							 % 摘要部分用罗马数字编码
+\titleformat{\chapter}{\centering\sanhao\heiti\bfseries}{\chaptername}{0.8em}{} % 恢复chapter标题格式要求
+
+
+\vspace{10em}
+
+\include{pages/abstract}%设置摘要
+%%%%%%%%%  正文  %%%%%%%%%
+\setcounter{page}{1} 
+\pagenumbering{arabic}  
+\include{pages/body}
+
+
+%%%%%%%%%%  参考文献  %%%%%%%%%%
+\defaultfont
+\bibliographystyle{static/references/ref.buk}
+\phantomsection
+% \markboth{参考文献}{参考文献}
+\chapter*{\texorpdfstring{\heiti\sanhao\textbf{参考文献}}{参考文献}}
+\addcontentsline{toc}{chapter}{\sihao\heiti{参考文献}}       % 参考文献加入到中文目录
+
+
+\nocite{*}                                     % 若将此命令屏蔽掉，则未引用的文献不会出现在文后的参考文献中
+\bibliography{static/references/reference}
+\titleformat{\chapter}{\centering\sihao\heiti}{\chaptername}{2em}{}
+
+
+%%%%%%%%%%附录和致谢%%%%%%%%%
+
+\include{pages/tail}  % 这一个tail就已经包含了致谢和附录的内容了，所以下面的部分读者自己取舍
+% 附加页面部分
+% \include{pages/extra/paperInEnglish}              % 外文资料
+% \include{pages/extra/paperInChinese}              % 中文译文
+% \include{pages/extra/acknowledgements}            % 致谢
+\clearpage
+\end{document}                                 % 结束全文

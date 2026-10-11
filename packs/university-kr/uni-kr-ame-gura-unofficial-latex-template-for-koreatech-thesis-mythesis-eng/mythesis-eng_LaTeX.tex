@@ -1,0 +1,153 @@
+%-- !TEX base = mythesis-eng.tex
+%-- mythesis-eng_LaTeX.tex BEGIN -----------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Basic Usage of \LaTeX}	\label{chap:LaTeX}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Chapter \ref{chap:LaTeX} provides an overview of basic \LaTeX~syntax.
+If you are already familiar with \LaTeX, you may skip this chapter.
+Nevertheless, it is still recommended that you read Section \ref{sec:Tables}.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section[Handling Long Chapter or Section Titles]{Handling Long Chapter or Section Titles that Span Multiple Lines in the Table of Contents}	\label{sec:LongTitle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In such cases, a simplified version of the title can be specified for the Table of Contents.
+For example, you may write \verb|\section[short title]{original long| \verb|title}| to display a shorter title in the Table of Contents.
+See the corresponding entry for Section \ref{sec:LongTitle} in the Table of Contents of this \LaTeX~template.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Equations}	\label{sec:Equations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Equations can be created using the standard \LaTeX~syntax.
+For example, you may write equations as follows:
+\begin{align}
+	\begin{split}
+		\dot x 	&= Ax +Bu, \qquad x \in \mathbb{R}^n, \\
+		y		&= Cx +Du.	
+	\end{split}		\label{eq:LinearSystem}
+\end{align}
+To refer to the equation, use the \verb|\eqref| command --- for instance, \eqref{eq:LinearSystem}.
+Note that in this template, the equation numbering follows the chapter-based scheme.
+
+You can also use the \verb|\subequations| command to number a group of related equations.
+Refer to the following example.
+
+\begin{quote}
+	\begin{defn}	\label{def:SingularlyPerturbedSystem}
+		\begin{subequations}	\label{eq:SingularlyPerturbedSystem}
+			A singularly perturbed system consists of a slow subsystem
+			\begin{align}
+				\dot x	= f(t,x,z,\epsilon)	\label{eq:SingularlyPerturbedSystem_SlowSystem}
+			\end{align}
+			and a fast subsystem
+			\begin{align}
+				\epsilon\dot z	= g(t,x,z,\epsilon).	\label{eq:SingularlyPertubedSystem_FastSystem}
+			\end{align}
+			If the algebraic equation $0=g(t,x,z,0)$, obtained by setting $\epsilon=0$ in \eqref{eq:SingularlyPertubedSystem_FastSystem}, has a well-defined solution $z = h(t,x)$, then the system \eqref{eq:SingularlyPerturbedSystem} is said to be in standard form \cite{Khalil}.
+		\end{subequations}
+	\end{defn}
+\end{quote}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Figures}	\label{sec:Figures}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Figures can also be inserted using the standard \LaTeX~syntax, and the class file \verb|koreatechthesis.cls| automatically formats captions according to the guidelines specified in \cite{ThesisGuide}.
+For instance, the caption of Figure \ref{fig:SingleFigure} is center-aligned and typeset in boldface.
+If you wish to include multiple images within a single figure environment, then you may use the \verb|subfig| package.
+See Figure \ref{fig:Subfigure} for an example with two subfigures.
+
+\begin{figure*}[b]
+	\centering%
+	\includegraphics[width=0.4\textwidth]{example-image-a}
+	\caption{An example of inserting a figure}
+	\label{fig:SingleFigure}
+\end{figure*}
+
+\begin{figure}[ht]%
+	\centering%
+	\subfloat[First figure]{\label{fig:Subfigure1}
+		\includegraphics[width=0.4\textwidth]{example-image-b}
+	}
+	\quad
+	\subfloat[Second figure]{\label{fig:Subfigure2}
+		\includegraphics[width=0.4\textwidth]{example-image-c}
+	}\\
+	\caption{Two subfloats}
+	\label{fig:Subfigure}
+\end{figure}
+
+On the other hand, if your thesis does not contain any figures, you should either delete or comment out the following lines in \verb|mythesis-eng.tex|:
+\begin{verbatim}
+	\listoffigures
+	\addcontentsline{toc}{chapter}{List of Figures}
+\end{verbatim}
+so that the List of Figures does not appear in the output PDF.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Tables}	\label{sec:Tables}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+To comply with the formatting guidelines for tables specified in \cite{ThesisGuide}, the \verb|threeparttable| package is used in this template.
+Therefore, when creating tables, you should use the \verb|threeparttable| environment whenever appropriate.
+Example usages are shown in Tables \ref{tab:Threeparttable} and \ref{tab:ThreeparttableWithTnote} for your reference.
+Note that according to \cite{ThesisGuide}, the table itself should be center-aligned but the caption of the table should be left-aligned.
+
+\begin{table}[ht]
+	\centering%
+	\begin{threeparttable}
+		\caption{A table example: threeparttable}
+		\begin{tabular}{>{\centering}m{1.5cm}|c}
+			\hline\hline
+			aaa 	& bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb \\
+			\hline
+		\end{tabular}	\label{tab:Threeparttable}
+	\end{threeparttable}
+\end{table}
+
+\begin{table}[ht]
+	\centering%
+	\begin{threeparttable}
+		\caption{A table example: threeparttable w/ tnote}
+		\begin{tabular}{>{\centering}m{1.5cm}|c}
+			\hline\hline
+			aaa\tnote{1)} 	& bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb \\
+			\hline
+		\end{tabular}	\label{tab:ThreeparttableWithTnote}
+		\begin{tablenotes}
+			{\footnotesize
+				\item[1)]	Explanation of the first item
+				\item[2)]	Explanations regarding the table itself and/or related aspects
+			}
+		\end{tablenotes}
+	\end{threeparttable}
+\end{table}
+
+If additional explanations are needed for table items or for the table itself, you can use the \verb|\tnote| command and the \verb|tablenotes| environment from the \verb|threeparttable| package.
+See Table \ref{tab:ThreeparttableWithTnote} for an example.
+
+Lastly, as with the case of figures, if your thesis does not contain any tables, you should either delete or comment out the following lines in \verb|mythesis-eng.tex|:
+\begin{verbatim}
+	\listoftables
+	\addcontentsline{toc}{chapter}{List of Tables}
+\end{verbatim}
+so that the List of Tables does not appear in the output PDF.
+
+

@@ -1,0 +1,172 @@
+\ProvidesPackage{khystyle}[2022/12/30 Kyung Hee University Template package]
+
+%% Commands to be used in the front pages, etc
+%%%% \department{Name of your department}
+%%%% \advisor{Name of your advisor}
+%%%% \degree{Title of the Degree, Ph.D or Master}
+%%%% \keyword{keyword to be placed after the abstract}
+%%%% \committee{Name of thesis committee, call this command multiple times with different names}
+
+\newcommand{\department}[1]{\def\khudept{#1}}
+\newcommand{\advisor}[1]{\def\khuadvisor{#1}}
+\newcommand{\degree}[1]{\def\khudegree{#1}}
+\newcommand{\keywords}[1]{\def\khukeywords{#1}}
+
+\RequirePackage{xparse}
+\ExplSyntaxOn
+\clist_new:N \g_committees
+\NewDocumentCommand\committee{m} {
+    \clist_put_right:Nn \g_committees {#1}
+}
+
+\NewDocumentCommand\printcommittees{} {
+    \clist_map_inline:Nn \g_committees {
+        %~##1 \\\vspace{-11pt}\hrule\vspace{11pt}
+        \vspace{11pt}\hrule\vspace{-10pt} ##1 \\
+    }
+}
+\ExplSyntaxOff
+
+%% Common packages and setup
+\RequirePackage{amsmath, amssymb, amsfonts}
+\RequirePackage{hyperref}
+
+\bibliographystyle{unsrt}
+
+%% Setup for the geometry
+\RequirePackage[paperwidth=19.cm,paperheight=26.0cm,
+                left=2.cm,right=2.cm,top=2.5cm,bottom=2.5cm]{geometry}
+\RequirePackage{setspace}
+
+\newcommand{\makeoutcover}{
+    \newpage
+    \pagestyle{empty}
+    \begin{spacing}{1.5}
+        \begin{minipage}[t][1.5cm][t]{\textwidth}\centering
+            \fontsize{12}{12}\selectfont Thesis for the Degree of \khudegree
+        \end{minipage}
+        \begin{minipage}[t][8.5cm][t]{\textwidth}\centering
+            \bf\fontsize{18}{18}\selectfont\@title
+        \end{minipage}
+        \begin{minipage}[c][9.4cm][t]{\textwidth}\centering
+            \bf\fontsize{14}{14}\selectfont\@author
+        \end{minipage}
+        \begin{minipage}[t][0cm][b]{\textwidth}\centering
+            \fontsize{12}{12}\selectfont\khudept\\
+            Graduate School\\
+            Kyung Hee University\\
+            Seoul, Korea \\
+            ~\\
+            \@date
+        \end{minipage}
+    \end{spacing}
+}
+
+\newcommand{\makeincover}{
+    \newpage
+    \pagestyle{empty}
+    \begin{spacing}{1.5}
+    ~\\~\vspace{.3cm}~\\
+    \begin{minipage}[t][8.5cm][t]{\textwidth}\centering
+            \bf\fontsize{18}{18}\selectfont\@title
+    \end{minipage}
+    \begin{minipage}[c][9.4cm][t]{\textwidth}\centering
+        \bf\fontsize{14}{14}\selectfont\@author
+    \end{minipage}
+    \begin{minipage}[t][0cm][b]{\textwidth}\centering
+            \fontsize{12}{12}\selectfont\khudept\\
+            Graduate School\\
+            Kyung Hee University\\
+            Seoul, Korea \\
+            ~\\
+            \@date
+    \end{minipage}
+\end{spacing}
+}
+
+\newcommand{\makesignature}{
+    \newpage
+    \pagestyle{empty}
+    \begin{spacing}{1.5}
+    ~\\~\vspace{.3cm}~\\
+        \begin{minipage}[t][4cm][t]{\textwidth}\centering
+            \bf\fontsize{18}{18}\selectfont\@title
+        \end{minipage}
+        \begin{minipage}[c][2cm][t]{\textwidth}\centering
+            by\\ \bf\fontsize{14}{14}\selectfont\@author
+        \end{minipage}
+        \begin{minipage}[c][3.5cm][t]{\textwidth}\centering
+            Advised by\\ \bf\fontsize{14}{14}\selectfont\khuadvisor
+        \end{minipage}
+        \begin{minipage}[t][5cm][t]{\textwidth}\centering
+            \fontsize{12}{12}\selectfont
+            Submitted to the \khudept\\
+            and the Faculty of the Graduate School of\\
+            Kyung Hee University in partial fullfillment\\
+            of the requirements for degree of \\
+            \khudegree\\
+        \end{minipage}
+
+        \hfill
+        \begin{minipage}[t][0cm][t]{.5\textwidth}
+            \fontsize{12}{12}\selectfont
+            Dissertation Committee:
+        \end{minipage}
+        \vspace{-.5cm}
+        \begin{flushright}
+            \fontsize{10}{10}\selectfont
+            \begin{minipage}[t][3cm][t]{2.05cm}
+                \vspace{.07cm}Chairperson
+            \end{minipage}%
+            \begin{minipage}[t][3cm][t]{5cm}
+                ~\printcommittees
+            \end{minipage}
+        \end{flushright}
+
+    \end{spacing}
+}
+
+\renewenvironment{abstract}{
+    \newpage
+    \pagestyle{empty}
+    \section*{\Large\centering{}Abstract}
+    \vspace{0.5cm}
+    {\bf\centering\@title} \\
+    \vspace{0.5cm}
+    \begin{flushright}
+        \@author \\
+        \khudegree \\
+        Graduate School of Kyung Hee University \\
+        Advised by \khuadvisor
+    \end{flushright}
+    \vspace{0.5cm}
+    \par
+}{
+    \\\\
+    \textbf{Keywords: } \khukeywords
+    \clearpage
+}
+
+\renewcommand\contentsname{\Large\bf\centering{}Contents}
+\renewcommand\listtablename{\Large\bf\centering{}List of Tables}
+\renewcommand\listfigurename{\Large\bf\centering{}List of Figures}
+%\setcounter{\lofdepth}{1}
+
+%\def\nofigure{0}
+\newcommand{\makefrontmatters}{
+    \makeoutcover
+    \makeincover
+    \makesignature
+    \newpage
+    \tableofcontents
+    \ifx\nofigure\undefined
+        \newpage\listoffigures
+        \clearpage
+    \fi
+    \ifx\notable\undefined
+        \newpage\listoftables
+        \clearpage
+    \fi
+}
+
+\endinput

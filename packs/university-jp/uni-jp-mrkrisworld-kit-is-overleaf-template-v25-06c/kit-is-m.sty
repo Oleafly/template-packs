@@ -1,0 +1,666 @@
+%%
+%%       kit-is-m.sty ver 3.0.1
+%%       京都工芸繊維大学大学院工芸科学研究科情報工学専攻
+%%       修士論文用スタイルファイル
+%%               2024/02/05      for pLaTeX
+%%               by Atsushi Nunome (nunome@kit.ac.jp)
+%%
+%%       更新履歴：
+%%       v3.0.1: (2024/02/05) 英語表紙で1名だけの指導教員に対応
+%%       v3.0.0: (2024/01/24) 和文概要と英文概要の書式を変更
+%%       v2.1.0: (2023/11/13) 職名の追加
+%%       v2.0.3: (2022/11/17) 様式2号の文言変更に対応
+%%       v2.0.2: (2019/12/05) 講師の英語名称を変更
+%%       v2.0.1: (2019/04/01) 新元号「令和」に対応
+%%       v2.0.0: (2019/01/11) 英語表紙に対応
+%%       v1.3.1: (2018/12/20) 様式2号の表題を修正
+%%       v1.3.0: (2018/04/17) 新元号判定機能追加
+%%       v1.2.0: (2016/02/03) 英文概要における日本人学生の姓名順変更に対応
+%%                            外国人留学生用に\eauthoriを追加
+%%       v1.1.2: (2015/02/06) 目次で章番号と章題が離れすぎていたのを修正
+%%       v1.1.1: (2014/02/12) section, subsection下の空きを微調整
+%%       v1.1.0: (2013/01/07) ３名の指導教員に対応
+%%       v1.0.9: (2012/02/09) 小さい図表の入る位置を調整
+%%                            英文概要の著者名を斜体に変更
+%%                            英文概要の矩形サイズを調整
+%%       v1.0.8: (2010/11/10) キャプション等のフォント不整合を修正
+%%       v1.0.7: (2010/02/09) 概要の余白を調整
+%%       v1.0.6: (2010/02/04) 禁則ルールを信学会に準拠
+%%       v1.0.5: (2010/02/02) 脚注スタイルを変更
+%%                            表キャプション下にスペースを挿入
+%%       v1.0.4: (2010/02/01) 図表の入る位置を調整
+%%       v1.0.3: (2010/01/25) 目次で章番号と章題が離れすぎていたのを修正
+%%       v1.0.2: (2010/01/18) 章番号と付録番号の参照ができなかったのを修正
+%%       v1.0.1: (2010/01/13) 長いタイトルに対応(\coverbreak, \abstbreak)
+%%       v1.0.0: (2009/12/21) 初版
+%%
+\typeout{kit-is-m.sty; Version 3.0.1 by A.Nunome [Feb 5, 2024]}
+
+\def\@wareki#1#2#3{{%
+\newcount\@nd
+\newcount\@nm
+\newcount\@ny
+\@ny=#1\@nd=#1\advance\@nd -1988
+\multiply\@nd 10000
+\@nm=#2\multiply\@nm 100
+\advance\@nd \@nm
+\advance\@nd #3\relax
+\ifnum\@nd<310501
+\advance\@ny -1988
+平成%
+\else\advance\@ny -2018
+令和%
+\fi
+\ifnum\@ny=1 元%
+\else\number\@ny\fi
+年%
+}}
+
+\def\deadline#1#2#3{%
+  \def\@eyear{#1}
+  \def\@jyear{\@wareki{#1}{#2}{#3}}
+  \def\@jdate{\@jyear#2月#3日}
+  \def\@edate{\ifcase#2\or January\or February\or March\or April%
+  \or May\or June\or July\or August\or September\or October%
+  \or November\or December\fi\hs@hzw#3, \@eyear}}
+\newif\ifadvisors
+\newif\ifadvisort
+%% 英文概要の著者名
+\def\eauthor#1#2{% 日本人学生
+  \def\@eauthor{\uppercase{#2} #1}%
+  \def\@ecovauthor{#1 #2}}
+\def\eauthori#1{% 外国人留学生
+  \def\@eauthor{#1}%
+  \def\@ecovauthor{#1}}
+\def\etitle#1{\def\@etitle{#1}}
+\def\advisor#1#2{%
+  \ifcase#1%
+  \or \def\@advisor{#2　教授}\def\@eadvisor{Professor\hs@fzw#2}%
+  \or \def\@advisor{#2　准教授}\def\@eadvisor{Associate Professor\hs@fzw#2}%
+  \or \def\@advisor{#2　講師}\def\@eadvisor{Junior Associate Professor\hs@fzw#2}%
+  \or \def\@advisor{#2　助教}\def\@eadvisor{Assistant Professor\hs@fzw#2}%
+  \or \def\@advisor{#2　助手}\def\@eadvisor{Assistant\hs@fzw#2}%
+  \or \def\@advisor{#2　特任教授}\def\@eadvisor{Project Professor\hs@fzw#2}%
+  \or \def\@advisor{#2　特任准教授}\def\@eadvisor{Project Associate Professor\hs@fzw#2}%
+  \or \def\@advisor{#2　特任講師}\def\@eadvisor{Project Junior Associate Professor\hs@fzw#2}%
+  \or \def\@advisor{#2　特任助教}\def\@eadvisor{Project Assistant Professor\hs@fzw#2}%
+  \or \def\@advisor{#2　特定教授}\def\@eadvisor{Retained Professor\hs@fzw#2}%
+  \or \def\@advisor{#2　特定准教授}\def\@eadvisor{Retained Associate Professor\hs@fzw#2}%
+  \or \def\@advisor{#2　特定講師}\def\@eadvisor{Retained Junior Associate Professor\hs@fzw#2}%
+  \or \def\@advisor{#2　特定助教}\def\@eadvisor{Retained Assistant Professor\hs@fzw#2}%
+  \else\def\@advisor{#2}
+  \fi
+  \def\@abstadv{#2}}
+\def\secondadvisor#1#2{%
+  \ifcase#1%
+  \or \def\@secondadvisor{#2　教授}\def\@esecondadvisor{Professor\hs@fzw#2}%
+  \or \def\@secondadvisor{#2　准教授}\def\@esecondadvisor{Associate Professor\hs@fzw#2}%
+  \or \def\@secondadvisor{#2　講師}\def\@esecondadvisor{Junior Associate Professor\hs@fzw#2}%
+  \or \def\@secondadvisor{#2　助教}\def\@esecondadvisor{Assistant Professor\hs@fzw#2}%
+  \or \def\@secondadvisor{#2　助手}\def\@esecondadvisor{Assistant\hs@fzw#2}%
+  \or \def\@secondadvisor{#2　特任教授}\def\@esecondadvisor{Project Professor\hs@fzw#2}%
+  \or \def\@secondadvisor{#2　特任准教授}\def\@esecondadvisor{Project Associate Professor\hs@fzw#2}%
+  \or \def\@secondadvisor{#2　特任講師}\def\@esecondadvisor{Project Junior Associate Professor\hs@fzw#2}%
+  \or \def\@secondadvisor{#2　特任助教}\def\@esecondadvisor{Project Assistant Professor\hs@fzw#2}%
+  \or \def\@secondadvisor{#2　特定教授}\def\@esecondadvisor{Retained Professor\hs@fzw#2}%
+  \or \def\@secondadvisor{#2　特定准教授}\def\@esecondadvisor{Retained Associate Professor\hs@fzw#2}%
+  \or \def\@secondadvisor{#2　特定講師}\def\@esecondadvisor{Retained Junior Associate Professor\hs@fzw#2}%
+  \or \def\@secondadvisor{#2　特定助教}\def\@esecondadvisor{Retained Assistant Professor\hs@fzw#2}%
+  \else\def\@secondadvisor{#2}
+  \fi\advisorstrue}
+\def\thirdadvisor#1#2{%
+  \ifcase#1%
+  \or \def\@thirdadvisor{#2　教授}\def\@ethirdadvisor{Professor\hs@fzw#2}%
+  \or \def\@thirdadvisor{#2　准教授}\def\@ethirdadvisor{Associate Professor\hs@fzw#2}%
+  \or \def\@thirdadvisor{#2　講師}\def\@ethirdadvisor{Junior Associate Professor\hs@fzw#2}%
+  \or \def\@thirdadvisor{#2　助教}\def\@ethirdadvisor{Assistant Professor\hs@fzw#2}%
+  \or \def\@thirdadvisor{#2　助手}\def\@ethirdadvisor{Assistant\hs@fzw#2}%
+  \or \def\@thirdadvisor{#2　特任教授}\def\@ethirdadvisor{Project Professor\hs@fzw#2}%
+  \or \def\@thirdadvisor{#2　特任准教授}\def\@ethirdadvisor{Project Associate Professor\hs@fzw#2}%
+  \or \def\@thirdadvisor{#2　特任講師}\def\@ethirdadvisor{Project Junior Associate Professor\hs@fzw#2}%
+  \or \def\@thirdadvisor{#2　特任助教}\def\@ethirdadvisor{Project Assistant Professor\hs@fzw#2}%
+  \or \def\@thirdadvisor{#2　特定教授}\def\@ethirdadvisor{Retained Professor\hs@fzw#2}%
+  \or \def\@thirdadvisor{#2　特定准教授}\def\@ethirdadvisor{Retained Associate Professor\hs@fzw#2}%
+  \or \def\@thirdadvisor{#2　特定講師}\def\@ethirdadvisor{Retained Junior Associate Professor\hs@fzw#2}%
+  \or \def\@thirdadvisor{#2　特定助教}\def\@ethirdadvisor{Retained Assistant Professor\hs@fzw#2}%
+  \else\def\@thirdadvisor{#2}
+  \fi\advisorttrue}
+\def\@ey#1{{% 入学年（和暦）
+  \count0=#1 \divide\count0 by 1000000 \advance\count0 by 2000
+  \@wareki{\count0}{4}{1}}}
+\def\idnumber#1{\def\@entyear{\@ey{#1}}\def\@idnumber{#1}}
+\renewcommand{\arraystretch}{1.3} % 標準の行間隔
+\def\cleardoublepagewnombre{%
+  \clearpage
+  \if@twoside
+    \ifodd\c@page\empty\else\hbox{}\newpage
+      \if@twocolumn\hbox{}\newpage\fi
+    \fi
+  \fi}
+\newif\if@ecover
+\newif\if@cover
+\newif\if@abst
+\def\EngCover#1{\if0#1\@ecoverfalse\else\@ecovertrue\fi}
+\def\coverbreak{\if@cover\\\else\relax\fi}
+\def\abstbreak{\if@abst\\\else\relax\fi}
+\def\hs@dzw{\hskip.1zw\relax}
+\def\hs@qzw{\hskip.25zw\relax}
+\def\hs@hzw{\hskip.5zw\relax}
+\def\hs@fzw{\hskip1zw\relax}
+\def\hs@wzw{\hskip2zw\relax}
+\def\vs@hzw{\vskip.5zw\relax}
+\def\vs@fzw{\vskip1zw\relax}
+\def\vs@wzw{\vskip2zw\relax}
+\def\@thesis{修 \hs@hzw 士 \hs@hzw 論 \hs@hzw 文}
+\def\@majorbelong{京都工芸繊維大学大学院}
+\def\@minorbelong{工芸科学研究科}
+\def\@tinybelong{情報工学専攻}
+\def\@edegree{Master of Engineering}
+\def\@emajorbelong{Kyoto Institute of Technology}
+\def\@eminorbelong{Graduate School of Science and Technology}
+\def\@etinybelong{Master's Program of Information Science}
+%
+\def\@stamp{○\hskip-.85zw\lower-.228ex\hbox{\scriptsize 印}}
+%%
+%% 表紙
+%%
+\renewcommand{\maketitle}{%
+\begin{titlepage}
+\@covertrue
+\if@ecover%
+  %% 英語版表紙
+    \null
+    \vskip 10\p@
+    \begin{center}
+      {\LARGE\@etitle}\\
+      \vskip 4.5zw
+      {\large Thesis for the degree of \@edegree}\\
+      \vskip 2.5zw
+      {\Large\sl Author:}\\
+      {\Large\@ecovauthor}\\
+      \vskip 2.5zw
+      {\Large\sl Student ID No.:}\\
+      {\Large\@idnumber}\\
+      \vskip 4.5zw
+    \end{center}
+    {\Large\sl Chief Supervisor:}\\
+    {\Large\@eadvisor}\\
+    \vs@fzw\noindent{\ifadvisors\Large\ifadvisort\sl Co-Supervisors:\else\sl Co-Supervisor:\fi\fi}\\
+    {\ifadvisors\Large\@esecondadvisor\fi}\\
+    {\ifadvisort\Large\@ethirdadvisor\fi}\\
+    \vskip 2.5zw
+    \begin{center}
+      {\Large\@etinybelong,}\\
+      {\Large\@eminorbelong,}\\
+      {\Large\@emajorbelong}
+      \vskip 2.5zw{\Large\@edate}
+    \end{center}
+\else%
+  %% 日本語版表紙
+    \null
+    \vskip 30\p@
+    \begin{center}
+      {\Huge \@thesis}\\
+      \vskip 2.5zw
+      \Large  
+      \begin{tabular}{p{4zw}l}
+        題 \hs@fzw 目 & 
+        \renewcommand{\arraystretch}{1}
+        \begin{tabular}[t]{l}
+          \@title 
+        \end{tabular} \\
+        \renewcommand{\arraystretch}{1}
+      \end{tabular}\\
+      \vs@fzw
+      \begin{tabular}{p{8zw}l}
+        主任指導教員 & \@advisor \\
+        \ifadvisors 　　指導教員 & \@secondadvisor \\\fi
+        \ifadvisort 　　指導教員 & \@thirdadvisor \\\fi
+      \end{tabular}
+      \vfill
+      \Large\@majorbelong\hs@hzw\@minorbelong\par
+      \vs@hzw\@tinybelong\par
+      \vs@fzw
+      \renewcommand{\arraystretch}{1.3}
+      \begin{tabular}{ll}
+      学生番号　 & \@idnumber \\
+      氏　　名　 & \@author 
+      \end{tabular}\\
+      \vs@fzw\@jdate 提出\par
+    \end{center}
+\fi
+  \end{titlepage}
+  \@coverfalse
+  \renewcommand{\arraystretch}{1}
+  \cleardoublepage}
+%%
+%% 概要（和文）
+%%
+\renewenvironment{abstract}{
+\@absttrue
+{\sffamily\bfseries\thispagestyle{empty}\parindent\z@
+\setcounter{page}\@ne
+\if@ecover
+  \begin{center}\@etitle\end{center}
+  \@edate\hfill\@idnumber\hs@fzw\@eauthor\par
+  \begin{center}{\bfseries Abstract}\end{center}
+\else
+  \begin{center}\@title\end{center}
+  \@jdate\hfill\@idnumber\hs@fzw\@author\par
+  \begin{center}概 \hskip 1.5zw 要\end{center}
+\fi}
+\vskip-2ex\parindent1em\rm}
+{\@abstfalse\cleardoublepage}
+
+%%
+%% 概要（英文）
+%%
+\newenvironment{eabstract}{%
+  \@absttrue
+  {\sffamily\bfseries\thispagestyle{empty}\parindent\z@
+  \setcounter{page}\@ne
+  \begin{center}\@etitle\end{center}
+  \@edate\hfill\@idnumber\hs@fzw\@eauthor\par
+  \begin{center}{\bfseries Abstract}\end{center}}
+  \vskip-2ex\parindent1em\rm}{\@abstfalse\cleardoublepage}
+
+
+%%
+%% 目次
+%%
+\newenvironment{contents}{%
+  \pagenumbering{roman}
+  \setcounter{page}\@ne}{%
+  \cleardoublepagewnombre
+  \pagenumbering{arabic}
+  \setcounter{page}\@ne}
+\renewcommand{\tableofcontents}{%
+\if@ecover
+  {\centering\section*{Table of Contents\markboth{}{}}}
+  \@starttoc{toc}
+\else
+  {\centering\section*{目 \hspace{0.5em} 次\markboth{}{}}}
+  \@starttoc{toc}
+\fi}
+
+%%
+%% 脚注
+%%
+
+%% カウンターの親子関係の削除
+%% from cntreset.sty (藤田眞作著「LaTeXマクロの八衢」P.47)
+%% 
+\def\Comm@{,}
+\def\doubleq{==}
+\def\delfromreset#1#2{%
+\edef\@Tempa{\csname del@parent\endcsname}
+\expandafter\gdef\csname del@parent\expandafter\endcsname%
+{\@Tempa\Comm@#2\doubleq #1}}
+
+\def\dl@prnt{} \def\dl@son{}
+\def\del@parent{{}=={}}
+\def\p@rntson#1==#2/{\gdef\dl@prnt{#1}\gdef\dl@son{#2}}
+\newcount\TestCount
+
+\def\@stpelt#1{\TestCount=0 \def\@Tempb{#1}
+\ifx\@Tempa\empty \else
+\@for\member:=\@Tempa\do{\expandafter\p@rntson\member/\relax
+\ifx\P@CNT\dl@prnt\relax \ifx\@Tempb\dl@son \relax
+\global\advance\TestCount\@ne \fi\fi}\fi
+\ifnum\TestCount=0 \global\csname c@#1\endcsname \z@ \fi\relax}
+
+\def\stepcounter#1{\xdef\P@CNT{#1} \xdef\@Tempa{\del@parent}%
+\global\expandafter\advance\csname c@#1\endcsname \@ne
+{\let\@elt\@stpelt \csname cl@#1\endcsname}}
+%%
+%%
+\delfromreset{footnote}{chapter}
+\def\thefootnote{\arabic{footnote}}
+\def\footnoterule{
+  \kern-3\p@
+  \hrule width 
+  \columnwidth
+  \kern 2.715\p@
+}
+\long\def\@makefntext#1{
+  \parindent 0.5zw
+  \noindent
+  \hbox{
+    \kern-.5zw
+    \if@ecover
+      (*\@thefnmark{})
+    \else
+      （注\@thefnmark{}）
+    \fi
+    \kern-.75zw
+    \makebox[1zw][c]{:}
+  }#1
+}
+\def\@makefnmark{
+  \hbox{$^{\mbox{
+    \tiny
+    \kern-2zw
+    \if@ecover
+      (*\@thefnmark{})
+    \else
+      （注\@thefnmark{}）
+    \fi
+    \kern-1zw
+  }}$}
+}
+
+%%
+%% ページスタイル
+%%
+\pagestyle{headings}
+\def\@oddhead{}
+\def\@evenhead{}
+\def\@oddfoot{\hfil\thepage\hfil}
+\def\@evenfoot{\hfil\thepage\hfil}
+
+%--- indication for typesetting ---
+\sloppy
+
+%%
+%% 章, 節タイトル
+%%
+\renewcommand{\chapter}[1]{
+  \clearpage
+  \vskip 1ex
+  \refstepcounter{chapter}
+  \section*{\Large\sffamily\bfseries \thechapter. \hs@hzw #1}
+  \addcontentsline{toc}{chapter}%
+    {\protect\numberline{\thechapter.}#1}}
+
+\newcommand{\cchapter}[1]{%
+  \section*{\Large\sffamily\bfseries #1}
+  \addcontentsline{toc}{chapter}{#1}}
+
+\newcommand{\nchapter}[1]{%
+  \clearpage
+  \vskip 1ex
+  \section*{\Large\sffamily\bfseries #1}}
+
+\newcommand{\ntchapter}[1]{%
+  \nchapter{#1}
+  \addcontentsline{toc}{chapter}{#1}}
+
+\def\section{\@startsection{section}{1}{\z@}%
+  {3.5ex plus 1ex minus .2ex}%
+  {2.3ex plus .2ex minus .2ex}%
+  {\large\sffamily\bfseries}}
+\def\subsection{\@startsection{subsection}{2}{\z@}%
+  {3.25ex plus 1ex minus .2ex}%
+  {1.5ex plus .2ex minus .2ex}%
+  {\normalsize\sffamily\bfseries}}
+\def\thesubsubsection{(\arabic{subsubsection})}
+\def\theparagraph{(\alph{paragraph})}
+\def\thesubparagraph{(\roman{subparagraph})}
+%\setcounter{tocdepth}{1}
+
+\renewcommand*{\l@chapter}[2]{%
+  \ifnum \c@tocdepth >\m@ne
+     \addpenalty{-\@highpenalty}%
+     \addvspace{1.0em \@plus\p@}%
+     \begingroup
+       \parindent\z@ \rightskip\@pnumwidth \parfillskip-\rightskip
+       \leavevmode\bfseries
+       \setlength\@lnumwidth{1.5zw}%
+       \advance\leftskip\@lnumwidth \hskip-\leftskip
+       #1\nobreak\hfil\nobreak\hbox to\@pnumwidth{\hss#2}\par
+       \penalty\@highpenalty
+     \endgroup
+   \fi}
+
+%%
+%% 参考文献
+%%
+\renewcommand{\thebibliography}[1]{
+  \if@ecover
+    \ntchapter{References}\list
+    {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \itemsep\z@
+    \usecounter{enumi}}
+    \def\newblock{\hskip .11em plus .33em minus .07em}
+    \sloppy
+    \sfcode`\.=1000\relax
+ \else
+    \ntchapter{参考文献 }\list
+    {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \itemsep\z@
+    \usecounter{enumi}}
+    \def\newblock{\hskip .11em plus .33em minus .07em}
+    \sloppy
+    \sfcode`\.=1000\relax
+ \fi}
+\let\endthebibliography=\endlist
+%%
+%% レイアウトパラメータ
+%%
+\flushbottom
+\setlength{\topmargin}{25mm}\addtolength{\topmargin}{-1in}
+\setlength{\headheight}{\z@}
+\setlength{\headsep}{\z@}
+\setlength{\oddsidemargin}{25mm}\addtolength{\oddsidemargin}{-1in}
+\setlength{\evensidemargin}{25mm}\addtolength{\evensidemargin}{-1in}
+\setlength{\parindent}{1zw}
+\setlength{\textheight}{247mm} % 297mm - (25+25)mm
+\setlength{\textwidth}{160mm} % 210mm - (25+25)mm
+\setlength{\kanjiskip}{.07zw plus .1zw minus .05zw}
+\setlength{\xkanjiskip}{.25zw plus .15zw minus .1zw}
+\renewcommand{\baselinestretch}{1.448} % 42 / 29
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+
+\newcommand{\ps@jabst}{%
+  \setlength{\topmargin}{20mm}\addtolength{\topmargin}{-1in}
+  \setlength{\oddsidemargin}{20mm}\addtolength{\oddsidemargin}{-1in}
+  \setlength{\evensidemargin}{20mm}\addtolength{\evensidemargin}{-1in}
+  \setlength{\textheight}{257mm} % 297mm - (20+20)mm
+  \setlength{\textwidth}{170mm} % 210mm - (20+20)mm
+  \setcounter{page}\@ne
+  \renewcommand{\@evenfoot}{}
+  \renewcommand{\@oddfoot}{\@evenfoot}}
+
+\newcommand{\ps@eabst}{%
+  \setlength{\topmargin}{30mm}\addtolength{\topmargin}{-1in}
+  \setlength{\oddsidemargin}{30mm}\addtolength{\oddsidemargin}{-1in}
+  \setlength{\evensidemargin}{30mm}\addtolength{\evensidemargin}{-1in}
+  \setlength{\textheight}{237mm} % 297mm - (30+30)mm
+  \setlength{\textwidth}{150mm} % 210mm - (30+30)mm
+  \setcounter{page}\@ne
+  \renewcommand{\@evenfoot}{}
+  \renewcommand{\@oddfoot}{\@evenfoot}}
+
+%%
+%% 禁則
+%%
+\postbreakpenalty`（=10000
+\prebreakpenalty`）=10000
+\postbreakpenalty`［=10000
+\prebreakpenalty`］=10000
+\postbreakpenalty`〈=10000
+\prebreakpenalty`〉=10000
+\postbreakpenalty`【=10000
+\prebreakpenalty`】=10000
+\postbreakpenalty`〔=10000
+\prebreakpenalty`〕=10000
+\postbreakpenalty`『=10000
+\prebreakpenalty`』=10000
+\prebreakpenalty`"=10000
+\prebreakpenalty`℃=10000
+\prebreakpenalty`　=10000
+\prebreakpenalty`・=10000
+\prebreakpenalty`〜=10000
+\prebreakpenalty`ー=10000
+\prebreakpenalty`？=10000
+\prebreakpenalty`！=10000
+\postbreakpenalty"5C=10000
+
+%%
+%% 数式
+%%
+\def\eqnarray{%
+  \stepcounter{equation}%
+  \let\@currentlabel=\theequation
+  \global\@eqnswtrue
+  \global\@eqcnt\z@
+  \tabskip\@centering
+  \let\\=\@eqncr
+  $$\halign to \displaywidth\bgroup\@eqnsel\hskip\@centering
+  $\displaystyle\tabskip\z@{##}$&\global\@eqcnt\@ne
+  \hfill$\displaystyle{{}##{}}$\hfill
+  &\global\@eqcnt\tw@$\displaystyle\tabskip\z@{##}$\hfill
+  \tabskip\@centering&\llap{##}\tabskip\z@\cr
+}
+\jot=.5cm
+
+%%
+%% 箇条書き
+%%
+\renewenvironment{enumerate} % jreport.clsから再定義
+  {\ifnum \@enumdepth >\thr@@\@toodeep\else
+   \advance\@enumdepth\@ne
+   \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+   \list{\csname label\@enumctr\endcsname}{%
+      \iftdir
+         \ifnum \@listdepth=\@ne \topsep.5\normalbaselineskip
+           \else\topsep\z@\fi
+         \labelwidth1zw \labelsep.3zw
+         \ifnum \@enumdepth=\@ne \leftmargin1zw\relax
+           \else\leftmargin\leftskip\fi
+         \advance\leftmargin 1zw
+      \fi
+         \parskip\z@ \itemsep\z@ \parsep\z@
+         \usecounter{\@enumctr}%
+         \def\makelabel##1{\hss\llap{##1}}}%
+   \fi}{\endlist}
+
+\renewenvironment{itemize} % jreport.clsから再定義
+  {\ifnum \@itemdepth >\thr@@\@toodeep\else
+   \advance\@itemdepth\@ne
+   \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+   \expandafter
+   \list{\csname \@itemitem\endcsname}{%
+      \iftdir
+         \ifnum \@listdepth=\@ne \topsep.5\normalbaselineskip
+           \else\topsep\z@\fi
+         \labelwidth1zw \labelsep.3zw
+         \ifnum \@itemdepth =\@ne \leftmargin1zw\relax
+           \else\leftmargin\leftskip\fi
+         \advance\leftmargin 1zw
+      \fi
+         \parskip\z@ \itemsep\z@ \parsep\z@
+         \def\makelabel##1{\hss\llap{##1}}}%
+   \fi}{\endlist}
+
+\renewenvironment{description} % jreport.clsから再定義
+  {\list{}{\labelwidth\z@ \itemindent-\leftmargin
+   \iftdir
+     \leftmargin\leftskip \advance\leftmargin3\Cwd
+     \rightmargin\rightskip
+     \labelsep=1zw
+   \fi
+     \itemsep\z@
+     \listparindent\z@ \topskip\z@ \parskip\z@ \partopsep\z@
+           \let\makelabel\descriptionlabel}}{\endlist}
+
+\renewcommand{\descriptionlabel}[1]{%
+  \hspace\labelsep\normalfont\sffamily\gtfamily #1}
+
+%%
+%% 図，表
+%%
+
+%% 浮動体に関するパラメータ
+\def\floatpagefraction{.01}% 浮動体のみのページは浮動体占拠率1%以上
+
+%% キャプション
+%% \ecaption は \caption の後で使うこと．
+\def\capfsize{\large}
+\long\def\@makecaption#1#2{%
+  \capfsize\sffamily\bfseries
+  \setbox\@tempboxa\hbox{#1\hs@fzw #2}%
+  \ifdim \wd\@tempboxa >\hsize 
+    #1\hs@fzw #2\par 
+  \else
+    \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip10\p@
+}
+
+\def\ecaption{\@dblarg{\@ecaption\@captype}}
+\long\def\@ecaption#1[#2]#3{%
+  \begingroup \capfsize\sffamily\bfseries
+    \@makecaption{\csname fnum@e#1\endcsname}{\ignorespaces #3}\par
+  \endgroup
+}
+
+\def\fnum@figure{
+  \if@ecover
+    Figure \thefigure
+  \else
+    図\thefigure
+  \fi
+}
+\def\thefigure{\thechapter.\arabic{figure}}
+\def\fnum@table{
+  \if@ecover
+    Table \thetable
+  \else
+    表\thetable
+  \fi
+}
+\def\thetable{\thechapter.\arabic{table}}
+\def\fnum@efigure{Fig.\,\thefigure}
+\def\fnum@etable{Table~\thetable}
+\@namedef{figure*}{\ecapwidth.66\textwidth\@dblfloat{figure}}
+\@namedef{endfigure*}{\end@dblfloat}
+
+\def\Hline{\noalign{\hrule height .5mm}} % 表の天地で使う太罫線
+
+%%
+%% 謝辞
+%%
+\def\acknowledgement{
+  \if@ecover
+    \cchapter{Acknowledgments}
+  \else
+    \cchapter{謝辞}
+  \fi
+}
+
+%%
+%% 付録
+%%
+\def\appendix{
+ \clearpage
+ \setcounter{chapter}\z@
+ \if@ecover
+   \def\@chapapp{Appendix }
+ \else
+   \def\@chapapp{付録}
+ \fi
+ \renewcommand{\chapter}[1]{
+  \refstepcounter{chapter}
+  \section*{\Large\sffamily\bfseries \@chapapp\thechapter. \hspace{0.5cm} ##1}
+  \addcontentsline{toc}{appendix}%
+    {\protect\numberline{\@chapapp\thechapter.}##1}}
+ \def\thechapter{\Alph{chapter}}}
+
+\newcommand*{\l@appendix}[2]{%
+  \ifnum \c@tocdepth >\m@ne
+     \addpenalty{-\@highpenalty}%
+     \addvspace{1.0em \@plus\p@}%
+     \begingroup
+       \parindent\z@ \rightskip\@pnumwidth \parfillskip-\rightskip
+       \leavevmode\bfseries
+       \setlength\@lnumwidth{4zw}%
+       \advance\leftskip\@lnumwidth \hskip-\leftskip
+       #1\nobreak\hfil\nobreak\hbox to\@pnumwidth{\hss#2}\par
+       \penalty\@highpenalty
+     \endgroup
+   \fi}

@@ -1,0 +1,204 @@
+\chapter{论文模板使用说明}
+\section{Latex使用}
+该模板已经在mac的texifier，overleaf，vscode上验证使用，请用XeLaTex进行编译。
+
+硕博士论文的英文封面有区别，因此请注意根据申请学位论文类型注释选择\lstinline!hnuthesis.cls!的英文封面（搜索英文封面字样，并注释掉另一类型即可）。硕博士要申请的学位类型都是在\lstinline!Doctoral-thesis.tex!中的\lstinline!\endoctor{Doctor of Philosophy}!修改。
+
+%\section{数学公式、图表、参考文献等功能}
+
+
+\section{参考文献}
+
+在Doctoral-thesis.tex修改参考文献链接：\lstinline!\bibliography{MyLibrary.bib}!。
+
+目前可以使用的引用命令有\lstinline!\cite{}!、\lstinline!\citep{}!、\lstinline!\citet{}!和\lstinline!\citen{}!。
+
+效果如下：
+\begin{enumerate}
+	\item 引用参考文献时，数字显示在右上角：引用 ResNet~\cite{2020_aradi_Survey}提出了ResNet网络结构\citep{2020_aradi_Survey}（\lstinline!\cite{}!、\lstinline!\citep{}!）；
+	\item 引用参考文献时，以人名为主语：\citet{2017_qinxiaohui_FeiYunZhiCheLiangDuiLieDeFenBuShiKongZhi}针对队列稳定性提出了观测性方法。或者\citet{2021_chen_Graph}对与图做了个总结（\lstinline!\citet{}!）；
+	\item 引用参考文献时，引用数字显示在正文中：\citen{2017_qinxiaohui_FeiYunZhiCheLiangDuiLieDeFenBuShiKongZhi}这样（\lstinline!\citen{}!）。
+\end{enumerate}
+
+\textcolor{red}{如果参考文献不需要doi信息，那么可以在\lstinline!newnumerical.bst!中搜索\lstinline!#1 'show.doi :=!，或者定位到第88行位置，并将1改为0。}
+%引用 ResNet~\cite{2020_aradi_Survey}提出了ResNet网络结构\citep{2020_aradi_Survey}（上述第一个效果和第二个效果相同）。
+
+%以人名为主语：\citet{2017_qinxiaohui_FeiYunZhiCheLiangDuiLieDeFenBuShiKongZhi}针对队列稳定性提出了观测性方法。或者\citet{2021_chen_Graph}对与图做了个总结。
+
+%参考文献的引用图标不上标：\citen{2017_qinxiaohui_FeiYunZhiCheLiangDuiLieDeFenBuShiKongZhi}这样。
+
+\section{图表}
+插入图的常用命令有：
+
+插入单个图时，可使用以下命令，主要调整的是图片大小。
+\begin{lstlisting}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=.7\textwidth]{figures/hnu-logo.png}
+  \caption{湖南大学校徽}
+  \label{fig:ch2-1}
+\end{figure}
+\end{lstlisting}
+
+引用时可以直接使用\lstinline!\figref{fig:ch2-1}!，文本中显示为“\figref{fig:ch2-1}”。值得一提的是，如果插入的为pdf文件，其中每页pdf对应着一张图片，那么，\lstinline!\includegraphics[]!中可添加\lstinline!page=num!（num为对应的页码）。此外需要提醒的是虽然\lstinline!width=!可以调整图片的大小，即可手动放大缩小来适应排版，但是\textcolor{red}{如果图中有文字的不太建议这样调整，最好是提前测试图片中的文字大小，不可小于8号字体，最大也不要超过10号字体，然后插入的时候尽量不使用\lstinline!width=!来调整，以保持原图的大小。}
+\begin{figure}
+    \centering
+    \includegraphics[]{figures/hnu-logo.png}
+    \caption[湖南大学校徽]{湖南大学校徽~\cite{2021_chen_Graph}}
+    \label{fig:ch2-1}
+\end{figure}
+
+如果插入图片的图注需要添加参考文献，如\figref{fig:ch2-1}的图注所示，为了防止前面的插图索引列表生成引用符号，同时防止参考文献顺序发生改变，只需在\lstinline!\caption!后面添加\lstinline![]!并在其中补充相应的题注信息，如\lstinline!\caption[湖南大学校徽]{湖南大学校徽~\cite{2021_chen_Graph}}!所示。
+
+多图排列，可使用以下代码：
+\begin{lstlisting}
+\begin{figure}[htbp]
+  \centering
+  \subfigure[分流]{
+  \includegraphics[width=0.3\linewidth]{figures/hnu-logo.png}
+  \label{fig:ch2-2a}
+  }
+  \quad
+  \subfigure[交叉]{
+  \includegraphics[width=0.3\linewidth]{figures/hnu-logo.png}
+  \label{fig:ch2-2b}
+  }
+  \quad
+  \subfigure[合流]{
+  \includegraphics[width=0.3\linewidth]{figures/hnu-logo.png}
+  \label{fig:ch2-2c}
+  }
+  \quad
+  \subfigure[无冲突]{
+  \includegraphics[width=0.3\linewidth]{figures/hnu-logo.png}
+  \label{fig:ch2-2d}
+  }
+  \caption{冲突模式}
+  \label{fig:ch2-2}
+\end{figure}
+\end{lstlisting}
+\begin{figure}[htbp]
+  \centering
+  \subfigure[分流]{
+  \includegraphics[width=0.3\linewidth]{figures/hnu-logo.png}
+  \label{fig:ch2-2a}
+  }
+  \quad
+  \subfigure[交叉]{
+  \includegraphics[width=0.3\linewidth]{figures/hnu-logo.png}
+  \label{fig:ch2-2b}
+  }
+  \quad
+  \subfigure[合流]{
+  \includegraphics[width=0.3\linewidth]{figures/hnu-logo.png}
+  \label{fig:ch2-2c}
+  }
+  \quad
+  \subfigure[无冲突]{
+  \includegraphics[width=0.3\linewidth]{figures/hnu-logo.png}
+  \label{fig:ch2-2d}
+  }
+  \caption{冲突模式}
+  \label{fig:ch2-2}
+\end{figure}
+
+
+~\\
+~\\
+三线表的命令：
+\begin{lstlisting}
+\begin{table}[htb]
+  \centering
+  \caption{训练超参数}
+  \label{tab:ch2-1}
+  \begin{tabular}{ccc} %ccc表示列数与对齐方式
+	\toprule[1.5pt] % 标准尺寸不要修改
+	物理意义 & 英文/符号 & 数值 \\ % 每一列的元素用&隔开
+	\midrule[0.75pt]
+	 隐含层数 & Hidden layer number & $\rm 2$ \\
+	\bottomrule[1.5pt]
+  \end{tabular}
+\end{table}
+\end{lstlisting}
+
+引用格式为\lstinline!\tabref{tab:ch2-1}!，在文本中为“\tabref{tab:ch2-1}”。
+\begin{table}[htb]
+%  \small
+  \centering
+  \caption{单车强化学习MDP设置}
+  \label{tab:ch2-1}
+  \begin{tabular}{cc}
+	\toprule[1.5pt]
+	名称 & 参数  \\ 
+	\midrule[0.75pt]
+	状态 & \makecell{鸟瞰图 \\ 显示航向角和速度的图像快照 \\ 车辆特征向量和信号特定信息} \\
+	动作 &  \makecell{加速度 \\ 等待、慢慢前进、走 \\ 向上、向下、向左和向右移动} \\
+	奖励 & \makecell{成功到达奖励和碰撞惩罚 \\ 速度、跟车间距和预计到达交叉路口时间的函数} \\
+	\bottomrule[1.5pt]
+  \end{tabular}
+\end{table}
+
+\section{定理类环境}
+该模板定义了定理，引理，评注等，具体有：
+\begin{lstlisting}
+\newcommand\hnu@assertionname{断言}
+\newcommand\hnu@axiomname{公理}
+\newcommand\hnu@corollaryname{推论}
+\newcommand\hnu@definitionname{定义}
+\newcommand\hnu@propertyname{性质}
+\newcommand\hnu@examplename{例}
+\newcommand\hnu@lemmaname{引理}
+\newcommand\hnu@proofname{证明}
+\newcommand\hnu@propositionname{命题}
+\newcommand\hnu@remarkname{评注}
+\newcommand\hnu@theoremname{定理}
+\newcommand\hnu@assumptionname{假设}
+\end{lstlisting}
+
+\begin{lstlisting}
+\begin{proof}
+	这是一个证明。
+\end{proof}
+
+\begin{theorem}\label{the:ch2-1}
+	这是一个定理。
+\end{theorem}
+\end{lstlisting}
+
+\begin{proof}
+	这是一个证明。
+\end{proof}
+
+\begin{theorem}\label{the:ch2-1}
+	这是一个定理。
+\end{theorem}
+
+\section{公式书写与引用}
+公式书写的开始形式如下
+引用格式为\lstinline!\eqref{}!
+
+
+\section{伪代码书写}
+\begin{algorithm} [htb]           
+    \DontPrintSemicolon %防止有些命令产生英文分号
+	\caption{FCFS算法}
+    \label{algo:revi-1}  
+    \SetKwInOut{KwIn}{初始化}
+    \SetKwInOut{KwOut}{输\quad 出}
+	\KwIn{交叉路口信息，即网格占用点}
+	\KwOut{$t_j^{\mathrm{in}}=\max \left\{t_{j, 1}^{\mathrm{in}}, t_{j, 2}^{\mathrm{in}}, \ldots, t_{j, k}^{\mathrm{in}}\right\}$ \quad $\rhd$}
+	得到交叉路口车辆进入序列；得到交叉路口车辆进入序列得到交叉路口车辆进入序列得到交叉路口车辆进入序列 \\
+	\For{\rm $1 < j < N$}{
+		\For{\rm $k<j$}{
+			识别车辆$j$与$k$之间的公共占用点$c_{j,k}\in \{1,2,\dots,Q_j\}$ \\
+			获得车辆$k$的进入时间$t_k^{\rm in}$ \\
+			$t_{j, k}^{\rm in}=t_k^Q+\frac{S}{V_{\text {int}}}+\delta$ \quad $\rhd$ 假设$Q$是占用点
+			}
+		$t_j^{\mathrm{in}}=\max \left\{t_{j, 1}^{\mathrm{in}}, t_{j, 2}^{\mathrm{in}}, \ldots, t_{j, k}^{\mathrm{in}}\right\}$ \quad $\rhd$ 获得最保守的进入时间 \\
+		随后更新并存储$t_j^{\mathrm{in}}, t_j^1, t_j^2, \ldots t_j^{Q_j}, t_j^{\text {out }}$。\\
+		}
+	\While {\rm condition }{ 
+		\uIf {\rm condition }{ then block } 
+		\Else { else block }
+	}
+\end{algorithm}

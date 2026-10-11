@@ -1,0 +1,226 @@
+#import "deps.typ": (
+  Assign, Break, Comment, Else, ElseIf, For, Function, If, IfElseChain, Line, LineBreak, Procedure, Return, Terminate,
+  While, capfig, capfig-style, capsubfig, captab, captab-style, gb7714-bibliography, init-gb7714, multicite, zh,
+)
+#import "layouts/doc.typ": doc
+#import "layouts/floats.typ": algorithm, equation-note
+#import "layouts/mainmatter.typ": frontmatter, mainmatter
+#import "pages/appendix.typ": appendix-page
+#import "pages/bachelor-cover.typ": bachelor-cover
+#import "pages/graduate-cover.typ": master-cover
+#import "pages/abstract.typ": abstract-page
+#import "pages/outline.typ": outline-page
+#import "pages/backmatter-page.typ": backmatter-page
+#import "pages/bibliography.typ": gb7714-entries-renderer
+#import "utils.typ": distribute, page-title
+
+#let default-bibliography(graduate) = {
+  if not graduate {
+    "../template/bachelor/refs.bib"
+  } else {
+    "../template/graduate/refs.bib"
+  }
+}
+
+#let default-achievements-bibliography() = "../template/graduate/achievements.bib"
+
+#let nwpu-thesis(
+  graduate: false,
+  degree: "master",
+  track: "academic",
+  anonymous: false,
+  english-writing: false,
+  colored-cover: false,
+  print-mode: false,
+  info: (:),
+  abstract: (:),
+  abstract-en: (:),
+  acknowledgement: none,
+  bibliography: auto,
+  achievements-bibliography: auto,
+  appendix: none,
+  scan-declaration: auto,
+  design-summary: none,
+  ref-par-indent: "none",
+  body,
+) = {
+  let bib-path = if bibliography == auto { default-bibliography(graduate) } else { none }
+
+  // 1. 文稿设置
+  show: doc.with(graduate: graduate)
+
+  // 2. 封面
+  if graduate {
+    master-cover(
+      degree: degree,
+      track: track,
+      colored-cover: colored-cover,
+      anonymous: anonymous,
+      info: info,
+    )
+  } else {
+    bachelor-cover(
+      anonymous: anonymous,
+      info: info,
+    )
+  }
+
+  // 本科生封面后的空页（封底），在 mainmatter 之前渲染，无页眉页脚
+  if not graduate and print-mode {
+    pagebreak()
+  }
+
+  show: init-gb7714.with(
+    if bib-path != none { read(bib-path) } else { "" },
+    range-tilde: not graduate, // 本科连续编号用 ~ 连接
+    // 研究生：著录标点全部半角；本科：著录标点全角（含句号 `．`）、圆括号单独半角
+    punct-width: if graduate { "half" } else { (default: "full", paren: "half") },
+    // 文献表统一配置：页面标题由 backmatter-page 提供，逐类型渲染器主表与成果页共用
+    bib-title: none,
+    bib-full-control: gb7714-entries-renderer(
+      graduate: graduate,
+      par-indent: ref-par-indent,
+    ),
+  )
+
+  // 3. mainmatter 包裹所有后续内容（前置 + 正文 + 后置）
+  show: mainmatter.with(
+    graduate: graduate,
+    degree: degree,
+    english-writing: english-writing,
+    print-mode: print-mode,
+  )
+
+  // 4. 前置部分（摘要、目录）
+  frontmatter[
+    #abstract-page(
+      abstract: abstract,
+      keyword-label: "关键词",
+      keyword-sep: if graduate { "；" } else { "，" },
+      keyword-indent: graduate,
+      outline-title: page-title("abstract", graduate: graduate),
+      outlined: graduate,
+    )
+    #abstract-page(
+      abstract: abstract-en,
+      keyword-label: if graduate { "Key words" } else { "KEY WORDS" },
+      keyword-weight: "bold",
+      keyword-sep: if graduate { "; " } else { ", " },
+      keyword-indent: false,
+      outline-title: "ABSTRACT",
+      title: if graduate { [*Abstract*] },
+      outlined: graduate,
+    )
+
+    #{
+      let outline-title = page-title("outline", graduate: graduate, english-writing: english-writing)
+      outline-page(
+        title: if graduate { outline-title } else { [*#outline-title*] },
+        indent: if not graduate { (0em, 1.8em, 1.3em) } else { (0em, 1.8em, 1.7em) },
+        weight: if not graduate { ("bold", "regular", "regular") } else { (auto,) },
+        fill: if not graduate { ([#repeat(gap: -2pt)[#text(zh(6.5))[·]]],) } else { (repeat([.]),) },
+        vspace: if not graduate { (1.25em, 1em) } else { (none,) },
+        gap: if not graduate { (-0.5em, 0.5em) } else { (auto,) },
+      )
+    }
+
+    #if graduate or print-mode {
+      pagebreak(weak: true, to: "odd")
+    }
+  ]
+
+  [#metadata(none) <__nwpu_mainmatter_start__>]
+  counter(page).update(1)
+
+  // 5. 正文
+  body
+
+  // 6. 后置部分
+  if bib-path != none {
+    backmatter-page(
+      "references",
+      graduate: graduate,
+      english-writing: english-writing,
+    )[
+      #gb7714-bibliography()
+    ]
+  }
+
+  if graduate and appendix != none {
+    appendix-page(
+      graduate: graduate,
+      english-writing: english-writing,
+    )[#appendix]
+  }
+
+  if not anonymous and acknowledgement != none {
+    backmatter-page(
+      "acknowledgement",
+      graduate: graduate,
+      english-writing: english-writing,
+    )[#acknowledgement]
+  }
+
+  if graduate and achievements-bibliography != none {
+    backmatter-page(
+      "academic-achievements",
+      english-writing: english-writing,
+    )[
+      #gb7714-bibliography(
+        bib-content: read(default-achievements-bibliography()),
+        label: "achievements",
+      )
+    ]
+  }
+
+  if not graduate and design-summary != none {
+    backmatter-page(
+      "design-summary",
+      english-writing: english-writing,
+    )[#design-summary]
+  }
+
+  if not graduate and appendix != none {
+    appendix-page(
+      graduate: graduate,
+      english-writing: english-writing,
+    )[#appendix]
+  }
+
+  if graduate {
+    pagebreak(weak: true, to: "odd")
+  }
+
+  // 尾部独立页面（声明、封底）：统一无页眉页脚、无边距
+  set page(margin: 0pt, header: none, footer: none)
+
+  if scan-declaration == auto and graduate {
+    page[
+      #image("../template/graduate/figures/硕博论文签字版声明.pdf")
+      #box(width: 0pt, height: 0pt)
+    ]
+  }
+
+  if colored-cover and graduate {
+    let bg = if degree == "doctor" {
+      "assets/doctor-back-cover.jpg"
+    } else if track == "professional" {
+      "assets/professional-back-cover.jpg"
+    } else {
+      "assets/academic-back-cover.jpg"
+    }
+    page[
+      #box(width: 0pt, height: 0pt)
+    ]
+    page(
+      background: image(bg, width: 100%, height: 100%),
+    )[
+      #box(width: 1pt, height: 1pt)
+    ]
+  }
+}
+
+// 按学位预置的薄入口：graduate 是模板固有属性，不让用户在 main.typ 里开关；
+// 用户只需选 graduate-thesis / bachelor-thesis，再用 degree 选硕士/博士。
+#let graduate-thesis = nwpu-thesis.with(graduate: true)
+#let bachelor-thesis = nwpu-thesis.with(graduate: false)

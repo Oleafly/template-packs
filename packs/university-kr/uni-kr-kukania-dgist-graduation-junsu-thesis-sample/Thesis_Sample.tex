@@ -1,0 +1,294 @@
+% -*- TeX:UTF-8 -*-
+%%
+%% DGIST 학위논문양식 LaTeX용 예시
+%%
+%% @version 0.1
+%% @author  진권휴, Gwonhyu Jin (mailto:overclocked@dgist.ac.kr)
+%% @date    2020. 09. 12.
+%%
+%% @requirement
+%% teTeX, fpTeX, teTeX 등의 LaTeX2e 배포판
+%% + 은광희 님의 HLaTeX 0.991 이상 버젼 또는 홍석호 님의 HPACK 1.0
+%% : 설치에 대한 자세한 정보는 http://www.ktug.or.kr을 참조바랍니다.
+%%
+%% @note
+%% 기존에 널리 쓰여오던 차재춘 님의 학위논문양식 클래스 파일의 형식을
+%% 따르지 않고 전면적으로 다시 작성하였습니다. 논문 정보 입력부분에서
+%% 과거 양식과 다른 부분이 많으니 아래 예시에 맞춰 바꿔주십시오.
+%%
+%% @note 2020.09.07
+%% 본 양식은 기존 KAIST 학위논문양식을 바탕으로 작성되었습니다.
+%% This tamplete is modified from KAIST thsis templete
+%%
+%% @acknowledgement
+%% 본 예시 논문은 물리학과 박사과정 김용현 님의 호의로 제공되었습니다.
+%% 본 예시 논문은 대구경북과학기술원 정보통신융합전공 박사과정 전강욱 님의 호의로 제공되었습니다.
+%% 본 예시 논문은 대구경북과학기술원 정보통신융합전공 박사과정 김한준 님의 호의로 제공되었습니다. (DGIST 양식으로 변경)
+%% 본 예시 논문은 대구경북과학기술원 정보통신융합전공 석사과정 신연재 님의 호의로 제공되었습니다
+%%
+%%
+%% 나눔 글꼴 문제는 다음 URL의 2.1을 참고
+%% http://wiki.ktug.org/wiki/wiki.php/HangulAndMiKTeX
+%% 위 링크의 실행해야할 것을 모두 실행할 것 그러면 한문 문제도 해결
+%% -------------------------------------------------------------------
+%% @information
+%% 이 예제 파일은 hangul-ucs를 사용합니다. UTF-8 입력 인코딩으로
+%% 작성되었습니다. hlatex의 hfont는 이용하지 않습니다. --2006/02/11
+%%
+% @class dgist.cls
+% @options [default: doctor, korean, final]
+% - doctor: 박사과정 | master : 석사과정
+% - korean: 한글논문 | english: 영문논문 (English only for DGIST users)
+% - final : 최종판   | draft  : 시험판
+% - pdfdoc : 선택하지 않으면 북마크와 colorlink를 만들지 않습니다.
+% If you want make pdf document (include bookmark, colorlink)
+
+\documentclass[master,english,final,pdfdoc]{dgist-ucs}
+
+% dgist-ucs.cls 에서는 기본으로 dhucs, ifpdf, graphicx 패키지가 로드됩니다.
+% 추가로 필요한 패키지가 있다면 주석을 풀고 적어넣으십시오,
+%\usepackage{...}
+\usepackage{times,amsmath,epsfig}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{xspace}
+\usepackage{dsfont}
+\usepackage{epsfig}
+\usepackage{amssymb}
+\usepackage{subfigure}
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{balance}
+\usepackage{url}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{epstopdf}
+\usepackage{amsmath}
+\usepackage[noend]{algorithmic}
+\usepackage{here}
+\usepackage[ruled,vlined,linesnumbered,noend]{algorithm2e}
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{afterpage}
+\usepackage{caption}
+\usepackage{kotex}
+
+\graphicspath{{./Image/}} %그림 상대경로 지정
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
+
+\makeatletter
+\g@addto@macro\ps@plain{%
+  \def\@oddfoot{\reset@font\hfil--~\thepage~--\hfil}%
+  \let\@evenfoot\@oddfoot
+}
+\makeatother
+\pagestyle{plain}
+\newcolumntype{C}[1]{>{\centering \arraybackslash}m{#1}}
+\newtheorem{problem}{\bf Problem Definition}
+\newtheorem{definition}{\bf Definition}
+\newtheorem{observation}{\bf Observation}
+\newtheorem{lemma}{\bf Lemma}
+\newtheorem{rationale}{\bf Rationale}
+\newtheorem{theorem}{\bf Theorem}
+\newtheorem{proposition}{\bf Proposition}
+\newtheorem{claim}{\bf claim}
+\newtheorem{example}{\bf Example}
+%\renewcommand{\thechapter}{\Roman{chapter}}
+
+\SetKwProg{Fn}{Function}{}{}
+\newcommand\Algphase[1]{%
+\vspace*{-.7\baselineskip}\Statex\hspace*{\dimexpr-\algorithmicindent-2pt\relax}\rule{\textwidth}{0.4pt}%
+\Statex\hspace*{-\algorithmicindent}\textbf{#1}%
+\vspace*{-.7\baselineskip}\Statex\hspace*{\dimexpr-\algorithmicindent-2pt\relax}\rule{\textwidth}{0.4pt}%
+}
+
+\input{my_commands}
+
+\newcolumntype{Y}{>{\raggedleft\arraybackslash}X} %
+\newcolumntype{Z}{>{\centering\arraybackslash}X} %
+
+% @command title 논문 제목(title of thesis)
+% @options [default: (none)]
+% - korean: 한글제목(korean title) | english: 영문제목(english title)
+\title[korean] {석사학위논문}
+\title[english]{Thesis}
+
+% @note 표지에 출력되는 제목을 강제로 줄바꿈하려면 \linebreak 을 삽입.
+%       \\ 나 \newline 등을 사용하면 안됩니다. (아래는 예시)
+%
+%\title[korean]{탄소 나노튜브의 물리적 특성에 대한\linebreak 이론 연구}
+%\title[english]{Theoretical study on physical properties of\linebreak
+%                carbon nanotubes}
+%
+% If you want to begin a new line in cover, use \linebreak .
+% See examples above.
+%
+
+
+% @command author 저자 이름
+% @param   family_name, given_name 성, 이름을 구분해서 입력
+% @options [default: (none)]
+% - korean: 한글이름 | chinese: 한문이름 | english: 영문이름
+% 한문 이름이 없다면 빈 칸으로 두셔도 됩니다.
+%
+%
+% If you are a foreigner , write your name in korean or your korean name.
+% If you can't write native character, you can make the chinese blank empty
+% Write as follow
+% \author[korean]{family name in korean}{given name in korean}
+% \author[chinese]{family name in your native language}{given name in your native language}
+% \author[english]{family name in english}{given name in english}
+%
+
+\author[korean] {陳}{權 携}
+\author[korean2] {진}{권휴}    %이름을 붙여 써 주시기 바랍니다.
+\author[chinese] {진}{권 휴}
+\author[english]{Gwonhyu}{Jin}
+
+% @command advisor 지도교수 이름 (복수가능)
+% @usage   \advisor[options]{...한글이름...}{...영문이름...}{signed|nosign}
+% @options [default: major]
+% - major: 주 지도교수  | coopr: 공동 지도교수
+\advisor[major]{이 성 진}{Sungjin Lee}{nosign}
+\advisor[major2]{이성진}{Sungjin Lee}{nosign}    %한글 성과 한글 이름을 모두 붙여 써 주시기 바랍니다.
+\advisorinfo{Professor of Department of Information and Communication Engineering} %제출승인서에 들어가는 교수님 정보, advisor's information
+\advisor[coopr]{김 예 성}{Yeseong Kim}{nosign}
+\advisor[coopr2]{김예성}{Yeseong Kim}{nosign}    %한글 성과 한글 이름을 모두 붙여 써 주시기 바랍니다.
+
+% @command department {학과이름}{학위종류} - 아래 표에 따라 코드를 입력
+% @command department {department code}{degree field}
+%
+% department code table
+%
+% EM	// 신물질과학전공 Department of Emerging Materials Science
+% IC 	// 정보통신융합전공 Department of Information and Communication Engineering
+% RT	// 로봇공학전공 Department of Robotics Engineering
+% ES	// 에너지시스템공학전공 Department of Energy Systems Engineering
+% BS	// 뇌과학전공 Department of Brain Science
+%
+% The third parameter : a | b | c	(DGIST의 경우 a만 쓰십시오. (20.08.18))
+% a: 소속된 학과만 쓰는 옵션 (학과에만 소속되어 있는 경우에는 무조건 a를 선택해야 함) (DGIST)
+% b: 학과 아래의, 프로그램이나 학제전공에 소속되어 있을 경우에 학과와 프로그램을 함께 쓰는 옵션
+% c: 학과 아래의, 프로그램이나 학제전공에 소속되어 있을 경우에 학과를 쓰지 않고 프로그램이나 학제전공의 이름만 쓰는 옵션
+%
+% use only {a} for DGIST users (20.08.18)
+% a: it represents only the name of department. (if you aren't in the program under the department, must choose a)
+% b: it represents the names of department and the program that is under the department (consider this when you are in the program not only department)
+% c: it represents only the name of program that is under the department (consider this when you are in the program not only department)
+
+\department{IC}{Engineering}{a}
+
+% @command studentid 학번(ID)
+\studentid{201922039}
+
+% @command referee 심사위원 (석사과정 3인, 박사과정 5인)
+\referee[1]{이 성 진}
+\referee[2]{김 예 성}
+\referee[3]{궁 재 하}
+% \referee[5] {Barack Obama}
+% Of course english name is available
+
+% @command approvaldate 지도교수논문승인일
+% @param   year,month,day 연,월,일 순으로 입력
+\approvaldate{2020}{11}{30}
+
+% @command refereedate 심사위원논문심사일
+% @param   year,month,day 연,월,일 순으로 입력
+\refereedate{2020}{5}{23}
+
+% @command gradyear 졸업년도
+\gradyear{2021}
+
+% 본문 시작
+\begin{document}
+	%\captionsetup[figure]{name={Figure}}
+    % 앞표지, 속표지, 학위논문 제출승인서, 학위논문 심사완료 검인서는
+    % 클래스 옵션을 final로 지정해주면 자동으로 생성되며,
+    % 반대로 옵션을 draft로 지정해주면 생성되지 않습니다.
+
+    % 논문 서지, 초록, 핵심 낱말, 영문 초록, 영어 핵심 낱말 (Information of thesis, abstract in korean, keywords in korean, abstract in english, keywords in english)
+
+   \thesisinfo
+   %% Letters of abstract in korean must be less than 500 and words of abstract in english must be less than 300.
+   %% Number of keywords must be less than 6.
+   %% Don't write english letters in the abstract in korean.
+    \begin{abstract}
+        
+        asdf
+		
+	\end{abstract} 
+
+    \begin{Engkeyword}
+	    asdf, asdf, asdf, asdf, asdf
+	\end{Engkeyword}
+
+%들여쓰기 관련
+
+%LaTeX의 기본 설정은 section, subsection 등을 선언하고 바로 다음에 오는 문단은 들여쓰기가 없게 하고, 다음 문단부터 계속 들여쓰기를 시키는 겁니다. 만약 첫 문단도 들여쓰기를 시키고 싶다면 다음을 preamble에 넣습니다.
+%\usepackage{indentfirst}
+%만약 문단 전체에 왼쪽 여백을 주고 싶다면 \leftskip을 조정합니다. 오른쪽은 \rightskip을 조정하면 됩니다.
+%\setlength{\leftskip}{10pt}
+%\setlength{\rightskip}{20pt}
+%문단의 들여쓰기 정도를 조절하고 싶다면 \parindent를 조정합니다. 0pt로 주면 들여쓰기를 없앨 수 있습니다.
+%\setlength{\parindent}{20pt}
+%특정 문단만 들여쓰기를 없애고 싶다면 그 문단 앞에 \noindent를 줍니다.
+%[출처] 문단 들여쓰기|작성자 위대한 서씨
+
+
+
+    % 목차 (Table of Contents) 생성
+    %\pagenumbering{roman}
+%    \tableofcontents
+%
+%	% 표목차 (List of Tables) 생성
+%    \listoftables
+%
+%    % 그림목차 (List of Figures) 생성
+%    \listoffigures
+
+    % 위의 세 종류의 목차는 한꺼번에 다음 명령으로 생성할 수도 있습니다.
+    \makecontents
+%% 이하의 본문은 LaTeX 표준 클래스 report 양식에 준하여 작성하시면 됩니다.
+%% 하지만 part는 사용하지 못하도록 제거하였으므로, chapter가 문서 내의
+%% 최상위 분류 단위가 됩니다.
+%% You cannot use 'part'
+
+\input{global_introduction}
+\input{global_background}
+\input{global_motivation}
+\input{global_design}
+\input{global_optimization}
+% \input{global_implementation}
+\input{global_experiment}
+\input{global_conclusions}
+
+%%
+%% 참고문헌 시작
+%% bibliography
+%% It can be changed but should include sufficient information.
+\bibliographystyle{IEEEtran}%{IEEEtran}%{unsrt}
+\bibliography{mybibfile}
+\clearpage
+\summarykorean
+\begin{summary}      
+
+    한글요약 부분임
+
+\end{summary}
+
+\begin{Korkeyword}
+	치킨, 피자, 족발, 순대, 국밥
+\end{Korkeyword}
+
+
+
+%% 본문 끝
+\label{paperlastpagelabel} %마지막 페이지 위치 지정
+\end{document}

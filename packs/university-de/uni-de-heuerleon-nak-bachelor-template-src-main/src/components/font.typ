@@ -1,0 +1,1 @@
+#let bold_upper(content) = text(weight: 700, upper(content))

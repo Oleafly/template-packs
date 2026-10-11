@@ -1,0 +1,195 @@
+%
+% LaTeX template for Student Thesis & PhD Thesis
+%
+% Institute of Biomedical Engineering
+% Karlsruhe Institute of Technology (KIT)
+% www.ibt.kit.edu
+%
+% IBT template v1.1 (2016-04-26)
+% Developed by Thomas Fritz & Axel Loewe based on the memoir class
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% CONFIGURATION %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% How does it work?
+% \newif\ifmyvariable will create a variable called myvariable and set is to 
+% false.  In order to set it to true, use \myvariabletrue
+
+%%% Language of thesis
+\newif\ifenglish 
+% \englishtrue % define if thesis is in English
+
+%%% Citation style
+\newif\ifapa
+% \apatrue             % define if APA style references are desired (Courtemanche et al., 2013)
+
+%%% List of figures and tables
+\newif\iflists
+% \liststrue            % define if you want to include a list of figures and a lists of tables
+
+%%% PhD Thesis or Student Thesis
+\newif\ifthesisIsDiss
+% \thesisIsDisstrue      % define for PhD Thesis
+
+\ifthesisIsDiss
+  %%% PhD Thesis for preparation or book print
+  \newif\ifdissForPrint
+    \dissForPrinttrue   % define Print Process at KIT Scientific Publishing (only affects title page)
+\fi
+
+%%% Paper format A5
+\newif\ifafive
+% \afivetrue
+
+%%% License necessary for the publication at KITopen.
+\newif\iflicense
+\licensetrue  % enable license
+
+\newif\ifsharealike 
+\sharealiketrue %   Creative Commons Attribution – Share Alike 4.0 International License
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% END CONFIGURATION %%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{Template/ibtThesis}      % This file defines our template based on the memoir class. Normally, you shouldn't need to change anything. If you want to make adjustments or are wondering about a particular behavior, this might be the first place to look at, though.
+
+\setsecnumdepth{subsubsection}    % indenture levels included in the table of contents
+
+\input{Template/commands}       % Have a look at this file regarding convenience commands
+
+\ifthesisIsDiss
+	\preto\chapter\acresetall % expand acronyms once in each chapter
+\fi
+
+\include{abbreviations}			% Here you can define your abbreviations
+
+\begin{document}
+\pagestyle{fancy}
+
+\ifthesisIsDiss  %Title
+  \input{titleDiss}
+  \input{License/license}
+  \thispagestyle{empty}
+\else
+  \include{title}
+\fi
+\frontmatter
+
+\rmfamily
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\listoftodos
+\include{Parts/00-todos}
+\clearemptydoublepage
+
+\include{Parts/01-abstract}
+\clearemptydoublepage
+
+% German "Zusammenfassung" only required for PhD Thesis or when written in German. 
+% Toggle in configuration block
+
+\ifthesisIsDiss
+  \include{Parts/02-zusammenfassung}
+  \clearemptydoublepage
+\else
+  \ifenglish
+  % Do nothing, as no "Zusammenfassung" required
+  \else
+    \include{Parts/02-zusammenfassung}
+    \clearemptydoublepage
+  \fi
+\fi
+
+\include{Parts/03-acknowledgments}
+\clearemptydoublepage
+\tableofcontents*
+\clearemptydoublepage
+
+\chapter*{Abbreviations}
+\thispagestyle{empty}
+\addcontentsline{toc}{chapter}{Abbreviations}
+\markboth{Abbreviations}{Abbreviations}
+\printacronyms[heading=none]
+\clearemptydoublepage
+
+\chapterstyle{madsen}
+\ifafive  % right margin too small to have chapter numbers there
+  \renewcommand*{\printchapternum}{%
+    \hspace{0.4em}%
+      \resizebox{!}{4ex}{%
+        \chapnamefont\bfseries\sffamily\thechapter}%
+  }%
+\fi
+\acresetall     % reintroduce any abbreviations potentially used in the abstract
+\mainmatter
+\input{Parts/04-intro}
+\clearemptydoublepage
+
+\ifthesisIsDiss  %Title
+\part{Fundamentals}
+\fi
+
+\input{Parts/05-medicalFundamentals}
+\clearemptydoublepage
+\input{Parts/06-mathematicalFundamentals}
+\clearemptydoublepage
+
+\ifthesisIsDiss  %Title
+\part{Methods}
+\fi
+
+\input{Parts/07-fancyMethodA}
+\clearemptydoublepage
+
+
+\ifthesisIsDiss  %Title
+\part{Results}
+\fi
+
+\input{Parts/08-results}
+\clearemptydoublepage
+
+\input{Parts/09-discussion}
+
+\input{Parts/10-outlook}
+\clearemptydoublepage
+\input{Parts/11-conclusion}
+\clearemptydoublepage
+
+\begin{appendix}
+% uncomment the following line if you want to hide Appendix sections from TOC
+%\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+\input{Parts/12-appendix1}
+\end{appendix}
+
+\clearemptydoublepage
+\backmatter
+\chapterstyle{default}
+\iflists
+  \listoffigures
+  \clearemptydoublepage
+  \listoftables
+  \clearemptydoublepage
+\fi
+
+% References
+{
+ \ifafive
+  \footnotesize
+  \setlength{\bibsep}{1pt}
+ \else
+  \small
+  \setlength{\bibsep}{2pt}
+ \fi
+ \bibliography{reduced} % or refbase
+ \clearemptydoublepage
+}
+
+\ifthesisIsDiss
+  \include{Parts/13-publications}
+  \clearemptydoublepage
+\fi
+
+\end{document}
+

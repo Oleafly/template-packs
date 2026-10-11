@@ -1,0 +1,393 @@
+%% File: tcu-thesis.sty
+%% Date : 2022/12/17
+%% Copying : Kenji Fujiwara
+%% Original File is created by Kyohei FUSHIDA as naist-dissertation.sty
+%% Date : 2010/01/10
+
+\ProvidesPackage{tcu-thesis}[2022/12/27 Kenji FUJIWARA]
+
+% sectionの開始前に改ページする
+\AddToHook{cmd/section/before}[clear]{\clearpage}
+
+% 章/節番号の末尾に．を付加する
+%% 本文
+\def\@seccntformat#1{\csname the#1\endcsname.\quad\hspace{-.2em}}
+
+%% 目次
+\def\@sect#1#2#3#4#5#6[#7]#8{%
+  \ifnum #2>\c@secnumdepth
+    \let\@svsec\@empty
+  \else
+    \refstepcounter{#1}%
+    \protected@edef\@svsec{\@seccntformat{#1}\relax}%
+  \fi
+  \@tempskipa #5\relax
+  \ifdim \@tempskipa<\z@
+    \def\@svsechd{%
+      #6{\hskip #3\relax
+      \@svsec #8}%
+      \csname #1mark\endcsname{#7}%
+      \addcontentsline{toc}{#1}{%
+        \ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname.}%
+        \fi
+        #7}}% 目次にフルネームを載せるなら #8
+  \else
+    \begingroup
+      \interlinepenalty \@M % 下から移動
+      #6{%
+        \@hangfrom{\hskip #3\relax\@svsec}%
+        #8\@@par}%
+    \endgroup
+    \csname #1mark\endcsname{#7}%
+    \addcontentsline{toc}{#1}{%
+      \ifnum #2>\c@secnumdepth \else
+        \protect\numberline{\csname the#1\endcsname.}%
+      \fi
+      #7}% 目次にフルネームを載せるならここは #8
+  \fi
+  \@xsect{#5}}
+
+
+% 日付指定は全て西暦にする
+\西暦
+
+% 日付周りの定義
+%% Japanese
+\def\jtoday{\today}
+
+%% English
+\def\etoday{
+\ifcase\month\or
+ January\or February\or March\or April\or May\or June\or
+ July\or August\or September\or October\or November\or December\fi
+ \space\number\day, \number\year}
+
+%% Current Time
+\newcount\curmin \newcount\hour \newcount\onehour \newcount\curhour
+\onehour=60
+\hour=\time
+\divide \hour by \onehour
+\curhour=\hour
+\multiply \hour by -\onehour
+\curmin=\time
+\advance \curmin by \hour
+\def\curtime{{\number\curhour 時\number\curmin 分}}
+\def\ecurtime{{\number\curhour:\number\curmin}}
+
+% University
+\def\university{東京都市大学}
+
+% Student Number
+\def\studentnumberstr{20XXXXXX}
+\newcommand{\studentnumber}[1]{\def\studentnumberstr{#1}}
+
+% Supervisor
+\def\supervisor{指導教員名}
+
+% Thesis Type
+\def\jdoctitle{20XX年度 卒業研究論文}
+\def\jdoctype{論文}
+\def\jdocname{学士論文}
+\def\edoctitle{Not Defined}
+\def\docidprefix{}
+\def\edoctitleacronym{}
+
+
+% dissertation title (not yet)
+\def\titlestr{Title}
+\renewcommand{\title}[1]{\def\titlestr{#1}}
+\def\etitlestr{Title}\newcommand{\etitle}[1]{\def\etitlestr{#1}}
+
+
+% author
+\def\authorstr{I am the author}
+\renewcommand{\author}[1]{\def\authorstr{#1}}
+\def\eauthorstr{I am the author}
+\newcommand{\eauthor}[1]{\def\eauthorstr{#1}}
+
+
+% submit date
+\def\syearstr{}
+\newcommand{\syear}[1]{\def\syearstr{#1}}
+\def\smonthstr{}
+\newcommand{\smonth}[1]{\def\smonthstr{#1}}
+\def\sdaystr{}
+\newcommand{\sday}[1]{\def\sdaystr{#1}}
+
+\def\datestr{\syearstr\,年\hspace{.3em}\nobreak%
+\smonthstr\,月\hspace{.3em}\nobreak\sdaystr\,日}
+\def\edatestr{
+\ifcase\smonthstr\or
+ January\or February\or March\or April\or May\or June\or
+ July\or August\or September\or October\or November\or December\fi
+ \space\sdaystr, \syearstr}
+
+
+% author's department
+\newcommand{\department}[1]{
+        \def\departmentstr{#1}
+        \def\media{1}
+	\def\jdepartmentstr{\ifcase\departmentstr\or{メディア情報学部}\fi}
+	\def\edepartmentstr{\ifcase\departmentstr\or{Not Defined}\fi}
+}
+
+\newcommand{\course}[1]{
+        \def\coursestr{#1}
+        \def\jsys{1}
+        \def\jcoursestr{\ifcase\coursestr\or{情報システム学科}\fi}
+        \def\ecoursestr{\ifcase\coursestr\or{Not Defined}\fi}
+}
+
+% keyword
+%% Japanese
+\def\keywordsstr{keyword1, keyword2}
+\newcommand{\keywords}[1]{\def\keywordsstr{#1}}
+
+%% English
+\def\ekeywordsstr{keyword1, keyword2}
+\newcommand{\ekeywords}[1]{\def\ekeywordsstr{#1}}
+
+
+% abstract
+%% Japanese
+\def\abstracttext{This is the abstract.}
+\renewcommand{\abstract}[1]{\def\abstracttext{#1}}
+
+%%English
+\def\eabstracttext{This is the abstract.}
+\newcommand{\eabstract}[1]{\def\eabstracttext{#1}}
+
+
+% 必要？
+%\def\thesection{\arabic{section}}
+
+
+% 必要？
+%\renewcommand*\thefigure{\@arabic\c@figure}
+%\renewcommand*\thetable{\@arabic\c@table}
+
+
+% 余白の設定など
+% 余白・テキスト域調整
+\setlength \topmargin{14truept}
+\setlength \hoffset {-1truein}% \hoffset の設定
+\addtolength \hoffset {17truept}
+\addtolength \hoffset {1truein}
+\setlength \textheight {583truept}
+\setlength \textwidth {\paperwidth}% \textwidth の設定
+\addtolength \textwidth {-34truept}
+\addtolength \textwidth {-2truein}
+\setlength \evensidemargin {0truept}% 偶数ページマージン
+\setlength \oddsidemargin {\evensidemargin}% 奇数ページマージン
+\setlength \fullwidth {\textwidth}
+
+\renewcommand{\baselinestretch}{1.0}    % 行間
+
+
+% タイトルページ微調整
+\def\isfinal{1}
+\def\yes{1}
+\renewcommand{\titlepage}{
+        \newpage
+        \thispagestyle{empty}
+        \if\isfinal\yes
+                % NAIST D論の名残，論文IDを記載している
+                {\raggedleft
+                        \normalsize \docidprefix\edoctitleacronym\studentnumberstr \\
+                }
+                \vspace*{9truemm}
+                \begin{center}
+                        \Large\bf\jdoctitle
+                \end{center}
+                \vspace*{27truemm}
+                \begin{center}
+                        \Large\bf\titlestr
+                \end{center}
+                \vspace*{18truemm}
+                \begin{center}
+                        \Large\authorstr
+                \end{center}
+                \vspace*{41truemm}
+                \begin{center}
+                        \datestr
+                \end{center}
+                \vspace*{4.5truemm}
+                \begin{center}
+                        \university \jdepartmentstr\\
+                        \jcoursestr
+                \end{center}
+                \begin{center}
+                        指導教員: \supervisor
+                \end{center}
+                \vspace*{\fill}
+        \else
+                \vspace*{\fill}
+                \begin{center}
+                        {\Huge\bf DRAFT}
+                \end{center}
+                \vspace*{1truecm}
+                \begin{center}
+                        \Large\bf\titlestr
+                \end{center}
+                \vspace*{1truecm}
+                \begin{center}
+                        {\Large \authorstr}
+                \end{center}
+                \vspace*{1truecm}
+                \begin{center}
+                        {\Large\bf \today}
+                \end{center}
+                \begin{center}
+                        {\Large\bf \curtime}
+                \end{center}
+                \vspace*{\fill}
+        \fi
+}
+
+
+% abstract page
+%% 概要ページ調整
+\newenvironment{abstractpage}{
+	%\baselineskip = 1.32em
+}
+
+%% Japanese abstract
+\newcommand{\jabstractpage}{
+        \pagebreak
+		\thispagestyle{fancy}
+		\rhead{{\bf \thepage}}
+		\lhead{}
+		\cfoot{}
+		\renewcommand{\headrulewidth}{0pt}
+		\markboth{内容梗概}{}
+        \pagenumbering{roman}
+        \begin{abstractpage}
+        \begin{center}
+                \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+                \Large\bf \titlestr\footnote[1]
+                        {\university \jdepartmentstr
+                        { \jcoursestr} \jdoctitle,
+                        \docidprefix\edoctitleacronym\studentnumberstr,
+                        \datestr.}
+                \renewcommand{\thefootnote}{\arabic{footnote}}
+        \end{center}
+        \vspace*{1truemm}
+        \begin{center}
+                \large\authorstr
+        \end{center}
+        \vspace*{10truemm}
+        \begin{center}
+        {\bf 内容梗概}
+        \end{center}
+        \vspace*{2truemm}
+        \par
+        \abstracttext
+        \vspace*{5truemm}
+        \begin{flushleft}
+                {\bf キーワード}
+        \end{flushleft}
+        \keywordsstr
+        \end{abstractpage}
+}
+
+%% English abstract
+\newcommand{\eabstractpage}{
+        \pagebreak
+		\thispagestyle{fancy}
+		\rhead{{\bf \thepage}}
+		\lhead{}
+		\renewcommand{\headrulewidth}{0pt}
+		\markboth{Abstract}{}
+        \begin{abstractpage}
+        \begin{center}
+                \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+                \Large\bf \etitlestr\footnote[1]
+                        {{\edoctitle}, Department of {\edepartmentstr},
+                        Graduate School of Information \mbox{Science,}
+                        Nara Institute of Science and Technology,
+                        {NAIST-IS-\edoctitleacronym\studentnumberstr},
+                        {\edatestr}.}
+                \renewcommand{\thefootnote}{\arabic{footnote}}
+        \end{center}
+        \vspace*{1truemm}
+        \begin{center}
+                \large\eauthorstr
+        \end{center}
+        \vspace*{10truemm}
+        \begin{center}
+        {\bf Abstract}
+        \end{center}
+        \vspace*{2truemm}
+        \par
+        \eabstracttext
+        \vspace*{5truemm}
+        \begin{flushleft}
+                {\bf Keywords:}
+        \end{flushleft}
+        \ekeywordsstr
+        \end{abstractpage}
+}
+
+
+\newcommand{\acknowledgements}{
+        \newpage
+        \section*{謝辞}
+		\addcontentsline{toc}{section}{謝辞}
+}
+
+
+%typeout{yet another reference}
+\newcommand{\reference}{
+        \newpage
+        \section*{参考文献}
+		\addcontentsline{toc}{section}{参考文献}
+}
+
+
+%typeout{yetendix}
+\renewcommand{\appendix}{
+        \setcounter{section}{0}
+        \setcounter{subsection}{0}
+        \def\thesection{\Alph{section}}
+        \section*{付録}
+        \RemoveFromHook{cmd/section/before}[clear]
+        \AddToHookNext{cmd/section/before}{\AddToHook{cmd/section/before}[clear]{\clearpage}}
+		\addcontentsline{toc}{section}{付録}
+}
+
+\renewenvironment{thebibliography}[1]
+{\section*{\refname\@mkboth{\refname}{\refname}}%
+    \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{#1}}%
+         \leftmargin\labelwidth
+         \advance\leftmargin\labelsep
+         \@openbib@code
+         \usecounter{enumiv}%
+         \let\p@enumiv\@empty
+         \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+   \sloppy
+   \clubpenalty4000
+   \@clubpenalty\clubpenalty
+   \widowpenalty4000%
+   \sfcode`\.\@m}
+  {\def\@noitemerr
+    {\@latex@warning{Empty `thebibliography' environment}}%
+   \endlist
+   \addcontentsline{toc}{section}{\refname}
+   }
+
+
+\renewcommand\@makefntext[1]{\parindent 1em
+  \noindent\hbox to 1.8em{\hss\@makefnmark}#1}
+
+% 参照
+\newcommand{\figref}[1]{図\ref{#1}}
+\newcommand{\tabref}[1]{表\ref{#1}}
+\newcommand{\secref}[1]{\ref{#1}章}
+\newcommand{\subsecref}[1]{\ref{#1}節}
+
+% \subsubsectionまで目次に表示させる
+\setcounter{tocdepth}{3}
+
+\renewcommand{\headfont}{\gtfamily\rmfamily\bfseries}

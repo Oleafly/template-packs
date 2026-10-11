@@ -1,0 +1,78 @@
+% !TeX program = xelatex
+\documentclass[UTF8,a4paper,twoside,openright,zihao=-4,fontset=none]{ctexrep}
+
+% 单独页面
+% \documentclass[UTF8,a4paper,oneside,zihao=-4,fontset=fandol]{ctexrep}
+
+%====================== 配置入口 ======================%
+% 用户只需修改：config/thesis-info.tex
+\input{InfoSetting}
+% 以下为模板样式与功能配置（一般不需要改）
+\input{config/thesis-fonts}
+\input{config/thesis-layout}
+\input{config/thesis-style}
+\input{config/thesis-math}
+\input{config/thesis-ref}
+
+
+\begin{document}
+\input{front/frontmatter.tex}
+
+%====================== 正文（有页眉页脚） ======================%
+\cleardoublepage   % 双面 
+% 重新定义页眉页脚
+\pagestyle{fancy} % 正文使用定义的页眉页脚
+\fancyhf{}  % 先清空原有页眉页脚
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% \fancyhead[C]{\HISTHeader}  % 论文名称 页眉 居中
+% \fancyhead[C]{\zihao{5}\song\leftmark}  % 章节名称
+
+% 左页（偶数页）页眉：论文题目
+\fancyhead[CE]{\song\zihao{5}\HISTTitleCN}
+
+% 右页（奇数页）页眉：当前章标题
+\fancyhead[CO]{\song\zihao{5}\leftmark}
+
+% 页码：偶数页左，奇数页右
+\fancyfoot[LE,RO]{\song\zihao{5}\thepage}
+
+
+\pagenumbering{arabic}  % 页码编码方式
+\setcounter{page}{1}  % 页码起始编号
+
+\input{chapters/chap1}
+\input{chapters/chap2}
+\input{chapters/conclusion}
+
+%====================== 参考文献 ======================%
+% \printbibliography[heading=bibliography,title={参考文献}]
+% \addcontentsline{toc}{chapter}{参考文献}
+
+%====================== 参考文献（BibTeX） ======================%
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{参考文献}
+
+\begingroup
+% \setlength{\baselineskip}{0pt}   % ← 关键：压缩文献内部行距
+% \setlength{\bibsep}{6pt}          % 条目之间不额外加空
+% \setlength{\parskip}{0pt}
+\renewcommand{\baselinestretch}{1}\selectfont % 可选：让参考文献行距别跟正文固定行距走
+\bibliography{\HISTbibname}
+\endgroup
+% \bibliography{references}
+
+%====================== 附录、致谢、成果 ======================%
+\ifShowAppendix
+  \appendix
+  % 附录在这里引入
+  \input{appendix/appendixA}
+  
+\fi
+
+\input{chapters/thanks}
+\input{chapters/results}
+
+\end{document}

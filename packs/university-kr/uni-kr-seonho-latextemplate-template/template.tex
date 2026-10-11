@@ -1,0 +1,409 @@
+\documentclass[11pt]{book}
+\usepackage[b5paper]{geometry}
+
+\usepackage[titletoc]{appendix}
+
+% 겉표지, 속표지 등을 위한 종이 크기 재설정
+% taken from
+% http://faq.ktug.org/faq/LayOut/%c6%c7%c7%fc#s-4
+%\special{pdf: pagesize width 190truemm height 260truemm}
+
+%\usepackage[titles]{tocloft}
+%\usepackage{titlesec}
+\usepackage[doublespacing]{setspace} % double spacing
+
+\usepackage{graphicx}
+\graphicspath{{./figures/}} % figure seach path
+
+\usepackage[utf]{kotex} % 한글 사용
+
+% part numbering as arabic (or alph (a, b, ...), Alph (A, B, ...), roman (i, ii, ...), Roman (I, II, ...), fnsymbol (*, ....))
+% taken from
+% http://tex.stackexchange.com/questions/3177/how-to-change-the-numbering-of-part-chapter-section-to-alphabetical-r
+%\renewcommand\thepart{\arabic{part}}
+
+% change table of contents for part, i.e. Part I
+% taken from
+% http://tex.stackexchange.com/questions/38625/part-and-tocloft
+\makeatletter
+\def\@part[#1]#2{%
+    \ifnum \c@secnumdepth >-2\relax
+      \refstepcounter{part}%
+      \addcontentsline{toc}{part}{\partname~\thepart\hspace{1em}#1}%
+    \else
+      \addcontentsline{toc}{part}{#1}%
+    \fi
+    \markboth{}{}%
+    {\centering
+     \interlinepenalty \@M
+     \normalfont
+     \ifnum \c@secnumdepth >-2\relax
+       \huge\bfseries \partname\nobreakspace\thepart
+       \par
+       \vskip 20\p@
+     \fi
+     \Huge \bfseries #2\par}%
+    \@endpart}
+\makeatother
+
+% Comment the following to have chapters numbered without interruption (numbering through parts)
+% taken from
+% http://tex.stackexchange.com/questions/35782/how-to-split-a-latex-document-using-parts-and-chapters
+%\makeatletter\@addtoreset{chapter}{part}\makeatother
+
+%\newlength\mylenchp
+%\newlength\mylenapp
+%
+%\renewcommand\cftchappresnum{\chaptername~}
+%\renewcommand\cftchapaftersnum{.}
+%
+%\settowidth\mylenchp{\cftchapfont\cftchappresnum\cftchapaftersnum}
+%\settowidth\mylenapp{\cftchapfont\appendixname~\cftchapaftersnum}
+%\addtolength\mylenchp{\cftchapnumwidth}
+%\addtolength\mylenapp{\cftchapnumwidth}
+%
+%\setlength\cftchapnumwidth{\mylenchp}
+
+\let\cleardoublepage\clearpage % blank page 제거
+
+\newcommand{\hiddensection}[1]{
+    \stepcounter{section}
+    \section*{\Alph{chapter}.\arabic{section}\hspace{1em}{#1}}
+}
+
+\newcommand{\hiddensubsection}[1]{
+    \stepcounter{subsection}
+    \subsection*{\Alph{chapter}.\arabic{section}.\arabic{subsection}\hspace{1em}{#1}}
+}
+
+\usepackage{array}	%
+\usepackage{multirow} % multicolumn or multirow
+\usepackage{hhline}    % 
+
+\usepackage{xcolor,colortbl} % for coloring 
+\definecolor{lightgray}{gray}{0.9}
+
+% Set default font for all the tables in this document
+\let\oldtabular\tabular
+\renewcommand{\tabular}{\footnotesize\oldtabular}
+
+% Algorithm 관련 패키지 및 명령어 재정의
+\usepackage{algorithm}  % algorithm package
+\usepackage{algorithmic}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}   % Algorithm input
+\renewcommand{\algorithmicensure}{\textbf{Output:}} % Algorithm output
+\renewcommand{\algorithmicforall}{\textbf{foreach}}    % Rename FORALL to foreach
+\renewcommand{\algorithmicif}{\textbf{if}}                     % Rename IF to if
+\renewcommand{\algorithmicendif}{\textbf{end}}          % Rename ENDIF to end
+\renewcommand{\algorithmicendfor}{\textbf{end}}        % Rename ENDFOR to end
+
+%\newcommand{\algname}[1]{{\sc #1}}                         % Set algorithm name
+
+\usepackage{bm} % \bm command for bold italic math font
+
+\usepackage{blindtext} % For long caption example
+
+\usepackage{subfigure}
+
+\begin{document}
+
+\pagestyle{plain} % page 위치, header 제거
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\clearpage
+
+\chapter{First Chapter}
+
+\setcounter{page}{1}
+
+\section{First Section}
+
+\subsection{First Subsection}
+
+\subsubsection{First Subsubsection}
+
+Blah blah
+
+In the following, Eqn.~\ref{eqn:cos2theta} illustrates double-angle formulae of $\cos$. % inline formula
+
+% See http://en.wikibooks.org/wiki/LaTeX/Mathematics
+% See http://en.wikibooks.org/wiki/LaTeX/Advanced_Mathematics
+\begin{equation}
+\label{eqn:cos2theta}
+\cos (2\theta) = \cos^2 \theta - \sin^2 \theta
+\end{equation}
+
+\newpage
+
+In the following, Fig.~\ref{fig:dum1} draws an example of figure.
+% See http://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions
+\begin{figure}[ht]
+\begin{center}
+\rule{0.5\linewidth}{0.35\linewidth}
+\caption[Long caption figure]{\blindtext}
+\label{fig:dum1}
+\end{center}
+\end{figure}
+
+In the following, Fig.~\ref{fig:subfig} draws an example of subfigure.
+\begin{figure}[ht]
+\subfigure[This is a caption of the first subfig.]{
+\includegraphics[width=2in]{subfig.eps}
+}
+\subfigure[This is a caption of the second subfig.]{
+\includegraphics[width=2in]{subfig.eps}
+}
+\caption{This is a caption of the figure.}
+\label{fig:subfig}
+\end{figure}
+
+In the following, Table~\ref{tbl:table1} denotes an example of table.
+% See http://en.wikibooks.org/wiki/LaTeX/Tables for details
+\begin{table}[ht]
+\caption[Table example]{This is an example of table}
+\label{tbl:table1}
+\centering
+\begin{tabular}{c c c}
+\hline
+A & B & C \tabularnewline \hline
+\rowcolor{lightgray}
+D & E & F \tabularnewline \hline
+H & H & I \tabularnewline \hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\label{tbl:drandet}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Samp. Lev.} & \multirow{2}{*}{EHMI Size} & \multicolumn{3}{c|}{Detection Rate (\%)} & \multicolumn{3}{c|}{Execution Time (ms)} \tabularnewline \hhline{~~------}
+& & Rec.  & Prec. & F1 & Gen. EHMI & Com. HOG & Total\\
+\hline
+Level     8 & $  2687 \times 32$ & 0.22 & 100.00 & 0.44 & 5 & 1 & 10 \tabularnewline \hline
+Level   18 & $  5882 \times 32$ & 5.41 & 93.59 & 10.23 & 7 & 1 & 12 \tabularnewline \hline
+Level   28 & $  9426 \times 32$ & 51.45 & 93.15 & 66.28 & 8 & 2 & 14 \tabularnewline \hline
+Level   38 & $13583 \times 32$ & 66.42 & 88.02 & 75.71 & 12 & 3 & 18 \tabularnewline \hline
+Level   48 & $16790 \times 32$ & 75.24 & 87.88 & 81.07 & 13 & 4 & 21 \tabularnewline \hline
+Level   58 & $20784 \times 32$ & 79.76 & 88.12 & 83.74 & 14 & 4 & 23 \tabularnewline \hline
+\rowcolor{lightgray}
+Level   68 & $24049 \times 32$ & 84.14 & 87.78 & 85.92 & 15 & 4 & 25 \tabularnewline \hline
+Level   78 & $27363 \times 32$ & 84.58 & 87.77 & 86.15 & 18 & 5 & 29 \tabularnewline \hline
+Level   88 & $29536 \times 32$ & 85.47 & 87.68 & 86.56 & 21 & 5 & 32 \tabularnewline \hline
+Level   98 & $33031 \times 32$ & 86.66 & 88.03 & 87.34 & 24 & 5 & 36 \tabularnewline \hline
+Level 108 & $35447 \times 32$ & 87.47 & 88.92 & 88.19 & 25 & 6 & 39 \tabularnewline \hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\label{tbl:tbl2}
+\centering
+\begin{tabular}{c|ccc}
+\hline
+& Recall  (\%) & Precision (\%) & F1-Measure (\%) \tabularnewline \hline
+Part 0 & 4.0 & 66.7 & 7.5 \\
+Part 12 & 46.0 & 92.0 & 61.3 \\
+\rowcolor{lightgray}
+Part 24 & 78.0 & 97.5 & 86.7 \\
+Part 36 & 94.0 & 78.3 & 85.5 \\
+Part 48 & 92.0 & 61.3 & 73.6 \\
+Part 60 & 90.0 & 72.6 & 80.4 \\
+\rowcolor{lightgray}
+Part 72 & 88.0 & 93.6 & 90.7 \\
+Part 84 & 2.0 & 50.0 & 3.8 \tabularnewline \hline
+\end{tabular}
+\end{table}
+
+Alg.~\ref{alg:example} illustrates an example of algorithm.
+
+% Algorithm - http://en.wikibooks.org/wiki/LaTeX/Algorithms
+\begin{algorithm}[ht]
+\caption{ALGORITHM EXAMPLE}
+\label{alg:example}
+\begin{algorithmic}[1]
+\REQUIRE some inputs.
+\ENSURE some outputs.
+
+\STATE <text>
+ \IF{<condition>} \STATE{<text>} \ENDIF
+ \FOR{<condition>} \STATE{<text>} \ENDFOR
+ \FOR{<condition> \TO <condition> } \STATE{<text>} \ENDFOR
+ \FORALL{<condition>} \STATE{<text>} \ENDFOR
+ \WHILE{<condition>} \STATE{<text>} \ENDWHILE
+ \REPEAT \STATE{<text>} \UNTIL{<condition>}
+ \LOOP \STATE{<text>} \ENDLOOP
+ \RETURN <text>
+ \PRINT <text>
+ \COMMENT{<text>}
+ \AND, \OR, \XOR, \NOT, \TO, \TRUE, \FALSE
+
+\end{algorithmic}
+\end{algorithm}
+
+\section{Second Section}
+
+\subsection{Second Subsection}
+
+\subsubsection{Second Subsubsection}
+
+\section{Third Section}
+
+\subsection{Third Subsection}
+
+\subsubsection{Third Subsubsection}
+
+Blah blah
+
+\section{Fourth Section}
+
+\subsection{Fourth Subsection}
+
+\subsubsection{Fourth Subsubsection}
+
+Blah blah
+
+\chapter{Second Chapter}
+
+\section{First Section}
+
+\subsection{First Subsection}
+
+\subsubsection{First Subsubsection}
+
+Blah blah
+
+\section{Second Section}
+
+\subsection{Second Subsection}
+
+\subsubsection{Second Subsubsection}
+
+Blah blah
+
+\section{Third Section}
+
+\subsection{Third Subsection}
+
+\subsubsection{Third Subsubsection}
+
+Blah blah
+
+\section{Fourth Section}
+
+\subsection{Fourth Subsection}
+
+\subsubsection{Fourth Subsubsection}
+
+\chapter{Third Chapter}
+
+\section{First Section}
+
+\subsection{First Subsection}
+
+\subsubsection{First Subsubsection}
+
+Blah blah
+
+\section{Second Section}
+
+\subsection{Second Subsection}
+
+\subsubsection{Second Subsubsection}
+
+Blah blah
+
+\section{Third Section}
+
+\subsection{Third Subsection}
+
+\subsubsection{Third Subsubsection}
+
+Blah blah
+
+\section{Fourth Section}
+
+\subsection{Fourth Subsection}
+
+\subsubsection{Fourth Subsubsection}
+
+\chapter{Fourth Chapter}
+
+\section{First Section}
+
+\subsection{First Subsection}
+
+\subsubsection{First Subsubsection}
+
+Blah blah
+
+\section{Second Section}
+
+\subsection{Second Subsection}
+
+\subsubsection{Second Subsubsection}
+
+Blah blah
+
+\section{Third Section}
+
+\subsection{Third Subsection}
+
+\subsubsection{Third Subsubsection}
+
+Blah blah
+
+\section{Fourth Section}
+
+\subsection{Fourth Subsection}
+
+\subsubsection{Fourth Subsubsection}
+
+Reference example... \cite{Tsa2006}.
+
+\begin{appendices}
+
+\chapter{First Appendix Chapter}
+
+\hiddensection{First Appendix Section}
+Blah blah
+
+\hiddensubsection{First Subsection}
+Blah blah
+
+\subsubsection{First Subsubsection}
+Blah blah
+
+\hiddensection{Second Appendix Section}
+Blah blah
+
+\chapter{Second Appendix Chapter}
+
+\hiddensection{First Appendix Section}
+Blah blah
+
+\hiddensection{Second Appendix Section}
+Blah blah
+
+\end{appendices}
+
+\addcontentsline{toc}{part}{References}
+\bibliographystyle{IEEEtran}
+\bibliography{bibliography}
+
+\addcontentsline{toc}{part}{Abstract}
+
+\newpage
+
+\pagestyle{plain}
+
+% footnote numbering to symbol
+\renewcommand\thefootnote{\fnsymbol{footnote}}
+
+% 한글 초록
+한글 초록은 여기에 이렇게... \footnote[1]{This is blah blah}
+
+\end{document}

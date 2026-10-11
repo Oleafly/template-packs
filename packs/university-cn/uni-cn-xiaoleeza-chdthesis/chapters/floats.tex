@@ -1,0 +1,116 @@
+% !TeX root = ../main.tex
+
+\chapter{浮动体}
+
+\section{三线表}
+
+《撰写手册》要求一律使用三线表，与文字齐宽，上下边线，线粗 1.5 磅，表内线，线粗 1 磅。如表~\ref{tab:exampletable}。
+
+\begin{table}
+  \centering
+  \caption{调查问卷样本情况}
+  \label{tab:exampletable}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l l l l}
+    \toprule[1.5pt]
+    个人背景资料 &  & 人数 & 百分比（\%）\\
+    \midrule[1pt]
+    教育程度 & 高中及以下 & 91 & 30.6\\
+            & 本科 & 125 & 42.1\\
+            & 硕士及以上 & 22 & 7.4\\
+    \bottomrule[1.5pt]
+  \end{tabular*}
+\end{table}
+
+Word 中表格的间距较 latex 大，推荐使用在表内调整 arraystretch 改变行间距。并且推荐在表格下方添加垂直间距 vspace ，使得表格与上下文之间的间距匹配。
+
+\begin{table}[h]
+  \centering
+  \centering
+  \caption{调整行间距的表格}
+  \renewcommand{\arraystretch}{1.6}
+  \begin{tabular}{c c c c c c}
+    \toprule[1.5pt]
+    \specialrule{0em}{0pt}{-1pt}
+      & & 白天 & 隧道 & 夜间 & 合计 \\
+    \midrule[1pt]
+    \multicolumn{2}{c}{图像数目} & 225900 & 73900 & 21082 & 320882 \\
+    \multicolumn{2}{c}{\multirow{2}{*}{图像分辨率}} & 1920*1080 & 1920*1080 & \multirow{2}{*}{1920*1080} & \multirow{2}{*}{/} \\
+      & & 1280*720 & 1280*720 & & \\
+    \multirow{2}{*}{目标数目} & 小车 & 117018 & 86132 & 15841 & 218991 \\
+      & 卡车 & 99634 & 59735 & 3887 & 163256 \\
+      & 客车 & 99634 & 59735 & 3887 & 163256 \\
+    \bottomrule[1.5pt]
+  \end{tabular}
+\end{table}
+\vspace{4bp}
+
+如果有表注，推荐使用 \pkg{threeparttable}。这样可以与表格对齐，满足部分评审老师的要求。
+
+\begin{table}
+  \centering
+  \begin{threeparttable}
+    \caption{带表注的表格}
+    \label{tab:tablewithnotes}
+    \begin{tabular}{cl}
+      \toprule[1.5pt]
+      类型   & 描述                                       \\
+      \midrule[1pt]
+      挂线表 & 挂线表也称系统表、组织表，用于表现系统结构 \\
+      无线表 & 无线表一般用于设备配置单、技术参数列表等   \\
+      卡线表 & 卡线表有完全表，不完全表和三线表三种       \\
+      \bottomrule[1.5pt]
+    \end{tabular}
+    \begin{tablenotes}[flushleft]
+      \item 注：表注分两种，第一种是对全表的注释，用不加阿拉伯数字排在表的下边，
+      前面加“注：”；第二种是和表内的某处文字或数字相呼应的注，
+      在表里面用带圈的阿拉伯数字在右上角标出，然后在表下面用同样的圈码注出来
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+编制表格应简单明了，表达一致，明晰易懂，表文呼应、内容一致。排版时表格字号略小，或变换字体，尽量不分页，尽量不跨节。表格太大需要转页时，需要在续表上方注明“续表”，表头页应重复排出。
+
+\section{插图}
+
+有的同学可能听说“\LaTeX{} 只能使用 eps 格式的图片”，甚至把 jpg 格式转为 eps。
+事实上，这种做法已经过时。
+而且每次编译时都要要调用外部工具解析 eps，导致降低编译速度。
+所以我们推荐矢量图直接使用 pdf 格式，位图使用 jpeg 或 png 格式。
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.3\textwidth]{chd-redlogo.pdf}
+  \caption{图号、图题置于图的下方}
+  \label{fig:badge}
+  \note{注：图注的内容不宜放到图题中。}
+\end{figure}
+
+关于图片的并排，推荐使用较新的 \pkg{subcaption} 宏包，
+不建议使用 \pkg{subfigure} 或 \pkg{subfig} 等宏包。
+
+\section{算法环境}
+
+模板中使用 \pkg{algorithm2e} 宏包实现算法环境。关于该宏包的具体用法，
+请阅读宏包的官方文档。
+
+\begin{algorithm}
+  \SetAlgoLined
+  \KwData{this text}
+  \KwResult{how to write algorithm with \LaTeX2e }
+
+  initialization\;
+  \While{not at end of this document}{
+    read current\;
+    \eIf{understand}{
+      go to next section\;
+      current section becomes this one\;
+    }{
+      go back to the beginning of current section\;
+    }
+  }
+  \caption{算法示例1}
+  \label{algo:algorithm1}
+\end{algorithm}
+
+注意，我们可以在论文中插入算法，但是插入大段的代码是愚蠢的。
+然而这并不妨碍有的同学选择这么做，对于这些同学，建议用 \pkg{listings} 宏包。

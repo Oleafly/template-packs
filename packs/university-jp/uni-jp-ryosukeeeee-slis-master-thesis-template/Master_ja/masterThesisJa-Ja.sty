@@ -1,0 +1,168 @@
+% フォーマット
+% http://www.slis.tsukuba.ac.jp/grad/assets/files/daigakuin-k2/Master%20Degree%20Application%20Guide%20Ja.pdf
+
+% 紙面設定
+\setlength{\textwidth}{\paperwidth}	% 本文領域を紙面幅全体に設定
+\setlength{\oddsidemargin}{4.6mm}	% 奇数ページの左マージン：1in(25.4mm)+4.6mmで30mmに設定
+\setlength{\evensidemargin}{\oddsidemargin}	% 偶数ページにも同じ設定
+\addtolength{\textwidth}{-60mm}	% 本文領域の設定値から左右余白(30mm x2)を削除
+
+\setlength{\textheight}{\paperheight}	% 本文領域を紙面高さ全体に設定
+\setlength{\topmargin}{4.6mm}	% 上マージン：1in(25.4mm)+4.6mmで30mmに設定
+\setlength{\headheight}{0pt}	% ヘッダの高さを0に設定
+\setlength{\headsep}{0pt}	% ヘッダと本文の間隔を0に設定
+\setlength{\footskip}{10mm}	% フッタの高さを0に設定
+\addtolength{\textheight}{-55mm}	% 本文領域の設定値から上下余白(35mm x2)を削除後、下余白を15mm削除
+
+% フォント設定
+\usepackage[T1]{fontenc}	% フォント New PX
+\usepackage{lmodern}	% アンダースコア用
+% \usepackage{tgtermes}	% 本文用
+% \usepackage{tgheros}	% 見出し用
+% \usepackage{inconsolata}	% ソースコード用
+% \usepackage{newtxmath}	% 数式用
+
+% その他設定
+\usepackage{ifthen}	% 条件分岐用
+\pagestyle{empty}	% ページ番号非表示
+
+% 文字列定義
+
+% 題目
+\newcommand{\maintitle}[2]{
+	\newcommand{\Maintitleja}{#1}	% 主題日本語
+	\newcommand{\Maintitleen}{#2}	% 主題英語
+}
+% サブタイトル
+\newcommand{\subtitle}[2]{
+	\newcommand{\Subtitleja}{#1}	% 副題日本語
+	\newcommand{\Subtitleen}{#2}	% 副題英語
+}
+% 発表年月
+\newcommand{\publish}[2]{
+	\newcommand{\Year}{#1}
+	\newcommand{\Month}{#2}
+}
+% 学籍番号・名前
+\newcommand{\student}[3]{
+	\newcommand{\Id}{#1}	% 学籍番号
+	\newcommand{\Nameja}{#2}	% 氏名日本語
+	\newcommand{\Nameen}{#3}	% 氏名英語
+}
+% 概要
+\newcommand{\abst}[1]{
+	\newcommand{\Abstract}{#1}
+}
+
+% 指導教官
+\newcommand{\advisors}[2]{
+	\newcommand{\Padvisor}{#1}	% 主指導教員
+	\newcommand{\Sadvisor}{#2}	% 副指導教員
+}
+
+
+\newcommand{\makecover}{
+	{\centering
+
+        		% 表紙上部
+        		\begin{minipage}[t]{\hsize}
+        		\vspace{15mm}
+        			{\centering
+        			\fontsize{20pt}{0pt}\selectfont
+        			\underline{図書館情報メディア研究科修士論文}	% DO NOT DELETE THE NEXT LINE
+        		
+        		}
+        		\end{minipage}
+        	
+        		% 表紙中部
+        		\vspace*{\stretch{1}}
+		\vspace{-45mm}
+        		\fontsize{20pt}{10pt}\selectfont
+        		\ifthenelse{\isundefined{\Subtitleja}}{
+        			\Maintitleja
+        		}{
+        			\Maintitleja \\[10pt]
+        			\centering\fontsize{16pt}{0pt}\selectfont	% 副題のフォントサイズはここで調整
+        			\Subtitleja
+        		}
+        		\vspace*{\stretch{1}}
+        	
+       	 	% 表紙下部
+       	 	\begin{minipage}[b]{\hsize}
+        		{\centering
+        			\fontsize{20pt}{10pt}\selectfont
+        			\underline{\smash{\Year 年\Month 月}} \\[20pt]
+        			\underline{\smash{\Id}} \\[20pt]
+        			\underline{\smash{\Nameja}}	% DO NOT DELETE THE NEXT LINE
+        			
+        		}
+        			\vspace{40mm}
+        			\end{minipage}
+	}
+	\newpage
+
+	% 標題紙上部
+	{\centering
+        		\vspace*{\stretch{1}}
+        		\vspace{-35mm}
+        		\fontsize{20pt}{10pt}\selectfont
+        		\ifthenelse{\isundefined{\Subtitleja}}{
+        			\Maintitleja
+        		}{
+        			\Maintitleja \\[10pt]
+        			\centering\fontsize{16pt}{0pt}\selectfont	% 副題のフォントサイズはここで調整
+        			\Subtitleja
+        		}
+        		\vspace*{\stretch{1}}
+        	
+        		% 標題紙下部
+        		\begin{minipage}[b]{\hsize}
+        		{\centering
+        			\fontsize{20pt}{10pt}\selectfont
+        			筑波大学 \\[10pt]
+        			図書館情報メディア研究科 \\[10pt]
+        			\Year 年\Month 月 \\[10pt]
+        			\Nameja	% DO NOT DELETE THE NEXT LINE
+        		
+        		}
+        		\vspace{25mm}
+        		\end{minipage}
+	}
+	\newpage
+	
+	% 概要ページ
+	{\centering
+        		\fontsize{14pt}{20pt}\selectfont
+        		\ifthenelse{\isundefined{\Subtitleja}}{
+        			\Maintitleja \\
+        		}{
+        			\Maintitleja \\
+        			\Subtitleja \\
+        		}
+        		
+        		\ifthenelse{\isundefined{\Subtitleen}}{
+       			\Maintitleen \\
+       		}{
+        			\Maintitleen\Subtitleen \\
+       		}
+	}
+
+	\begin{flushright}
+	        	\vspace{10mm}	% 題目と学籍番号の間隔はここで調整
+	          \fontsize{10.5pt}{15pt}\selectfont
+	          学籍番号：\Id \\
+	          氏名：\Nameja \\
+      		\Nameen
+	\end{flushright}
+
+	\vspace{0mm}	% 氏名と概要の間隔はここで調整
+	\begin{flushleft}
+		\Abstract
+	\end{flushleft}
+	
+	\begin{flushright}
+        		\vspace{10mm}	% 概要と指導教員の間隔はここで調整
+       		研究指導教員：\Padvisor \\
+       		副研究指導教員：\Sadvisor \\
+	\end{flushright}
+}

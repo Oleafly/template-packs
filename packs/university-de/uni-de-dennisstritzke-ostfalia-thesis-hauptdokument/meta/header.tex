@@ -1,0 +1,117 @@
+% In diesem Dokument werden die globalen \usepackage{}-Befehle eingefügt.
+% Definition des Seitestils (Ränder, Schriftart, Abstände, usw.)
+
+\usepackage[top=2.5cm, bottom=2cm, left=3cm, right=2cm]{geometry}
+
+\usepackage[ngerman]{babel}
+\selectlanguage{ngerman}
+
+\usepackage[T1]{fontenc}
+
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+
+\usepackage[bottom]{footmisc} % Fußnoten nach unten stellen
+
+\setlength{\parindent}{0em} % Absatzeinrückung linksbündig
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+
+\usepackage{graphicx}
+
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{} % Removes space above \chapter head
+\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{} % Removes space above \chapter* head
+\makeatother
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{14.5pt}
+\pagestyle{fancy}
+
+\renewcommand{\chaptermark}[1]{
+	\markboth{
+		{\chaptername\ \thechapter\ #1}
+	}{}
+}
+
+\renewcommand{\sectionmark}[1]{
+	\markright{
+		{\thesection\ #1}
+	}
+}
+
+\fancypagestyle{titlepage}
+{
+	\setcounter{page}{-100000}
+	\fancyhf{}
+	\fancyfootoffset{0pt}
+	\fancyheadoffset{0pt}
+	\renewcommand{\headrulewidth}{0pt}
+}
+
+
+\usepackage{titlesec} % Im folgenden werden die Schriftarten der Überschriften gesetzt.
+\titleformat{\chapter}[display] {\sffamily \huge}{\chaptertitlename\ \thechapter}{-5pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{0pt}{10pt}
+\titleformat{\section}[display] {\sffamily \tiny}{}{0pt}{\LARGE \thesection\ }
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+\titleformat{\subsection}[display] {\sffamily \tiny}{}{-15pt}{\Large \thesubsection\ }
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+\titleformat{\subsubsection}[display] {\sffamily \tiny}{}{-15pt}{\large \thesubsubsection\ }
+\titlespacing*{\subsubsection}{0pt}{0pt}{0pt}
+
+\usepackage[titles]{tocloft}
+\renewcommand{\cftchapfont}{\bf\sffamily}
+\renewcommand{\cftsecfont}{\sffamily}
+\renewcommand{\cftsubsecfont}{\sffamily}
+
+\renewcommand{\cfttabfont}{\sffamily}
+\renewcommand{\cftfigfont}{\sffamily}
+
+\setcounter{secnumdepth}{3}
+
+\usepackage{csquotes}
+\usepackage[square, numbers]{natbib}
+
+\usepackage[pdftex, pdfborder={0 0 0}]{hyperref}
+\hypersetup{pdfauthor={\documentauthor},
+	pdftitle={\documenttitle\ - \documentsubtitle},
+	pdfsubject={\documentsubject},
+	pdfkeywords={Betreuer:\ \documenttutor}}
+
+\usepackage{lmodern}
+\usepackage{listings}
+\lstset{
+	showspaces=false,
+	showtabs=false,
+	breaklines=true,
+	showstringspaces=false,
+	basicstyle=\ttfamily,
+	frame=lt,
+	rulecolor=\color{gray},
+	framerule=3pt,
+	xleftmargin=6pt,
+}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\usepackage{caption}
+
+\newlength\myx
+\setlength\myx{\textwidth}
+\addtolength\myx{-2\fboxsep}
+
+\DeclareCaptionFont{white}{\color{white} \sffamily}
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\myx}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+\renewcommand{\lstlistingname}{Quelltext}
+
+\ifdraft
+	\usepackage{todonotes}
+\else
+	\usepackage[disable]{todonotes}
+\fi
+
+%\usepackage{showframe} % Auskommentieren, um die Layoutgrenzen anzuzeigen

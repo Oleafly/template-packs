@@ -1,0 +1,224 @@
+%% ============================================================
+%% 단국대학교 대학원 학위논문 템플릿 (공학계열)
+%% Dankook University Graduate School - Engineering Thesis
+%% 작성지침 + 공학계열_학위논문작성틀.docx 기준
+%% Overleaf: XeLaTeX 컴파일러 사용 (Menu → Compiler → XeLaTeX)
+%% 이 템플릿이 도움이 되었다면 GitHub Star를 남겨주시면 큰 힘이 됩니다 :)
+%% https://github.com/imagesid/Dankook-Thesis-Latex
+%% ============================================================
+
+\documentclass[11pt, a4paper]{report}
+\newcounter{frontpage}
+
+%% ── 패키지 ────────────────────────────────────────────────
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath, amssymb}
+\usepackage{caption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{indentfirst}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage{array}  % add to preamble
+\usepackage{makecell}  % add to preamble
+\usepackage{natbib}
+\bibliographystyle{apalike}  % or use a custom style
+
+
+%% ── 폰트 (XeLaTeX) ────────────────────────────────────────
+\usepackage{fontspec}
+\usepackage{kotex}
+\setmainfont{Times New Roman}
+\hangulfontspec{NanumMyeongjo}   % 한글 명조체
+
+%% ── 용지 설정 (작성지침: 상하좌우 30mm, 머리말/꼬리말 15mm) ─
+% \geometry{
+%   a4paper,
+%   top=30mm, bottom=30mm,
+%   left=30mm, right=30mm,
+%   headheight=15mm, headsep=0mm,
+%   footskip=15mm,
+%   includeheadfoot
+% }
+\geometry{
+  a4paper,
+  top=44.9mm,
+  bottom=44.9mm,
+  left=30mm,
+  right=30mm,
+}
+
+\AtBeginDocument{
+  \fontsize{11}{14}\selectfont
+  \setlength{\parindent}{10pt}
+  \setlength{\parskip}{0pt}
+  \spaceskip=0.6em
+  \xspaceskip=0.6em
+}
+%% ── 줄간격 160% (작성지침) ───────────────────────────────
+\setstretch{1.6}
+
+%% ── 들여쓰기 2 space ─────────────────────────────────────
+\setlength{\parindent}{2em}
+
+%% After \begin{document}:
+\renewcommand{\thechapter}{\Roman{chapter}}  % ← makes I II III everywhere including TOC
+
+%% ── 쪽번호: 아래 중앙 ────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+
+%% ── 앞부분/본문 쪽번호 전환 ──────────────────────────────
+\newcommand{\frontmatter}{\pagenumbering{roman}\setcounter{page}{1}}
+\newcommand{\mainmatter}{\pagenumbering{arabic}\setcounter{page}{1}}
+
+%% ── 장 제목: Ⅰ. 형식, 16pt, 가운데, bold ────────────────
+\titleformat{\chapter}[block]
+  {\centering\fontsize{16}{20}\selectfont\bfseries}
+  {\Roman{chapter}.}{0.5em}{}
+\titlespacing{\chapter}{0pt}{-7mm}{16pt}
+
+%% ── 절 제목: 1.1 형식, 14pt, 왼쪽, bold ─────────────────
+\titleformat{\section}[block]
+  {\fontsize{14}{16}\selectfont\bfseries}
+  {\thesection}{0.2em}{}
+\titlespacing{\section}{0pt}{14pt}{6pt}
+
+%% ── 소절: 1.1.1 형식, 14pt, 왼쪽, bold ──────────────────
+\titleformat{\subsection}[block]
+  {\fontsize{14}{18}\selectfont\bfseries}
+  {\thesubsection}{0.5em}{}
+\titlespacing{\subsection}{0pt}{20pt}{6pt}
+
+\titleformat{\subsubsection}[block]
+  {\fontsize{14}{18}\selectfont\bfseries}
+  {\thesubsubsection}{0.5em}{}
+\titlespacing{\subsubsection}{0pt}{10pt}{4pt}
+
+%% ── 그림/표 캡션 ─────────────────────────────────────────
+%% 그림: 아래, 가운데 / 표: 위, 오른쪽 (11pt bold, 고딕)
+\captionsetup[figure]{
+  labelsep=space, labelfont=bf, textfont=normalfont,
+  justification=centering, position=below
+}
+\captionsetup[table]{
+  labelsep=space, labelfont=bf, textfont=normalfont,
+  justification=raggedright, singlelinecheck=false, position=above
+}
+
+%% 번호: 장번호-일련번호 (예: Figure 2-1)
+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
+
+%% ── 수식번호: (장번호.일련번호) 형식 ────────────────────
+\renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}
+
+%% ── 목차 ─────────────────────────────────────────────────
+\renewcommand{\cftchappresnum}{}
+\renewcommand{\cftchapaftersnum}{.~}   % ← adds dot after number: "I. 서론"
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}  % ← dots for chapters
+\renewcommand{\cftchapfont}{\normalfont}   % ← removes bold
+\setlength{\cftbeforechapskip}{2pt}        % ← tighter row spacing
+\renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{chapter}.\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+% \renewcommand{\cftchapskip}{4pt}
+\renewcommand{\cftchapfont}{\normalfont}
+\renewcommand{\cftchappagefont}{\normalfont}
+
+\renewcommand{\contentsname}{\hfill 목\quad 차\hfill}
+\renewcommand{\listtablename}{\hfill List of Tables\hfill}
+\renewcommand{\listfigurename}{\hfill List of Figures\hfill}
+\setlength{\cftbeforechapskip}{4pt}
+
+
+
+%% ── 논문 정보 (수정하세요) ───────────────────────────────
+\newcommand{\thesistitleko}{단국대학교 대학원 학위논문 작성양식}
+\newcommand{\thesistitlekosub}{공학계열 학과를 대상으로}
+\newcommand{\thesistitlenone}{Thesis Format of Dankook University Graduate School}
+\newcommand{\thesistitlentwo}{For Engineering Departments}
+
+
+\newcommand{\authorname}{○ ○ ○}
+\newcommand{\authornameEN}{HONG Gildong}
+\newcommand{\advisorname}{○ ○ ○}
+\newcommand{\advisornameEN}{English Name Prof}
+\newcommand{\submityear}{2021}
+\newcommand{\submitmonth}{○○}
+\newcommand{\submitdate}{○○}
+\newcommand{\department}{○○○학과}
+\newcommand{\major}{○○○전공}
+\newcommand{\departmentEN}{Name of Department}
+\newcommand{\majorEN}{Name of Major}
+\newcommand{\degreetype}{석사(박사)}
+\newcommand{\gradschool}{단국대학교 대학원}
+\newcommand{\gradschoolEN}{Graduate School, Dankook University}
+
+
+%% ============================================================
+\begin{document}
+%% ============================================================
+
+%% ① 겉표지 (서식 1)
+\input{pages/01_cover}
+
+%% ② 속지
+\input{pages/02_blank}
+
+%% ③ 속표지 (서식 2)
+\input{pages/03_titlepage}
+
+%% ④ 심사 판정지 (서식 4)
+\input{pages/04_approval}
+
+%% ── 앞부분: 로마자 쪽번호 (i, ii, iii …) ────────────────
+\frontmatter
+
+%% ⑤ 국문 초록
+\input{pages/05_abstract_ko}
+
+%% ⑥ 목차 + List of Tables + List of Figures
+\input{pages/06_toc}
+
+% Save last frontmatter page number numerically
+\setcounter{frontpage}{\value{page}}
+
+%% ── 본문: 아라비아 쪽번호 (1, 2, 3 …) ──────────────────
+\mainmatter
+
+%% ⑦ 본문 장들
+\input{chapters/ch1_intro}
+\input{chapters/ch2_target}
+\input{chapters/ch3_method}
+\input{chapters/ch4_results}
+\input{chapters/ch5_conclusion}
+
+%% ⑧ 참고문헌
+\renewcommand{\bibname}{참 고 문 헌}
+\input{pages/07_references}
+
+%% ⑨ 영문 초록 (앞부분 쪽번호 계속)
+\cleardoublepage
+\pagenumbering{roman}
+\setcounter{page}{\value{frontpage}}
+\input{pages/08_abstract_en}
+
+%% ⑩ 감사의 글
+\input{pages/09_acknowledgements}
+
+%% ⑪ 속지
+\input{pages/02_blank}
+
+\end{document}

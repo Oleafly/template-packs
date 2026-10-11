@@ -1,0 +1,265 @@
+%==============================================================================
+% ETHSRL - (ethsrl.sty) Style file
+% A LaTeX package providing new style definitions and commands.
+% 2013.10: Péter Fankhauser
+% 2020.11: Pascal Auf der Maur
+% This package is based on the ETHIMRT package by Eric A. Mueller.
+% forked from asl-student-templates
+%==============================================================================
+\def\Presentation@Version{1.1}
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{ethsrl}[2013/10/07, v. \Presentation@Version]
+\typeout{providing new style definitions and commands ---}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newif\ifsom
+\newif\ifbt
+\newif\ifst
+\newif\ifmt
+\newif\iffp
+\DeclareOption{som}{
+    \global\somtrue
+    \global\btfalse
+    \global\stfalse
+    \global\mtfalse
+    \global\fpfalse
+}
+\DeclareOption{bt}{
+    \global\somfalse
+    \global\bttrue
+    \global\stfalse
+    \global\mtfalse
+    \global\fpfalse
+}
+\DeclareOption{st}{
+    \global\somfalse
+    \global\btfalse
+    \global\sttrue
+    \global\mtfalse
+    \global\fpfalse
+}
+\DeclareOption{mt}{
+    \global\mtfalse
+    \global\btfalse
+    \global\stfalse
+    \global\mttrue
+    \global\fpfalse
+}
+\DeclareOption{fp}{
+    \global\mtfalse
+    \global\btfalse
+    \global\stfalse
+    \global\mtfalse
+    \global\fptrue
+}
+
+\newif\ifhs
+\DeclareOption{hs}{\global\hstrue}
+\DeclareOption{fs}{\global\hsfalse}
+
+\newif\ifingerman
+\DeclareOption{german}{\global\ingermantrue}
+\DeclareOption{english}{\global\ingermanfalse}
+
+\ExecuteOptions{bt,fs,english}
+\ProcessOptions
+
+%%%%%%%
+\newcommand{\@subtitle}{}
+\newcommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+
+\newcommand{\@projectYear}{}
+\newcommand{\projectYear}[1]{\gdef\@projectYear{#1}}
+
+\newcommand{\@institutelogo}{}
+\newcommand{\institutelogo}[1]{\gdef\@institutelogo{#1}}
+
+\newcommand{\@institute}{}
+\newcommand{\institute}[1]{\gdef\@institute{#1}}
+
+\newcommand{\@headofinstitute}{}
+\newcommand{\headofinstitute}[1]{\gdef\@headofinstitute{#1}}
+
+\newcommand{\@supervisionA}{}
+\newcommand{\supervisionA}[1]{\gdef\@supervisionA{#1}}
+
+\newif\ifsupervisionB
+\newcommand{\@supervisionB}{}
+\newcommand{\supervisionB}[1]{
+	\gdef\@supervisionB{#1}\supervisionBtrue
+	%\addtolength{\spaceforauthors}{-\baselineskip}
+}
+
+\newif\ifsupervisionC
+\newcommand{\@supervisionC}{}
+\newcommand{\supervisionC}[1]{
+	\gdef\@supervisionC{#1}\supervisionCtrue
+	\addtolength{\spaceforauthors}{-\baselineskip}
+}
+
+\newif\ifsupervisionD
+\newcommand{\@supervisionD}{}
+\newcommand{\supervisionD}[1]{
+	\gdef\@supervisionD{#1}\supervisionDtrue
+	%\addtolength{\spaceforauthors}{-\baselineskip}
+}
+
+\newlength{\spaceforauthors}
+\setlength{\spaceforauthors}{5cm}
+
+\newcommand{\@studentA}{}
+\newcommand{\studentA}[1]{\gdef\@studentA{#1}}
+
+\newif\ifstudentB
+\newcommand{\@studentB}{}
+\newcommand{\studentB}[1]{
+	\gdef\@studentB{#1}\studentBtrue
+	%\addtolength{\spaceforauthors}{-\baselineskip}
+}
+
+\newif\ifstudentC
+\newcommand{\@studentC}{}
+\newcommand{\studentC}[1]{
+	\gdef\@studentC{#1}\studentCtrue
+	\addtolength{\spaceforauthors}{-\baselineskip}
+
+}
+
+\newif\ifstudentD
+\newcommand{\@studentD}{}
+\newcommand{\studentD}[1]{
+    \gdef\@studentD{#1}\studentDtrue
+    %\addtolength{\spaceforauthors}{-\baselineskip}
+}
+
+\newif\ifstudentE
+\newcommand{\@studentE}{}
+\newcommand{\studentE}[1]{
+    \gdef\@studentE{#1}\studentEtrue
+    \addtolength{\spaceforauthors}{-\baselineskip}
+}
+
+\newif\ifstudentF
+\newcommand{\@studentF}{}
+\newcommand{\studentF}[1]{
+    \gdef\@studentF{#1}\studentFtrue
+    %\addtolength{\spaceforauthors}{-\baselineskip}
+}
+
+\newif\ifstudentG
+\newcommand{\@studentG}{}
+\newcommand{\studentG}[1]{
+    \gdef\@studentG{#1}\studentGtrue
+    \addtolength{\spaceforauthors}{-\baselineskip}
+}
+
+\newif\ifstudentH
+\newcommand{\@studentH}{}
+\newcommand{\studentH}[1]{
+    \gdef\@studentH{#1}\studentHtrue
+    %\addtolength{\spaceforauthors}{-\baselineskip}
+}
+
+\newif\iftitleimage
+\newcommand{\@titleimage}{}
+\newcommand{\titleimage}[2][1]{
+    \gdef\@titleimage{#2}
+    \newlength{\titleimagesize}
+    \setlength{\titleimagesize}{{#1}\textwidth}
+    \titleimagetrue
+}
+
+%%%%%%%
+% Definition of title page
+
+\renewcommand{\maketitle}{
+
+\pagestyle{empty}
+\begin{titlepage}
+
+\newgeometry{top=2cm, bottom=4cm, right=1.5cm, left=1cm}
+	
+\begin{center}
+	\vspace*{6cm}
+	% Semester-, Bachelor-, Masterarbeit
+	\ifingerman
+		\ifsom
+			{\huge  \textbf{Studies on Mechatronics}}\\[0.75cm]
+		\fi
+		\ifbt
+			{\huge  \textbf{Bachelorarbeit}}\\[0.75cm]
+		\fi
+		\ifst
+			{\huge  \textbf{Semesterarbeit}}\\[0.75cm]
+		\fi
+		\ifmt
+			{\huge  \textbf{Masterarbeit}}\\[0.75cm]
+		\fi
+		\iffp
+			{\huge  \textbf{Fokus Projekt}}\\[0.75cm]
+		\fi
+	\else
+		\ifsom
+			{\huge  \textbf{Studies on Mechatronics}}\\[0.75cm]
+		\fi
+		\ifbt
+			{\huge  \textbf{Bachelor Thesis}}\\[0.75cm]
+		\fi
+		\ifst
+			{\huge  \textbf{Semester Thesis}}\\[0.75cm]
+		\fi
+		\ifmt
+			{\huge  \textbf{Master Thesis}}\\[0.75cm]
+		\fi
+		\iffp
+			{\huge  \textbf{Focus-project}}\\[0.75cm]
+		\fi
+	\fi
+	% Title
+	\Huge \@title 
+	\if \@subtitle
+	\else
+		\\ \huge \@subtitle
+	\fi
+	\\[\spaceforauthors]
+	\huge
+	\begin{tabular}{c p{1cm} c}
+	\ifstudentB \@studentA & & \@studentB \else \multicolumn{3}{c}{\@studentA} \fi \\
+	\ifstudentC \ifstudentD \@studentC & & \@studentD \else \multicolumn{3}{c}{\@studentC} \fi \\ \fi
+	\ifstudentE \ifstudentF \@studentE & & \@studentF \else \multicolumn{3}{c}{\@studentE} \fi \\ \fi
+	\ifstudentG \ifstudentH \@studentG & & \@studentH \else \multicolumn{3}{c}{\@studentG} \fi \\ \fi
+	\end{tabular}
+	\\[1.5cm]
+	\LARGE \@projectYear\\
+	\vfill
+	\ifingerman
+	Betreuer\\
+	\else
+	Supervision\\
+	\fi
+	\vspace*{0.5cm}
+	\huge
+	\begin{tabular}{c p{1cm} c}
+	\ifsupervisionB \@supervisionA & & \@supervisionB \else \multicolumn{3}{c}{\@supervisionA} \fi \\
+	\ifsupervisionC \ifsupervisionD \@supervisionC & & \@supervisionD \else \multicolumn{3}{c}{\@supervisionC} \fi \\ \fi
+	\end{tabular}
+ 
+\end{center}
+
+\AddToShipoutPicture*{\includegraphics[]{images/titlepage_background.pdf}}
+\end{titlepage}
+
+\cleardoublepage
+
+\iffp
+    \input{chapters/declaration}
+\else
+    \ifingerman
+    \includepdf[pagecommand={}]{chapters/plagiat-eigenstaendigkeitserklaerung.pdf}   
+    \else
+    \includepdf[pagecommand={}]{chapters/declaration-originality.pdf}
+    \fi
+\fi
+}

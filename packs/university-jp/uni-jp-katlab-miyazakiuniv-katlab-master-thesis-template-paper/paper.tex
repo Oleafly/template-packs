@@ -1,0 +1,190 @@
+%%
+% 下のコメント欄は卒論執筆時の森がイキって書いたものです。
+% 修論執筆時の森が代わりに謝罪いたします。
+% 温かい目で見守ってあげてください。
+%
+% また、修論執筆時にはTeXstudioで、またDockerを用いて執筆しています。
+% 上記の手法は平木場くんから教えていただきました。
+% 参考: https://qiita.com/Shitimi_613/items/9706d57fb7bc17cbed0e
+%
+
+%%
+% モダンなLaTeXを書きたい？
+% そしたら僕の考えた最強のtexファイルを見てくれ
+%
+% 注意！
+% このLaTeXをPDFに変換するためには、普通とはちょっと違う方法を使うよ
+% コマンド上では
+%   $ ptex2pdf -u -l GraduatePaper.tex
+% で変換してね
+% もしptex2pdfコマンドが無かったら、
+%   $ uplatex GraduatePaper.tex
+%   $ dvipdfmx GraduatePaper.dvi
+% でうまくいくかも（未確認）
+%
+% え、TeXworksで使いたいって？
+% そしたら、TeXworksの編集メニュー -> 設定を開く
+% タイプセットタブの下の方にあるタイプセットの方法の右下の＋ボタンを選択する
+% 名前: uplatex(ptex2pdf)
+% プログラム: ptex2pdf
+% 引数: -l
+%       -u
+%       -ot
+%       $synctexoption
+%       $fullname
+% として保存して、TeXworks実行ボタン右のコンボボックスのuplatex(ptex2pdf)を選択して変換だ！
+%
+
+
+%%
+% 今時jarticleやjbook使ってる人いる？時代はjsarticleかjsbookだよ
+% ついでに言うと、uplatexってのはplatexの上位互換、これを使わないなんて旧世代だよね
+%
+\documentclass[uplatex, report, a4j, 10pt, dvipdfmx]{jsbook}
+
+
+%%
+% パッケージ群
+%
+\usepackage{packages/miyazaki-u-paper}   % 宮崎大学工学部の卒論の基本（片山先生作）を、僕がちょっと書き換えちゃった（テヘッ
+\usepackage{enumitem}           % enumerate？古い古い
+\usepackage[dvipdfmx]{graphicx, color} % 当然dvipdfmなんて使ってないよね
+% \usepackage[dvipdfmx]{color}    % listingsを使うときにはこれも必須、dvipdfmxを変えちゃうとgraphicxのdvipdfmxも変わるよ
+\usepackage{listings, jvlisting} % コードを埋め込むなら必須、jvlistingは日本語対応
+\usepackage{amsmath}            % 数式環境（align等）を使うために必須
+\usepackage{txfonts}            % フォントといえばやっぱりtxfonts、今はnewtxってのもあるらしい（amsmathと競合するためコメントアウト）
+\usepackage{multirow}           % 表で複数行をまとめるために必須
+\usepackage{url}                % URLを表示するために必要
+\usepackage{verbatim}           % コメントアウトしてくれる便利なプリアンブルが使える \begin{comment} ... \end{comment}
+\usepackage[htt]{hyphenat}      % textttをハイフネーションしてくれる。
+\usepackage[hdivide={21mm, , 21mm}, vdivide={30mm, , 25mm}]{geometry} % スタイルを少し変えたくても\hoffset, \voffsetは使わないでね
+\usepackage[dvipdfmx, hidelinks, plainpages=false, pdfpagelabels, hypertexnames=false]{hyperref} % リンクを付けてくれる。
+\usepackage{pxjahyper}          % リンクを付けてくれる（日本語）
+\usepackage[nameinlink]{cleveref} % 図表の自動参照（\cref）
+%\RequirePackage[l2tabu, orthodox]{nag} % これを入れると、古いコマンドを警告してくれる！なお完全には消せなかった模様
+
+\lstset{
+  breaklines = true,%自動で折り返す
+  basicstyle={\footnotesize\ttfamily},
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex,
+  frame=single,
+  numbers=left,%行番号を左に
+  framexleftmargin=6mm,%行番号をフレーム内に
+  xleftmargin=6mm,%左マージンをフレームに合わせる
+  xrightmargin=0mm,%右マージン
+  linewidth=\linewidth,%ページ幅に収める
+  numberstyle=\scriptsize,%行番号のサイズ
+  stepnumber=1%1行おきに行番号を
+}
+
+%
+% 図表の自動参照設定
+%
+% cleveref用の日本語名設定
+\crefname{figure}{図}{図}
+\crefname{table}{表}{表}
+\crefname{equation}{式}{式}
+\crefname{chapter}{}{}
+\crefformat{chapter}{#2#1章#3}
+\crefrangeformat{chapter}{#3#1章#4から#5#2章#6}
+\crefname{section}{}{}
+\crefformat{section}{#2#1節#3}
+\crefrangeformat{section}{#3#1節#4から#5#2節#6}
+\crefname{subsection}{}{}
+\crefformat{subsection}{#2#1項#3}
+\crefrangeformat{subsection}{#3#1項#4から#5#2項#6}
+\crefname{enumi}{}{}
+\crefname{enumii}{}{}
+\crefname{enumiii}{}{}
+\crefname{enumiv}{}{}
+\creflabelformat{equation}{#2(#1)#3}
+
+% autoref用の日本語名設定
+\def\figureautorefname{図}
+\def\tableautorefname{表}
+\def\equationautorefname{式}
+\def\chapterautorefname{}
+\def\sectionautorefname{}
+\def\subsectionautorefname{}
+
+%
+% マクロの定義
+%
+\newcommand{\tool}{TOOL}
+\newcommand{\toolFullName}{TOOL: Optimize Operation Language}
+
+\usepackage{languages}   % 言語設定ファイル
+
+%%
+% miyazaki-u-paper.sty用設定値
+%
+%%
+% miyazaki-u-paper.sty用設定値
+%
+\degree{m} % Graduateのg or Masterのm
+\figurenumbering{f} % 図目次を付ける場合はt (真) を持つ真偽値を引数に取る関数
+\tablenumbering{f} % 表目次を付ける場合はt (真) を持つ真偽値を引数に取る関数
+\title{長ったらしいタイトルを \\ リアルタイムに描画するツール \\ \tool{}の実装と評価}
+\author{執筆者ネーム}
+% \nendo{} % 年度（省略時は自動で令和年度を計算。手動で指定する場合はコメント解除して数字を入力）
+\advisor{片山 徹郎 教授} % 修論では無視する
+% \major{} % 専攻・プログラム名（省略時は学部/修士に応じて自動設定。手動で指定する場合はコメント解除）
+
+
+
+\begin{document}
+\maketitle
+
+\preface{概要}
+
+ここには概要を書くよ
+
+
+%%
+% 本文
+%
+% はじめに
+\input{chapters/01-introduction.tex}
+
+% 研究の準備
+\input{chapters/02-preparation.tex}
+
+% 機能
+\input{chapters/03-function.tex}
+
+% 実装
+\input{chapters/04-implementation.tex}
+
+% 適用例
+\input{chapters/05-indication.tex}
+
+% 考察
+\input{chapters/06-discussion.tex}
+
+% おわりに
+\input{chapters/07-conclusion.tex}
+
+%%
+% 謝辞
+%
+\input{chapters/08-acknowledgments.tex}
+
+
+%%
+% 参考文献
+%
+%%
+% 参考文献
+%
+\bibliography{paper} %hoge.bibから拡張子を外した名前
+\bibliographystyle{junsrt} %参考文献出力スタイル
+
+%%
+% 付録
+%
+% \appendix{} % 付録は基本的に使わない
+
+\end{document}

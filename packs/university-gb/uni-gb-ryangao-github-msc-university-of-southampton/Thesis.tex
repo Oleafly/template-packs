@@ -1,0 +1,214 @@
+%% ----------------------------------------------------------------
+%% Thesis.tex
+%% 设置文章格式
+%% ---------------------------------------------------------------- 
+\documentclass[oneside]{ecsthesis}       % Use the Thesis Style
+\usepackage{graphicx}
+\graphicspath{{../Figures/}}    % Location of your graphics files
+\usepackage{adjustbox}          % 调整box大小
+\usepackage{longtable}          % 长表格
+\usepackage{booktabs}           % 表格标签
+\usepackage{array}              % 调整表格
+%\usepackage[sort]{natbib}       % 文献引用
+\usepackage{pdfpages}           % Use Natbib style for the refs.
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=black
+}   % Set to false for black/white printing
+\input{Definitions}             % Include your abbreviations
+\usepackage{xcolor}             % 高亮宏包
+\usepackage{comment}            % 注释宏包
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+%% ----------------------------------------------------------------
+
+%%----文章封面----%%
+\frontmatter
+
+%----文章信息摘要----%
+\title{MSc University of Southampton} %Here is your title
+\addresses  {\groupname {Faculty of Engineering and Physical Science}\\
+	         \deptname {Electronics and Computer Science}\\ 
+	         \univname {University of Southampton}} %If you want to change that please go to .cls file
+\authors
+{\texorpdfstring
+{\href{xxxxxx@soton.ac.uk}{Your Name}}
+{Your Name}}
+\date{\today}
+\supervisor{}
+\examiner{}
+\subject{}
+\keywords{}
+
+%%----文章开始----%%
+\begin{document}
+\maketitle
+%%----Abstract----%%
+\begin{abstract}
+
+Your words begin here ...
+
+\end{abstract}
+
+\acknowledgements{
+	$\mathcal{YOUR}$ words begin here ...
+}       % Acknowledgements
+
+\includepdf{soo.pdf}                       % 陈述声明
+
+\tableofcontents                           % Contents
+
+\listoffigures                             % Figures
+\addcontentsline{toc}{chapter}{List of Tables}
+
+\listoftables                              % Tables
+\addcontentsline{toc}{chapter}{List of Figures}
+
+%\lstlistoflistings                         % Listings
+%\addcontentsline{toc}{chapter}{List of Listings}
+
+\listofsymbols                             % Symbols, ll左对齐
+{ll}{
+	$a$ & A	\\
+	$b$ & B	
+}
+\addcontentsline{toc}{chapter}{List of Symbols}
+
+\mainmatter
+%% ----------------------------------------------------------------
+%%----Introduction----%%
+
+\chapter{Introduction} \label{Chapter:introduction}
+
+\section{Background Information}\label{background-information}
+
+Your words begin here ...
+
+\section{Problem Statement}\label{problem-statement}
+
+Your words begin here ...
+
+\section{Objectives}\label{objectives}
+
+Your words begin here ...
+
+\section{Structure of Report}\label{structure-of-report}
+
+Your words begin here ...
+
+%% ----------------------------------------------------------------
+
+%%----LiteratureReview----%%
+\chapter{Literature Review} \label{Chapter:LiteratureReview}
+
+
+\section{Section}\label{section}
+
+
+\subsection{Subsection}\label{subsection}
+
+Your words begin here ... \cite{vihman1994word}
+
+\begin{figure}[!htb]
+	\centering
+	\begin{minipage}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.8\linewidth]{figure}
+		\caption{figure1}
+		\label{fig:figure1}
+	\end{minipage}
+	\hfill
+	\begin{minipage}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.6\linewidth]{figure}
+		\caption{figure2}
+		\label{fig:figure2}
+	\end{minipage}
+\end{figure}
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics[width=8cm]{figure}
+	\caption{figure3}
+	\label{Figure:figure3}
+\end{figure}
+
+\subsubsection{Subsubsection}\label{subsubsection}
+
+\begin{itemize}
+\item
+  \textbf{A}
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  A
+\item
+  B
+\item
+  C
+\end{enumerate}
+
+%% ----------------------------------------------------------------
+
+%%----Methodology----%%
+
+\chapter{Methodology}\label{methodology}
+
+\begin{equation}
+  V_{\text{A}} = \left(\frac{X}{Y}\right) \times (V_{\text{B}} - V_{\text{C}})
+  \label{VoutZoom}
+\end{equation}
+
+\begin{table}[!htb]
+  \centering
+  \begin{tabular}{p{2.5cm} p{6cm} p{2.5cm}}
+    \toprule
+    \textbf{A} & \textbf{B} & \textbf{C} \\
+    \midrule
+    & A\_1 & PA1 \\
+    & A\_2 & PA2 \\
+    & A\_3 & PA3 \\
+    & A\_4 & PA4 \\
+    \bottomrule
+  \end{tabular}
+  \caption{ABC}
+  \label{tab:abc}
+\end{table}
+
+\begin{algorithm}[!htb]
+	\caption{Pseudocode for Program}
+	\begin{algorithmic}[1] % The number tells LaTeX to number each line
+		\STATE A
+	\end{algorithmic}
+\end{algorithm}
+
+%% ----------------------------------------------------------------
+
+%%----Experimental Results----%%
+
+\chapter{Experimental Results}\label{experimental-results}
+
+%% ----------------------------------------------------------------
+
+%%----Conclusion----%%
+
+\chapter{Conclusion}\label{conclusion}
+
+%% ----------------------------------------------------------------
+%%----Appendix----%%
+
+\chapter{Appendix} \label{Chapter:Appendix}
+
+
+\backmatter
+
+\bibliographystyle{IEEEtran}
+\bibliography{ECS}
+
+\end{document}
+%% ----------------------------------------------------------------

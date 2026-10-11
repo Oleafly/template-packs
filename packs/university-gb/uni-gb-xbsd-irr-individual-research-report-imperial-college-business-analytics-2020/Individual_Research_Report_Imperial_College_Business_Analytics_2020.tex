@@ -1,0 +1,233 @@
+
+\documentclass[a4paper,11]{article}
+
+%\title{Unused Title}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{blindtext}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+
+% Use helvet if uarial cannot be installed
+%\usepackage{uarial}
+\usepackage[scaled]{helvet}
+
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{courier}
+\usepackage{setspace}
+\usepackage[table,svgnames]{xcolor}
+\usepackage{fancyvrb} 
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{longtable}
+\usepackage{relsize}
+\usepackage{tfrupee}
+\usepackage{rotating}
+\usepackage{lipsum}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{aliascnt}
+
+
+\usepackage{natbib}
+\newcommand*{\urlprefix}{Available from: }
+\newcommand*{\urldateprefix}{Accessed }
+\bibliographystyle{bath}
+\renewcommand{\bibsection}{}
+
+\makeatletter
+\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
+\makeatother
+
+\newaliascnt{eqfloat}{equation}
+\newfloat{eqfloat}{h}{eqflts}
+\floatname{eqfloat}{Equation}
+
+\newcommand*{\ORGeqfloat}{}
+\let\ORGeqfloat\eqfloat
+\def\eqfloat{%
+	\let\ORIGINALcaption\caption
+	\def\caption{%
+		\addtocounter{equation}{-1}%
+		\ORIGINALcaption
+	}%
+	\ORGeqfloat
+}
+
+\addto\captionsenglish{% Replace "english" with the language you use
+	\renewcommand{\contentsname}%
+	{List of Contents}%
+}
+
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+	xleftmargin=0.5cm,
+	xrightmargin=-0.8cm,
+	frame=lr,
+	%	framesep=-5pt,
+	framerule=0pt
+}
+
+\lstset{style=mystyle}
+
+\definecolor{Teal}{RGB}{0,128,128}
+\definecolor{NewBlue1}{RGB}{4,100,226}
+\definecolor{NiceBlue}{RGB}{63,104,132}
+\definecolor{DarkRed}{RGB}{14,53,59}
+\definecolor{NewBlue2}{RGB}{62,100,125}
+\definecolor{NewBlue3}{RGB}{44,100,128}
+
+\hypersetup{
+	colorlinks,
+	citecolor=NiceBlue,
+	linkcolor=NewBlue1,
+	urlcolor=Blue
+	%	citebordercolor=Violet,
+	%	filebordercolor=Red,
+	%	linkbordercolor=Blue
+}
+
+\usepackage{geometry}
+\linespread{1.25}
+\usepackage[parfill]{parskip} % Avoid indentation
+
+\geometry{
+	a4paper,
+	left=4cm,
+	right=2.5cm,
+	top=2.5cm,
+	bottom=2.5cm,
+}
+
+
+\begin{document}
+	\pagenumbering{gobble}
+	\begin{center}
+		{\large IMPERIAL COLLEGE BUSINESS SCHOOL}
+	\end{center}
+	%	\maketitle
+	\vspace{6cm}
+	
+	\begin{center}
+		
+		\Huge This is the title to the paper which can span multiple lines\\		
+		\vspace{.5cm}		
+		\large {Word Count: 1,000}
+		
+	\end{center}
+	\vspace{2.5cm}
+	\begin{center}
+		\Large John Doe\\Advisor: Dr. James Doe
+	\end{center}
+	
+	\vspace{8cm}
+	\begin{center}
+		{\large A report submitted in partial fulfilment of the \\requirements for the MSc Business Analytics degree}
+	\end{center}
+	
+	\begin{center}
+		{\large August 2020}
+	\end{center}		
+
+	\newpage
+	\pagenumbering{Roman}
+
+\section{How to use this template (Comment section before use)}
+\input{howtouse.tex}
+\pagebreak
+
+\section*{Synopsis}
+\textbf{MAXIMUM 250 WORDS}
+All Reports must include a one page synopsis. This should include a clear statement that sets out the terms of reference and objectives of the Report as agreed with the Supervisor.
+%\include{synopsis.tex}
+
+
+\pagebreak
+
+\section*{Acknowledgments}
+%\include{Acknowledgments.tex}
+\blindtext
+\pagebreak
+
+\section*{Notation}
+The extent to which you list any symbols used in your report must be left to your discretion. Symbols, which are used in several parts of your report, should preferably be listed before the main text for easy reference. Symbols which are used only once or in one part of the report may be referred to in that part only. Generally, try to place yourself in the position of a reader with average background knowledge and arrange the notation in a manner which will be most convenient for him/her to follow.
+\pagebreak
+
+%\section*{List of Contents}
+\tableofcontents
+\pagebreak
+\listoffigures
+\listoftables
+\pagebreak
+\newpage
+%\section{Notation}
+%\textbf{IF APPLICABLE}
+%%\include{Acknowledgments.tex}
+
+
+\cleardoublepage\pagenumbering{arabic}
+
+\section{Introduction}
+\input{introduction.tex}
+\pagebreak
+
+\section{Literature Review}
+\input{literature.tex}
+\pagebreak
+
+\section{Data}
+\input{data.tex}
+\pagebreak
+
+\section{Methodology}
+\input{methodology.tex}
+\pagebreak
+
+
+\section{Data Analysis and Discussion}
+\input{analysis.tex}
+\pagebreak
+
+\section{Conclusion and Recommendations}
+\input{conclusion.tex}
+\pagebreak
+
+\section{References}
+\bibliography{irrbibfile.bib}
+\pagebreak
+
+\pagenumbering{roman}
+
+\section{Appendix}
+\input{appendix.tex}
+
+
+
+\end{document}          

@@ -1,0 +1,786 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ŠABLONA ZÁVĚREČNÝCH PRACÍ FSI na VUT                               %%
+%%                                                                    %%
+%% Autor: Antonín Sochor, antonin.sochor@vutbr.cz			     %%
+%% Verze: 1.0 (26. 05. 2023)							     %%
+%%                                                                    %%
+%% Šablona vznikla jako bakalářská práce v akademickém roce 2022/2023 %%
+%% a je možné ji dále modifikovat a libovolně využívat.		     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------%
+%  DEFINICE METADAT ŠABLONY  %
+%----------------------------%
+
+%% Definice verze, data a jména šablony
+%  Datum je ve formátu RRRR/MM/DD (R = rok, M = měsíc, D = den).
+\def\fileversion{1.0}
+\def\filedate{2023/05/26}
+\def\filename{sablona.sty}
+
+%% Požadavek verze systému LaTex
+\NeedsTeXFormat{LaTeX2e}[2022/06/01]
+
+%% Představení samotného balíčku
+\ProvidesPackage{sablona}[\filedate Šablona v\fileversion]
+
+%----------------------------%
+
+
+
+%-------------------------------------%
+%  DEFINICE ZÁKLADNÍCH PŘÍKAZŮ A DAT  %
+%-------------------------------------%
+
+%% DRUH ZÁVĚREČNÉ PRÁCE
+%  Definuje nový příkaz pro zvolení typu záverečné práce (bakalářská, diplomová
+%  nebo dizertační). Pro kontrolu a správné přiřazení typu práce je vyžadován
+%  balíček "ifthen".
+%  Typ závěrečné práce se zadává zkratkou: 
+%	- bc  = bakalářská práce
+%	- ing = diplomová práce
+%	- phd = dizertační práce
+\RequirePackage{ifthen}
+
+\newcommand\prace[1]{
+	\ifthenelse{\equal{\detokenize{#1}}{\detokenize{bc}}}{
+		\def\prace{\jazyk@original@prace@bc}}{
+		\ifthenelse{\equal{\detokenize{#1}}{\detokenize{ing}}}{
+			\def\prace{\jazyk@original@prace@ing}}{
+			\ifthenelse{\equal{\detokenize{#1}}{\detokenize{phd}}}{
+				\def\prace{\jazyk@original@prace@phd}}{
+				\def\prace{\jazyk@original@prace@error}
+				}
+			}
+		}
+	}
+
+%% NÁZEV ZÁVĚREČNÉ PRÁCE
+%  Definuje příkaz pro zadání názvu závěrečné práce.
+%  Název se zadává celý, je možno jej zkopírovat ze Studisu nebo
+%  ze zadání závěrečné práce.
+\newcommand\nazev[1]{
+	\def\nazev{#1}
+	}
+
+%% ODKAZ NA ELEKTRONICKOU PUBLIKACI ZÁVĚREČNÉ PRÁCE
+%  Definuje příkaz pro zadání odkazu na elektronickou publikaci
+%  závěrečné práce.
+%  Odkaz se zkopíruje ze Studisu, nezkracuje se.
+\newcommand\odkaz[1]{
+	\def\odkaz{#1}
+	}
+
+%% AUTOR ZÁVĚREČNÉ PRÁCE
+%  Definuje příkaz pro zadání jména autora.
+%  Jméno se zadává ve tvaru {tituly před}{jméno}{příjmení}{tituly za},
+%  přičemž jednotlivé tituly (pokud jich je více) se oddělují čárkou
+%  a pevnou/nezlomitelnou mezerou (",~").
+%  Pokud má autor práce tituly za jménem, příkaz automaticky vloží za příjmení čárku
+%  a poté vysází tituly za jménem.
+\newcommand\autor[4]{
+	\ifthenelse{\equal{\detokenize{#4}}{\detokenize{}}}{
+		\def\autor@pred{#1}
+		\def\autor@jmeno{#2}
+		\def\autor@prijmeni{#3}
+		\def\autor@za{}}{
+			\def\autor@pred{#1}
+			\def\autor@jmeno{#2}
+			\def\autor@prijmeni{#3}
+			\def\autor@za{,~#4.}}
+	}
+
+%% VEDOUCÍ ZÁVĚREČNÉ PRÁCE
+%  Definuje nový příkaz pro zadání jména vedoucího práce.
+%  Jméno se zadává ve tvaru {tituly před}{jméno}{příjmení}{tituly za},
+%  přičemž jednotlivé tituly (pokud jich je více) se oddělují čárkou
+%  a pevnou/nezlomitelnou mezerou (",~").
+%  Pokud má vedoucí práce tituly za jménem, příkaz automaticky vloží za příjmení čárku
+%  a poté vysází tituly za jménem.
+\newcommand\vedouci[4]{
+	\ifthenelse{\equal{\detokenize{#4}}{\detokenize{}}}{
+		\def\vedouci@pred{#1}
+		\def\vedouci@jmeno{#2}
+		\def\vedouci@prijmeni{#3}
+		\def\vedouci@za{.}}{
+			\def\vedouci@pred{#1}
+			\def\vedouci@jmeno{#2}
+			\def\vedouci@prijmeni{#3}
+			\def\vedouci@za{,~#4.}}
+	}
+
+%% ÚSTAV
+%  Definuje nový příkaz pro volbu ústavu.
+%  Ústav se zadává ve formě zkratky
+\newcommand\ustav[1]{
+	\def\ustav{#1}
+	}
+	
+%% MĚSTO
+%  Definuje nový příkaz pro volbu města.
+%  Město se zadává takové, ve kterém bude probíhat SZZ a obhajoba
+%  závěrečné práce, typicky Brno.
+\newcommand\mesto[1]{
+	\def\mesto{#1}	
+	}
+	
+%% ROK OBHAJOBY
+%  Definuje nový příkaz pro volbu roku obhajoby závěrečné práce.
+%  Rok obhajoby se zdává ve formátu RRRR (R = rok). Jedná se o rok,
+%  ve kterém proběhne SZZ a obhajoba závěrečné práce.
+\newcommand\obhajoba[1]{
+	\def\obhajoba{#1}	
+	}
+	
+%% DATUM ODEVZDÁNÍ
+%  Definuje nový příkaz pro volbu data odevzdání závěrečné práce.
+%  Datum odevzdání se zadává ve formátu DD. MM. RRRR (D = den,
+%  M = měsíc, R = rok), přičemž se jedná o datum, do kdy je
+%  možné do Studisu závěrečnou práci odevzdat..
+\newcommand\odevzdani[1]{
+	\def\odevzdani{#1}
+	}
+
+%% ZPRACOVÁNÍ JAZYKA
+%  Definuje nový příkaz pro volbu jazyka zpracování závěrečné práce.
+%  Na výběr jsou čtyři možnosti:
+%	- hlavní jazyk: čeština		vedlejší jazyk: angličtina,
+%	- hlavní jazyk: slovenština	vedlejší jazyk: angličtina,
+%	- hlavní jazyk: angličtina	vedlejší jazyk: čeština,
+%	- hlavní jazyk: angličtina	vedlejší jazyk: čeština.
+%  Hlavní jazyk je ten, ve kterém bude závěrečná práce napsána, vedlejší
+%  jazyk je použit na úvodní straně a jako překlad abstraktu a klíčových
+%  slov.
+%  Jazyk zpracování se zadává ve formě zkratky:
+%	- cz-en  = hlavní jazyk čeština, vedlejší jazyk angličtina,
+%	- sk-en = hlavní jazyk slovenština, vedlejší jazyk slovenština,
+%	- en-cz  = hlavní jazyk angličtina, vedlejší jazyk čeština,
+%	- en-sk = hlavní jazyk angličtina, vedlejší jazyk slovenština.
+%  Pokud bude uvedena nesprávná nebo žádná zkratka, bude automaticky
+%  nastavena volba hlavní jazyk čeština, vedlejší jazyk angličtina.
+\newcommand\jazyk[1]{
+	\newboolean{logo_EN}	
+	\ifthenelse{\equal{\detokenize{#1}}{\detokenize{sk-en}}}{
+		\jazyk@sk@en}{
+		\ifthenelse{\equal{\detokenize{#1}}{\detokenize{en-cz}}}{
+			\jazyk@en@cz
+			\setboolean{logo_EN}{true}}{
+			\ifthenelse{\equal{\detokenize{#1}}{\detokenize{en-sk}}}{
+				\jazyk@en@sk
+				\setboolean{logo_EN}{true}}{
+				\jazyk@cz@en
+				}
+			}
+		}
+	}
+
+%-------------------------------------%
+
+
+
+%------------------------------%
+%  ÚVODNÍ TEXTOVÉ NÁLEŽITOSTI  %
+%------------------------------%
+
+%% ABSTRAKT
+%  Definuje nový příkaz pro zadání abstraktu.
+%  Abstrakt se zadává pomocí příkazu "\abstrakt{}{}", přičemž
+%  první parametr je abstrakt v jazyce závěrečné práce a druhý
+%  parametr je abstrakt přeložený do druhého jazyka.
+%  Abstrakt se zadává do souboru "zaverecna_prace.tex".
+\newcommand\abstrakt[2]{
+	\def\abstrakt@original{#1}
+	\def\abstrakt@preklad{#2}
+	\cleardoublepage
+	\thispagestyle{empty}
+	\uvodninadpis{\jazyk@original@abstrakt}
+	\noindent\abstrakt@original
+	\uvodninadpis{\jazyk@preklad@abstrakt}
+	\noindent\abstrakt@preklad
+	}
+
+%% KLÍČOVÁ SLOVA
+%  Definuje nový příkaz pro zadání klíčových slov.
+%  Klíčová slova se zadávají pomocí příkazu "\klicovaslova{}{}",
+%  přičemž první parametr jsou klíčová slova v jazyce závěrečné
+%  práce a druhý parametr jsou klíčová slova přeložená do
+%  druhého jazyka.
+%  Klíčová slova se zadávají do souboru "zaverecna_prace.tex".
+\newcommand\klicovaslova[2]{
+	\def\klicovaslova@original{#1}
+	\def\klicovaslova@preklad{#2}
+	\vfill
+	\uvodninadpis{\jazyk@original@klicovaslova}
+	\noindent\klicovaslova@original
+	\uvodninadpis{\jazyk@preklad@klicovaslova}
+	\noindent\klicovaslova@preklad
+	\vfill
+	}
+
+%% BIBLIOGRAFICKÁ CITACE
+%  Definuje nový příkaz pro zadání bibliografické citace.
+%  Bibliografická citace se zadává do souboru "zaverecna_prace.tex".
+\newcommand\citace{
+	\cleardoublepage
+	\thispagestyle{empty}
+	\hbox{}\vfill
+	\uvodninadpis{\jazyk@original@citace}
+	\noindent
+	\MakeUppercase{\autor@prijmeni},~\autor@jmeno. \textit{\nazev}. \mesto, \obhajoba.
+	\jazyk@original@citace@odkaz\odkaz. \prace. \jazyk@original@univerzita, 					\jazyk@original@fakulta, \ustav.
+	\jazyk@original@citace@vedouci~\vedouci@pred~\vedouci@jmeno~\vedouci@prijmeni\vedouci@za
+	}
+
+%% ČESTNÉ PROHLÁŠENÍ
+%  Definuje nový příkaz pro zadání čestného prohlášení.
+%  Čestné prohlášení se zadává do souboru "zaverecna_prace.tex".
+\newcommand\prohlaseni[1]{
+	\def\prohlaseni{#1}
+	\cleardoublepage
+	\thispagestyle{empty}
+	\hbox{}\vfill
+	\uvodninadpis{\jazyk@original@prohlaseni}
+	\noindent\prohlaseni
+	\par\vspace{2cm}
+	\noindent\jazyk@original@podpis~\odevzdani\hfill\makebox[6cm]{\dotfill}
+	\makebox[\textwidth]{\hfill\makebox[6cm][c]{\autor@pred~\autor@jmeno~\autor@prijmeni\autor@za}}
+	}
+
+%% PODĚKOVÁNÍ
+%  Definuje nový příkaz pro zadání poděkování.
+%  Poděkování se zadává do souboru "zaverecna_prace.tex".
+\newcommand\podekovani[1]{
+	\def\podekovani{#1}
+	\cleardoublepage
+	\thispagestyle{empty}
+	\hbox{}\vfill
+	\uvodninadpis{\jazyk@original@podekovani}
+	\noindent\podekovani
+	}
+
+%------------------------------%
+
+
+
+%--------------------------------------%
+%  FORMÁTOVÁNÍ TEXTU A VZHLED STRÁNKY  %
+%--------------------------------------%
+
+%% FORMÁTOVÁNÍ ROZMĚRŮ STRÁNKY
+%  Nastavuje okraje stránky dle směrnice děkana č. 3/2022,
+%  která stanovuje velikost textové oblasti na 16 cm x 25 cm.
+%  Tomu odpovídá velikost okrajů:
+%	- vlevo/u hřbetu	3   cm, (kvůli vazbě)
+%	- vpravo 		2   cm,
+%	- nahoře		2.2 cm,
+%	- dole		2.5 cm.
+%  Dále nastavuje mezeru mezi koncem textové oblasti a číslem
+%  stránky na 1 cm.
+%  Pro přizpůsobení okrajů stránky je potřeba balíček "geometry". 
+\RequirePackage{geometry}
+\geometry{
+	left=3cm,
+	top=2.2cm,
+	text={16cm,25cm},
+	footskip=1cm
+	}
+
+%% FORMÁTOVÁNÍ PÍSMA A ODSTAVCŮ
+%  Nastaví výchozí písmo pro celý dokument, jeho velikost a řádkování.
+%  Zároveň nastavuje mezery mezi odstavci a definuje volbu počátku
+%  nového odstavce - zdali má být první řádek nového odstavce uskočen
+%  anebo bude nový odstavec začínat na odskočeném řádku.
+
+%% Formátování písma
+%  Jako výchozí font dokumentu je zvolen font "Latin Modern Roman".
+\RequirePackage{lmodern}
+
+%% Řádkování
+%  Stupeň řádkování je dle směrnice děkana č. 3/2022
+%  ve výchozím stavu nastaven 1.1
+\renewcommand{\baselinestretch}{1.1}
+
+%% Formátování odstavců
+%  Uživatel má při formátování odstavů na výběr ze dvou možností:
+%	1. Nový odstavec bude začínat odstavcovou zarážkou, tj. první
+%	   slovo nového odstavce bude uskočeno o 1 cm doprava.
+%	2. Nový odstavec bude bez odstavcové zarážky a od předchozího
+%	   odstavce bude odsazen o 6 pt.
+%  Toto uživatel volí pomocí příkazu "\odstavec{}", přičemž jako argument
+%  tohoto příkazu je zadávána možnost "1" nebo "2" dle seznamu výše.
+%
+%  Každá z možností rovněž aktivuje příkaz na úpravu formátování
+%  nadpisů kapitol kvůli zachování shodného na odsazení názvů kapitol
+%  nehledě na způsob formátování odstavců ("\kapitoly@volba@prvni/druha").
+%
+%  Příkaz zároveň upravuje odsazení položek v odrážkových a číslovaných
+%  seznamech. Mezeru PO předcházejícím a PŘED nadcházejícím textem nastavuje
+%  na:
+%	- 6 pt v případě volby odstavce č. 1,
+%  	- 0 pt v případě volby odstavce č. 2.
+%  K tomuto nastavení je vyžadován balíček "enumitem"
+%  Pozn.: Pokud nebude vyplněna žádná nebo nesprávná možnost, bude
+%	    bude automaticky nastavena možnost č. 2.
+\RequirePackage{enumitem}
+
+\newcommand\odstavec[1]{
+	\ifthenelse{#1 = 1}{
+		\setlength{\parindent}{1cm}
+		\kapitoly@volba@prvni
+		\setlist{
+			topsep = 6pt,
+			partopsep = 0 pt,
+			noitemsep
+			}
+		}{
+		\setlength{\parindent}{0cm}
+		\setlength{\parskip}{6pt}
+		\kapitoly@volba@druha
+		\setlist{nosep}
+		}
+	}
+
+%% FORMÁTOVÁNÍ NADPISŮ KAPITOL
+%  Nastaví výchozí formátování názvů kapitol pro celý dokument.
+%  Šablona využívá 3 úrovně kapitol/číslování:
+%		- úroveň 1 - hlavní kapitoly (X) pomocí příkazu "\chapter",
+%		- úroveň 2 - podkapitoly (X.X) pomocí příkazu "\section",
+%		- úroveň 3 - pod-podkapitoly (X.X.X) pomocí příkazu "\subsubsection".
+%  Kapitoly úrovně 4 (X.X.X.X) a další se nepoužívají, nejsou číslovány
+%  a nejsou zobrazovány v obsahu.
+%  Odsazení před a za nadpisem je řízeno podle volby formátování odstavců z důvodu
+%  různé mezery mezi odstavci (0 pt nebo 6 pt) u obou možností formátování.
+
+%% Nastavení kapitol s formátováním odstavců dle volby "1".
+\newcommand\kapitoly@volba@prvni{
+
+%  Kapitola úrovně 1 (X):
+%	- začíná vždy na nové straně,
+%	- kapitálky,
+%	- tučný text,
+%	- velikost písma 16 pt,
+%	- odsazení za nadpisem 24 pt.	
+	\renewcommand\chapter{
+		\cleardoublepage
+		\@startsection{chapter}{0}{0pt}
+			{-1ex}{24pt}
+			{\fontsize{16}{19.2}\bfseries\MakeUppercase}
+		}  
+
+%  Kapitola úrovně 2 (X.X):
+%	- tučný text,
+%	- velikost písma 14 pt,
+%	- odsazení před nadpisem 24 pt,
+%	- odsazení za nadpisem 12 pt.
+	\renewcommand\section{
+		\@startsection{section}{1}{0pt}
+			{-24pt}{12pt}
+			{\fontsize{14}{16.8}\bfseries}
+		}
+
+%  Kapitola úrovně 3 (X.X.X)
+%	- tučný text,
+%	- velikost písma 13 pt,
+%	- odsazení před nadpisem 12 pt,
+%	- odsazení za nadpisem 6 pt.
+	\renewcommand\subsection{
+		\@startsection{subsection}{2}{0pt}
+			{-12pt}{6pt}
+			{\fontsize{13}{15.6}\bfseries}
+		}
+	}
+
+%% Nastavení kapitol s formátováním odstavců dle volby "2".
+\newcommand\kapitoly@volba@druha{
+
+%  Kapitola úrovně 1 (X):
+%	- začíná vždy na nové straně,
+%	- kapitálky,
+%	- tučný text,
+%	- velikost písma 16 pt,
+%	- odsazení za nadpisem 24 pt.
+	\renewcommand\chapter{
+		\cleardoublepage
+		\@startsection{chapter}{0}{0pt}
+			{-1ex}{18pt}
+			{\fontsize{16}{19.2}\bfseries\MakeUppercase}
+		}  
+
+%  Kapitola úrovně 2 (X.X):
+%	- tučný text,
+%	- velikost písma 14 pt,
+%	- odsazení před nadpisem 24 pt,
+%	- odsazení za nadpisem 12 pt.
+	\renewcommand\section{
+		\@startsection{section}{1}{0pt}
+			{-18pt}{6pt}
+			{\fontsize{14}{16.8}\bfseries}
+		}
+
+%  Kapitola úrovně 3 (X.X.X)
+%	- tučný text,
+%	- velikost písma 13 pt,
+%	- odsazení před nadpisem 12 pt,
+%	- odsazení za nadpisem 6 pt.
+	\renewcommand\subsection{
+		\@startsection{subsection}{2}{0pt}
+			{-6pt}{0.1pt}
+			{\fontsize{13}{15.6}\bfseries}
+		}
+	}
+
+%% FORMÁTOVÁNÍ POPISKŮ OBRÁZKŮ A TABULEK
+%  Nastavuje odsazení obrázků tak, aby se jich na jednu stranu vlezlo
+%  více. Pro nastavení formátování jsou vyžadovány balíčky "caption" a
+%  "subcaption". Tyto balíčky rovněž umožňují umístění více obrázků do
+%  jednoho prostředí "figure" včetně patřičně číslovaných popisků obrázků.
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+
+%% Odsazení obrázků
+%  Nastavuje mezery před a za obrázkem na 18 pt.
+\setlength\intextsep{18pt}
+
+%% Popisky obrázků
+%  Nastavuje mezeru před popiskem obrázku na 6 pt a
+%  za popiskem obrázku na 12 pt.
+\setlength\abovecaptionskip{6pt}
+\setlength\belowcaptionskip{12pt}
+
+%% Popisky tabulek
+%  Nastavuje zarovnání popisku tabulky doleva.
+\captionsetup[table]{singlelinecheck=false}
+
+%% FORMÁT ČÍSLOVÁNÍ OBRÁZKŮ, TABULEK A ROVNIC
+%  Definuje nový příkaz pro nastavení stylu číslování
+%  obrázků a tabulek. Uživatel má při číslování na výběr ze
+%  dvou možností:
+%  	1. Číslo obrázku, tabulky a rovnice obsahuje i číslo hlavní
+%	   kapitoly, tj. číslo bude vypadat např.: Obrázek 1.3: Auto.
+%	   kde první číslo je číslo hlavní kapitoly a druhé číslo je
+%	   pořadové číslo obrázku v dané kapitole.
+%	2. Číslo obrázku, tabulky a rovnice neobsahuje číslo kapitoly,
+%	   bude pouze ve formátu: Obrázek 3: Auto.
+%  Uživatel pomocí příkazu "\cislovani{}" zvolí jednu z výše uvedených
+%  možností, přičemž její číslo "1" nebo "2" zadá jako argument příkazu.
+%  Pozn.: Pokud nebude vyplněna žádná nebo nesprávná možnost, bude
+%  	    automaticky nastavena možnost č. 2.
+\RequirePackage{chngcntr}
+
+\newcommand\cislovani[1]{
+	\ifthenelse{#1 = 1}{
+		\counterwithin{equation}{chapter}
+		\counterwithin{figure}{chapter}
+		\counterwithin{table}{chapter}
+		}{
+		\counterwithout{equation}{chapter}
+		\counterwithout{figure}{chapter}
+		\counterwithout{table}{chapter}
+		}
+	}
+
+%% HLAVIČKA A PATIČKA DOKUMENTU
+%  Nastavuje vzhled hlavičky a patičky sudé a liché stránky dokumentu.
+%  Pro přizpůsobení formátování hlavičky je potřeba balíček "fancyhdr".
+%  Pro úpravu fontu v hlavičce je potřeba balíček "fontspec".
+\RequirePackage{fancyhdr}
+\RequirePackage{fontspec}
+\pagestyle{fancy}
+
+%  Pomocné příkazy pro vysázení loga fakulty a školy do hlavičky.
+%  Obě loga posune v hlavičce o 1.5 pt směrem dolů k hlavičkové čáře.
+%  Loga jsou uložena jako soubory
+\newcommand\logoFSI{
+	\ifthenelse{\boolean{logo_EN}}{
+		\raisebox{-1.5pt}{\includegraphics[height=16pt]{loga/Logo_FSI_EN.png}}}{
+		\raisebox{-1.5pt}{\includegraphics[height=16pt]{loga/Logo_FSI_CZ.png}}
+		}
+	}
+\newcommand\logoVUT{
+	\raisebox{-1.5pt}{\includegraphics[height=16pt]{loga/Logo_VUT.png}}
+	}
+
+%  Pomocný příkaz pro aktivaci VUT fontu do hlavičky.
+\newcommand\fontVUT{
+	\fontspec[
+		Path = fonty/,
+		Extension = .otf]
+		{Font_VUT_Vafle_Light}
+	\fontsize{10pt}{11pt}
+	\selectfont
+	}
+
+%  Nastaví tloušťku hlavičkové čáry na 0.4 pt a tloušťku patičkové
+%  čáry na 0 pt.
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+%% Hlavička dokumentu
+%  Nastaví výšku hlavičky na 20 pt
+\setlength{\headheight}{20pt}
+
+%  Vysází samotnou hlavičku liché a sudé stránky dokumentu.
+\fancyhead{}
+\fancyhead[LO]{\logoVUT\hspace{0.5em}\fontVUT\autor@pred~\autor@jmeno~\autor@prijmeni\autor@za}
+\fancyhead[RO]{\fontVUT\prace}
+\fancyhead[LE]{\logoFSI\hspace{0.5em}\fontVUT\ustav}
+\fancyhead[RE]{\fontVUT\mesto,~\obhajoba}
+
+%% Patička dokumentu
+%  Nastavuje číslování stránek dokumentu.
+\fancyfoot{}
+\fancyfoot[LE,RO]{\thepage}
+
+%--------------------------------------%
+
+
+
+%--------------------------------%
+%  ÚPRAVY DALŠÍCH ČÁSTÍ ŠABLONY  %
+%--------------------------------%
+
+%% ÚPRAVA ZOBRAZENÍ OBSAHU
+%  Definuje nový příkaz pro vytvoření obsahu.
+%  Obsah je tvořen pomocí standardního \tableofcontents
+%  příkazu, ale je doplněný o nulové odsazení (0 pt) mezi
+%  jednotlivými kapitoly v seznamu nehledě na zvolenou
+%  možnost formátování odstavců.
+\newcommand\obsah{{
+	\setlength{\parskip}{0pt}    
+	\tableofcontents
+	}}
+
+%% KŘÍŽOVÉ ODKAZY a PDF METADATA
+%  Nastavuje funkční odkazy v rámci dokumentu.
+%  Při prohlížení závěrečné práce v PDF prohlížeči bude
+%  možné kliknout na číselné odkazy obrázků, rovnic, tabulek,
+%  citací a podobně. Zároveň nastavuje metadata pro PDF prohlížeč.
+%  Pro aktivaci odkazů je potřeba balíček "hyperref".
+\RequirePackage{hyperref}
+
+%  Nastavení metadat PDF prohlížeče
+%  Nastavuje následující vlastnosti:
+%	- název dokumentu,
+%	- autora dokumentu,
+%	- předmět dokumentu.
+\AtBeginDocument{
+	\hypersetup{
+		pdftitle={\nazev},
+		pdfauthor={\autor@pred~\autor@jmeno~\autor@prijmeni\autor@za},
+		pdfsubject={\prace},
+		}
+	}
+
+%  Nastavení odkazů a zobrazení
+%  Nastavuje zobrazení PDF souboru dle nastavení PDF prohlížeče
+%  a zároveň nastavuje zobrazení názvu závěrečné práce místo
+%  názvu dokumentu do hlavičky prohlížeče. Taktéž nastavuje výchozí
+%  odkaz na PDF soubor se závěrečnou prací. Dále aktivuje odkazy
+%  a nastavuje je na černou barvu.
+\hypersetup{
+	pdfstartview={},
+	pdfdisplaydoctitle=true,
+	baseurl=\odkaz,
+	colorlinks=true,
+	allcolors=black
+	}
+
+%% CITAČNÍ BALÍČEK
+%  Aktivuje balíček "cite" a přiřadí mu styl "czplain"
+\RequirePackage{cite}
+\bibliographystyle{czplain}
+
+%% PROSTŘEDÍ VERBATIM
+%  Odstraňuje nechtěné vertikální mezery před a za prostředím verbatim.
+%  Vyžaduje balíček "etoolbox"
+\RequirePackage{etoolbox}
+\preto{\@verbatim}{\topsep=0pt \partopsep=0pt}
+
+%--------------------------------%
+
+
+
+%---------------------------%
+%  OSTATNÍ POMOCNÉ PŘÍKAZY  %
+%---------------------------%
+
+%% PRÁZDNÁ SUDÁ STRÁNKA
+%  Redefinice příkazu \cleardoublepage tak, aby v případě
+%  potřeby či užití byla sudá stránka čistá, tj. bez
+%  hlavičky a patičky. Toto je využíváno například při
+%  úvodních textových náležitostech (abstrakt, ...), kdy
+%  tyto náležitosti jsou vždy na samostatné liché straně.
+%  Dále je toto využíváno při začátku nové kapitoly, které
+%  začíná vždy na nové liché straně.
+\renewcommand\cleardoublepage{
+	\clearpage
+	\if@twoside
+		\ifodd
+			\c@page
+		\else
+			\hbox{}
+			\thispagestyle{empty}
+			\newpage
+		\fi
+	\fi
+	}
+
+%% ÚVODNÍ NADPIS
+%  Pomocný příkaz pro vysázení nadpisů abstraktu, klíčových slov,
+%  bibliografické citace, čestného prohlášení a poděkování.
+%  Formátování nadpisu:
+%	- kapitálky,
+%	- tučný text,
+%	- velikost písma 16 pt,
+%	- odsazení před nadpisem 24 pt,
+%	- odsazení za nadpisem 6 pt.
+\newcommand\uvodninadpis[1]{
+	\par\vspace{24pt}\noindent
+	{\fontsize{16}{19.2}\bfseries\MakeUppercase{#1}}
+	\par\vspace{6pt}
+	}
+	
+%---------------------------%
+
+
+
+%-------------------%
+%  CHYBOVÁ HLÁŠENÍ  %
+%-------------------%
+
+%% Zde budou zpracována případná chybová hlášení a upozornění.
+
+%-------------------%
+
+
+
+%-----------------------------------%
+%  MULTIJAZYKOVÉ TEXTOVÉ DEFINICE  %
+%-----------------------------------%
+
+%  Na základě volby jazyka vytváří jednotlivé textové náležitosti
+%  používané v závěrečné práci.
+
+%% ČESKO-ANGLICKÝ JAZYK
+\newcommand\jazyk@cz@en{
+
+%  Aktivace češtiny (popisky obrázků, tabulek, rovnic a podobně,
+%  dělení slov, názvy dílčích kapitol).
+	\RequirePackage[czech]{babel}
+
+%  Název univerzity a fakulty
+	\def\jazyk@original@univerzita{Vysoké učení technické v Brně}
+	\def\jazyk@original@fakulta{Fakulta strojního inženýrství}
+
+%  Typ práce
+	\def\jazyk@original@prace@bc{Bakalářská práce}
+	\def\jazyk@original@prace@ing{Diplomová práce}
+	\def\jazyk@original@prace@phd{Dizertační práce}
+	\def\jazyk@original@prace@error{Nezadán/neznámý typ práce}
+	
+%  Úvodní textové náležitosti a jejich překlad	
+	\def\jazyk@original@abstrakt{Abstrakt}
+		\def\jazyk@preklad@abstrakt{Abstract}
+	\def\jazyk@original@klicovaslova{Klíčová slova}
+		\def\jazyk@preklad@klicovaslova{Keywords}
+	\def\jazyk@original@citace{Bibliografická citace}
+		\def\jazyk@original@citace@odkaz{Dostupné také z: }
+		\def\jazyk@original@citace@vedouci{Vedoucí práce:}
+	\def\jazyk@original@prohlaseni{Čestné prohlášení}
+	\def\jazyk@original@podpis{V Brně dne}	
+	\def\jazyk@original@podekovani{Poděkování}
+	}
+
+%% SLOVENSKO-ANGLICKÝ JAZYK
+\newcommand\jazyk@sk@en{
+
+%  Aktivace slovenštiny (popisky obrázků, tabulek, rovnic a podobně,
+%  dělení slov, názvy dílčích kapitol).
+	\RequirePackage[slovak]{babel}
+
+%  Název univerzity a fakulty
+	\def\jazyk@original@univerzita{Vysoké učení technické v Brně}
+	\def\jazyk@original@fakulta{Fakulta strojního inženýrství}
+
+%  Typ práce
+	\def\jazyk@original@prace@bc{Bakalárska práca}
+	\def\jazyk@original@prace@ing{Diplomová práca}
+	\def\jazyk@original@prace@phd{Dizertačná práca}
+	\def\jazyk@original@prace@error{Nezadaný/neznámy typ práce}
+
+%  Úvodní textové náležitosti a jejich překlad
+	\def\jazyk@original@abstrakt{Abstrakt}
+	\def\jazyk@preklad@abstrakt{Abstract}
+	\def\jazyk@original@klicovaslova{K\v{l}účové slová}
+	\def\jazyk@preklad@klicovaslova{Keywords}
+	\def\jazyk@original@citace{Bibliografická citácia}
+		\def\jazyk@original@citace@odkaz{K dispozícii aj z: }
+		\def\jazyk@original@citace@vedouci{Vedúci práce:}
+	\def\jazyk@original@prohlaseni{Čestné vyhlásenie}
+	\def\jazyk@original@podpis{V Brne dňa}	
+	\def\jazyk@original@podekovani{Poďakovanie}
+	}
+   
+%% ANGLICKO-ČESKÝ JAZYK 
+\newcommand\jazyk@en@cz{
+
+%  Aktivace angličtiny (popisky obrázků, tabulek, rovnic a podobně,
+%  dělení slov, názvy dílčích kapitol).
+	\RequirePackage[english]{babel}
+
+%  Název univerzity a fakulty
+	\def\jazyk@original@univerzita{Brno University of Technology}
+	\def\jazyk@original@fakulta{Faculty of Mechanical Engineering}
+
+%  Typ práce
+	\def\jazyk@original@prace@bc{Bachelor's Thesis}
+	\def\jazyk@original@prace@ing{Master's Thesis}
+	\def\jazyk@original@prace@phd{Doctoral Thesis}
+	\def\jazyk@original@prace@error{Thesis type not assigned/unknown}
+
+%  Úvodní textové náležitosti a jejich překlad
+	\def\jazyk@original@abstrakt{Abstract}
+	\def\jazyk@preklad@abstrakt{Abstrakt}
+	\def\jazyk@original@klicovaslova{Keywords}
+	\def\jazyk@preklad@klicovaslova{Klíčová slova}
+	\def\jazyk@original@citace{Citation}
+		\def\jazyk@original@citace@odkaz{Available also at: }
+		\def\jazyk@original@citace@vedouci{Supervised by}
+	\def\jazyk@original@prohlaseni{Author's declaration}
+	\def\jazyk@original@podpis{In Brno on}
+	\def\jazyk@original@podekovani{Acknowledgement}
+	}
+
+%% ANGLICKO-SLOVENSKÝ JAZYK
+\newcommand\jazyk@en@sk{
+
+%  Aktivace angličtiny (popisky obrázků, tabulek, rovnic a podobně,
+%  dělení slov, názvy dílčích kapitol).
+	\RequirePackage[english]{babel}
+
+%  Název univerzity a fakulty
+	\def\jazyk@original@univerzita{Brno University of Technology}
+	\def\jazyk@original@fakulta{Faculty of Mechanical Engineering}
+
+%  Typ práce
+	\def\jazyk@original@prace@bc{Bachelor's Thesis}
+	\def\jazyk@original@prace@ing{Master's Thesis}
+	\def\jazyk@original@prace@phd{Doctoral Thesis}
+	\def\jazyk@original@prace@error{Thesis type not assigned/unknown}
+
+%  Úvodní textové náležitosti a jejich překlad
+	\def\jazyk@original@abstrakt{Abstract}
+	\def\jazyk@preklad@abstrakt{Abstrakt}
+	\def\jazyk@original@klicovaslova{Keywords}
+	\def\jazyk@preklad@klicovaslova{K\v{l}účové slová}
+	\def\jazyk@original@citace{Citation}
+		\def\jazyk@original@citace@odkaz{Available also at: }
+		\def\jazyk@original@citace@vedouci{Supervised by}
+	\def\jazyk@original@prohlaseni{Author's declaration}
+	\def\jazyk@original@podpis{In Brno on}
+	\def\jazyk@original@podekovani{Acknowledgement}
+	}
+
+%-----------------------------------%
+
+\endinput

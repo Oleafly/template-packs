@@ -1,0 +1,42 @@
+%!TeX program = xelatex
+\documentclass[12pt,a4paper,UTF8]{ctexart}
+\usepackage{swjtuReport}
+
+% 将一级标题改成“第1章”，若\arabic改成\chinese即为“第一章”
+% \usepackage{titletoc}         
+% \ctexset{section={name={第,章},number={\arabic{section}}}}   
+
+\begin{document}
+%%------------------------------封面------------------------------%%
+\cover
+\thispagestyle{empty} % 首页不显示页码
+%%------------------------------摘要------------------------------%%
+\newpage
+\pagenumbering{Roman} % 重新计算页码，并将摘要、目录的页码设置成罗马数字页码
+
+\begin{abstract}\normalsize   % 更改摘要的内容的字体大小
+
+在此填写摘要的内容。
+
+\noindent \textbf{关键词：}
+关键词1；关键词2；关键词3；关键词4
+
+\end{abstract}
+%%------------------------------目录页----------------------------%%
+\newpage
+\begin{center}
+    \tableofcontents
+\end{center}
+%%------------------------------正文------------------------------%%
+\newpage
+\pagenumbering{arabic} % 重新计算页码，并将正文的页码设置成阿拉伯数字页码
+
+\include{chapters/chapter01}
+\include{chapters/chapter02}
+\include{chapters/chapter03}
+%%------------------------------参考文献---------------------------%%
+\newpage
+\reference
+\addcontentsline{toc}{section}{参考文献}   % 将参考文献作为一级标题加入到目录
+
+\end{document}

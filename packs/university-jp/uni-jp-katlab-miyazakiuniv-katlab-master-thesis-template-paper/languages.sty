@@ -1,0 +1,93 @@
+% lstlisting のキャプションとコードの間隔設定
+\usepackage{caption}
+\captionsetup[lstlisting]{skip=10pt}
+
+\renewcommand{\lstlistingname}{コード}
+\lstset{
+  language={Java},
+  abovecaptionskip=10pt,  % キャプションの上のスペース
+  belowcaptionskip=10pt,  % キャプションの下（コードとの間）のスペース
+  frame=tlBR,%フレーム線の指定，上右下左の順，大文字は二重線
+%  frameround=tttt,%角の指定，右上|右下|左下|左上の順，tは丸角，fは四角
+  framesep=5pt,%本文からframeまでの間隔
+  framerule=.2pt,%線の太さ
+%  rulecolor={\color[gray]},%線の色
+%  backgroundcolor={\color[gray]{.9}},%背景色の指定
+  basicstyle={\scriptsize\ttfamily \color[gray]{.15}},%書体の指定，この場合は7ptのタイプライタ体
+  identifierstyle={\ttfamily},%識別子の書体
+  keywordstyle={\ttfamily \color[cmyk]{0,1,0,0}},%言語ワードの書体
+  stringstyle={\scriptsize\ttfamily \color[rgb]{0,0,1}},%文字列リテラルの書体
+  commentstyle={\itshape \color[cmyk]{1,0,1,0}},%コメントの書体
+  numberstyle={\scriptsize},%行番号の書式
+  stepnumber=1,%行番号のステップ間隔
+  numbers=left,%行番号の位置
+  numbersep=1em,%本文との間隔
+  breaklines=true,%改行の設定
+  breakautoindent=true,%折り返し時の自動インデント
+  linewidth=0.98\textwidth,%ページ幅の98%に収める
+  xleftmargin=0.05\textwidth,%中央揃えのための左マージン
+  columns=flexible,
+  lineskip=-0.5zw,
+  morecomment={[s][{\color[cmyk]{1,0,0,0}}]{/**}{*/}},
+  floatplacement=t,
+  classoffset=1,
+  showstringspaces=false,%空行の表示
+%  breakatwhitespace=true,
+%  tabsize=5,
+}
+\usepackage[dvipsnames]{xcolor}
+
+% Kotlinのコードのハイライト
+% 参考サイト
+% https://github.com/cansik/kotlin-latex-listing
+\lstdefinelanguage{Kotlin}{
+  comment=[l]{//},
+  commentstyle={\color{gray}\ttfamily},
+  emph={delegate, filter, first, firstOrNull, forEach, lazy, map, mapNotNull, println, return@},
+  emphstyle={\color{OrangeRed}},
+  identifierstyle=\color{black},
+  keywords={abstract, actual, as, as?, break, by, class, companion, continue, data, do, dynamic, else, enum, expect, false, final, for, fun, get, if, import, in, interface, internal, is, null, object, override, package, private, public, return, set, super, suspend, this, throw, true, try, typealias, val, var, vararg, when, where, while},
+  keywordstyle={\color{NavyBlue}\bfseries},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]",
+  morestring=[s]{"""*}{*"""},
+  ndkeywords={@Deprecated, @JvmField, @JvmName, @JvmOverloads, @JvmStatic, @JvmSynthetic, Array, Byte, Double, Float, Int, Integer, Iterable, Long, Runnable, Short, String},
+  ndkeywordstyle={\color{BurntOrange}\bfseries},
+  sensitive=true,
+  stringstyle={\color{ForestGreen}\ttfamily},
+}
+
+% Swiftのコードのハイライト
+% 参考サイト
+% https://gist.github.com/chriseidhof/18dbc1c4eef919eab2c7
+\lstdefinelanguage{swift}
+{
+  morekeywords={
+    func,if,then,else,for,in,while,do,switch,case,default,where,break,continue,fallthrough,return,
+    typealias,struct,class,enum,protocol,var,func,let,get,set,willSet,didSet,inout,init,deinit,extension,
+    subscript,prefix,operator,infix,postfix,precedence,associativity,left,right,none,convenience,dynamic,
+    final,lazy,mutating,nonmutating,optional,override,required,static,unowned,safe,weak,internal,
+    private,public,is,as,self,unsafe,dynamicType,true,false,nil,Type,Protocol,
+  },
+  morecomment=[l]{//}, % l is for line comment
+  morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+  morestring=[b]" % defines that strings are enclosed in double quotes
+}
+
+\definecolor{keyword}{HTML}{BA2CA3}
+\definecolor{string}{HTML}{D12F1B}
+\definecolor{comment}{HTML}{008400}
+
+\lstset{
+  language=swift,
+  basicstyle=\ttfamily,
+  showstringspaces=false, % lets spaces in strings appear as real spaces
+  columns=flexible,
+  keepspaces=true,
+  keywordstyle=\color{keyword},
+  stringstyle=\color{string},
+  commentstyle=\color{comment},
+  breaklines=true, % 自動で折り返す
+  linewidth=0.98\textwidth, % ページ幅の98%に収める
+  xleftmargin=0.05\textwidth, % 中央揃えのための左マージン
+}

@@ -1,0 +1,90 @@
+\documentclass[./Main.tex]{subfiles}
+\graphicspath{{./Fig/}}
+\begin{document}
+
+\setcounter{chapter}{-1}
+\chapter{このテンプレートの説明}
+\section{修論の構成}
+修論，卒論ともに通常の学術論文と同じように
+
+\begin{enumerate}
+    \item 序論（背景，既存の研究のレビューと目的）
+    \item 研究手法
+    \item 結果と考察
+    \item 結論
+    \item その他（参考文献，謝辞，付録等。ただし，参考文献は必須）
+\end{enumerate}
+の順序で書きます。（実際には「その他」という章は普通作りません）それに対応して，このテンプレートではTeXのソースファイルを
+\begin{itemize}
+    \item introduction.tex
+    \item solution.tex
+    \item result.tex
+    \item conclusion.tex
+\end{itemize}
+にしています。参考文献は最後にまとめて出力するようにしています。
+
+TeXの場合，ソースファイルをどう分割しても特に問題ないので，手法や結果がながければ，さらに細かく分割したほうが見やすいです。
+
+\subsection{LaTeXのエンジン}
+このテンプレートはplatexでコンパイル，dvipdfmxでPDF化するようにしています。
+
+\subsection{ファイル分割の詳細}
+通常，ソースファイルを分割する場合，\verb|\include \input|命令を使います。ですが，ここではsubfilesパッケージを使っています。subfilesパッケージを使うと，分割した各ソースファイルを単独でコンパイルできるようになります。例えば，introduction.texを単独でコンパイルすると，introduction.texだけで完結したPDFが生成されます。これにより，部分的にコンパイルして確認したい場合に便利です。
+
+subfilesでファイルを分割する場合，Mainのソースファイルでは，\verb|\subfile{ファイル名.tex}|とします。\verb|\input|等と異なり，拡張子の.texまで必要です。分割したファイル側には，\verb|\documentclass[./Main.tex]{subfiles}|をはじめに書きます。Main.texが親ファイルであることを指定するためです。このテンプレートのファイルを確認してください。分割したファイル単独でコンパイルできるようになります。コード\ref{code_subfile}に分割したTeXのソース例を示します。最後のifなんちゃらは，大本のMain.texをコンパイルしたときには無視されます。
+
+\begin{lstlisting}[caption=subfileで分割したTeXのソース, label=code_subfile]
+\documentclass[./Main.tex]{subfiles}
+\graphicspath{{./Fig/}}
+\begin{document}
+
+% この間に本文を書く
+
+\ifSubfilesClassLoaded{
+\printbibliography[title = 参考文献]
+}{}
+
+\end{document}
+\end{lstlisting}
+
+\subsection{参考文献の出力}
+参考文献はbibtexで出力しています。preamble.texを確認してもらえれば分かります。
+自分でコンパイルするときには以下の流れになります。MainのファイルがMain.texとして，
+
+\begin{verbatim}
+platex Main.tex
+bibtex Main
+platex Main.tex
+platex Main.tex
+dvipdfmx Main.dvi
+\end{verbatim}
+の順でコンパイルします。最初のplatexでauxファイルが生成され，bibtexで参考文献データが処理され，その後のplatexで参考文献が出力されます。2回platexを回すのは，参照番号などを正しく反映させるためです。
+
+
+\section{LaTeXの各パッケージと使い方}
+
+\subsection{zebra-goodies}
+todoやcommentを本文に挿入するためのパッケージ。
+TeXのソースに
+\begin{verbatim}
+\todo{ここにTODOを書く}
+\comment{XXについて要確認}
+\end{verbatim}
+という感じで，コマンドを入れると，PDFに赤字でTODOやコメントが挿入されます。
+
+原稿が完成して，todoやコメントを一括で消したいときには
+\begin{verbatim}
+    \usepackage[final]{zebra-goodies}
+\end{verbatim}
+でコンパイルすれば，todoやcommentが消えます。
+
+\subsection{cleverref}
+図番号・表番号を参照するのに通常は\verb|\ref{}|を使いますが，\verb|\cref{}|を使うと，自動的に「図」「表」などの接頭語が付きます。例えば，\verb|\cref{fig:example}|とすると，「図1」のように出力されます。
+
+
+
+\ifSubfilesClassLoaded{
+\printbibliography[title=参考文献]
+}{}
+
+\end{document}

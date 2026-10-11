@@ -1,0 +1,149 @@
+%! TEX-program = xelatex
+\documentclass[sub3section,fontset=fandol]{ctexart}
+    % sub3section - 启用 paragraph 之后换行，无需在 ctexset 中使用 runin
+\usepackage{geometry}
+\usepackage{xeCJK}
+\usepackage{enumerate}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage[european]{circuitikz}
+\usepackage{pdfpages}
+\usepackage{tabularx}
+\usepackage{listings}
+%\usepackage{titlesec}
+%\usepackage{titletoc}
+\usepackage{layouts}
+\usepackage{ifthen}
+\usepackage{xcolor}  % colorlet
+\usepackage{mdwlist} % enumerate*
+\usepackage[newfloat]{minted}
+\usepackage{metalogo}
+\usepackage{tcolorbox}
+\usepackage{etoolbox}
+
+\geometry{a4paper,left=3.86cm,right=2.54cm,top=2.54cm,bottom=2.54cm}
+%%%%%%%%%%%%%%%% 与 ctexset 冲突，不再使用
+%\titleformat{\paragraph}[block]{\normalsize\bfseries}{\theparagraph}{1em}{} % 设置 \paragraph 后换行
+%%%%%%%%%%%%%%%%
+% \DeclareCaptionType{code}[代码]
+\setcounter{tocdepth}{2}    % 目录深度
+\setcounter{secnumdepth}{4} % 编号的深度，4 表示到 paragraph 一级，默认为 2
+\colorlet{darkred}{red!50!black}
+%\usepackage{titlesec}
+%\titleformat{\section}{\centering\Large}{实验\,\thesection}{1em}{}
+\usepackage[colorlinks,linkcolor=darkred]{hyperref}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+	backgroundcolor=\color{white},   % choose the background color
+	basicstyle=\footnotesize\ttfamily,        % size of fonts used for the code
+	columns=fullflexible,
+	breaklines=true,                 % automatic line breaking only at 
+	%whitespace
+	captionpos=t,                    % sets the caption-position to bottom
+	tabsize=4,
+	commentstyle=\color{mygreen},    % comment style
+	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+	keywordstyle=\color{blue},       % keyword style
+	stringstyle=\color{mymauve}\ttfamily,     % string literal style
+	frame=single,
+	frameround=fttt,
+	rulesepcolor=\color{red!20!green!20!blue!20},
+	% identifierstyle=\color{red},
+	language=Verilog,
+	keepspaces=true,
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Not Using tcolorbox as minted frames anymore in case of cover-page problems
+%\BeforeBeginEnvironment{minted}%
+%	{\begin{tcolorbox}[colback=white,colframe=mymauve!30!mygray,boxrule=0.5pt]}%
+%\AfterEndEnvironment{minted}%
+%	{\end{tcolorbox}}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setminted{
+	frame=single,
+	rulecolor=mymauve!30!mygray,
+	breaklines,
+	fontsize=\footnotesize,
+}
+\ctexset{
+    section = {
+        name = {实验,},
+        number = {\chinese{section}}
+    },
+    subsection/number = {\chinese{subsection}},
+	subsubsection/number = {\arabic{subsubsection}},
+    paragraph/number = {\arabic{subsubsection}.\arabic{paragraph}}
+}
+\renewcommand{\lstlistingname}{清单}
+\newcommand{\lstdir}{listing}
+\newcommand{\instabledir}{table}
+\newcommand{\instikdir}{tikz}
+\newcommand{\inspicdir}{figure}
+\newcommand{\elementdir}{element}
+\newcommand{\inlineformula}{on}
+\newcommand{\includetable}{on}
+\newcommand{\includefigure}{on}
+
+\newcommand{\instable}[3]{ %
+	\begin{table}[!htb] %
+		\ifthenelse{\equal{#1}{}}{}{ %
+			\caption{#1} %
+			\label{#2} %
+		} %
+		\centering %
+		\ifthenelse{\equal{\includetable}{on}}{ %
+			\input{\instabledir/#3} %
+		}{} %
+	\end{table} %
+}
+\newcommand{\instik}[3]{ %
+	\begin{figure}[!htb] %
+		\centering %
+		\ifthenelse{\equal{\includefigure}{on}}{ %
+			\input{\instikdir/#3} %
+		}{} %
+		\ifthenelse{\equal{#1}{}}{}{%
+			\caption{#1} %
+			\label{#2} %
+		} %
+	\end{figure} %
+}
+\newcommand{\inspic}[4][\linewidth]{ %
+	\begin{figure}[!htb] %
+		\centering %
+		\ifthenelse{\equal{\includefigure}{on}}{ %
+			\includegraphics[width=#1]{\inspicdir/#4} %
+		}{} %
+		\ifthenelse{\equal{#2}{}}{}{ %
+			\caption{#2} %
+			\label{#3} %
+		} %
+	\end{figure} %
+}
+\newcommand{\insfigure}[2][\linewidth]{%
+	\ifthenelse{\equal{\includefigure}{on}}{%
+		\includegraphics[width=#1]{\inspicdir/#2}  %
+	}{}%
+}
+\newcommand{\e}[2][]{\ifthenelse
+	{\equal{\inlineformula}{on}}{ %
+		\ifthenelse{\equal{#1}{}}{$ #2 $}{$\mathsf{ #1 } #2 $}}{}}
+%\renewcommand{\proofname}{解}
+\renewcommand{\qedsymbol}{\textcolor{darkred}{\rule{1ex}{1.5ex}}}
+\newenvironment{code}{\captionsetup{type=listing}}{}
+\SetupFloatingEnvironment{listing}{name=清单}
+\captionsetup{font={footnotesize}}
+\newcommand{\cinline}[1]{\mintinline[breaklines,breakanywhere,fontsize=\small]{C}{#1}}
+\begin{document}
+
+\input{contents}
+
+\end{document}

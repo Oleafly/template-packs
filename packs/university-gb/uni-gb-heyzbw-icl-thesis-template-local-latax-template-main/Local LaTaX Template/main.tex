@@ -1,0 +1,207 @@
+\documentclass[a4paper,12pt,UTF8,oneside,hyperref]{ctexart} %twoside可设置双面打印格式;
+% \usepackage{times}%全文英文字体使用Times New Roman；
+\usepackage[english]{babel} %设置英文单词的断行规则；
+
+\linespread{1.25}%全文1.25倍行距；
+%========================电子文档与超链接======================
+\usepackage[backref=page,hyperfootnotes=false]{hyperref}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{graphicx}
+
+\hypersetup{
+ bookmarks = true,
+ bookmarksopen = true,
+ pdfborder=0 0 0,
+ hyperfootnotes=false,
+ pdfpagemode = FullScreen,
+ pdfstartview = Fit,
+ pdftitle = {Title},
+ pdfauthor = {Bowen Zhi}
+}
+\pdfbookmark[1]{Contents}{contents}
+%===============================================================
+
+%=========================设=置=页=眉===========================
+\usepackage{fancyhdr} %为了保证正确长度的页眉下划线,fancyhdr宏包要在geometry宏包后使用；
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\includegraphics[scale=0.03]{./pictures/ICL_logo.png}}
+\usepackage{lastpage}
+\rhead{\small\bfseries Title}
+%===============================================================
+
+%==========================章节格式=============================
+\usepackage{titlesec}
+\usepackage{indentfirst}
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5ex plus 0.1ex minus 0.1ex} % 段落间距
+\titleformat{\section}[hang]{\bfseries\Large}{Chapter\ \thesection \quad}{0pt}{}{}
+\titleformat{\subsection}[hang]{\bfseries\normalsize\raggedright}{\thesubsection\quad}{0pt}{}{}
+\titleformat{\subsubsection}[hang]{\normalsize\kaishu\raggedright}{\thesubsubsection\quad}{0pt}{}{}
+\titlespacing*{\section}{0pt}{0pt}{8pt}[0pt]
+\titlespacing*{\subsection}{0pt}{6pt}{4pt}[0pt]
+\titlespacing*{\subsubsection}{0pt}{6pt}{4pt}[0pt]
+%===============================================================
+
+%============================目录===============================
+\usepackage{titletoc}
+\titlecontents{section}[1.2em]{}{}{}{}[]  % 修改section的缩进
+\dottedcontents{section}[1.2em]{\normalsize}{1.0em}{4pt}  % 修改section的起始缩进
+\dottedcontents{subsection}[3.2em]{\normalsize}{2.0em}{4pt}
+\dottedcontents{subsubsection}[5.2em]{\normalsize}{3.0em}{4pt}
+%===============================================================
+
+%==========================脚注格式=============================
+\usepackage{pifont}
+\renewcommand\thefootnote{\ding{\numexpr171+\value{footnote}}}% 更好看的一个脚注格式
+\usepackage[perpage]{footmisc}%脚注每页清零编号
+%===============================================================
+
+%==========================插入图片=============================
+\usepackage{graphicx}
+% \usepackage{subfigure}%两图并排
+\usepackage{picinpar}%文字绕排
+\usepackage{caption}
+\graphicspath{{./pictures/}}%设置图片放置路径
+\captionsetup{font=small,labelfont=bf,labelsep=quad}
+\captionsetup{skip=0pt}%标题与浮动环境内容的垂直间距无额外间距（设置为0pt）;
+%===============================================================
+
+%==========================插入表格=============================
+\usepackage{booktabs,multirow} %三线表
+\usepackage{longtable}         %长表格
+\usepackage{bigstrut}
+\usepackage{subcaption}        %插入并排图片
+\usepackage{diagbox}
+\usepackage{makecell}
+\usepackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+%==========================解决三线表竖线过短的问题=============================
+\renewcommand{\cmidrulesep}{0mm}  %定义两条相邻\cmidrule之间的间隔
+\setlength{\aboverulesep}{0mm}    %在线条[不包括\toprule]上面增加一段垂直距离，此处为0mm
+\setlength{\belowrulesep}{0mm}    %在线条[不包括\bottomrule]下面增加一条垂直距离，此处为0mm
+\setlength{\abovetopsep}{0cm}     %在线条\toprule上面，即表格与上面的文字之间的距离。
+\setlength{\belowbottomsep}{0cm}  %在线条\bottomrule下面，即表格与下面的文字之间的距离。
+%===============================================================
+
+%==========================数学公式=============================
+\usepackage{amsmath}%公式
+\usepackage{amssymb}
+\usepackage{bm}%粗体
+\usepackage{upgreek}%直立希腊字母
+\usepackage{mhchem}%化学公式 \ce{SiO2} 或 \ce{H2O}
+\DeclareMathOperator\dif{d\!}%微分算子\frac{\dif y}{dif x}
+%\usepackage{xfrac}%行内小分式
+\newenvironment{sequation}{\begin{equation}\small}{\end{equation}}
+\newenvironment{tequation}{\begin{equation}\tiny}{\end{equation}}
+%===============================================================
+
+%==========================使用彩色=============================
+%\usepackage[usenames,dvipsnames]{color}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes.geometric, arrows}
+\definecolor{mygray}{gray}{.9}
+\definecolor{mypink}{rgb}{.99,.91,.95}
+\definecolor{mycyan}{cmyk}{.3,0,0,0}
+%================================================================
+
+%==========================程序代码=============================
+\usepackage{listings}
+\usepackage{pythonhighlight}
+%===============================================================
+
+%=============================其它===============================
+\usepackage{siunitx}%摄氏度 \SI{100}{\degreeCelsius}
+\makeatletter%罗马数字
+\newcommand{\rmnum}[1]{\romannumeral #1}% 罗马数字
+\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}%罗马数字
+\makeatother%罗马数字 \Rmnum{1} 或 \Rmnum{2} 或 \rmnum{3}
+\usepackage{xfrac}%行内小分式
+\setlength{\belowcaptionskip}{-10pt} %减少图表标题下方的行距
+%==================================================================
+
+%=============================文献格式===============================
+\usepackage[numbers,authoryear]{natbib}         % 引用哈佛格式
+\renewcommand{\bibfont}{\small\rmfamily} 
+\setlength\bibsep{0pt}                          % 取消不同文献条目之间的距离
+\usepackage{url}
+%==================================================================
+
+%=========================一个更好的下划线设置=======================
+\usepackage{ulem}
+\usepackage{enumitem}
+\usepackage{hhline}% 双线表
+\newcommand\dlmu[2][4cm]{\hskip1pt\underline{\hb@xt@ #1{\hss#2\hss}}\hskip3pt}
+%==================================================================
+
+%=========================公式按章编号===============================
+\makeatletter
+\@addtoreset{equation}{section}
+\makeatother
+\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
+
+\makeatletter
+\@addtoreset{figure}{section}
+\makeatother
+\renewcommand{\thefigure}{\thesection\,-\,\arabic{figure}}
+
+\makeatletter
+\@addtoreset{table}{section}
+\makeatother
+\renewcommand{\thetable}{\thesection\,-\,\arabic{table}}
+%==================================================================
+
+\usepackage{ifpdf}
+
+\newtheorem{thm}{定理}
+
+%==============积分符号修改，改原倾斜的积分符号为直立体==================
+\usepackage{amsmath,amssymb}
+\DeclareSymbolFont{EulerExtension}{U}{euex}{m}{n}
+\DeclareMathSymbol{\euintop}{\mathop} {EulerExtension}{"52}
+\DeclareMathSymbol{\euointop}{\mathop} {EulerExtension}{"48}
+\let\intop\euintop
+\let\ointop\euointop
+%==================================================================
+
+\usepackage{doc}
+\begin{document}
+\input{cover.tex}
+\clearpage
+\phantom{s}
+% \thispagestyle{empty}
+% \newpage
+
+\setcounter{page}{1}
+\pagenumbering{Roman}
+\cfoot{\small\thepage}
+
+\input{abstract.tex}
+\newpage
+
+\phantomsection 
+%设置“幻影标题”，解决额外插入目录（\addcontentsline）后总是引用到第一页的问题；
+\addcontentsline{toc}{section}{Contents}
+\vspace*{-21.6pt}
+\tableofcontents
+\newpage
+
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\cfoot{\small Page\, \thepage\,of\, \pageref{LastPage}}
+\input{body.tex}
+\newpage
+
+\phantomsection
+\addcontentsline{toc}{section}{Reference}
+\nocite{*}
+\bibliographystyle{dcu}  % 使用Harvard格式
+\bibliography{./reference/thesis}  % 指向bib文件
+
+\titleformat{\section}[hang]{\bfseries\large}{Appendix\,\thesection \quad}{0pt}{}{}
+\input{appendix.tex}
+
+\end{document}

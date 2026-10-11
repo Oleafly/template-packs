@@ -1,0 +1,99 @@
+\chapter{算法、代码与其他的用法}
+\label{cha:other-example}
+
+\section{算法流程图}
+\label{sec:algorithm}
+\begin{algorithm}[h]
+    \KwIn{$m$个训练样本}
+    \lFor{$l=1$ \emph{\KwTo} $n_l$}{
+        初始化：$\Delta \mathbf{W}^{(l)}=0$，$\Delta \mathbf{b}^{(l)}=0$}
+    \ForEach{训练样本}{
+        \lFor{$l=1$ \emph{\KwTo} $n_l-1$}{
+            前向传播：$\mathbf{z}^{(l+1)}=\mathbf{W}^la^l+\mathbf{b}^l$,$\mathbf{a}^{(l+1)}=f(\mathbf{z}^{(l+1)})$}
+        输出误差计算：$\delta^{(n_l)} = \frac{\partial}{\partial \mathbf{z}^{(n_l)}} J(\mathbf{W},\mathbf{b};\mathbf{x},y)$\;
+        \lFor{$l=n_l-1$ \emph{\KwTo} $1$}{
+            后向传播：$\delta^{(l)} = \bigl((\mathbf{W}^{(l)})^T \delta^{(l+1)}\bigr)f'(\mathbf{z}^{(l)})$}
+        \ForAll{层l}{
+            计算梯度：$\nabla_{\mathbf{W}^{(l)}}J(\mathbf{W},\mathbf{b};\mathbf{x},y)=\delta^{(l+1)}(\mathbf{a}^{(l)})^T$ \\
+            \hspace{60pt}$\nabla_{\mathbf{b}^{(l)}}J(\mathbf{W},\mathbf{b};\mathbf{x},y)=\delta^{(l+1)}$\;
+            累加梯度：$\Delta \mathbf{W}^{(l)} \leftarrow \Delta \mathbf{W}^{(l)} + \nabla_{\mathbf{W}^{(l)}}J(\mathbf{W},\mathbf{b};\mathbf{x},y)$; \\
+            \hspace{60pt}$\Delta \mathbf{b}^{(l)} \leftarrow \Delta \mathbf{b}^{(l)} + \nabla_{\mathbf{b}^{(l)}}J(\mathbf{W},\mathbf{b};\mathbf{x},y)$\;
+        }
+    }
+    \ForAll{层$l$}{
+        更新权重：$\mathbf{W}^{(l)} \leftarrow \mathbf{W}^{(l)} - \alpha \biggl[\frac 1m \Delta \mathbf{W}^{(l)}\biggr]$ \\
+        \hspace{60pt} $\mathbf{b}^{(l)} \leftarrow \mathbf{b}^{(l)} - \alpha \biggl[\frac 1m \Delta \mathbf{b}^{(l)}\biggr]$
+    }
+    \caption{梯度下降算法}
+    \label{algo:sgd}
+\end{algorithm}
+
+\section{代码}
+
+本模版支持在论文中插入代码片段，或直接从源码文件进行插入\footnote{请参考\url{https://www.overleaf.com/learn/latex/Code_listing}}。
+
+例如，在论文中插入代码片段的效果为：
+
+\begin{lstlisting}[
+ numbers=left,
+ basicstyle=\ttfamily,
+ breaklines=true,
+ keywordstyle=\color{SeaGreen4},
+ caption=Python example,
+ language=Python
+]
+for i in range(N):
+  A[i] += 1
+\end{lstlisting}
+
+也可在行内插入代码片段，例如：Python中重载加法运算符的函数为\lstinline[language=Python,keywordstyle=\color{SeaGreen4}]{__add__}。
+此外，还可直接插入代码文件，例如插入\texttt{./code/demo.cpp}的效果为：
+
+\lstinputlisting[
+ basicstyle=\ttfamily,
+ breaklines=true,
+ keywordstyle=\color{SeaGreen4},
+ language=C++
+]{code/demo.cpp}
+
+
+\section{其他的一些用法}
+\label{sec:font}
+\subsection{子章节编号}
+\label{sec:font:subsection}
+\subsubsection{更小的章节}
+\label{sec:font:subsection:subsub}
+更小的章节编号也是支持的。
+
+可以如此引用章节：
+
+\begin{itemize}
+    \item \autoref{cha:other-example}
+    \item  \autoref{sec:font}
+    \item  \autoref{sec:font:subsection}
+    \item  \autoref{sec:font:subsection:subsub}
+\end{itemize}
+
+
+\subsection{列表的使用}
+\label{sec:font:list}
+
+这是一个无序列表
+\begin{itemize}
+    \item 引用文献\cite{long2015fully}
+    \item 引用文献作者\citeauthor{long2015fully}
+    \item 引用文献年份\citeyear{long2015fully} 
+    \item 字体{\color{red}{变红}}，\textbf{粗体}，\textit{斜体}，\underline{下划线}。
+\end{itemize}
+
+这是一个有序列表
+\begin{enumerate}
+    \item 索引前面的\autoref{sec:formula}、图像\ref{fig:sysulogo}、表格\ref{tab:siftflow}
+    \item 加脚注\footnote{测{\zihao{-5}试一下}脚注和URL \url{http://cs231n.github.io/transfer-learning/}}
+\end{enumerate}
+
+\section{关于生僻字}
+
+测试生僻字
+% 此处需修改main.tex文件第6行的fontset参数才能成功测试。
+昇䊒熗庈焾燋庼廎㶭粌纇颣炥䊧彂㢕糑鄜麛麚䴫麌䴠麎塵䴣麆麠䴤麖䴨䴩䴪麘麞麡麍麏麐麔	

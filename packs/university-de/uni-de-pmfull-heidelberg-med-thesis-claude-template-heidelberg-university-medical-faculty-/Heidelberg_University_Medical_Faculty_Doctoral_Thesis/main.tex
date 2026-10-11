@@ -1,0 +1,82 @@
+\documentclass{thesis}
+
+\newcommand{\thesistitle}{TODO TITLE}
+
+\usepackage{mathpazo}  % font: palatino vs computer modern
+\usepackage{lipsum} % used to fill random text in sections
+\usepackage{tikz} % used for sample figure
+
+\newenvironment{dedication}
+  {%\clearpage           % we want a new page          %% I commented this
+   \thispagestyle{empty}% no header and footer
+   \vspace*{\stretch{1}}% some space at the top
+   \itshape             % the text is in italics
+   \raggedleft          % flush to the right margin
+  }
+  {\par % end the paragraph
+   \vspace{\stretch{3}} % space at bottom is three times that at the top
+   \clearpage           % finish off the page
+  }
+
+\begin{document}
+
+    % Titlepage (empty pagestyle)
+    % Contains titlepage, empty page, "Prodekan + Doktorvater", empty page
+    \pagestyle{empty}
+    \pagenumbering{gobble}
+    \input{titlepage.tex}
+    \input{chapters/Dedication}
+
+    \cleardoublepage
+    \tableofcontents
+    \cleardoublepage
+
+    \pagestyle{fancy}
+    \setcounter{tocdepth}{2}
+    \frontmatter
+    \setcounter{page}{1}
+    % Add acronyms from file (_Acronyms.tex) and add to table of contents
+    \input{chapters/Acronyms}
+
+    % Add list of figures and list of tables
+    \newpage
+    \phantomsection
+    \addcontentsline{toc}{chapter}{List of Figures}
+    \listoffigures
+    \listoftables
+    \addcontentsline{toc}{chapter}{List of Tables}
+
+    \mainmatter
+    
+    
+    \mainmatter
+    % % Main Body of thesis
+    \input{chapters/01_Introduction/00}
+    \input{chapters/02_Materials_and_Methods/00}
+    \input{chapters/03_Results/00}
+    \input{chapters/04_Discussion/00}
+    \input{chapters/05_Summary}
+    \input{chapters/06_Zusammenfassung}
+    
+    \clearpage
+    \phantomsection
+    \addcontentsline{toc}{chapter}{Bibliography}
+    \markboth{Bibliography}{Bibliography}
+    \bibliography{refs} % In overleaf you can link to Zotero. Go to "new file"->"From Zotero"
+
+    \input{chapters/07_Own_Publications}
+
+    \pagestyle{plain}
+    % Include CV from PDF like this:
+    \phantomsection
+    \addcontentsline{toc}{chapter}{Curriculum Vitae}
+    \includepdf[pages=-,frame,scale=.77,pagecommand={\thispagestyle{plain}}]{figures/CV.pdf}
+    
+
+    \input{chapters/08_Appendix}
+    \input{chapters/09_Acknowledgement}
+    \input{chapters/10_Eidestattliche_Erklärung}
+    \input{chapters/11_Angabe_KI}
+    \input{chapters/12_Anhang_KI_Tools}
+
+\end{document}

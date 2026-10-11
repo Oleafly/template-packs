@@ -1,0 +1,289 @@
+
+%====================== 常用宏包（排版/图表/列表） ======================%
+\usepackage{graphicx}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{makecell}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage{diagbox}
+\usepackage{rotating}
+% \usepackage{xeCJKfntef}
+% 浮动控制（可选；正文尽量不用 [H]）
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{subcaption}
+\setlist[itemize]{itemsep=0.2em, topsep=0.4em}
+\setlist[enumerate]{itemsep=0.2em, topsep=0.4em}
+
+
+\usepackage{setspace}
+\usepackage{ragged2e}   % 两端对齐
+\usepackage[none]{hyphenat}      % 关闭自动断词
+
+\hyphenpenalty=10000             % 禁止普通英文单词断开
+\exhyphenpenalty=10000           % 禁止在已有连字符处断开
+\emergencystretch=2em            % 给排版留一点弹性，减少文字溢出
+
+%====================== 固定长度下划线（封面/信息页） ======================%
+\newcommand{\fixuline}[2][4cm]{%
+  \makebox[#1][c]{\underline{\makebox[#1][c]{#2}}}%
+}
+%====================== caption（图/表标题） ======================%
+\captionsetup[figure]{font=small, labelfont=bf, labelsep=quad}
+\captionsetup[table]{font=small, labelfont=bf, labelsep=quad}
+
+%====================== 章节标题格式（ctex） ======================%
+\ctexset{
+  chapter = {
+    format = \centering\hei\zihao{3},
+    name = {第,章},
+    number = \chinese{chapter},
+    aftername = \ ,
+    beforeskip = -1em,
+    afterskip = 1em
+  },
+  section = {
+    format = \hei\zihao{4},
+    aftername = \ ,
+    beforeskip = 20pt,
+    afterskip = 10pt
+  },
+  subsection = {
+    format = \hei\zihao{4},
+    aftername = \ ,
+    beforeskip = 0.5em,
+    afterskip = 0.5em
+  },
+  subsubsection = {
+    format = \hei\zihao{4},
+    aftername = \ ,
+    beforeskip = 8pt,
+    afterskip  = 4pt
+  },
+}
+
+% % 三级标题编号深度
+\setcounter{secnumdepth}{4}
+
+%====================== 工具：插入空白页（双面排版补空页） ======================%
+\newcommand{\blankpage}{%
+  \clearpage
+  \ifodd\value{page}\else
+    \thispagestyle{empty}\null\newpage
+  \fi
+}
+
+%====================== 页眉页脚（含章节首页） ======================%
+% empty：页眉和页脚都为空。
+% plain：页眉为空，页脚包含一个居中的页码（这是标准文档类的默认样式）。
+% headings：页眉包含章节标题和页码，页脚为空。
+% myheadings：类似headings，但内容可由用户自定义。
+% fancy：使用fancyhdr宏包定义的更灵活的页眉页脚样式。
+
+% \fancyhead[L]{左页眉内容}  % 页眉左侧
+% \fancyhead[C]{中间页眉内容} % 页眉中间
+% \fancyhead[R]{右页眉内容}  % 页眉右侧
+% \fancyfoot[L]{左页脚内容}  % 页脚左侧
+% \fancyfoot[C]{中间页脚内容} % 页脚中间
+% \fancyfoot[R]{右页脚内容}  % 页脚右侧
+
+% \fancyhead{}                     % 清空页眉
+% \fancyfoot{}                     % 清空页脚
+% \fancyhf{}   % 清空页脚和页眉
+
+\usepackage{fancyhdr}
+\renewcommand{\MakeUppercase}[1]{#1}
+\fancyhf{}  %用于清空（重置）当前所有的页眉页脚设置。
+\pagestyle{fancy}
+% % 页眉内容：论文中文题目（可在 config/thesis-info.tex 修改）
+% \fancyhead[C]{\HISTTitleCN}  % 页眉 居中
+% \fancyhead[C]{\zihao{5}\song\leftmark}
+  % \fancyfoot[C]{}
+  % \fancyfoot[LE,RO]{\song\zihao{5}\thepage}
+% \fancyfoot[C]{\song\zihao{5}\thepage}  % 页脚为页码  居中
+% \renewcommand{\headrulewidth}{0.4pt}   % 设置页眉横线宽度
+% \renewcommand{\footrulewidth}{0pt}     % 设置页脚横线宽度
+
+\fancyhead[CE]{\song\zihao{5}\HISTTitleCN}
+\fancyhead[CO]{\song\zihao{5}\leftmark}
+\fancyfoot[LE,RO]{\song\zihao{5}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+
+% 章节首页（plain）有页眉页脚与普通页保持一致   plain 默认样式
+  % \fancyhf{}
+  % \fancyhead[C]{\zihao{5}\song\leftmark}
+  % \fancyhead[C]{\HISTTitleCN}
+  % \fancyhead[C]{\zihao{5}\song\rightmark}
+    % \fancyfoot[C]{\song\zihao{5}\thepage}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  % \fancyhead[C]{\zihao{5}\song\leftmark}  居中的
+  % \fancyfoot[C]{}
+
+  \fancyhead[CE]{\song\zihao{5}\HISTTitleCN}
+  \fancyhead[CE]{\song\zihao{5}\HISTHeader}
+  \fancyhead[CO]{\song\zihao{5}\leftmark}
+
+  \fancyfoot[LE,RO]{\song\zihao{5}\thepage}
+  % \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+
+% 前置部分专用：无页眉，仅显示页码
+\fancypagestyle{frontstyle}{
+  \fancyhf{}
+  \fancyfoot[LE,RO]{\song\zihao{5}\thepage} % 奇数在右面，偶数在左面
+  % \fancyfoot[C]{\song\zihao{5}\thepage} % 摘要页码居中；
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}  % 是否显示第几章  注释掉显示
+
+
+%====================== 表格常用列类 ======================%
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+%====================== 目录格式（小四 + 1.5倍行距）======================%
+
+
+\usepackage{tocloft}
+
+\renewcommand{\contentsname}{目\quad 录}
+
+\makeatletter
+\renewcommand{\@cftmaketoctitle}{%
+  \addpenalty\@secpenalty
+  \if@cfthaschapter
+    \vspace*{\cftbeforetoctitleskip}%
+  \else
+    \vspace{\cftbeforetoctitleskip}%
+  \fi
+  \@cftpagestyle
+  {\interlinepenalty\@M
+   \centering\hei\bfseries\zihao{-3}\contentsname\par
+   \cftmarktoc
+   \par\nobreak
+   \vskip \cftaftertoctitleskip
+   \@afterheading}}
+\makeatother
+
+\renewcommand{\cftdotsep}{1}
+\setlength{\cftbeforetoctitleskip}{0pt}  % 标题前
+\setlength{\cftaftertoctitleskip}{18pt}   % 标题后
+
+% 目录正文统一：宋体 + 小四  章节设置
+\renewcommand{\cftchapfont}{\song\bfseries\zihao{-4}}
+\renewcommand{\cftsecfont}{\song\zihao{-4}}
+\renewcommand{\cftsubsecfont}{\song\zihao{-4}}
+
+\renewcommand{\cftchappagefont}{\song\bfseries\zihao{-4}} 
+\renewcommand{\cftsecpagefont}{\song\zihao{-4}}
+\renewcommand{\cftsubsecpagefont}{\song\zihao{-4}}
+% 各级条目前后间距（一般设 0pt 或很小）
+\setlength{\cftbeforechapskip}{0pt}
+\setlength{\cftbeforesecskip}{0pt}
+\setlength{\cftbeforesubsecskip}{0pt}
+% 让“章/节/小节”都使用点线 leader
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}}
+
+\renewcommand{\listfigurename}{插\quad 图}
+
+\makeatletter
+\renewcommand{\@cftmakeloftitle}{%
+  \addpenalty\@secpenalty
+  \if@cfthaschapter
+    \vspace*{\cftbeforeloftitleskip}%
+  \else
+    \vspace{\cftbeforeloftitleskip}%
+  \fi
+  \@cftpagestyle
+  {\interlinepenalty\@M
+   \centering\hei\zihao{-3}\listfigurename\par
+   \cftmarklof
+   \par\nobreak
+   \vskip \cftafterloftitleskip
+   \@afterheading}}
+\makeatother
+
+
+% 插图目录标题上下空白
+\setlength{\cftbeforeloftitleskip}{0pt}
+\setlength{\cftafterloftitleskip}{18pt}
+
+
+\renewcommand{\listtablename}{表\quad 格}
+\makeatletter
+\renewcommand{\@cftmakelottitle}{%
+  \addpenalty\@secpenalty
+  \if@cfthaschapter
+    \vspace*{\cftbeforelottitleskip}%
+  \else
+    \vspace{\cftbeforelottitleskip}%
+  \fi
+  \@cftpagestyle
+  {\interlinepenalty\@M
+   \centering\hei\zihao{-3}\listtablename\par
+   \cftmarklot
+   \par\nobreak
+   \vskip \cftafterlottitleskip
+   \@afterheading}}
+\makeatother
+
+
+% 表格目录标题上下空白
+\setlength{\cftbeforelottitleskip}{0pt}
+\setlength{\cftafterlottitleskip}{18pt}
+
+
+\lstset{
+  basicstyle=\ttfamily\small,      % 等宽字体
+  % numbers=left,                    % 行号
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=8pt,
+  frame=single,                    % 边框
+  breaklines=true,                 % 自动换行
+  tabsize=3,
+  captionpos=b,
+  showstringspaces=false,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{red}
+}
+
+
+\usepackage{tikz}
+
+\definecolor{kwbg}{RGB}{225,235,250}  % 浅亮蓝
+\definecolor{kwtx}{RGB}{30,80,150}    % 深蓝字
+
+\newcommand{\kw}[1]{%
+  \tikz[baseline=(X.base)]{
+    \node[
+      fill=kwbg,
+      rounded corners=2pt,
+      inner xsep=5pt,
+      inner ysep=2pt
+    ] (X) {\textsf{\small\textcolor{kwtx}{#1}}};
+  }%
+}

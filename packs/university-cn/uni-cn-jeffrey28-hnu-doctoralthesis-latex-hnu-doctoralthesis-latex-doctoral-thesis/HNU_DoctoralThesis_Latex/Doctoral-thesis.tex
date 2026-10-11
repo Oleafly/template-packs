@@ -1,0 +1,119 @@
+%!TEX encoding = UTF-8 Unicode
+%!TEX program = xelatex
+
+\documentclass[doctor]{hnuthesis}
+\usepackage[small,bf,sf,SF,BF]{subfigure}
+\usepackage{amsmath, unicode-math}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\DeclareMathAlphabet{\mathbb}{U}{msb}{m}{n}%
+%\setlength\cftbeforechapskip{0.5em}  
+%\newCJKfontfamily{\simsun}[AutoFakeBold = {3.17}]{SimSun} %%中文加粗
+\setlength{\algoheightrule}{1.5pt} % thickness of the rules above and below
+\setlength{\algotitleheightrule}{0.75pt} % thicknes of the rule below the title
+\usepackage{algpseudocode}
+ 
+ 
+\usepackage{float}
+\usepackage{makecell}
+
+
+
+
+\usepackage{tikz}
+\usepackage{etoolbox}
+\newcommand{\circled}[2][]{\tikz[baseline=(char.base)]
+    {\node[shape = circle, draw, inner sep = 1pt]
+    (char) {\phantom{\ifblank{#1}{#2}{#1}}};%
+    \node at (char.center) {\makebox[0pt][c]{#2}};}}
+\robustify{\circled} 
+
+\usepackage{listings}
+%\let\oldcomment\comment
+%\let\comment\relax
+%\usepackage{easyReview}
+
+%\usepackage{setspace}
+%\linespread{1.5}
+
+
+
+% 学校代码
+\hnucode{10532}
+% 学校名称
+\hnuname{湖南大学}
+\enhnuname{Hunan University}
+% 中图分类号
+\clc{TP391}         
+% 密级       
+\secrettext{公开}                  
+
+% 标题 
+\title{湖南大学硕博士学位论文\\ \LaTeX{}模板} % TODO 换行
+\yttitle{湖南大学硕博士学位论文\LaTeX{}模板}
+\entitle{Hunan University Master's and Doctoral Dissertation \LaTeX{} Template}
+% 作者
+\author{陈晓龙}
+\enauthor{CHEN Xiaolong}
+% 学号
+\authorid{***********}      
+% 学院
+\college{机械与运载工程学院}
+% 专业
+\major{机械工程} 
+\enmajor{Mechanical Engineering}
+%学士学位获得学校，年份
+\enbachelor{B.E.~(****** University)2016}
+\enmaster{M.S.~(****** University)2018}
+\endoctor{Doctor of Philosophy}
+% 研究方向
+\workon{智能网联汽车}
+% 导师
+\supervisor{***\ 教授}
+\ensupervisor{Professor XXX}
+% 论文提交、答辩日期
+\submitdate{202x年x月xx日}
+\defensedate{202X年x月xx日}
+\endate{June, 2022}
+% 答辩委员会主席
+\chair{待定}
+
+\usepackage[export]{adjustbox} 
+\begin{document}
+% 封面、原创性声明
+\maketitle
+
+% 摘要
+\input{chapters/abstract}
+% 目录
+\tableofcontents
+% 插图附表索引
+\begingroup
+	\renewcommand*{\addvspace}[1]{}
+	\newcommand{\loflabel}{图} 
+	\renewcommand{\numberline}[1]{\loflabel~#1\hspace*{1em}}	
+	\listoffigures
+	
+	\newcommand{\lotlabel}{表}
+	\renewcommand{\numberline}[1]{\lotlabel~#1\hspace*{1em}}
+	\listoftables
+\endgroup
+
+
+% 正文章节
+\mainmatter
+%\input{chapters/prematter}
+% 设置表格字体大小
+\AtBeginEnvironment{tabular}{\small} % 调整为所需的字体大小
+\input{chapters/ch1}
+\input{chapters/example}
+\input{chapters/summary}
+\bibliography{MyLibrary.bib}
+
+\appendix
+\input{chapters/publications}
+\input{chapters/projects}
+
+\backmatter
+\input{chapters/acknowledgements}
+
+\end{document}

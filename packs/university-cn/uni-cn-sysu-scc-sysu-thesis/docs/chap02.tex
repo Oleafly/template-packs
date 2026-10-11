@@ -1,0 +1,100 @@
+\chapter{插图与表格}
+
+\label{cha:tables-and-images}
+
+\section{三线表}
+
+三线表是《撰写手册》推荐使用的格式，如表~\ref{tab:siftflow}。
+
+\begin{table}[h] %voc table result
+    \centering
+    \caption{典型的实验对比表格}
+    \begin{tabular}{*{4}{c}}
+        \toprule
+        Method                                & Pixel Acc.    & Mean Acc.     & Mean Iu.      \\
+        \midrule
+        Liu等人\cite{liu2011sift}             & 76.7          & -             & -             \\
+        Tighe等人\cite{tighe2013finding}      & 78.6          & 39.2          & -             \\
+        FCN-16s\cite{long2015fully}           & 85.2          & \textbf{51.7} & 39.5          \\
+        Deeplab-LargeFOV\cite{chen14semantic} & 85.6          & 51.2          & 39.7          \\
+        \midrule
+        Grid-LSTM5                            & \textbf{86.2} & 51.0          & \textbf{41.2} \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:siftflow}
+\end{table}
+
+\begin{table}[h] %voc table result
+    \centering
+    \caption{复杂一些的表格}
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{c|*{20}{c}|c}
+            \toprule
+            Method                    & aero          & bike          & bird          & boat          & bottle        & bus           & car           & cat           & chair         & cow           & table         & dog           & horse         & mbike         & person        & plant         & shep          & sofa          & train         & tv            & mIoU.         \\
+            \midrule
+            CNN                       & 72.6          & 29.6          & 70.2          & 53.1          & 65.1          & 81.0          & 74.3          & 79.8          & 25.0          & 64.8          & 47.8          & 69.5          & 66.2          & 65.2          & 74.2          & 42.1          & 69.6          & 38.8          & 74.4          & 58.6          & 62.5          \\
+            CNN+\textbf{1}LSTM        & 71.5          & 30.6          & 70.5          & 53.8          & 64.9          & 82.4          & 77.1          & 79.5          & 25.1          & 65.8          & 47.8          & 71.5          & 64.6          & 67.0          & 74.0          & 43.9          & 69.6          & 38.6          & 74.9          & 59.4          & 63.0          \\
+            CNN+\textbf{2}LSTM        & 76.1          & 32.6          & 72.1          & 57.0          & 65.3          & 83.6          & 75.4          & 81.7          & 24.7          & 69.3          & 47.5          & 72.3          & 68.9          & 69.5          & 74.7          & 41.5          & 69.8          & 38.3          & 77.8          & 62.1          & 64.3          \\
+            CNN+\textbf{3}LSTM        & 77.7          & 32.3          & 72.6          & 60.0          & 68.3          & 85.5          & 78.5          & 82.3          & 25.3          & 71.1          & 49.7          & 71.5          & 69.7          & 70.8          & 75.9          & 47.9          & 71.2          & 38.9          & 80.2          & 61.7          & 65.8          \\
+            CNN+\textbf{4}LSTM        & 79.1          & \textbf{33.7} & \textbf{73.6} & \textbf{62.0} & \textbf{70.4} & 85.5          & \textbf{80.9} & 83.7          & \textbf{24.1} & 70.7          & 45.7          & 73.7          & 69.6          & 72.1          & 75.6          & 47.2          & \textbf{76.0} & 37.3          & 80.5          & 62.2          & 66.4          \\
+            CNN+\textbf{5}LSTM        & \textbf{79.9} & 33.6          & \textbf{73.6} & 61.7          & 68.0          & \textbf{88.5} & \textbf{80.9} & \textbf{84.0} & 23.6          & \textbf{71.3} & \textbf{49.7} & \textbf{73.1} & \textbf{71.3} & \textbf{72.9} & \textbf{76.4} & \textbf{48.9} & 75.1          & \textbf{38.1} & \textbf{84.5} & \textbf{63.8} & \textbf{67.2} \\
+            \midrule
+            CNN+\textbf{5}LSTM$^\dag$ & 84.8          & 36.4          & 82.0          & 69.4          & 73.0          & 87.2          & 81.8          & 86.1          & 34.5          & 82.4          & 53.1          & 81.5          & 77.4          & 79.0          & 81.3          & 54.8          & 81.1          & 47.0          & 84.3          & 67.3          & 72.3          \\
+            \bottomrule
+        \end{tabular}}
+    \label{tab:vocval}
+\end{table}
+
+
+如果有表注，推荐使用 \pkg{threeparttable}。这样可以与表格对齐，满足部分评审老师的要求。
+
+\begin{table}
+  \centering
+  \begin{threeparttable}
+    \caption{带表注的表格}
+%    \bicaption{带表注的表格}{Test table 2}
+    \label{tab:tablewithnotes}
+    \begin{tabular}{cl}
+      \toprule
+      类型   & \multicolumn{1}{c}{描述}              \\
+      \midrule
+      挂线表 & 挂线表也称系统表、组织表，用于表现系统结构 \\
+      无线表 & 无线表一般用于设备配置单、技术参数列表等   \\
+      卡线表 & 卡线表有完全表，不完全表和三线表三种       \\
+      \bottomrule
+    \end{tabular}
+    \begin{tablenotes}[flushleft]
+      \item 注：表注分两种，第一种是对全表的注释，用不加阿拉伯数字排在表的下边，
+      前面加“注：”；第二种是和表内的某处文字或数字相呼应的注，
+      在表里面用带圈的阿拉伯数字在右上角标出，然后在表下面用同样的圈码注出来
+    \end{tablenotes}
+  \end{threeparttable}
+\end{table}
+
+
+编制表格应简单明了，表达一致，明晰易懂，表文呼应、内容一致。
+排版时表格字号略小，或变换字体，尽量不分页，尽量不跨节。
+表格太大需要转页时，需要在续表上方注明“续表”，表头页应重复排出。
+
+\section{插图}
+
+有的同学可能听说“\LaTeX{} 只能使用 eps 格式的图片”，甚至把 jpg 格式转为 eps。
+事实上，这种做法已经过时。
+而且每次编译时都要要调用外部工具解析 eps，导致降低编译速度。
+所以我们推荐矢量图直接使用 pdf 格式，位图使用 jpeg 或 png 格式。
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\textwidth]{image/confusion.pdf}
+  \caption{图号、图题置于图的下方}
+%  \bicaption{图号、图题置于图的下方}{Test figure 1}
+  \label{fig:sysulogo}
+  \figurenote{若有图注，图注置于图题下方。
+    多个图注则须顺序编号，注序左缩进2字，与注文之间空一字符，续行悬挂缩进左对齐，两端对齐。
+    注文的字数较少且是短语时，末尾不可加标点，多个图注可以在同一行通过自由选取字符空格将各个图注间隔开来；
+    注文的字数较多或者甚至需要用句子说明时，该图注可以独立成行。
+  }
+\end{figure}
+
+关于图片的并排，推荐使用较新的 \pkg{subcaption} 宏包，
+不建议使用 \pkg{subfigure} 或 \pkg{subfig} 等宏包。

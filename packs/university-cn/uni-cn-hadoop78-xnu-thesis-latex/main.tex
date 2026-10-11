@@ -1,0 +1,89 @@
+%!TEX encoding = UTF-8 Unicode
+%!TEX program = xelatex
+
+% 关键1：在文档类之前传递选项，强制ctex不使用预置字体集
+\PassOptionsToPackage{fontset=none}{ctex}
+% 关键2：将文档类的fontset选项改为none
+\documentclass[doctor, fontset=none]{hnuthesis}  % 修改：fontset=windows → fontset=none
+
+% 关键3：立即定义字体，确保在模板加载ctex之前设置
+\setCJKmainfont{SimSun}[
+    Path = ./fonts/,
+    Extension = .ttc,
+    BoldFont = *, 
+    AutoFakeBold = false
+]
+\providecommand\CJKsfdefault{} % 防止重定义警告
+\setCJKsansfont{SimHei}[
+    Path = ./fonts/,
+    Extension = .ttf
+]
+
+
+\usepackage{subfigure}
+\usepackage{amsmath}
+\usepackage{algorithmicx,algpseudocode}
+\usepackage{float}
+
+\hnucode{10545} % 学校代码（按需修改）
+\hnuname{湘南学院}  % 学校名称
+\enhnuname{Xiangnan University}  % 学校名称（英文）
+\degree{本科}   % 学位类别
+\clc{TP391}  % 中图分类号
+\secrettext{公开}  % 密级       
+\session{} % 届别
+\coverlogo{figures/xiaohui} % 校徽图路径
+\covername{figures/xiaoming} % 校名字样图路径
+
+% 标题
+\title{基于VB平台的CAI教学软件的研究与开发}
+\entitle{Research on the Design and Optimization of Multi-Level Protection System Based on Triple Rashomon}
+% 作者
+\author{}
+\enauthor{Shewan Da}
+% 学号
+\authorid{}      
+% 学院
+\college{}
+% 专业
+\major{} 
+\enmajor{Software Engineering}
+
+\workon{}
+% 导师
+\supervisor{}
+\ensupervisor{Professor Rizhan Yuanfei}
+% 论文提交、答辩日期
+\submitdate{}
+\defensedate{2025年3月}
+\endate{March, 2025}
+% 答辩委员会主席
+\chair{待定}
+
+\begin{document}
+% 封面、原创性声明
+\maketitle
+
+% 摘要
+\input{chapters/abstract}
+% 目录
+\tableofcontents
+
+
+% 正文章节
+\mainmatter
+\input{chapters/ch1}
+\input{chapters/ch2}
+\input{chapters/ch3}
+\input{chapters/ch4}
+\input{chapters/ch5}
+
+\bibliography{references}
+
+\backmatter
+\input{chapters/acknowledgements}
+
+\appendix
+\input{chapters/publications} % 可选：附录（如不需要可注释）
+
+\end{document}

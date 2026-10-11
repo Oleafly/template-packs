@@ -1,0 +1,140 @@
+% 东南大学校庆研究生学术报告会论文模板-非官方
+% 编译方式：XeLaTeX
+\documentclass{seu-report}
+
+%% ========== 论文元信息 ==========
+\cnTitle{基于分层蚁群算法的人力资源智能优化配置系统研究}
+\enTitle{Human Resource Distribution Smart Optimizing System Using Multi-Layer Ant Colony Optimization}
+
+\cnAuthor{张三\textsuperscript{1}，李四\textsuperscript{2}，王五\textsuperscript{3}}
+\enAuthor{Zhang San\textsuperscript{1}, Li Si\textsuperscript{2}, Wang Wu\textsuperscript{3}}
+
+\cnInstitute{（1.东南大学机械工程学院，南京，210000；2.东南大学信息科学与工程学院，南京，210096）}
+\enInstitute{(1. School of Mechanical Engineering, Southeast University, Nanjing, 210000; \\ 
+2. School of Information Engineering, Southeast University, Nanjing, 210096)}
+
+\cnAbstract{为提高企业人力资源配置的合理性，设计了一个基于蚁群算法的人力资源智能优化分配系统。本文首先介绍了该系统的框架结构与功能模块，并研究了利用日志信息修正新任务属性矩阵的方法。随后提出一种分层式蚁群算法用于进行人力资源配置优化，该算法可简化目标函数及运算过程，同时可高效的利用反馈信息，使优化结果更具实效性。最后的实验表明该系统优化结果良好，具有较强的实用性。}
+
+\enAbstract{To improve the quality of human resource distribution (HRD) in enterprise, a system of HRD (HRDS) is designed in this paper. Based on the function requirement and the features of HRD, the frame structure and functional module of the system is built in this paper. According to the features of HRD, the state transition rule and pheromone update rule in ant colony optimization (ACO) are appropriately modified, so that the optimizing process can be obviously reduced. Experimental results manifest that this system is accurate, useful and high efficiency.}
+
+\cnKeywords{工作流；蚁群算法；人力资源；优化配置}
+\enKeywords{Workflow; Human resource; Ant colony optimization; Distribution optimizing}
+
+\authorInfo{%
+作者简介：焦X，（1985-），男，硕士研究生，E-mail: jiaoxxx@hotmail.com；祁X，（1964-），女，副教授，E-mail: qixx@seu.edu.cn；孙XX，（1965-）男，教授，博导，E-mail: sunxx@seu.edu.cn.}
+
+% 基金项目 没有可以删掉
+\fundInfo{基金项目：南京市科技计划项目（2008软资03027）}
+
+\begin{document}
+
+%% ========== 标题区（单栏）+ 正文开始（双栏） ==========
+\twocolumn[\makeheader]
+
+%% ========== 作者简介（第一页左栏底部） ==========
+\makeauthorinfo
+
+\section{Introduction}
+制造业内部竞争日益激烈，如何合理利用自身资源是企业生存与否的一个重要因素。人力资源作为企业的一项重要资源，其分配的质量将直接影响着企业的运营效果，从而决定了企业的生存与否。然而，尽管目前许多企业配套了ERP、PDM、MES等信息系统以提升自身的管理与运行效率，但是在人员与任务匹配方面，一般仍采用手工方式，凭借管理者的个人管理经验完成。由于个人经验往往带有主观性、局限性，难以从全局入手获得最优方案，这导致人力资源分配成为企业运营的瓶颈。
+
+针对此现状，近年来许多学者展开了针对人员配置优化的研究，常见的有基于各类算法（如基于神经网络增强学习算法\upcite{ref1}、multi-objective immune Deadline-based\upcite{ref2,ref3}、locality principle\upcite{ref4}和自行设计的algorithm\upcite{ref5}等）或基于各类策略\upcite{ref6,ref7}。但各类优化方法，大多仅从优化目标入手，未考虑企业自身分配任务时的固有特点和习惯，对企业现有的信息管理系统未能加以充分利用。人力资源分配的工作是一种典型的多目标优化问题，而蚁群算法已被证明是解决该问题的有力工具之一\upcite{ref9,ref10,ref11}。关于蚁群算法在资源优化配置中的应用，也获得了相应成果\upcite{ref12,ref13}。但是关于人力资源配置方面的研究尚少，并且在现有研究中，进行任务分配时所需的参数，一般由人工指定，如员工的能力值、任务所需时间等。本文通过将蚁群算法与数据挖掘技术相结合，将对现有管理平台的数据挖掘结果反馈于分配算法过程，使得任务分配优化能够在企业固有的任务分配习惯和特点的基础上展开，所优化的结果更具有实用性。最后的测试结果表明，该系统具有较高的实用性及效率。
+
+
+\section{Related Work}
+论文要求主题明确，数据可靠，逻辑严密，文字精炼。每篇论文（含图、表）不超过10页，内容包括标题、作者姓名、作者单位、摘要（不多于5个）、正文、参考文献、作者简介（包括姓名、出生年、性别、职称、联系方式等）及基金项目名称及批准号等信息。
+
+\subsection{蚁群优化的信息矩阵预配置}
+从日志库中获取的相关信息经过处理，以矩阵的形式参与蚁群算法的优化计算，获取此类矩阵的过程称为信息矩阵预配置。主要的相关矩阵有任务相似度矩阵S、员工-任务匹配权值矩阵W、员工-任务用时估值修正矩阵T。信息矩阵的参考信息来源于对日志库的信息挖掘及对新任务的前期处理（如任务分解、所需成本与时间的估算等）。假定在矩阵计算开始前，如下信息已经得到，同时为能简要提出本文方法的思路，以下均假定任务对象为单一零件，即将任务和零件等同处理：
+
+\subsection{基于蚁群算法的人员分配优化}
+蚁群算法（ant colony optimization, ACO）是一种优秀的启发式算法，最初被设计用于解决TSP问题。但是人力资源分配与TSP问题有着显著区别，主要体现在如下方面：1.非循环性，在ACO中表现为蚂蚁最终不会回到起点；2.非遍历性，在ACO中表现为蚂蚁不需要访问到所有的结点；3.可重复性，在ACO中表现为结点可重复被选择。
+
+针对如上特点，传统的蚁群算法若直接被应用于人力资源优化分配，会带来目标函数复杂、计算过程繁琐等问题，因此需要根据人力资源分配过程的特点，对传统ACO进行一定的改进。
+
+
+\section{Methodology}
+若信息素始终处于积累状态，那么随着优化的不停循环，信息素将会增加到淹没能见度信息的地步。因此必须在每次循环结束后，对信息素进行升华。为增加收敛速度，本文采用全局更新法。在每次循环结束后，只有当前最优路径上的信息素才会被更新。设$\Delta\tau_{ij}^k$为第k只蚂蚁在路径(i,j)上留下的信息素增量，则有：
+
+表格一律采用三线表，如表\ref{tab:example}所示。
+
+\begin{center}
+  \captionof{table}{实验数据}\label{tab:example}
+  \zihao{-5}
+  \begin{tabular}{ccc}
+    \toprule
+    序号 & 参数A & 参数B \\
+    \midrule
+    1 & 2.5 & 3.8 \\
+    2 & 4.1 & 5.2 \\
+    3 & 6.3 & 7.9 \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+
+
+\begin{center}
+  \includegraphics[width=0.5\columnwidth]{figures/seu-color-logo2.png}
+  \captionof{figure}{图1 系统架构示意图}\label{fig:example}
+\end{center}
+
+\section{Experiment}
+在应用时，实际工作时间会受诸多因素干扰，如病假、工作失误等等，因为本文为验证多层蚁群算法在优化中的实际效果，并未使用现实中的案例，而是利用程序，按一定的算法随机生成模拟现实的所需信息，如任务历史日志、员工属性、任务属性等。将这些信息，通过穷举法，可获得一个目标函数的理论最佳解。再利用多层蚁群算法进行人力资源的优化分配，将优化结果与最佳值进行对比，即可验证出本文方法的优劣。
+
+\begin{center}
+  \captionof{table}{任务时实验数据}\label{tab:table1}
+  \zihao{-5}\CJKfamily{zhsong}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{cc@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c}
+    \toprule
+    方法 & \makebox[0pt][c]{任务1到8各自} & 目标函 & 所需时间 & 优化时间 \\
+         & \makebox[0pt][c]{对应的员工}   & 数值   & （天）   & （秒）   \\
+    \midrule
+    EM   & 2,1,4,2,3,5,1,5 & 132.4 & 24 & 74 \\
+    2000 & 2,1,3,2,3,4,1,5 & 132.6 & 25 & 8  \\
+    1000 & 2,1,3,2,3,4,1,5 & 132.6 & 25 & 4  \\
+    300  & 2,1,4,2,3,4,1,5 & 135.4 & 27 & 1  \\
+    100  & 2,1,4,2,5,4,3,5 & 140.6 & 28 & $<$1 \\
+    \bottomrule
+  \end{tabular}
+
+  \tabnote{注：表中EM代表穷举法，100、300、1000、2000分别表示循环100次、300次、1000次、2000次的多层蚁群算法的结果。}
+\end{center}
+
+\begin{center}
+  \captionof{table}{任务时实验数据}\label{tab:table2}
+  \zihao{-5}\CJKfamily{zhsong}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{cc@{\hspace{6pt}}c@{\hspace{6pt}}c@{\hspace{6pt}}c}
+    \toprule
+    方法 & \makebox[0pt][c]{任务1到9各自} & 目标函 & 所需时间 & 优化时间 \\
+         & \makebox[0pt][c]{对应的员工}   & 数值   & （天）   & （秒）   \\
+    \midrule
+    EM   & 2,1,4,3,3,5,1,5,2 & 159.2 & 29 & 554 \\
+    2000 & 2,1,4,3,3,4,1,5,2 & 159.9 & 30 & 10  \\
+    300  & 2,3,4,1,3,4,1,5,2 & 162.5 & 32 & 2   \\
+    \bottomrule
+  \end{tabular}
+\end{center}
+
+\section{总结}
+结论应准确、完整、精炼。如果不能导出应有的结论，也可进行必要的讨论。可以在结论或讨论中提出建议、设想、尚待解决的问题等。
+
+%% ========== 参考文献 ==========
+\begin{thebibliography}{13}
+\bibitem{ref1} 张毅, 罗元, 郑太雄等. 移动机器人技术及其应用[M]. 北京：电子工业出版社, 2007.
+\bibitem{ref2} Ishiguro, H.Y., M. Tsuji, et al. Pattern analysis and machine intelligence[J]. IEEE Transaction on, 1992, 14(2): 257-262.
+\bibitem{ref3} 廖晓辉, 沈大中, 王东署. 智能轮椅的研究现状与关键技术分析[J]. 制造业自动化, 2008, 30(4): 1-6.
+\bibitem{ref4} R.S.Rao, K.Conn, S.H.Jung, et al. Human robot interaction: application to smart wheelchairs[C]. International Conference on Robotics \& Automation, Washington, DC: 7803-7272, 2002: 3583-3588.
+\bibitem{ref5} Richard Simpson, Edmund LoPresti, Steve Hayashi, et al. The smart wheelchair component system[J]. Journal of Rehabilitation Research \& Development, 2004, 41(3B): 429-442.
+\bibitem{ref6} 章小兵. 基于视觉和超声波传感器的地面移动机器人定位与路径规划研究[D]. 南京: 东南大学, 2006.
+\bibitem{ref7} 赵海文, 岳宏, 张雅丽等. 移动机器人运动目标跟踪系统设计[J]. 微计算机信息, 2007, 23(9-2): 249-251.
+\bibitem{ref8} 荣命哲, 娄建勇, 王小华. 永磁式接触器动触头动作特性仿真分析与试验研究[J]. 中国电机工程学报, 2005, 25(1): 109-113.
+\bibitem{ref9} Fang Shuhua, Lin Heyun, et al. Magnetic field analysis and dynamic characteristic prediction of ac permanent-magnet contactor[J]. IEEE Trans. Magnetics, 2009, 45(7): 2990-2995.
+\bibitem{ref10} 房淑华, 林鹤云, 蔡彬等. 永磁接触器磁场有限元分析及控制单元设计[J]. 中国电机工程学报, 2006, 26(22): 162-166.
+\bibitem{ref11} 毛万镝, 林鹤云, 汪先兵等. 永磁接触器操动机构多目标动态优化设计[J]. 东南大学学报(自然科学版), 2009, 39(2): 287-292.
+\bibitem{ref12} 汪先兵, 林鹤云, 房淑华等. 永磁接触器位移分段PWM控制及吸合过程动态特性分析[J]. 中国电机工程学报, 2010, 30(3): 113-118.
+\bibitem{ref13} Chien T C. Applying closing phase-angle control technique in bounce reduction of AC permanent magnet contactor[J]. Hindawi Publishing Corporation Active and Passive Electronic Components, 2009, (2009): 1-12.
+\end{thebibliography}
+
+\end{document}

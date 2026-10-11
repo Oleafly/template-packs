@@ -1,0 +1,281 @@
+% !Mode:: "TeX:UTF-8"
+
+\chapter{系统功能实现}\label{ch:5}
+
+本章按系统演示和答辩说明的顺序展开，先说明登录鉴权与角色边界，再说明课程体测和学生端请假流程，随后介绍导入导出、AI 分析问答和日志追溯，从"用户进入系统"到"业务数据形成分析结果"逐步展开。
+
+\section{管理端登录模块实现}
+
+管理端登录模块采用账号密码认证。用户提交登录请求后，后端完成身份校验并返回登录凭证，前端依据当前用户的角色和权限信息加载对应页面。
+
+登录成功后，管理员可进入系统管理、课程管理和统计分析等页面，教师只能访问本人负责课程的相关数据。这体现了系统在角色边界控制上的差异化设计。
+
+密码修改和个人资料维护操作中，后端继续校验参数完整性和权限合法性。出现密码错误、参数缺失或权限不足时，系统返回对应提示。除管理端登录外，系统还提供学生个人端入口，学生首次登录后需先修改默认密码再进入后续业务页面。管理端登录与主页效果如图 \ref{fig:admin-login-home} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_1_admin_home.png}
+  \caption{管理端登录与主页界面}
+  \label{fig:admin-login-home}
+\end{figure}
+
+\section{管理端相关管理功能的实现}
+
+\subsection{用户与角色管理模块实现}
+
+用户与角色管理模块用于教师账号维护、个人信息修改和角色授权。系统在新增或修改账号时校验用户名等关键字段的唯一性，通过启用、禁用状态控制账号登录权限。
+
+角色管理采用角色编码与菜单权限结合的方式。角色信息调整后，前端页面依据新的授权结果重新加载，保证页面展示范围与实际可执行操作一致。
+
+权限校验的核心实现基于 RBAC 模型。后端通过 PermissionService 对当前登录用户的角色集合进行匹配判断，管理员角色编码（如 R\_ADMIN、SUPBER\_ADMIN）和教师角色编码（如 R\_TEACHER）分别对应不同的数据访问范围。hasRole 方法从 SecurityContext 中提取已认证用户的角色集合，再与接口要求的角色逐一比对，任一命中即判定为有权限。
+
+用户管理与角色管理界面如图 \ref{fig:user-manage} 和图 \ref{fig:role-manage} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_2_user_manage.png}
+  \caption{系统用户管理界面}
+  \label{fig:user-manage}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_3_role_manage.png}
+  \caption{系统角色管理界面}
+  \label{fig:role-manage}
+\end{figure}
+
+\subsection{课程管理模块实现}
+
+课程管理模块是体测业务的基础。管理员可按学期、课程编号和授课教师等条件查询课程，完成课程维护工作。课程管理界面如图 \ref{fig:course-manage} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_4_course_manage.png}
+  \caption{课程管理界面}
+  \label{fig:course-manage}
+\end{figure}
+
+\subsection{教师分配模块实现}
+
+一门课程由多位教师共同负责时，系统通过课程与教师的关联关系限定可访问范围。管理员在课程管理页面点击编辑按钮，进入教师分配界面完成教师更新。教师登录后只能操作本人参与课程及对应项目的数据。教师分配界面如图 \ref{fig:teacher-assign} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_4b_teacher_assign.png}
+  \caption{教师分配界面}
+  \label{fig:teacher-assign}
+\end{figure}
+
+\subsection{学生基础信息与请假管理模块实现}
+
+学生基础信息是体测业务的前提。系统围绕学号、姓名、性别、班级和身份证号等字段维护学生档案，通过唯一性校验和关联约束保证学生信息、课程关系与体测记录之间的对应关系。
+
+请假业务形成"学生提交申请、教师或管理员审核、结果留痕"的流程。管理端负责统一维护请假记录，学生端负责发起申请并查看处理进度。
+
+请假记录中增加课程关联、审批状态、审批人、审批时间和审批意见等字段，记录一次申请的完整处理过程。教师只能审批本人授课课程中的学生申请，学生提交申请时也必须选择对应课程。
+
+审批通过后，若请假申请带有特殊标签（如"兵役""免测"），系统自动将该标签写入对应体测记录的备注字段。写回操作在审批方法中通过事务保证一致性：先按学号查询学生信息，再定位该课程下的体测记录并更新备注。
+
+学生请假管理与审批界面如图 \ref{fig:leave-manage} 和图 \ref{fig:leave-approval} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_5_leave_manage.png}
+  \caption{学生请假管理界面}
+  \label{fig:leave-manage}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_6_leave_approval.png}
+  \caption{学生请假审批界面}
+  \label{fig:leave-approval}
+\end{figure}
+
+\subsection{体测数据录入与备注修正模块实现}
+
+体测数据模块支持按单个项目逐步录入，也支持按班级统一处理和集中导入回填，围绕本校两类体测组织方式进行设计：一类是面向大一、大二体育课的普通体测，另一类是面向大三、大四按行政班集中开展的集体体测。系统依据项目类型对输入执行差异化校验，耐力跑项目检查时间格式，其他项目检查数值取值范围。
+
+发现异常值时，教师可直接进行单条修改、恢复默认值或补充备注，不需要重新处理整批数据。
+
+男女生存在差异的体测项目在字段设计和评分逻辑上进行了区分。公共项目按统一规则计算，差异项目依据性别匹配对应字段与标准。体测数据录入与备注修正界面如图 \ref{fig:fitness-entry-remark} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_8_fitness_record.png}
+  \caption{体测数据录入与备注修正界面}
+  \label{fig:fitness-entry-remark}
+\end{figure}
+
+\subsection{课程结束与成绩计算模块实现}
+
+课程结束后，系统先更新课程状态，再依据该课程下已有体测记录统一计算学生总分、等级与达标结果并写入成绩表。
+
+课程结束后如需补录或修正数据，可先将课程恢复为可录入状态，处理完成后再重新结束课程。这一方式符合学校体测数据需要多轮核对的实际情况。课程体测项目完成度和学生体测成绩总表界面如图 \ref{fig:course-project-progress} 和图 \ref{fig:student-score-table} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_completion_progress.png}
+  \caption{课程体测项目完成度界面}
+  \label{fig:course-project-progress}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_score_table.png}
+  \caption{学生体测成绩总表界面}
+  \label{fig:student-score-table}
+\end{figure}
+
+\subsection{成绩分析与日志审计模块实现}
+
+成绩分析模块支持从学期和课程两个维度查看体测结果，前端通过图表展示及格率、等级分布和项目表现。
+
+日志审计模块记录用户维护、导入导出、课程结束、体测修改和 AI 分析等关键操作。需要核查问题时，可依据日志内容回溯处理过程。体育成绩统计分析和系统日志界面如图 \ref{fig:score-analysis} 和图 \ref{fig:system-log} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_ai_analysis.png}
+  \caption{体育成绩统计分析界面}
+  \label{fig:score-analysis}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_12_system_log.png}
+  \caption{系统日志界面}
+  \label{fig:system-log}
+\end{figure}
+
+\section{教师端课程管理功能实现}
+
+教师端课程查询在后端根据当前登录用户 ID 过滤课程教师关联表，只返回教师被分配的课程，从接口层保证教师无法越权读取其他课程数据。进入课程详情后，教师可查看各体测项目完成情况，系统通过已录入人数和待录入人数反映当前进度。教师端课程列表界面如图 \ref{fig:teacher-course-list} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_13_teacher_courses.png}
+  \caption{教师端课程列表界面}
+  \label{fig:teacher-course-list}
+\end{figure}
+
+\section{体测数据填写与批量导入功能实现}
+
+教师端体测数据页面提供逐条录入和批量回填两类入口。针对大一、大二体育课的普通体测，教师可直接录入单项成绩；针对大三、大四按行政班集中开展的集体体测，可基于模板统一导入，页面操作与后端校验规则一致。进入课程学生列表后，教师点击"进入编辑模式"切换为逐行录入状态，直接编辑体测数据字段。同一页面还提供"导出数据"和"导入数据"按钮，用于模板导出与数据回传。体测数据填写界面如图 \ref{fig:data-fill} 所示。
+
+批量导入遵循"同模板导出、同模板导入"的闭环。教师先从课程中导出模板，按既定字段补充数据，最后将结果回传系统，避免手工整理时列名设置和字段口径不一致。该流程可在课程结束前重复执行，便于多轮核对和补录。若课程已结束，系统先校验课程状态再决定是否允许导入。该闭环流程如图 \ref{fig:template-loop} 所示。
+
+交互层面，前端对常见格式错误和取值越界进行即时提示。批量导入失败时，后端返回具体原因，教师可据此修正源数据后再次提交。导入结果和成绩汇总数据可在成绩总表中统一查看（见图 \ref{fig:student-score-table}）。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_edit_mode.png}
+  \caption{体测数据填写界面}
+  \label{fig:data-fill}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{fig5_11_template_loop.png}
+  \caption{模板导出与回传导入流程图}
+  \label{fig:template-loop}
+\end{figure}
+
+\section{学生端登录、自助查询与历史记录展示功能实现}
+
+学生端围绕学生在校期间的体测情况提供服务。学生登录后可查看历史体测成绩、当前课程和体测安排，也可提交请假申请并查看审批结果。
+
+历史体测展示中，页面给出各次测试成绩和最近一次总分、等级与变化趋势。对尚未形成完整成绩的课程，系统结合已录入项目和算分规则补齐展示结果。
+
+请假场景下，学生端负责提交申请和查看处理结果，审批操作仍由教师端或管理端完成。学生端历史体测、课程安排和请假申请界面如图 \ref{fig:student-history} 至图 \ref{fig:student-leave} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_student_history.png}
+  \caption{学生端历史体测成绩界面}
+  \label{fig:student-history}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_student_schedule.png}
+  \caption{学生端课程与体测安排界面}
+  \label{fig:student-schedule}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_student_leave.png}
+  \caption{学生端请假申请与记录界面}
+  \label{fig:student-leave}
+\end{figure}
+
+\section{AI 分析功能实现}
+
+AI 分析功能覆盖班级统计分析和学生历史分析两类场景。用户发起分析后，系统先判断分析对象属于课程统计范围还是学生个体范围。课程或学期范围的分析汇总总人数、及格人数、优秀人数、平均分和各项目及格率等统计结果。学生个体范围的分析读取历次体测记录，补充最近请假与就医情况。
+
+统计数据整理完成后，系统将课程指标封装为结构化统计对象，或按时间顺序将历次体测记录与请假摘要组装为学生历史分析对象。随后根据分析场景构建提示模板，明确分析角色、输入结构、输出格式和数据边界，再交由模型生成分析文本。生成结果返回后，系统保存输出文本与分析条件，用于后续核对模型结论与输入统计的一致性。
+
+模型服务调用失败时，系统切换到本地规则化分析逻辑，输出简要结论、主要问题和训练建议。该功能的实现路径为"数据汇总—提示信息构造—模型调用—失败回退—结果存储"。其中提示信息构造是决定分析质量的关键环节，系统将统计对象中的关键字段按固定模板组装，并预置"整体评估—主要问题—训练建议—下阶段目标"四段式输出结构。
+
+\section{AI 问答能力实现}
+
+\subsection{AI 问答流程实现}
+
+AI 问答功能面向管理端的数据查询和结果解释场景。用户提出问题后，系统接收当前问题及历史对话内容，结合问题中的学号、课程号、班级编号和学期信息判断查询范围。对未给出完整条件的连续追问，系统结合上下文恢复上一轮查询范围，支持多轮问答中的范围继承。
+
+范围确定后，系统按不同层级读取数据。学生范围提取个人历史体测记录，必要时补充请假信息。课程、班级和学校范围提取成绩统计结果。问题属于排行、对比或条件筛选时，系统补充学生排行、班级排行、命中人数比例和代表性样本等结构化结果。经过该步骤，问答输入不再是原始记录，而是按问题语义组织好的数据依据。
+
+\subsection{问答证据组织与生成机制}
+
+数据组织阶段，系统将体测历史、请假记录、统计结果、排行信息和条件样本整理为可读摘要，再与用户问题、对话上下文、识别意图和查询范围共同组装为提示信息。提示信息要求回答依据输入材料，不得编造数据。数据不足时直接说明不足。
+
+为落实上述约束，系统在提示信息中嵌入了三层约束机制。第一层为来源约束：每条摘要标注数据来源（如"2025-2026学年第一学期体测成绩表""学生请假记录表"），要求模型在回答中引用具体来源。第二层为范围约束：提示信息中声明当前查询范围（学生/课程/班级/学校），要求模型不得越界推断范围外的数据。第三层为数值约束：关键统计数值（总人数、及格率、平均分、排名等）以显式字段标注，要求模型在回答中直接引用而非自行推算。该设计降低了模型生成过程中引入数值偏差的风险。
+
+上述证据采集通过 Spring AI 的 @Tool 注解机制接入模型调用流程。各查询工具使用注解声明功能描述和参数语义，使 AI Agent 能够根据问题选择合适的查询能力，并将返回的 JSON 结构化结果记录到调用轨迹中。
+
+模型服务不可用时，系统回退到本地规则化问答逻辑，输出基于已有统计结果或历史记录的说明性回答。后端在前置处理阶段发现范围冲突、条件不完整或证据不足时，直接给出结构化降级结果，不再进入模型调用。最终生成的回答文本、证据列表、查询范围、上下文摘要和建议追问统一呈现至前端，同时写入分析日志表，用于问答结果的查询、复核和追溯。AI 问答界面和时序如图 \ref{fig:ai-qa} 和图 \ref{fig:ai-qa-sequence} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.92\textwidth]{fig5_ai_qa.png}
+  \caption{AI 体测问答界面}
+  \label{fig:ai-qa}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{fig5_23_ai_qa_sequence.png}
+  \caption{AI 问答处理时序图}
+  \label{fig:ai-qa-sequence}
+\end{figure}
+
+\section{AI 分析模型设计}
+
+AI 分析与问答功能的模型调用层由统一的提示工程、数据结构组织和回退策略支撑，本节从这三个方面说明。
+
+\subsection{提示工程}
+
+提示工程用于约束模型输出的范围和格式。系统将角色定义、结构化输入、输出格式和数据边界统一写入提示模板，使模型回答能够围绕已提取的信息展开。
+
+系统角色定义层指明模型的辅助分析定位，要求模型基于输入数据给出结论，不得编造数据。输入数据结构化层将统计分析对象或学生历史记录以可读摘要的形式嵌入提示，模型在生成阶段见到的始终是经过业务整理的结构化信息。输出格式约束层对回答结构提出要求：先给出总体结论，再列出主要问题或关键数据，最后给出建议或追问方向。数据边界声明层要求模型在证据不足时直接说明不足，不进行推测性补充。
+
+对于课程统计分析场景，提示模板中预置总人数、及格人数、优秀人数、平均分和各项目及格率等统计字段。对于学生历史分析场景，提示模板按时间顺序列出历次体测成绩，附加请假摘要和历史趋势标注。AI 问答场景在上述四层结构之外，额外嵌入当前问题的识别意图、查询范围和已提取的数据摘要。
+
+\subsection{数据结构组织}
+
+AI 分析的数据输入经过后端结构化处理，不直接传递原始数据库记录。课程统计场景下，系统先将体测成绩汇总为分析视图对象（包含总人数、及格率、优秀率、平均分、标准差和各项目及格率等字段），再将对象序列化为提示信息中的结构化数据块。学生历史分析场景下，系统将历次体测记录与评分结果按学期关联、按时间顺序组装为历史记录列表，包含各次成绩、变化趋势和请假记录摘要。
+
+AI 问答的数据组织更为灵活。后端先根据用户问题识别查询意图，再按学生、课程、班级或学校层级调用对应的数据查询能力，覆盖学生查询、成绩统计、排行筛选、请假记录、教师范围和课程信息等场景。查询结果在服务端统一封装为结构化结果，包含类型、来源、关键字段和数值摘要，组装为结果列表后嵌入提示，模型看到的输入始终保持"问题—数据"对应关系。
+
+\subsection{回退策略}
+
+模型服务不可用时，系统采用两级回退策略。第一级为规则化分析回退：AI 分析场景下，系统直接基于统计对象中的达标率、等级分布和各项目表现生成规则化结论文本，格式与模型输出一致。AI 问答场景下，系统根据已查询到的结构化结果生成说明性回答，附带数据来源标注。
+
+第二级为前置降级：后端在前置处理阶段发现查询范围冲突、条件不完整或查询结果为空时，直接返回结构化降级结果，不再进入模型调用。降级结果中标明降级原因（如"证据不足""查询条件不完整"），前端据此展示对应提示，避免用户等待无效的模型调用。
+
+两级回退的输出均记录至 AI 分析日志表，回退输出在文本中以系统提示前缀标识，用于后续统计回退频率和优化触发条件。
+
+\section{本章小结}
+
+本章围绕登录鉴权、课程管理、体测处理、学生端服务、AI 分析问答、AI 分析模型设计和日志追溯说明了实现过程，核心业务功能已完成落地，形成了可连续演示的业务链路。

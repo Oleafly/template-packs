@@ -1,0 +1,89 @@
+\input{preamble} % <--- README is in here!!!!!!!!
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Choose includes %%%%%%%%%%%%%%%%%%%%%%%%%%
+% Save compilation time by uncommenting the line below and only
+% including the chapters you're working on, while still maintaining
+% correct cross-references. Load all by simply re-commenting the line.
+%
+% NOTE: you MUST run at least once with all loaded to avoid errors
+%       where it can't remember where the references were in the
+%       unused files.
+% NOTE: when using include only, you may notice a number of "extra"
+%       blank pages - this is expected behaviour, don't panic! The text
+%       content of the chapters has been excluded but the "clear blank
+%       pages" between chapters haven't. This will look normal again
+%       when you put the other files back in. If you'd like to code up
+%       a neat solution that removes these, let me know please!
+%
+%\includeonly{2_paper1.tex,3_paper2.tex}
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Title and Declaration %%%%%%%%%%%%%%%%%%%%
+\pagenumbering{roman} % Start roman numbering, to be used until intro.
+\input{title_and_declaration}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Acknowledgments %%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter*{Acknowledgements}
+\fancyhead[RE,LO]{Acknowledgements}
+\fancyhead[RO,LE]{\thepage}
+\input{acknowledgements}
+\cleardoublepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter*{Abstract}
+\fancyhead[RE,LO]{Abstract}
+\fancyhead[RO,LE]{\thepage}
+My abstract, which will be 300 words or fewer.
+\cleardoublepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Contents page %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pdfbookmark[0]{Contents}{Contents}
+\fancyhead[RE,LO]{Contents}
+\fancyhead[RO,LE]{\thepage}
+\tableofcontents
+\cleardoublepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% List of figures %%%%%%%%%%%%%%%%%%%%%%%%%%
+\fancyhead[RE,LO]{List of figures}
+\fancyhead[RO,LE]{\thepage}
+% otherwise, default is List of Figures. Likewise, List of Tables
+\renewcommand{\listfigurename}{List of figures} 
+\listoffigures
+% Figure captions are automatically added to the list of figures.
+% Often, this makes for a list of unwieldy length. One can add a short
+% version of the caption for the LoF by using \caption[short]{full}
+\cleardoublepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% List of tables %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fancyhead[RE,LO]{List of tables}
+\fancyhead[RO,LE]{\thepage}
+\renewcommand{\listtablename}{List of tables}
+\listoftables
+% See note for list of figures, it applies to this too.
+\cleardoublepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% List of abbreviations %%%%%%%%%%%%%%%%%%%%
+\input{abbreviations}
+\cleardoublepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% List of symbols %%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\nomname}{List of symbols}
+\input{symbols}
+\cleardoublepage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Main document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fancyhead[RE]{\leftmark}		% Return Headers to Normal
+\fancyhead[LO]{\rightmark}
+\pagenumbering{arabic}    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Chapters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Naturally, include any further chapters you need here.
+\includethesischapter{1_intro.tex}      % I found numbering the files
+\includethesischapter{2_paper1.tex}     % made it easier to find them
+\includethesischapter{3_paper2.tex}     % but you might hate it!
+\includethesischapter{4_paper3.tex}
+\includethesischapter{5_conc1.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Appendix %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+%\setcounter{secnumdepth}{0} 
+\includethesischapter{9_appendix.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Bibliography %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+\bibliographystyle{copernicus}           % if you need to count your
+                                         % references, the quickest 
+                                         % way is to change to ieeetr
+                                         % temporarily
+{\raggedright \bibliography{references}} % note change of alignment to
+                                         % make neater, but you may
+                                         % prefer consistent but ugly
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Fin! %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

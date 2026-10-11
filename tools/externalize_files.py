@@ -84,7 +84,7 @@ def externalize(template_dir, store):
             if relative in KEEP:
                 continue
             is_font = name.lower().endswith(FONT_EXTENSIONS)
-            if is_font and primary_family(path) and primary_family(path) <= COVERED:
+            if is_font and manifest.get("engine") == "typst" and primary_family(path) and primary_family(path) <= COVERED:
                 os.remove(path)
                 dropped.append(relative)
                 continue

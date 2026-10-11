@@ -1,0 +1,326 @@
+\documentclass[12pt]{graduate-design-manual}
+\tikzset{every picture/.style={font=\fontsize{10.5pt}{12pt}\selectfont}}
+
+\classid{SJ005-1}
+% 论文的完整标题
+\title{基于Unity*********************游戏的设计与实现}
+% 只作用于封面，封面标题两行。若只要一行，删掉本行或改用 \covertitle{单行内容}{} 即可
+\covertitle{基于Unity*********************}{游戏的设计与实现}
+\academy{计算机信息工程学院}
+\field{软件工程}
+\class{22 软件三}
+\id{21030588}
+\author{陈\quad 小\quad 鹏}
+\Instructor{刘\quad 一\quad 一}
+\InstructorTitle{副教授}
+\ReviewingTeacher{}
+\ReviewingTeacherTitle{}
+\thedate{2026}{05}
+
+
+\begin{document}
+\makecover
+%保证书
+\begin{originalitystatement}
+本人所呈交的毕业设计（论文）是在指导教师指导下进行的工作及取得的成果。除文中已经注明的内容外，本论文不包含其他个人已经发表或撰写过的研究成果。对本文的研究做出重要贡献的个人和集体，均已在文中作了明确说明并表示谢意。
+\end{originalitystatement}
+% 中文摘要部分
+\begin{cnabstract}{基于Unity*********************游戏的设计与实现}{Unity；Vuforia；增强现实；第一人称}
+中文摘要不少于300字，摘要一般包括：文章的目的和重要性、采用的研究方法、完成哪些工作、获得的主要结论。用句应精炼概括，并有文章的关键词3－5个。
+
+英文摘要是中文摘要的英文，不少于1200印刷字符。英文摘要用词应准确，使用本学科通用的词汇；摘要中主语（作者）常常省略，因而一般使用被动语态，应使用正确的时态并要注意主、谓的一致。必要的冠词不能省略；中、英文摘要的内容须一致。……
+\end{cnabstract}
+	
+% 英文摘要部分
+\begin{englishabstract}{DESIGN AND IMPLEMENTATION OF **************~GAME BASED UNITY}{Unity;Vuforia;Augmented Reality;First-persom}
+The Chinese abstract must contain no fewer than 300 Chinese characters and generally include the following components: the purpose and significance of the study; research methodology adopted; major tasks accomplished; and key conclusions obtained. Sentences should be concise yet comprehensive, accompanied by 3–5 keywords reflecting the article's core themes. 
+
+The English abstract, serving as the direct translation of the Chinese version, must comprise no fewer than 1,200 printable characters. Lexical precision and discipline-specific terminology are mandatory. Authorship (first-person subjects) is typically omitted, favoring passive voice constructions. Grammatical accuracy must be maintained through proper tense usage and strict subject-verb agreement. Necessary articles must not be omitted. Complete content consistency between Chinese and English abstracts is required.
+\end{englishabstract}
+
+\contents
+\pagenumbering{arabic}
+\mainbody
+\section{绪论}
+本章主要介绍了课题背景、课题意义、国内外研究现状和论文组织结构。
+
+\subsection{课题背景}
+正文是一个逻辑严密、论述准确、结构合理、内容充实的整体，一般应包括研究背景、主体研究内容及过程、结论等部分。作者可视具体研究内容分为若干章。全文应与参考文献紧密结合，重点论述作者本人的独立研究工作和见解。文章不得模糊作者与他人的工作界限，参考或引用了他人的学术成果或学术观点，必须给出参考文献，严禁抄袭、占有他人的成果。正文页码从“正文、结论、致谢、参考文献、附录”一直到全文结束，页下方居中排列，用“1、2、3、4、5、6……”数字。
+
+研究背景是整个文章的基础，研究背景及意义的内容和要求为：
+\begin{enumerate}
+    \item 清楚、严谨地论述国内外关于本课题研究领域的发展现状、水平及存在的问题；
+    \item 明确论述本研究的目的及意义；
+    \item 论述文章的研究思路和主要内容。
+\end{enumerate}
+
+\subsection{课题意义}
+AR游戏为用户提供增强现实景象，为用户带来了全新的游戏体验，并增加了游戏的趣味性，能够调动用户对游戏的参与兴趣\cite{wang2019unity3d}。AR游戏的优点明显多于传统的网络游戏，AR游戏能为用户带来更多的真实性、趣味性、娱乐性和交互性体验。
+
+随着移动终端性能的不断提升，增强现实技术逐渐具备了更广泛的应用基础。将Unity游戏引擎与Vuforia增强现实开发工具结合，可以降低AR游戏的开发门槛，提高场景搭建、交互实现和多平台发布的效率。因此，开展基于Unity的第一人称增强现实冒险游戏设计与实现研究，具有一定的实践价值和市场需求。
+
+\subsection{研究现状}
+\subsubsection{国内游戏产业现状}
+随着社会经济的发展，精神文化需求成为了人们当下最主要的需求。我国游戏产业发展进入了高速发展时期。面对疫情带来的种种不利影响，游戏产业更是在国家的一系列战略指引下迎难而上，将社会效益置于首位，不断强化精品研发，创造优质内容，推动产业融合，使中国游戏产业呈现出健康、繁荣、多元的发展态势。
+
+随着AR（Augmented Reality）技术逐渐成熟，其产业应用发展速度也将加快，AR行业将迎来爆发，其用户规模将持续增加\cite{guo2019ar}。中国游戏近年来用户规模及增长率如图\ref{fig:china-game-users}所示：
+
+\begin{figure}[H]
+    \centering
+    \fbox{%
+        \begin{minipage}[c][5.2cm][c]{0.82\textwidth}
+            \centering
+            图表占位：2014--2021年中国游戏用户规模及增长率
+        \end{minipage}%
+    }
+    \caption{中国游戏用户规模及增长率}
+    \label{fig:china-game-users}
+\end{figure}
+
+文中插图版式要求：
+\begin{enumerate}
+    \item 所有插图必须有“图号”，图号按章编号，如第1章的第1张插图的图号为“图1－1”；所有插图均需要有“图题”（即图的说明，用五号宋体），“图号”与“图题”间应空1个字距，在图的下方居中标出。
+    \item 一幅图如有若干幅分图，均应编分图号，用(a)，（b），（c）……，按顺序编排。
+    \item 插图须紧跟正文，特殊情况需延后的插图不应跨节。
+    \item 图形符号及各种线型画法须按照现行的国家标准。
+    \item 坐标图中坐标上须注明标度值，并标明坐标轴所表示的物理量名称及量纲，应均按国际标准（SI）标注。
+    \item 图应具有“自明性”，即只看图、图题和图例，不阅读正文，就可理解图意。
+    \item 图中用字为五号宋体。
+    \item 正文中需提交。
+\end{enumerate}
+
+\subsubsection{国外游戏产业现状}
+根据数据，从市场规模与玩家分布来看，2020年，全球游戏市场主要位于泛太平洋、北美与欧洲。分国家看，中国和美国为全球最大的两个游戏市场，但玩家平均付费率相对美国较弱。根据App Annie数据，从游戏下载量指标来看，全球游戏发行商位于欧洲，从应用变现能力来看，主要发行商位于亚洲\cite{jin2020ar}。
+
+近年来全球游戏市场规模变化趋势如图\ref{fig:global-game-market}所示：
+
+\begin{figure}[H]
+    \centering
+    \fbox{%
+        \begin{minipage}[c][5.2cm][c]{0.82\textwidth}
+            \centering
+            图表占位：2016--2020年全球游戏市场规模变化趋势图（单位：亿美元）
+        \end{minipage}%
+    }
+    \caption{2016-2020年全球游戏市场规模变化趋势图（单位：亿美元）}
+    \label{fig:global-game-market}
+\end{figure}
+
+\subsection{主要工作内容}
+基于Unity的第一人称增强现实冒险游戏设计与实现这一课题，是利用Unity和Vuforia等开发工具，完成增强现实游戏的设计、开发与测试，主要工作如下：
+\begin{enumerate}
+    \item 调研Unity和Vuforia两个游戏制作工具的特点和基本操作方法。
+    \item 研究并设计制作相关的AR交互、场景物设计、UI交互设计、碰撞检测、相机人物跟随、房间地形、音效、光效、粒子特效、关卡设置、游戏对象自动寻路、有限状态机、3D动画等。
+\end{enumerate}
+
+\subsection{论文组织结构}
+论文主要针对基于Unity的第一人称增强现实冒险游戏设计与实现进行研究，论文内容如下：
+
+第1章，绪论。主要介绍了课题研究背景及意义、游戏产业的国内外现状和游戏开发主要研究内容。
+
+第2章，相关软件与技术简介。主要介绍了Unity、Vuforia以及增强现实游戏开发涉及的相关技术。
+
+\section{相关软件及技术简介}
+本章主要介绍游戏开发过程用到的几个重要技术，包括这些技术的优势和一些常用功能。
+
+\subsection{Unity}
+\subsubsection{Unity组件}
+Unity组件是为游戏对象实现需要功能的集合。需要在游戏对象上挂载不同类型的组件并设置相应的参数以实现某些需要的功能，如渲染组件、碰撞组件、刚体组件、音频组件、脚本组件等。通过组件化的方式，可以将游戏对象的表现、交互和控制逻辑进行拆分，便于后期维护和扩展。
+
+\subsubsection{渲染}
+Unity 提供了许多后期处理效果和全屏效果，可以用很少的设置时间大大改善应用程序的外观。可以使用这些效果模拟真实光照、阴影、景深、色彩校正以及粒子特效等视觉表现，从而提升游戏画面的整体质量。
+
+\subsubsection{动画控制}
+文中表格版式要求：
+\begin{enumerate}
+    \item 表格序号一律采用阿拉伯数字分章编号，如第2章第1个表的表序表示为“表2－1”，并需有表题，表题应简明（表题文字五号、中文宋体，Times New Roman字体）。
+    \item 表格要求三线表，上下边线宽1.5磅表头与内容之间的分隔线宽0.75磅。（表内文字五号、中文宋体，Times New Roman字体）。
+    \item 表格序号和表题间空1个字距，必须置于表格上方居中排列；
+    \item 表格的设计应紧跟正文。表格较大，不能在一页打印、需要转页排时，只需在续表上方居中注明“续表”，续表的表头应重复排出。若为大表或作为工具使用的表格，可作为附表在附录中给出。
+    \item 表中各物理量及量纲均按国际标准（SI）及国家规定的法定符号和法定计量单位标注。
+    \item 正文中需提交。
+\end{enumerate}
+
+\begin{table}[H]
+\centering
+\caption{管理员登录系统功能测试表}
+\begin{tabular}{cccc}
+\toprule
+用例编号 & 用例名称 & 预期结果 & 实际结果 \\
+\midrule
+1 & 管理员正常账号登录 & 返回操作成功提示 & 符合预期 \\
+2 & 管理员输入错误账号登录 & 返回账号或密码错误 & 符合预期 \\
+3 & 管理员输入错误密码登录 & 返回账号或密码错误 & 符合预期 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Unity脚本}
+目前Unity主要使用C\#为开发语言。脚本用于控制游戏对象的行为、响应用户输入、处理碰撞检测、管理场景切换以及实现游戏逻辑。通过脚本可以将游戏设计中的交互规则转化为可执行的程序逻辑。
+
+\subsubsection{MonoBehaviour类}
+MonoBehaviour 类是一个基类，所有 Unity 脚本都默认派生自该类。当从 Unity 的项目窗口创建一个 C\# 脚本时，Unity会自动生成继承MonoBehaviour的类结构。该类提供了Start、Update、FixedUpdate等常用生命周期函数，使开发者能够在不同阶段执行初始化、帧更新和物理更新等操作。
+
+\subsubsection{常用函数}
+Unity脚本中使用的几个重要函数包括Start函数、Update函数、FixedUpdate函数、OnCollisionEnter函数和OnTriggerEnter函数等。Start函数通常用于初始化数据，Update函数用于每帧执行逻辑，FixedUpdate函数常用于物理相关操作，碰撞与触发函数则用于处理游戏对象之间的交互。
+
+\begin{lstlisting}
+private void UpdateHp(int damage)
+{
+    currentHp -= damage;
+    if (currentHp <= 0)
+    {
+        ChangeState(PlayerState.Dead);
+    }
+}
+\end{lstlisting}
+
+\begin{algorithm}[H]
+\caption{角色状态更新流程}
+\label{alg:state-update}
+\begin{algorithmic}[1]
+\State 获取玩家输入
+\If{角色生命值小于等于零}
+    \State 切换为死亡状态
+\Else
+    \State 根据输入更新移动和攻击状态
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+文中公式要求：
+\begin{enumerate}
+    \item 公式应另起一行，正文中的公式、算式或方程式等应编排序号，公式的编号用圆括号括起，序号标注于该式所在行（当有续行时，应标注于最后一行）的行末。
+    \item 公式可按章节顺序编号，如第2章的第1个公式序号为“（2.1）”。公式序号必须连续，不得重复或跳缺。重复引用的公式不得另编新序号。公式和编号之间不加虚线。
+    \item 较长的公式，如必须转行时，最好在等号处转行，如做不到这一点，要在+，-，$\times$，$\div$等数学符号处转行。数学符号应写在转行处的行首。上下式尽可能在等号“＝”处对齐。
+    \item 编号中的括号、短划线与数字字体须为Times New Roman，字号为五号。
+\end{enumerate}
+
+\begin{equation}
+\begin{aligned}
+f(x,y) =\ & f(0,0) + \frac{1}{1!}\left(x\frac{\partial}{\partial x} + y\frac{\partial}{\partial y}\right)f(0,0) \\
+& + \frac{1}{2!}\left(x\frac{\partial}{\partial x} + y\frac{\partial}{\partial y}\right)^2 f(0,0) \\
+& + \cdots \\
+& + \frac{1}{n!}\left(x\frac{\partial}{\partial x} + y\frac{\partial}{\partial y}\right)^n f(0,0) + K
+\end{aligned}
+\end{equation}
+
+\subsection{本章小结}
+本章主要介绍了本次游戏开发用到的技术和开发软件，包括Unity的组件系统、渲染功能、动画控制机制以及Unity脚本开发中常用的MonoBehaviour类和相关函数，为后续游戏系统的设计与实现奠定基础。
+\section{系统分析}
+一个完备的系统如何进行开发，需要从多方面进行考虑，其中主要包括需求分析、可行性分析、功能分析和用户需求分析等。
+
+\subsection{需求分析}
+随着增强现实技术越来越成熟，AR游戏也越来越多地出现在市场中。用户对游戏的需求已经不再局限于单纯的图像展示和基础操作，而是更加关注游戏的交互性、沉浸感和真实感。因此，本系统需要在基本游戏功能的基础上，结合增强现实技术实现虚拟对象与现实环境的融合展示。
+
+系统需要满足玩家基本操作需求，包括角色移动、场景交互、关卡切换、UI显示和游戏状态反馈等。同时，系统还需要保证游戏运行的稳定性，使玩家能够顺利完成游戏流程。通过需求分析，可以明确系统开发的功能范围和实现目标，为后续总体设计与详细设计提供依据。
+
+\subsection{可行性分析}
+可行性分析在需求分析后进行，主要从社会可行性和技术可行性两个方面判断系统是否具备开发条件。通过对开发环境、技术基础、应用场景和用户需求进行分析，可以确定本课题具有一定的实现基础。
+
+\subsubsection{社会可行性分析}
+随着社会科技化和电子化的不断发展，人们对于娱乐层面的需求不断提高，网络游戏基于其故事性、娱乐性和交互性，已成为当代人群休闲娱乐的主要选择之一，网络游戏的市场规模不断扩大。
+
+AR游戏通过增强现实技术将虚拟对象叠加到现实环境中，能够增强用户的参与感和代入感。该类游戏具有较强的新颖性和互动性，能够满足用户对多样化娱乐方式的需求。因此，基于Unity的第一人称增强现实冒险游戏设计与实现具有一定的社会可行性。
+
+\subsubsection{技术可行性分析}
+整个游戏主要分为模型设计、动画设计、角色控制、敌人行为控制和游戏控制模块。Unity提供了较为完善的游戏开发环境，能够完成场景搭建、脚本编写、动画控制、碰撞检测和UI设计等工作。Vuforia能够提供增强现实识别与跟踪能力，便于完成AR交互功能。
+
+在开发语言方面，Unity主要使用C\#进行脚本开发，其语法清晰、资料丰富，适合完成角色控制、关卡控制和游戏逻辑控制等功能。因此，从开发工具和技术实现角度来看，本系统具有技术可行性。
+
+\subsection{本章小结}
+本章对系统进行了一系列的研究与分析，包括对系统的需求分析、可行性分析、社会可行性分析和技术可行性分析。通过本章分析，可以明确系统开发的必要性和可实现性，为后续系统总体设计提供基础。
+
+\section{系统总体设计}
+系统分析完成后，需要对系统进行总体设计，将系统分为多个功能模块，通过流程图、E-R图和用例图等对每个功能进行详细设计，并完成系统的业务流程设计、剧情设计、场景设计和UI设计等。
+
+\subsection{系统功能设计}
+基于Unity的第一人称增强现实冒险游戏设计与实现主要包括角色控制、场景管理、AR识别、UI显示、敌人控制和游戏流程控制等功能模块。各模块之间相互配合，共同完成游戏运行过程中的交互、展示和反馈。
+
+角色控制模块用于接收玩家输入并控制角色移动、跳跃、攻击等动作；场景管理模块用于控制不同关卡之间的切换；UI模块用于显示血量、小地图和提示信息；敌人控制模块用于实现敌人的寻路、追踪和攻击行为；AR识别模块用于实现增强现实场景中的识别与展示。
+
+\subsection{业务流程设计}
+基于游戏运行流程，用户进入游戏后首先加载主界面，选择开始游戏后进入场景。系统初始化角色、地图、敌人和UI信息，随后根据玩家输入执行角色控制逻辑。当玩家完成指定任务或到达关卡出口时，系统触发场景切换；当角色血量为零或任务失败时，系统显示失败界面。
+
+业务流程设计能够明确游戏从启动、运行到结束的整体过程，使各功能模块之间的调用关系更加清晰，也为后续详细设计和代码实现提供依据。
+
+\subsection{游戏UI设计}
+\subsubsection{小地图设计}
+游戏场景中会通过UI界面显示整个游戏场景的地图、玩家控制角色在场景的位置、敌人或关键目标的大致位置等信息。小地图能够帮助玩家快速判断自身所在区域，提高游戏探索效率。
+
+\subsubsection{血量设计}
+血量设计用于显示玩家角色当前生命状态。当角色受到敌人攻击、触发陷阱或发生其他损伤事件时，血量会相应减少。当血量降为零时，系统判定角色死亡，并触发游戏失败或重新开始逻辑。
+
+\subsection{本章小结}
+本章完成了游戏的总体设计，通过之前的需求分析进一步确定了此次游戏系统开发的各个模块，模块的设计可以为后续游戏详细设计与实现提供重要帮助。通过E-R图、流程图和用例图等使每个功能模块更加直观。
+
+\section{系统详细设计及实现}
+完成系统总体设计后，将会根据设计完成各个功能模块的详细设计与实现，最后通过整合完成对一整个游戏的实现。
+
+\subsection{角色控制模块的实现}
+角色控制模块通过脚本监听用户的输入获取玩家的操作信息，控制角色各种状态的转换，在角色控制模块中，完成了角色的待机、攻击、行走、加速跑、下落、跳跃和死亡状态之间的转换。
+
+\subsubsection{角色动作制作及导入}
+角色动画使用Unity动画系统进行管理。首先将角色模型和动画资源导入Unity项目中，然后检查模型骨骼、动画片段和材质显示是否正常。导入完成后，将动画片段分配给角色对象，并通过Animator组件进行统一管理。
+
+\subsubsection{角色动作管理}
+在 Unity 中通过动画管理器及状态机实现。在游戏中，角色会根据玩家输入和当前状态切换不同的动画。例如，角色静止时播放待机动画，移动时播放行走动画，按下攻击键时播放攻击动画，受到伤害或生命值为零时播放受击或死亡动画。
+
+通过状态机可以清晰地描述不同动画之间的转换关系，并通过参数控制动画切换条件，从而使角色动作表现更加自然。
+
+\subsection{本章小结}
+本章主要详细介绍角色控制模块的设计与实现过程，包括角色动作资源的导入、动画管理器的配置和状态机的使用。通过该模块的实现，玩家可以完成基本角色操作，并获得较为流畅的游戏控制体验。
+
+\section{系统测试}
+为了确保游戏可以正常运行，需要对游戏的各个功能模块进行测试。测试内容主要包括UI测试、角色总体测试以及开发过程中发现的问题与解决方法。
+
+\subsection{UI测试}
+游戏的UI测试主要针对游戏不同的UI界面进行测试，包括主界面、暂停界面、血量显示、小地图显示、提示信息和结束界面等。测试过程中需要检查UI元素是否显示完整，按钮是否能够正常响应，界面跳转是否符合预期。
+
+\subsection{角色总体测试}
+角色的总体测试主要检查角色移动、跳跃、攻击、碰撞、受击和死亡等行为是否正常。测试时需要在不同场景中反复操作角色，观察角色动画切换是否流畅，碰撞检测是否准确，状态变化是否符合设计要求。
+
+\subsection{发现问题与解决方法}
+\subsubsection{场景跳转不响应}
+产生问题：
+
+完成第一个关卡任务到达出口处后无法跳转至下一关卡的场景。
+
+解决方法：
+
+修改场景跳转触发条件，检查碰撞体和触发器设置是否正确，并确认目标场景已经加入Unity的Build Settings中。通过重新绑定触发脚本和场景名称后，场景跳转功能可以正常响应。
+
+\subsubsection{敌人自动寻路穿墙}
+产生问题：
+
+敌人在地图中移动时可能穿过墙体或障碍物，影响游戏体验。
+
+解决方法：
+
+在基于A*算法为敌人自动寻路搜索最优路径时，重新设置地图中的障碍节点，并检查敌人的碰撞体和导航区域。通过限制可行走区域并调整路径检测逻辑，可以减少敌人穿墙问题。
+
+\subsection{本章小结}
+本章完成了系统测试工作，对游戏UI、角色控制以及开发中出现的问题进行了测试和分析。通过测试发现并修正部分问题，提高了系统运行的稳定性和可用性。
+
+\section{总结与展望}
+对整个研究工作进行归纳和综合，阐述本课题研究中尚存在的问题及进一步开展研究的见解和建议。结论要写得概括、简短。
+
+\subsection{总结}
+通过为用户提供虚拟景象，为用户带来全新的游戏体验，基于Unity的第一人称增强现实冒险游戏设计与实现完成了增强现实游戏的基本功能。系统结合Unity和Vuforia等开发工具，实现了角色控制、场景交互、UI显示、动画控制和基础游戏流程管理等功能。
+
+通过本次设计与实现，进一步熟悉了Unity游戏开发流程和增强现实游戏开发方法，也加深了对脚本控制、动画状态机、碰撞检测和场景管理等技术的理解。
+
+\subsection{展望}
+游戏的设计与实现还有许多新的问题待解决，需要在后续的实际应用中不断完善。例如，可以进一步优化游戏画面表现，增加更多关卡内容，完善敌人行为逻辑，提高AR识别稳定性，并增强用户交互体验。
+
+\begin{acknowledgement}
+在毕业设计和毕业设计说明书编写的过程中，我得到了指导老师刘一一老师的悉心指导。从论文选题、系统设计到论文撰写，老师都给予了耐心帮助和宝贵建议，使我能够顺利完成本次毕业设计。
+
+同时，感谢同学和朋友在资料查找、系统测试和论文修改过程中给予的帮助。最后向在百忙之中评审我毕业论文和答辩的老师表示衷心的感谢！
+\end{acknowledgement}
+\nocite{*} % 强制显示所有未引用文献；正式正文引用时通常不需要
+\bibliographystyle{gbt7714-numerical}
+\bibliography{report}
+\begin{appendixsection}
+\end{appendixsection}
+\end{document}

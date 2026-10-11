@@ -1,0 +1,474 @@
+\chapter*{Appendix}\label{chap:appendix}
+\addcontentsline{toc}{chapter}{Appendix}
+
+% Redefine section numbering for the appendix
+\renewcommand{\thesection}{\Alph{section}.} % Sections in appendix use A, B, C
+\setcounter{section}{0} % Reset section counter for appendix
+
+\section{$k$-Cluster Algorithm Implementation}
+\label{sec:kclustercode}
+
+Provided below is the Python 3 implementation of the $k$-cluster algorithm discussed in this work. The \texttt{Numba} and \texttt{Numpy} packages are required, as well as the definition of macros like \texttt{ARRAY\_INDEX\_DTYPE}. For the fully integrated library please refer to section \ref{sec:github}.
+
+\begin{lstlisting}[language=Python]
+@numba.njit(cache=True)
+def numba_kmeans_1d_k_cluster(
+        sorted_X,
+        n_clusters,
+        max_iter,
+        weights_prefix_sum, weighted_X_prefix_sum,
+        weighted_X_squared_prefix_sum,
+        start_idx,
+        stop_idx,
+        random_state=None,
+):
+    """An optimized kmeans for 1D data with n clusters.
+    Exploits the fact that the data is 1D to optimize the calculations.
+    Time complexity: O(k ^ 2 * log(k) * log(n) + i * log(n) * k)
+
+    Args:
+        sorted_X: np.ndarray
+            The input data. Should be sorted in ascending order.
+        n_clusters: int
+            The number of clusters to generate
+        max_iter: int
+            The maximum number of iterations to run
+        weights_prefix_sum: np.ndarray
+            The prefix sum of the weights. Should be None if the data is unweighted.
+        weighted_X_prefix_sum: np.ndarray
+            The prefix sum of the weighted X
+        weighted_X_squared_prefix_sum: np.ndarray
+            The prefix sum of the weighted X squared
+        start_idx: int
+            The start index of the range to consider
+        stop_idx: int
+            The stop index of the range to consider
+        random_state: int or None
+            The random seed to use.
+
+    Returns:
+        centroids: np.ndarray
+            The centroids of the clusters
+        cluster_borders: np.ndarray
+            The borders of the clusters
+    """
+    # set random_state
+    set_np_seed_njit(random_state)
+
+    cluster_borders = np.empty(n_clusters + 1, dtype=ARRAY_INDEX_DTYPE)
+    cluster_borders[0] = start_idx
+    cluster_borders[-1] = stop_idx
+
+    centroids = _kmeans_plusplus(
+        sorted_X, n_clusters,
+        weights_prefix_sum, weighted_X_prefix_sum,
+        weighted_X_squared_prefix_sum,
+        start_idx, stop_idx,
+    )
+    sorted_centroids = np.sort(centroids)
+
+    for _ in range(max_iter):
+        new_cluster_borders = _centroids_to_cluster_borders(sorted_X, sorted_centroids, start_idx, stop_idx)
+
+        if np.array_equal(cluster_borders, new_cluster_borders):
+            break
+
+        cluster_borders[:] = new_cluster_borders
+        for i in range(n_clusters):
+            cluster_start = cluster_borders[i]
+            cluster_end = cluster_borders[i + 1]
+
+            if cluster_end < cluster_start:
+                raise ValueError("Cluster end is less than cluster start")
+
+            if cluster_start == cluster_end:
+                continue
+
+            cluster_weighted_X_sum = query_prefix_sum(weighted_X_prefix_sum, cluster_start, cluster_end)
+            cluster_weight_sum = query_prefix_sum(weights_prefix_sum, cluster_start, cluster_end)
+
+            if cluster_weight_sum == 0:
+                # if the sum of the weights is zero, we set the centroid to the mean of the cluster
+                sorted_centroids[i] = sorted_X[cluster_start:cluster_end].mean()
+            else:
+                sorted_centroids[i] = cluster_weighted_X_sum / cluster_weight_sum
+
+    return sorted_centroids, cluster_borders
+
+
+@numba.njit(cache=True)
+def _rand_choice_prefix_sum(arr, prob_prefix_sum, start_idx, stop_idx):
+    """Randomly choose an element from arr according to the probability distribution given by prob_prefix_sum
+    
+    Time complexity: O(log n)
+
+    Args:
+        arr: np.ndarray
+            The array to choose from
+        prob_prefix_sum: np.ndarray
+            The prefix sum of the probability distribution
+        start_idx: int
+            The start index of the range to consider
+        stop_idx: int
+            The stop index of the range to consider
+
+    Returns:
+        The chosen element
+    """
+    total_prob = query_prefix_sum(prob_prefix_sum, start_idx, stop_idx)
+    selector = np.random.random_sample() * total_prob
+
+    # Because we are using start_idx as the base, but the prefix sum is calculated from 0,
+    # we need to adjust the selector if start_idx is not 0.
+    adjusted_selector = selector + prob_prefix_sum[start_idx - 1] if start_idx > 0 else selector
+
+    # Search for the index of the selector in the prefix sum, and add start_idx to get the index in the original array
+    idx = np.searchsorted(prob_prefix_sum[start_idx:stop_idx], adjusted_selector) + start_idx
+
+    return arr[idx]
+
+
+@numba.njit(cache=True)
+def _centroids_to_cluster_borders(X, sorted_centroids, start_idx, stop_idx):
+    """Converts the centroids to cluster borders.
+    The cluster borders are where the clusters are divided.
+    The centroids must be sorted.
+
+    Time complexity: O(k * log n)
+
+    Args:
+        X: np.ndarray
+            The input data. Should be sorted in ascending order.
+        sorted_centroids: np.ndarray
+            The sorted centroids
+        start_idx: int
+            The start index of the range to consider
+        stop_idx: int
+            The stop index of the range to consider
+
+    Returns:
+        np.ndarray: The cluster borders
+    """
+    midpoints = (sorted_centroids[:-1] + sorted_centroids[1:]) / 2
+    cluster_borders = np.empty(len(sorted_centroids) + 1, dtype=ARRAY_INDEX_DTYPE)
+    cluster_borders[0] = start_idx
+    cluster_borders[-1] = stop_idx
+    cluster_borders[1:-1] = np.searchsorted(X[start_idx:stop_idx], midpoints) + start_idx
+    return cluster_borders
+
+
+@numba.njit(cache=True)
+def _calculate_inertia(sorted_centroids, centroid_ranges,
+                       weights_prefix_sum, weighted_X_prefix_sum, weighted_X_squared_prefix_sum,
+                       stop_idx):
+    """Calculates the inertia of the clusters given the centroids.
+    The inertia is the sum of the squared distances of each sample to the closest centroid.
+    The calculations are done efficiently using prefix sums.
+
+    Time complexity: O(k)
+
+    Args:
+        sorted_centroids: np.ndarray
+            The centroids of the clusters
+        centroid_ranges: np.ndarray
+            The borders of the clusters
+        weights_prefix_sum: np.ndarray
+            The prefix sum of the weights. Should be None if the data is unweighted.
+        weighted_X_prefix_sum: np.ndarray
+            The prefix sum of the weighted X
+        weighted_X_squared_prefix_sum: np.ndarray
+            The prefix sum of the weighted X squared
+        stop_idx: int
+            The stop index of the range to consider
+    """
+    # inertia = sigma_i(w_i * abs(x_i - c)^2) = sigma_i(w_i * (x_i^2 - 2 * x_i * c + c^2))
+    #         = sigma_i(w_i * x_i^2) - 2 * c * sigma_i(w_i * x_i) + c^2 * sigma_i(w_i)
+    #         = sigma_i(weighted_X_squared) - 2 * c * sigma_i(weighted_X) + c^2 * sigma_i(weight)
+    #  Note that the centroid c is the CLOSEST centroid to x_i, so the above calculation must be done for each cluster
+
+    inertia = 0
+    for i in range(len(sorted_centroids)):
+        start = centroid_ranges[i]
+        end = centroid_ranges[i + 1]
+
+        if start >= stop_idx:
+            break
+        if end >= stop_idx:
+            end = stop_idx
+
+        if start == end:
+            continue
+
+        cluster_weighted_X_squared_sum = query_prefix_sum(weighted_X_squared_prefix_sum, start, end)
+        cluster_weighted_X_sum = query_prefix_sum(weighted_X_prefix_sum, start, end)
+        cluster_weight_sum = query_prefix_sum(weights_prefix_sum, start, end)
+
+        inertia += (cluster_weighted_X_squared_sum - 2 * sorted_centroids[i] * cluster_weighted_X_sum +
+                    sorted_centroids[i] ** 2 * cluster_weight_sum)
+
+    return inertia
+
+
+@numba.njit(cache=True)
+def _rand_choice_centroids(X, centroids,
+                           weights_prefix_sum, weighted_X_prefix_sum, weighted_X_squared_prefix_sum,
+                           sample_size, start_idx, stop_idx):
+    """Randomly choose sample_size elements from X, weighted by the distance to the closest centroid.
+    The weighted logic is implemented efficiently by utilizing the _calculate_inertia function.
+
+    Time complexity: O(l * k * log n)
+
+    Args:
+        X: np.ndarray
+            The input data. Should be sorted in ascending order.
+        centroids: np.ndarray
+            The centroids of the clusters
+        is_weighted: bool
+            Whether the data is weighted. If True, the weighted versions of the arrays should be provided.
+        weights_prefix_sum: np.ndarray
+            The prefix sum of the weights. Should be None if the data is unweighted.
+        weighted_X_prefix_sum: np.ndarray
+            The prefix sum of the weighted X
+        weighted_X_squared_prefix_sum: np.ndarray
+            The prefix sum of the weighted X squared
+        sample_size: int
+            The number of samples to choose
+        start_idx: int
+            The start index of the range to consider
+        stop_idx: int
+            The stop index of the range to consider
+
+    Returns:
+        np.ndarray: The chosen samples
+    """
+    sorted_centroids = np.sort(centroids)  # O(k log k)
+    cluster_borders = _centroids_to_cluster_borders(X, sorted_centroids, start_idx, stop_idx)  # O(k log n)
+    total_inertia = _calculate_inertia(sorted_centroids, cluster_borders,  # O(k)
+                                       weights_prefix_sum, weighted_X_prefix_sum,
+                                       weighted_X_squared_prefix_sum, stop_idx)
+    selectors = np.random.random_sample(sample_size) * total_inertia
+    results = np.empty(sample_size, dtype=centroids.dtype)
+
+    for i in range(sample_size):  # O(l k log n)
+        selector = selectors[i]
+        floor = start_idx + 1
+        ceiling = stop_idx
+        while floor < ceiling:
+            stop_idx_cand = (floor + ceiling) // 2
+            inertia = _calculate_inertia(sorted_centroids, cluster_borders,  # O(k)
+                                         weights_prefix_sum, weighted_X_prefix_sum,
+                                         weighted_X_squared_prefix_sum, stop_idx_cand)
+            if inertia < selector:
+                floor = stop_idx_cand + 1
+            else:
+                ceiling = stop_idx_cand
+        results[i] = X[floor - 1]
+
+    return results
+
+
+@numba.njit(cache=True)
+def _kmeans_plusplus(X, n_clusters,
+                     weights_prefix_sum, weighted_X_prefix_sum, weighted_X_squared_prefix_sum,
+                     start_idx, stop_idx):
+    """An optimized version of the kmeans++ initialization algorithm for 1D data.
+    The algorithm is optimized for 1D data and utilizes prefix sums for efficient calculations.
+
+    Time complexity: = O(k ^ 2 * log k * log n)
+
+    Args:
+        X: np.ndarray
+            The input data
+        n_clusters: int
+            The number of clusters to choose
+        weights_prefix_sum: np.ndarray
+            The prefix sum of the weights. Should be None if the data is unweighted.
+        weighted_X_prefix_sum: np.ndarray
+            The prefix sum of the weighted X
+        weighted_X_squared_prefix_sum: np.ndarray
+            The prefix sum of the weighted X squared
+
+    Returns:
+        np.ndarray: The chosen centroids
+    """
+    centroids = np.empty(n_clusters, dtype=X.dtype)
+    n_local_trials = 2 + int(np.log(n_clusters))
+
+    # First centroid is chosen randomly according to sample_weight
+    centroids[0] = _rand_choice_prefix_sum(X, weights_prefix_sum, start_idx, stop_idx)  # O(log n)
+
+    for c_id in range(1, n_clusters):  # O(k^2 l log n)
+        # Choose the next centroid randomly according to the weighted distances
+        # Sample n_local_trials candidates and choose the best one
+
+        centroid_candidates = _rand_choice_centroids(  # O(l k log n)
+            X, centroids[:c_id],
+            weights_prefix_sum, weighted_X_prefix_sum,
+            weighted_X_squared_prefix_sum, n_local_trials,
+            start_idx, stop_idx
+        )
+
+        best_inertia = np.inf
+        best_centroid = None
+        for i in range(len(centroid_candidates)): # O(l k log n)
+            # O(k log k + k log n + k) = O(k log n), as k <= n
+            centroids[c_id] = centroid_candidates[i]
+            sorted_centroids = np.sort(centroids[:c_id + 1]) # O(k log k), I think we could avoid centroid sorting and use some linear algorithm, but the gain would be minimal, especially considering that k <= n, and most times k << n
+            centroid_ranges = _centroids_to_cluster_borders(X, sorted_centroids, start_idx, stop_idx)  # O(k log n)
+            inertia = _calculate_inertia(sorted_centroids, centroid_ranges,  # O(k)
+                                         weights_prefix_sum, weighted_X_prefix_sum,
+                                         weighted_X_squared_prefix_sum, stop_idx)
+            if inertia < best_inertia:
+                best_inertia = inertia
+                best_centroid = centroid_candidates[i]
+        centroids[c_id] = best_centroid
+
+    return centroids
+\end{lstlisting}
+
+\section{2-Cluster Agorithm Implementation}
+\label{sec:2clustercode}
+
+Provided below is the Python 3 implementation of the $2$-cluster algorithm discussed in this work. The \texttt{Numba} and \texttt{Numpy} packages are required, as well as the definition of macros like \texttt{ARRAY\_INDEX\_DTYPE}. For the fully integrated library please refer to section \ref{sec:github}.
+
+\begin{lstlisting}[language=Python]
+@numba.njit(cache=True)
+def numba_kmeans_1d_two_cluster(
+        sorted_X,
+        weights_prefix_sum,
+        weighted_X_prefix_sum,
+        start_idx,
+        stop_idx,
+):
+    """An optimized kmeans for 1D data with 2 clusters, weighted version.
+    Utilizes a binary search to find the optimal division point.
+    Time complexity: O(log(n))
+
+    Args:
+        sorted_X: np.ndarray
+            The input data. Should be sorted in ascending order.
+        weights_prefix_sum: np.ndarray
+            The prefix sum of the sample weights. Should be None if the data is unweighted.
+        weighted_X_prefix_sum: np.ndarray
+            The prefix sum of (the weighted) X.
+        start_idx: int
+            The start index of the range to consider.
+        stop_idx: int
+            The stop index of the range to consider.
+
+    Returns:
+        centroids: np.ndarray
+            The centroids of the two clusters, shape (2,)
+        cluster_borders: np.ndarray
+            The borders of the two clusters, shape (3,)
+
+    WARNING: X should be sorted in ascending order before calling this function.
+    """
+    size = stop_idx - start_idx
+    centroids = np.empty(2, dtype=sorted_X.dtype)
+    cluster_borders = np.empty(3, dtype=ARRAY_INDEX_DTYPE)
+    cluster_borders[0] = start_idx
+    cluster_borders[2] = stop_idx
+    # Remember to set cluster_borders[1] as the division point
+
+    if size == 1:
+        centroids[0], centroids[1] = sorted_X[start_idx], sorted_X[start_idx]
+        cluster_borders[1] = start_idx + 1
+        return centroids, cluster_borders
+
+    if size == 2:
+        centroids[0], centroids[1] = sorted_X[start_idx], sorted_X[start_idx + 1]
+        cluster_borders[1] = start_idx + 1
+        return centroids, cluster_borders
+
+    # Now we know that there are at least 3 elements
+
+    # If the sum of the sample weight in the range is 0, we assume that the data is unweighted
+    if query_prefix_sum(weights_prefix_sum, start_idx, stop_idx) == 0:
+        # We need to recalculate the prefix sum, as previously it would have been all zeros
+        X_casted = sorted_X.astype(PREFIX_SUM_DTYPE)
+        X_prefix_sum = np.cumsum(X_casted)
+        return numba_kmeans_1d_two_cluster_unweighted(sorted_X, X_prefix_sum, start_idx, stop_idx)
+    else:
+        # Check if there is only one nonzero sample weight
+        total_weight = query_prefix_sum(weights_prefix_sum, start_idx, stop_idx)
+        sample_weight_prefix_sum_within_range = weights_prefix_sum[start_idx:stop_idx]
+        final_increase_idx = np.searchsorted(
+            sample_weight_prefix_sum_within_range,
+            sample_weight_prefix_sum_within_range[-1]
+        )
+        final_increase_amount = query_prefix_sum(weights_prefix_sum,
+                                                 start_idx + final_increase_idx,
+                                                 start_idx + final_increase_idx + 1)
+        if total_weight == final_increase_amount:
+            # If there is only one nonzero sample weight, we need to return the corresponding weight as the centroid
+            # and set all elements to the left cluster
+            nonzero_weight_index = start_idx + final_increase_idx
+            centroids[0], centroids[1] = sorted_X[nonzero_weight_index], sorted_X[nonzero_weight_index]
+            cluster_borders[1] = stop_idx
+            return centroids, cluster_borders
+
+    # Now we know that there are at least 3 elements and at least 2 nonzero weights
+
+    # KMeans with 2 clusters on 1D data is equivalent to finding a division point.
+    # The division point can be found by doing a binary search on the prefix sum.
+
+    # We will do a search for the division point,
+    # where we search for the optimum number of elements in the first cluster
+    # We don't want empty clusters, so we set the floor and ceiling to start_idx + 1 and stop_idx - 1
+    floor = start_idx + 1
+    ceiling = stop_idx - 1
+    left_centroid = None
+    right_centroid = None
+
+    while floor < ceiling:
+        division_point = (floor + ceiling) // 2
+        # If the left cluster has no weight, we need to move the floor up
+        left_weight_sum = query_prefix_sum(weights_prefix_sum, start_idx, division_point)
+        if left_weight_sum == 0:
+            floor = division_point + 1
+            continue
+        right_weight_sum = query_prefix_sum(weights_prefix_sum, division_point, stop_idx)
+        # If the right cluster has no weight, we need to move the ceiling down
+        if right_weight_sum == 0:
+            ceiling = division_point - 1
+            continue
+
+        left_centroid = query_prefix_sum(weighted_X_prefix_sum, start_idx, division_point) / left_weight_sum
+        right_centroid = query_prefix_sum(weighted_X_prefix_sum, division_point, stop_idx) / right_weight_sum
+
+        new_division_point_value = (left_centroid + right_centroid) / 2
+        if sorted_X[division_point - 1] <= new_division_point_value:
+            if new_division_point_value <= sorted_X[division_point]:
+                # The new division point matches the previous one, so we can stop
+                break
+            else:
+                floor = division_point + 1
+        else:
+            ceiling = division_point - 1
+
+    # recalculate division point based on final floor and ceiling
+    division_point = (floor + ceiling) // 2
+
+    # initialize variables in case the loop above does not run through
+    if left_centroid is None:
+        left_centroid = (query_prefix_sum(weighted_X_prefix_sum, start_idx, division_point) /
+                         query_prefix_sum(weights_prefix_sum, start_idx, division_point))
+    if right_centroid is None:
+        right_centroid = (query_prefix_sum(weighted_X_prefix_sum, division_point, stop_idx) /
+                          query_prefix_sum(weights_prefix_sum, division_point, stop_idx))
+
+    # avoid using lists to allow numba.njit
+    centroids[0] = left_centroid
+    centroids[1] = right_centroid
+
+    cluster_borders[1] = division_point
+    return centroids, cluster_borders
+\end{lstlisting}
+
+\section{Library Implementation}
+\label{sec:github}
+The algorithms detailed in this thesis have been published open-source as \texttt{flash1dkmeans}.
+
+\noindent Github respository: \url{https://github.com/SyphonArch/flash1dkmeans} \newline
+\texttt{PyPI}: \url{https://pypi.org/project/flash1dkmeans/}

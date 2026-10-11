@@ -1,0 +1,469 @@
+%%      Filename : gthesis.sty ver 1.2
+%%
+%%      東京工業大学工学部      電気・電子、電子物理、情報工学科
+%%      平成７年度版に基づく卒業論文用スタイルファイル
+%%      （正式なものではありません）無保証！
+%%
+\typeout{Style for 'T.I.Tech. graduation thesis'.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%      ソースの記述例                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \documentstyle[12pt,gthesis]{jreport}
+%
+% \年度{平成6年度}
+% \提出年月{平成7年2月}
+% \題名{ここはタイトルです。}
+% \指導教員名{上田  光宏}
+% \職名{教授}
+% \所属学科{電気電子工学科}{}
+% \学籍番号{91xxxxx}
+% \氏名{伊藤  明典}
+% \内容梗概{概要をここにかく. }
+% 
+% \begin{document}
+% \maketitle
+% \tableofcontents
+% \chapter{諸論}
+%     :
+%     :
+% \chapter*{謝辞}
+% \addchapter{謝辞}
+%     :
+% \end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%      変更しているのは、キャプション、原稿用紙の寸法、改行幅、章番号位置、
+%%      参考文献、参考文献の引用、フットノート、内容梗概、表紙です。
+%%
+%%  参考文献：
+%%      平成７年度版卒業論文の提出に関する諸注意
+%%      複数のメール
+%%      LaTeX トータルガイドのみ
+%%      TeX Book なし（無謀）^^;
+%%  履歴：
+%%       ver. 1.0       1994/Dec/14 writtten by akito@pi.titech.ac.jp
+%%       ver. 1.1       1994/Dec/15 added footnote by akito@pi
+%%       ver. 1.2       1994/Dec/26 Ａ４スタイルに対応 by akito@pi,
+%%                      改行幅の変更 ieeej.sty から引用,
+%%                      タイトルページのパラーメタの指定方法の変更
+%%                      by ichizawa@tithp0.phys.titech.ac.jp
+%%                      章番号の位置合わせ by ichizawa@tithp0.phys
+%%                      内容梗概の段落わけ by ichizawa@tithp0.phys
+%%                      字の間隔の調整 ieeej.sty から引用
+%%                      \parindent  の調整 by ichizawa@tithp0.phys
+%%      ver. 1.2a       章、図、表の日本語化 by saibara@ctrl.titech
+%%                      段落間の距離の調整 by saibara@ctrl.titech
+%%                      jreportへの対応 by saibara@ctrl.titech
+%%      ver. 1.2b       付録の対応 by rui@ctrl.titech
+%%                      目次のタイトルの漢字化 by rui@ctrl.titech
+%%                      謝辞、参考文献を目次に載せるための\addchapterの追加
+%%                      by rui@ctrl.titech
+%%                      jreportにおける柱の追加 by rui@ctrl.titech
+%%      ver. 1.2c       図をめいっぱい表示出来るようにする
+%%                       by saibara@ctrl.titech
+%%      ver. 1.2d       \noinccaptionの追加 by saibara@ctrl.titech
+%%      ver. 1.2e       卒論表紙の追加 -1ページに作る。by saibara@ctrl.titech
+%%      ver. warhol(1.2e.001)
+%%                      微妙に変えた.坂庭・山田研バージョン by warhol
+%%      ver. nozaki     章と参考文献の表記：英語に対応
+%%                      (English/Japanese とある部分：4箇所)
+%%      ver. 160606     指導教員認定印/学科長認定印の枠を調整
+%%
+%%
+%%      ver. ryuta      修士論文用に勝手に変更
+%%
+\typeout{ver. warhol(1.2e.001)      1999/Jan/22 ko-ji@mars.dti.ne.jp}
+
+%%
+%%      字と字の間
+%%
+%\kanjiskip 4.2857mm plus .2zw
+\kanjiskip 3.52778mm plus .2zw
+\advance \kanjiskip by -1zw
+\xkanjiskip 2pt plus 2pt minus .5pt
+\def\baselinestretch{1}
+\def\arraystretch{1}
+
+%%
+%%      行ピッチ
+%%
+\newdimen \lineheight
+\lineheight 7.9mm
+
+%%
+%%      改行幅の変更
+%%
+\def\@normalsize{\@setsize\normalsize{\lineheight}\xiipt\@xiipt
+ \abovedisplayskip 10pt plus2pt minus5pt
+ \belowdisplayskip \abovedisplayskip
+ \abovedisplayshortskip \z@ plus3pt
+ \belowdisplayshortskip 6pt plus3pt minus3pt
+ \let\@listi\@listI
+}
+\def\small{\@setsize\small{5.29mm}\xipt\@xipt
+ \abovedisplayskip 8.5pt plus3pt minus4pt
+ \belowdisplayskip \abovedisplayskip
+ \abovedisplayshortskip \z@ plus2pt
+ \belowdisplayshortskip 4pt plus2pt minus2pt
+ \def\@listi{\leftmargin\leftmargini \parsep \z@
+  \itemsep 2pt plus 1pt minus 1pt
+  \topsep 4pt plus 2pt minus 2pt}
+}
+\def\scriptsize{\@setsize\scriptsize{3.9mm}\viiipt\@viiipt}
+\@normalsize
+
+%%
+%%      空白行の定義
+%%
+\newdimen \blankline
+\blankline 2\lineheight
+\advance \blankline by -12pt
+\def\bline{\vskip\blankline}
+
+%%
+%%      原稿用紙の寸法
+%%
+\setlength{\baselineskip}{\lineheight}
+\setlength{\topskip}{\baselineskip}
+
+\setlength{\topmargin}{-1in}
+
+%       以下の３行が合わせて３０ｍｍになるようにします。
+\addtolength{\topmargin}{10mm}
+\setlength{\headheight}{10mm}
+\setlength{\headsep}{10mm}
+
+
+\setlength{\oddsidemargin}{-1in}
+\addtolength{\oddsidemargin}{29mm}
+%\addtolength{\oddsidemargin}{22mm}
+
+\setlength{\evensidemargin}{-1in}
+\addtolength{\evensidemargin}{30mm}
+%\addtolength{\evensidemargin}{22mm}
+
+\setlength{\textheight}{100mm}
+%%\setlength{\textwidth}{150mm}
+\setlength{\textwidth}{150mm}
+%\setlength{\footskip}{15mm}
+%\setlength{\footheight}{\lineheight}
+
+\setlength{\parindent}{1zw}
+\addtolength{\parindent}{\kanjiskip}
+
+\setlength{\parskip}{\lineheight}      % deleted by saibara.
+\setlength{\parskip}{0mm}               % add by saibara.
+
+\setlength{\floatsep}{\lineheight}      % add by saibara.
+\setlength{\textfloatsep}{\lineheight}  % add by saibara.
+\setlength{\intextsep}{\lineheight}     % add by saibara.
+
+%%
+%%      参考文献
+%%
+%% English/Japanese %%%%%
+%\def\thebibliography#1{\chapter*{References \@mkboth
+% {References}{References}}\list
+\def\thebibliography#1{\chapter*{参考文献\@mkboth
+ {参 考 文 献}{参 考 文 献}}\list
+%
+  {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+  \advance\leftmargin\labelsep
+  \usecounter{enumi}}
+  \def\newblock{\hskip .11em plus .33em minus .07em}
+  \sloppy
+  \sfcode`\.=1000\relax}
+ \let\endthebibliography=\endlist
+
+%%
+%%      参考文献の引用
+%%
+%%      \cite[text]{key} : text は使ってません
+%%
+%\def\@cite#1#2{\unskip\nobreak\relax
+%    \def\@tempa{$\m@th^{\hbox{\the\scriptfont0 [#1]}}$}%        %% by rui
+%    \futurelet\@tempc\@citexx}
+%\def\@citexx{\ifx.\@tempc\let\@tempd=\@citepunct\else
+%    \ifx,\@tempc\let\@tempd=\@citepunct\else
+%    \let\@tempd=\@tempa\fi\fi\@tempd}
+%\def\@citepunct{\@tempc\edef\@sf{\spacefactor=\the\spacefactor\relax}\@tempa
+%    \@sf\@gobble}
+
+%%
+%%      章番号位置の調整
+%%
+\def\@makechapterhead#1{ \vspace*{\lineheight} { \parindent 0pt \raggedright
+ \ifnum \c@secnumdepth >\m@ne \huge\bf \@chapapp{} \thechapter \par
+ \vskip 20pt \fi \Huge \bf #1\par
+ \nobreak \vskip 40pt } }
+
+\def\@makeschapterhead#1{ \vspace*{\lineheight} { \parindent 0pt \raggedright
+ \Huge \bf #1\par
+ \nobreak \vskip 40pt } }
+
+%%
+%%      表紙 & 内容梗概         by saibara
+%%
+\def\年度#1{\gdef\@年度{#1}}
+\def\題名#1{\gdef\@題名{#1}}
+\def\梗概題名#1{\gdef\@梗概題名{#1}}
+\def\指導教員名A#1{\gdef\@指導教員名A{#1}}
+\def\職名A#1{\gdef\@職名A{#1}}
+\def\指導教員名B#1{\gdef\@指導教員名B{#1}}
+\def\職名B#1{\gdef\@職名B{#1}}
+%\def\副指導教員名#1{\gdef\@副指導教員名{#1}}
+%\def\副職名#1{\gdef\@副職名{#1}}
+%\def\副副指導教員名#1{\gdef\@副副指導教員名{#1}}
+%\def\副副職名#1{\gdef\@副副職名{#1}}
+\def\学籍番号#1{\gdef\@学籍番号{#1}}
+\def\氏名#1{\gdef\@氏名{#1}}
+
+\def\提出年月#1{\gdef\@提出年月{#1}}
+%\def\所属学科#1{\gdef\@所属学科{#1}}
+\def\所属学院#1#2{\gdef\@所属学院{#1}\gdef\@所属コース{#2}
+  \setbox0=\hbox{#2}
+  \ifdim\wd0>0em {\gdef\@所属2学院{#1\hspace{1zw}(#2)}}
+  \else {\gdef\@所属2学院{#1}} \fi}
+%\long\def\内容梗概#1{\gdef\@内容梗概{#1}}
+\long\def\概要#1{\gdef\@概要{#1}}
+\def\maketitle{\begin{titlepage}
+
+\setcounter{page}{-1}
+{
+	\thispagestyle{empty}
+	\Large
+	\begin{center} \textbf{修士論文} \\
+    \vspace{30mm} \ \\
+		{\Huge
+      \begin{tabular}{c}
+		  \@題名
+      \end{tabular}
+		}
+    \\
+    \vspace{10mm}
+	\@氏名 \\
+	\vspace{3mm}
+	\@学籍番号
+
+
+	%\vspace{40mm}
+	\vfill
+		東京工業大学\\
+		\@所属学院 \\
+		\@所属コース
+
+	%\vspace{40mm}
+	\vfill
+    \begin{tabular}{rl}
+      指導教員            &\@指導教員名A\\
+      副指導教員          &\@指導教員名B\\
+      %       &\@副指導教員名&\@副職名\\
+      %       &\@副副指導教員名&\@副副職名
+    \end{tabular}
+
+		%\vspace{40mm}
+		\vfill
+		{\large \@提出年月}
+    
+\end{center}}
+\restoregeometry
+
+\newpage
+\thispagestyle{empty}
+ \let\footnotesize\small \let\footnoterule\relax \setcounter{page}{0}
+\begin{flushleft}
+ %\@年度\hspace{1zw}学士論文内容梗概
+\end{flushleft}
+\begin{center}
+	{\large \textbf{  概要}}
+\end{center}
+	\addchapter{概要}
+ 
+\@概要
+\thispagestyle{empty}
+\vfil
+%\null                                  % deleted by saibara
+\end{titlepage}
+\setcounter{footnote}{0} \let\thanks\relax
+\gdef\@thanks{}\gdef\@author{}\gdef\@title{}\let\maketitle\relax}
+%%
+%%      フットノート
+%%
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+%%
+%%      キャプション
+%%
+% 図や表が Fig. Table でなければならない人は以下の2行を使用してください。
+% \def\fnum@figure{{\bf Fig. \thefigure}}        % deleted by saibara
+% \def\fnum@table{\sc Table \thetable}           % deleted by saibara
+% 日本語が好きな人は下の方を使用してください。 by saibara
+\def\fnum@figure{図 \thefigure}   % changed by saibara
+\def\fnum@table{\sc 表 \thetable}       % changed by saibara
+\captionsetup[figure]{format=plain, labelformat=simple, labelsep=space, font=footnotesize}
+\captionsetup[table]{format=plain, labelformat=simple, labelsep=space, font={sc, footnotesize}}
+
+
+%\def\thetable{\Roman{table}}           % changed by saibara
+
+%%
+%%      章番号位置の調整                by rui
+%%
+%% English/Japanese %%%%%
+%\def\@chapapp#1{Chapter #1}
+\def\@chapapp#1{第#1章}     
+
+
+\def\@makechapterhead#1{ \vspace*{\lineheight} { \parindent 0pt \raggedright
+ \ifnum \c@secnumdepth >\m@ne \huge\bf \@chapapp \thechapter \par
+ \vskip 20pt \fi \Huge \bf #1\par
+ \nobreak \vskip 40pt } }
+
+\def\@makeschapterhead#1{ \vspace*{\lineheight} { \parindent 0pt \raggedright
+ \Huge \bf #1\par
+ \nobreak \vskip 40pt } }
+
+%%
+%%      付録                    by rui
+%%
+\def\appendix{
+  \par
+  \setcounter{chapter}{0}
+  \setcounter{section}{0}
+%% English/Japanese %%%%%
+%  \def\@chapapp{Appendix }
+  \def\@chapapp{付録 }
+  \def\thechapter{\Alph{chapter}}
+}
+
+%%
+%%      目次                    by rui
+%%
+
+%% English/Japanese %%%%%
+%% Contents/目次
+%\renewcommand{\contentsname}{Contents}
+\renewcommand{\contentsname}{目\quad 次}
+
+\def\@pnumwidth{3em}
+\def\chapter{\newpage \thispagestyle{plain} \global\@topnum\z@
+\@afterindentfalse \secdef\@chapter\@schapter} 
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+ \refstepcounter{chapter}
+ \typeout{\@chapapp{\thechapter}.}
+ \addcontentsline{toc}{chapter}{\protect
+% \numberline{\thechapter}#1}\else
+  {\advance\hangindent1in {\@chapapp{\thechapter}}} ~ #1}\else
+ \addcontentsline{toc}{chapter}{#1}\fi
+ \chaptermark{#1}
+ \addtocontents{lof}{\protect\addvspace{10pt}}
+\addtocontents{lot}{\protect\addvspace{10pt}} \if@twocolumn
+\@topnewpage[\@makechapterhead{#2}] 
+ \else \@makechapterhead{#2}
+ \@afterheading \fi} 
+\def\@schapter#1{\if@twocolumn \@topnewpage[\@makeschapterhead{#1}]
+ \else \@makeschapterhead{#1} 
+ \@afterheading\fi}
+
+%%
+%%      目次に番号なしの章を加える．例：\addchapter{参考文献} by rui
+%%
+\newcommand{\addchapter}[1]{\addcontentsline{toc}{chapter}{\bf #1}}
+
+%%
+%% 柱を加える．         by rui
+%%
+%       jbookの時はかえって不要かもしれませんね。
+\mark{{}{}}   % Initializes TeX's marks
+
+%\def\ps@headings{\let\@mkboth\markboth
+%\def\@oddfoot{\thepage}
+%\def\@evenfoot{\thepage}
+%\def\@evenhead{}
+%\def\@oddhead{}
+%\def\@evenhead{\hbox{}\sl\rightmark \hfil \rm\thepage}
+%\def\@oddhead{\hbox{}\sl \rightmark \hfil \rm\thepage}
+%\def\chaptermark##1{
+%  \markboth {
+%     \ifnum \c@secnumdepth >\m@ne
+%       \thechapter. \ \
+%         \fi ##1}{}}
+%\def\sectionmark##1{ \markright {
+%   \ifnum \c@secnumdepth >\z@
+%      \thesection. \ \fi ##1}}}
+
+%  \uppercase{
+%     \@chapapp \thechapter. \ \fi ##1}}}} % added by saibara but not fine.
+
+%\def\ps@myheadings{\let\@mkboth\@gobbletwo
+% \def\@oddfoot{}
+% \def\@evenfoot{}
+% \def\@oddhead{\hbox{}\sl \rightmark \hfil \rm\thepage}
+% \def\@evenhead{\hbox{}\sl\rightmark \hfil \rm\thepage}
+% \def\sectionmark##1{}
+% \def\subsectionmark##1{}}
+
+%\ps@headings \pagenumbering{arabic} \onecolumn 
+
+%%
+%% 図を目いっぱい表示出来るようにする    by saibara
+%%
+\renewcommand{\textfraction}{0.0}
+\renewcommand{\topfraction}{1.0}
+\renewcommand{\bottomfraction}{1.0}
+
+%%
+%% 図、章番号を増やさない caption       by saibara
+%%
+%  ２ページ以上にまたがる図の時に使用してください。
+% 使用例
+%\begin{figure}
+%\caption{sample No.1}
+%\end{figure}
+%\newpage
+%\begin{figure}
+%\noinccaption{sample No.2}
+%\end{figure}
+
+\def\refcounter#1{\let\@tempa\protect
+\def\protect{\noexpand\protect\noexpand}%
+\edef\@currentlabel{\csname p@#1\endcsname\csname the#1\endcsname}%
+\let\protect\@tempa}
+
+\def\noinccaption{\refcounter\@captype \@dblarg{\@caption\@captype}}
+
+\makeatletter
+	\renewcommand{\theequation}{%
+	\thechapter.\arabic{equation}}
+	\@addtoreset{equation}{chapter}
+	\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+	\@addtoreset{figure}{chapter}
+	\renewcommand{\thetable}{%
+		\thechapter.\arabic{table}}
+		\@addtoreset{table}{chapter}
+\makeatother
+%\newcommand{\defeq}{\stackrel{\rm def}{=}}%定義command
+\newcommand{\qed}{\hbox{\rule[-2pt]{3pt}{6pt}}}%Proof End!
+\newcommand{\pend}{\hfill\qed}
+\newcommand{\bsquare}{\hbox{\rule{6pt}{6pt}}}%Proof End in Black!
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\newtheorem{df}{定義}[chapter]
+\newtheorem{pr}{命題}[chapter]
+\newtheorem{theo}{定理}[chapter]
+\newtheorem{col}{系}[chapter]
+\newtheorem{lem}{補題}[chapter]
+\newtheorem{pot}{ \small \it proof}
+\newtheorem{pol}[lem]{\small \it proof}
+\newtheorem{ex}{例}
+%\newfont{\bg}{cmr10 scaled\magstep4}
+\newcommand{\bigzerou}{\smash{\hbox{0}}}
+%\newcommand{\bigzerou}{\smash{\lower1.7ex\hbox{\bg 0}}}
+\newcommand{\bm}[1]{\mbox{\boldmath $#1$}}
+\newcommand{\tdeg}{\mbox{\rm tdeg}}
+\newcommand{\myappendix}{%
+ \setcounter{secnumdepth}{-1}
+ \appendix\chapter{Appendix}
+ \setcounter{secnumdepth}{2}
+ \setcounter{chapter}{1000000}}
+

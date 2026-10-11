@@ -1,0 +1,107 @@
+\def\supervisor#1{\gdef\@supervisor{#1}}
+\def\@supervisor{\@latex@error{No \noexpand\supervisor given}\@ehc}
+\def\affiliation#1{\gdef\@affiliation{#1}}
+\def\@affiliation{\@latex@error{No \noexpand\affiliation given}\@ehc}
+
+\def\thesisauthor#1{\gdef\@thesisauthor{#1}}
+\def\@thesisauthor{\@latex@error{No \noexpand\thesisauthor given}\@ehc}
+\def\thesistitle#1{\gdef\@thesistitle{#1}}
+\def\@thesistitle{\@latex@error{No \noexpand\thesistitle given}\@ehc}
+
+\def\keywords#1{\gdef\@keywords{#1}}
+\def\@keywords{\@latex@error{No \noexpand\keywords given}\@ehc}
+\def\abstcontents#1{\gdef\@abstcontents{#1}}
+\def\@abstcontents{\@latex@error{No \noexpand\abstcontents given}\@ehc}
+\def\submissiondate#1#2#3{\gdef\@submissiondate{#1 年 #2 月 #3 日}}
+%\def\@submissiondate{#1 年 #2 月 #3 日}
+\def\@submissiondate{\the\year 年 \the\month 月 \the\day 日}
+\def\uselang#1{\gdef\@uselang{#1}}
+\def\@uselang{\@latex@error{No \noexpand\uselang given}\@ehc}
+
+\newcounter{graduateyear}
+
+\newcommand{\acknowledgement}{
+\chapter*{謝辞}
+\addcontentsline{toc}{chapter}{謝辞}
+}
+\def\graduateyearcalc{
+\setcounter{graduateyear}{\the\year}
+\newcounter{gm}
+\setcounter{gm}{\the\month}
+\ifnum\c@gm < 4
+\addtocounter{graduateyear}{-1}
+\fi
+}
+\graduateyearcalc
+
+\def\maketitlepage
+   {
+    \pagestyle{empty}%
+ %\begin{titlepage}
+ \begin{center}
+ ~  \vskip5em
+   {\huge 特　別　研　究　報　告}
+   \vskip5em
+   {\huge 題　　目}\par
+   \vskip3em
+   {\huge \@thesistitle}\par
+   \vskip10em
+   {\Large 指導教員\par \@supervisor ~~教授\par}
+   \vskip5em
+   {\Large 報告者~~~~\@thesisauthor}
+   \vskip2em
+   {\Large \@submissiondate}
+   \vskip2em
+   {\Large \@affiliation}
+   \end{center}
+   %\end{titlepage}
+  \setcounter{page}{0}
+  \newpage
+ \pagestyle{plain}
+   } 
+   
+\def\makeabstract{
+\noindent {\Large \thegraduateyear 年度 特別研究報告
+\vskip1em
+\noindent \@thesistitle \par
+}
+{\large
+\begin{flushright}
+\@thesisauthor
+\end{flushright}
+}
+\noindent {\large \bf 内容梗概}\par
+\@abstcontents \par
+{\bf キーワード：}\@keywords
+\newpage
+
+}
+\def\makepreambles{
+\makeatletter
+\renewcommand{\bibname}{参考文献}
+\renewenvironment{thebibliography}[1]% 再定義
+{\chapter*{\bibname\@mkboth{\bibname}{\bibname}}%
+ \addcontentsline{toc}{chapter}{\bibname}% この行追加
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{\@arabic\c@enumiv}}%
+         \leftmargin\labelwidth
+         \advance\leftmargin\labelsep
+         \@openbib@code
+         \usecounter{enumiv}%
+         \let\p@enumiv\@empty
+         \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+   \sloppy
+   \clubpenalty4000
+   \@clubpenalty\clubpenalty
+   \widowpenalty4000%
+   \sfcode`\.\@m}
+  {\def\@noitemerr
+    {\@latex@warning{Empty `thebibliography' environment}}%
+   \endlist}
+\makeatother
+
+\maketitlepage
+\makeabstract
+\tableofcontents
+
+}

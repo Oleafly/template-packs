@@ -1,0 +1,108 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Author: Ming Li
+%% Time: 2026-09-03
+%% Note: Texpage版本，非官方模板。
+%% https://github.com/Latiyas/JNUThesis
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Author: Yongtao Zhou <y.t.zhou@foxmail.com>                            %%
+%% Time: 2015-4-8                                                         %%
+%% Note: 请保留原作者Yongtao Zhou信息，非官方模板。                            %%
+%%       最终解释权和所有权利归原作者和数据存储与集群计算实验室所有。               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PassOptionsToPackage{quiet}{fontspec}          %% 抑制fontspec警告
+\documentclass[a4paper,twoside,openany,12pt]{book}
+\usepackage[UTF8,fontset=none,heading=true]{ctex}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amscd}
+\usepackage{amsthm}
+\usepackage{eucal}
+\usepackage{bm}
+\usepackage{cite}
+%% 常用包
+% \usepackage{textcomp, gensymb}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{subfig}
+\usepackage{float}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{rotating}
+\usepackage{booktabs}
+\usepackage{diagbox}
+%% 用geometry宏包设置页边距
+\usepackage[top=2.5cm,bottom=2.0cm,left=2.5cm,right=2.5cm]{geometry}
+\usepackage{etoolbox}
+%% 默认算法环境
+\usepackage[chapter]{algorithm}
+\usepackage{algorithmic}
+
+%% 一些可控的参数
+%% 参数isprint控制是否包含打印时的空白页（默认是false）
+\newif\ifisprint
+\isprintfalse % 设置参数为true或false。如果isprint为false，不包含空白页，方便阅读。这是默认配置。如果为true，输出打印模式下PDF，论文包含必须的空页。
+%% 参数hasappendix控制是否包含附录页（默认是false）
+\newif\ifhasappendix
+\hasappendixfalse % 如果hasappendix为false，不包含附录章节。如果为true，则包含。
+
+% 模板配置文件
+\input{configs/theme}
+
+% 额外的宏包
+\input{configs/libs}
+
+
+\begin{document}
+%% 前言
+\include{chapters/declaration}
+
+%% 摘要
+\include{chapters/abstract}
+
+%% 生成目录
+\tableofcontents
+\thispagestyle{main}
+%% 重置图/表目录(取消不同章之间的间隔)
+\begingroup
+	\renewcommand*{\addvspace}[1]{}
+	\newcommand{\loflabel}{图} 
+	\renewcommand{\numberline}[1]{\loflabel~#1\hspace*{1em}}
+    \renewcommand{\listfigurename}{图目录}
+    \listoffigures
+    \thispagestyle{main}
+    
+	\newcommand{\lotlabel}{表}
+	\renewcommand{\numberline}[1]{\lotlabel~#1\hspace*{1em}}
+    \renewcommand{\listtablename}{表目录}
+    \listoftables
+    \thispagestyle{main}
+\endgroup
+
+%% 正文部分
+%% 重置各级标题的字体和字号
+\mainmatter
+
+%% 论文正文部分，在chaps.tex内编辑
+\input{chapters/chaps}
+
+%% 参考文献引入
+%% 暨大参考文献设置，文献著录格式参考《GB/T 7714-2015》
+\bibliographystyle{gbt7714-2015}
+\bibliography{bib/refs}
+
+%% 攻读学位期间发表的论文
+\include{chapters/papers}
+
+%% 附录（默认不包含，参数hasappendix控制）
+\ifhasappendix
+    \include{chapters/appendix}
+\fi
+
+%% 致谢
+\include{chapters/acknowledgement}
+%% 加入\newpage能使最后一页也有页眉
+\newpage
+\end{document}

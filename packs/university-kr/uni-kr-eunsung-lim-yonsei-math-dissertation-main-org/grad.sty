@@ -1,0 +1,130 @@
+%\parskip 0.1in
+
+
+\textheight 198mm %7.4 in
+%\textheight 22mm %7.4 in
+\textwidth 135mm  %5.8 in
+\footskip 18mm
+
+\oddsidemargin 209mm%                     Calculations to
+\advance\oddsidemargin by -\textwidth%      center text
+\divide\oddsidemargin by 2%                horizontally
+\advance\oddsidemargin by -1in%            onto A4 sheet
+\evensidemargin \oddsidemargin
+%\renewcommand{\arraystretch}{2.0}
+
+%\parindent 0.5in
+
+\floatsep 6pt plus 2pt minus 4pt \textfloatsep 30pt plus 20pt minus 10pt
+
+\newcommand{\bp}[2]{\begin{minipage}[#1]{#2}}
+\newcommand{\ep}{\end{minipage}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\arr}[4]{ \left\{ \begin{array}{ll} #1, & \mbox{#2} \\ #3, & \mbox{#4} \end{array} \right. }
+
+
+\def\maketitle{
+ \begingroup
+   \def\thefootnote{\fnsymbol{footnote}}
+   \def\@makefnmark{\hbox
+       to\z@{$\m@th^{\@thefnmark}$\hss}}
+   \if@twocolumn
+     \twocolumn[\@maketitle]
+     \else \newpage
+     \global\@topnum\z@
+     \@maketitle \fi\thispagestyle{empty}\@thanks
+ \endgroup
+ \setcounter{footnote}{0}%
+ \let\maketitle\relax
+ \let\@maketitle\relax
+ \gdef\@thanks{}\gdef\@author{}\gdef\@title{}\let\thanks\relax}
+
+
+\def\@maketitle{
+\newpage
+\null \thispagestyle{empty}
+\begin{center}
+ \vskip 2.0cm
+{\fontsize{20pt}{34pt} \selectfont \@title \par} \vskip 6.5cm
+{\fontsize{16pt}{27pt} \selectfont
+ \begin{tabular}[t]{c}\@author
+ \end{tabular}\par}
+
+\vskip 4.1cm 
+
+
+{\fontsize{16pt}{27pt} \selectfont
+The Graduate School \par
+Yonsei University \par
+\txtDepartment \par
+}
+
+\newpage
+\null
+\vskip 1cm
+
+\begin{center}
+{\fontsize{20pt}{34pt} \selectfont \@title \par}
+
+\vskip 6.0cm
+
+{\fontsize{14pt}{24pt} \selectfont
+A Dissertation \par
+Submitted to the Department of Mathematics\par
+and the Graduate School of Yonsei University \par
+in partial fulfillment of the \par
+requirements for the degree of \par
+Doctor of Philosophy in Mathematics \par
+}
+
+\vskip 2.0cm
+
+{\fontsize{16pt}{18pt} \selectfont
+ \begin{tabular}[t]{c}\@author
+ \end{tabular}\par}
+
+\vskip 1.0cm
+
+{\fontsize{14pt}{18pt} \selectfont \@date}
+\end{center}
+}
+
+
+\def\abbreviations{
+\chapter*{List of Abbreviations}
+\vspace {20.0mm}
+}
+\def\endabbreviations{}
+
+\def\abstract{
+\chapter*{ABSTRACT}
+\vspace {10.0mm}
+}
+\def\endabstract{}
+
+\def\appendix{
+\chapter*{Appendix}
+}
+\def\endappendix{}
+
+\def\appendixB{
+\chapter*{Appendix for Chapter 3}
+}
+\def\endappendix{}
+
+
+\def\theappendix{\Alph{appendix}.}
+
+
+\def\thebibliography#1{\chapter*{Bibliography\@mkboth
+ {BIBLIOGRAPHY}{BIBLIOGRAPHY}}\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+ \def\newblock{\hskip .11em plus .33em minus .07em}
+ \sloppy\clubpenalty4000\widowpenalty4000
+ \sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist
+
+%\def\endthebibliography{}

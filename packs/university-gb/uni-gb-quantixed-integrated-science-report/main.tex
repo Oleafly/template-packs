@@ -1,0 +1,162 @@
+% MAIN.TEX - University of Warwick, Integrated Science, Report
+% Template by Andrew Blanks and Stephen Royle
+% The idea is to write a report, based on an eLife manuscript
+% To use this template:
+%  1. delete any lines that contain \lipsum or other instructions
+%  2. type your report!
+%  3. Upload your own refs.bib file (the output from Zotero or other reference manager)
+%  4. Upload your figures (png, jpeg or pdf is fine, avoid large tiff files)
+% 2020-09-21
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% PREAMBLE
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc} % text encoding, for special characters e.g. umlauts use \"
+\usepackage{amsmath} % for equations
+\usepackage{amsfonts} % for equations
+\usepackage{amssymb} % for equations
+\usepackage{graphicx} % for figures
+\usepackage{wrapfig} % for figures
+\usepackage[final]{pdfpages}
+\usepackage[margin=2cm]{geometry} % sorts out page margins
+\usepackage{authblk} % the author field
+\usepackage[authoryear,round]{natbib} % referencing
+\bibliographystyle{modabbrv} % referencing
+\usepackage{siunitx} % for correct units e.g. 10 nm is \SI{10}{\nano\metre}
+\DeclareSIUnit\Molar{\textsc{m}} % formats Molar concentrations e.g. \SI{1}{\micro\Molar}
+\usepackage[version=4]{mhchem} % for chemical entities e.g. \ce{FeSO4}
+\usepackage[font=small,labelfont=bf]{caption} % caption/legends for figures
+\usepackage{parskip} % controls gap between paragraph and previous
+\usepackage{titlesec} % controls titles and sections
+\usepackage{lipsum} % dummy text for this template
+\usepackage[hidelinks]{hyperref} % makes links clickable
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% provide details of your project report in this part
+\title{Declarative title of my report}
+% The title should ideally be fewer than 120 characters, with a clear indication of the biological system under investigation (if appropriate), and should avoid abbreviations and unfamiliar acronyms if possible
+\author{Alex Smith\thanks{Corresponding author: a.smith@warwick.ac.uk}}
+% Use your STUDENT NUMBER here and not your name, include any other co-authors and addresses
+\affil{Integrated Science, University of Warwick, Gibbet Hill Road, Coventry, CV4 7AL, UK}
+\date{} % add the date here
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+% The abstract should be fewer than 150 words and should not contain subheadings. It should provide a clear, measured, and concise summary of the work. If the biological system (species names or broader taxonomic groups if appropriate) is not mentioned in the title, it must be included in the abstract.
+Abstract of the paper goes here.
+\lipsum[1]
+\end{abstract}
+
+% After the abstract comes the main text.
+% You should split your main text into separate sections: Introduction, Results & Discussion and  Materials and Methods. The exact section heading you use for each section is up to you!
+% the * after section or subsection prevents numbering in LaTeX
+\section*{Introduction}
+
+Introduction text goes here.
+\lipsum{2-6}
+
+Text is added like this.
+This is a reference to a published paper \citep{watson_molecular_1953}.
+We can cite other things too \citep{tipton_complexities_2019,zheng_genome_2011,alberts_molecular_2002}
+
+% figure goes here but can be moved to wherever it looks best
+\begin{figure}
+     \centering
+     \includegraphics[width=10cm]{Fig_1}
+        \caption{\textbf{Title of the figure goes here.}\\
+                \textbf{A}:~If a figure has many panels.
+                \textbf{B}:~You can refer to them.
+                \textbf{C}:~Like this.
+        }
+        \label{fig:1}
+\end{figure}
+
+\section*{Results}
+
+Results text goes here. 
+% reference figure 1 by
+Here is my result (Fig.~\ref{fig:1}).
+\lipsum[19]
+
+\subsection*{Subsection of Results section 1}
+Subsection of results goes here.
+\lipsum[20]
+
+Adding a table can be done like this.
+
+\begin{table}[!htp]
+    \centering
+    \begin{tabular}{c | c c c c}
+    Column head 1 & Column head 2 & Column head 3 & Column head 4 & Column head 5\\
+    \hline
+    Table body & Table body & Table body  & Table body  & Table body  \\
+    Table body & Table body & Table body  & Table body  & Table body  \\
+    Table body & Table body & Table body  & Table body  & Table body  \\
+    Table body & Table body & Table body  & Table body  & Table body  \\
+    Table body & Table body & Table body  & Table body  & Table body  \\
+    \end{tabular}
+    \caption{
+        \textbf{A title for the table}.\\
+        A short ``legend'' is possible like this.}
+    \label{table:example}
+\end{table}
+
+
+\subsection*{Subsection of Results section 2}
+Subsection of results goes here.
+\lipsum[21]
+
+\section*{Discussion}
+
+Text of discussion goes here
+\lipsum{12-15}
+
+
+\section*{Conclusion}
+
+Conclusion text goes here.
+\lipsum[5]
+
+\section*{Materials and Methods}
+
+\subsection*{Materials} 
+Materials text goes here.
+\lipsum[3]
+ 
+\subsection*{Method1}  
+Method 1 text goes here.
+\lipsum[3]
+
+\subsection*{Method2}
+Method 2 text goes here.
+\lipsum[3]
+
+Equations can be display in-line like this $e = mc^2$.
+Alternatively, equations can be shown and referenced, like this.
+
+\begin{equation}
+    \int^{r_2}_0 F(r,\varphi){\rm d}r\,{\rm d}\varphi = [\sigma r_2/(2\mu_0)] \int^{\infty}_0\exp(-\lambda|z_j-z_i|)\lambda^{-1}J_1 (\lambda r_2)J_0 (\lambda r_i\,\lambda {\rm d}\lambda)
+    \label{eq:eq1}
+\end{equation}
+
+As you can see, from Equation \ref{eq:eq1} it is possible to write nice equations with \LaTeX.
+
+\subsection*{Data analysis}
+Data analysis section goes here.
+\lipsum[3]
+
+\section*{Acknowledgments}
+% You can thank anyone who helped your work here.
+Acknowledgments go here.
+
+\newpage
+
+\bibliography{refs}
+
+\end{document}

@@ -1,0 +1,103 @@
+\ProvidesPackage{HUSTtils}[2024/01/23 3.0.1x any packages you would
+like to use]
+
+
+
+%%%%% Setting for python env.
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{9} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{9}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\usepackage[final]{listings}
+\usepackage{lstautogobble}
+\usepackage[ruled,linesnumbered,algo2e]{algorithm2e}
+\usepackage[export]{adjustbox}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+breaklines=true,
+numbers=left,
+numberstyle=\tiny,
+basicstyle=\setstretch{0.7}\ttm,  %
+otherkeywords={self},             % Add keywords here
+keywordstyle=\ttb\color{deepblue},  % \ttb
+%emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style  \ttb
+stringstyle=\color{deepred},
+commentstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false,            %
+xleftmargin=2em,
+framexleftmargin=2.5em,
+autogobble=true,
+literate={-}{-}1
+}}
+\newcommand\knote[1]{\textcolor{blue}{#1}}
+%\newcommand\knote[1]{\textcolor{black}{#1}}
+\newcommand\snote[1]{\textcolor{red}{#1}}
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+
+% Bash
+%\def\backtick{\char768}
+\def\backtick{\`{}}
+\newcommand\bashstyle{\lstset{
+language=bash,
+breaklines=true,
+numbers=left,
+numberstyle=\tiny,
+basicstyle=\setstretch{0.7}\ttm,  %
+otherkeywords={self},             % Add keywords here
+keywordstyle=\ttb\color{deepblue},  % \ttb
+%emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style  \ttb
+stringstyle=\color{deepred},
+commentstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false,            %
+xleftmargin=2em,
+framexleftmargin=2.5em,
+upquote=true,
+autogobble=true,
+%literate={`}{{$^{\backprime}$}}1
+% literate={`}{\backtick}1
+literate={-}{-}1
+}}
+
+% Python environment
+\lstnewenvironment{bash}[1][]
+{
+\bashstyle
+\lstset{#1}
+}
+{}
+
+% Bash for external files
+\newcommand\bashexternal[2][]{{
+\bashstyle
+\lstinputlisting[#1]{#2}}}
+
+%%%%% Setting for python env.
+
+\endinput

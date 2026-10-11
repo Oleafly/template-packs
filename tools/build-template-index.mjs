@@ -24,7 +24,7 @@ export function readTemplates(root = ROOT) {
       if (!folder.isDirectory()) continue;
       const path = `packs/${pack.name}/${folder.name}`;
       const manifest = JSON.parse(readFileSync(join(root, path, "template.json"), "utf8"));
-      if (!["xetex", "pdflatex", "latex", "xelatex", "lualatex", "typst", "markdown"].includes(manifest.engine)) throw new Error(`Unknown engine: ${path}`);
+      if (!["xetex", "pdflatex", "latex", "xelatex", "lualatex", "latexmk", "typst", "markdown"].includes(manifest.engine)) throw new Error(`Unknown engine: ${path}`);
       const engine = manifest.engine === "typst" ? "typst" : manifest.engine === "markdown" ? "markdown" : "latex";
       if (!existsSync(join(root, path, manifest.main_doc))) throw new Error(`Missing source: ${path}/${manifest.main_doc}`);
       const sharedPreview = `previews/${pack.name}/${folder.name}/page-1.webp`;

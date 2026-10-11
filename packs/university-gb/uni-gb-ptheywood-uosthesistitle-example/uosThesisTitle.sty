@@ -1,0 +1,124 @@
+% Copyright 2015 Peter Heywood. A full list of contributors can be found at 
+%
+%     https://github.com/ptheywood/uosThesisTitle/graphs/contributors
+%
+%
+% This work is licensed under the MIT License (see LICENSE)
+
+\ProvidesPackage{uosThesisTitle}[2019/10/25 v0.3.0]
+\RequirePackage{etoolbox}
+\RequirePackage{graphicx}
+\RequirePackage{geometry}
+
+% Define package option toggles
+\newtoggle{defaultMargins}
+\DeclareOption{defaultMargins}{\toggletrue{defaultMargins}}
+\newtoggle{showAuthorPrefix}
+\DeclareOption{showAuthorPrefix}{\toggletrue{showAuthorPrefix}}
+
+% Process package options
+\ProcessOptions
+
+% Define variables/commands to store parts of the page
+% Path to image, defaults to an example image
+\newcommand*{\universityLogoImage}[1]{\gdef\@universityLogoImage{#1}%
+}
+\newcommand*{\@universityLogoImage}{example-image-16x9}
+% Optional subtitle, defaults to nothing
+\newcommand*{\subtitle}[1]{\gdef\@subtitle{#1}%
+}
+\newcommand*{\@subtitle}{}
+% Supervisor names
+\newcommand*{\supervisors}[1]{\gdef\@supervisors{#1}%
+}
+\newcommand*{\@supervisors}{Supervisor A\par Supervisor B}
+% Statement detailing the purpose of the document
+\newcommand*{\documentStatement}[1]{\gdef\@documentStatement{#1}%
+}
+\newcommand*{\@documentStatement}{A thesis submitted in partial fulfilment of the requirements for the degree of
+Doctor of Philosophy}
+% The name of the university (Defaults to Sheffield)
+\newcommand*{\university}[1]{\gdef\@university{#1}%
+}
+\newcommand*{\@university}{The University of Sheffield}
+% The name of the faculty
+\newcommand*{\faculty}[1]{\gdef\@faculty{#1}%
+}
+\newcommand*{\@faculty}{Faculty of ...}
+% The name of school or department
+\newcommand*{\department}[1]{\gdef\@department{#1}%
+}
+\newcommand*{\@department}{School (or Department) of ...}
+
+% Redefine the make title command with the more complex title page layout, matching and expanding the suggested example from RIS (https://www.sheffield.ac.uk/ris/pgr/code/formatting)
+\renewcommand*{\maketitle}{%
+\nottoggle{defaultMargins}{%
+    % Redefine page geometry to match the suggested page style.
+    \newgeometry{
+        top=0.75in,
+        bottom=0.75in,
+        right=1.25in,
+        left=1.25in
+    }
+}
+
+\begin{titlepage}
+% Center everything
+\centering
+
+% Include the university logo
+\ifdefempty{\@universityLogoImage}{%
+    \vspace*{2.5cm}
+}{%
+    \includegraphics[height=2.5cm,keepaspectratio]{\@universityLogoImage}\par
+}
+% Fill space to vertically center the remaining content.
+\vfill
+% Include the thesis title
+{\bfseries\LARGE\@title\unskip\strut\par}
+\vfill
+% Include an optional report subtitle
+\ifdefempty{\@supervisors}{%
+    {\bfseries\Large\unskip\strut\par}
+}{%
+    {\bfseries\Large\@subtitle\unskip\strut\par}
+}
+\vfill
+% Include the author name with "By: Prefix"
+\nottoggle{showAuthorPrefix}{%
+    {\large\bfseries\par}
+}{%
+    {\large\bfseries By:\par}
+}
+{\Large\@author\unskip\strut\par}
+\vfill
+% Show the supervisors if required
+\ifdefempty{\@supervisors}{%
+    {\large\bfseries\unskip\strut\par}
+    {\large\unskip\strut\par} 
+}{%
+    {\large\bfseries Supervised By:\par}
+    {\large\@supervisors\unskip\strut\par}
+}
+\vfill
+% Include the document statement
+{\large\@documentStatement\unskip\strut\par}
+\vfill
+% Include details of University, Faculty and Department/School
+{\large\@university\unskip\strut\par}
+{\large\@faculty\unskip\strut\par}
+{\large\@department\unskip\strut\par}
+\vfill
+% Fill space to push date down
+\vfill
+% Include Date
+{\large \@date\par}
+% Fill space at end of page
+\vfill
+\end{titlepage}
+\nottoggle{defaultMargins}{%
+    % Restore the original page geometry
+    \restoregeometry
+}
+}
+\endinput

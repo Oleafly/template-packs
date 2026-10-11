@@ -1,0 +1,85 @@
+% nuthesis v2.2
+% By Keith A. Gillow <gillow@maths.ox.ac.uk>
+% Version 1.0 released 26/11/1997
+% updated by Halil Agin <halil.agin@gmail.com>
+% Version 1.0.1
+
+\documentclass[a4paper,12pt,twoside]{nuthesis}  % default square logo 
+%\documentclass[12pt,beltcrest]{nuthesis} % use old belt crest logo
+%\documentclass[12pt,shieldcrest]{nuthesis} % use older shield crest logo
+
+%load any additional packages
+\usepackage{amssymb}
+%for quotation at the top of each chapter
+\usepackage{epigraph/epigraph}
+%\usepackage{geometry}
+\usepackage[inner=3cm,outer=1cm]{geometry}
+
+\usepackage{marginnote}
+
+
+%input macros (i.e. write your own macros file called mymacros.tex 
+%and uncomment the next line)
+%\include{mymacros}
+
+%in case of two lines needed, put \\[1ex]
+%\title{Parameter Space Brushing\\[1ex]     %your thesis title,
+
+\title{Parameter Space Brushing}     %your thesis title,
+
+\author{Halil Agin}             %your name
+\college{}  %your college
+
+%\renewcommand{\submittedtext}{change the default text here if needed}
+\degree{Doctor of Philosophy}     %the degree
+\degreedate{April 2019}         %the degree date
+\renewcommand{\EthicalCommitteeDate}{05/02/2018} % approval date of ethical committee
+
+%end the preamble and start the document
+\begin{document}
+
+%this baselineskip gives sufficient line spacing for an examiner to easily
+%markup the thesis with comments
+\baselineskip=18pt plus1pt
+
+%set the number of sectioning levels that get number and appear in the contents
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+
+\coverpage                  % create a cover page from the preamble info
+\putemptypage
+\maketitle                  % create a title page from the preamble info
+\include{dedication}        % include a dedication.tex file
+\putemptypage
+\include{declaration}        % include a dedication.tex file
+\include{acknowlegements}   % include an acknowledgements.tex file
+\putemptypage
+\include{abstract}          % include the abstract
+
+\begin{romanpages}          % start roman page numbering
+\tableofcontents            % generate and include a table of contents
+\listoffigures              % generate and include a list of figures
+\end{romanpages}            % end roman page numbering
+
+
+\input{thesislayout.default}
+%now include the files of latex for each of the chapters etc
+\include{chapter1}
+\include{chapter2}
+\include{conclusions}
+
+%now enable appendix numbering format and include any appendices
+\appendix
+\include{appendix1}
+\include{appendix2}
+
+%next line adds the Bibliography to the contents page
+\addcontentsline{toc}{chapter}{Bibliography}
+%uncomment next line to change bibliography name to references
+%\renewcommand{\bibname}{References}
+\bibliography{refs}        %use a bibtex bibliography file refs.bib
+\bibliographystyle{plain}  %use the plain bibliography style
+
+\end{document}
+

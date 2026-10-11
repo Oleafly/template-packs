@@ -1,0 +1,173 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PhD Thesis Main File
+% Author: Humphrey Curtis
+% Version: 1.0
+%
+% License:
+% Unless otherwise stated, this work is licensed under
+% Creative Commons Attribution 4.0 International (CC BY 4.0).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt, twoside, a4paper]{report}
+
+% ----------------------------------------------------------
+% Page layout
+% ----------------------------------------------------------
+\usepackage[margin=1in]{geometry}
+
+% Custom package imports
+\input{packages}
+
+% ----------------------------------------------------------
+% Glossaries & Acronyms
+% ----------------------------------------------------------
+\makeglossaries
+
+\newacronym{gcd}{GCD}{Greatest Common Divisor}
+\newacronym{lcm}{LCM}{Least Common Multiple}
+
+% ----------------------------------------------------------
+% Personal Publications Bibliography
+% ----------------------------------------------------------
+\newcites{personal}{List of Publications}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ==========================================================
+% Cover Page
+% ==========================================================
+
+\thispagestyle{empty}
+
+\begin{center}
+
+\begin{flushright}
+\includegraphics[scale=0.4]{FrontMatter/logo.png}
+\end{flushright}
+
+\vspace*{2in}
+
+{\huge \textbf{Thesis Title}}\\[0.2in]
+{\Large \textbf{Author's Name}}\\
+{\Large Supervisor's Name}\\[0.2in]
+
+King's College London\\
+Department of Informatics\\[0.2in]
+
+A dissertation submitted for the degree of\\
+\textit{Doctor of Philosophy}\\[0.2in]
+
+\today
+
+\end{center}
+
+\pagenumbering{roman}
+
+% ==========================================================
+% Front Matter
+% ==========================================================
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{part}{Declaration}
+\include{FrontMatter/declaration}
+
+\phantomsection
+\addcontentsline{toc}{part}{Dedication}
+\include{FrontMatter/dedication}
+
+\phantomsection
+\addcontentsline{toc}{part}{Abstract}
+\include{FrontMatter/abstract}
+
+\phantomsection
+\addcontentsline{toc}{part}{Acknowledgements}
+\include{FrontMatter/acknowledgements}
+
+\phantomsection
+\addcontentsline{toc}{part}{Acronyms}
+\include{FrontMatter/acronyms}
+
+% ==========================================================
+% Page Style (Headers & Footers)
+% ==========================================================
+
+\fancyhf{}
+\pagestyle{fancy}
+\setlength{\headheight}{15pt}
+
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\fancyhead[L]{\nouppercase\leftmark}
+\fancyfoot[C]{\thepage}
+
+% ==========================================================
+% Personal Publications Section
+% ==========================================================
+
+\nocitepersonal{*}
+\bibliographystylepersonal{plainnat}
+\bibliographypersonal{FrontMatter/personal}
+
+% ==========================================================
+% Table of Contents & Lists
+% ==========================================================
+
+\tableofcontents
+\clearpage
+
+\phantomsection
+\addcontentsline{toc}{part}{\listfigurename}
+\listoffigures
+\clearpage
+
+\phantomsection
+\addcontentsline{toc}{part}{\listtablename}
+\listoftables
+\clearpage
+
+% Switch to Arabic numbering for main body
+\pagenumbering{arabic}
+\fancyhead[R]{\textit{\nouppercase\rightmark}}
+
+% ==========================================================
+% Main Thesis Content
+% ==========================================================
+
+\part{Introduction}
+
+\include{Chapters/chapter-1/chapter-1}
+\include{Chapters/chapter-2/chapter-2}
+\include{Chapters/chapter-3/chapter-3}
+
+\part{Papers}
+
+\include{Chapters/chapter-4/chapter-4}
+\include{Chapters/chapter-5/chapter-5}
+\include{Chapters/chapter-6/chapter-6}
+\include{Chapters/chapter-7/chapter-7}
+
+% ==========================================================
+% Bibliography
+% ==========================================================
+
+\clearpage
+\addcontentsline{toc}{part}{Bibliography}
+
+\renewcommand{\bibname}{BIBLIOGRAPHY}
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+% ==========================================================
+% Appendices
+% ==========================================================
+
+\appendix
+
+\include{Appendices/appendix-1}
+\include{Appendices/appendix-2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,64 @@
+%!TEX encoding = UTF-8 Unicode
+%
+% 卒論 / 修論用 プリアンブル
+%
+
+%% フォント
+\usepackage{lmodern}
+\usepackage[scale=0.95]{tgheros}
+\usepackage{textcomp}
+\usepackage[scaled=0.85]{beramono}
+\usepackage[T1]{fontenc}
+
+%% パッケージ
+\usepackage[cmex10]{amsmath}
+\usepackage{amssymb,amsfonts,mathtools,bm}
+
+\usepackage{graphicx,color}
+\usepackage[table]{xcolor}
+
+\usepackage[pdfborder={0 0 0}]{hyperref}
+\usepackage{pxjahyper}
+
+% caption のコロン「図4.4: キャプション」を「図4.4 キャプション」に直す
+\usepackage[labelsep=quad,compatibility=false]{caption}
+\usepackage[belowskip=1.2em]{subcaption}
+
+\usepackage{cite,url,array,makecell}
+\usepackage{algorithm,algorithmic}
+
+% 数学コマンドの補完
+\DeclareMathOperator*{\sinc}{sinc}
+\DeclareMathOperator*{\prox}{prox}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+
+% 参考文献表示スタイルを変更
+\bibliographystyle{sieicej}
+
+% 赤色を少し暗くする
+\definecolor{red}{rgb}{0.75,0,0}
+
+\makeatletter
+   % アルゴリズム図キャプションの表記を「Algorithm」→「アルゴリズム」に
+   \renewcommand{\ALG@name}{アルゴリズム}
+\makeatother
+
+% 修正箇所に色付けするコマンド
+%
+% ・ コマンド版
+%   \fixed{修正箇所}
+%
+% ・ 環境版
+%   \begin{fixedregion}
+%      修正箇所
+%   \end{fixedregion}
+\newcommand{\fixed}[1]{#1} 
+\newenvironment{fixedregion}{\ignorespaces}{\ignorespacesafterend}
+% 下の 2 行をコメントアウトすることで色付けを無効化します
+\renewcommand{\fixed}[1]{\textcolor{red}{#1}}
+\renewenvironment{fixedregion}{\protect\leavevmode\color{red}\ignorespaces}{\ignorespacesafterend}
+
+% 強調
+\newcommand{\strong}[1]{\textcolor{red}{\textbf{#1}}}
+

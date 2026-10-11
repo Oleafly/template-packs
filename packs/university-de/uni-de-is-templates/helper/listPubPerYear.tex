@@ -1,0 +1,104 @@
+% % To create list of own publications by year
+% %Pubs 
+
+\usepackage{xparse}
+% Taken from https://tex.stackexchange.com/questions/472588/sort-all-citations-from-one-year-automatically-under-a-heading-with-the-year-num
+\ExplSyntaxOn
+\seq_new:N \g__blxbibbyyear_yearlist_seq
+
+\cs_new:Npn \__blxbibbyyear_seq_gput_right_once:Nn #1 #2
+{
+  \seq_if_in:NnF #1 {#2}
+  { \seq_gput_right:Nn #1 {#2} }
+}
+
+\cs_generate_variant:Nn \__blxbibbyyear_seq_gput_right_once:Nn { NV, Nx }
+
+
+\prg_new_conditional:Nnn \blx_field_if_undef:n { p, T, F , TF }
+{
+  \use:c { iffieldundef } { #1 } { \prg_return_true: } { \prg_return_false: }
+}
+
+% unfortunately, \iffieldint is not expandable, so no p version for us, boo
+\prg_new_protected_conditional:Nnn \blx_field_if_int:n { T, F , TF }
+{
+  \iffieldint { #1 } { \prg_return_true: } { \prg_return_false: }
+}
+
+\AtDataInput
+{
+  \blx_field_if_undef:nF { labeldatesource }
+  {
+    \blx_field_if_undef:nTF { \thefield{labeldatesource}year }
+    {
+      \blx_field_if_undef:nF { \thefield{labeldatesource} }
+      {
+        \blx_field_if_int:nT { \thefield{labeldatesource} }
+        {
+          \__blxbibbyyear_seq_gput_right_once:Nx \g__blxbibbyyear_yearlist_seq
+          { \thefield{\thefield{labeldatesource}} }
+        }
+      }
+    }
+    {
+      \__blxbibbyyear_seq_gput_right_once:Nx \g__blxbibbyyear_yearlist_seq
+      { \thefield{\thefield{labeldatesource}year} }
+    }
+  }
+}
+
+\cs_new:Npn \blxbibbyyear_seq_sort_bydirection:NN #1 #2
+{
+  \seq_sort:Nn #2
+  {
+    \int_compare:nNnTF { ##1 } #1 { ##2 }
+    { \sort_return_swapped: }
+    { \sort_return_same: }
+  }
+}
+
+\cs_new:Nn \blxbibbyyear_seq_sort_descending:N
+{
+  \blxbibbyyear_seq_sort_bydirection:NN < #1
+}
+
+\cs_new_nopar:Npn \blxbibbyyear_print_yearbib:nn #1 #2
+{
+
+  \defbibcheck{thisyear}
+  {
+    \blx_field_if_int:nTF { labelyear }
+    {
+      \int_compare:nNnF { \thefield{labelyear} } = { #1 }
+      { \skipentry }
+    }
+    { \skipentry }
+  }
+  % aktuell "hack" mit filter nach Jahr, da sonst leere Jahreseinträge angezeigt werden
+  \ifnumless{#1}{\yearoffirstpub}{}{
+  \printbibliography[heading=subbibliography, title=#1, check=thisyear, #2]
+    }
+}
+
+\DeclareDocumentCommand{\printbibbyyear}{O{}}
+{
+  \blxbibbyyear_seq_sort_descending:N \g__blxbibbyyear_yearlist_seq
+  \seq_map_inline:Nn \g__blxbibbyyear_yearlist_seq
+  { \blxbibbyyear_print_yearbib:nn {##1} {#1} }
+}
+\ExplSyntaxOff
+
+% Audrey’s approach to reverse numbering
+% at https://tex.stackexchange.com/a/22770/105447
+
+% Count total number of entries in each refsection
+\AtDataInput{%
+  \csnumgdef{entrycount:\therefsection}{%
+    \csuse{entrycount:\therefsection}+1}}
+
+% Print the labelnumber as the total number of entries in the
+% current refsection, minus the actual labelnumber, plus one
+\DeclareFieldFormat{labelnumber}{\mkbibdesc{#1}}
+\newrobustcmd*{\mkbibdesc}[1]{%
+  \number\numexpr\csuse{entrycount:\therefsection}+1-#1\relax}

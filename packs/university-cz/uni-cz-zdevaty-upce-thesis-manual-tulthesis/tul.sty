@@ -1,0 +1,260 @@
+\ProvidesPackage{tul}[2023/10/29 version 0.0]
+% Licence: CC BY
+
+\RequirePackage{ifthen}
+% indikator, ktera fakulta/ustav je aktivni, hodnotu meni volby baliku
+\newcommand{\sekce@TUL}{TUL}
+% jazykova verze
+\newcommand{\TUL@nguage}{CZ}
+\newcommand{\CZTUL}{Technick\'a univerzita v~Liberci}
+\newcommand{\ENTUL}{Technical university of Liberec}
+\newcommand{\TUL}{\ifthenelse{\equal{\TUL@nguage}{EN}}{\ENTUL}{\CZTUL}}
+\newcommand{\CZTULsoucast}{\CZTUL}
+\newcommand{\ENTULsoucast}{\ENTUL}
+\newcommand{\TULsoucast}{\ifthenelse{\equal{\TUL@nguage}{EN}}{\ENTULsoucast}{\CZTULsoucast}}
+
+% nastaveni stranky a rozmeru
+\ifthenelse{\lengthtest{\paperwidth=210mm}\AND\lengthtest{\paperheight=297mm}}{%format A4
+\setlength{\oddsidemargin}{-0.04cm}
+\setlength{\evensidemargin}{-0.04cm}
+\setlength{\textwidth}{16cm}
+\setlength{\topmargin}{-0.54cm}
+\setlength{\headheight}{0.8cm}
+\setlength{\headsep}{1.0cm}
+\setlength{\textheight}{22.5cm}
+\setlength{\footskip}{1.45cm}
+}{% jiny format
+\addtolength{\topmargin}{-1.0cm}
+\setlength{\headheight}{1.8cm}
+\setlength{\headsep}{1.0cm}
+\addtolength{\textheight}{0.75cm}
+\setlength{\footskip}{1.2cm}
+}
+
+\setlength{\unitlength}{1mm}
+
+\newcommand{\TULwide}{
+\setlength{\oddsidemargin}{-0.04cm}
+\setlength{\evensidemargin}{-0.04cm}
+\setlength{\textwidth}{\paperwidth}
+\addtolength{\textwidth}{-5cm}
+\makeTULf@@ter
+}
+
+% barvy TUL a jednotlivych fakult
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\definecolor{tul}{HTML}{5948AD}
+\definecolor{tulgray}{cmyk}{0, 0, 0, 0.8}
+\definecolor{tulFF}{HTML}{EB6D25}
+\newcommand{\tulcolor}{tul}
+\newcommand{\titlecolor}{tul}
+
+% kontaktni informace
+\newcommand{\TULkontakt@name}{}
+\newcommand{\TULname}[1]{\renewcommand{\TULkontakt@name}{#1}}
+\newcommand{\TULkontakt@pos}{}
+\newcommand{\TULposition}[1]{\renewcommand{\TULkontakt@pos}{#1}}
+\newcommand{\TULkontakt@mail}{info@tul.cz}
+\newcommand{\TULmail}[1]{\renewcommand{\TULkontakt@mail}{#1}}
+\newcommand{\TULkontakt@phone}{+420 485 351 111}
+\newcommand{\TULphone}[1]{\renewcommand{\TULkontakt@phone}{#1}}
+\newcommand{\TUL@URL}{www.tul.cz}
+\newcommand{\TUL@adr}{{Studentsk\'a 1402/2, 461~17 Liberec~1\add@cz}}
+\newcommand{\add@cz}{\ifthenelse{\equal{\TUL@nguage}{EN}}{, Czech Republic}{}}
+\newcommand{\TULsekce@adr}{}
+
+% zahlavi a zapati
+\RequirePackage{fancyhdr}
+
+\newlength{\logo@height}
+\newlength{\logo@shift}
+
+\newcommand{\TULheader}{
+    \fancyhead{}\renewcommand{\headrulewidth}{0pt}
+    \settoheight{\logo@height}{\logotext}
+    \setlength{\logo@shift}{1.4cm}
+    \addtolength{\logo@shift}{-\logo@height}
+    \fancyhead[L]{\raisebox{\logo@shift}[0pt]{\logotext}}
+    \fancyheadoffset{1.5cm}}
+\newcommand{\noTULheader}{\fancyhead{}}
+
+\newcommand{\makeTULf@@ter}[1]{
+    \fancyfootoffset{1.5cm}
+    \fancyfoot[C]{}
+    \fancyfoot[L]{\color{\tulcolor}\fontsize{9pt}{12pt}\selectfont
+        \raisebox{-0.7cm}[0pt]{\vbox{
+            \ifthenelse{\equal{\TULkontakt@name}{}}{}{\TULkontakt@name\ |
+            \ifthenelse{\equal{\TULkontakt@pos}{}}{\unskip{}}{\TULkontakt@pos\ |}}
+            \TULkontakt@phone\ | \TULkontakt@mail\\
+            \TUL
+            \ifthenelse{\equal{\CZTUL}{\CZTULsoucast}}{}{ | \TULsoucast}\\
+            \TUL@adr\ | \TUL@URL}}}
+    \ifthenelse{\equal{#1}{true}}{
+        \fancyfoot[R]{\raisebox{-0.15cm}[0pt]{\TULp@ge}}
+    }{
+        \fancyfoot[R]{}
+    }
+}
+
+\newcommand{\TULp@ge}{\fontsize{9pt}{12pt}\selectfont\thepage}
+
+\newcommand{\TULfooter}{\makeTULf@@ter{true}}
+\newcommand{\TULfooternopage}{\makeTULf@@ter{false}}
+\newcommand{\noTULfooter}{\fancyfoot[L,R]{}\fancyfoot[C]{\TULp@ge}}
+\newcommand{\nofootaddress}{\fancyfoot[L,C]{}\fancyfoot[R]{\TULp@ge}}
+\newcommand{\TULpage}{\TULheader\TULfooter}
+
+\fancypagestyle{TUL}{\TULheader\TULfooter}
+\fancypagestyle{TULnopage}{\TULheader\TULfooternopage}
+\fancypagestyle{TULheader}{\TULheader\noTULfooter}
+\fancypagestyle{TULheaderonly}{\TULheader\fancyfoot{}}
+\fancypagestyle{TULfooter}{\fancyhead{}\TULfooter}
+\fancypagestyle{TULfooternopage}{\fancyhead{}\TULfooternopage}
+\fancypagestyle{TULfooternoaddr}{\fancyhead{}\nofootaddress}
+
+
+% loga
+\newcommand{\logoTUL}{\includegraphics[scale=0.3]{logo-tul}}
+\newcommand{\logoTULwh}{\includegraphics[scale=0.3]{logo-tul-wh}}
+\newcommand{\logoTULtext}{\includegraphics[scale=0.3]{logo-tul-txt}}
+\newcommand{\logoTULtextwh}{\includegraphics[scale=0.3]{logo-tul-txt-wh}}
+\newcommand{\logoTULalt}{\includegraphics[scale=0.3]{logo-tul-3r}}
+\newcommand{\logoTULaltwh}{\includegraphics[scale=0.3]{logo-tul-3r-wh}}
+\newcommand{\logoFF}{\includegraphics[scale=0.3]{logo-cxi}}
+\newcommand{\logoFFwh}{\includegraphics[scale=0.3]{logo-cxi-wh}}
+\newcommand{\logoFFtext}{\includegraphics[scale=0.3]{logo-cxi-txt}}
+\newcommand{\logoFFtextwh}{\includegraphics[scale=0.3]{logo-cxi-txt-wh}}
+\newcommand{\ENlogoTUL}{\includegraphics[scale=0.3]{logo-tul}}
+\newcommand{\ENlogoTULwh}{\includegraphics[scale=0.3]{logo-tul-wh}}
+\newcommand{\ENlogoTULtext}{\includegraphics[scale=0.3]{logo-tul-txt-en}}
+\newcommand{\ENlogoTULtextwh}{\includegraphics[scale=0.3]{logo-tul-txt-en-wh}}
+\newcommand{\ENlogoTULalt}{\includegraphics[scale=0.3]{logo-tul-3r-en}}
+\newcommand{\ENlogoTULaltwh}{\includegraphics[scale=0.3]{logo-tul-3r-en-wh}}
+\newcommand{\ENlogoFF}{\includegraphics[scale=0.3]{logo-cxi}}
+\newcommand{\ENlogoFFwh}{\includegraphics[scale=0.3]{logo-cxi-wh}}
+\newcommand{\ENlogoFFtext}{\includegraphics[scale=0.3]{logo-cxi-txt-en}}
+\newcommand{\ENlogoFFtextwh}{\includegraphics[scale=0.3]{logo-cxi-txt-en-wh}}
+\newcommand{\CZlogo}{\logoTUL}
+\newcommand{\CZlogowh}{\logoTULwh}
+\newcommand{\ENlogo}{\ENlogoTUL}
+\newcommand{\ENlogowh}{\ENlogoTULwh}
+\newcommand{\CZlogotext}{\logoTULtext}
+\newcommand{\CZlogotextwh}{\logoTULtextwh}
+\newcommand{\ENlogotext}{\ENlogoTULtext}
+\newcommand{\ENlogotextwh}{\ENlogoTULtextwh}
+\newcommand{\logo}{\ifthenelse{\equal{\TUL@nguage}{EN}}{\ENlogo}{\CZlogo}}
+\newcommand{\logowh}{\ifthenelse{\equal{\TUL@nguage}{EN}}{\ENlogowh}{\CZlogowh}}
+\newcommand{\logotext}{\ifthenelse{\equal{\TUL@nguage}{EN}}{\ENlogotext}{\CZlogotext}}
+\newcommand{\logotextwh}{\ifthenelse{\equal{\TUL@nguage}{EN}}{\ENlogotextwh}{\CZlogotextwh}}
+
+\newcommand{\darkTULbg}{
+    \renewcommand{\logo}{\logowh}
+    \renewcommand{\logotext}{\logotextwh}
+    \renewcommand{\logoTULalt}{\logoTULaltwh}
+}
+
+% oddelovac v textu (svisla cara ve fakultni barve)
+\newcommand{\oddel}{{\color{\tulcolor}\rule{1pt}{1.7ex}}}
+
+% styl a barva nadpisu
+\RequirePackage[sf, bf]{titlesec}
+\@ifundefined{chapter}{}{\titleformat*{\chapter}{\color{\titlecolor}\TULmono\bfseries\LARGE\raggedright}}
+\@ifundefined{section}{}{\titleformat*{\section}{\color{\titlecolor}\TULmono\bfseries\Large\raggedright}}
+
+% titulni stranka
+\newcommand{\create@uthb@x}[2]{%
+\vspace{2cm}
+
+{\Large #1}
+
+\vspace{0.5cm}
+
+{\large #2}
+}
+
+\newlength{\f@ntsize}
+\setlength{\f@ntsize}{\f@size pt}
+
+\newcommand{\TULtitlepage}[3]{{%
+\thispagestyle{TULheaderonly}
+\mbox{}
+\vfill
+\vfill
+\vfill
+\bgroup
+\raggedright
+\color{\tulcolor}\huge\bfseries\TULmono\setlength{\baselineskip}{2.5\f@ntsize} #1\par
+
+\create@uthb@x{#2}{#3}
+\egroup
+\vfill
+\newpage
+}}
+
+% pisma - priprava
+\newboolean{TULf@nts}
+\setboolean{TULf@nts}{false}
+
+% prepinac stylu: nazev fakulty/ustavu
+\newcommand{\switchTULstyle}[1]{
+    \renewcommand{\sekce@TUL}{#1}
+    \renewcommand{\tulcolor}{tul#1}
+    \renewcommand{\titlecolor}{tul#1}
+    \renewcommand{\CZlogo}{\csname logo#1\endcsname}
+    \renewcommand{\CZlogowh}{\csname logo#1wh\endcsname}
+    \renewcommand{\ENlogo}{\csname ENlogo#1\endcsname}
+    \renewcommand{\ENlogowh}{\csname ENlogo#1wh\endcsname}
+    \renewcommand{\CZlogotext}{\csname logo#1text\endcsname}
+    \renewcommand{\CZlogotextwh}{\csname logo#1textwh\endcsname}
+    \renewcommand{\ENlogotext}{\csname ENlogo#1text\endcsname}
+    \renewcommand{\ENlogotextwh}{\csname ENlogo#1textwh\endcsname}
+}
+
+% nastaveni jednotlivych fakult/ustavu: \TUL@<utvar>@setup
+
+\newcommand{\TUL@FF@setup}{\switchTULstyle{FF}%
+\renewcommand{\ENTULsoucast}{Faculty of Arts and Philosophy}%
+\renewcommand{\CZTULsoucast}{Fakulta filozofick\'a}
+\renewcommand{\TUL@URL}{ff.upce.cz}
+}
+
+% volby baliku
+\DeclareOption{EN}{\renewcommand{\TUL@nguage}{EN}}
+
+\DeclareOption{FF}{\TUL@FF@setup}
+
+\DeclareOption{bwtitles}{
+    \renewcommand{\titlecolor}{black}
+}
+
+\DeclareOption{bw}{
+    \renewcommand{\tulcolor}{black!50}
+    \renewcommand{\titlecolor}{black}
+    \renewcommand{\logoTUL}{\includegraphics[scale=0.3]{logo-tul-bw}}
+    \renewcommand{\logoTULtext}{\includegraphics[scale=0.3]{logo-tul-txt-bw}}
+    \renewcommand{\logoTULalt}{\includegraphics[scale=0.3]{logo-tul-3r-bw}}
+    \renewcommand{\logoFF}{\includegraphics[scale=0.3]{logo-cxi-bw}}
+    \renewcommand{\logoFFtext}{\includegraphics[scale=0.3]{logo-cxi-txt-bw}}
+    \renewcommand{\ENlogoFF}{\includegraphics[scale=0.3]{logo-cxi-bw}}
+    \renewcommand{\ENlogoFFtext}{\includegraphics[scale=0.3]{logo-cxi-txt-en-bw}}
+}
+
+\DeclareOption{fonts}{\setboolean{TULf@nts}{true}}
+
+\DeclareOption{noheader}{\noTULheader}
+
+\pagestyle{TUL}
+
+\ProcessOptions
+
+% aktivace pisem
+\ifthenelse{\boolean{TULf@nts}}{
+    \newcommand\TULmono{\sffamily\bfseries}
+    \RequirePackage{fontspec}
+    \setmainfont{Times New Roman}
+    \setsansfont{Helvetica}
+}{
+    \newcommand\TULmono{\sffamily\bfseries}
+}
+

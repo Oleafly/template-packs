@@ -1,0 +1,105 @@
+
+\newif\ifjapanese
+
+\japanesetrue  % 論文全体を日本語で書く（英語で書くならコメントアウト）
+
+\ifjapanese
+  \documentclass[a4j,twoside,openright,11pt]{jreport} % 両面印刷の場合．余白を綴じ側に作って右起こし．
+  %\documentclass[a4j,11pt]{jreport}                  % 片面印刷の場合．
+  \renewcommand{\bibname}{参考文献}
+  \newcommand{\acknowledgmentname}{謝辞}
+\else
+  \documentclass[a4paper,11pt]{report}
+  \newcommand{\acknowledgmentname}{Acknowledgment}
+\fi
+\usepackage{thesis}
+\usepackage{ascmac}
+\usepackage[dvipdfmx]{graphicx,color}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{lipsum}
+\usepackage[dvipdfmx]{hyperref}
+\usepackage{pxjahyper}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{threeparttable}
+\usepackage{amsmath}
+\usepackage[subrefformat=parens]{subcaption}
+
+\bibliographystyle{junsrt}
+
+\usepackage{lmodern}
+
+% gitコミットハッシュをフッターに挿入
+% 最終書き出し時にはコメントアウト
+\usepackage[mark]{gitinfo2}
+\renewcommand{\gitMark}{commit \gitAbbrevHash\space(\gitAuthorDate)}
+
+% \bindermode  % バインダー用余白設定
+
+% 日本語情報（必要なら）
+\jclass  {卒業論文}                             % 論文種別
+\jtitle    {タイトル}    % タイトル．改行する場合は\\を入れる
+\juniv    {慶應義塾大学}                  % 大学名
+\jfaculty  {総合政策学部}               % 学部，学科
+\jauthor  {慶應 太郎}                       % 著者
+\jera {令和}                                   % 元号
+\jhyear  {3}                                   % 令和○年度
+\jsyear  {2021}                                 % 西暦○年度
+\jkeyword  {\LaTeX，テンプレート}     % 論文のキーワード
+\jproject{} %プロジェクト名
+\jdate{2021年7月}
+
+% 英語情報（必要なら）
+\eclass  {Bachelor's Thesis}                            % 論文種別
+\etitle    {Title}      % タイトル．改行する場合は\\を入れる
+\euniv  {Keio University}                             % 大学名
+\efaculty  {Faculty of Policy Management}  % 学部，学科
+\eauthor  {Taro Keio}                           % 著者
+\eyear  {2021}                                        % 西暦○年度
+\ekeyword  {\LaTeX, Template}          % 論文のキーワード
+\eproject{}                 %プロジェクト名
+\edate{July 2021}
+
+
+% hyperrefの設定
+\hypersetup{
+  hidelinks, %リンクに赤枠を表示しない
+  pdftitle={PDF Title},
+  pdfauthor={Taro Keio}
+}
+
+
+
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{0pt} % 数式上部のマージン
+\setlength{\belowdisplayskip}{2pt} % 数式下部のマージン
+
+\ifjapanese
+  \jmaketitle    % 表紙（日本語）
+\else
+  \emaketitle    % 表紙（英語）
+\fi
+
+\include{chapters/00-abstract}  % アブストラクト．要独自コマンド，include先参照のこと
+
+\tableofcontents  % 目次
+\listoffigures    % 表目次
+\listoftables    % 図目次
+
+\pagenumbering{arabic}
+
+\include{chapters/01}  % 本文1
+\include{chapters/02}  % 本文2
+\include{chapters/03}  % 本文3
+\include{chapters/04}  % 本文4
+
+\include{chapters/90_acknowledgment}  % 謝辞．要独自コマンド，include先参照のこと
+\include{bib/91_bibliography}  % 参考文献．要独自コマンド，include先参照のこと
+
+\appendix
+\include{appendix/92_appendix}    % 付録
+
+\end{document}

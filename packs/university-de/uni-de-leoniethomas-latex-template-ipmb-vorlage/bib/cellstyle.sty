@@ -1,0 +1,48 @@
+%%%%%%%%%%%%%%%%%%% BibLaTeX Style et. al. kursiv %%%%%%%%%%%%%
+% Some general changes
+\renewcommand{\cite}{\parencite}
+\setlength{\bibhang}{0pt}
+\setlength{\bibitemsep}{\parskip}
+\DeclareNameAlias{sortname}{family-given}
+\renewcommand*{\nameyeardelim}{\addcomma\space}
+\renewcommand*{\bibinitdelim}{}
+\renewbibmacro*{in:}{%
+	\iffieldequalstr{entrytype}{inproceedings}{%
+		\printtext{\bibstring{in}\addspace}%
+	}{}%
+}
+\AtEveryBibitem{\clearfield{issn}}
+\AtEveryBibitem{\clearfield{isbn}}
+\AtEveryBibitem{\clearfield{doi}}
+\AtEveryBibitem{\clearfield{number}}
+\AtEveryBibitem{\clearfield{url}}
+\AtEveryBibitem{\clearfield{eprint}}
+
+% Changes for Book
+\csletcs{abx@macro@publisher+location+date@orig}{abx@macro@publisher+location+date}
+\renewbibmacro*{publisher+location+date}{%
+	\printtext[parens]{\usebibmacro{publisher+location+date@orig}}
+}
+\DeclareFieldFormat[book]{title}{#1\printunit{\addspace}}
+
+% Changes for inproceedings
+\DeclareFieldFormat[inproceedings]{title}{#1\isdot}
+\DeclareFieldFormat{booktitle}{#1\addcomma}
+\xpatchbibmacro{byeditor+others}{%
+	\usebibmacro{byeditor+othersstrg}%
+	\setunit{\addspace}%
+	\printnames[byeditor]{editor}%
+	\clearname{editor}%
+}{%
+	\printnames[byeditor]{editor}%
+	\clearname{editor}
+	\addcomma\addspace
+	\bibstring{editor}
+	\setunit{\addspace}%
+}{}{}
+
+% Changes in Article
+\DeclareFieldFormat[article]{title}{#1}
+\DeclareFieldFormat[article]{journaltitle}{#1\isdot}
+\DeclareFieldFormat[article]{volume}{\textit{#1}}
+\DeclareFieldFormat[article]{pages}{#1}

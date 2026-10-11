@@ -1,0 +1,72 @@
+% !TeX spellcheck = en_US
+%--------------------- Basic settings ---------------------
+\documentclass[
+  twoside,
+  12pt,
+  a4paper,
+  openright,
+  bioscience, % possible options are: bioscience, chemgeo, mathcomp, physicsastro
+  english, % english or german
+  marginleft=1in,
+  marginright=1in,
+  margintop=1in,
+  marginbottom=1in,
+  bindingoffset=6mm
+]{hdphdthesis}
+
+\usepackage{afterpage}
+\usepackage{fontspec} % This requires XeLaTeX
+
+\setmainfont{Times New Roman}
+
+%------------- Setting the license of thesis --------------
+\usepackage[
+    type={CC},
+    modifier={by-nc-nd},
+    version={3.0},
+]{doclicense}
+
+%----------------- Start of the document ------------------
+\begin{document}
+\pagenumbering{roman}
+
+%--------------- Table and figure captions ----------------
+\captionsetup[figure]{labelfont={bf},name={Figure},labelsep=period,singlelinecheck=false}
+\captionsetup[table]{labelfont={bf},name={Table},labelsep=period,singlelinecheck=false}
+
+%----- First two pages according to the faculty rules ----
+\author{M.Sc. Bruce Wayne}
+\bornin{Gotham City}
+\examdate{30-03-1939}
+\title{The Dark Knight in Gotham City}
+\setreferees{
+    Prof. Dr. First Supervisor,
+    Prof. Dr. Second Supervisor
+}
+\maketitle
+
+%----------------------- Abstracts ------------------------
+\insertcopyrightnotice
+\include{chapters/abstracts}
+
+%------------------- Table of contents --------------------
+\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\contentsname}\tableofcontents\newpage
+\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\listfigurename}\listoffigures\newpage
+\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\listtablename}\listoftables\newpage
+
+%--------------------- Main contents ----------------------
+\cleardoublepage
+\pagenumbering{arabic}
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+\include{chapters/chapter3}
+
+%---------------------- Bibliography ----------------------
+\cleardoublepage\phantomsection\addcontentsline{toc}{chapter}{\bibname}
+\bibliography{bibliography}
+\bibliographystyle{unsrt}
+
+%-------------------- Acknowledgements --------------------
+\include{chapters/acknowledgements}
+
+\end{document}

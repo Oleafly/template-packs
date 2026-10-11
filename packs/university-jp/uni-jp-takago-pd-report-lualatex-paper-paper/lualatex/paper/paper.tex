@@ -1,0 +1,42 @@
+% !TeX root = paper.tex
+%%% TeXのファイル名を変えたら ↑ も変えましょう
+
+% TEX STUDIO MAGIC-COMMAND
+% !TeX document-id = {21ffa6e2-6c8f-4532-897c-386dc477f19a}
+% !TeX root = paper.tex
+% !TeX encoding = utf8
+% !TeX TXS-program:compile = lualatex -synctex=1 -interaction=nonstopmode -halt-on-error %.tex
+% !TeX TXS-program:quick = txs:///compile | txs:///view-pdf-internal --embedded
+%%%-------------------------------------------------------------------------
+%%% PD3レポートテンプレート
+%%% 作成： 金沢工大・情報工学科・鷹合研究室
+%%%-------------------------------------------------------------------------
+\documentclass[a4paper,openright]{ltjsbook} 
+
+\usepackage{takagolab}	% 鷹合研の設定
+
+\begin{document}
+\input{title.tex} %タイトル
+\frontmatter % タイトルの次に1ページの空きページを
+\input{abstract.tex}  % アブストラクト
+\input{alloc.tex} % 活動履歴と作業分担
+
+\mainmatter %ここから本文（<--これないと目次のページがずれる？）
+\input{toc.tex}   % 目次，図目次，表目次，ソースリスト目次
+
+% ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+\setcounter{page}{0} % PDFにしたときに，第1章が右ページからが始まらないときは，0にすること
+% PDF印刷時の注意： ①実際のページ，②両面，③空白ページを除外しない, にすること．さもないと見開き時におかしくなる
+% ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+\input{chap1.tex} % 1章
+\input{chap2.tex} % 2章
+\input{chap3.tex} % 3章
+\input{chap4.tex} % 4章
+\input{chap5.tex} % 5章
+
+\input{bibliography.tex} % 参考文献
+\newpage
+\input{appendix.tex}     % 付録  listingsがうまくイカない
+
+\end{document}

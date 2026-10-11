@@ -1,0 +1,58 @@
+\documentclass[11pt,a4paper]{report}
+
+% Thesis information (title, author, dates)
+\input{thesis-info.tex}
+
+% Import preamble
+\input{preamble.tex}
+
+\begin{document}
+
+% Cover Pages
+\pagestyle{empty} % No page numbers for cover pages
+\input{cover.tex} % 외표지
+\input{cover.tex} % 속표지
+\clearpage
+
+% Restore page numbers
+\pagestyle{plain}
+
+% Abstract and TOC
+\pagenumbering{Roman}
+\setcounter{page}{1} % Start Roman page numbering
+\input{abstracts/english.tex}
+\clearpage
+
+% Table of Contents
+\renewcommand\baselinestretch{1.3}
+\tableofcontents
+\cleardoublepage
+
+% Main Content
+\pagenumbering{arabic} % Switch to Arabic page numbering
+\setcounter{page}{1}   % Reset page number to 1
+\input{contents/0-introduction.tex}
+\input{contents/1-background.tex}
+\input{contents/2-algorithms.tex}
+\input{contents/3-experiments.tex}
+\input{contents/4-conclusion.tex}
+\cleardoublepage
+
+% References
+\pagenumbering{roman}
+\setcounter{page}{1} % Restart Roman page numbering for Korean abstract
+\renewcommand{\bibname}{References}
+\phantomsection % Correct alignment for TOC
+\addcontentsline{toc}{chapter}{References} % Include it in the Table of Contents
+\bibliographystyle{IEEEtran}
+\bibliography{bib}
+
+% Appendix
+\input{contents/5-appendix.tex}
+\cleardoublepage
+
+% Korean Abstract (국문초록)
+\input{abstracts/korean.tex}
+
+
+\end{document}

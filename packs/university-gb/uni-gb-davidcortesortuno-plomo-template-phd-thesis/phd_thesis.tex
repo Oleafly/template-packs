@@ -1,0 +1,86 @@
+\documentclass{plomo}
+
+\graphicspath{{./figures/}}
+
+\begin{document}
+
+% Mini TOC Initialization
+\dominitoc 
+
+\frontmatter
+
+\input{chapters/frontpage.tex}
+\cleardoublepage
+\phantomsection
+\input{chapters/abstract.tex}
+\addcontentsline{toc}{chapter}{Abstract}
+\cleardoublepage
+
+
+%%%%%%%% ABSTRACT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add an external PDF file in the 'cover' folder
+
+% \thispagestyle{empty}
+% \includepdf[pages=1,pagecommand={\clearpage}]{cover/cover.pdf}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% TABLE OF CONTENTS -----------------------------------------------------------
+
+% Cleardoublepage necessary so bookmark points to the right place
+\pdfbookmark{\contentsname}{Contents}
+\tableofcontents
+% \thispagestyle{empty}
+\listoffigures
+\listoftables
+\cleardoublepage
+
+% AUTHORSHIP ------------------------------------------------------------------
+
+% \pdfbookmark{\contentsname}{Authorship}
+\phantomsection
+\input{chapters/authorship.tex}
+\addcontentsline{toc}{chapter}{Declaration of Authorship}
+\cleardoublepage
+
+% ACKNOWLEDGMENTS ------------------------------------------------------------- 
+
+% \pdfbookmark{\contentsname}{Authorship}
+\phantomsection
+\input{chapters/acknowledgments.tex}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+\cleardoublepage
+
+% NOMENCLATURE ----------------------------------------------------------------
+
+\phantomsection
+\input{chapters/nomenclature.tex}
+\addcontentsline{toc}{chapter}{Nomenclature}
+\cleardoublepage
+
+% INTRODUCTION ----------------------------------------------------------------
+
+% \pdfbookmark{\contentsname}{Introduction}
+\input{chapters/introduction.tex}
+% \addcontentsline{toc}{chapter}{Introduction}
+\clearpage
+
+% MAIN CONTENT ----------------------------------------------------------------
+\mainmatter
+% Manually adding contents to TOC messes up the order of minitoc
+% We set here the startig chapter of minitoc
+\setcounter{mtc}{5}
+
+\input{chapters/first_chapter.tex}
+\clearpage
+% \input{chapters/second_chapter.tex}
+% \clearpage
+\input{chapters/appendix.tex}
+
+% BIBLIOGRAPHY ----------------------------------------------------------------
+
+\bibliographystyle{unsrtcolor}
+\bibliography{my_library.bib}
+% \addcontentsline{toc}{section}{\protect\numberline{}References}
+
+\end{document}

@@ -1,0 +1,79 @@
+\documentclass{scrbook}
+
+\input{style}
+\input{macros}
+
+% Set title and author used in the PDF meta data
+\hypersetup{
+  pdftitle={Wie schreibe ich eine Masterarbeit?},
+  pdfauthor={Erika Mustermann}
+}
+
+% Depending on which of the following two color schemes you import your thesis will be in color or grayscale. I recommend to generate a colored version as a PDF and a grayscale version for printing.
+
+\input{schema-color}
+%\input{schema-gray}
+
+\newcommand{\duedate}{15. Juli 2016}
+
+\begin{document}
+  \frontmatter
+  \include{title}
+  \include{declaration}
+
+  \include{abstract}
+
+  \cleardoublepage
+  \phantomsection
+  \pdfbookmark{\contentsname}{tableofcontents}
+  \markboth{\contentsname}{}
+  \tableofcontents
+
+  % Remove this for the final version of the thesis!
+  \cleardoublepage
+  \phantomsection
+  \newcommand{\listtodoname}{Aufgabenverzeichnis}
+  \pdfbookmark{\listtodoname}{listoftodos}
+  \listoftodos[\listtodoname]
+
+  \mainmatter
+  \include{einleitung}
+  \include{grundlagen}
+  \include{konzept}
+  \include{evaluation}
+  \include{fazit}
+
+  \appendix
+
+  \include{appendix}
+
+  \backmatter
+
+  \cleardoublepage
+  \phantomsection
+  \pdfbookmark{\listfigurename}{listoffigures}
+  \listoffigures
+
+  \cleardoublepage
+  \phantomsection
+  \pdfbookmark{\listtablename}{listoftables}
+  \listoftables
+
+  \cleardoublepage
+  \phantomsection
+  \renewcommand{\listtheoremname}{Definitions- und Theoremverzeichnis}
+  \pdfbookmark{\listtheoremname}{listoftheorems}
+  \listoftheorems[ignoreall,show={Lemma,Theorem,Korollar,Definition}]
+
+  \cleardoublepage
+  \phantomsection
+  \pdfbookmark{\lstlistlistingname}{listoflistings}
+  \lstlistoflistings
+
+  \include{abkuerzungen}
+
+  \cleardoublepage
+  \phantomsection
+  \pdfbookmark{\bibname}{bibliography}
+  \bibliography{literature}
+\end{document}

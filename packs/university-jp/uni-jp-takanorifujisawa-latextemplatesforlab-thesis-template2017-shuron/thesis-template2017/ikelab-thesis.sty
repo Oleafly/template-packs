@@ -1,0 +1,370 @@
+%% -------------------------------------------------------- %%
+%%             卒論 / 修論用 スタイルファイル               %%
+%% -------------------------------------------------------- %%
+%
+%  池原研究室卒論・修論用の LaTeX スタイルファイルです
+%  奥村氏の jsbook (デフォルトで付属，report オプションを指定してください)
+%  に対して，スタイルの変更を加えます
+%  卒論・修論それぞれ以下のように用いてください
+%
+%  --------------------------------------------------------------------------
+%    \documentclass[dvipdfmx,report,disablejfam,nosetpagesize,12pt]{jsbook}
+%    %% 卒論 bachelor, 修論は master を指定してください
+%    \usepackage[bachelor]{ikelab-thesis}
+%    \usepackage{その他必要なパッケージ...}
+%   
+%    %% 論文タイトル
+%    \title{2016年度 卒論/修論テンプレート}
+%    %% 論文英語タイトル (修論のみ)
+%    \etitle{The Template for Master Thesis}
+%    %% 論文著者
+%    \author{池研 太郎}
+%    %% 学籍番号
+%    \id{8XXXXXXX}
+%    %% 指導教員名
+%    \teacher{池原雅章\hspace{1em}教授}
+%    %% 所属
+%    \department{慶應義塾大学院理工学研究科総合デザイン工学専攻}
+%  
+%    \begin{document}
+%    \frontmatter
+%    % 表紙用タイトルの出力
+%    \maketitleforcover
+%    % タイトルを出力
+%    \maketitle
+%    % 論文要旨（修論のみ）
+%    \begin{abstract}
+%       ここに要旨を記述します
+%    \end{abstract}
+%    % 論文英語要旨（修論のみ）
+%    \begin{eabstract}
+%       Abstract here ...
+%    \end{eabstract}
+%    % 目次を出力
+%    \tableofcontents
+%    % ページ番号を数字 1 から振り直す
+%    \mainmatter
+%    \chapter{序論}
+%    論文本文を記述 ...
+%    \end{document}
+%  --------------------------------------------------------------------------
+%
+%  このスタイルに関係のある LaTeX コマンド
+%  
+%    \title{タイトル}
+%       論文のタイトルを指定します
+%
+%    \author{著者名}
+%       論文の著者名を指定します
+%
+%    \date{年月日}
+%       執筆年月日を変更します (デフォルトは「XXXX年XX月」)
+%
+%  このスタイルファイルで定義しているコマンド
+%  
+%    \scoolyear{年度} 
+%       表紙に表示される年度を変更する (過去の卒論・修論を出力したい時など)
+%       \schoolyear{2015} % 年度を「2015 年度」に変更
+%
+%    \thesis{卒業論文/修士論文} 
+%       表紙に表示される「卒業論文」「修士論文」の文字列を変更
+%       ikelab-thesis.sty のオプションで自動的に設定されるのであまり使いみちは無いか
+%       \thesis{卒業論文}
+%
+%    \id{学籍番号}
+%       表紙に表示される学籍番号を変更
+%       \id{8XXXXXXX}
+%  
+%    \department{所属名}
+%       所属を変更．学事の指定どおり改行を入れたい時とか
+%       \department{慶應義塾大学理工学研究科\\総合デザイン工学専攻}
+%
+%    \teacher{指導教員名}
+%       指導教員．役職まで記述する
+%       \teacher{池原雅章\hspace{1em}教授}
+%
+%    \etitle{英語タイトル}
+%       論文の英語タイトル (修論のみ)
+%       \etitle{This is the English Title}
+%
+\NeedsTeXFormat{pLaTeX2e}
+\ProvidesFile{ikelab-thesis.sty}[2017/01/20 version 2.8 Takanori Fujisawa]
+
+\newif\if@masterthesis
+
+% [bachelor] : 卒業論文
+\DeclareOption{bachelor}{\@masterthesisfalse}
+% [master] : 修士論文
+\DeclareOption{master}{\@masterthesistrue}
+
+\ExecuteOptions{bachelor}
+\ProcessOptions\relax
+
+% ----------- 余白を変更 (バインダーのスペースに合わせて) ---------
+\addtolength{\oddsidemargin}{48truept}
+\addtolength{\textwidth}{-24truept}
+
+% タイトル部分の横幅 (外表紙と内表紙で改行位置が同じになるようにする)
+\newlength{\titlelength}
+\setlength{\titlelength}{\textwidth}
+
+% 
+\setcounter{topnumber}{10}
+\renewcommand{\topfraction}{.9}
+\setcounter{bottomnumber}{10}
+\renewcommand{\bottomfraction}{1.0}
+\setcounter{totalnumber}{20}
+\renewcommand{\textfraction}{0.4}
+\renewcommand{\floatpagefraction}{1.0}
+
+% --------------------- 表紙のフォーマット -------------------------
+\newcounter{schoolyear}
+\setcounter{schoolyear}{\the\year}
+\ifnum \the\month < 4
+   \addtocounter{schoolyear}{-1}
+\fi
+
+\newcommand{\schoolyear}[1]{\setcounter{schoolyear}{#1}}
+\newcommand{\thesis}[1]{\gdef\@thesis{#1}}
+\newcommand{\id}[1]{\gdef\@id{#1}}
+\newcommand{\department}[1]{\gdef\@department{#1}}
+\newcommand{\teacher}[1]{\gdef\@teacher{#1}}
+\def\@etitle{}
+\let\@etitle\@empty
+\newcommand{\etitle}[1]{\gdef\@etitle{#1}}
+
+\def\today{\number\year 年 \number\month 月}
+
+\teacher{池原雅章\hspace{1em}教授}
+
+\if@masterthesis
+   \thesis{修士論文}
+   \department{慶応義塾大学理工学研究科総合デザイン工学専攻}
+\else
+   \thesis{卒業論文}
+   \department{慶応義塾大学理工学部電子工学科}
+\fi
+
+% 均等割り付けのコマンド (okumacro.sty より流用)
+% \thesis@kintou{5zw}{割り付け}
+\def\thesis@kintou#1#2{%
+   \leavevmode%
+   \settowidth{\@tempdima}{#2}%
+   \ifdim\@tempdima>#1\relax%
+      #2%
+   \else%
+      \hbox to #1{%
+         \kanjiskip=0pt plus 1fil minus 1fil
+         \xkanjiskip=\kanjiskip
+         #2%
+      }%
+   \fi%
+}
+
+\def\zw{zw}
+
+% --------------------- 表紙のフォーマット --------------------------
+
+\def\@titlecontents{
+   \begin{center}
+      \begin{minipage}[c]{.49\hsize}%
+         \large \@thesis
+      \end{minipage}
+      \begin{minipage}[c]{.49\hsize}%
+         \flushright \large \theschoolyear 年度
+      \end{minipage}\par
+      \vspace{\stretch{.8}}
+         \parbox{\titlelength}{\centering\huge\headfont\@title}\par % 論文のタイトル部分
+      \vspace{\stretch{1}}
+         {\Large \@author \par} % 氏名 
+         {\normalsize （学籍番号\hspace{1em}\@id） \par} % 学籍番号部分
+      \vspace{\stretch{.6}}
+         {\Large 指導教員\hspace{1em} \@teacher\par} % 指導教員
+      \vspace{\stretch{.4}}
+         {\large \@date \par}  % 提出年月日
+      \vspace{\stretch{.4}}
+         {\large \@department\par} % 所属
+  \end{center} 
+}
+
+\newcommand{\maketitleforcover}{
+   % 表紙の組版に必要な最低限のパラメータだけ変更する
+   % 基本的に自分が何をやっているかわからない限り，本文中での
+   % 組版パラメータの変更はすべきでないのだが・・・
+   {
+      % 表紙をしおりに表示
+      \ifdefined\pdfbookmark
+         \pdfbookmark[0]{表紙}{title}
+      \fi
+      \thispagestyle{empty}
+      \addtolength{\oddsidemargin}{-48truept}
+      \addtolength{\hsize}{24truept}
+      \@titlecontents
+      \newpage
+   }
+}
+
+\renewcommand{\maketitle}{
+   \thispagestyle{empty}
+   \@titlecontents
+   \newpage
+}
+
+% ----------------------- 章のフォーマット --------------------------
+\def\@makechapterhead#1{%
+   \vspace*{\stretch{1}}
+   \begin{center}
+      \parindent \z@
+      \normalfont
+      \ifnum \c@secnumdepth >\m@ne
+         \if@mainmatter
+            % 第 ?? 章
+            \huge\headfont \@chapapp~~\thechapter~~\@chappos
+            \par\nobreak
+            \vskip 4\Cvs
+         \fi
+      \fi
+      \interlinepenalty \@M
+      % 章の名前
+      % 4 文字未満の章名を均等割りつけするように．好みが分かれるデザインかも
+      \HUGE \headfont%
+      \sbox\@tempboxa{%
+         % \\ を入れたときには割り付けしないように
+         \def\\{\hspace{3.2\zw}}%
+         \let\par\\%
+         \let\label\@gobble%
+         #1}
+      \ifdim\wd\@tempboxa>3.2\zw\relax
+          #1%
+      \else
+          \thesis@kintou{3.2\zw}{#1}%
+      \fi
+      \par\nobreak
+   \end{center}
+   \vspace{\stretch{5}}
+   \newpage
+}
+
+% ----------------- 概要 (修士論文のみ必要) -----------------------
+
+\newsavebox\thesis@abstractbox
+
+% \begin{abstract}
+%   日本語要旨...
+% \end{abstract}
+\def\abstract{%
+   \newpage
+   \setbox\thesis@abstractbox\vbox\bgroup%
+      \begin{center}
+         \headfont \LARGE \thesis@kintou{6\zw}{論文要旨}
+      \end{center} \par
+}
+
+\def\endabstract{%
+   \egroup%
+   % 概要全体が 1 ページを超えそうなときは上下中央寄せをしない
+   \ifdim\ht\thesis@abstractbox>.95\textheight
+      \PackageWarning{ikelab-thesis}{Japanese abstract is too large. Please shrink it to 800 words.}%
+      \unvbox\thesis@abstractbox%
+   \else
+      \null\vfil\hbox{\box\thesis@abstractbox}\par\vfil\null%
+   \fi
+   \newpage
+}
+
+\def\eabstract{%
+   \newpage
+   \setbox\thesis@abstractbox\vbox\bgroup%
+      \begin{center}
+         \headfont \LARGE Thesis Abstract \par \vspace{.7ex}
+         \large \@etitle
+      \end{center}\par
+}
+
+\def\endeabstract{%
+   \egroup%
+   % 概要全体が 1 ページを超えそうなときは上下中央寄せをしない
+   \ifdim\ht\thesis@abstractbox>.95\textheight
+      \PackageWarning{ikelab-thesis}{English abstract is too large. Please shrink it to 400 words.}%
+      \unvbox\thesis@abstractbox%
+   \else
+      \null\vfil\hbox{\box\thesis@abstractbox}\par\vfil\null%
+   \fi
+   \newpage
+}
+
+% ----------------------- その他の機能 --------------------------
+
+% 参考文献リストの URL 欄が中途半端な部分で切れやすいので改行 & 小さな文字にする
+\newcommand{\biburl}[1]{\\{\footnotesize\url{#1}}}
+
+% ------------------------------------------------------------
+
+% "Font shape `JY1/mc/b/n' undefined" のエラーに対処
+% tgheros.sty が \bfdefault を変更するため．
+% 定義しておかないと JY1/mc/m/n に置換されて太字も反映されない
+\DeclareFontShape{\jsc@JYn}{mc}{b}{n}{<->ssub*mc/bx/n}{}
+\DeclareFontShape{\jsc@JTn}{mc}{b}{n}{<->ssub*mc/bx/n}{}
+\DeclareFontShape{\jsc@JYn}{gt}{b}{n}{<->ssub*gt/bx/n}{}
+\DeclareFontShape{\jsc@JTn}{gt}{b}{n}{<->ssub*gt/bx/n}{}
+\DeclareFontShape{\jsc@JYn}{mc}{b}{it}{<->ssub*mc/bx/n}{}
+\DeclareFontShape{\jsc@JTn}{mc}{b}{it}{<->ssub*mc/bx/n}{}
+\DeclareFontShape{\jsc@JYn}{gt}{b}{it}{<->ssub*gt/bx/n}{}
+\DeclareFontShape{\jsc@JTn}{gt}{b}{it}{<->ssub*gt/bx/n}{}
+\DeclareFontShape{\jsc@JYn}{mc}{b}{sl}{<->ssub*mc/bx/n}{}
+\DeclareFontShape{\jsc@JTn}{mc}{b}{sl}{<->ssub*mc/bx/n}{}
+\DeclareFontShape{\jsc@JYn}{gt}{b}{sl}{<->ssub*gt/bx/n}{}
+\DeclareFontShape{\jsc@JTn}{gt}{b}{sl}{<->ssub*gt/bx/n}{}
+\DeclareFontShape{\jsc@JYn}{mc}{b}{sc}{<->ssub*mc/bx/n}{}
+\DeclareFontShape{\jsc@JTn}{mc}{b}{sc}{<->ssub*mc/bx/n}{}
+\DeclareFontShape{\jsc@JYn}{gt}{b}{sc}{<->ssub*gt/bx/n}{}
+\DeclareFontShape{\jsc@JTn}{gt}{b}{sc}{<->ssub*gt/bx/n}{}
+
+
+\AtBeginDocument{%
+   % hyperref の設定
+   \@ifpackageloaded{hyperref}{
+      \begingroup
+         % \title, \etitle 中に改行 (\\) が入ってもワーニングが出ないようにする
+         \let\Hy@saved@hook\pdfstringdefPreHook
+         \pdfstringdefDisableCommands{%
+            \def\\#1{ #1}%
+            \let\newline\\%
+         }%
+         \hypersetup{
+            pdftitle = {\@title},
+            pdfauthor = {\@author},
+            pdfsubject = {\@etitle}
+         }
+         \global\let\pdfstringdefPreHook\Hy@saved@hook
+      \endgroup
+   }{}
+}
+
+\let\oldeqnarray\eqnarray
+\def\eqnarray{{\scriptsize\itshape %
+    Environment ``eqnarray'' should not be used. %
+    use ``align'', ``gather'', ``multline'' instead.}%
+    \oldeqnarray}
+
+\def\warnoldfontcommand#1#2#3{
+   \expandafter\def\csname #1\endcsname{%
+      \ifmmode
+         {\text{\scriptsize\itshape Command #1 should not be used. Use #3 instead.}~}
+      \else
+         {\scriptsize\itshape Command #1 should not be used. Use #2 instead. }
+      \fi
+   }
+}
+
+\warnoldfontcommand{mc}{textmc}{text}
+\warnoldfontcommand{gt}{textgt}{text}
+\warnoldfontcommand{rm}{textrm}{mathrm or text}
+\warnoldfontcommand{sf}{textsf}{mathsf or text}
+\warnoldfontcommand{tt}{texttt}{mathtt or text}
+\warnoldfontcommand{bf}{textbf}{mathbf or bm}
+\warnoldfontcommand{it}{textit}{mathit}
+\warnoldfontcommand{sl}{textsl}{text}
+\warnoldfontcommand{sc}{textsc}{text}
+
+\endinput

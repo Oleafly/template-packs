@@ -1,0 +1,86 @@
+% +---------------------------------------------------------------+
+% indique quel est le document Master à compiler
+% TeXstudio
+% !TeX master = ../tb_report.tex
+%
+% TexShop
+% !TEX root = ../tb_report.tex
+
+\chapter{Planification}
+\label{ch:planif}
+
+\section{Planification initiale}
+
+Un exemple de planification en latex. D'autres moyens sont possibles.
+
+Dates clés administratives :
+\begin{itemize}
+	\item oct-dec 2025 : sélection, élaboration et affectation du sujet
+	\item 16.02.2026 : Démarrage du travail
+	\item 20.02.2026 : Kick-off
+	\item 16.03.2026 : Documents de confidentialité
+	\item 16.04.2026 : Cahier des charges final
+	\item 16.05.2026 : Rendu intermédiaire
+	\item 24.07.2026 : Rendu final du travail
+	\item 03.09.2026 : Défense du travail de Bachelor
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+
+	%exemple
+	\scalebox{0.6}{
+		\begin{ganttchart}[vgrid,
+				title/.style={fill=teal, draw=none},
+				title label font=\color{white}\bfseries,
+				title left shift=0,
+				title right shift=0,
+				%title top shift=0,
+				title height=.75,
+				group/.append style={draw=black, fill=black!50},
+				%group top shift=1,
+				bar/.append style={fill=gray!50},
+				%bar top shift=0,
+				%bar height=0.4,
+				%milestone top shift=0,
+				y unit chart=0.6cm,
+				x unit=0.6cm,
+			]{1}{28}
+			\gantttitle{Déroulement du projet}{28} \\
+			\gantttitlelist{1,...,28}{1} \\
+			%
+			\ganttgroup{Démarrage}{1}{5} \\
+			\ganttbar{Kick-off meeting}{1}{1} \\
+			\ganttbar{Documents administratifs (NDA, etc.)}{1}{2} \\
+			\ganttbar[bar/.append style={fill=red!50}]{Analyse des besoins métiers}{2}{4} \\
+			\ganttbar{Rédaction du cahier des charges}{2}{4} \\
+			%	
+			\ganttgroup{Réalisation de l'état de l'art}{3}{6} \\
+			\ganttbar{Recherche des travaux}{3}{3} \\
+			\ganttbar[bar/.append style={fill=red!50}]{Analyse du travail précédent}{4}{5} \\
+			\ganttbar{Analyse de la techno X}{5}{6} \\
+			%	
+			\ganttgroup{Mise en place de l'environnement de dev}{5}{8} \\
+			\ganttmilestone[milestone/.append style={fill=red!50}]{Liste des besoins}{5}{12} \\
+			\ganttbar{Mise en place}{7}{8} \\
+			%
+			\ganttgroup{Développement}{9}{19} \\
+			\ganttbar{Back-end}{9}{15} \\
+			\ganttbar{Front-end}{14}{17} \\
+			\ganttbar{Prod}{18}{19}\\
+			%
+			\ganttbar{Tests}{19}{21} \\
+			%
+			\ganttbar{Synthèse des résultats}{20}{22} \\
+			%
+			\ganttgroup{Documentation}{1}{22} \\
+			\ganttmilestone[milestone/.append style={fill=red!50}]{Rapport intermédiaire}{12}{12} \\
+			\ganttmilestone[milestone/.append style={fill=red!50}]{Rapport final}{22}{22} \\
+			\ganttmilestone[milestone/.append style={fill=red!50}]{Défense}{28}{28} \\
+			%
+		\end{ganttchart}
+	}
+
+	\caption{Planification du projet}
+\end{figure}
+

@@ -1,0 +1,267 @@
+\documentclass[czech]{fim-uhk-thesis}
+%\documentclass[english]{fim-uhk-thesis} % without assignment - for the work start to avoid compilation problem
+% * Je-li práce psaná v anglickém jazyce, je zapotřebí u třídy použít 
+%   parametr english následovně:
+%   If thesis is written in English, it is necessary to use 
+%   parameter english as follows:
+%      \documentclass[english]{fim-uhk-thesis}
+% * Je-li práce psaná ve slovenském jazyce, je zapotřebí u třídy použít 
+%   parametr slovak následovně:
+%   If the work is written in the Slovak language, it is necessary 
+%   to use parameter slovak as follows:
+%      \documentclass[slovak]{fim-uhk-thesis}
+% * Je-li práce psaná v anglickém jazyce se slovenským abstraktem apod., 
+%   je zapotřebí u třídy použít parametry english a enslovak následovně:
+%   If the work is written in English with the Slovak abstract, etc., 
+%   it is necessary to use parameters english and enslovak as follows:
+%      \documentclass[english,enslovak]{fim-uhk-thesis}
+
+% Základní balíčky jsou dole v souboru šablony fim-uhk-thesis.cls
+% Basic packages are at the bottom of template file fim-uhk-thesis.cls
+% zde můžeme vložit vlastní balíčky / you can place own packages here
+
+
+
+%---rm---------------
+\renewcommand{\rmdefault}{lmr}%zavede Latin Modern Roman jako rm / set Latin Modern Roman as rm
+%---sf---------------
+\renewcommand{\sfdefault}{qhv}%zavede TeX Gyre Heros jako sf
+%---tt------------
+\renewcommand{\ttdefault}{lmtt}% zavede Latin Modern tt jako tt
+
+% vypne funkci šablony, která automaticky nahrazuje uvozovky,
+% aby nebyly prováděny nevhodné náhrady v popisech API apod.
+% disables function of the template which replaces quotation marks
+% to avoid unnecessary replacements in the API descriptions etc.
+\csdoublequotesoff
+
+
+\usepackage{url}\def\UrlBreaks{\do\/\do-}
+\usepackage{url}
+\usepackage{longtable}
+\usepackage{tabularx}
+
+\usepackage{xltabular}
+
+\usepackage{tabularray}
+\usepackage{xcolor}
+\usepackage{pdflscape}
+\usepackage{fancyhdr} 
+
+\fancypagestyle{mylandscape}{
+\fancyhf{} %Clears the header/footer
+\fancyfoot{% Footer
+\makebox[\textwidth][r]{% Right
+  \rlap{\hspace{.75cm}% Push out of margin by \footskip
+    \smash{% Remove vertical height
+      \raisebox{4.87in}{% Raise vertically
+        \rotatebox{90}{\thepage}}}}}}% Rotate counter-clockwise
+\renewcommand{\headrulewidth}{0pt}% No header rule
+\renewcommand{\footrulewidth}{0pt}% No footer rule
+}
+
+
+
+
+% =======================================================================
+% balíček "hyperref" vytváří klikací odkazy v pdf, pokud tedy použijeme pdflatex
+% problém je, že balíček hyperref musí být uveden jako poslední, takže nemůže
+% být v šabloně
+% "hyperref" package create clickable links in pdf if you are using pdflatex.
+% Problem is that this package have to be introduced as the last one so it 
+% can not be placed in the template file.
+
+  \usepackage{color}
+  \usepackage[unicode,colorlinks,hyperindex,plainpages=false,urlcolor=black,linkcolor=black,citecolor=black]{hyperref}
+  \definecolor{links}{rgb}{0,0,0}
+  \definecolor{anchors}{rgb}{0,0,0}
+  \def\AnchorColor{anchors}
+  \def\LinkColor{links}
+  \def\pdfBorderAttrs{/Border [0 0 0] } % bez okrajů kolem odkazů / without margins around links
+  \pdfcompresslevel=9
+
+% Řešení problému, kdy klikací odkazy na obrázky vedou za obrázek
+% This solves the problems with links which leads after the picture
+\usepackage[all]{hypcap}
+
+\projectinfo{
+  %Prace / Thesis
+  project={BP},            %typ práce BP/SP/DP/DR  / thesis type (SP = term project)
+  year={2020},             % rok odevzdání / year of submission
+  date=\today,             % datum odevzdání / submission date
+  %Nazev prace / thesis title
+  title.cs={Název práce},  % název práce v češtině či slovenštině (dle zadání) / thesis title in czech language (according to assignment)
+  title.en={Thesis title}, % název práce v angličtině / thesis title in english
+  %title.length={14.5cm}, % nastavení délky bloku s titulkem pro úpravu zalomení řádku (lze definovat zde nebo níže) / setting the length of a block with a thesis title for adjusting a line break (can be defined here or below)
+  %sectitle.length={14.5cm}, % nastavení délky bloku s druhým titulkem pro úpravu zalomení řádku (lze definovat zde nebo níže) / setting the length of a block with a second thesis title for adjusting a line break (can be defined here or below)
+  %Autor / Author
+  author.name={Jméno},   % jméno autora / author name
+  author.surname={Příjmení},   % příjmení autora / author surname 
+  author.field={Aplikovaná Informatika},   % obor
+  %author.title.p={Bc.}, % titul před jménem (nepovinné) / title before the name (optional)
+  %author.title.a={Ph.D.}, % titul za jménem (nepovinné) / title after the name (optional)
+  %Ustav / Department
+  department={DEF}, % doplňte příslušnou zkratku dle ústavu na zadání: DEF / fill in appropriate abbreviation of the department according to assignment: DEF
+  % Školitel / supervisor
+  supervisor.name={Jméno},   % jméno školitele / supervisor name 
+  supervisor.surname={Příjmení},   % příjmení školitele / supervisor surname
+  supervisor.title.p={prof. RNDr.},   %titul před jménem (nepovinné) / title before the name (optional)
+  supervisor.title.a={Ph.D.},    %titul za jménem (nepovinné) / title after the name (optional)
+  % Klíčová slova / keywords
+  keywords.cs={Sem budou zapsána jednotlivá klíčová slova v českém (slovenském) jazyce, oddělená čárkami.}, % klíčová slova v českém či slovenském jazyce / keywords in czech or slovak language
+  keywords.en={Sem budou zapsána jednotlivá klíčová slova v anglickém jazyce, oddělená čárkami.}, % klíčová slova v anglickém jazyce / keywords in english
+  %keywords.en={Here, individual keywords separated by commas will be written in English.},
+  % Anotace
+  annotation.cs={Text anotace – shrnutí cíle, významu práce a výsledky v ní dosažené. Délka minimálně 100 a maximálně 200 slov},
+  annotation.en={Anotace v anglickém jazyce. Délka minimálně 100 a maximálně 200 slov.},
+  % Prohlášení (u anglicky psané práce anglicky, u slovensky psané práce slovensky) / Declaration (for thesis in english should be in english)
+  declaration={Prohlašuji, že jsem bakalářskou/diplomovou práci zpracoval/zpracovala samostatně a s použitím uvedené literatury},
+  %declaration={I hereby declare that this Bachelor's thesis was prepared as an original work by the author under the supervision of Mr. X
+% The supplementary information was provided by Mr. Y
+% I have listed all the literary sources, publications and other sources, which were used during the preparation of this thesis.},
+  % Poděkování (nepovinné, nejlépe v jazyce práce) / Acknowledgement (optional, ideally in the language of the thesis)
+  acknowledgment={V této sekci je možno uvést poděkování vedoucímu práce a těm, kteří poskytli odbornou pomoc
+(externí zadavatel, konzultant apod.).},
+  %acknowledgment={Here it is possible to express thanks to the supervisor and to the people which provided professional help
+%(external submitter, consultant, etc.).},
+  faculty={FIM}, % TODO FMI/DEF
+%   faculty.cs={Fakulta informatiky a managementu}, % Fakulta v češtině - pro využití této položky výše zvolte fakultu DEF / Faculty in Czech - for use of this entry select DEF above
+%   faculty.en={Faculty of Informatics and Management}, % Fakulta v angličtině - pro využití této položky výše zvolte fakultu DEF / Faculty in English - for use of this entry select DEF above
+  department={KIT} % TODO dopsat seznam
+%   department.cs={KATEDRA INFORMAČNÍCH TECHNOLOGIÍ}, % Ústav v češtině - pro využití této položky výše zvolte ústav DEF nebo jej zakomentujte / Department in Czech - for use of this entry select DEF above or comment it out
+%   department.en={DEPARTMENT OF INFORMATION TECHNOLOGY} % Ústav v angličtině - pro využití této položky výše zvolte ústav DEF nebo jej zakomentujte / Department in English - for use of this entry select DEF above or comment it out
+}
+
+% řeší první/poslední řádek odstavce na předchozí/následující stránce
+% solves first/last row of the paragraph on the previous/next page
+\clubpenalty=10000
+\widowpenalty=10000
+
+\include{text-03-zkratky}
+% začátek dokumentu
+\begin{document}
+
+
+  % Vysazeni titulnich stran / Typesetting of the title pages
+  % ----------------------------------------------
+  \maketitle
+  % Obsah
+  % ----------------------------------------------
+  \setlength{\parskip}{0pt}
+
+  \thispagestyle{empty}
+  {\hypersetup{hidelinks}\tableofcontents}
+  
+  % Seznam obrazku a tabulek (pokud prace obsahuje velke mnozstvi obrazku, tak se to hodi)
+  % List of figures and list of tables (if the thesis contains a lot of pictures, it is good)
+  
+  \ifczech
+    \renewcommand\listfigurename{Seznam obrázků}
+  \fi
+  \ifslovak
+    \renewcommand\listfigurename{Zoznam obrázkov}
+  \fi
+   {\hypersetup{hidelinks}\listoffigures}
+   \thispagestyle{empty}
+  
+  \ifczech
+    \renewcommand\listtablename{Seznam tabulek}
+  \fi
+  \ifslovak
+    \renewcommand\listtablename{Zoznam tabuliek}
+  \fi
+  
+  {\hypersetup{hidelinks}\listoftables}
+  \thispagestyle{empty}
+
+  % vynechani stranky v oboustrannem rezimu
+  % Skip the page in the two-sided mode
+  \iftwoside
+    \cleardoublepage
+  \fi
+
+  % Text prace / Thesis text
+  % ----------------------------------------------
+  \setcounter{page}{0}
+  \input{text-01-kapitoly}
+
+  \iftwoside
+    \cleardoublepage
+  \fi
+
+  % Pouzita literatura / Bibliography
+  % ----------------------------------------------
+
+\ifslovak
+  \makeatletter
+  \def\@openbib@code{\addcontentsline{toc}{section}{Literatúra}}
+\else
+  \ifczech
+    \makeatletter
+    \def\@openbib@code{\addcontentsline{toc}{section}{Literatura}}
+  \else 
+    \makeatletter
+    \def\@openbib@code{\addcontentsline{toc}{section}{Bibliography}}
+  \fi
+\fi
+  \makeatother
+  \begin{flushleft}
+  \label{references}
+
+  \bibliographystyle{iso690}
+  \bibliography{text-02-literatura}
+  \end{flushleft}
+  
+  \newpage
+
+  % vynechani stranky v oboustrannem rezimu
+  % Skip the page in the two-sided mode
+  \iftwoside
+    \cleardoublepage
+  \fi
+  
+  \ifslovak
+   \addcontentsline{toc}{section}{Zoznam zkratek}
+  \else
+    \ifczech
+      \addcontentsline{toc}{section}{Seznam zkratek}
+    \else
+      \addcontentsline{toc}{section}{List of Abbreviations}
+    \fi
+  \fi
+  \startcontents[section]
+  \label{abb}
+  \setlength{\parskip}{0pt} 
+  % seznam příloh / list of appendices
+  % \printcontents[section]{l}{0}{\setcounter{tocdepth}{2}}
+  
+  \printacronyms[name=Seznam zkratek,heading=section*]
+  
+  \newpage
+  % vynechani stranky v oboustrannem rezimu
+  \iftwoside
+    \cleardoublepage
+  \fi
+
+  % Prilohy / Appendices
+  % ---------------------------------------------
+  \appendix
+
+    \ifczech
+    \renewcommand{\appendixpagename}{Přílohy}
+    \renewcommand{\appendixtocname}{Přílohy}
+    \renewcommand{\appendixname}{Příloha}
+  \fi
+  \ifslovak
+    \renewcommand{\appendixpagename}{Prílohy}
+    \renewcommand{\appendixtocname}{Prílohy}
+    \renewcommand{\appendixname}{Príloha}
+  \fi
+ \appendixpage
+  
+  % Přílohy / Appendices
+  \input{text-04-prilohy}
+
+  \includepdf[pages=-,offset=0.6cm -1.7cm]{zadani.pdf}
+  
+\end{document}

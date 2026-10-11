@@ -1,0 +1,123 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{ctex}
+\usepackage{geometry}
+\usepackage{fontspec}
+\usepackage{array}
+\usepackage{ulem}
+\usepackage{graphicx} % 插入图片
+\usepackage{tikz} 
+
+\geometry{a4paper, left=1.5cm, right=1.5cm, top=2cm, bottom=2cm}
+\setmainfont{SimSun}
+\pagestyle{empty}
+
+\newcommand{\fixedunderline}[2][3cm]{\underline{\makebox[#1]{#2}}}
+\newcommand{\centerLogoScale}{0.28} 
+\newcommand{\centerLogoYOffset}{5cm} 
+\newcommand{\cornerLogoScale}{0.05}
+\newcommand{\cornerLogoXOffset}{2.5cm} 
+\newcommand{\cornerLogoYOffset}{3cm} 
+
+\newcommand{\thesistemplate}[1]{
+\begingroup
+\setkeys{thesis}{#1}
+\vspace{-1cm}
+\begin{flushleft}
+    {\fontsize{9pt}{9pt}\selectfont 学校代码：\fixedunderline[2cm]{\schoolcode}} \\
+    {\fontsize{9pt}{9pt}\selectfont 分\hspace{0.5em}类\hspace{0.5em}号：\fixedunderline[2cm]{\classification}} \\
+    {\fontsize{9pt}{9pt}\selectfont 密\hspace{2em}级：\fixedunderline[2cm]{\securitylevel}} \\
+    {\fontsize{9pt}{9pt}\selectfont U\hspace{0.75em} D \hspace{0.75em}C：\fixedunderline[2cm]{\udc}} \\
+    {\fontsize{9pt}{9pt}\selectfont 学\hspace{2em}号：\fixedunderline[2cm]{\studentid}} \\
+\end{flushleft}
+
+\begin{center}
+    \vspace{6.6cm}
+    {\fontsize{36pt}{26pt}\selectfont \textbf{硕\hspace{0.3cm}士\hspace{0.3cm}专\hspace{0.3cm}业\hspace{0.3cm}学\hspace{0.3cm}位\hspace{0.3cm}论\hspace{0.3cm}文}} \\
+    \vspace{1cm}
+    {\fontsize{26pt}{22pt}\selectfont \heiti \thesistitle} \\
+    \vspace{1cm}
+    {\fontsize{16pt}{20pt}\selectfont 学位论文形式：\thesisform} \\
+    \vspace{1.5cm}
+
+\newcommand{\myfont}{\fontsize{18pt}{36pt}\selectfont}
+
+
+\setlength{\labelwidth}{3.5cm} 
+
+
+
+\begin{tabular}{@{}>{\raggedleft\myfont}p{\labelwidth}@{\hspace{4pt}}l@{}}
+    \myfont 研究生姓名： & \fixedunderline[4cm]{\myfont\studentname} \\[10pt] % 增加行距
+    \myfont 导\hspace{0.3em}师\hspace{0.3em}姓\hspace{0.3em}名： & \fixedunderline[4cm]{\myfont\advisorname} \\[10pt]
+    & \fixedunderline[4cm]{} \\ [10pt]
+\end{tabular}
+    
+
+\vspace{1cm}
+\begin{tabular}{ll}
+申\hspace{0.2em}请\hspace{0.2em}学\hspace{0.2em}位\hspace{0.2em}类\hspace{0.15em}别\fixedunderline[4cm]{\degreecategory} & 学位授予单位\fixedunderline[4cm]{南京工程学院} \\[10pt]
+领\hspace{0.95em}域\hspace{0.95em}名\hspace{0.95em}称\fixedunderline[4cm]{\fieldname} & 论文答辩日期\fixedunderline[4cm]{\defensedate} \\[10pt]
+研\hspace{0.95em}究\hspace{0.95em}方\hspace{0.95em}向\fixedunderline[4cm]{\researchdirection} & 学位授予日期\fixedunderline[4cm]{\degreedate} \\[10pt]
+答辩委员会主席\fixedunderline[4cm]{\defensechair} & 评\hspace{0.6cm}阅\hspace{0.6cm}人\fixedunderline[4cm]{\reviewer} \\
+\end{tabular}
+
+\vspace{1cm}
+\begin{center}
+{\fontsize{14pt}{18pt}\selectfont \defensedate}
+\end{center}
+\endgroup
+}
+
+\usepackage{xkeyval}
+\makeatletter
+\define@key{thesis}{schoolcode}{\def\schoolcode{#1}}
+\define@key{thesis}{classification}{\def\classification{#1}}
+\define@key{thesis}{securitylevel}{\def\securitylevel{#1}}
+\define@key{thesis}{udc}{\def\udc{#1}}
+\define@key{thesis}{studentid}{\def\studentid{#1}}
+\define@key{thesis}{thesistitle}{\def\thesistitle{#1}}
+\define@key{thesis}{thesisform}{\def\thesisform{#1}}
+\define@key{thesis}{studentname}{\def\studentname{#1}}
+\define@key{thesis}{advisorname}{\def\advisorname{#1}}
+\define@key{thesis}{degreecategory}{\def\degreecategory{#1}}
+\define@key{thesis}{fieldname}{\def\fieldname{#1}}
+\define@key{thesis}{researchdirection}{\def\researchdirection{#1}}
+\define@key{thesis}{defensechair}{\def\defensechair{#1}}
+\define@key{thesis}{defensedate}{\def\defensedate{#1}}
+\define@key{thesis}{degreedate}{\def\degreedate{#1}}
+\define@key{thesis}{reviewer}{\def\reviewer{#1}}
+\makeatother
+
+\begin{document}
+
+\begin{tikzpicture}[remember picture,overlay]
+    \node at (current page.center) [yshift=\centerLogoYOffset] {
+        \includegraphics[scale=\centerLogoScale]{njit_logo/logo3.png}
+    };
+   
+    \node at ([xshift=-\cornerLogoXOffset,yshift=-\cornerLogoYOffset]current page.north east) {
+        \includegraphics[scale=\cornerLogoScale]{njit_logo/logo4.png}
+    };
+\end{tikzpicture}
+
+\thesistemplate{
+  schoolcode=11276,
+  classification=填写分类号,
+  securitylevel=填写密级,
+  udc=UDC编号,
+  studentid=填写学号,
+  thesistitle=电力系统非线性负载仿真分析,
+  thesisform=填写论文形式,
+  studentname=研究生姓名,
+  advisorname=导师姓名,
+  degreecategory=填写学位类别,
+  fieldname=填写领域名称,
+  researchdirection=填写研究方向,
+  defensechair=填写答辩主席姓名,
+  defensedate=2023年12月15日,
+  degreedate=2023年12月20日,
+  reviewer=填写评阅人姓名
+}
+
+\end{document}

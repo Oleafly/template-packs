@@ -1,0 +1,129 @@
+%%% 卒業研究報告予稿集用スタイルファイル
+%%% Time-stamp: <2022-05-11 14:26:01 hirayama>
+%%% The official site is the GitHub repository:
+%%% https://github.com/j0306043/jcourse-proceeding
+%%% It is forked from the original graduation.cls by N. Nakaya:
+%%% http://www.mn.cis.iwate-u.ac.jp/~nakaya/graduation/
+
+%%% 使い方: LaTeX本文中で
+%%% \usepackage{jcourse-proceeding}
+%%% してください。
+%%% LaTeX本文中で、下記のパラメタを設定すること。
+%%% エラーにならずにコンパイルされるという意味では、\titleのみ必須で、他は任意です。
+%%%
+%%% \jcpnumber{A-2-1} % 発表番号
+%%% \title{論文の題目} % 論文の題目
+%%% \jcpsubtitle{副題など、太字の付加情報} % 副題など
+%%% \author{岩手　太郎} % 氏名
+%%% \jcplaboratory{（岩手研究室）} % 所属研究室など
+%%% \jcpunderauthor{タイトル領域で特に言及したい文献情報など、普通字の付加情報} % 付加情報
+%%% \jcpabstract{ここに概要を書く。} % 予稿の概要
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{jcourse-proceeding}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 用紙の余白の設定（上下20mm、左右15mm）
+
+\ifdefined\setpagelayout%% BXjsclsが読み込み済か
+  %% BXjsclsのやり方で、余白を設定する
+  \setpagelayout*{top=20truemm,bottom=20truemm,left=15truemm,right=15truemm,footskip=10truemm}
+\else
+  %% geometryパッケージを呼んで、余白を設定する
+  \usepackage{geometry}
+  \geometry{top=20truemm,bottom=20truemm,left=15truemm,right=15truemm,footskip=10truemm}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% タイトル領域
+
+%% 2段組みにおいて、アブストラクトは1段ぶちぬきにする。
+\newcommand{\@jcpabstract}{}
+\newcommand{\jcpabstract}[2][\abstractname]{
+  \newcommand{\@jcpabstractcontents}{#2}
+  \newcommand{\@jcpabstractname}{#1}
+  \renewcommand{\@jcpabstract}{
+    \centering
+    \begin{minipage}{0.9\textwidth}
+    \textbf{{\@jcpabstractname}:} \@jcpabstractcontents
+    \end{minipage}
+    \vskip 1.5em
+ }
+}
+%% \abstractの使い方例
+%% 例1: 通常は、出だしが「概要:」になる。
+% \abstract{本論文では、新しい下界を与える。}
+% →概要: 本論文では、新しい下界を与える。
+%% 例2: 出だしを変えたいときは、オプション引数で指定する。
+% \abstract[要旨]{本論文では、新しい下界を与える。}
+% →要旨: 本論文では、新しい下界を与える。
+%% 例3: 英語
+% \abstract[Abstract]{This paper presents a new lower bound.}
+% →Abstract: This paper presents a new lower bound.
+
+%% タイトルの下のサブタイトル
+\newcommand{\@jcpsubtitle}{}
+\newcommand{\jcpsubtitle}[1]{
+  \renewcommand{\@jcpsubtitle}{\rule{0pt}{1.2em}#1}
+}
+
+%% 著者の所属研究室
+\newcommand{\@jcplaboratory}{}
+\newcommand{\jcplaboratory}[1]{
+  \renewcommand{\@jcplaboratory}{#1}
+}
+
+%% 著者氏名の下の付加情報
+\newcommand{\@jcpunderauthor}{}
+\newcommand{\jcpunderauthor}[1]{
+  \renewcommand{\@jcpunderauthor}{
+    \vskip .5em
+    \centering
+    \begin{minipage}{0.9\textwidth}
+    {#1}
+    \end{minipage}
+  }
+}
+
+%% タイトル
+%%
+%% \@maketitleを変更した。
+%% 変更元: jarticle.cls
+%% 主な変更点:
+%% ・余白の調整をした。
+%% ・\jcplaboratoryによる研究室名をタイトル領域に追加した。
+%% ・\jcpsubtitle, \jcpunderauthorによる付加情報をタイトル領域に追加した。
+%% ・ぶちぬきアブストラクトを追加した。
+%% ・\dateは無視するようにした。
+\def\@maketitle{%
+  \begin{flushleft}%
+  \raisebox{0pt}[0pt][0pt]{\Large\textbf{\thejcpnumber}}%
+  \end{flushleft}%
+  \vspace{-1.2em}
+  \centering
+  \let\footnote\thanks
+    {\LARGE\textbf{\@title}\par}%
+    {\large\textbf{\@jcpsubtitle}}%
+    \vskip 1.0em%
+    {\large\textbf{{\@author}\hspace{0.5em}{\@jcplaboratory}}}%
+    \@jcpunderauthor
+%    \vskip 1em%
+%    {\large \@date}%
+  \par\vskip 1.5em
+  \@jcpabstract
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ページ番号を変更
+
+%% 発表番号がある場合にその番号を付加する
+\newcommand{\thejcpnumber}{}
+\newcommand{\jcpnumber}[1]{
+\ifx&#1& % #1 is empty?
+\else
+  \renewcommand{\thejcpnumber}{#1}
+  \renewcommand{\thepage}{{#1}-\arabic{page}}%
+\fi
+}
+
+\endinput % this must be the last command in a package.

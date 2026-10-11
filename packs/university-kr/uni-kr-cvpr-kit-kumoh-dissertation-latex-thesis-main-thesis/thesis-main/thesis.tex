@@ -1,0 +1,146 @@
+% ---------------------------------------------------
+% Basic Document Setup and Packages
+% ---------------------------------------------------
+\documentclass[english,10pt,twoside]{report}
+\input{preamble.tex}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+
+% ---------------------------------------------------
+% Meta Information (Title, Author, Committee, etc.)
+% ---------------------------------------------------
+\input{meta.tex}
+
+% ---------------------------------------------------
+% Cover Page
+% ---------------------------------------------------
+\input{cover.tex}
+\currentpdfbookmark{Cover Page}{coverPage}
+
+% ---------------------------------------------------
+% Optional GKS Scholarship Page
+% Comment this block if it does not apply.
+% ---------------------------------------------------
+\pagenumbering{roman}
+\setcounter{page}{1}
+\pagestyle{empty}
+\hypersetup{pageanchor=true}
+\input{gks.tex}
+\currentpdfbookmark{Scholarship Page}{scholarship}
+\setcounter{page}{2}
+
+% ---------------------------------------------------
+% Inner Cover Page
+% ---------------------------------------------------
+\input{cover.tex}
+\setcounter{page}{3}
+
+% ---------------------------------------------------
+% Title Page
+% ---------------------------------------------------
+\input{titlePage.tex}
+\currentpdfbookmark{Title Page}{titlePage}
+\setcounter{page}{4}
+
+% ---------------------------------------------------
+% Approval Page
+% ---------------------------------------------------
+\input{approvalPage.tex}
+\setcounter{page}{5}
+
+
+
+% ---------------------------------------------------
+% Abstracts
+% ---------------------------------------------------
+\pagestyle{empty}
+\input{abstract-eng.tex}
+\input{abstract-kr.tex}
+\clearpage
+
+% ---------------------------------------------------
+% Table of Contents
+% ---------------------------------------------------
+\pagestyle{plain}
+\renewcommand\contentsname{Table of Contents}
+
+\begin{singlespace}
+\tableofcontents
+\end{singlespace}
+
+\currentpdfbookmark{Table of Contents}{TOC}
+\clearpage
+
+% ---------------------------------------------------
+% List of Tables
+% ---------------------------------------------------
+\addcontentsline{toc}{chapter}{List of Tables}
+\begin{singlespace}
+    \setlength\cftbeforetabskip{\baselineskip}
+    \listoftables
+\end{singlespace}
+\clearpage
+
+% ---------------------------------------------------
+% List of Figures
+% ---------------------------------------------------
+\addcontentsline{toc}{chapter}{List of Figures}
+\begin{singlespace}
+\setlength\cftbeforefigskip{\baselineskip}
+\listoffigures
+\end{singlespace}
+\clearpage
+
+% ---------------------------------------------------
+% List of Notations and Abbreviations
+% ---------------------------------------------------
+\input{notations.tex}
+\input{abbreviations.tex}
+
+% ---------------------------------------------------
+% Optional Remark Page
+% ---------------------------------------------------
+%\input{remark.tex}
+
+% ---------------------------------------------------
+% Main Body
+% ---------------------------------------------------
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\input{chapter1.tex}
+\input{chapter2.tex}
+\input{chapter3.tex}
+\input{chapter4.tex}
+\input{chapter5.tex}
+
+% ---------------------------------------------------
+% References
+% ---------------------------------------------------
+\renewcommand{\bibname}{References}
+\addcontentsline{toc}{chapter}{References}
+\ifnumericcitations
+  \bibliographystyle{unsrtnat}
+\else
+  \bibliographystyle{plainnat}
+\fi
+\bibliography{references}
+
+% ---------------------------------------------------
+% Acknowledgments
+% ---------------------------------------------------
+\input{acknowledgements.tex}
+
+% ---------------------------------------------------
+% Appendices
+% ---------------------------------------------------
+\input{appendix.tex}
+
+% ---------------------------------------------------
+% Clear page to prevent incorrect page numbering
+% ---------------------------------------------------
+\cleardoublepage
+
+\end{document}

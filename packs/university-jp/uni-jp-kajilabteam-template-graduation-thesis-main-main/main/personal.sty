@@ -1,0 +1,49 @@
+\def\onelineskip{\par\vspace{1\baselineskip}\par}
+\def\halflineskip{\par\vspace{.5\baselineskip}\par}
+
+\def\doubledash{\hbox to 2zw{---\hss ---}}
+
+\def\FRAC#1#2{\leavevmode\kern-.1em
+  \raise.5ex\hbox{\the\scriptfont0 #1}\kern-.1em
+  /\kern-.15em\lower.25ex\hbox{\the\scriptfont0 #2}}
+\def\RN#1{\uppercase\expandafter{\romannumeral#1}}
+
+\def\kintou#1#2{\@ifundefined{jintercharskip}%
+ {\makebox[#1]{\kanjiskip\z@ plus 1fill minus 1fill\xkanjiskip=\kanjiskip #2}}%
+ {\makebox[#1]{\jintercharskip=0pt plus 1fill minus 1fill 
+ \jasciikanjiskip=\jintercharskip #2}}}
+
+\def\ruby#1#2{\leavevmode \setbox0=\hbox{#1}\setbox1=\hbox{\tiny#2}%
+\ifdim\wd0>\wd1 \dimen0=\wd0 \else \dimen0=\wd1 \fi
+\hbox{\kanjiskip=\fill
+ \vbox{\hbox to \dimen0{\tiny \hfil#2\hfil}%
+  \nointerlineskip \hbox to \dimen0{\hfil#1\hfil}}}}
+
+\def\QED{{\unskip\nobreak\hfil\penalty50
+ \hskip1zw\hbox{}\nobreak\hfil \hbox{$\Box$\hskip1zw}
+ \parfillskip\z@ \finalhyphendemerits\z@\par}}
+
+\def\Hline{\noalign{\hrule height 0.4mm}}
+
+\def\leq{\mathrel{\mathpalette\gl@align<}} \let\le=\leq
+\def\geq{\mathrel{\mathpalette\gl@align>}} \let\ge=\geq
+\def\gl@align#1#2{\lower.6ex\vbox{\baselineskip\z@skip\lineskip\z@
+ \ialign{$\m@th#1\hfil##\hfil$\crcr#2\crcr=\crcr}}}
+\def\subseteq{\rlap{\raisebox{.25ex}{$\subset$}}\raisebox{-1.1ex}{$=$}}
+\def\supseteq{\rlap{\raisebox{.25ex}{$\supset$}}\raisebox{-1.1ex}{$=$}}
+\def\neq{\mathrel{\mathpalette\c@ncelass=}}
+\def\c@ncelass#1#2{\ooalign{$\hfil#1\mkern-.4mu|\hfil$\crcr$#1#2$}}
+\let\ne=\neq
+
+\hbadness4000
+\vbadness10001
+\tolerance 9999 \pretolerance\m@ne
+
+\def\ruby#1#2{% ルビ
+ \leavevmode
+ \setbox0=\hbox{#1}\setbox1=\hbox{\tiny#2}%
+ \ifdim\wd0>\wd1 \dimen0=\wd0 \else \dimen0=\wd1 \fi
+ \hbox{\kanjiskip=\fill
+  \vbox{\hbox to \dimen0{\tiny \hfil#2\hfil}%
+   \nointerlineskip
+   \hbox to \dimen0{\hfil#1\hfil}}}}

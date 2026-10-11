@@ -1,0 +1,143 @@
+
+%====================== 字体设置（中英文） ======================%
+% 中文字体：
+%   - main.tex 使用 fontset=fandol（TeX Live 自带），跨平台最稳定。
+%   - 因此这里不再手动 \setCJKmainfont，避免与 ctex fontset 冲突。
+%
+% 英文字体（建议使用 TeX Live 自带字体，避免系统缺字导致编译失败）：
+%   - Times 风格：TeX Gyre Termes
+%   - Helvetica 风格：TeX Gyre Heros
+%   - Courier 风格：TeX Gyre Cursor
+%
+% 若你在 Windows 且希望使用 Times New Roman/Arial/Courier New，可将下面三行替换为：
+  % \setmainfont{Times New Roman}
+  % \setsansfont{Arial}
+  % \setmonofont{Courier New}
+
+% \setmainfont{TeX Gyre Termes}
+% \setsansfont{TeX Gyre Heros}
+% \setmonofont{TeX Gyre Cursor}
+
+%====================== 英文字体：自动适配 ======================%
+% \usepackage{fontspec}
+
+% \IfFontExistsTF{Times New Roman}{
+%   \setmainfont{Times New Roman}
+% }{
+%   \setmainfont{TeX Gyre Termes}
+% }
+
+% \IfFontExistsTF{Arial}{
+%   \setsansfont{Arial}
+% }{
+%   \setsansfont{TeX Gyre Heros}
+% }
+
+% \IfFontExistsTF{Courier New}{
+%   \setmonofont{Courier New}
+% }{
+%   \setmonofont{TeX Gyre Cursor}
+% }
+
+% 加载文件包中的字体
+% =========================
+% Local fonts config (./fonts)
+% Compile with XeLaTeX or LuaLaTeX
+% =========================
+\usepackage{fontspec}
+
+
+
+% 让 fontspec 可以直接按文件名找字体（不依赖系统安装）
+\defaultfontfeatures{Ligatures=TeX}
+
+% ---------- 英文字体（来自 ./fonts） ----------
+\setmainfont{TimesNewRoman.ttf}[
+  Path = ./fonts/,
+  UprightFont = TimesNewRoman.ttf,
+  BoldFont    = timesbd.ttf,
+  ItalicFont  = timesi.ttf,
+  BoldItalicFont = timesbi.ttf
+]
+% 如果你后续需要英文无衬线，可再补 Arial.ttf；目前你目录里没有，就先不设
+% \setsansfont{Arial.ttf}[Path=./fonts/]
+
+\setmonofont{CourierNew.ttf}[
+  Path = ./fonts/,
+  UprightFont = CourierNew.ttf
+]
+
+% ---------- 中文字体（来自 ./fonts） ----------
+% 正文中文：宋体；加粗用 SimSunB.TTF
+\setCJKmainfont{SimSun.ttf}[
+  Path = ./fonts/,
+  UprightFont = SimSun.ttf,
+  % BoldFont    = SimHei.TTF,
+    AutoFakeBold = 2.0,
+   AutoFakeSlant = 0.0
+]
+
+\setCJKmonofont{SimSun.ttf}[
+    Path=./fonts/, 
+    UprightFont=SimSun.ttf, 
+    AutoFakeBold=2.0
+]
+
+% 黑体：用于标题等（如果你模板已定义 \heiti，这里也可以用下面的 \hei）
+\setCJKsansfont{SimHei.ttf}[
+  Path = ./fonts/,
+  UprightFont = SimHei.ttf,
+  AutoFakeBold = 2.0
+]
+
+% ---------- 额外中文字体族：仿宋、楷体 ----------
+\setCJKfamilyfont{fs}{FangSong.ttf}[
+  Path = ./fonts/,
+  UprightFont = FangSong.ttf
+]
+\setCJKfamilyfont{kai}{SimKai.ttf}[
+  Path = ./fonts/,
+  UprightFont = SimKai.ttf
+]
+\setCJKfamilyfont{hei}{SimHei.ttf}[
+  Path = ./fonts/,
+  UprightFont = SimHei.ttf,
+  AutoFakeBold = 2.0
+]
+\setCJKfamilyfont{song}{SimSun.ttf}[
+  Path = ./fonts/,
+  UprightFont = SimSun.ttf,
+  AutoFakeBold = 2.0,
+  % BoldFont    = SimSunBold.ttf
+]
+
+\newCJKfontfamily\xiaobiaosong[
+  Path = ./fonts/,
+  Extension = .ttf,
+  UprightFont = *
+]{方正小标宋简体}
+
+% 楷体_GB2312
+\newCJKfontfamily\kaifont{./fonts/楷体GB2312.ttf}
+
+% 仿宋_GB2312
+\newCJKfontfamily\fangsongfont[
+    Path = ./fonts/,
+  Extension = .ttf,
+  UprightFont = *
+]{仿宋_GB2312}
+
+\newCJKfontfamily\kaitifont[
+    Path = ./fonts/,
+  Extension = .ttf,
+  UprightFont = *
+]{楷体_GB2312}
+
+% 方便你在正文里随时切换：
+\newcommand{\fs}{\CJKfamily{fs}}     % 仿宋
+\newcommand{\kai}{\CJKfamily{kai}}   % 楷体
+\newcommand{\hei}{\CJKfamily{hei}}   % 黑体
+\newcommand{\song}{\CJKfamily{song}} % 宋体
+
+
+

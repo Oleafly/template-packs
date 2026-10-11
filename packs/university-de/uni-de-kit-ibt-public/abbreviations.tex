@@ -1,0 +1,56 @@
+%!TEX root = ./thesis.tex
+% For details, see https://www.ctan.org/pkg/acro
+
+
+
+%======== ADJUST SPACING BETWEEN ACRONYM AND FULL NAME HERE ===============================
+% The following part adjusts the appearance of the printed list of abbreviations
+% Based on: http://tex.stackexchange.com/questions/253338/abbreviation-list-align-left-with-space-between
+% Generate your list so every thing is in line
+\usepackage{enumitem}
+\newlength\myitemwidth
+
+\setlength\myitemwidth{9em} 						% <<< choose what you need here
+\newlist{myacronymlist}{description}{1}
+\setlist[myacronymlist]{
+  labelindent = 0pt ,
+  labelsep    = 0pt ,
+  leftmargin  = \myitemwidth ,
+  labelwidth  = \myitemwidth ,
+  itemindent  = 0pt ,
+  format      = \bfseries
+}
+
+\NewAcroTemplate[list]{custom}{%
+  \let\description\myacronymlist
+  \let\enddescription\endmyacronymlist
+  \UseAcroTemplate[list]{description}[0]%
+}
+\acsetup{list/template=custom,list/display = all , pages/display = all}
+
+
+%======== ENTER YOUR ABBREVIATIONS HERE ===============================
+
+  % You can access the abbreviations in your code by the commands
+  %  \ac for singluar
+  %  \acp for plural
+  %  \Ac for capitalized singular
+  %  ... see acro package description for many more: https://www.ctan.org/pkg/acro
+
+  % There is no need to sort your acronyms alphabetically, however it helps to have an overview.
+  % You could assign classes for each acrynom, allowing to print only lists for eg. all channel types and a second list for all model types and so on.
+  % This package acro is similar to the acronym package, but the latter does not provide capitalization
+
+% short - short version of the acronym
+% long - long version of the acronym
+% long-plural-form - non-standard form of the pluar version
+% list - abbreviation in the acronym list
+
+  \DeclareAcronym{ACL}		{short={ACL},		long={atrial (basic) cycle length}}
+  \DeclareAcronym{AFib}		{short={AFib},		long={atrial fibrillation}}
+  \DeclareAcronym{AFlut}		{short={AFlut},		long={atrial flutter}}
+  \DeclareAcronym{AP}		{short={AP},			long={action potential}}
+  \DeclareAcronym{FT}		{short={FT},			long={atrial flutter}}
+  \DeclareAcronym{FFT}		{short={FFT},		long={Fourier transform}}
+  \DeclareAcronym{HC-PLSR}	{short={HC-PLSR},	long={hierarchical cluster-based partial least squares regression}}
+  \DeclareAcronym{PiCA}		{short={$\pi$CA},	long={periodic component analysis}}

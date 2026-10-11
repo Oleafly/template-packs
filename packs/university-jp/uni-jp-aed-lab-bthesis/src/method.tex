@@ -1,0 +1,124 @@
+% !TEX root = ../main.tex
+
+\chapter{その次}
+\label{chp:second}
+
+\section{数式}
+\label{sec:eqn}
+
+数式のインラインモードは \(x^2 + y^2 \leq 1\) のように表示させることができる．
+インラインモードで「\verb+$...$+」を使うやり方は，
+近年の LaTeX ではあまり推奨されていないが，その利用は妨げない．
+
+ディスプレイ数式モードを利用する際に推奨するのは equation 環境である．
+\begin{equation}
+	\mathbf{A}_p = \frac{\mathbf{A}\cdot\mathbf{B}}{|\mathbf{B}|^2}\mathbf{B} .
+	\label{eq:samp1}
+\end{equation}
+数式の参照は「\verb+\ref+」ではなく「\verb+\eqref+」を用いる．
+上記の数式を参照すると「式\eqref{eq:samp1}」となる．
+このように，\verb+\eqref+ を用いた場合は数式中と同じ様式の括弧がつく．
+
+また，複数行にわたる数式を表示したい場合は align 環境を用いることを推奨する．
+以下の式\eqref{eq:samp2}にその例を示す．
+
+\begin{align}
+	& \begin{bmatrix}
+	a_{11} & a_{12} & \cdots & a_{1n} \\
+	a_{21} & a_{22} & \cdots & a_{2n} \\
+	\vdots & \vdots & \ddots & \vdots \\
+	a_{m1} & a_{m2} & \cdots & a_{mn} \\
+	\end{bmatrix}
+	\otimes
+	\begin{bmatrix}
+	b_{11} & b_{12} & \cdots & b_{1n} \\
+	b_{21} & b_{22} & \cdots & b_{2n} \\
+	\vdots & \vdots & \ddots & \vdots \\
+	b_{m1} & b_{m2} & \cdots & b_{mn} \\
+	\end{bmatrix} \notag \\
+	& \qquad \qquad = \sum_{i}^{m}\sum_{j}^{n}a_{ij}b_{ij} .
+	\label{eq:samp2}
+\end{align}
+
+数式で複数行を用いる方法として、古い \LaTeX に関する資料では eqnarray 環境の
+解説を行っている場合があるが、最近の \LaTeX では幾つかのパッケージ
+(特に\AmS 関連)と同時に利用すると問題が発生することがあるため、利用は推奨しない．
+複数行を用いる方法としては他にも gather, multline, split など多くの環境があるが、
+equnarray 以外のものであれば問題はない。
+
+具体的な数式の記述方法については書籍や Web 上の情報等を参照のこと。
+
+\section{寸法}
+
+\LaTeX では、縦方向や横方向に空白を空けたいとき (\verb+\vspace+, \verb+\hspace+) や、
+画像の縦幅や横幅を指定したい場合など、多くの場面で寸法を指定することがある。
+\LaTeX の寸法単位は mm (ミリメートル) や cm (センチメートル) など多くの種類が利用でき、
+小数点以下も記述できるためかなり柔軟な指定ができる。例えば、表のキャプションと
+本体の間を少し空けたいときは
+\begin{verbatim}
+\begin{table}[H]
+  \caption{ラベルに指定するキーワードのプリフィクス一覧}
+  \label{tbl:pre_list}
+  \centering
+  \vspace{0.5cm}
+  \begin{tabular}{|l|l|r|} \hline
+\end{verbatim}
+のように、表本体の直前に \verb+\vspace+ を入れればよい。
+
+\LaTeX の寸法指定で留意すべきこととして、単位の「true つき」と「true なし」の使い分けがある。
+例えば、先述の「\verb+\vspace{0.5cm}+」に対し、true つきの場合は
+「\verb+\vspace{0.5truecm}+」ということになる。
+
+true がついていない場合、\verb+\documentclass+ の指定時でのフォントサイズを変更すると、
+そのフォントサイズに伴って(空白幅や画像幅などの)実際の寸法も変化する。
+フォントサイズを変更した際に連動してほしい寸法については、この「true なし」を用いるとよい。
+一方、「true つき」の場合はフォントサイズの変更には連動せず常に固定の値となる。
+センタリングした画像幅などはフォントサイズと連動しない方が都合がよいことも多く、
+そういった場合は「true つき」の寸法を指定するとよい。
+
+\section{参考文献}
+\label{sec:bib}
+
+参考文献リストの作成は、\BibTeX を用いることを推奨する。
+文献の参照は、リスト上で文献に付けたキーワードをciteコマンドによって指定することで記述する。
+例えば、
+「阿部ら\cite{abeJ}によると、
+某手法\cite{nowrouzezahrai}には重大な欠点が存在することが指摘されている。」
+という利用方法となる。
+
+文献を1つも参照していない状態でPDFを生成するバッチファイルを実行するとエラーとなるので注意すること。
+生成したPDFファイル中で参照がうまくできていない場合には参照番号ではなく
+「\verb+?+」記号が表示される。
+
+\BibTeX の記述方法は、どのような種類の文献かによって異なる。以下に具体的な例を列挙する。
+\begin{itemize}
+ \item 論文誌掲載の学術論文\cite{abeJ}\cite{nowrouzezahrai}
+ \item 研究会の研究報告\cite{aoki}
+ \item 博士論文\cite{takeuchi}
+ \item 修士論文\cite{abeM}
+ \item 学部卒業論文\cite{abeU}
+ \item 書籍\cite{dragonball}
+ \item URL\cite{effekseer}
+\end{itemize}
+
+文献の属性の種類や、設定するべきステータスについてもWebを参照すること。
+論文データベースサイトでは \BibTeX の記述形式によるテキストを出力してくれるところもあるので、
+利用できると便利である。
+リストの記述順は一切気にする必要がなく、
+参考文献に挙げないものが含まれていても問題無いので、関連しそうな文献は全てリスト化しておくとよい。
+
+\BibTeX における著者名の列挙はカンマで並べるのではなく、
+\begin{verbatim}
+    author = "阿部 雅樹 and 渡辺 大地 and 三上 浩司",
+\end{verbatim}
+というように、各氏名の間に「and」を入れるという独特の形式を持つ。
+
+また、\BibTeX では author や title 等での
+アルファベット大文字小文字を自動的に変換する機能があり、
+例えばタイトル中の「3DCG における」といった文字列は「3dcg における」となる。
+これを強制的に大文字小文字を指定したい場合は、
+\begin{verbatim}
+    title = "{3DCG}における何かしらの手法",
+\end{verbatim}
+のようにその部分だけ波括弧で囲うことで指定できる。
+

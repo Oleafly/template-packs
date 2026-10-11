@@ -1,0 +1,194 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 京都工芸繊維大学 機械工学課程／機械物理学専攻・機械設計学専攻
+%% 卒業論文・修士論文の執筆要綱もとに作成した LaTeX テンプレートです
+%% by Motoaki Hiraga (ver.1.0, Oct. 22nd, 2024)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% 表紙および中表紙用 TeX ファイル %%%%%%%%%%
+% src/thesis_data.tex の「論文情報記入欄」に記入してください．
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% 表紙および中表紙に関する注意（要約） %%%%%%%%%%
+% ・卒論は日本語版のみ，修論は日本語版と英語版の両方を含める．
+% ・修論の場合，指導の形態により，主任指導教員と指導教員の
+% 　両方を記載する場合と，主任指導教員のみを記載する場合がある．
+% ・英語で執筆した場合も，日本語版の表紙および中表紙を用いる．
+% 　このとき，可能な限り，題目以外を日本語で記載する．
+% ・PDF には，中表紙と本文すべてを含める．
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%% 日本語版の表紙および中表紙
+\begin{titlepage}
+  \titlepagestyle
+  \begin{center}
+
+    \ifthenelse{{\equal{\ThesisType}{B}}\OR{\equal{\ThesisType}{Mp}}\OR{\equal{\ThesisType}{Md}}}
+    {}{{\Huge {\ThesisTypeError}}}
+
+    \vspace*{4.6truemm}
+    {\fontsize{18pt}{18pt}\selectfont 令和 {\number\numexpr\AcademicYear\relax} 年度}
+
+    \vspace{14truemm}
+    \ifthenelse{\equal{\ThesisType}{B}}{
+      {\fontsize{26.5pt}{26.5pt}\selectfont
+          \contour{black}{卒\hspace{10.7truemm}業\hspace{10.7truemm}論\hspace{10.7truemm}文}}
+    }{
+      {\fontsize{26.5pt}{26.5pt}\selectfont
+          \contour{black}{修\hspace{10.7truemm}士\hspace{10.7truemm}論\hspace{10.7truemm}文}}
+    }
+
+    \vspace{13.7truemm}
+    {\fontsize{18pt}{18pt}\selectfont \textrm{題\hspace{12.5truemm}目}}
+
+    \vspace{18truemm}
+    {\fontsize{22pt}{22pt}\selectfont \textbf{\ThesisTitleOneJP}}
+
+    \vspace{-2.5truemm}
+    \noindent
+    \rule{123truemm}{0.7pt}
+
+    \ifthenelse{\isundefined{\ThesisTitleTriJP}}{
+          \vspace{14.8truemm}
+          {\fontsize{22pt}{22pt}\selectfont \textbf{\ThesisTitleTwoJP}}
+
+          \vspace{-2.5truemm}
+          \noindent
+          \rule{123truemm}{0.7pt}
+    }{
+          \vspace{6truemm}
+          {\fontsize{22pt}{22pt}\selectfont \textbf{\ThesisTitleTwoJP}}
+
+          \vspace{-2.5truemm}
+          \noindent
+          \rule{123truemm}{0.7pt}
+
+          \vspace{6truemm}
+          {\fontsize{22pt}{22pt}\selectfont \textbf{\ThesisTitleTriJP}}
+
+          \vspace{-2.5truemm}
+          \noindent
+          \rule{123truemm}{0.7pt}
+          \vspace{-8.2truemm}
+    }
+
+    \vspace{25truemm}
+    \ifthenelse{{\equal{\ThesisType}{B}}}{
+      % 卒論
+      \begin{tabbing}
+        % 左余白 \> 項目 \> スペース \> 下線開始 \> 記入情報 \\[改行時行間]
+        \hspace{0.5truemm} \= \hspace{26truemm} \= \hspace{-0.5truemm} \= \hspace{11truemm} \= \kill
+        \> \makebox[26truemm]{\fontsize{16pt}{16pt}\selectfont 学{\hfill}籍{\hfill}番{\hfill}号} \> \> \> {\fontsize{20pt}{20pt}\selectfont \textsf{\StudentNum}}  \\[-5.2truemm]
+        \>  \>  \> \rule{93truemm}{0.7pt} \>  \\[3.65truemm]
+        \> \makebox[26truemm]{\fontsize{16pt}{16pt}\selectfont 提{\hfill}出{\hfill}者} \> \> \> {\fontsize{20pt}{20pt}\selectfont \textsf{\MyNameJP}}  \\[-5.2truemm]
+        \>  \>  \> \rule{93truemm}{0.7pt} \>  \\[16.3truemm]
+        \> \makebox[26truemm]{\fontsize{16pt}{16pt}\selectfont 指{\hfill}導{\hfill}教{\hfill}員} \> \> \> {\fontsize{20pt}{20pt}\selectfont \textsf{{\ChiefAdvisorJP}\hspace{10truemm}{\ChiefAdvisorTitleJP}}}  \\[-5.2truemm]
+        \>  \>  \> \rule{93truemm}{0.7pt} \>  \\[3.65truemm]
+      \end{tabbing}
+    }{
+      % 修論
+      \begin{tabbing}
+        % 左余白 \> 項目 \> スペース \> 下線開始 \> 記入情報 \\[改行時行間]
+        \hspace{0.5truemm} \= \hspace{26truemm} \= \hspace{-0.5truemm} \= \hspace{11truemm} \= \kill
+        \> \makebox[26truemm]{\fontsize{16pt}{16pt}\selectfont 申{\hfill}請{\hfill}者} \> \> \> {\fontsize{20pt}{20pt}\selectfont \textsf{\MyNameJP}\textsf{（{\StudentNum}）}}  \\[-5.2truemm]
+        \>  \>  \> \rule{93truemm}{0.7pt} \>  \\[16.3truemm]
+        \> \makebox[26truemm]{\fontsize{14pt}{14pt}\selectfont 主{\hfill}\!任{\hfill}\!指{\hfill}\!導{\hfill}\!教{\hfill}\!員} \> \> \> {\fontsize{20pt}{20pt}\selectfont \textsf{{\ChiefAdvisorJP}\hspace{10truemm}{\ChiefAdvisorTitleJP}}}  \\[-5.2truemm]
+        \ifthenelse{{\equal{\MultiAdvisors}{True}}}{
+        % 主任指導教員と指導教員が異なる場合
+        \>  \>  \> \rule{93truemm}{0.7pt} \>  \\[3.65truemm]
+        \> \makebox[26truemm]{\fontsize{16pt}{16pt}\selectfont 指{\hfill}導{\hfill}教{\hfill}員} \> \> \> {\fontsize{20pt}{20pt}\selectfont \textsf{{\AdvisorJP}\hspace{10truemm}{\AdvisorTitleJP}}}  \\[-5.2truemm]
+        \>  \>  \> \rule{93truemm}{0.7pt} \>  \\[3.65truemm]
+        }{
+        \>  \>  \> \rule{93truemm}{0.7pt} \>  \\[16.3truemm]
+        }
+
+      \end{tabbing}
+    }
+
+    \vspace{3.8truemm}
+    \ifthenelse{{\equal{\ThesisType}{B}}}{
+      % 卒論
+      {\fontsize{16pt}{16pt}\selectfont 京\,都\,工\,芸\,繊\,維\,大\,学\hspace{4.8truemm}工\,芸\,科\,学\,部}
+
+      \vspace{6.3truemm}
+      {\fontsize{16pt}{16pt}\selectfont 機\,械\,工\,学\,課\,程}
+    }{
+      % 修論
+      {\fontsize{16pt}{16pt}\selectfont 京\,都\,工\,芸\,繊\,維\,大\,学\hspace{7.8truemm}大\,学\,院\,工\,芸\,科\,学\,研\,究\,科}
+
+      \vspace{6.3truemm}
+      \ifthenelse{{\equal{\ThesisType}{Mp}}}{
+        % 機械物理学専攻
+        {\fontsize{16pt}{16pt}\selectfont 機\,械\,物\,理\,学\,専\,攻}
+      }{
+        % 機械設計学専攻
+        {\fontsize{16pt}{16pt}\selectfont 機\,械\,設\,計\,学\,専\,攻}
+      }
+    }
+  \end{center}
+
+  \clearpage
+
+  %%%% 英語版の表紙および中表紙（修論のみ）
+  \ifthenelse{{\equal{\ThesisType}{B}}\OR\NOT{\isundefined{\NoEnglishTitle}}}{}{
+    \begin{center}
+
+      \vspace*{15.85truemm}
+      \parbox[t][20.5truemm][t]{\textwidth}{
+        \begingroup
+        \begin{center}
+          \renewcommand{\\}{\newline}
+          \setlength{\baselineskip}{12.5truemm}
+          {\fontsize{23pt}{23pt}\selectfont \textbf{\ThesisTitleEN}}
+        \end{center}
+        \endgroup
+      }
+
+      \vspace{12truemm * (\NumLinesTitleEN - 1)}
+      {\fontsize{16pt}{16pt}\selectfont by}
+
+      \vspace{11truemm}
+      {\fontsize{20pt}{20pt}\selectfont {\MyNameEN}}
+
+      \vspace{8.2truemm}
+      {\fontsize{15.5pt}{24.1pt}\selectfont
+        A thesis submitted\\
+        to\\
+        \ifthenelse{{\equal{\ThesisType}{Mp}}}{
+          % 機械物理学専攻
+          Division of Mechanophysics,\\
+        }{
+          % 機械設計学専攻
+          Division of Mechanodesign,\\
+        }
+        Graduate School of Science and Technology\\
+        in partial fulfillment of the requirements\\
+        for the degree\\
+        of\\[2.3truemm]
+        Master of Engineering
+      }
+
+      \vspace{8.5truemm}
+      {\fontsize{17.5pt}{24pt}\selectfont Chief Advisor:~{\ChiefAdvisorEN}\\
+      \ifthenelse{{\equal{\MultiAdvisors}{True}}}{
+      % 主任指導教員と指導教員が異なる場合
+      Advisor:~{\AdvisorEN}\\
+      }{
+      \,\\
+      }
+      }
+
+      \vspace{11.45truemm}
+      {\fontsize{15pt}{15pt}\selectfont Kyoto Institute of Technology\\[2.15truemm]
+        Sakyo, Kyoto}
+
+      \vspace{10.5truemm}
+      {\fontsize{15pt}{15pt}\selectfont {\DateSubmitted}}
+
+    \end{center}
+  }
+  \cleartitlepagestyle
+\end{titlepage}
+
+\clearpage

@@ -1,0 +1,132 @@
+% Copyright (C) 2014  Martin Uhrin
+% 
+% This program is free software; you can redistribute it and/or
+% modify it under the terms of the GNU General Public License
+% as published by the Free Software Foundation; either version 2
+% of the License, or (at your option) any later version.
+% 
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+% 
+% You should have received a copy of the GNU General Public License
+% along with this program; if not, write to the Free Software
+% Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+%
+% See LICENSE document for the full license.
+%
+%
+% Template author:
+% Martin Uhrin
+%
+% Thesis template designed to conform to UCL thesis guidelines:
+% http://www.ucl.ac.uk/current-students/research_degrees/thesis_formatting
+%
+\documentclass[10pt,twoside]{report}
+%\documentclass{memoir}[10pt]
+
+\usepackage[T1]{fontenc}
+\usepackage{titlesec, blindtext, color}
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+
+\usepackage{etoolbox} % Used for conditional toggles in in settings
+% Be able to use \theauthor, \thetitle etc. WARNING: Has to come before \author
+% etc are used for the first time.
+\usepackage{titling}
+\usepackage{setspace} % Set line spacing
+% Date and time
+\usepackage[british]{babel}
+\usepackage[nodayofweek]{datetime}
+
+% Set up all the toggles
+\newtoggle{debugging}
+\input{./user_settings.tex}
+
+% Set margins
+\usepackage[a4paper,margin=20mm, bindingoffset=20mm]{geometry}
+
+% Packages
+\usepackage{graphicx} % Loading more figure formats
+%\usepackage{fancyhdr} % Fancy running head
+
+% Running head
+%\pagestyle{fancy}
+
+\iftoggle{debugging}{%
+\usepackage{layout}
+}
+
+\newdateformat{monthyear}{\monthname[\THEMONTH] \THEYEAR} % Set up date format as: January 2012
+\pagenumbering{arabic} % Set pagination
+
+\input{./user_preamble.tex}
+
+\begin{document}
+
+\pagestyle{empty} % No numbers of title page                      
+
+\begin{center}
+\vspace*{1cm}
+{\Huge\textbf{\thetitle}}\\ % Title
+\vspace*{3cm}
+{\Large \theauthor}\\ % Author
+\vspace*{2cm}
+
+\vfill
+
+{\Large University College London}
+
+\vspace*{1.5cm}
+\begin{figure}[h!]
+ \centering
+ \includegraphics[width=50mm]{logos/ucllogo-black.eps}
+\end{figure}
+\vspace*{1.5cm}
+\textsc{A dissertation submitted for the degree of}
+
+\large Doctor of Philosophy
+
+\monthyear\displaydate{thesis_date}
+\end{center}
+
+\newpage
+\pagestyle{plain} % Page numbers at bottom
+
+\chapter*{Declaration}
+
+I, \theauthor{}, confirm that the work presented in this thesis is my own. Where information has been derived from other sources, I confirm that this has been indicated in the thesis.  The work contains nothing which is the outcome of work done in collaboration except where specifically indicated in the text.
+
+\IfFileExists{./user_publications.tex}{%
+Parts of this dissertation have been published, or submitted for publication, as follows.
+\input{./user_publications.tex}
+}{}
+\vfill
+  
+\hfill \theauthor
+
+\hfill \monthyear\displaydate{thesis_date}
+
+\chapter*{Abstract}
+\input{./user_abstract.tex}
+
+\IfFileExists{./user_acknowledgements.tex}{%
+\chapter*{Acknowledgements}
+\input{./user_acknowledgements.tex}
+}{}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\iftoggle{debugging}{%
+  \chapter*{LAYOUT DEBUGGING}
+  \layout*{}
+}
+
+\input{./user_content.tex}
+
+\end{document}
+

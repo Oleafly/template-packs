@@ -1,0 +1,338 @@
+%% !TEX TS-program = pdflatexmk
+% !TeX program = lualatex
+% !TeX encoding = UTF-8
+% 先頭の %% と指定順は、TeXShopと他エディターの設定を分けるため。
+% コンパイル: midterm 内、またはリポジトリ直下で latexmk -pdf
+
+\documentclass[10pt,twocolumn]{ltjsarticle}
+
+% 基本情報
+\newcommand{\presentationnumber}{00} % 発表番号。不要なら {} にする。
+\newcommand{\researchtitle}{研究タイトルを入力してください}
+\newcommand{\studentid}{00000000}     % 自分の学籍番号
+\newcommand{\studentname}{氏名を記入} % 自分の氏名
+
+% 用紙・余白
+\usepackage[
+  paperwidth=210mm,
+  paperheight=297mm,
+  top=27mm,
+  bottom=26mm,
+  left=17mm,
+  right=17mm,
+  columnsep=7.4mm,
+  headheight=0pt,
+  headsep=0pt
+]{geometry}
+
+% フォント: 日本語は原ノ味、欧文はTimes系
+\usepackage[haranoaji,deluxe,scale=1.0]{luatexja-preset}
+\usepackage{newtxtext}
+\usepackage{amsmath}
+\usepackage{newtxmath}
+
+\usepackage{etoolbox}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{titlesec}
+\usepackage{indentfirst}
+\usepackage{url}
+\usepackage[unicode,hidelinks]{hyperref}
+\graphicspath{{figures/}}
+\urlstyle{same}
+
+% 本文書式
+\makeatletter
+\renewcommand{\normalsize}{%
+  \@setfontsize\normalsize{10.5bp}{12.3bp}%
+  \abovedisplayskip 6bp plus 2bp minus 2bp
+  \belowdisplayskip 6bp plus 2bp minus 2bp
+  \abovedisplayshortskip 3bp plus 1bp
+  \belowdisplayshortskip 3bp plus 1bp
+}
+\makeatother
+\normalsize
+\setlength{\parindent}{1\zw}
+\setlength{\parskip}{0pt}
+\setlength{\columnseprule}{0pt}
+\setlength{\emergencystretch}{1\zw}
+\pagestyle{empty}
+\raggedbottom
+
+% 見出し
+\titleformat{\section}
+  {\normalfont\sffamily\gtfamily\bfseries\fontsize{11bp}{13bp}\selectfont}
+  {\thesection.}{0.5\zw}{}
+\titleformat{\subsection}
+  {\normalfont\sffamily\gtfamily\bfseries\fontsize{10.5bp}{12.3bp}\selectfont}
+  {\thesubsection}{0.5\zw}{}
+\titlespacing{\section}{0pt}{8bp plus 2bp minus 1bp}{7bp}
+\titlespacing{\subsection}{0pt}{8bp plus 2bp minus 1bp}{6bp}
+
+% 図表
+\DeclareCaptionFont{bodycaption}{\fontsize{10bp}{12bp}\selectfont}
+\captionsetup{
+  font=bodycaption,
+  labelfont=normalfont,
+  labelsep=quad,
+  skip=6bp
+}
+\captionsetup[figure]{position=bottom}
+\captionsetup[table]{position=top}
+\renewcommand{\figurename}{図}
+\renewcommand{\tablename}{表}
+\setlength{\textfloatsep}{10bp plus 2bp minus 2bp}
+\setlength{\intextsep}{10bp plus 2bp minus 2bp}
+\setlength{\floatsep}{8bp plus 2bp minus 2bp}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.8}
+\makeatletter
+\def\fps@figure{tp}
+\def\fps@table{tp}
+\makeatother
+
+% 参考文献
+\makeatletter
+\renewenvironment{thebibliography}[1]
+  {\section*{参考文献}%
+   \fontsize{8bp}{9.6bp}\selectfont
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{#1}}%
+         \leftmargin\labelwidth
+         \advance\leftmargin\labelsep
+         \usecounter{enumiv}%
+         \setlength{\itemsep}{3bp}%
+         \setlength{\parsep}{0pt}%
+         \setlength{\topsep}{0pt}}%
+   \sloppy
+   \clubpenalty4000
+   \widowpenalty4000}
+  {\endlist}
+\makeatother
+
+% タイトル
+\newcommand{\makemidtermtitle}{%
+  \twocolumn[{%
+    \vspace*{5mm}%
+    \begin{center}
+      {\fontsize{14bp}{18bp}\selectfont\bfseries
+       \ifdefempty{\presentationnumber}{}{\presentationnumber.\ }
+       \researchtitle\par}
+      \vspace{5mm}
+      {\fontsize{12bp}{15bp}\selectfont\bfseries
+       \studentid\hspace{2\zw}\studentname\par}
+    \end{center}
+    \vspace{5mm}%
+  }]%
+}
+
+\hypersetup{
+  pdftitle={\researchtitle},
+  pdfauthor={\studentname}
+}
+
+% 本文
+\begin{document}
+\makemidtermtitle
+
+\section{はじめに}
+\label{sec:introduction}
+
+ここには，研究の背景，解決したい課題，研究の目的を記述する．
+本ファイルの本文は，予稿の構成と組版を確認するための案内文であり，
+特定の研究についての説明や実験結果ではない．提出前に，タイトル，
+学籍番号，氏名，本文，図表，参考文献を実際の内容へ差し替える．
+
+背景では，対象となる技術やシステムがどのような場面で使われ，
+なぜ研究する必要があるのかを説明する．読み手が専門用語を知らなくても
+問題意識を理解できるように，対象，利用場面，現状の課題の順に整理する．
+広い話題の紹介だけで終わらず，自分が扱う具体的な問題につなげる．
+
+続いて，従来の方法では何が十分でないのかを述べる．例えば，適用できる
+条件の制約，処理に要する時間，作業の負担など，研究の目的に直接関係する
+課題を取り上げる．事実として述べる内容には，必要に応じて出典を付ける．
+まだ調査していない事項について，確認済みの事実であるかのようには書かない．
+
+最後に，本研究の目的と取り組む範囲を明確にする．何を提案または実装し，
+どのような観点で有効性を確認するのかを簡潔に述べる．中間発表の時点で
+達成したことと，卒業研究の終了までに目指すことを分けておくと，
+研究の進捗と今後の方針を読み手に伝えやすい．
+
+\section{研究背景}
+\label{sec:background}
+
+ここでは，提案手法を理解するために必要な概念，対象システム，前提条件を
+説明する．参考にした予稿では，この位置に研究対象の基礎説明が置かれている．
+節の名前は固定ではなく，研究対象や中心となる技術の名前に変更してよい．
+
+専門用語や略語は，最初に登場する箇所で意味を示す．数式を使う場合は，
+記号が表す対象，値の範囲，単位を説明し，式と文章を対応付ける．
+定義を並べるだけでなく，その概念が自分の研究のどの部分に関係するのかを
+補足することで，後の提案手法を理解するための準備になる．
+
+対象とする入力，出力，動作条件も，必要に応じてここで整理する．
+既存のプログラムやデータを利用する場合には，何をそのまま利用し，
+どこを変更するのかを区別する．利用する環境や対象の範囲に制限がある場合は，
+後から結果を解釈する際に必要となるため，前提として明示する．
+
+予稿の紙面は限られているため，研究目的に直接つながる説明を優先する．
+長い導出や周辺的な説明は省略し，必要な詳細を参考文献へ案内する．
+ただし，本研究の結果が成立するために重要な前提は省かず，
+読み手が適用範囲を判断できるようにする．
+
+\section{関連研究}
+\label{sec:related}
+
+ここには，同じ課題に取り組む研究や，提案手法の基礎となる手法を記述する．
+本文から参考文献を引用する場合は，文献の識別子を指定する
+\verb|\cite{reference-example}| のような命令を用いる\cite{reference-example}．
+このテンプレート末尾の文献は書式の例であり，実在する文献情報ではない．
+
+各研究について，対象としている問題，中心となる方法，確認されている結果を
+整理したうえで，自分の研究との関係を説明する．既存研究を列挙するだけでなく，
+共通する点と異なる点を明らかにすることが重要である．比較の観点は，
+研究の目的に合わせて，適用範囲，機能，評価方法などから選ぶ．
+
+既存手法の制約を述べるときは，その手法が想定している条件も確認する．
+異なる条件で得られた結果を，そのまま優劣の根拠にしない．
+本研究の独自性は，実際に確認できた事実に基づいて説明し，
+未調査の事項について断定的な表現を避ける．
+
+\section{提案手法}
+\label{sec:method}
+
+ここでは，研究課題に対してどのような方法を用いるのかを説明する．
+最初に手法の全体像を示し，次に構成要素や処理の流れを述べる．
+従来の方法から変更する部分がある場合には，変更内容だけでなく，
+その変更によってどの課題の解決を目指すのかを対応付けて記述する．
+
+\subsection{システム構成}
+\label{sec:architecture}
+
+システムを実装する研究では，入力，主要な処理，出力の関係を説明する．
+アルゴリズムを扱う研究では，処理手順や各段階の役割を示す．
+図\ref{fig:overview}のような図を用いる場合は，図を置くだけでなく，
+図中の要素が何を表しているかを本文でも説明する．
+
+% figures/overview.pdf を配置し、枠を \includegraphics[width=\linewidth]{overview.pdf} に置き換える。
+\begin{figure}
+  \centering
+  \fbox{%
+    \parbox[c][65mm][c]{0.88\linewidth}{%
+      \centering
+      \textbf{図の差し替え欄}\par\medskip
+      システム構成図，処理の流れ，\par
+      実装画面などを配置する．\par\medskip
+      この枠は実際の研究成果ではない．
+    }%
+  }
+  \caption{提案手法の概要（差し替え用）}
+  \label{fig:overview}
+\end{figure}
+
+構成要素を説明した後に，各要素の間で受け渡す情報を示す．
+実装上の工夫が研究の中心となる場合は，なぜその設計を選んだのか，
+代替案と比べてどのような利点や制約があるのかを説明する．
+詳細なコードの掲載よりも，研究上重要な判断が分かる記述を優先する．
+
+\subsection{実装状況}
+\label{sec:implementation}
+
+ここには，中間発表時点で実装できた内容と，動作確認の範囲を記述する．
+使用したプログラミング言語，ライブラリ，実行環境などは，
+再現に必要なものを選んで示す．単に実装が完了したと書くのではなく，
+どの入力や条件で，何を確認できたのかを明確にする．
+
+実装済み，検証中，未着手の項目を混同しないように整理する．
+想定どおりに動作しない箇所が残っている場合は，現在把握している現象と，
+調査または修正の方針を述べる．予定している機能については，
+すでに利用できる機能と区別して記載する．
+
+開発状況を示す資料には，確認した機能が分かる画面，処理の記録，
+入力と出力の例などを用いる．画面全体を縮小すると文字が読みにくくなるため，
+説明したい部分を選び，図中の文字の大きさにも注意する．
+複数の構成要素がある場合は，個別に動くことを確認した段階なのか，
+全体を接続して確認した段階なのかを区別して説明する．
+
+\section{評価}
+\label{sec:evaluation}
+
+ここでは，提案手法の有効性をどのように確認するのかを説明する．
+評価の目的，対象，実験条件，比較手法，評価指標を示し，
+研究目的に対して何が分かる評価なのかを明確にする．
+実験をまだ実施していない場合は，評価計画であることを明記し，
+結果が得られたかのような表現を用いない．
+
+実験条件には，使用するデータや入力の範囲，試行回数，実行環境，
+処理を終了する条件などを記載する．比較実験では，手法ごとに異なる条件が
+結果に影響していないかを確認する．乱数を用いる手法では，
+試行ごとのばらつきをどのように扱うかも，あらかじめ整理しておく．
+
+評価指標を示す際は，値が大きい方と小さい方のどちらが望ましいのか，
+どのような改善を確認するための指標なのかを説明する．
+複数の指標がある場合には，それぞれが研究目的のどの側面に対応するかを示す．
+計算時間と結果の品質など，相反する観点がある場合は，
+一つの指標だけで結論を出さず，両方の結果を対応付けて検討する．
+
+表\ref{tab:evaluation}は，表の書式を示すための仮の例である．
+数値欄の横線はプレースホルダーであり，測定値ではない．
+実際の予稿では，比較対象，項目名，単位，数値を自分の評価に合わせて変更する．
+表の説明は表の上に，図の説明は図の下に配置する．
+
+\begin{table}
+  \centering
+  \caption{評価結果の記載例（数値は未記入）}
+  \label{tab:evaluation}
+  \fontsize{9.5bp}{11.5bp}\selectfont
+  \renewcommand{\arraystretch}{1.25}
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabularx}{\linewidth}{|>{\raggedright\arraybackslash}X|c|c|}
+    \hline
+    評価項目 & 比較手法 & 提案手法 \\ \hline
+    指標A（単位） & --- & --- \\ \hline
+    指標B（単位） & --- & --- \\ \hline
+    評価条件 & \multicolumn{2}{c|}{実際の条件を記入} \\ \hline
+  \end{tabularx}
+\end{table}
+
+結果が得られている場合は，まず観測した事実を記述し，その後で解釈を述べる．
+期待した傾向が得られなかった場合も，原因として考えられる要因と，
+追加で確認すべき事項を整理する．限られた条件で得られた結果から，
+検証していない条件についてまで一般化しないように注意する．
+
+図表の数値を本文で繰り返すだけでなく，研究目的に関係する変化や差に注目する．
+差の理由がまだ確かめられていない場合は，観測結果と原因の推測を分ける．
+失敗した試行や除外した条件がある場合も，結果の理解に必要な範囲で説明し，
+評価の対象範囲が分かるようにする．
+
+中間段階で評価が完了していない場合でも，予備的に確認できた事項と，
+今後確認する事項を整理できる．次に必要な実験を具体化し，
+どの結果が得られれば研究目的の達成を判断できるのかを示す．
+ここで記述した評価計画と，次節の今後の作業が対応していることを確認する．
+
+\section{まとめ}
+\label{sec:conclusion}
+
+ここには，研究の目的，中間発表までに行ったこと，現時点で分かったことを
+簡潔にまとめる．本文で説明していない新しい主張を追加するのではなく，
+研究の進捗を振り返り，目的に対してどこまで到達したかを示す．
+
+続いて，残っている課題と今後の作業を記述する．実装の追加，評価の実施，
+比較対象の拡充など，次に何を行うのかを具体的にする．
+中間発表後の方針が研究目的とどのようにつながるのかを述べ，
+卒業研究の最終的な到達点を読み手が理解できるように締めくくる．
+
+% 参考文献
+\begin{thebibliography}{9}
+  \bibitem{reference-example}
+    著者名：『論文タイトル』，掲載誌または会議名，巻，号，
+    ページ，出版年（書式例・要差し替え）．
+  \bibitem{web-example}
+    著者または組織名：『資料名』，URL，閲覧年月日
+    （書式例・要差し替え）．
+\end{thebibliography}
+
+\end{document}

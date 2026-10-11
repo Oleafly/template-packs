@@ -1,0 +1,54 @@
+% !Mode:: "TeX:UTF-8"
+
+\chapter{相关技术以及工具}\label{ch:2}
+
+本章介绍系统使用的技术与工具，包括 B/S 架构、SpringBoot、Vue3、MyBatis-Plus、MySQL、SpringSecurity、Spring AI 以及开发工具。
+
+B/S（Browser/Server，浏览器/服务器）架构是 Web 应用中常见的系统结构\cite{anderson2020mis}。该模式将业务逻辑和数据处理放在服务器端，浏览器负责发起请求和展示页面，用户不需要安装专用客户端。本系统选择 B/S 架构，主要因为管理员、教师和学生都可以通过浏览器访问，系统升级时只需更新服务器端，用户侧不用单独维护版本。这种方式对操作系统要求低，适合高校内部多角色共同使用的管理类系统。
+
+B/S 架构的工作流程为：用户在浏览器中发起请求，后端接收请求后完成身份校验、业务处理和数据持久化，再将结果返回前端。前端根据返回结果渲染列表、表单、图表或提示信息，完成一次交互。其工作原理如图 \ref{fig:bs-architecture} 所示。
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.88\textwidth]{fig2_1_bs_architecture.png}
+  \caption{B/S 架构工作原理}
+  \label{fig:bs-architecture}
+\end{figure}
+
+B/S 架构与传统 C/S 架构的区别如表 \ref{tab:bs-cs} 所示。相比 C/S 架构，B/S 架构在统一部署、集中维护和多角色访问方面更适合高校管理类系统。
+
+\begin{table}[H]
+  \centering
+  \caption{B/S 与 C/S 架构对比}
+  \label{tab:bs-cs}
+  \begin{tabularx}{\textwidth}{>{\centering\arraybackslash}p{3cm}XX}
+    \toprule
+    对比项 & B/S 架构 & C/S 架构 \\
+    \midrule
+    客户端要求 & 通过浏览器访问，无需安装专用客户端 & 需要安装并维护专用客户端 \\
+    部署维护 & 服务端统一升级，维护成本较低 & 客户端和服务端均可能需要更新 \\
+    适用场景 & 适合校园管理、在线查询和多角色协同业务 & 适合对本地性能或专用设备依赖较强的业务 \\
+    本系统适配性 & 管理员、教师和学生均可通过浏览器访问 & 多端分发与版本维护成本较高 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+SpringBoot 3.3 是 Spring 生态中的核心 Web 开发框架\cite{springboot2026reference}。本系统选用 SpringBoot 3.3 而非传统 SSM 框架，原因是它的自动配置能力可以减少 XML 配置工作，内置 Tomcat 简化了 Servlet 容器部署，与 SpringSecurity、MyBatis-Plus 和 Spring AI 也有良好的集成基础\cite{wang2025springbootvue}。在本系统中，SpringBoot 承担 Web 服务提供、事务管理、全局异常处理和依赖注入等基础职责。
+
+Vue3 是渐进式前端框架，采用组件化和响应式设计，适合构建单页面应用\cite{vue2026guide}。SpringBoot 与 Vue 的前后端分离组合已在多个管理系统中得到验证\cite{lai2025filemanage}。本系统前端基于 Vue3 和 Element Plus 组件库实现，使用 Vue Router 管理页面路由，Pinia 管理全局状态，Axios 封装数据请求。系统面向管理员、教师和学生三类用户，Vue3 的 Composition API 能将不同角色页面的逻辑分开组织，降低维护难度。
+
+MyBatis-Plus 是 MyBatis 的增强工具，降低了数据访问层开发成本\cite{mybatisplus2026guide}。本系统使用 Lambda 条件构造器完成常规 CRUD 操作和分页查询，使用批量插入能力支撑 Excel 导入场景，在成绩计算等复杂统计环节保留原生 MyBatis XML 映射以编写更明确的 SQL。
+
+MySQL 是开源关系型数据库\cite{mysql2026reference}。关系型数据库通过表、字段、主键和关联关系组织业务数据，适合保存学生、课程、体测记录和成绩等结构化信息\cite{abraham2024database,wang2023database,zhang2018sql,database2019basic}。本系统选用 MySQL，主要考虑学校现有运维环境能支持 MySQL 部署，其事务机制可保证成绩计算和课程状态变更过程中的数据一致性，索引与查询优化能力也能满足按学期、课程、班级等条件检索的需要。
+
+\section{SpringSecurity}
+
+SpringSecurity 是 Spring 体系中的安全框架，提供身份认证、权限授权和基础安全防护能力\cite{springsecurity2026reference}。本系统基于 RBAC 模型实现管理员、教师和学生三类角色的访问控制：管理员拥有全局管理权限，教师只能操作本人负责课程及其关联数据，学生只能查看个人相关信息并提交请假申请。系统结合 JWT 令牌机制完成访问鉴权，不同角色的操作边界保持清楚。
+
+\section{开发工具}
+
+系统开发过程中，后端功能开发、数据访问和接口调试在 IntelliJ IDEA 中完成，前端页面开发、功能联调和样式调整在 Visual Studio Code 中完成。两类工具分别适配 Java 后端和 Vue 前端开发场景，结合浏览器 DevTools 进行页面调试和性能观察。
+
+\section{Spring AI}
+
+Spring AI 是 Spring 生态中用于集成大模型能力的框架，统一了模型请求、提示信息组织和调用入口\cite{springai2026reference}。本系统中，AI 分析与 AI 问答都通过统一的模型访问通道接入外部服务，结合模型供应商、访问密钥、模型名称和异常回退开关等配置完成模型切换与异常处理。相比直接调用单一厂商 SDK，Spring AI 更适合嵌入现有业务系统，使分析和问答直接基于系统中的真实业务数据生成结果。

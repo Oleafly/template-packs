@@ -1,0 +1,162 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+
+% Blindtext to test
+\usepackage{blindtext}
+
+% Betetr font
+\usepackage{lmodern}
+
+\usepackage[printonlyused]{acronym}
+
+% Load mathematic environment american mathematics society
+\usepackage{amsmath}
+
+% Load more mathematic symbols
+\usepackage{amssymb}
+
+% Import setspace to make distances between paragraphs
+\usepackage{setspace}
+
+% Importing csquotes because babel and biblatex use it
+\usepackage[german=guillemets]{csquotes}
+
+% Color settings
+\usepackage{xcolor}
+\xdefinecolor{sourcecodebackground}{RGB}{240, 240, 240}
+\usepackage{tcolorbox}
+\tcbset{width=\textwidth, boxrule=0pt, colback=orange, arc=0pt, auto outer arc, left=0pt, right=0pt}
+
+% Float Package
+\usepackage{float}
+
+% Package for graphics
+\usepackage{graphicx}
+
+% Package for enumerates and for vspace between each item
+\usepackage{enumitem}
+
+% Header and Footer adjustments
+\usepackage[autooneside=false]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\automark[section]{chapter}
+\automark*[section]{}
+\rohead{\rightmark}
+\lohead{\leftmark}
+\chead{}
+
+% Falls im Header die Kapitel/Abschnittsnummern nicht angezeigt werden sollen
+%\renewcommand*{\chaptermarkformat}{}
+%\renewcommand*{\sectionmarkformat}{}
+%\renewcommand*{\subsectionmarkformat}{}
+
+% KOMA Options
+\KOMAoptions{
+	fontsize=12pt,
+	twoside=false,
+	DIV=8,
+	titlepage=true,
+	parskip=full,
+	listof=totoc,
+	index=totoc,
+	bibliography=totoc,
+	bibliography=openstyle,
+	headings=big,
+	headsepline=true,
+	listof=entryprefix,
+	numbers=noenddot
+}
+
+% Inhaltsverzeichnis
+\DeclareTOCStyleEntries[pagenumberwidth=20pt]{tocline}{chapter,section,subsection}
+% If table of contents should be adjusted in vertical space
+%\DeclareTOCStyleEntry[beforeskip=.5cm]{chapter}{chapter}
+%\DeclareTOCStyleEntry[beforeskip=.2cm]{section}{section}
+%\DeclareTOCStyleEntry[beforeskip=.5cm]{default}{subsection}
+
+\renewcommand{\listoflofentryname}{Abb.}
+\renewcommand{\listoflotentryname}{Tab.}
+
+% Change Fonts of Header and chapter and chapterentrys in toc -> see KOMA Guide
+\addtokomafont{disposition}{\rmfamily\bfseries}
+\addtokomafont{pagehead}{\rmfamily\upshape\small}
+
+% #######################################################################################
+% ##############################SOURCE CODE ADJUSTMENTS##################################
+% #######################################################################################
+% Creates custom source code style
+\usepackage{listings}
+% Used for appearence QC. in listings
+% It needs that koma has to understand lol listoflist format
+\usepackage{scrhack}			 
+% Renaming chapter name for content
+\renewcommand{\lstlistlistingname}{Quellcodeverzeichnis}
+% Renaming listingsnames
+\renewcommand{\lstlistingname}{Quellcode}
+% Add new command that koma understand what to do and that it can read 'lol' generated file
+\newcommand{\listoflolentryname}{Quellc.}
+\AfterTOCHead[lol]{\renewcommand*\autodot{:}}% NEU
+
+\lstdefinestyle{configs}{%
+	basicstyle=\small\ttfamily,
+	showstringspaces=false,
+	keywordstyle=\bfseries,
+	stringstyle=\sffamily,
+	numbers=left,
+	breaklines=true,
+	numberstyle=\small,
+	numbersep=10pt,
+	stepnumber=1,
+	upquote=true,
+	aboveskip=10pt,
+	belowskip=5pt,
+	captionpos=b,
+	backgroundcolor=\color{sourcecodebackground},
+	rulesep=0pt,
+	frame=single,
+	framesep=0pt,
+	framerule=1pt,
+	xleftmargin=25pt,
+	framexleftmargin=24pt,
+	framexrightmargin=-1pt,
+	framextopmargin=5pt,
+	framexbottommargin=5pt,
+	gobble=2,
+	float=htbp,
+	literate={Ö}{{\"O}}1{Ä}{{\"A}}1{Ü}{{\"U}}1{ß}{{\ss}}1{ü}{{\"u}}1{ä}{{\"a}}1{ö}{{\"o}}1{¡\\)}{{\textbackslash)}}1,
+}
+\usepackage{textcomp}
+
+\lstdefinestyle{pythonlisting}{%
+	language=Python,
+	style=configs
+}
+
+\lstdefinestyle{texlisting}{%
+	language=[LaTeX]TeX,
+	style=configs
+}
+
+% #######################################################################################
+% #######################################################################################
+% #######################################################################################
+
+% Creates custom index table
+% #######################################################################################
+\usepackage[original]{imakeidx}
+\makeindex[title=Stichwortverzeichnis, options=-s mystyle]
+%\usepackage{filecontents} % wurde von der internen environment "filecontents" abgelöst -> nciht mehr notwendig zu laden
+\input{config/indexdefinition}
+% #######################################################################################
+
+% Import bibliography
+\usepackage[style=alphabetic, isbn=false, backend=bibtex]{biblatex}
+\addbibresource{bibliography/literatur.bib}
+%\bibliographystyle{unsrt}
+
+% Damit bei Warnungen umgebrochen wird, wenn es zu hbox Meldungen kommt.
+\emergencystretch=12pt
+
+% For links (must be loaded at the end of all packages)
+\usepackage[pdfauthor={\VarAuthor}, pdftitle={\VarTitel}, pdfsubject={\VarFachgebiet}, pdfkeywords={\VarKeywords}, hidelinks, breaklinks=true, pdffitwindow=true, pdfpagelayout=SinglePage]{hyperref}

@@ -1,0 +1,149 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                     University of Glasgow Thesis Template  
+%   Created by : Majed Al Saeed
+%   Date:        Feb 2014
+%   Department of Computer Science
+%   University of Glasgow
+%   email: maj.saeed@gmail.com
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper,12pt]{report}
+\input{Macros}
+
+%==============================title page info=================================
+
+% Name of the author
+\newcommand{\auth}{FName LName}   
+% Title of Thesis                
+\newcommand{\thesistitle}{Thesis Title}
+% Degree  
+\newcommand{\degree}{Doctor of Philosophy} 
+% Date submitted
+\newcommand{\supdate}{September 2014}
+
+
+%===================================packages===================================
+\usepackage[top=18mm, bottom=18mm, left=40mm, right=15mm]{geometry}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage[citecolor=black, urlcolor=black,
+  linkcolor=black, colorlinks=true, bookmarksopen=false, bookmarks=true]{hyperref}
+\usepackage[toc,nonumberlist]{glossaries}
+\input{Glossaries}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{xspace}
+\usepackage{listings}
+\usepackage{pdfpages}
+\usepackage{alltt}
+\usepackage{float} % to use [H] 
+\usepackage[notindex, nottoc, notlof, notlot ]{tocbibind} 
+
+\usepackage{lscape}    % if you want to use land scape in one paper 
+                       %...\begin{landscape}\end{landscape}
+
+% thesw 2 lines if you like to see deep contents
+%\setcounter{tocdepth}{3}   
+\setcounter{secnumdepth}{3}
+
+
+\usepackage{listings}
+\lstset{ %
+language=Haskell,                % choose the language of the code
+basicstyle=\scriptsize,       % the size of the fonts that are used for the code
+numbers=left,                   % where to put the line-numbers
+numberstyle=\scriptsize,      % the size of the fonts that are used for the line-numbers
+stepnumber=1,                   % the step between two line-numbers. If it is 1 each line will be numbered
+numbersep=5pt,                  % how far the line-numbers are from the code
+backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+frame=lines,           % adds a frame around the code, single
+tabsize=2,          % sets default tabsize to 2 spaces
+captionpos=t,           % sets the caption-position to bottom
+breaklines=true,        % sets automatic line breaking
+breakatwhitespace=false,    % sets if automatic breaks should only happen at whitespace
+%keywordstyle=\color{blue},          % keyword style
+%commentstyle=\color{green},       % comment style
+%stringstyle=\color{mauve},         % string literal style
+escapeinside={\%*}{*)}          % if you want to add a comment within your code
+}
+
+%===================================Document===================================
+\begin{document}
+\begin{spacing}{1.5}
+
+%==================================Title page==================================
+\pagenumbering{arabic}
+\pagestyle{empty}
+\begin{center}
+\begin{spacing}{2}
+{\large{\ \\  \vspace{1.5cm}\textbf{\MakeUppercase{\thesistitle}}}}\\
+\end{spacing}
+\vfill
+%{\Large\textit{by}}\\\vspace{0.2cm}
+{\Large\upshape{\auth}}\\\vspace{2.0cm}
+{\large Submitted in Fulfilment of the Requirements for the Degree of \\ \degree}\\
+\vspace{1cm}
+\includegraphics[width=3cm]{Front/Figures/Logo.png}\\
+\vspace{0.5cm}
+{\large\textsc{University of Glasgow}\\
+\textsc{College of Science and Engineering}\\
+\textsc{School of Computing Science}}\vfill
+{\large{\supdate}}
+\end{center}
+{\small The copyright in this thesis is owned by the author. Any quotation from the thesis or use of any of the information contained in it must acknowledge this thesis as the source of the quotation or information.}
+%==================================frontmater==================================
+\clearpage
+\pagestyle{plain}
+\input{Front/Abstract}
+\newpage
+\input{Front/Dedication.tex}
+\newpage
+\input{Front/Acknowledgements}
+\newpage
+\input{Front/Declaration}
+\newpage
+\tableofcontents
+\listoftables
+\listoffigures
+
+%===================================headings===================================
+\clearpage
+\pagestyle{fancy}
+\fancyhead{}
+\lhead{\slshape \leftmark}  
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.0pt}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter. \ #1}{}}
+%===================================Chapters===================================
+
+
+\include{Introduction/Introduction}
+\input{Background/Background}
+\input{Conclusion/Conclusion}
+
+
+%===================================Appendix===================================
+\appendix
+\renewcommand{\chaptermark}[1]{\markboth{Appendix \thechapter. \ #1}{}}
+
+\input{Benchmarks/Benchmarks}
+
+
+%==================================glossaries==================================
+% In order for the glossaries to appear you should run this command 
+% on the terminal $ makeglossaries Thesis
+\printglossaries
+
+%=================================Bibliography=================================
+\bibliographystyle{abbrv}
+\bibliography{BIBLIOGRAPHY}
+
+\end{spacing}
+\end{document}
+
+

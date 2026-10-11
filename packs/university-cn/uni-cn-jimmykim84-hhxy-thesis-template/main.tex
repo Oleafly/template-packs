@@ -1,0 +1,81 @@
+%%=====================================================================
+%%  怀化学院本科生毕业论文（设计、创作）LaTeX 模板 —— 主文件
+%%
+%%  模板名称：怀化学院本科毕业设计 LaTeX 模板
+%%  作者：张乐冰 怀化学院 计算机与人工智能学院
+%%  版本：V1.1.5  2026.9.10
+%%  项目主页： https://github.com/jimmykim84/hhxy-thesis-template 
+%%
+%%  特别说明：本模板为非官方模板，仅参照本校学位论文格式制作，仅供排版参考；不代表学校官方要求，也不代表示例论文内容正确。如与学校最新官方文件冲突，以学校官方文件为准。
+%%
+%%  编译方式（必须用 XeLaTeX，编译两遍以生成目录与交叉引用）：
+%%      xelatex main.tex
+%%      xelatex main.tex
+%%
+%%  填写位置：本文件"一、论文信息"区；正文写在 chapters/ 下各 .tex 文件。
+%%=====================================================================
+\documentclass{hhxythesis}
+
+%%=====================================================================
+%%  一、论文信息（封面与摘要用到）
+%%=====================================================================
+\ClassificationNumber{0809}                    % 学科分类号
+\ThesisType{本科生毕业设计}                     % 本科生毕业论文 / 毕业设计 / 毕业创作
+\WorkType{毕业设计}                             % 诚信声明正文中的称呼
+\TitleCN{基于微信小程序的PMP刷题系统的实现}
+\TitleEN{Implementation of the PMP Answer System Based on the WeChat Mini Program}
+\Author{冉\quad 娜}
+\StudentID{1406404054}
+\College{计算机科学与工程学院}
+\Major{网络工程}
+\Advisor{杨夷梅}{副教授}                        % 姓名 + 职称
+%% 第一指导教师不具备讲师及以上职称时，启用第二指导教师，封面分两行填写：
+% \SecondAdvisor{某某}{讲师}
+\Duration{2019.06 --- 2020.05}
+\SubmitDate{2020 年 5 月 10 日}
+
+%% PDF 文档属性：标题/作者自动取自上方"一、论文信息"，改题或改名时此处无需再动
+\makeatletter
+\hypersetup{
+  pdftitle   = {\hhxy@titlecn},
+  pdfauthor  = {\hhxy@author},
+  pdfsubject = {怀化学院本科毕业设计},
+}
+\makeatother
+
+%%=====================================================================
+%%  二、正文
+%%=====================================================================
+\begin{document}
+
+%% ---- 封面（不编页码）------------------------------------------
+\makecover
+
+%% ---- 诚信声明（不编页码）--------------------------------------
+\makedeclaration
+
+%% ---- 目录（不编页码）------------------------------------------
+\makehhxytoc
+
+%% ---- 中英文摘要：页码用罗马数字编排----------------------------
+\pagenumbering{Roman}
+\input{chapters/00-abstract}        % 0 摘要
+
+%% ---- 引言/前言起：页码用阿拉伯数字连续编排，至附录--------------
+\clearpage
+\pagenumbering{arabic}
+\mainbody                                % 正文起始：复位为小4仿宋，与摘要一致
+
+\input{chapters/01-preface}         % 1 前言
+\input{chapters/02-miniprogram}     % 2 微信小程序开发介绍
+\input{chapters/03-requirement}     % 3 微信小程序开发需求设计
+\input{chapters/04-technology}      % 4 项目主要技术实现介绍
+\input{chapters/05-implement}       % 5 系统模块设计与实现
+\input{chapters/06-test}            % 6 测试
+\input{chapters/07-summary}         % 7 总结
+
+\input{chapters/08-reference}       % 参考文献
+\input{chapters/09-acknowledgement} % 致谢
+\input{chapters/10-appendix}        % 附录
+
+\end{document}

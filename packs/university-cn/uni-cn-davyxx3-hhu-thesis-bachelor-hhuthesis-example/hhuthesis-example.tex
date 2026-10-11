@@ -1,0 +1,113 @@
+\documentclass{hhu-thesis-bachelor}
+%% 更改数学字体设置，Latin Modern Math 默认的有点细，可选用下列宏包
+% \usepackage[bold-style=ISO]{unicode-math}
+\usepackage{lipsum}
+
+%% 本科论文规定不允许有空页，因此将空页替换掉
+\let\cleardoublepage\clearpage
+
+\begin{document}
+
+%%
+%% 基本信息设定（一定要改这里）
+%%
+
+% 此处填写你的学号
+\studentnumber{1812100019}
+% 此处填写你的中文论文标题
+\title{分布式智能监控终端\\与传感信息融合系统设计及实现}
+% 此处填写你的中文姓名
+\author{张晓明}
+% 此处填写你的年级，如：2018级
+\grade{2018}
+% 此处填写指导教师的中文名
+\tutor{毛明禾}
+% 此处填写评阅人，初稿阶段可不填
+\reviewer{毛明禾，李雷，韩梅梅}
+% 此处填写专业的中文名
+\major{电子信息工程}
+% 此处填写日期，如：2022年5月
+\thesisdate{2022年5月}
+% 此处填写中文地点，如：中~~国~~$\cdot$~~南~~京，将城市名改成所在的城市即可
+\location{中国~~~~南京}
+
+% 此处填写英文论文标题
+\englishtitle{Design and implementation of distributed smart monitoring terminal and sensor information fusion system}
+% 此处填写英文学院名
+\englishcollege{Computer and information}
+% 此处填写英文专业名
+\englishmajor{Electronics and Information Engineering}
+% 此处填写你的英文姓名
+\englishauthor{Xiaoming Zhang}
+% 此处填写指导教师的英文名
+\englishtutor{Dr. Minghe Mao}
+% 此处填写英文地点，如：Nanjing,  P.R.China
+\englishlocate{NANJING CHINA}
+
+%% 填写完上述信息后，即可在chapters文件夹中创建tex文件开始写作，
+%% 引用的参考文献以bib文件形式放在reference文件夹中，
+%% 写作完成后，在下面的正文部分引入所有的tex文件，
+%% 并在下面的参考文献部分引入所有bib文件，编译即可生成论文。
+
+%%
+%% 生成封面和声明页
+%%
+
+
+%TC:ignore
+\pagenumbering{Alph} 
+%% 修改封面页码样式，方便打印指定页面
+%% 生成中文封面
+\makecover
+%% 生成英文封面
+\makeencover
+%% 生成声明页
+\makedeclare
+
+%%
+%% 前置部分
+%%
+
+\frontmatter
+%% 摘要
+\input{chapters/abstract}
+%% 符号对照表，可选，如不用可注释掉
+% \input{chapters/denotation}
+%% 加入目录
+\tableofcontents
+%% 加入图、表索引(同时取消图表索引中章之间的垂直间隔，不需要可以注释)
+% \let\origaddvspace\addvspace
+% \renewcommand{\addvspace}[1]{}
+% \listoffigures
+% \listoftables
+% \renewcommand{\addvspace}[1]{\origaddvspace{#1}}
+%TC:endignore
+
+%%
+%% 正文部分（在这里引入你的所有tex文件和bib文件）
+%%
+
+\mainmatter
+%% 各章正文内容
+%% 在这里引入你的各个章节哦！！！
+\input{chapters/chapter1}
+\input{chapters/chapter2}
+
+%% 参考文献样式设定
+\bibliographystyle{hhuthesis-numeric}% 顺序编码式
+
+%TC:ignore
+%% 参考文献，10号字，使用 BibTeX，包含参考文献文件.bib
+%% 如果新创建了bib文件，记得要在这里引用哦！！！
+\bibliography{reference/chap1}
+
+%%
+%% 后置部分
+%% 
+
+%% (其后部分无编号)
+\backmatter
+%% 致谢
+\input{chapters/acknowledgement}
+%TC:endignore
+\end{document}

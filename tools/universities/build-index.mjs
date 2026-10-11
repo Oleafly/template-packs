@@ -59,7 +59,7 @@ export function buildIndex({ inventories, results, rechecks, checked, hosted = n
   const seen = new Set();
   for (const record of inventories) {
     const repo = String(record.repo ?? "");
-    const mainFile = String(record.main_file ?? "");
+    const mainFile = String(record.main_file || "main.tex");
     if (!/^https?:\/\//.test(repo) || !/\.(tex|typ)$/.test(mainFile)) continue;
     if (!record.university || /^generic\b/i.test(record.university)) continue;
     const id = recordId(repo, mainFile);

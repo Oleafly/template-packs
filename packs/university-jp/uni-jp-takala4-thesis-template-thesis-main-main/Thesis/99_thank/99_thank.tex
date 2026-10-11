@@ -1,0 +1,47 @@
+\documentclass[../main/main]{subfiles}
+
+
+% 謝辞用にchapter名の位置を変更する
+\makeatletter
+\def\@makechapterhead#1{\hbox{}%
+  \vskip2\Cvs
+  {\parindent\z@
+  %  \raggedright% 左揃え（オリジナルの定義)
+ \centering% 中央揃え
+%  \raggedleft% 右揃え
+   \normalfont\huge\sffamily\gtfamily%% フォントを変更する
+   \leavevmode
+   \ifnum \c@secnumdepth >\m@ne
+     \setlength\@tempdima{\linewidth}%
+    \if@mainmatter% ← report クラスの場合この行不要
+     \setbox\z@\hbox{\@chapapp\thechapter\@chappos\hskip1zw}%
+     \addtolength\@tempdima{-\wd\z@}%
+     \unhbox\z@\nobreak
+    \fi% ← report クラスの場合この行不要
+     \vtop{\hsize\@tempdima#1}%
+   \else
+     #1\relax
+   \fi}\nobreak\vskip3\Cvs}
+%
+\def\@makeschapterhead#1{\hbox{}%
+  \vskip2\Cvs
+  {\parindent\z@
+  %  \raggedright% 左揃え（オリジナルの定義)
+ \centering% 中央揃え
+%  \raggedleft% 右揃え
+   \normalfont\huge\sffamily\gtfamily%% フォントを変更する
+   \leavevmode
+   \setlength\@tempdima{\linewidth}%
+   \vtop{\hsize\@tempdima#1}}\vskip3\Cvs}
+\makeatother%% プリアンブルで再定義する際は必須
+\begin{document}
+\chapter*{謝辞}
+本テンプレートを作成するにあたり，様々なサイトを参考にした．
+基本的にはTeXソースのコメントに，参考サイトのURLを記載している．
+
+\vspace{5mm}
+\rightline{\today}
+\par
+\rightline{CC DD}
+
+\end{document}

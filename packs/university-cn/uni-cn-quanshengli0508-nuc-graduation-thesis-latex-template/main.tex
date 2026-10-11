@@ -1,0 +1,565 @@
+\documentclass[UTF8,openany,fontset=none]{ctexbook}
+
+\usepackage[a4paper]{geometry}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{caption}
+\usepackage{chngcntr}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+\hypersetup{
+  hidelinks,
+  pdftitle={},
+  pdfauthor={}
+}
+
+\IfFontExistsTF{Times New Roman}{%
+  \setmainfont{Times New Roman}[
+    Ligatures=TeX
+  ]
+  \setsansfont{Times New Roman}[
+    Ligatures=TeX
+  ]
+  \setmonofont{Times New Roman}[
+    Ligatures=TeX,
+    Scale=MatchLowercase
+  ]
+}{%
+  \PackageError{thesis-template}{Times New Roman not found}{Install Times New Roman to keep all English text in the required font.}%
+}
+
+\newcommand{\TemplateFontWarning}[1]{%
+  \PackageWarningNoLine{thesis-template}{#1}%
+}
+
+\newcommand{\SetupSongtiFont}{%
+  \IfFileExists{fonts/local/simsun.ttc}{%
+    \setCJKmainfont[Path=fonts/local/]{simsun.ttc}%
+    \setCJKfamilyfont{zhsong}[Path=fonts/local/]{simsun.ttc}%
+  }{%
+    \IfFileExists{fonts/local/songti.ttc}{%
+      \setCJKmainfont[Path=fonts/local/,FontIndex=4]{songti.ttc}%
+      \setCJKfamilyfont{zhsong}[Path=fonts/local/,FontIndex=4]{songti.ttc}%
+    }{%
+      \IfFontExistsTF{SimSun}{%
+        \setCJKmainfont{SimSun}%
+        \setCJKfamilyfont{zhsong}{SimSun}%
+      }{%
+        \IfFontExistsTF{宋体}{%
+          \setCJKmainfont{宋体}%
+          \setCJKfamilyfont{zhsong}{宋体}%
+        }{%
+          \IfFontExistsTF{STSong}{%
+            \setCJKmainfont{STSong}%
+            \setCJKfamilyfont{zhsong}{STSong}%
+          }{%
+            \IfFontExistsTF{Songti SC}{%
+              \setCJKmainfont{Songti SC}%
+              \setCJKfamilyfont{zhsong}{Songti SC}%
+            }{%
+              \IfFontExistsTF{Source Han Serif SC}{%
+                \setCJKmainfont{Source Han Serif SC}%
+                \setCJKfamilyfont{zhsong}{Source Han Serif SC}%
+                \TemplateFontWarning{Using Source Han Serif SC as a preview fallback. Install SimSun/STSong for strict Songti output.}%
+              }{%
+                \PackageError{thesis-template}{No Songti-like font found}{Install SimSun/STSong/Songti SC, or put simsun.ttc or songti.ttc into fonts/local/.}%
+              }%
+            }%
+          }%
+        }%
+      }%
+    }%
+  }%
+}
+
+\newcommand{\SetupHeitiFont}{%
+  \IfFileExists{fonts/local/simhei.ttf}{%
+    \setCJKsansfont[Path=fonts/local/,AutoFakeBold=3]{simhei.ttf}%
+    \setCJKfamilyfont{zhhei}[Path=fonts/local/,AutoFakeBold=3]{simhei.ttf}%
+    \newCJKfontfamily\thesisheiti[Path=fonts/local/,AutoFakeBold=3]{simhei.ttf}%
+  }{%
+    \IfFileExists{fonts/local/heiti.ttf}{%
+      \setCJKsansfont[Path=fonts/local/,AutoFakeBold=3]{heiti.ttf}%
+      \setCJKfamilyfont{zhhei}[Path=fonts/local/,AutoFakeBold=3]{heiti.ttf}%
+      \newCJKfontfamily\thesisheiti[Path=fonts/local/,AutoFakeBold=3]{heiti.ttf}%
+    }{%
+      \IfFontExistsTF{SimHei}{%
+        \setCJKsansfont[AutoFakeBold=3]{SimHei}%
+        \setCJKfamilyfont{zhhei}[AutoFakeBold=3]{SimHei}%
+        \newCJKfontfamily\thesisheiti[AutoFakeBold=3]{SimHei}%
+      }{%
+        \IfFontExistsTF{黑体}{%
+          \setCJKsansfont[AutoFakeBold=3]{黑体}%
+          \setCJKfamilyfont{zhhei}[AutoFakeBold=3]{黑体}%
+          \newCJKfontfamily\thesisheiti[AutoFakeBold=3]{黑体}%
+        }{%
+          \IfFontExistsTF{Heiti SC}{%
+            \setCJKsansfont[AutoFakeBold=3]{Heiti SC}%
+            \setCJKfamilyfont{zhhei}[AutoFakeBold=3]{Heiti SC}%
+            \newCJKfontfamily\thesisheiti[AutoFakeBold=3]{Heiti SC}%
+          }{%
+            \IfFontExistsTF{Source Han Sans SC}{%
+              \setCJKsansfont[AutoFakeBold=3]{Source Han Sans SC}%
+              \setCJKfamilyfont{zhhei}[AutoFakeBold=3]{Source Han Sans SC}%
+              \newCJKfontfamily\thesisheiti[AutoFakeBold=3]{Source Han Sans SC}%
+              \TemplateFontWarning{Using Source Han Sans SC as a preview fallback. Install SimHei/Heiti for strict Heiti output.}%
+            }{%
+              \PackageError{thesis-template}{No Heiti-like font found}{Install SimHei/Heiti SC, or put simhei.ttf or heiti.ttf into fonts/local/.}%
+            }%
+          }%
+        }%
+      }%
+    }%
+  }%
+}
+
+\newcommand{\SetupKaitiFont}{%
+  \IfFileExists{fonts/local/kaiti.ttf}{%
+    \setCJKfamilyfont{zhkai}[Path=fonts/local/,AutoFakeBold=3]{kaiti.ttf}%
+    \newCJKfontfamily\kaifont[Path=fonts/local/,AutoFakeBold=3]{kaiti.ttf}%
+  }{%
+    \IfFontExistsTF{KaiTi}{%
+      \setCJKfamilyfont{zhkai}[AutoFakeBold=3]{KaiTi}%
+      \newCJKfontfamily\kaifont[AutoFakeBold=3]{KaiTi}%
+    }{%
+      \IfFontExistsTF{楷体}{%
+        \setCJKfamilyfont{zhkai}[AutoFakeBold=3]{楷体}%
+        \newCJKfontfamily\kaifont[AutoFakeBold=3]{楷体}%
+      }{%
+        \IfFontExistsTF{Kaiti SC}{%
+          \setCJKfamilyfont{zhkai}[AutoFakeBold=3]{Kaiti SC}%
+          \newCJKfontfamily\kaifont[AutoFakeBold=3]{Kaiti SC}%
+        }{%
+          \IfFontExistsTF{STKaiti}{%
+            \setCJKfamilyfont{zhkai}[AutoFakeBold=3]{STKaiti}%
+            \newCJKfontfamily\kaifont[AutoFakeBold=3]{STKaiti}%
+          }{%
+            \PackageError{thesis-template}{No Kaiti-like font found}{Install Kaiti SC/STKaiti, or put kaiti.ttf into fonts/local/.}%
+          }%
+        }%
+      }%
+    }%
+  }%
+}
+
+\newcommand{\SetupCoverTypeFont}{%
+  \IfFileExists{fonts/local/simsun.ttc}{%
+    \newCJKfontfamily\covertypefont[Path=fonts/local/,AutoFakeBold=3]{simsun.ttc}%
+  }{%
+    \IfFileExists{fonts/local/songti.ttc}{%
+      \newCJKfontfamily\covertypefont[
+        Path=fonts/local/,
+        FontIndex=4,
+        BoldFont={songti.ttc},
+        BoldFeatures={Path=fonts/local/,FontIndex=1}
+      ]{songti.ttc}%
+    }{%
+      \IfFontExistsTF{SimSun}{%
+        \newCJKfontfamily\covertypefont[AutoFakeBold=3]{SimSun}%
+      }{%
+        \IfFontExistsTF{宋体}{%
+          \newCJKfontfamily\covertypefont[AutoFakeBold=3]{宋体}%
+        }{%
+          \IfFontExistsTF{STSong}{%
+            \newCJKfontfamily\covertypefont[AutoFakeBold=3]{STSong}%
+          }{%
+            \IfFontExistsTF{Songti SC}{%
+              \IfFontExistsTF{Songti SC Bold}{%
+                \newCJKfontfamily\covertypefont[BoldFont={Songti SC Bold}]{Songti SC}%
+              }{%
+                \newCJKfontfamily\covertypefont[AutoFakeBold=3]{Songti SC}%
+              }%
+            }{%
+              \IfFontExistsTF{Source Han Serif SC}{%
+                \newCJKfontfamily\covertypefont[AutoFakeBold=3]{Source Han Serif SC}%
+                \TemplateFontWarning{Using Source Han Serif SC as a fallback for the cover type title. Install SimSun/STSong for strict Songti output.}%
+              }{%
+                \PackageError{thesis-template}{No Songti-like font found for the cover type title}{Install SimSun/STSong/Songti SC, or put simsun.ttc or songti.ttc into fonts/local/.}%
+              }%
+            }%
+          }%
+        }%
+      }%
+    }%
+  }%
+}
+
+\newcommand{\SetupCoverMajorFont}{%
+  \IfFileExists{fonts/local/cover-major.ttf}{%
+    \newCJKfontfamily\covermajorfont[Path=fonts/local/,AutoFakeBold=3]{cover-major.ttf}%
+  }{%
+    \IfFontExistsTF{方正大标宋简体}{%
+      \newCJKfontfamily\covermajorfont[AutoFakeBold=3]{方正大标宋简体}%
+    }{%
+      \IfFontExistsTF{FZDaBiaoSong-B06S}{%
+        \newCJKfontfamily\covermajorfont[AutoFakeBold=3]{FZDaBiaoSong-B06S}%
+      }{%
+        \newCJKfontfamily\covermajorfont{STSong}%
+        \TemplateFontWarning{Using STSong as a fallback for the cover major title. Put cover-major.ttf into fonts/local/ for exact output.}%
+      }%
+    }%
+  }%
+}
+
+\newcommand{\SetupCoverSmallFont}{%
+  \IfFileExists{fonts/local/cover-small.ttf}{%
+    \newCJKfontfamily\coversmallfont[Path=fonts/local/,AutoFakeBold=3]{cover-small.ttf}%
+  }{%
+    \IfFontExistsTF{方正小标宋简体}{%
+      \newCJKfontfamily\coversmallfont[AutoFakeBold=3]{方正小标宋简体}%
+    }{%
+      \IfFontExistsTF{FZXiaoBiaoSong-B05S}{%
+        \newCJKfontfamily\coversmallfont[AutoFakeBold=3]{FZXiaoBiaoSong-B05S}%
+      }{%
+        \newCJKfontfamily\coversmallfont[AutoFakeBold=3]{STSong}%
+        \TemplateFontWarning{Using STSong as a fallback for the cover small title. Put cover-small.ttf into fonts/local/ for exact output.}%
+      }%
+    }%
+  }%
+}
+
+\SetupSongtiFont
+\SetupHeitiFont
+\SetupKaitiFont
+\SetupCoverTypeFont
+
+\newcommand{\songti}{\CJKfamily{zhsong}}
+\newcommand{\heiti}{\CJKfamily{zhhei}}
+\newcommand{\kaishu}{\CJKfamily{zhkai}}
+
+\SetupCoverMajorFont
+\SetupCoverSmallFont
+
+\newcommand{\bodyfont}{\songti\fontsize{12bp}{18bp}\selectfont}
+\newcommand{\coverfieldfont}{\kaifont\fontsize{16bp}{40bp}\selectfont}
+\newcommand{\forceparindent}{\noindent\hspace*{\parindent}\ignorespaces}
+\newcommand{\blanklinecontent}{\mbox{}}
+\newcommand{\graduationyear}{xxxx}
+\newcommand{\headertext}{中北大学 \graduationyear 届毕业设计说明书}
+
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+
+\setlength{\parindent}{2\ccwd}
+\setlength{\parskip}{0pt}
+\setlength{\headheight}{18bp}
+
+\DeclareCaptionFont{thesiscaptionfont}{\songti\fontsize{10.5bp}{15.75bp}\selectfont}
+\captionsetup{
+  font=thesiscaptionfont,
+  labelfont=thesiscaptionfont,
+  labelsep=space
+}
+\captionsetup[figure]{position=bottom}
+\captionsetup[table]{position=top}
+
+\counterwithin{figure}{chapter}
+\counterwithin{table}{chapter}
+\numberwithin{equation}{chapter}
+
+\renewcommand{\chaptername}{}
+\renewcommand{\thechapter}{\arabic{chapter}}
+\ctexset{
+  chapter = {
+    name = {},
+    number = \arabic{chapter}
+  }
+}
+
+\titleformat{\chapter}[hang]
+  {\thesisheiti\bfseries\fontsize{15bp}{22.5bp}\selectfont}
+  {\thechapter}
+  {0.75em}
+  {}
+
+\titleformat{name=\chapter,numberless}[hang]
+  {\thesisheiti\bfseries\fontsize{15bp}{22.5bp}\selectfont}
+  {}
+  {0pt}
+  {}
+
+\titleformat{\section}[hang]
+  {\thesisheiti\bfseries\fontsize{12bp}{18bp}\selectfont}
+  {\thesection}
+  {0.75em}
+  {}
+
+\titleformat{\subsection}[hang]
+  {\thesisheiti\fontsize{12bp}{18bp}\selectfont}
+  {\thesubsection}
+  {0.75em}
+  {}
+
+\titlespacing*{\chapter}{0pt}{0.5\baselineskip}{0.5\baselineskip}
+\titlespacing*{\section}{0pt}{0pt}{0.5\baselineskip}
+\titlespacing*{\subsection}{0pt}{0.25\baselineskip}{0.25\baselineskip}
+
+\titlecontents{chapter}
+  [0em]
+  {\songti\fontsize{12bp}{18bp}\selectfont}
+  {\hspace*{2.2em}\contentslabel{2.2em}}
+  {}
+  {\titlerule*[0.5pc]{.}\contentspage}
+
+\titlecontents{section}
+  [2.8em]
+  {\songti\fontsize{12bp}{18bp}\selectfont}
+  {\contentslabel{2.8em}}
+  {}
+  {\titlerule*[0.5pc]{.}\contentspage}
+
+\titlecontents{subsection}
+  [2.8em]
+  {\songti\fontsize{12bp}{18bp}\selectfont}
+  {\contentslabel{2.8em}}
+  {}
+  {\titlerule*[0.5pc]{.}\contentspage}
+
+\fancypagestyle{frontstyle}{
+  \fancyhf{}
+  \fancyhead[C]{\thesisheiti\fontsize{12bp}{12bp}\selectfont \headertext}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\fancypagestyle{tocstyle}{
+  \fancyhf{}
+  \fancyhead[C]{\thesisheiti\fontsize{12bp}{12bp}\selectfont \headertext}
+  \fancyfoot[R]{\songti\fontsize{9bp}{9bp}\selectfont 第 \thepage 页\quad 共 \thepage 页}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\fancypagestyle{mainstyle}{
+  \fancyhf{}
+  \fancyhead[C]{\thesisheiti\fontsize{12bp}{12bp}\selectfont \headertext}
+  \fancyfoot[R]{\songti\fontsize{9bp}{9bp}\selectfont \thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[C]{\thesisheiti\fontsize{12bp}{12bp}\selectfont \headertext}
+  \fancyfoot[R]{\songti\fontsize{9bp}{9bp}\selectfont \thepage}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\newcommand{\thesistype}{毕业设计说明书}
+\newcommand{\thesistitlelinea}{\blanklinecontent}
+\newcommand{\thesistitlelineb}{\blanklinecontent}
+\newcommand{\thesistitlecn}{\blanklinecontent}
+\newcommand{\thesistitleen}{\blanklinecontent}
+\newcommand{\studentname}{}
+\newcommand{\studentid}{}
+\newcommand{\college}{}
+\newcommand{\majorname}{}
+\newcommand{\advisorname}{}
+\newcommand{\thesisdate}{}
+\newcommand{\cnabstracttext}{}
+\newcommand{\cnkeywords}{}
+\newcommand{\enabstracttext}{}
+\newcommand{\enkeywords}{}
+\newcommand{\chapteronetitle}{引言}
+\newcommand{\chaptertwotitle}{第二章标题}
+\newcommand{\sectiononetitle}{第一节标题}
+\newcommand{\subsectiononetitle}{三级标题}
+\newcommand{\subsectiontwotitle}{三级标题}
+\newcommand{\sectiontwotitle}{第二节标题}
+\newcommand{\chapterthreetitle}{第三章标题}
+\newcommand{\chapterxtitle}{第 X 章标题}
+\newcommand{\conclusiontitle}{结论}
+\newcommand{\appendixatitle}{附录 A}
+\newcommand{\appendixbtitle}{附录 B}
+\newcommand{\referencelist}{}
+\newcommand{\acknowledgementstext}{}
+
+\newcommand{\setfrontgeometry}{%
+  \newgeometry{
+    top=3cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=18bp,
+    headsep=12bp,
+    footskip=18bp
+  }%
+}
+
+\newcommand{\setmaingeometry}{%
+  \newgeometry{
+    top=3cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=18bp,
+    headsep=12bp,
+    footskip=24bp
+  }%
+}
+
+\newcommand{\coverlinetwo}[4]{%
+  \noindent\coverfieldfont
+  #1\underline{\makebox[4.2cm][c]{#2}}%
+  \hspace{1.3cm}%
+  #3\underline{\makebox[4.0cm][c]{#4}}%
+  \par
+}
+
+\newcommand{\coverlineone}[2]{%
+  \noindent\coverfieldfont
+  #1\underline{\makebox[11.2cm][c]{#2}}%
+  \par
+}
+
+\newcommand{\makecover}{%
+  \setfrontgeometry
+  \begin{titlepage}
+    \thispagestyle{frontstyle}
+    \pagestyle{frontstyle}
+    \begin{flushleft}
+      \hspace*{-0.3cm}\includegraphics[width=6.67cm]{assets/cover-image1.jpeg}
+    \end{flushleft}
+
+    \vspace{2.1cm}
+
+    \begin{center}
+      {\coversmallfont\fontsize{52bp}{62.4bp}\selectfont \thesistype\par}
+      \vspace{2.1cm}
+      {\thesisheiti\fontsize{26bp}{31.2bp}\selectfont \thesistitlelinea\par}
+      {\thesisheiti\fontsize{26bp}{31.2bp}\selectfont \thesistitlelineb\par}
+    \end{center}
+
+    \vfill
+
+    \coverlinetwo{学生姓名：}{\studentname}{学号：}{\studentid}
+    \coverlineone{学\qquad 院：}{\college}
+    \coverlineone{专\qquad 业：}{\majorname}
+    \coverlineone{指导教师：}{\advisorname}
+
+    \vfill
+
+    \begin{center}
+      {\kaifont\fontsize{18bp}{27bp}\selectfont \thesisdate\par}
+    \end{center}
+  \end{titlepage}
+}
+
+\newcommand{\makecnabstract}{%
+  \thispagestyle{frontstyle}
+  \pagestyle{frontstyle}
+  \bodyfont
+  \vspace*{0.5\baselineskip}
+  \begin{center}
+    {\thesisheiti\fontsize{15bp}{22.5bp}\selectfont \thesistitlecn\par}
+    {\thesisheiti\fontsize{12bp}{18bp}\selectfont 摘要\par}
+  \end{center}
+  \forceparindent\cnabstracttext
+
+  \par\vspace{\baselineskip}
+  \noindent{\thesisheiti\fontsize{12bp}{18bp}\selectfont 关键词：}\cnkeywords
+}
+
+\newcommand{\makeenabstract}{%
+  \clearpage
+  \thispagestyle{frontstyle}
+  \pagestyle{frontstyle}
+  \bodyfont
+  \vspace*{0.5\baselineskip}
+  \begin{center}
+    {\fontsize{15bp}{22.5bp}\selectfont \thesistitleen\par}
+    \vspace{0.5\baselineskip}
+    {\fontsize{12bp}{18bp}\selectfont Abstract\par}
+  \end{center}
+  \vspace{0.5\baselineskip}
+  \forceparindent\enabstracttext
+
+  \par\vspace{\baselineskip}
+  \noindent{\fontsize{12bp}{18bp}\selectfont Keywords: }\enkeywords
+}
+
+\makeatletter
+\newcommand{\makethesistoc}{%
+  \clearpage
+  \thispagestyle{tocstyle}
+  \pagestyle{tocstyle}
+  \begin{center}
+    {\thesisheiti\fontsize{14bp}{21bp}\selectfont 目\quad 录\par}
+  \end{center}
+  \vspace{0.5\baselineskip}
+  \@starttoc{toc}
+}
+\makeatother
+
+\newcommand{\makereferences}{%
+  \clearpage
+  \phantomsection
+  \addcontentsline{toc}{chapter}{参考文献}
+  \thispagestyle{mainstyle}
+  \begin{center}
+    {\thesisheiti\bfseries\fontsize{15bp}{22.5bp}\selectfont 参考文献\par}
+  \end{center}
+  \vspace{0.5\baselineskip}
+  {\bodyfont\referencelist}
+}
+
+\newcommand{\makeappendix}[1]{%
+  \clearpage
+  \chapter*{#1}
+  \addcontentsline{toc}{chapter}{#1}
+}
+
+\newcommand{\makeacknowledgements}{%
+  \clearpage
+  \chapter*{致谢}
+  \addcontentsline{toc}{chapter}{致谢}
+  \acknowledgementstext
+}
+
+\begin{document}
+
+\makecover
+
+\bodyfont
+
+\makecnabstract
+\makeenabstract
+\clearpage
+\pagenumbering{Roman}
+\setcounter{page}{1}
+\makethesistoc
+
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\setmaingeometry
+\bodyfont
+\pagestyle{mainstyle}
+
+\chapter{\chapteronetitle}
+
+\chapter{\chaptertwotitle}
+\section{\sectiononetitle}
+\subsection{\subsectiononetitle}
+\subsection{\subsectiontwotitle}
+\section{\sectiontwotitle}
+
+\chapter{\chapterthreetitle}
+
+\chapter{\chapterxtitle}
+
+\chapter{\conclusiontitle}
+
+\makeappendix{\appendixatitle}
+\makeappendix{\appendixbtitle}
+
+\makereferences
+\makeacknowledgements
+
+\end{document}

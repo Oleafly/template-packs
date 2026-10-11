@@ -1,0 +1,49 @@
+\usepackage{amsmath, amssymb}
+\usepackage{color}
+\usepackage[dvipdfmx]{hyperref}
+\usepackage{pxjahyper}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{newtxtext, newtxmath}
+\definecolor{ftr}{gray}{0.5}
+%%%%%%%%%
+\titleformat{\chapter}[display]
+    {\huge\sffamily}
+    {\LARGE{第\,\thechapter\,章}}{.2em}{}[{\titlerule[0.8pt]}]
+\titlespacing{\chapter}
+    {\parindent}{1.5ex plus .1ex minus .2ex}{30pt}
+%%%%%%%%%
+\def\snumber#1{\gdef\@snumber{#1}}
+\def\syear#1{\gdef\@syear{#1}}
+\def\teacher#1{\gdef\@teacher{#1}}
+\newcommand{\todayd}{\the\year\,年\the\month\,月}
+\renewcommand\maketitle[0]{
+\begin{titlepage}
+\begin{center}
+    \vspace*{20mm}
+    {\Huge 卒 業 論 文}
+    \vspace{20mm}\\
+    {\Huge \@title}
+    \vspace{20mm}\\
+    {\LARGE 指導教員\quad\@teacher}
+    \vspace{10mm}\\
+    {\LARGE 芝浦工業大学\quad 工学部\\通信工学科}
+    \vspace{15mm}\\
+    {\LARGE \@snumber\quad\@author}
+    \vspace{20mm}\\
+    {\LARGE 提出年月\quad\todayd}
+\end{center}
+\par\vskip 1.5em
+\end{titlepage}
+}
+%%%%%%%%%
+\pagestyle{fancy}
+\lhead{\sffamily\leftmark}
+\rhead{\sffamily\rightmark}
+\rfoot{\emph{\thepage}}
+\cfoot{\textcolor{ftr}{\@snumber\; \@author\; \@syear\,年度卒業研究\; 卒業論文}}
+\renewcommand{\chaptermark}[1]{\markboth{第 \thechapter 章\; ~#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\; ~#1}{}}
+\renewcommand{\footrulewidth}{0.4pt}
+%%%%%%%%%
+\renewcommand{\bibname}{参考文献}

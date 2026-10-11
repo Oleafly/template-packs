@@ -1,0 +1,203 @@
+% Ouverture sur une page
+\documentclass[a4paper,11pt,oneside]{book} 
+
+% +---------------------------------------------------------------+
+% | Langue
+% +---------------------------------------------------------------+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[american]{babel}
+
+
+% +---------------------------------------------------------------+
+% | Paramètres
+% +---------------------------------------------------------------+
+
+% confidentialité ? choisir la ligne non-commentée :
+%\newif\ifisconfidential	\isconfidentialfalse % si NON confidentiel
+\newif\ifisconfidential	\isconfidentialtrue % si confidentiel
+\newcommand{\confidential}{\textbf{Confidential}} %Ce texte sera affiché dans chaque entête. 
+
+% draft ? choisir la ligne non-commentée :
+\newif\ifisdraft\isdraftfalse % si NON draft
+%\newif\ifisdraft\isdrafttrue % si draft
+
+% Font for HES-SO
+\usepackage[scaled]{helvet}
+\renewcommand*{\familydefault}{\sfdefault}
+
+% Titles
+\newcommand{\TMtype}{Master thesis}
+\newcommand{\TMtitle}{Title example}
+\newcommand{\TMsubtitle}{Subtitle}%laisser vide si pas de sous-titre
+\newcommand{\TMyear}{2026}
+\newcommand{\TMacademicYears}{2025-26}
+
+% School
+\newcommand{\TMfiliere}{Filière}
+\newcommand{\TMfiliereData}{Master of Science HES-SO in Engineering}
+\newcommand{\TMorient}{Profil}
+\newcommand{\TMorientData}{Information and Cyber Security (ICS)}
+
+% Student
+\newcommand{\TMproducedby}{Produced by}
+\newcommand{\TMauthor}{Author}
+\newcommand{\TMauthorData}{First Last Name}
+
+% Supervisor
+\newcommand{\TMsupervisorData}{Prof. First Last Name}
+\newcommand{\TMsupervisor}{Under the supervision of \TMsupervisorData}
+
+% Industry
+\newcommand{\TMindustryType}{Industrial partner}
+\newcommand{\TMindustryName}{IndustryName}
+\newcommand{\TMindustryContact}{First Last Name}
+\newcommand{\TMindustryAddress}{%
+  Rue XY\\
+  1234 Ville
+}
+\newcommand{\TMindustry}{In collaboration with \TMindustryName}
+
+% Date and location
+\newcommand{\Date}{Date of publication}
+\newcommand{\DateData}{\today}
+\newcommand{\LieuSignature}{Yverdon-les-bains}
+
+% Footer
+\newcommand{\FooterTL}{Master of Science in Engineering (MSE)}
+\newcommand{\FooterBL}{Master thesis}
+\newcommand{\FooterTM}{\TMauthorData}
+\newcommand{\FooterBM}{%
+	\ifisconfidential
+		\textcolor{red}{Confidential}
+	\else
+		Non-confidential
+	\fi
+	}
+\newcommand{\FooterTR}{\DateData}
+
+
+
+\newcommand{\TMresumePubliable}{
+	\lipsum[6] % exemple
+
+	Ceci est le résumé publiable...
+
+	Rappel du contexte et de la problématique
+
+	Dans ce travail, il a été réalisé
+
+	Présenter les résultats et ce que cela a apporté	
+	
+	\lipsum[2] % exemple
+}
+
+% +---------------------------------------------------------------+
+
+
+
+% +-[set path]-------------------------------------+
+\usepackage{template/TM-style}
+\usepackage{template/TM-macros}
+\usepackage{template/TM-template}
+%\graphicspath{images/}
+\usepackage{hyperref} %Doit etre le dernier package
+
+
+\begin{document}
+
+\frontmatter
+
+% TITLE 
+% +---------------------------------------------------------------+
+\pagestyle{empty}
+\TMmaketitle
+
+% template parts
+% +---------------------------------------------------------------+
+\pagestyle{mainstyle}
+
+% TOC ----------------------------------------------------------+
+\tableofcontents
+\clearpage
+
+\chapter{Declaration of authenticity}
+I hereby affirm that this assignment is my own written work and that I have used no other sources or aids other than those indicated. All passages that have been quoted from publications or paraphrased from these sources are indicated as such. Additionally, any assistance from artificial intelligence tools has been appropriately acknowledged and documented.
+\vspace{1cm}
+
+\begin{flushright}
+    \begin{minipage}{7cm}
+        Date : {\DateData}
+        
+        Name : {\TMauthorData}
+    \end{minipage}
+\end{flushright}
+
+
+\chapter{Acknowledgments}
+To write...
+
+
+\chapter{Summary}
+To write (in English)...
+
+
+\chapter{Résumé}
+A écrire (en français)...
+
+
+% Content
+% +---------------------------------------------------------------+
+\mainmatter
+\fullchaptermarktrue %affiche les chapitres complets, exemple : Chapitre N : Titre
+
+\input{chapters/introduction}
+
+\input{chapters/specification}
+
+\input{chapters/planification}
+
+\input{chapters/state-of-the-art}
+
+\input{chapters/ch_example}
+
+\input{chapters/architecture}
+
+\input{chapters/implementation}
+
+\input{chapters/results}
+
+\input{chapters/conclusion}
+
+
+% +---------------------------------------------------------------+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\markboth{Bibliographie}{Bibliography}
+%\bibliographystyle{plain}
+\bibliographystyle{alpha}
+\bibliography{chapters/biblio}
+\nocite{*} %ajoute tout ce qu'il y a dans le bibtex
+
+\phantomsection
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+\markboth{Table des Figures}{List of Figures}
+
+\phantomsection
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+\markboth{Liste des tableaux}{List of Tables}
+
+
+% Annexes
+% +---------------------------------------------------------------+
+\appendix
+
+\input{chapters/tools}
+
+\input{chapters/logbook}
+
+
+\end{document}

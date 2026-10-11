@@ -1,0 +1,326 @@
+\documentclass{my_bthesis}
+
+% 論文タイトル（日本語）
+\title{個人の移動履歴の説明文生成に\\アキネーターによる再識別評価指標の提案}
+% 論文タイトル（英語）
+\etitle{Proposal of Re-identification Evaluation Metrics using Akinator\\for Description Generation of Personal Mobility History}
+
+\author{分大 寺玖珠}
+\date{2025年2月8日}
+
+\begin{document}
+\maketitle
+
+% --- 1. 要旨（大学様式：ページ番号なし） ---
+\startabstractpage
+\pagenumbering{gobble} 
+
+% --- 和文要旨 ---
+\begin{center}
+  {\Large \textbf{要 \quad 旨}} % 文字間隔を空けて中央揃え
+\end{center}
+
+\newpage
+%（和文800字程度をここに記入。数式は使わない。）
+あ1
+
+あ２
+
+あ３
+
+あ４
+
+あ５
+
+あ６
+
+あ７
+
+あ８
+
+あ９
+
+あ１０
+
+あ１
+
+あ２
+
+あ３
+
+あ４
+
+あ５
+
+あ６
+
+あ７
+
+あ８
+
+あ９
+
+あ１０
+
+あ１
+
+あ２
+
+あ３
+
+あ４
+
+あ５
+
+あ６
+
+あ７
+
+あ８
+
+あ９
+
+あ１０
+
+あ１
+
+あ２
+
+あ３
+
+あ４
+
+あ５
+
+あ６
+
+あ７
+
+あ８
+
+あ９
+
+あ１０
+
+あ１
+
+あ２
+
+あ３
+
+あ４
+
+あ５
+\vspace*{1mm}
+\begin{center}
+\noindent \textbf{キーワード} \underline{移動履歴, LLM, 再識別, アキネーター}
+\end{center}
+\vspace{0.5em} % 和文と英文の間の余白
+
+% --- 英文 Abstract ---
+\begin{center}
+  {\Large \textbf{Abstract}}
+\end{center}
+%\vspace{1em}
+
+%（英文300語程度をここに記入。）
+
+Recent advances in IoT have enabled large-scale collection of sensor-based time-series data, but their complexity makes analytical results difficult for non-experts to interpret. This has increased demand for methods that translate complex outputs into natural language, with large language models (LLMs) emerging as a promising solution. However, while LLM-generated text improves interpretability, it also introduces new privacy concerns.
+Prior research has mainly focused on protecting either raw data, through techniques such as anonymization and Differential Privacy (DP), or the LLM inference process itself. In contrast, the privacy risk inherent in the generated natural-language output has not been directly evaluated. To address this gap, we propose a novel anonymity metric, N(D), inspired by the Akinator game, which quantifies the minimum number of questions required to uniquely identify an individual from a given description. Using mobility data, we generated textual summaries with an LLM and evaluated the effects of DP under different privacy settings. The results show that DP substantially increases N(D), indicating higher re-identification difficulty, and that N(D) sensitively captures variations in the DP parameter $\epsilon$. Overall, this study bridges NLP and privacy-preserving data analysis by providing an intuitive framework for quantifying anonymity in LLM-generated text.
+
+\vspace*{1mm}
+\begin{center}
+\noindent \textbf{keywords} \underline{Mobility History, LLM, Re-identification, Akinator}
+\end{center}
+
+\newpage % 要旨が終わったところで改ページ
+\pagenumbering{arabic} % ここからページ番号を開始（必要に応じて）
+
+% --- 2. 目次 ---
+\pagenumbering{roman} % ローマ数字 (i, ii...) 開始
+\tableofcontents      % 通常の目次
+\clearpage
+
+\listoffigures        % 図目次を追加
+\clearpage
+
+\listoftables         % 表目次を追加
+\clearpage
+
+% --- 3. 本文 ---
+\startmaintext
+\pagenumbering{arabic}
+
+
+\chapter{はじめに}
+\section{研究背景}
+近年のIoTデバイスの普及とセンシング技術の発展は、交通移動データ（例：ICカードデータ）やヘルスケアデータ（例：歩数、消費カロリー）などの時系列センサーデータの爆発的な蓄積をもたらしている。これらのデータは、都市計画、健康管理、行動分析など多岐にわたる分野で、データ駆動型の新たな知見と価値を生み出している。しかしながら、これらの時系列データは、その大規模性と複雑な時間的・多次元的な特徴ゆえに、データ分析の専門知識を持たない非専門家にとって、分析結果や潜在的なパターンを正確に解釈し理解することが困難であるという課題を抱えている。この課題に対処するため、複雑なデータ分析の結果やパターンを人間が直感的に理解できる自然言語のテキスト記述として自動生成する技術への需要が急速に高まっている。特に、大規模言語モデル（LLM）は、複雑な情報から自然言語で要約・説明する能力が飛躍的に向上おり、この課題解決の鍵として注目されている。\cite{10.1007/11787006_1}
+
+\section{関連研究}
+このように、時系列データから自然言語の説明文を生成する技術が進展する一方で、生成されたテキスト記述に含まれるプライバシーリスクに対する懸念も同時に深刻化している。交通移動データのように個人を特定しうる詳細な情報を含むデータが、LLMを介して自然言語化されると、その再識別（Re-identification）リスクは高まる可能性がある。既存のプライバシー保護に関する研究は、主に以下の二つの側面で進展が見られる。一つ目は、生データの保護である。これは、差分プライバシー (Differential Privacy: DP) などのメカニズムを適用し、交通系ICカードデータなどの入力データ自体の匿名性を確保するアプローチである。二つ目は、LLM推論プロセスの保護である。これは、プロンプトエンジニアリングやFederated Learning (FL) の適用により、LLMへの入力プロンプトやモデルパラメータのプライバシーを保護するアプローチである。しかしながら、生成された自然言語記述の安全性を評価・運用する上では、依然として以下の三つの重要な課題が残されている。第一に、入力データに施された差分プライバシー（DP）などの匿名化効果が、LLMによるテキスト生成プロセスを経た後も、最終的な出力文においてどの程度継承・維持されているのかを検証する直接的な手段が存在しないことである。第二に、従来の指標は非構造化テキストの曖昧さに弱く、攻撃に要するコストを非専門家でも直感的に理解できる客観的な数値として定量化できていないことである。第三に、生成文の「有用性（情報の詳細さ）」と「プライバシーリスク」という複雑なトレードオフを、体系的に評価・最適化するための基盤が確立されていないことである。
+
+\section{研究の目的と意義}
+本研究は、これらの課題を解決し、LLMが生成した自然言語の説明文の再識別リスクを定量的に測定するための新しい評価指標を提案する。具体的には、対話型クイズゲーム「アキネーター (Akinator)」に着想を得た新たな匿名性評価指標 N(D) を提案する。この指標は、与えられた自然言語記述から特定の個人を一意に特定するために必要となる最小限の質問数を定量化することにより、出力されたテキストの匿名性を直接測定することを可能にする。
+定量的評価をするためにはDPを適用したデータで生成された説明文の N(D) 値が、DPを適用しない場合と比較して大幅に増加することを示す。これは、提案指標が、生成テキストにおける匿名性の向上、すなわち再識別に要する質問数の増加を明確に捉えていることを意味する。また、提案指標 N(D) が、DPパラメータ $\epsilon$ の変化に伴うプライバシーレベルの微細な変動を、LLM生成テキストの出力空間において明確に捉える高い感度と定量的信頼性を持つことを実証する。
+
+\chapter{提案手法}
+本研究は、LLMによって生成された自然言語の説明文におけるプライバシーリスクを、体系的に評価するためのフレームワークを提案する。本手法は、特定のドメインに依存せず、数値的な特徴量を持つあらゆる時系列データに適用可能である。まず提案手法の全体図を図2.1で示す。
+
+\begin{figure*}[htbp]
+\begin{center} %センタリングする
+\includegraphics[width=0.75\textwidth]{./figs/framework.jpg}
+\caption{Proposed Method Overview} %タイトルをつける
+\label{fig:methodoverview} %ラベルをつけ図の参照を可能にする
+\end{center}
+\end{figure*}
+
+\subsection{Sentiment Score for each posted data}
+\label{ss:ss}
+
+\section{概要}
+提案したアルゴリズムに基づき……
+
+\section{記述生成の形式化}
+
+
+\section{匿名性指標の定義}
+
+\section{質問選択の最適化}
+
+\section{評価アルゴリズムの全体プロセス}
+
+
+
+
+
+\chapter{評価}
+
+\section{実験方法}
+
+\subsection{実験1}
+
+\subsection{実験2}
+
+\section{実験結果}
+
+\begin{table}[htbp]
+\caption{Impact of Differential Privacy on Re-identification risk Depth}
+\label{tbl:dp_effect}
+\centering
+\begin{tabular}{lrrrr}
+\noalign{\hrule height 1pt}
+status & mean & max & min & users \\
+\noalign{\hrule height 1pt}
+DP ($\epsilon=1$) & 28.2 & 50 & 14 & 10 \\
+DP ($\epsilon=3$) & 24.5 & 50 & 14 & 10 \\
+NO DP               &  9.1 & 15 &  4 & 10 \\
+\noalign{\hrule height 1pt}
+\end{tabular}
+\end{table}
+
+
+\chapter{考察}
+
+\newpage
+あ１
+
+あ２
+
+あ３
+
+あ４
+
+あ５
+
+あ６
+
+あ７
+
+あ８
+
+あ９
+
+あ１０
+
+あ１１
+
+あ１２
+
+あ１３
+
+あ１４
+
+あ１５
+
+あ１６
+
+あ１７
+
+あ１８
+
+あ１９
+
+あ２０
+
+あ２１
+
+あ２２
+
+あ２３
+
+あ２４
+
+あ２５
+
+あ２６
+
+あ２７
+
+あ２８
+
+あ２９
+
+あ３０
+
+\newpage
+
+ああああああああああ１０
+
+ああああああああああああああああああああ２０
+
+ああああああああああああああああああああああああああああああ
+
+\section{DP処理済みデータとLLMの相互作用生成}
+
+
+\section{定量的指標としてのN(D)の検証}
+
+
+
+
+\section{効用とプライバシーのトレードオフへの示唆}
+
+
+
+
+
+
+
+\chapter{おわりに}
+%ここのチャプターで結論と今後の展望
+
+
+
+% --- 4. 謝辞 ---
+\chapter*{謝辞}
+本研究は、JSPS科研費（24K05080）および令和７年度大分大学研究力強化推進プロジェクト（BURST）、令和７年度大分大学理工学部研究支援経費の助成を受けたものです。
+
+% --- 5. 業績 ---
+\input{achievement.tex}
+
+
+% --- 6. 参考文献 ---
+\bibliographystyle{ieeetr}
+\bibliography{refs} % 学会で使っていた refs.bib を流用
+
+\end{document}

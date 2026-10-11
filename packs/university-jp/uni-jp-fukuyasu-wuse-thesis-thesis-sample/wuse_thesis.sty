@@ -1,0 +1,214 @@
+%
+%   2001/01/11 N.Fukuyasu (fukuyasu@sys.wakayama-u.ac.jp)
+%   2001/01/12 タイトル行数の項目を削除，\vfill に置き換え．
+%   2001/01/12 12pt, 36文字×36行から11pt, 43文字×40行に変更．
+%   2003/02/06 修士論文に対応するために一部変更．
+%   2009/02/16 修士論文の統一論文様式に合わせて変更(英語の追加など)．
+%   2015/08/27 「学籍番号」を「学生番号」に変更．
+%
+\typeout{和歌山大学システム工学部卒業論文用スタイルファイル}
+
+\usepackage{ifthen}
+
+%%
+%% ページ・レイアウト
+%%
+\def\baselinestretch{1.1}
+\topmargin=-10mm
+\oddsidemargin=0mm
+\evensidemargin=0mm
+\textheight=240mm	% 40行(11pt)
+\textwidth=160mm	% 43字(11pt)
+
+%%
+%%  段落
+%%
+\parindent=1zw		% 段落の頭の字下げ
+
+%%
+%%  タイトル行数 (2001/01/12 Obsoleted)
+%%
+% \def\@titlelines{0}
+% \def\titlelines#1{\def\@titlelines{#1}}
+% \newlength{\titlelineskip}
+% \titlelineskip=-.9\baselineskip
+
+%%
+%%  英語タイトル
+%%
+\def\@etitle{}
+\def\etitle#1{\def\@etitle{#1}}
+
+%%
+%%  英語氏名
+%%
+\def\@eauthor{}
+\def\eauthor#1{\def\@eauthor{#1}}
+
+%%
+%%  英語日付
+%%
+\def\@edate{February 2021}
+\def\edate#1{\def\@edate{#1}}
+
+%%
+%%  卒業年度
+%%
+\def\@gyear{2020}
+\def\gyear#1{\def\@gyear{#1}}
+
+%%
+%% 所属学部
+%%
+\def\faculty#1{\def\@faculty{#1}}
+\def\efaculty#1{\def\@efaculty{#1}}
+
+%%
+%% 所属学科
+%%
+\def\@department{システム工}
+\def\department#1{\def\@department{#1}}
+
+%%
+%% 学生番号
+%%
+\def\@studentid{\verb|\studentid|を指定して下さい}
+\def\studentid#1{\def\@studentid{#1}}
+
+\def\@bachelar{%
+  \def\@faculty{システム工学部}%
+  \def\@efaculty{Faculty of Systems Engineering}%
+  \def\@departmentsfx{学科}%
+  \def\@thesis{卒 業 論 文}%
+  \def\@ethesis{Bachelor's Thesis}%
+  \def\course{bachelor}%
+}
+
+\def\@master{%
+  \def\@faculty{大学院システム工学研究科}%
+  \def\@efaculty{Graduate School of Systems Engineering}%
+  \def\@departmentsfx{クラスタ}%
+  \def\@thesis{修 士 論 文}%
+  \def\@ethesis{Master's Thesis}%
+  \def\course{master}%
+}
+
+\def\bachelar{\@bachelar}
+\def\master{\@master}
+
+\bachelar
+
+%%
+%%  タイトルページ
+%%
+\renewcommand{\maketitle}{%
+\ifthenelse{\equal{\course}{bachelor}}{%
+  \begin{titlepage}
+    \vspace*{10mm}
+    \begin{center}
+      {\huge\@gyear 年度\hspace{5mm}\@thesis\par}
+      \vfill
+      {\huge\bf\@title\par}			% タイトル
+      \vfill
+      \vspace{10mm}
+      {\Large\@date\par}			% 提出年月日
+      \vspace{20mm}
+      {\Large\@department\@departmentsfx\par}	% 所属学科
+      {\Large (学生番号: \@studentid )\par}	% 学生番号
+      \vspace{5mm}
+      {\LARGE\@author\par}			% 氏名
+      \vspace{55mm}
+      {\Large 和歌山大学\@faculty}
+      \vspace{10mm}
+    \end{center}
+  \end{titlepage}}{}%
+\ifthenelse{\equal{\course}{master}}{%
+  \begin{titlepage}
+    \begin{center}
+      \vspace*{8mm}
+      {\Large\@gyear 年度\hspace{5mm}\@thesis\par}
+      \vfill
+      {\huge\bf\@title\par}			% タイトル
+      \vfill
+      {\Large \@date\par}			% 提出年月日
+      \vspace{40mm}
+      {\Large 和歌山大学\@faculty\par}
+      \vspace{27mm}
+      {\Large 学生番号: \@studentid\par}	% 学生番号
+      {\LARGE \@author\par}			% 氏名
+      \vspace*{28mm}
+    \end{center}
+  \end{titlepage}%
+  \begin{titlepage}
+    \begin{center}
+      \vspace*{8mm}
+      {\huge\@etitle\par}			% 英語タイトル
+      \vspace{12mm}
+      {\Large by\par}
+      \vspace{9mm}
+      {\huge\@eauthor\par}			% 英語氏名
+      \vspace{27mm}
+      {\LARGE\@ethesis\par}
+      \vfill
+      {\Large \@efaculty\par}
+      \vspace{4mm}
+      {\Large Wakayama University\par}
+      \vspace{23mm}
+      {\Large \@edate\par}
+      \vspace*{14mm}
+    \end{center}
+  \end{titlepage}}{}%
+}
+
+%%
+%%  概要
+%%
+\def\abstract{\newpage\pagenumbering{roman}\section*{概 要}}
+\def\endabstract{}
+
+%%
+%%  目次
+%%
+\def\tableofcontents{%
+  \newpage
+  \section*{目 次\@mkboth{目 次}{目 次}}
+  \@starttoc{toc}}
+
+%%
+%%  図目次
+%%
+\def\listoffigures{%
+  \newpage
+  \section*{図 目 次\@mkboth{図 目 次}{図 目 次}}
+  \@starttoc{lof}}
+
+%%
+%%  表目次
+%%
+\def\listoftables{%
+  \newpage
+  \section*{表 目 次\@mkboth{表 目 次}{表 目 次}}
+  \@starttoc{lot}}
+
+%%
+%%  概要
+%%
+\def\acknowledgements{\newpage\section*{謝 辞}}
+\def\endacknowledgements{}
+
+%%
+%% 参考文献
+%%
+\def\thebibliography#1{%
+  \newpage
+  \section*{参 考 文 献\@mkboth{参 考 文 献}{参 考 文 献}}
+  \list{[\arabic{enumi}]}
+    {\settowidth{\labelwidth}{[#1]}
+     \leftmargin=\labelwidth
+     \advance \leftmargin by \labelsep
+     \usecounter{enumi}}
+  \def\newblock{\hskip .11em plus .33em minus .07em}
+  \sloppy
+  \clubpenalty=4000 \widowpenalty=4000
+  \sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist

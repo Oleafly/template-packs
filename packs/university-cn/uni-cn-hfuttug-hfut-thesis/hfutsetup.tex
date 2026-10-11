@@ -1,0 +1,121 @@
+% !TeX root = ./main.tex
+
+\hfutsetup{
+  title              = {合肥工业大学学位论文模板示例文档 \hfutthesisversion},
+  title*             = {An example of thesis template for \\ Hefei University of Technology \hfutthesisversion},
+  stuID              = {学号},
+  author             = {XXX},
+  author*            = {Yin Zhenhao},
+  speciality         = {数学与应用数学},
+  supervisor         = {XXX~教授},
+  % date               = {2021-05},  % 完成日期默认为当前日期 格式:yyyy-mm
+  % secret-level       = {秘密},     % 绝密|机密|秘密|内部交流，注释本行则公开
+  % secret-year        = {10年},      % 保密年限，必须与secret-level搭配使用
+  %
+  % 数学字体
+  % math-style         = GB,  % 可选：GB, TeX, ISO
+  math-font          = xits,  % 可选：stix, xits, libertinus, newcm, cm, lm, newtx
+  %
+  %
+  %
+  % Parameters for Non-bachelor's option
+  %
+  clc               = {分类号}, % 分类号
+  %
+  %
+  %
+  % Parameters for master's(docotoral) option 和 答辩委员签名页 参数
+  %
+  % advisor            = {XXX~教授}, % 用于“专业硕士-中文内封页” 校外导师的填写，默认空
+  research           = {研究方向}, % 研究方向，默认为 “研究方向”
+  signchairman       = {专家工作单位，职称，姓名}, % 答辩委员签名页 主席：  默认为空
+  signmember         = {XXX，XXX，XXX \\ XXX，XXX，XXX}, % 答辩委员签名页 委员：  默认为空
+  signsupervisor     = {合肥工业大学，XXX，XXX}, % 答辩委员签名页 导师：  默认为空
+  %
+  %
+  %
+  % Parameters ONLY for bachelor's option
+  %
+  ugtype             = {论文}, % 封面第一栏“类型”的选项：设计或者论文，默认“论文”
+  hfuteryear         = {2017级}, % 入学年份 
+  department         = {数学学院}, % 学院名称
+  %
+  %
+  %
+  % Parameters ONLY for doctoral option 和 提名页 参数
+  %
+  % applydegree        = {}, % 申请学位：理学博士|工学博士, etc. 默认“理学博士”
+  % school             = {}, % 默认培养单位：合肥工业大学，难道你想填其他的？
+  defensedate        = {2021年6月}, % 答辩时间：格式 “2021年6月”，默认为空
+  % phdchairman        = {}, % 提名页 答辩委员会主席：  默认为空
+  % phdmember          = {}, % 提名页 评阅人：  默认为空
+  % 关于Ph.D的专家清单页，请仔细阅读hftuthesis-doc，详见`chapters/expertspage.tex`
+}
+
+
+% 加载宏包
+
+% 定理类环境宏包
+\usepackage{amsthm}
+
+% 插图
+\usepackage{graphicx}
+
+% 三线表
+\usepackage{booktabs}
+
+% 跨页表格
+\usepackage{longtable}
+
+% 算法
+\usepackage[ruled,linesnumbered]{algorithm2e}
+
+% SI 量和单位
+\usepackage{siunitx}
+
+% 参考文献使用 BibTeX + natbib 宏包
+% 顺序编码制
+% HFUT学位论文样例 参考文献的著录格式
+\usepackage[sort]{natbib}
+\bibliographystyle{hfutthesis-numerical}
+
+% gbt7714-2015 参考文献的著录格式
+% \usepackage[sort]{natbib}
+% \bibliographystyle{gbt7714-numerical}
+
+% 备用方案（优化过的 gbt7714-2015）参考文献的著录格式
+% \usepackage[sort]{natbib}
+% \bibliographystyle{hfutthesis-graduate}
+
+% 参考文献使用 BibLaTeX 宏包
+% \usepackage[style=hfutthesis-numeric]{biblatex}
+% \usepackage[bibstyle=hfutthesis-numeric,citestyle=hfutthesis-inline]{biblatex}
+% \usepackage[style=hfutthesis-authoryear]{biblatex}
+% \usepackage[style=hfutthesis-bachelor]{biblatex}
+% 声明 BibLaTeX 的数据库
+% \addbibresource{bib/hfut.bib}
+
+% 配置图片的默认目录
+\graphicspath{{figures/}}
+
+% 数学命令
+\makeatletter
+\newcommand\dif{%  % 微分符号
+  \mathop{}\!%
+  \ifhfut@math@style@TeX
+    d%
+  \else
+    \mathrm{d}%
+  \fi
+}
+\makeatother
+\newcommand\eu{{\symup{e}}}
+\newcommand\iu{{\symup{i}}}
+
+% 用于写文档的命令
+\DeclareRobustCommand\cs[1]{\texttt{\char`\\#1}}
+\DeclareRobustCommand\pkg{\textsf}
+\DeclareRobustCommand\file{\nolinkurl}
+
+% hyperref 宏包在最后调用
+\usepackage{hyperref}

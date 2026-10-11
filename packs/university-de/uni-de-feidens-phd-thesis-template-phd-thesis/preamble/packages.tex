@@ -1,0 +1,195 @@
+%%% color
+\usepackage{graphicx}
+\usepackage[dvipsnames,svgnames,hyperref]{xcolor}
+%\usepackage[dvipsnames]{color}
+
+
+\usepackage[hyphens]{url}
+\def\UrlBreaks{\do\/\do-}
+
+
+\usepackage[%
+	bookmarks = true,
+	bookmarksnumbered=false,
+	bookmarksopen=false,
+	unicode = true,
+	pdftoolbar = true,	
+	pdfmenubar = true,
+	pdfprintscaling=None,
+	pdffitwindow = false,
+	pdfstartview = {FitH},
+	pdftitle = {Thesis},
+	pdfauthor = {Author Name},
+	pdfsubject = {Computer Science},
+	pdfcreator = {Author Name},
+	pdfproducer = {Author Name},
+	pdfkeywords = {Privacy} {Universal Composability} {Updatable Anonymous Credentials},
+	pdfnewwindow = true,
+	breaklinks,
+	colorlinks = true,%	colored text instead of colored surrounding box
+	%hidelinks,%		no color at all
+	linkcolor = black,%	links (section, pages, ...) are black
+	citecolor = black, %OliveGreen,%	citations are black
+	filecolor = black,%	color of file links
+	urlcolor = black,%	web, mail, ... links
+]{hyperref}
+
+
+
+
+%% Typography
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+%\usepackage{microtype}
+% activate={true,nofcompatibility} - activate protrusion and expansion
+% final - enable microtype; use "draft" to disable
+% tracking=true, kerning=true, spacing=true - activate these techniques
+% factor=1100 - add 10% to the protrusion amount (default is 1000)
+% stretch=10, shrink=10 - reduce stretchability/shrinkability (default is 20/20)
+%\microtypecontext{spacing=nonfrench}
+
+\usepackage{lmodern}
+%\usepackage[largesc, p]{newpxtext}
+%\usepackage{newpxmath}
+%\usepackage[zerostyle=b,scaled=.93]{newtxtt}
+%\let\openbox\undefined % workaround for clash with amsthm
+%\let\Bbbk\undefined
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+
+
+%\usepackage{textcomp}
+			
+%\usepackage[sb]{libertine} % or \usepackage[sb]{libertinus}
+
+%\usepackage[varqu,varl]{zi4} % inconsolata for mono, not LibertineMono
+%\usepackage{libertinust1math} % slanted integrals, by default
+%\usepackage[scr=boondoxo,bb=boondox]{mathalpha} %Omit bb=boondox for default libertinus bb
+
+
+
+
+
+
+
+%% tools
+\usepackage{etoc}
+\usepackage{soul}
+
+%% Language
+\usepackage[american]{babel}
+
+%% MATHEMATICAL SYMBOLS
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{thmtools, thm-restate}
+\usepackage{mathtools} % coloneqq
+\usepackage{pifont} % checkmark and ballot x
+
+
+%% OTHERs
+\usepackage[binary-units=true]{siunitx}
+
+%%% figures, tables, boxes, dashes
+\usepackage{tikz}
+\usetikzlibrary{arrows,
+				automata,
+				calc,
+				positioning,
+				shapes, 
+				matrix,
+				fit,
+				}
+\usepackage{mdframed} 
+\usepackage{multicol}
+\usepackage{varwidth}
+\usepackage{ctable} % for \specialrule command
+\usepackage{newfloat}
+\usepackage[font={small}, labelfont=bf, labelsep=colon, margin=.0cm,format=plain, justification=justified]{caption}
+%justification=justified % or centerlast
+\usepackage{subcaption}
+\usepackage[gen]{eurosym} % for \euro and \EUR{} commands
+
+
+\usepackage{float}
+
+\usepackage{setspace}
+\usepackage{xspace}
+
+
+
+
+
+%extended enumerate, such as \begin{compactenum}
+\usepackage{paralist}
+\usepackage{enumitem}
+
+\usepackage[babel, english=american]{csquotes} % \enquote{text}
+
+%Table stuff for protocols
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+
+%% Crypto
+\usepackage [
+  probability,
+  logic,
+  ff,
+  mm,
+  events,
+  complexity
+] {cryptocode}
+\usepackage{cryptocode}
+\usepackage{dashbox} % \dbox in pseudocode blocks of cryptocode
+
+%% REFERENCES
+
+%\usepackage{cite} %orders citations, \eg [3,1,4,6,2] to [1â4,6] 
+\usepackage[capitalise,noabbrev]{cleveref} % use \cref{section_id} for Sec. X.Y or \Cref{section_id} for Section X.Y 
+% Note: cref and the start-of-sentence version cref is defined here to be capatilised since this is the way
+
+%% fix for cryptocode to work with cleverref
+%\pcfixcleveref
+
+%\crefname{section}{Section}{Sections}
+\crefname{construction}{Construction}{Constructions}
+\crefname{experiment}{Experiment}{Experiments}
+%\crefname{table}{Table}{Tables}
+%\crefname{appendix}{Appendix}{Appendices}
+%\crefname{observation}{Observation}{Observations}
+
+
+\crefname{lstlisting}{Listing}{Listings}
+
+
+
+
+% listing for block code and inline code
+\usepackage{listings}
+\renewcommand{\lstlistingname}{List.}
+\usepackage{chngcntr}
+\AtBeginDocument{\counterwithout{lstlisting}{section}}
+% or use 
+%\usepackage[linesnumbered,ruled,noend]{algorithm2e} 
+
+
+
+%% Color definitions
+\definecolor{lightgray}{gray}{0.9} % for inline code
+\lstset{
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\color{blue},
+	commentstyle=\color[gray]{0.6},
+	stringstyle=\color[RGB]{255,150,75}
+}
+
+%% Glossary
+\usepackage{acro}
+\usepackage{longtable}
+
+
+

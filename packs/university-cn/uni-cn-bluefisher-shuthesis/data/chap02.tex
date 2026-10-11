@@ -1,0 +1,71 @@
+% !Mode:: "TeX:UTF-8"
+\chapter{表格和插图}
+\label{chap:table}
+
+\section{表格}
+模板中关于表格的宏包有三个: \pkg{booktabs}、\pkg{array} 和 \pkg{longtabular}. 三线表可
+以用 \pkg{booktabs} 提供的 \cs{toprule}、\cs{midrule} 和 \cs{bottomrule}. 它们与
+\pkg{longtable} 能很好的配合使用.
+\begin{table}[htb]
+  \centering
+  \begin{minipage}[t]{0.8\linewidth}
+    \caption[模板文件]{模板文件}
+    \label{tab:template-files}
+    \begin{tabularx}{\linewidth}{lX}
+      \toprule[1.5pt]
+      {\heiti 文件名}  & {\heiti 描述}                                        \\\midrule[1pt]
+      shuthesis.ins & \LaTeX{} 安装文件, \textsc{DocStrip}.\footnote{表格中的脚注} \\
+      shuthesis.dtx & 所有的一切都在这里面.                                        \\
+      shuthesis.cls & 模板类文件.                                             \\
+      shuthesis.cfg & 模板配置文.                                             \\
+      shuthesis.sty & 常用的包和命令.                                           \\
+      \bottomrule[1.5pt]
+    \end{tabularx}
+  \end{minipage}
+\end{table}
+
+\section{插图}
+论文里插图可使用 \texttt{graphicx} 宏包.
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[scale=0.3]{shu.pdf}
+  \bicaption{上海大学}{Shanghai University}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[scale=0.2]{shulogo.pdf}
+  \bicaption{上海大学 logo}{Shanghai University logo}
+\end{figure}
+
+
+\newpage
+\section{多子图}
+多子图可使用 \texttt{subcaption} 宏包, 并配合.
+
+\texttt{subcaptionbox} 命令，看第一个子图~\ref{fig:shu1}~和第二个子图~\ref{fig:shu2}.
+
+\begin{figure}[!htbp]
+  \centering
+  \bisubcaptionbox{上海大学\label{fig:shu1}}{Shanghai University}{
+    \includegraphics[scale=0.3]{shu.pdf}
+  }
+  \bisubcaptionbox{上海大学logo\label{fig:shu2}}{Shanghai University logo}[.4\textwidth]{
+    \includegraphics[scale=0.3]{shulogo.pdf}
+  }
+  \captionsetup{bi-separator=shu-m}
+  \bicaption{\texttt{subcaptionbox} 多子图}{This is a multi-subfigure with \texttt{subcaptionbox} and many many long caption. This is a multi-subfigure with \texttt{subcaptionbox} and many many long caption}
+\end{figure}
+
+
+\texttt{captionbox} 命令:
+
+\begin{figure}[!htbp]
+  \centering
+  \bicaptionbox{上海大学logo}{Shanghai University logo}[.4\textwidth]{
+    \includegraphics[scale=0.3]{shulogo.pdf}
+  }
+  \bicaptionbox{上海大学}{Shanghai University}{
+    \includegraphics[scale=0.3]{shu.pdf}
+  }
+\end{figure}

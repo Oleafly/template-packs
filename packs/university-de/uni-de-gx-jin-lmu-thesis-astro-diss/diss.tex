@@ -1,0 +1,275 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%            LMU Template             %%
+%%                                     %%
+%%         For Creating a              %%
+%%     Dissertation with LaTeX         %%
+%%                                     %%
+%%  Original (2002) Robert Dahlke      %%
+%%             & Sigmund Stintzing     %%
+%%                                     %%
+%%  Modified (2026) Gaoxiang Jin       %%
+%%    - authoryear citation (natbib)   %%
+%%    - aasjournalv7 bibstyle (AAS)    %%
+%%    - images/ for figures            %%
+%%    - bibstyle/ for .bst files       %%
+%%    - fncychap Sonny chapter style   %%
+%%    - Linux Libertine font           %%
+%%    - 1.3x line spacing (setspace)   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{book}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%   Additional Packages  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{a4wide}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+% --- Typography ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\let\Bbbk\relax                 % resolve \Bbbk conflict between amssymb & newtxmath
+\usepackage{libertine}          % Linux Libertine for text
+\usepackage[libertine]{newtxmath} % matching math font for Libertine
+\usepackage{microtype}          % microtypography: better justification, fewer overfull boxes
+\usepackage{setspace}
+\setstretch{1.3}                % 1.3x line spacing throughout
+\setlength{\headheight}{14.5pt} % required by fancyhdr
+% --- Tables & captions ---
+\usepackage{booktabs}           % professional table rules (\toprule/\midrule/\bottomrule)
+\usepackage[font=small,labelfont=bf,labelsep=period]{caption} % bold "Fig. 1." + small text
+% --- Chapter style ---
+\usepackage[Sonny]{fncychap}    % Sonny: large chapter number + horizontal rule
+% --- Hyperlinks (color links, print-friendly) ---
+\usepackage{xcolor}
+\definecolor{linkblue}{rgb}{0.1,0.2,0.6}
+\definecolor{citegreen}{rgb}{0.0,0.4,0.2}
+\definecolor{urlteal}{rgb}{0.0,0.35,0.5}
+\usepackage[colorlinks=true,
+            linkcolor=linkblue,
+            citecolor=citegreen,
+            urlcolor=urlteal,
+            bookmarks=true]{hyperref}
+\usepackage[authoryear,round]{natbib}
+% Override aasjournalv7 link commands: show compact hyperlinked label instead of full URL
+\newcommand{\dodoi}[1]{\href{https://doi.org/#1}{doi:#1}}
+\newcommand{\doarXiv}[1]{\href{https://arxiv.org/abs/#1}{arXiv:#1}}
+\newcommand{\doeprint}[1]{\href{http://ascl.net/#1}{ascl:#1}}
+\newcommand{\ion}[2]{#1~\textsc{\lowercase{#2}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ADS Journal Abbreviation Macros   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Main astronomical journals
+\newcommand{\apj}{ApJ}                    % Astrophysical Journal
+\newcommand{\apjl}{ApJL}                  % Astrophysical Journal Letters
+\newcommand{\apjs}{ApJS}                  % Astrophysical Journal Supplement Series
+\newcommand{\aj}{AJ}                      % Astronomical Journal
+\newcommand{\mnras}{MNRAS}                % Monthly Notices of the Royal Astronomical Society
+\newcommand{\aap}{A\&A}                   % Astronomy and Astrophysics
+\newcommand{\aapr}{A\&A~Rev.}             % Astronomy and Astrophysics Reviews
+\newcommand{\aaps}{A\&AS}                 % Astronomy and Astrophysics Supplement Series
+\newcommand{\araa}{ARA\&A}                % Annual Review of Astronomy and Astrophysics
+\newcommand{\nat}{Nature}                 % Nature
+\newcommand{\apss}{Ap\&SS}                % Astrophysics and Space Science
+\newcommand{\pasp}{PASP}                  % Publications of the Astronomical Society of the Pacific
+\newcommand{\pasj}{PASJ}                  % Publications of the Astronomical Society of Japan
+
+% Proceedings and miscellaneous
+\newcommand{\baas}{BAAS}                  % Bulletin of the American Astronomical Society
+\newcommand{\icarus}{Icarus}              % Icarus
+\newcommand{\jrasc}{JRASC}                % Journal of the Royal Astronomical Society of Canada
+\newcommand{\memras}{MmRAS}               % Memoirs of the Royal Astronomical Society
+\newcommand{\qjras}{QJRAS}                % Quarterly Journal of the Royal Astronomical Society
+\newcommand{\skytel}{Sky \& Telescope}    % Sky and Telescope
+\newcommand{\solphys}{Sol.~Phys.}         % Solar Physics
+\newcommand{\sovast}{Soviet~Ast.}         % Soviet Astronomy
+\newcommand{\ssr}{Space~Sci.~Rev.}        % Space Science Reviews
+\newcommand{\zap}{ZAp}                    % Zeitschrift fur Astrophysik
+\newcommand{\iaucirc}{IAU~Circ.}          % IAU Circulars
+\newcommand{\aplett}{Astrophys.~Lett.}    % Astrophysics Letters
+\newcommand{\apspr}{Astrophys.~Space~Phys.~Res.} % Astrophysics Space Physics Research
+\newcommand{\actaa}{Acta~Astron.}         % Acta Astronomica
+\newcommand{\azh}{AZh}                    % Astronomicheskii Zhurnal
+\newcommand{\caa}{Chinese~Astron.~Astrophys.} % Chinese Astronomy and Astrophysics
+\newcommand{\cjaa}{Chinese~J.~Astron.~Astrophys.} % Chinese Journal of Astronomy and Astrophysics
+\newcommand{\jcap}{JCAP}                  % Journal of Cosmology and Astroparticle Physics
+\newcommand{\na}{New~A}                   % New Astronomy
+\newcommand{\nar}{New~A~Rev.}             % New Astronomy Reviews
+\newcommand{\pra}{Phys.~Rev.~A}           % Physical Review A
+\newcommand{\prb}{Phys.~Rev.~B}           % Physical Review B
+\newcommand{\prc}{Phys.~Rev.~C}           % Physical Review C
+\newcommand{\prd}{Phys.~Rev.~D}           % Physical Review D
+\newcommand{\pre}{Phys.~Rev.~E}           % Physical Review E
+\newcommand{\prl}{Phys.~Rev.~Lett.}       % Physical Review Letters
+\newcommand{\pasa}{PASA}                  % Publications of the Astronomical Society of Australia
+\newcommand{\physrep}{Phys.~Rep.}         % Physics Reports
+\newcommand{\physscr}{Phys.~Scr.}         % Physica Scripta
+\newcommand{\planss}{Planet.~Space~Sci.}  % Planetary and Space Science
+\newcommand{\rmxaa}{Rev.~Mexicana~Astron.~Astrofis.} % Revista Mexicana de Astronomia y Astrofisica
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Definition of Header     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[RE]{\bfseries\leftmark}
+\fancyhead[LO]{\bfseries\rightmark}
+% Chapter opening pages: no header, page number centered at bottom
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Definition of Cover Page and Title Page       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\LMUTitle}[9]{
+  \thispagestyle{empty}
+  \vspace*{\stretch{1}}
+  {\parindent0cm
+   \rule{\linewidth}{.7ex}}
+  \begin{flushright}
+
+    \vspace*{\stretch{1}}
+    \sffamily\bfseries\Huge
+    #1\\
+    \vspace*{\stretch{1}}
+    \sffamily\bfseries\large
+    #2
+    \vspace*{\stretch{1}}
+  \end{flushright}
+  \rule{\linewidth}{.7ex}
+  \vspace*{\stretch{5}}
+  \begin{center}
+    \includegraphics[width=2in]{siegel}
+  \end{center}
+  \vspace*{\stretch{1}}
+  \begin{center}\sffamily\LARGE{#5}\end{center}
+  \newpage
+  \thispagestyle{empty}
+
+  \cleardoublepage
+  \thispagestyle{empty}
+
+  \vspace*{\stretch{1}}
+  {\parindent0cm
+  \rule{\linewidth}{.7ex}}
+  \begin{flushright}
+    \vspace*{\stretch{1}}
+    \sffamily\bfseries\Huge
+    #1\\
+    \vspace*{\stretch{1}}
+    \sffamily\bfseries\large
+    #2
+    \vspace*{\stretch{1}}
+  \end{flushright}
+  \rule{\linewidth}{.7ex}
+
+  \vspace*{\stretch{3}}
+  \begin{center}
+    \Large Dissertation\\
+    \Large an der #4\\
+    \Large der Ludwig--Maximilians--Universit"at\\
+    \Large M\"unchen\\
+    \vspace*{\stretch{1}}
+    \Large vorgelegt von\\
+    \Large #2\\
+    \Large aus #3\\
+    \vspace*{\stretch{2}}
+    \Large M\"unchen, den #6
+  \end{center}
+
+  \newpage
+  \thispagestyle{empty}
+
+  \vspace*{\stretch{1}}
+
+  \begin{flushleft}
+    \large Erstgutachter:  #7 \\[1mm]
+    \large Zweitgutachter: #8 \\[1mm]
+    \large Tag der m\"undlichen Pr\"ufung: #9\\
+  \end{flushleft}
+
+  \cleardoublepage
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Beginning of Document %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+
+  \frontmatter
+
+  % Temporarily revert to Computer Modern for the cover pages (LMU requirement)
+  {%
+  \renewcommand{\rmdefault}{cmr}%
+  \renewcommand{\sfdefault}{cmss}%
+  \normalfont
+  \LMUTitle
+      {Thesis Title Goes Here}             % Title of the work
+      {Firstname Lastname}                 % First and last name of the author
+      {City, Country}                      % Place of birth of the author
+      {Fakult\"at f\"ur Physik}            % Name of the faculty
+      {Munich 20XX}                        % Place and year of creation
+      {DD. Month YYYY}                     % Date of submission
+      {Prof. Dr. First Reviewer}           % Name of the first reviewer
+      {Prof. Dr. Second Reviewer}          % Name of the second reviewer
+      {DD. Month YYYY}                     % Date of the oral examination
+  }% end CM font group
+
+
+  \tableofcontents
+  \markboth{Table of Contents}{Table of Contents}
+
+
+  \listoffigures
+  \markboth{List of Figures}{List of Figures}
+
+
+  \listoftables
+  \markboth{List of Tables}{List of Tables}
+  \cleardoublepage
+
+
+  \markboth{Abstract}{Abstract}
+  \include{abstract}
+
+
+  \mainmatter
+  \include{chapter_01}
+  \include{chapter_02}
+  %\include{chapter_03}
+  %\include{chapter_04} etc.
+  \include{appendix}
+
+
+  \backmatter
+  \include{bibliography}
+  \markboth{}{}
+
+
+  \include{acknowledgments}
+
+
+  \include{cv}
+
+
+\end{document}

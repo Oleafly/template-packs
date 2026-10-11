@@ -1,0 +1,108 @@
+% Author: Qingyu Zhang
+% Email: vn22984@britol.ac.uk or alfred.zhang98@gmail.com
+
+% Guideline of Msc thesis at school of engineering
+% The thesis length is required to be a minimum of 20 A4 pages and maximum length of 30 A4 pages. You must use 11 point font, 2cm margins and 1.2 line spacing.
+
+\documentclass[11pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm}
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.2}
+
+\usepackage{blindtext}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{chemformula}
+\usepackage{cite}
+\usepackage[colorlinks, linkcolor=black, anchorcolor=black, citecolor=black]{hyperref}
+\usepackage{graphicx}
+\setlength{\parskip}{0.5em}
+
+
+% Use import to add tex files
+\usepackage{import}
+
+% Set the figure and tables caption
+\usepackage{caption}
+\usepackage{subcaption}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\renewcommand {\thefigure} {\thesection{}.\arabic{figure}}
+\renewcommand {\thetable} {\thesection{}.\arabic{table}}
+
+% coding
+\usepackage{listings}
+
+% Error fix
+\usepackage{xspace}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%% Seting figure view %%%%%%%%%%%%%%%%%%%%%%
+% \captionsetup[figure]{labelfont={bf},labelformat={default},labelsep=period,name={Figure.},singlelinecheck=on} %bf Bolded
+% \captionsetup[table]{labelfont={bf},labelformat={default},labelsep=period,name={Table.}, singlelinecheck=on} %bf Bolded
+
+%%%%%%%%%%%%%%%%%%%%%% Set the title page %%%%%%%%%%%%%%%%%%%%%%
+
+\pagenumbering{roman}
+
+%%%%%%%%%%%%%%%%%%%%%% Set the frontmatter page %%%%%%%%%%%%%%%%%%%%%%
+
+\input{frontmatter/title}
+\clearpage
+
+\input{frontmatter/abstract}
+\clearpage
+
+\input{frontmatter/dedication}
+\clearpage
+
+\input{frontmatter/declaration}
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%% Set the contents %%%%%%%%%%%%%%%%%%%%%%
+
+% Table of Contents
+\renewcommand{\contentsname}{Table of Contents}
+\setcounter{tocdepth}{3}
+\tableofcontents
+\addtocontents{toc}{\par\nobreak \mbox{}\hfill{\bf Page}\par\nobreak}
+\clearpage
+
+% listoftables
+\listoftables
+\addtocontents{lot}{\par\nobreak\textbf{{\scshape Table} \hfill Page}\par\nobreak}
+\clearpage
+
+% listoffigures
+\listoffigures
+\addtocontents{lof}{\par\nobreak\textbf{{\scshape Figure} \hfill Page}\par\nobreak}
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%% main chapter %%%%%%%%%%%%%%%%%%%%%%
+
+% new the page number
+\pagenumbering{arabic}
+
+\import{chapter/01/}{01.tex}
+\clearpage
+
+
+%%%%%%%%%%%%%%%%%%%%%% appendix %%%%%%%%%%%%%%%%%%%%%%
+\import{appendix}{appendix01.tex}
+\clearpage
+
+
+%%%%%%%%%%%%%%%%%%%%%% biblio %%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{IEEEtran}
+\bibliography{biblio}
+\thispagestyle{empty}
+\clearpage
+
+\end{document}

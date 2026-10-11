@@ -1,0 +1,183 @@
+% !TeX root = paper.tex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% フォント
+\usepackage[no-math,deluxe,expert,haranoaji]{luatexja-preset}
+%\setmainfont{TeX Gyre Termes} % 欧文フォントを変更
+\usepackage{ascmac} %% \return
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 新しいhyperrefとifxetexが必要です。 %%
+% 日本語可能なしおりにする
+
+\usepackage[%
+%a4paper,%
+%dvipdfm,%
+pdftitle={PD3レポート},%
+%pdfsubject={鬼が島のその後},%
+pdfauthor={金沢工大，情報工，鷹合研},%
+%pdfkeywords={ウェーブレット変換，直交変換，}%
+pdfstartview={FitH -32768},%    描画領域の幅に合わせる
+bookmarks=true,%                しおり付き
+bookmarksnumbered=true,%        章や節の番号をふる
+bookmarkstype=toc,%             目次情報のファイル.tocを参照
+colorlinks=true,%              ハイパーリンクを色枠に
+linkcolor=black,%
+urlcolor=black,%
+citecolor=black,%
+filecolor=black,%
+menucolor=black,%
+%pagecolor=black,%
+]{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{xurl}
+
+
+%%%%%%%%%%%%%% マージン設定 %%%%%%%%%%%%%%
+% 両面印刷・かつファイルに閉じる用に調整
+\usepackage[twoside,top=15truemm,bottom=15truemm,inner=30truemm,outer=20truemm]{geometry}
+
+
+\doublerulesep=\arrayrulewidth
+\setcounter{topnumber}{10}
+\setcounter{bottomnumber}{10}
+\setcounter{totalnumber}{20}
+\renewcommand{\topfraction}{1}
+\renewcommand{\bottomfraction}{1}
+\renewcommand{\textfraction}{0}
+\renewcommand{\floatpagefraction}{1}
+
+%%%%%%%%%%%%%% LISTINGS %%%%%%%%%%%%%%%%%%%%%
+\usepackage{caption}% これがないとlistingのキャプションが乱れることがある
+\usepackage{xcolor}
+\usepackage{listings} 
+\definecolor{darkblue}{rgb}{0.0,0.0,0.545}
+\definecolor{darkgreen}{rgb}{0.0,0.392,0.0}
+\definecolor{brown}{rgb}{0.647,0.165,0.165}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgray}{rgb}{0.75,0.75,0.75}
+\definecolor{gray2}{rgb}{0.15,0.15,0.15}
+\definecolor{darkgray}{rgb}{0.05,0.05,0.05}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.545}
+\definecolor{darkgreen}{rgb}{0.0,0.392,0.0}
+\definecolor{brown}{rgb}{0.647,0.165,0.165}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{%
+	% language={C}, 
+	backgroundcolor={\color[gray]{.97}},%
+	basicstyle={\small \ttfamily},%
+	identifierstyle={\ttfamily\small},
+	commentstyle={\ttfamily\gtfamily\color{brown}},
+	keywordstyle={\ttfamily\color{darkgreen}},
+	ndkeywordstyle={},%
+	stringstyle={\ttfamily\small\color{darkblue}},
+	frame={tb},
+	breaklines=true,
+	columns=[l]{fullflexible},
+	%	columns=[l]{fixed},%　fixed だと開きすぎ
+	basewidth=0.5em,   % これないと行頭のスペースが揃わない
+	numbers=left,%
+	xrightmargin=0\zw,% %LuaLatexにあわせて変更した
+	xleftmargin=3\zw,% %LuaLatexにあわせて変更した
+	numberstyle={\ttfamily\small},%
+	tabsize=2,
+	stepnumber=1, 
+	numbersep=1\zw,% %LuaLatexにあわせて変更した
+	lineskip=-.8ex,% 行間の設定
+	belowcaptionskip=2pt,   % これないと見出しとリスト本体に隙間が毎回変わる
+	abovecaptionskip=0pt,
+	captionpos=t,
+	showstringspaces=false, % 半角スペースを記号で表示しない
+}
+\def\lstlistingname{リスト}
+\def\lstlistlistingname{ソースリスト目次}
+
+
+%%%%%%%%%%%%%% 目次設定 %%%%%%%%%%%%%%
+\usepackage{tocloft}
+\cftsetindents{chapter}{0em}{3em}
+\cftsetindents{section}{3em}{3em}
+\cftsetindents{subsection}{4em}{3em}
+\cftsetindents{subsubsection}{5em}{3em}
+
+% listing用にtocloftを追加
+\makeatletter
+\begingroup\let\newcounter\@gobble\let\setcounter\@gobbletwo
+\globaldefs\@ne \let\c@loldepth\@ne
+\newlistof{listings}{lol}{\lstlistlistingname}
+\endgroup
+\let\l@lstlisting\l@listings
+\AtBeginDocument{\addtocontents{lol}{\protect\addvspace{10\p@}}}
+\makeatother
+\renewcommand{\lstlistoflistings}{\listoflistings}
+
+
+% \renewcommand{\cftfigfont}{\gtfamily}      % 図一覧のフォント
+% \renewcommand{\cfttabfont}{\gtfamily}      % 表一覧のフォント
+% \renewcommand{\cftlistingsfont}{\gtfamily} % リスト一覧のフォント
+
+\cftsetindents{figure}{0em}{8em}
+\cftsetindents{table}{0em}{8em}
+\cftsetindents{listings}{0em}{0em}
+
+
+
+% 目次の表題
+\renewcommand{\cfttoctitlefont}{\hfill\large\gtfamily}
+\renewcommand{\cftaftertoctitle}{\hfill\null}
+\renewcommand{\cftbeforetoctitleskip}{0pt}
+\renewcommand{\cftaftertoctitleskip}{0pt}
+
+% 表目次
+\renewcommand{\cftlottitlefont}{\hfill\large\gtfamily}
+\renewcommand{\cftafterlottitle}{\hfill\null}
+\setlength{\cftbeforelottitleskip}{2em}
+\setlength{\cftafterlottitleskip}{0pt}
+\renewcommand{\cfttabpresnum}{表 }
+\renewcommand{\cfttabaftersnum}{:}
+\renewcommand{\cfttabnumwidth}{6em}
+
+% 図目次
+\renewcommand{\cftloftitlefont}{\hfill\large\gtfamily}
+\renewcommand{\cftafterloftitle}{\hfill\null}
+\setlength{\cftbeforeloftitleskip}{2em}
+\setlength{\cftafterloftitleskip}{0pt}
+\renewcommand{\cftfigpresnum}{図 }
+\renewcommand{\cftfigaftersnum}{:}
+\renewcommand{\cftfignumwidth}{6em}
+
+% ソースリスト目次
+\renewcommand{\cftloltitlefont}{\hfill\large\gtfamily}
+\renewcommand{\cftafterloltitle}{\hfill\null}
+\renewcommand{\cftbeforeloltitleskip}{2em}
+\renewcommand{\cftafterloltitleskip}{0pt}
+\renewcommand{\cftlistingspresnum}{リスト }
+\renewcommand{\cftlistingsaftersnum}{:}
+\renewcommand{\cftlistingsnumwidth}{6em}
+
+% 章見出しのフォント
+\renewcommand{\cftchapfont}{\normalsize\gtfamily}
+\renewcommand{\cftchappagefont}{\normalsize}
+\renewcommand{\cftchappresnum}{}
+\renewcommand{\cftchapaftersnum}{}
+\renewcommand{\cftchapnumwidth}{5em}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftchapdotsep}}
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+\setlength{\cftbeforechapskip}{.5em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 数式中にコメントをいれられるようにする\
+\usepackage{amsmath,amssymb,bm}
+\newcommand{\MB}[1]{\quad(\because\ \text{#1)}}
+\newcommand{\MC}[1]{\quad\cdots\text{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Verbatim環境にデフォルト値をセット
+\usepackage{fancyvrb}
+\newenvironment{verbatimx}%
+{\Verbatim[frame=single,obeytabs,baselinestretch=.65,commandchars=\\\{\}]}%
+{\endVerbatim}%
+

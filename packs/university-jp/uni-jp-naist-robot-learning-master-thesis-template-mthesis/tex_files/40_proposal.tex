@@ -1,0 +1,134 @@
+提案手法についてここに書く．
+
+\vspace{10truemm}
+%%%%% 論文書く上でのお役立ち情報 %%%%%
+次のページに図と表の追加についてまとめる．
+\newpage
+図は以下のように追加する．ここで図は基本的にページ上部に配置する．
+%%%%%%%%%%%%%%%%%
+\begin{figure}[t]
+    \centering
+    \includegraphics[clip, width=0.3\linewidth]{figures/rll_logo.png}
+    \caption{Our lab logo}
+    \label{fig: our_logo}
+\end{figure}
+%%%%%%%%%%%%%%%%%
+
+{\bf 図内の文字は全て英語}にするとともに{\bf 図題も英文で記載}する．
+また，この図を参照したいときは\figref{fig: our_logo}とする．
+文頭で参照する場合は以下のようにする．
+\figureref{fig: our_logo}は文頭に参照されましたので，Fig.~ではなくFigure~になりました．\
+図のサイズは\texttt{includegraphics[width=]}で調整できる．現状は横幅の$0.3$倍．
+
+複数の図を追加したいときはこうする．
+%%%%%%%%%%%%%%%%%
+\begin{figure}[t]
+    \centering
+  \begin{minipage}{0.49\linewidth}
+    \centering
+    \includegraphics[clip, trim=0 0 0 0, width=0.5\linewidth]{figures/logomark_Rnasi.png}
+    \subcaption{NAIST logo}
+    \label{fig: naist_logo}
+  \end{minipage}
+  \begin{minipage}{0.49\linewidth}
+    \centering
+    \includegraphics[clip, trim=0 0 0 0, width=0.5\linewidth]{figures/rll_logo.png}
+    \subcaption{Our lab logo}
+    \label{fig: rll_logo}
+  \end{minipage}
+  \caption{Logo comparison}
+  \label{fig: logo_comp}
+\end{figure}
+%%%%%%%%%%%%%%%%%
+
+各図はこのように\figref{fig: naist_logo}，\figref{fig: rll_logo}と参照できるし，図全体も\figref{fig: logo_comp}と参照できる．
+ここでは，\texttt{minipage}でまず全体を約半分に切った後で，その内部で$0.5$倍された図を追加している．
+
+図は縦に並べたり，もっと複雑に並べたりすることも可能なので調べる．
+
+\newpage
+写真以外の図 (例えばパワポで作った図)はPDFなどのベクター形式で出力して使う．
+\figref{fig: png_vs_pdf}にpngとPDFの比較を貼る．
+PDFは拡大しても画質が劣化しない．
+ベクター形式での画像出力はmacの場合スムーズに行える． \\(図として保存 $>$ PDF)
+
+%%%%%%%%%%%%%%%%%
+\begin{figure}[t]
+    \centering
+  \begin{minipage}{0.3\linewidth}
+    \centering
+    \includegraphics[clip, trim=0 0 0 0, width=0.9\linewidth]{figures/hit.png}
+    \subcaption{PNG}
+    \label{fig: png_img}
+  \end{minipage}
+  \begin{minipage}{0.3\linewidth}
+    \centering
+    \includegraphics[clip, trim=0 0 0 0, width=0.5\linewidth]{figures/hit_converted.pdf}
+    \subcaption{PDF}
+    \label{fig: converted_pdf_img}
+  \end{minipage}
+  \caption{Comparison of PNG and PDF}
+  \label{fig: png_vs_pdf}
+\end{figure}
+%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%
+\begin{figure}[t]
+    \centering
+    \includegraphics[clip, width=0.3\linewidth]{figures/hit.pdf}
+    \caption{PDF image when not converted to shape}
+    \label{fig: unconverted_pdf}
+\end{figure}
+%%%%%%%%%%%%%%%%%
+
+
+上記のようにパワーポイントのアイコンを用いた場合の注意点として，\textbf{そのままではPDF形式で出力しても意図したものにならない}点が挙げられる．
+\figref{fig: unconverted_pdf}にそのまま出力した場合の図を示す．
+\figref{fig: converted_pdf_img}と比較すると両者ともPDFであるが画質に大きな差異がある．
+これを回避するためには，パワポ上でアイコンを右クリックして\textbf{図形に変換}をクリックしてアイコンをばらす必要がある．
+
+\newpage
+
+表はこんな感じで入れることができる．表についても基本的に上部に配置する．
+
+%%%%%%%%%%%%%%%%%
+\begin{table}[t]
+    \centering
+    \begin{tabular}{l|cc}
+        \toprule
+                                & \textbf{Task A} & \textbf{Task B}  \\
+        \midrule
+        Number of dense units   & \multicolumn{2}{c}{512, 512, 512} \\
+        Activation function     & \multicolumn{2}{c}{Swish} \\
+        Input dimension         & 14 & 9 \\
+        Output dimension        & 8  & 7 \\
+        Number of ensembles     & 5  & 5 \\
+        \bottomrule
+    \end{tabular}
+    \caption{This is the table.}
+    \label{tab: sample}
+\end{table}
+%%%%%%%%%%%%%%%%%
+
+multicolumnを使うと，$512, 512, 512$やSwishのようにセルを結合できる．
+\tabref{tab: sample}は横幅が若干狭いので，手動で調整したものを\tabref{tab: improved_sample}にしめす．
+
+%%%%%%%%%%%%%%%%%
+\begin{table}[t]
+    \centering
+    \begin{tabular}{p{50truemm}|wc{30truemm}wc{30truemm}}
+        \toprule
+                                & \textbf{Task A} & \textbf{Task B}  \\
+        \midrule
+        Number of dense units   & \multicolumn{2}{c}{512, 512, 512} \\
+        Activation function     & \multicolumn{2}{c}{Swish} \\
+        Input dimension         & 14 & 9 \\
+        Output dimension        & 8  & 7 \\
+        Number of ensembles     & 5  & 5 \\
+        \bottomrule
+    \end{tabular}
+    \caption{This is a more sophisticated table.}
+    \label{tab: improved_sample}
+\end{table}
+%%%%%%%%%%%%%%%%%
+
+なお，\TeX の表はこのサイト\footnote{\url{https://www.tablesgenerator.com/}}で比較的容易に作ることができる．

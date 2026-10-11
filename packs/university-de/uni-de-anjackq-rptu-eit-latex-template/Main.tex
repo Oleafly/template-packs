@@ -1,0 +1,169 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Main Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper,11pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% EIT Package and Language Settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% font is RedHatText from RPTU Brand Design
+% use [de] option for German documents
+%\usepackage{style-eit-latex/EIT}
+\usepackage[de]{style-eit-latex/EIT}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Custom Packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% TODO: add own packages here
+%\usepackage[european]{circuitikz}		% Circuitikz-Umgebung (Schaltungen)
+\usepackage{tikz}						% Tikz-Umgebung
+\usepackage{epstopdf}					% Einbinden von EPS-Dateien
+\usepackage[figurename=Abb.,tablename=Tab.,justification=centering]{caption}	% Damit "Abb." statt "Abbildung" und "Tab." statt "Tabelle"
+\usepackage[printonlyused]{acronym}		% Abkürzungsverzeichnis
+\usepackage{color}						% wird für .pdf_tex benötigt
+\usepackage{transparent}				% wird für .pdf_tex benötigt
+\usepackage{subcaption}
+
+\newcommand\RPTULogo{%
+\put(86,716){%
+\parbox[b][5cm]{\textwidth}{%
+\centering
+\begin{tabularx}{\textwidth}{@{}lXr@{}}
+\savecellbox{\includegraphics[width=0.385\textwidth]{style-eit-latex/backgrounds/RPTU_Logo_1c-1_dunkelblau.pdf}} & & 
+\savecellbox{\includegraphics[scale=0.5]{style-eit-latex/backgrounds/Lehrstuhllogo.pdf}} \\ % Hier das Lehrstuhllogo einbinden
+[-\rowheight] \printcellmiddle & & \printcellmiddle \\ 
+\end{tabularx}
+}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Hyphenation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% correct bad hyphenation here
+\input{Hyphenation.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Document Configuration
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% import global settings file
+\input{includes/settings}
+
+% TODO: add own settings here
+\numberwithin{equation}{section}	% Damit bei Gleichungsnummerierungen die 
+									% Kapitelnummer davor steht
+\numberwithin{figure}{section}		% Damit bei Abbildungsnummerierungen die 
+									% Kapitelnummer davor steht
+\numberwithin{table}{section}		% Damit bei Tabellennummerierungen die 
+									% Kapitelnummer davor steht
+
+\renewcommand{\baselinestretch}{1.5}
+
+%\graphicspath{{Material/}}			% Festlegen des Pfades der Grafiken (für .pdf_tex Dateien)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Title and Document Information
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\AddToShipoutPicture*{\RPTULogo}
+\input{Titlepage.tex} \label{Deckblatt} % Deckblatt
+\ClearShipoutPicture
+\pagenumbering{Roman}
+\setcounter{page}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% eidesstattliche Erklärung, Abstract und Inhaltsverzeichnis
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\phantomsection
+\markboth{Eidesstattliche Erklärung}{Eidesstattliche Erklärung}
+\input{eidesstattlicheerklaerung.tex} \label{Eidesstatt} % eidesstattliche Erklärung
+
+\newpage
+\phantomsection
+\markboth{Kurzfassung | Abstract}{Kurzfassung | Abstract}
+\input{Abstract.tex} \label{Abstract} % Abstract
+
+\newpage
+\markboth{Inhaltsverzeichnis}{Inhaltsverzeichnis}
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% INSERT YOUR CONTENT HERE:
+
+\input{Kap_1_Einleitung.tex} % Einleitung
+
+\newpage
+\graphicspath{{Kapitel_2/}}
+\input{Kap_2.tex} % Grundlagen
+
+\newpage
+\graphicspath{{Kapitel_3/}}
+\input{Kap_3}
+
+\newpage
+\graphicspath{{Kapitel_4/}}
+\input{Kap_4}
+
+\newpage
+
+\input{Kap_5_Fazit.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Verzeichnisse und Anhang
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\markboth{Literaturverzeichnis}{Literaturverzeichnis}
+\thispagestyle{firstsection}
+\renewcommand{\refname}{Literaturverzeichnis}
+\bibliography{Bibliografie}
+\bibliographystyle{deIEEEtran}
+\addcontentsline{toc}{section}{Literaturverzeichnis}
+
+\newpage
+% Abkürzungen sind in abkuerzungen.tex hinterlegt
+\thispagestyle{firstsection}
+\printunsrtglossary[title={Abkürzungsverzeichnis},type=acronym,style=acronyms] % Abkürzungsverzeichnis
+
+\newpage
+% Symbole sind in symbole.tex hinterlegt
+\thispagestyle{firstsection}
+\printunsrtglossary[title={Symbolverzeichnis},type=symbols,style=symbunitlong] % Symbolverzeichnis
+
+\newpage
+% Glossareinträge sind in glossar.tex hinterlegt
+\thispagestyle{firstsection}
+\printunsrtglossary[title={Glossar},type=main,style=glossar] % Glossar
+
+\newpage
+\phantomsection
+\markboth{Tabellenverzeichnis}{Tabellenverzeichnis}
+\thispagestyle{firstsection}
+\listoftables
+\addcontentsline{toc}{section}{Tabellenverzeichnis}
+
+\newpage
+\phantomsection
+\markboth{Abbildungsverzeichnis}{Abbildungsverzeichnis}
+\thispagestyle{firstsection}
+\listoffigures
+\addcontentsline{toc}{section}{Abbildungsverzeichnis}
+
+\newpage
+\phantomsection
+\appendix
+\markboth{Anhang}{Anhang}
+\thispagestyle{firstsection}
+\input{Anhang.tex} % Anhang
+
+
+\end{document}

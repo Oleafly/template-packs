@@ -1,0 +1,60 @@
+% 自定义命令定义
+\makeatletter
+\def\ctitle#1{\def\@ctitle{#1}}\def\@ctitle{}
+\def\etitle#1{\def\@etitle{#1}}\def\@etitle{}
+\def\cdegree#1{\def\@cdegree{#1}}\def\@cdegree{}
+\def\caffil#1{\def\@caffil{#1}}\def\@caffil{}
+\def\csubject#1{\def\@csubject{#1}}\def\@csubject{}
+\def\cgrade#1{\def\@cgrade{#1}}\def\@cgrade{}
+\def\cauthor#1{\def\@cauthor{#1}}\def\@cauthor{}
+\def\cnumber#1{\def\@cnumber{#1}}\def\@cnumber{}
+\def\csupervisor#1{\def\@csupervisor{#1}}\def\@csupervisor{}
+\def\crank#1{\def\@crank{#1}}\def\@crank{}
+\def\cdate#1{\def\@cdate{#1}}\def\@cdate{}
+\def\startdate#1{\def\@startdate{#1}}\def\@startdate{}
+\def\enddate#1{\def\@enddate{#1}}\def\@enddate{}
+
+% \renewcommand{\ULdepth}{4pt}		% 控制下划线与文本之间的垂直位置。
+\renewcommand{\ULthickness}{1.1pt}		% 控制下划线的粗细。
+
+\newcommand\dlmu[2][4cm]{%
+	\hskip1pt\uline{\hbox to #1{\hss#2\hss}}\hskip3pt%
+}
+
+% 定义封面
+\def\makecover{
+    \cleardoublepage%
+    \newgeometry{left=3cm, right=2.5cm, top=2cm, bottom=2cm} % 仅本页生效的新边距
+    \begin{titlepage}
+        % 左上角校徽（固定宽度，保持原始比例：仅给 width 即可）
+        \vspace*{0pt}
+        \noindent\includegraphics[width=9cm]{cover/cover1.png}
+
+        % 中央标题与副标题
+        \vspace*{20pt}
+        \begin{center}
+            {\bfseries\fontspec{Arial}\fontsize{36pt}{60pt}\selectfont Final Year Project (Paper)\par}
+
+            \vspace*{48pt}
+            {\bfseries\fontspec{Arial}\fontsize{18pt}{22pt}\selectfont \@etitle\par}
+            {\songti\fontsize{16pt}{20pt}\selectfont \@ctitle\par}
+
+            \vspace*{18pt}
+
+            % 信息表
+            \renewcommand\arraystretch{1.5}
+            \newlength{\coverTableW}\setlength{\coverTableW}{12.5cm}
+            \begin{tabular}{p{4.2cm} p{8.3cm}}
+                {\bfseries\fontspec{Arial} School:} & \fontspec{Arial}\@caffil \\
+                {\bfseries\fontspec{Arial} Major:} & \fontspec{Arial}\@csubject \\
+                {\bfseries\fontspec{Arial} Class:} & \fontspec{Arial}\@cgrade \\
+                {\bfseries\fontspec{Arial} Name:} & \fontspec{Arial}\@cauthor \\
+                {\bfseries\fontspec{Arial} Student ID:} & \fontspec{Arial}\@cnumber \\
+                {\bfseries\fontspec{Arial} Supervisor:} & \fontspec{Arial}\@csupervisor \\
+                {\bfseries\fontspec{Arial} Professional Title:} & \fontspec{Arial}\@crank \\
+                {\bfseries\fontspec{Arial} From:} &
+                  \fontspec{Arial}\@startdate\quad {\bfseries To:}\quad \fontspec{Arial}\@enddate \\
+            \end{tabular}
+        \end{center}
+    \end{titlepage}
+}

@@ -1,0 +1,64 @@
+\chapter{Introduction}
+\label{chap:introduction}
+
+So, you're writing your thesis. 
+
+Here's the \LaTeX\ template I cobbled together for my PhD thesis at the University of Leeds, using the built-in \verb|book| style, I know others have used \verb|report|. It's purely here as a do what you want with it kind of thing -- I don't think it's particularly fair play for you to moan at me if things don't work as you'd like, or don't meet whatever requirements your school or department insist on. But I understand it, you might not think it's a particularly beneficial use of your time to make your thesis document look in shape, especially when hundreds of others have also tried before you. 
+
+
+Also I don't know what the uni thinks about using the crest on a thesis. I just thought the logo looked a bit plain for a thesis, maybe I'm a bit big-headed. The uni's minimum recommended margins looked a bit small for my liking so I tweaked em a bit. The \LaTeX \ defaults, though beautiful, seemed a bit too big on reflection.
+
+Have a play around though, packages get updated and best practices change. Have you considered reading \href{https://tobi.oetiker.ch/lshort/lshort.pdf}{The not so short introduction to \LaTeX}?
+
+I think this template is a bit overkill for an undergrad dissertation, but I mean, go wild, you're using \LaTeX\ at least I guess.
+
+Below is a short summary of a few packages that I'm glad I used.
+
+\section{Referencing}
+\label{sec:ref}
+I used \verb|biblatex| for referencing as I couldn't find a \verb|bst| file that met my needs and \verb|biblatex| is very easy to customise. I used a \verb|bibtex| backend (I think) which means you can still use \verb|\citep| commands instead of \verb|\parencite|, for example -- which was useful as I was merging in a journal article which I'd use \verb|bibtex| for. If you're starting from scratch, maybe it's better to use a different backend?
+
+One thing which was blummin useful for cross-referencing was the \verb|cref| package, which cleverly infers the prefix for cross-refs. For example, \cref{chap:introduction} and \cref{sec:ref}.
+
+\section{Abbreviations}
+My field is full to the brim of abbreviations and jargon, and the \verb|acronym| package was very handy at producing a list of abbreviations at the start of my thesis (and only the ones that I'd used!) but also for handling printing the full abbreviation on first usage and then sticking to the shortened unless you specify otherwise. There are several other packages that do this, including \verb|acro| and \verb|glossary| I think.
+
+For example, you might want to mention \ac{BR} in your thesis, especially if you want to talk about egg and cress sandwiches, or how great a typeface Rail Alphabet is. And then again, you might decide to not mention \ac{BR}.
+
+\section{Units}
+
+Science is full of units and quantities, and getting things to look nice with the right spacing is handled by the \verb|siunitx| package (there's apparently another one called \verb|siunits| that does something very similar). 
+
+You can then use commands to speed up typesetting of common units. For example, for velocities, I defined a command called \verb|\vel|: \vel{10}. You can also just do units on their own (\unit{\hecto\pascal}), or together within a quantity, of whatever unit you like: \qty{700}{\hecto\pascal\per\second\squared}. You can also define non SI-units, using \verb|\DeclareSIUnit|, for example if you wanted to say \qty{1}{\foot} is about \qty{30}{\cm}.
+
+\section{Tables}
+
+I remember reading Nick Higham's \href{https://nhigham.com/2019/11/19/better-latex-tables-with-booktabs/}{blog post} on typesetting tables in \LaTeX, and particularly the nice-ness of using \verb|booktabs| for tables, appropriately referenced of course as in \cref{tab:book1}.
+
+\begin{table}
+    \centering
+    \begin{tabular}{cc}
+    \toprule
+     A    & B \\
+     \midrule
+     1 & 2\\
+     2 & 3\\
+     3 & 5\\
+     4 & 7\\
+     5 & 11\\
+     \bottomrule
+    \end{tabular}
+    \caption{Prime table layout with booktabs}
+    \label{tab:book1}
+\end{table}
+
+\section{Overleaf bits and bobs}
+The uni pays (at least did in May 2024) for an institutional subscription to Overleaf, which means several things for you. You should make sure you can link your Overleaf account with your university email address, which should add you to the uni's Overleaf subscription.
+
+You can collaborate with others on one document (useful for sharing the live versions with supervisors who can leave comments on the text, rather than a load of pdfs zooming around over the shop).
+
+You can automatically import all your references in .bib format from reference managers (such as Mendeley and Zotero), meaning you don't need to keep re-uploading or editing bib files every time you find a new paper: you only need to re-sync your library within Overleaf.
+
+GitHub integration is very handy for having a backup of your thesis somewhere else -- and also means you can work on your thesis locally if you have git and a local \LaTeX\ editor (or even just a text editor if you're not bothered about compiling while working). I managed to get TeXLive 2023 installed on my uni laptop, and it came with a version of TeXworks which served me adequately when I was sat in the Cairngorm ski centre car park in January after a run.
+
+Finally, you also get longer compile times on the uni's subscription. I never had an issue with compile times while writing my thesis but I probably would have done on the basic one. \verb|\includeonly| is handy to speed things up when writing by only compiling a sub-file when editing.

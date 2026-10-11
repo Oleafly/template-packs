@@ -1,0 +1,161 @@
+% !TEX root = ../main.tex
+
+\chapter{数学}
+
+\section{数学符号}
+
+模板中使用 \pkg{unicode-math} 宏包配置数学字体。
+该宏包与传统的 \pkg{amsfonts}、\pkg{amssymb}、\pkg{bm}、
+\pkg{mathrsfs}、\pkg{upgreek} 等宏包\emph{不}兼容。
+本模板作了处理，用户可以直接使用 \cs{bm}, \cs{mathscr},
+\cs{upGamma} 等命令。
+关于数学符号更多的用法，参见 \pkg{unicode-math} 宏包的使用说明和符号列表
+\pkg{unimath-symbols}。
+
+
+
+\section{数学公式}
+
+数学公式可以使用 \env{equation} 和 \env{equation*} 环境。
+注意数学公式的引用应前后带括号，建议使用 \cs{eqref} 命令，比如式~\eqref{eq:example}。
+\begin{equation}
+  \hat{f}(\xi) = \int_{-\infty}^\infty f(x) \eu^{-2 \uppi \iu x \xi} \dif x.
+  \label{eq:example}
+\end{equation}
+
+多行公式尽可能在“=”处对齐，推荐使用 \env{align} 环境，比如式~\eqref{eq:align_2}。
+\begin{align}
+  a & = b + c + d + e \label{eq:align_1} \\
+    & = f + g. \label{eq:align_2}
+\end{align}
+
+
+
+\section{量和单位}
+
+量和单位推荐使用 \pkg{siunitx} 宏包。
+\begin{itemize}
+  \item 为了阅读方便，四位以上的整数或小数推荐采用千分空的分节方式：\num{55235367.34623}。
+    四位以内的整数可以不加千分空：\num{1256}。
+  \item 数值与单位符号间留适当空隙：\qty{25.4}{mm}，\qty{5.97e24}{\kilo\gram}，
+    \qty{-273.15}{\degreeCelsius}。 例外：\qty{12.3}{\degree}，\ang{1;2;3}。
+  \item 组合单位默认使用 APS 的格式，即相乘的单位之间留一定空隙： \unit{kg.m.s^{-2}}，
+    也可以使用居中的圆点： \unit[inter-unit-product = \ensuremath{{}\cdot{}}]{kg.m.s^{-2}}。
+    GB 3100—1993 对两者都允许，建议全文统一设置。
+  \item 量值范围使用“～”：\qtyrange{10}{15}{mol/L}。
+  \item 注意：词头 \textmu{} 不能写为 u，如：\unit{umol} 应为 \unit{\micro\mole}、\unit{\umol}。
+\end{itemize}
+
+
+
+\section{定理和证明}
+
+示例文件中使用 \pkg{amsthm} 宏包配置了定理、引理和证明等环境。
+用户也可以使用 \pkg{ntheorem} 宏包。
+
+\begin{definition}
+  If the integral of function $f$ is measurable and non-negative, we define
+  its (extended) \textbf{Lebesgue integral} by
+  \begin{equation}
+    \int f = \sup_g \int g,
+  \end{equation}
+  where the supremum is taken over all measurable functions $g$ such that
+  $0 \le g \le f$, and where $g$ is bounded and supported on a set of
+  finite measure.
+\end{definition}
+
+\begin{assumption}
+The communication graph is strongly connected.
+\end{assumption}
+
+\begin{example}
+  Simple examples of functions on $\mathbb{R}^d$ that are integrable
+  (or non-integrable) are given by
+  \begin{equation}
+    f_a(x) =
+    \begin{cases}
+      |x|^{-a} & \text{if } |x| \le 1, \\
+      0        & \text{if } x > 1.
+    \end{cases}
+  \end{equation}
+  \begin{equation}
+    F_a(x) = \frac{1}{1 + |x|^a}, \qquad \text{all } x \in \mathbb{R}^d.
+  \end{equation}
+  Then $f_a$ is integrable exactly when $a < d$, while $F_a$ is integrable
+  exactly when $a > d$.
+\end{example}
+
+\begin{lemma}[Fatou]
+  Suppose $\{f_n\}$ is a sequence of measurable functions with $f_n \geq 0$.
+  If $\lim_{n \to \infty} f_n(x) = f(x)$ for a.e. $x$, then
+  \begin{equation}
+    \int f \le \liminf_{n \to \infty} \int f_n.
+  \end{equation}
+\end{lemma}
+
+\begin{remark}
+  We do not exclude the cases $\int f = \infty$,
+  or $\liminf_{n \to \infty} f_n = \infty$.
+\end{remark}
+
+\begin{corollary}
+  Suppose $f$ is a non-negative measurable function, and $\{f_n\}$ a sequence
+  of non-negative measurable functions with
+  $f_n(x) \le f(x)$ and $f_n(x) \to f(x)$ for almost every $x$. Then
+  \begin{equation}
+    \lim_{n \to \infty} \int f_n = \int f.
+  \end{equation}
+\end{corollary}
+
+\begin{proposition}
+  Suppose $f$ is integrable on $\mathbb{R}^d$. Then for every $\epsilon > 0$:
+  \begin{enumerate}
+    \renewcommand{\theenumi}{\roman{enumi}}
+    \item There exists a set of finite measure $B$ (a ball, for example) such
+      that
+      \begin{equation}
+        \int_{B^c} |f| < \epsilon.
+      \end{equation}
+    \item There is a $\delta > 0$ such that
+      \begin{equation}
+        \int_E |f| < \epsilon \qquad \text{whenever } m(E) < \delta.
+      \end{equation}
+  \end{enumerate}
+\end{proposition}
+
+\begin{theorem}
+  Suppose $\{f_n\}$ is a sequence of measurable functions such that
+  $f_n(x) \to f(x)$ a.e. $x$, as $n$ tends to infinity.
+  If $|f_n(x)| \le g(x)$, where $g$ is integrable, then
+  \begin{equation}
+    \int |f_n - f| \to 0 \qquad \text{as } n \to \infty,
+  \end{equation}
+  and consequently
+  \begin{equation}
+    \int f_n \to \int f \qquad \text{as } n \to \infty.
+  \end{equation}
+\end{theorem}
+
+\begin{proof}
+  Trivial.
+\end{proof}
+
+\newtheorem*{axiomofchoice}{Axiom of choice}
+\begin{axiomofchoice}
+  Suppose $E$ is a set and ${E_\alpha}$ is a collection of
+  non-empty subsets of $E$. Then there is a function $\alpha
+  \mapsto x_\alpha$ (a ``choice function'') such that
+  \begin{equation}
+    x_\alpha \in E_\alpha,\qquad \text{for all }\alpha.
+  \end{equation}
+\end{axiomofchoice}
+
+\newtheorem{observation}{Observation}
+\begin{observation}
+  Suppose a partially ordered set $P$ has the property
+  that every chain has an upper bound in $P$. Then the
+  set $P$ contains at least one maximal element.
+\end{observation}
+\begin{proof}[A concise proof]
+  Obvious.
+\end{proof}

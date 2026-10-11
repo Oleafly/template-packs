@@ -1,0 +1,70 @@
+\RequirePackage[l2tabu,orthodox]{nag}
+% TODO: decide if one-sided/two-sided
+%\documentclass[headsepline,footsepline,footinclude=false,fontsize=11pt,paper=a4,listof=totoc,bibliography=totoc,BCOR=12mm,DIV=12]{scrbook} % two-sided
+\documentclass[headsepline,footsepline,footinclude=false,oneside,fontsize=12pt,paper=a4,listof=totoc,bibliography=totoc]{scrbook} % one-sided
+
+% TODO: change citation style in settings
+\input{settings}
+
+% TODO: change thesis information
+\newcommand*{\getLegalStatement}{\getThesisType gemäß § 10 der Studien- und Prüfungsordnung vom 27.06.2016 im Studiengang \getStudyCourse an der \getUniversityGerman}
+\newcommand*{\getUniversityGerman}{Hochschule für angewandte Wissenschaften Neu-Ulm}
+\newcommand*{\getUniversity}{University of Applied Sciences Neu-Ulm}
+\newcommand*{\getFaculty}{Fakultät}
+\newcommand*{\getStudyCourse}{Studiengang}
+\newcommand*{\getThesisType}{Bachelorarbeit/Masterarbeit}
+\newcommand*{\getTitle}{Thesis title}
+\newcommand*{\getAuthor}{Vorname Nachname}
+\newcommand*{\getDoctype}{\getThesisType  in \getStudyCourse}
+\newcommand*{\getSupervisor}{Name des Betreuers}
+\newcommand*{\getCoSupervisor}{Name des Zweitprüfers}
+\newcommand*{\getAdvisor}{Betreuer im Unternehmen}
+\newcommand*{\getCompany}{Unternehmen}
+\newcommand*{\getSubmissionDate}{Abgabedatum}
+\newcommand*{\getSubmissionLocation}{Neu-Ulm}
+
+\begin{document}
+
+% Set page numbering to avoid "destination with the same identifier has been already used" warning for cover page.
+% (see https://en.wikibooks.org/wiki/LaTeX/Hyperlinks#Problems_with_Links_and_Pages).
+\pagenumbering{alph}
+\input{pages/cover}
+
+\frontmatter{}
+
+\input{pages/title}
+\input{pages/acknowledgments}
+\input{pages/sperrvermerk.tex}
+\linespread{1.25} % adjust line spread for mathpazo font
+\input{pages/abstract}
+\microtypesetup{protrusion=false}
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+\tableofcontents{}
+\microtypesetup{protrusion=true}
+
+
+
+\microtypesetup{protrusion=false}
+\listoffigures{}
+\listoftables{}
+\input{pages/glossary.tex}
+\microtypesetup{protrusion=true}
+
+
+\mainmatter{}
+
+% Chapters
+\input{chapters/01_introduction}
+% TODO: add more chapters here
+
+\begin{appendices}
+% TODO: add appendices here
+\end{appendices}
+
+\bibliographystyle{agsm}
+\bibliography{bibliography}
+ 
+\input{pages/disclaimer}
+
+\end{document}

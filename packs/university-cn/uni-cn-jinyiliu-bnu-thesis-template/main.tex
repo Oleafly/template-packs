@@ -1,0 +1,42 @@
+% !Mode:: "TeX:UTF-8"
+% 
+% 编译说明
+%		使用 XeLaTeX 编译引擎
+%       TeX Live 的版本 2022 和 2021 目前都可以成功编译
+%       如果使用 Overleaf 进行写作，请在左上角菜单中选择编译器为 XeLaTeX
+%		在 MacBook 中推荐使用编译软件 Texpad
+
+
+\documentclass[master]{bnuthesis}
+	% bachelor/master/doctor: 学士/硕士/博士学位论文
+	% twoside: 奇数页和偶数页页边距不一样，用于打印
+	\usepackage{bnutils}
+	% 调用宏包，使用 GB/T 7714-2015 参考文献著录格式
+	\usepackage{gbt7714}
+	
+	\begin{document}
+	\graphicspath{{figures/}}
+	
+	\frontmatter
+	\input{data/cover}
+	\makecover
+	
+	\tableofcontents
+	\listoffigures % 插图索引
+	\listoftables % 表格索引
+	
+	\mainmatter
+	\include{data/chap1}
+	\include{data/chap2}
+	
+    \bibliographystyle{gbt7714-numerical}
+	\bibliography{ref/refs}
+	
+	\begin{appendix}
+	\input{data/appendix}
+	\end{appendix}
+	
+	\include{data/paper}
+	\include{data/ack}
+
+\end{document}

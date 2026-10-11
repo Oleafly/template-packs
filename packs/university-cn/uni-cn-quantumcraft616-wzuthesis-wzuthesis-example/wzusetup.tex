@@ -1,0 +1,181 @@
+%% File: wzusetup.tex
+%% Derived from: thusetup.tex (Tsinghua University Thesis Template)
+%%
+%% Major Changes:
+%%   - Updated the basic information and configuration of the paper for Wenzhou University
+
+% !TeX root = ./wzuthesis-example.tex
+
+% 论文基本信息配置
+
+\wzusetup{
+  %******************************
+  % 注意：
+  %   1. 配置里面不要出现空行
+  %   2. 不需要的配置信息可以删除
+  %   3. 建议先阅读文档中所有关于选项的说明
+  %******************************
+  %
+  % 输出格式
+  %   选择打印版（print）或用于提交的电子版（electronic），前者会插入空白页以便直接双面打印
+  %
+  output = electronic,
+  % 格式类型
+  %   默认为论文（thesis），也可以设置为开题报告（proposal）
+  % thesis-type = proposal,
+  %
+  % 标题
+  %   可使用“\\”命令手动控制换行
+  %
+  clc                = {TP391.4},
+  udc                = {004.8},
+  student-id = {24451352011},
+  secret-level = {公开},
+  title  = {面向高效的无监督分割方法},
+  %
+  % 培养单位
+  %   填写所属院系的全名
+  %
+  department = {计算机与人工智能学院},
+  %
+  % 学科
+  %   1. 研究生学术型学位，获得一级学科授权的学科填写一级学科名称，其他填写二级学科名称
+  %   2. 本科生填写专业名称，第二学位论文需标注“（第二学位）”
+  %
+  major  = {计算机科学与技术},
+  %
+  % 专业领域
+  %   1. 设置专业领域的专业学位类别，填写相应专业领域名称
+  %   2. 2019 级及之前工程硕士学位论文，在 `engineering-field` 填写相应工程领域名称
+  %   3. 其他专业学位类别的学位论文无需此信息
+  %
+  % professional-field  = {计算机技术},
+  % professional-field* = {Computer Technology},
+  %
+  % 姓名
+  %
+   author  = {冯兴宇},
+  %
+  % 学号
+  % 仅当书写开题报告时需要（同时设置 `thesis-type = proposal'）
+  %
+  % student-id = {2000310000},
+  %
+  % 指导教师
+  %   中文姓名和职称之间以英文逗号“,”分开，下同
+  %
+  supervisor  = {李洪, 教授},
+  %
+  % 副指导教师
+  %
+%  associate-supervisor  = {陈文光, 教授},
+  %
+  % 联合指导教师
+  %
+  % co-supervisor  = {某某某, 教授},
+  % co-supervisor* = {Professor Mou Moumou},
+  %
+  % 日期
+  %   使用 ISO 格式；默认为当前时间
+  %
+  % date = {2019-07-07},
+  %
+  % 是否在中文封面后的空白页生成书脊（默认 false）
+  %
+  finish-date = {2026年6月16日},
+  include-spine = false,
+  %
+  % 密级和年限
+  %   秘密, 机密, 绝密
+  %
+  % secret-level = {秘密},
+  % secret-year  = {10},
+  %
+  % 博士后专有部分
+  %
+  % clc                = {分类号},
+  % udc                = {UDC},
+  % id                 = {编号},
+  % discipline-level-1 = {计算机科学与技术},  % 流动站（一级学科）名称
+  % discipline-level-2 = {系统结构},          % 专业（二级学科）名称
+  % start-date         = {2011-07-01},        % 研究工作起始时间
+}
+
+% 载入所需的宏包
+
+% 定理类环境宏包
+\usepackage{amsthm}
+% 也可以使用 ntheorem
+% \usepackage[amsmath,thmmarks,hyperref]{ntheorem}
+
+% 可以使用 nomencl 生成符号和缩略语说明
+% \usepackage{nomencl}
+% \makenomenclature
+
+% 表格加脚注
+\usepackage{threeparttable}
+
+% 表格中支持跨行
+\usepackage{multirow}
+
+% 固定宽度的表格。
+% \usepackage{tabularx}
+
+% 跨页表格
+\usepackage{longtable}
+
+% 算法
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% 量和单位
+\usepackage{siunitx}
+
+% 参考文献使用 BibTeX + natbib 宏包
+% 顺序编码制
+\usepackage[sort]{natbib}
+\bibliographystyle{wzuthesis-numeric}
+
+% 著者-出版年制
+% \usepackage{natbib}
+% \bibliographystyle{wzuthesis-author-year}
+
+% 生命科学学院要求使用 Cell 参考文献格式（2023 年以前使用 author-date 格式）
+% \usepackage{natbib}
+% \bibliographystyle{cell}
+
+% 本科生参考文献的著录格式
+% \usepackage[sort]{natbib}
+% \bibliographystyle{wzuthesis-bachelor}
+
+% 参考文献使用 BibLaTeX 宏包
+% \usepackage[style=wzuthesis-numeric]{biblatex}
+% \usepackage[style=wzuthesis-author-year]{biblatex}
+% \usepackage[style=gb7714-2015]{biblatex}
+% \usepackage[style=apa]{biblatex}
+% \usepackage[style=mla-new]{biblatex}
+% 声明 BibLaTeX 的数据库
+% \addbibresource{ref/refs.bib}
+
+% 定义所有的图片文件在 figures 子目录下
+\graphicspath{{figures/}}
+
+% 数学命令
+\makeatletter
+\newcommand\dif{%  % 微分符号
+  \mathop{}\!%
+  \ifwzu@math@style@TeX
+    d%
+  \else
+    \mathrm{d}%
+  \fi
+}
+\makeatother
+
+% hyperref 宏包在最后调用
+\usepackage{hyperref}
+
+% 中英文图/表标题
+\usepackage[list=off]{bicaption} % 禁用 bicaption 自动添加到 lof
+\captionsetup[figure][bi-second]{name=Figure}
+\captionsetup[table][bi-second]{name=Table}

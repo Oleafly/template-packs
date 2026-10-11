@@ -1,0 +1,209 @@
+% !TeX program = xelatex
+\documentclass[11pt,a4paper,UTF8,fontset=fandol]{ctexart}
+
+% Keep this layout synchronized with the English course-report template.
+\usepackage[margin=0.88in,headheight=14pt]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{needspace}
+\usepackage{microtype}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+% Shared assets live at the repository root.  The second path also supports
+% compilers whose working directory is the repository root (for example Overleaf).
+\graphicspath{{../assets/}{assets/}}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  urlcolor=blue!60!black,
+  citecolor=blue!60!black,
+  pdfauthor={}
+}
+
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{topsep=0.25em,itemsep=0.15em,leftmargin=1.6em}
+\setlist[enumerate]{topsep=0.25em,itemsep=0.15em,leftmargin=1.8em}
+
+\titleformat{\section}{\Needspace{8\baselineskip}\normalfont\Large\bfseries}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\Needspace{6\baselineskip}\normalfont\large\bfseries}{\thesubsection}{0.8em}{}
+\titlespacing*{\section}{0pt}{1.0em}{0.45em}
+\titlespacing*{\subsection}{0pt}{0.75em}{0.35em}
+
+% =========================
+% 模板信息
+% =========================
+% 准备新报告时只需修改本区域。
+\newcommand{\CourseName}{[课程名称]}
+\newcommand{\ReportTitle}{[报告题目]}
+\newcommand{\CoverReportTitle}{[报告题目第一行]\\[0.35cm]
+[报告题目第二行]}
+\newcommand{\StudentName}{[学生姓名]}
+\newcommand{\StudentID}{[学生学号]}
+\newcommand{\InstructorName}{[任课教师]}
+\newcommand{\SchoolName}{[学院名称]}
+\newcommand{\InstitutionName}{同济大学}
+\newcommand{\ReportDate}{[年—月]}
+
+% 首次只运行一次 XeLaTeX 时也显示一份简洁目录；生成 main.toc 后，
+% 自动目录会接管并按正文更新页码。
+\newcommand{\TemplateTocLine}[3][0pt]{%
+  \par\noindent\hspace*{#1}#2\nobreak
+  \leaders\hbox to 0.8em{\hss.\hss}\hfill\nobreak
+  \makebox[2em][r]{#3}\par\vspace{0.35em}%
+}
+\newcommand{\TemplateTocPreview}{%
+  \TemplateTocLine{1\quad 引言}{1}
+  \TemplateTocLine{2\quad 问题陈述}{1}
+  \TemplateTocLine{3\quad 方法}{1}
+  \TemplateTocLine[2em]{3.1\quad 分析流程}{1}
+  \TemplateTocLine[2em]{3.2\quad 实现说明}{1}
+  \TemplateTocLine{4\quad 结果}{1}
+  \TemplateTocLine{5\quad 讨论}{2}
+  \TemplateTocLine{6\quad 结论}{2}
+}
+\makeatletter
+\newcommand{\TemplateTableOfContents}{%
+  \IfFileExists{\jobname.toc}{%
+    \tableofcontents
+  }{%
+    \section*{目\quad 录}%
+    \TemplateTocPreview
+    \@starttoc{toc}%
+  }%
+}
+\makeatother
+
+% 页眉不显示课程、题目或个人信息。
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{课程作业模板}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\begin{document}
+
+% =========================
+% 封面：结构与英文模板一致
+% =========================
+\begin{titlepage}
+    \thispagestyle{empty}
+    \newgeometry{left=2.0cm,right=2.0cm,top=1.8cm,bottom=2.0cm}
+
+    \noindent
+    \begin{minipage}[t]{0.36\textwidth}
+        \vspace{0pt}
+        \includegraphics[height=2.6cm]{top_left_logo.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.58\textwidth}
+        \vspace{0pt}
+        \raggedleft
+        \parbox[c][2.6cm][c]{\linewidth}{
+            \raggedleft
+            {\large\bfseries \InstitutionName 研究生课程\par}
+            \vspace{0.35cm}
+            {\large\bfseries \CourseName\par}
+        }
+    \end{minipage}
+
+    \vspace{1.9cm}
+
+    \begin{center}
+        \includegraphics[width=0.58\textwidth]{tongji_logo.png}
+    \end{center}
+
+    \vspace{1.55cm}
+
+    \begin{center}
+        {\Huge\bfseries \CoverReportTitle\par}
+        \vspace{1.05cm}
+        {\LARGE\bfseries \CourseName\par}
+    \end{center}
+
+    \vspace{1.5cm}
+
+    \begin{center}
+        \renewcommand{\arraystretch}{2.0}
+        \begin{tabular}{>{\Large\bfseries}r @{\hspace{0.8cm}} c}
+            姓名： & \underline{\makebox[8.0cm][c]{\Large \StudentName}} \\
+            学号： & \underline{\makebox[8.0cm][c]{\Large \StudentID}} \\
+            任课教师： & \underline{\makebox[8.0cm][c]{\Large \InstructorName}} \\
+        \end{tabular}
+    \end{center}
+
+    \vfill
+
+    \begin{center}
+        {\LARGE\bfseries \SchoolName \\ \InstitutionName\par}
+        \vspace{0.8cm}
+        {\Large \ReportDate\par}
+    \end{center}
+
+    \restoregeometry
+\end{titlepage}
+
+\pagenumbering{roman}
+\TemplateTableOfContents
+\newpage
+\pagenumbering{arabic}
+
+\section{引言}
+本文档是一份中性的课程报告模板。请将本段替换为对选题、实践或理论动机以及报告所研究问题的简明说明。清晰的引言通常从较宽的背景逐步收束到边界明确的任务，并在结尾简要介绍全文结构。
+
+模板不包含原作业的正文、数据、代码或插图，仅用于展示标题层级、公式、表格、列表、页码以及保留的封面版式。
+
+\section{问题陈述}
+在介绍方法之前，应先定义研究对象、基本假设、变量和评价标准。设 $x_t$ 表示系统状态，$u_t$ 表示决策变量，$c_t$ 表示观测条件，则一个通用目标函数可以写为
+\begin{equation}
+  J(\boldsymbol{u})=
+  \sum_{t=1}^{T} L(x_t,u_t,c_t)+\lambda R(\boldsymbol{u}),
+\end{equation}
+其中 $L(\cdot)$ 衡量主要任务表现，$R(\cdot)$ 表示正则项或约束惩罚，$\lambda$ 用于控制两者之间的权衡。
+
+\section{方法}
+\subsection{分析流程}
+一个清晰的方法部分可以按以下步骤组织：
+\begin{enumerate}
+  \item 说明输入、输出与基本假设；
+  \item 描述模型或分析过程；
+  \item 给出对比方法与评价指标；
+  \item 解释如何处理不确定性与局限性。
+\end{enumerate}
+
+\subsection{实现说明}
+本小节可用于记录理解报告所必需的实现细节。请避免写入私人文件路径、账户名称或设备专属信息。若未来提交需要代码或数据，可以说明其可用性，但不应嵌入个人标识信息。
+
+\section{结果}
+表~\ref{tab:example} 展示了一种紧凑的对比格式。正式使用时，请将所有标签和数值替换为课程任务中的真实结果。
+
+\begin{table}[htbp]
+  \centering
+  \caption{示例对比结果表}
+  \label{tab:example}
+  \begin{tabular}{lccc}
+    \toprule
+    方法 & 指标 A & 指标 B & 综合评价 \\
+    \midrule
+    基准方法 & 0.72 & 0.68 & 参考 \\
+    改进方法 & 0.81 & 0.76 & 提升 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+结果部分应先报告证据，再对其进行解释。应说明测量对象，并在适用时给出单位和不确定性，同时区分观察结果与原因分析。
+
+\section{讨论}
+讨论部分应解释观察到的现象为何合理、结果是否符合预期，以及分析可能在哪些条件下失效。重要局限可能包括假设简化、样本有限、测量不确定性或工况覆盖不足。尚未检验的判断应明确标为假设或未来工作。
+
+\section{结论}
+结论应回答引言中提出的问题。一个有力的结论会概括最可靠的发现、实际意义和分析边界，同时避免引入新的证据。
+
+\end{document}

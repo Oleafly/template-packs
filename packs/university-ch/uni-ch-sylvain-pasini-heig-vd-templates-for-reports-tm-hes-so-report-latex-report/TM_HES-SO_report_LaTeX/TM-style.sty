@@ -1,0 +1,264 @@
+% +---------------------------------------------------------------+
+% | Author :    Sylvain Pasini, HEIG-VD
+% | Date :      February 6th, 2026
+% +---------------------------------------------------------------+
+
+
+% +---------------------------------------------------------------+
+% | A few useful packages
+% +---------------------------------------------------------------+
+
+% Maths & fonts
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% To hide text
+\usepackage{comment}
+
+% To add text for tests
+\usepackage{lipsum}
+
+% Images and colors
+\usepackage{graphicx,color}
+\usepackage{xcolor} % Pour gérer les couleurs personnalisées
+\usepackage{float} % pour [H]
+
+% to print url
+\usepackage{url}
+
+% Allow number computations
+\usepackage{calc}
+
+% Smileys
+\usepackage{wasysym} % exemples : \smiley or \frownie
+
+% Algos
+\usepackage{verbatim}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% Layout
+\usepackage{fullpage}
+%\usepackage{subfigure}
+
+% remove parindent
+\setlength{\parindent}{0pt}
+% espace entre les paragraphes
+\setlength{\parskip}{6pt}
+
+% bullets in itemize
+\AtBeginDocument{\def\labelitemi{$\bullet$}}
+
+% multicolumn for choice on two columns... (exam questions)
+\usepackage{multicol}
+\setlength\multicolsep{0pt}
+
+% pour les commandes \menu
+\usepackage{menukeys}
+
+% pour utiliser ifempty
+\usepackage{ifthen}
+\usepackage{xifthen}
+
+% utiliser des "to do"
+\usepackage{todonotes}
+
+% pour tourner les pages
+\usepackage{lscape}
+
+% utiliser de tables sur plusieurs pages
+\usepackage{longtable}
+
+%\usepackage{float} % Pour gérer le placement des images
+%\usepackage{fancyhdr} % Pour les headers, paramètres ci-dessous
+\usepackage{enumitem} % Pour des listes à points personnalisable
+\usepackage{lastpage}
+\usepackage{subfiles}
+
+
+
+% +---------------------------------------------------------------+
+% | Section, subsection, subsubsection, paragraph, ...
+% +---------------------------------------------------------------+
+% Permet de numéroter les paragraph et subparagraph
+\setcounter{secnumdepth}{5}
+
+
+% +---------------------------------------------------------------+
+% | Tables de matières
+% +---------------------------------------------------------------+
+% n'affiche que les tocdepth premiers niveaux
+\setcounter{tocdepth}{3} 
+%\mtcselectlanguage{french}
+
+
+% +---------------------------------------------------------------+
+% | Gantt
+% +---------------------------------------------------------------+
+\usepackage{pgfgantt} %for Gantt
+\usepackage{tikz}
+
+\makeatletter
+\def\pgfcalendarmonthnamefrench#1{%
+\ifcase#1\or Janvier\or Février\or Mars\or Avril\or Mai\or Juin\or
+Juillet\or Août\or Septembre\or Octobre\or Novembre\or Décembre\fi}
+\makeatother
+
+
+% +---------------------------------------------------------------+
+% | Layout
+% +---------------------------------------------------------------+
+%1 Offset horizontal
+\setlength{\hoffset}{0pt}                            
+%2 Offset vertical
+\setlength{\voffset}{-64pt}   %HES-SO
+%4 Top margin
+\setlength{\topmargin}{6mm}
+%5 head height
+\setlength{\headheight}{14pt}
+%6 head sep
+\setlength{\headsep}{18mm}
+%7 Text height
+\setlength{\textheight}{237mm}
+%8 Text width
+\setlength{\textwidth}{\paperwidth - 2in}
+%9 Margin sep
+\setlength{\marginparsep}{5pt}
+%10 Margin notes width
+\setlength{\marginparwidth}{60pt}
+%11 Foot skip
+\setlength{\footskip}{15mm+12pt}
+
+
+% Package used to print layout data
+\usepackage{layout}
+
+
+
+% +---------------------------------------------------------------+
+% | Headers/footers
+% +---------------------------------------------------------------+
+
+%\usepackage{titlesec}
+%
+%\definecolor{titleblue}{RGB}{0,96,156} %HES-SO
+%
+%\titleformat{\chapter}
+%  {\color{titleblue}\huge\bfseries}
+%  {\thechapter}{1em}{}
+%
+%\titleformat{\section}
+%  {\color{titleblue}\Large\bfseries}
+%  {\thesection}{1em}{}
+%
+%\titleformat{\subsection}
+%  {\color{titleblue}\large\bfseries}
+%  {\thesubsection}{1em}{}
+  
+\definecolor{hesso}{RGB}{0,96,156}
+
+\usepackage{sectsty}
+\chapterfont{\color{hesso}}  % sets colour of chapters
+\sectionfont{\color{hesso}}  % sets colour of sections
+
+
+% +---------------------------------------------------------------+
+% | Headers/footers
+% +---------------------------------------------------------------+
+
+\usepackage{lastpage}
+
+\usepackage{fancyhdr}
+
+% élargir header/footer par rapport au texte
+\fancyhfoffset[L]{1cm}
+\fancyhfoffset[R]{1cm}
+%\setlength{\headheight}{20mm}
+
+
+\newcommand{\HESfooter}{
+	\parbox{17.2cm}{
+	\vspace{-18pt}
+	\footnotesize
+	\textcolor{magenta}{\textsc{Engineering and Architecture}}
+	\vspace{2pt}
+	\hrule
+	\vspace{-6pt}
+	\begin{flushright}
+	\scriptsize %\tiny
+	\begin{tabular}{|p{7cm}|p{5cm}|p{3cm}|}
+	\hline
+	\FooterTL &  \FooterTM & \multicolumn{1}{|r|}{\parbox{3cm}{~\hfill\FooterTR}} \\
+	\hline
+	 \FooterBL & \FooterBM & \multicolumn{1}{|r|}{\thepage} \\
+	\hline
+	\end{tabular}
+	\end{flushright}
+	}
+}
+
+% empty
+% page de garde
+\fancypagestyle{empty}{
+    \fancyhf{}  % vide tout d'abord
+    % En-tête
+    \renewcommand{\headrulewidth}{0pt}     % trait en haut
+    \fancyhead[R]{\includegraphics[width=1cm]{template/corner-top-right.pdf}}
+    % Pied de page
+    \renewcommand{\footrulewidth}{0pt} % trait en bas
+}
+
+% plain
+% pages d'en-tête de chapitres
+\fancypagestyle{plain}{
+    \fancyhf{}  % vide tout d'abord
+    % En-tête
+    \renewcommand{\headrulewidth}{0pt}     % trait en haut
+    \fancyhead[R]{\includegraphics[width=1cm]{template/corner-top-right.pdf}}
+    % Pied de page
+    \renewcommand{\footrulewidth}{0pt} % trait en bas
+    \fancyfoot[L]{\includegraphics[width=1cm]{template/corner-bot-left.pdf}}
+    \fancyfoot[R]{\HESfooter}
+}
+
+
+% Style général
+\fancypagestyle{mainstyle}{
+    \fancyhf{}  % vide tout d'abord
+    % En-tête
+    \renewcommand{\headrulewidth}{0pt}     % trait en haut
+    \fancyhead[L]{\includegraphics[width=3cm]{template/hes-so-master.png}\vspace*{-2mm}}
+    \fancyhead[R]{\includegraphics[width=1cm]{template/corner-top-right.pdf}}
+    % Pied de page
+    \renewcommand{\footrulewidth}{0pt} % trait en bas
+    \fancyfoot[L]{\includegraphics[width=1cm]{template/corner-bot-left.pdf}}
+    \fancyfoot[R]{\HESfooter}
+}%style
+
+% Appliquer ce style par défaut
+\pagestyle{mainstyle}
+
+
+
+% redefine the mark to access the simple text
+% il doit être après la définition des styles
+% Drapeau pour en-tête complet ou simplifié
+\newif\iffullchaptermark \fullchaptermarkfalse
+\makeatletter
+\renewcommand{\chaptermark}[1]{%
+  \iffullchaptermark
+    \markboth{\@chapapp\ \thechapter\ : #1}{}    % Chapitre N : Titre
+  \else
+    \markboth{#1}{} % Titre
+  \fi
+}
+\makeatother
+
+
+
+
+
+
+
+

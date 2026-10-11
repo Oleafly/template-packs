@@ -1,0 +1,99 @@
+\chapter{Background}\label{chap:background}
+
+This chapter provides the necessary background on the $k$-means clustering problem, Lloyd's algorithm, and the $k$-means++ initialization, along with an overview of relevant works. The focus is on the theoretical foundations, time complexities, and practical implementations relevant to this thesis.
+
+\section{$k$-Means Clustering}\label{sec:kmeans}
+
+The $k$-means clustering problem is a widely studied unsupervised learning problem. Given a set of \(n\) data points \(X = \{x_1, x_2, \dots, x_n\}\) in a metric space and a positive integer \(k\), the goal of \(k\)-means clustering is to partition the data into \(k\) disjoint clusters \(C_1, C_2, \dots, C_k\) such that the within-cluster sum of squared distances (WCSS) is minimized. Formally, the objective function is:
+
+\[
+\text{WCSS} = \sum_{i=1}^k \sum_{x \in C_i} \|x - \mu_i\|^2,
+\]
+
+where \(\mu_i\) is the centroid of cluster \(C_i\), defined as the mean of all points in \(C_i\). 
+
+Finding the globally optimal solution to the $k$-means problem is NP-hard in general for \(d\)-dimensional data, even for \(k = 2\) \cite{nphard}. As a result, heuristic algorithms such as Lloyd's algorithm are commonly used in practice to approximate solutions efficiently.
+
+\section{Lloyd’s Algorithm}\label{sec:lloyds}
+
+Lloyd’s algorithm \cite{lloyd,max} is a popular iterative method for solving the $k$-means problem. It alternates between assigning data points to their nearest cluster centroid and updating the centroids based on the current cluster assignments. The steps of the algorithm are as follows:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Initialization:} Choose \(k\) initial centroids \(\mu_1, \mu_2, \dots, \mu_k\).
+    \item \textbf{Assignment step:} Assign each point \(x_j \in X\) to the cluster \(C_i\) with the closest centroid:
+    \[
+    C_i = \{x_j \mid \|x_j - \mu_i\| \leq \|x_j - \mu_m\|, \, \forall m \neq i\}.
+    \]
+    \item \textbf{Update step:} Update each centroid \(\mu_i\) as the mean of all points assigned to \(C_i\):
+    \[
+    \mu_i = \frac{1}{|C_i|} \sum_{x \in C_i} x.
+    \]
+    \item Repeat the assignment and update steps until convergence, typically when the centroids no longer change significantly or a maximum number of iterations is reached.
+\end{enumerate}
+
+\noindent \textbf{Remark:}  
+Both the assignment and update steps of Lloyd's algorithm ensure that the within-cluster sum of squares (WCSS) decreases monotonically after each iteration. As a result, the algorithm is guaranteed to converge to a local minimum of the WCSS objective function.
+
+\noindent \textbf{Time Complexity:}  
+The time complexity of Lloyd’s algorithm for general \(d\)-dimensional data is \(O(i \cdot k \cdot n \cdot d)\), where \(i\) is the number of iterations. For 1D data, the complexity simplifies to \(O(i \cdot k \cdot n)\).
+
+\section{$k$-Means++ Initialization}\label{sec:kmeanspp}
+
+The quality of solutions obtained by Lloyd’s algorithm depends heavily on the choice of initial centroids. The $k$-means++ initialization algorithm \cite{kmeansplusplus} improves the centroid selection process by probabilistically choosing points based on their distances to already selected centroids. The steps of the algorithm are as follows:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Initialization:} Choose the first centroid \(\mu_1\) uniformly at random from the data points.
+    \item \textbf{Candidate selection:} For each subsequent centroid \(\mu_i\), select a point \(x_j\) with probability proportional to its squared distance from the nearest already chosen centroid:
+    \[
+    P(x_j) = \frac{\text{Distance}(x_j, C_{\text{nearest}})^2}{\sum_{x_i \in X} \text{Distance}(x_i, C_{\text{nearest}})^2}.
+    \]
+    \item Repeat the candidate selection step until \(k\) centroids are chosen.
+\end{enumerate}
+
+\noindent \textbf{Remark:}  
+The $k$-means++ initialization improves the spread of centroids compared to random initialization, significantly reducing the likelihood of poor clustering outcomes. However, this improvement comes at the cost of additional computation during the initialization phase.
+
+\noindent \textbf{Time Complexity:}  
+The time complexity of standard $k$-means++ initialization for \(d\)-dimensional data is \(O(k \cdot n \cdot d)\), where \(k\) is the number of clusters, \(n\) is the number of data points, and \(d\) is the dimensionality of the data.
+
+\noindent \textbf{Greedy $k$-Means++ Initialization:}  
+In the greedy version of $k$-means++ initialization, briefly mentioned in the conclusion of the original paper \cite{kmeansplusplus}, \(l\) candidate centroids are evaluated at each step, and the one minimizing the WCSS is selected. The total time complexity for the greedy version is \(O(l \cdot k \cdot n \cdot d)\), where \(l\) is the number of local trials. A common choice for \(l\) is \(O(\log k)\) \cite{localtrials1, localtrials2}, and \texttt{scikit-learn} adopts a similar approach with \(l = 2 + \log k\) \cite{sklearn}. For 1D data, where \(d = 1\), the complexity simplifies to \(O(l \cdot k \cdot n)\).
+
+\section{Weighted $k$-Means}\label{sec:weightedkmeans}
+
+Weighted $k$-means generalizes the standard $k$-means problem by assigning each data point \(x_j\) a weight \(w_j\). The objective function becomes:
+
+\[
+\text{WCSS} = \sum_{i=1}^k \sum_{x_j \in C_i} w_j \|x_j - \mu_i\|^2,
+\]
+
+where the centroid \(\mu_i\) is updated as the weighted mean:
+
+\[
+\mu_i = \frac{\sum_{x_j \in C_i} w_j \cdot x_j}{\sum_{x_j \in C_i} w_j}.
+\]
+
+\noindent \textbf{Changes to Lloyd’s Algorithm:}  
+The \textbf{update step} computes weighted centroids instead of simple means. The assignment step remains unchanged.
+
+\noindent \textbf{Changes to $k$-Means++ Initialization:}  
+The probability of selecting a point \(x_j\) as a centroid becomes proportional to its weighted squared distance from the nearest already chosen centroid:
+
+\[
+P(x_j) = \frac{w_j \cdot \text{Distance}(x_j, C_{\text{nearest}})^2}{\sum_{x_i \in X} w_i \cdot \text{Distance}(x_i, C_{\text{nearest}})^2}.
+\]
+
+
+\noindent \textbf{Relevance:}  
+Weighted $k$-means is particularly useful in applications where data points contribute unequally to the clustering objective, such as quantization for large language models (LLMs) \cite{sqllm, anyprec}.
+
+\noindent \textbf{Implementation Note:}  
+The algorithms detailed in this thesis support both unweighted and weighted $k$-means clustering, ensuring flexibility for practical use cases.
+
+\section{Relevant Works}\label{sec:relevantworks}
+
+For the special case of 1D $k$-means clustering, significant progress has been made in achieving globally optimal solutions. Wang and Song \cite{wang1ddp} introduced a dynamic programming algorithm with a time complexity of \(O(k \cdot n^2)\). This was later improved by Grønlund et al. \cite{fastexactkmeans}, who developed an \(O(n)\)-time algorithm for computing the exact optimal clustering in 1D.
+
+Despite these advancements, widely used implementations such as \texttt{scikit-learn}'s $k$-means algorithm \cite{sklearn} do not include optimizations for the 1D case. Instead, they treat 1D data as a general instance of higher-dimensional clustering. \texttt{scikit-learn} uses Cython \cite{cython} to achieve efficient performance for general-purpose Lloyd's algorithm and $k$-means++ initialization, but it still operates with \(O(l \cdot k \cdot n)\) initialization time and \(O(i \cdot k \cdot n)\) iteration time for 1D data.
+
+This thesis is the first to address the gap of optimizing Lloyd’s algorithm and $k$-means++ initialization specifically for 1D clustering, targeting scenarios where speed and scalability are paramount. While prior works achieve globally optimal solutions, they do not target scenarios where speed and scalability are more critical than exact optimality. By leveraging the properties of sorted data, the proposed algorithms achieve logarithmic runtime while delivering high-quality clustering results, offering a practical alternative for latency-critical and large-scale applications.

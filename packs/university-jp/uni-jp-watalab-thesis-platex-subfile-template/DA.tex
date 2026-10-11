@@ -1,0 +1,33 @@
+\documentclass[./Main.tex]{subfiles}
+\graphicspath{{./Fig/}}
+\begin{document}
+
+\chapter{データ同化}
+\section{局所アンサンブル変換カルマンフィルタ}
+\subsection{局所アンサンブル変換カルマンフィルタの理論}
+本研究では、データ同化手法の一つである局所アンサンブル変換カルマンフィルタ（Local Ensemble Transform Kalman Filter: LETKF）を適用した\cite{Hunt2007}。
+
+アンサンブル変換カルマンフィルタでは、N個のアンサンブルメンバーと呼ばれる複数の状態ベクトルからその流れ場の平均及び分散を求め、これに対して不確かさを持つ観測データを与えて、確率的にもっともらしい流れ場を推定する。以下でその手法を簡単に説明する。
+
+N個のアンサンブルメンバーを使用して、m次元の状態ベクトルの推定することを考える。
+時刻 $t$ における予測値 $\bm{x}^{f(i)}_t$ は
+\begin{equation}
+\bm{x}^{f(i)}_t = \bm{M}\bm{x}^{a(i)}_{t-1}
+\end{equation}
+と表される。
+ここで、上付き文字の$f$および$a$はそれぞれ予測(forecast)と解析(analysis)の値であることを示し、下付き文字の$t$は時刻を示す。また、$\bm{M}$は状態ベクトルを発展させる関数、ここではCFDの支配方程式のことを指す。予測値の平均と不確かさは以下に示すアンサンブル平均と誤差共分散行列で表される。
+\begin{equation}
+\overline{\bm{x}^{f}} = \frac{1}{N}\sum_{i=1}^{N}\bm{x}^{f(i)}
+\end{equation}
+\begin{equation}
+\bm{P}^{f} = \frac{1}{N-1}\delta\bm{X}^{f}(\delta\bm{X}^{f})^{T}
+\end{equation}
+
+
+
+\ifSubfilesClassLoaded{
+\bibliographystyle{cs2srt}
+\bibliography{./mybib.bib}
+}{}
+
+\end{document}

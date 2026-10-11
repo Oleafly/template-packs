@@ -1,0 +1,92 @@
+\documentclass[a4paper,11pt]{jreport}
+
+% slis修論のスタイルシート
+\usepackage{Master_ja/masterThesisJa-Ja}
+
+% 画像読み込み用の定番パッケージ
+\usepackage[dvipdfmx]{graphicx}
+
+% 画像が多くなってタイプセットに時間がかかるときはこっちに切り替える
+% \usepackage[dvipdfmx, draft]{graphicx}
+
+% texファイルの分割のためのパッケージ
+\usepackage{subfiles}
+
+% 本文中のURLにハイパーリンクを設定するパッケージ
+\usepackage{url}
+
+% 題目提出したら反映させましょう
+\maintitle{日本語タイトル}{English Title}
+\publish{2020}{03}
+\student{201821000}{筑波 太郎}{Taro TSUKUBA}
+
+% 要旨
+\input{./chapter/00_abst}
+
+% 指導教員の名前
+\advisors{筑波　花子}{筑波　次郎}
+
+\begin{document}
+
+% masterThesisJa.styで表紙・英表紙・抄録を作るコマンド
+\makecover
+
+\addtolength{\textheight}{-5mm}	% 本文の下限を5mm上昇
+\setlength{\footskip}{15mm}	% フッタの高さを15mmに設定
+\fontsize{11pt}{15pt}\selectfont
+
+\newpage
+\pagestyle{plain}
+\raggedright
+
+% ページ番号を小文字のローマ数字にする
+\pagenumbering{roman} % I, II, III, IV 
+
+% 目次を表示
+\tableofcontents
+\newpage
+
+% 図目次を表示
+\listoffigures
+\newpage
+
+% 表目次を表示
+\listoftables
+\newpage
+
+% 本文
+\parindent=1zw	% インデントを1文字分に設定
+\pagebreak\setcounter{page}{1}
+\pagenumbering{arabic} % 1,2,3
+\pagestyle{plain}
+
+% はじめに
+\subfile{chapter/01_intro}
+
+% 手法
+\subfile{chapter/02_method}
+
+% 結果
+\subfile{chapter/03_result}
+
+% 考察
+\subfile{chapter/04_discussion}
+
+% まとめ
+\subfile{chapter/05_conclusion}
+
+% 謝辞
+\chapter*{謝辞}
+\input{./chapter/99_thanks}
+
+% 目次に謝辞を表示させる
+\addcontentsline{toc}{chapter}{\numberline{}謝辞}
+
+\renewcommand{\bibname}{参考文献}
+\bibliographystyle{junsrt}
+\bibliography{ref}
+
+%　目次に参考文献を表示させる
+\addcontentsline{toc}{chapter}{\numberline{}参考文献}
+
+\end{document}

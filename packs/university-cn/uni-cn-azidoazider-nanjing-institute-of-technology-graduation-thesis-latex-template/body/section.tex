@@ -1,0 +1,74 @@
+\section{公式}
+
+数学论文必然涉及不少数学公式的使用。下面简单介绍一个可能用得上的数学环境。
+
+首先是行内公式，例如 $ \theta $ 是角度。行内公式使用 \verb|$  $| 包裹。
+
+行间公式不需要编号的可以使用 \verb|\[  \]| 包裹，例如
+\[
+E=mc^2
+\]
+
+其中 $ E $ 是能量，$ m $ 是质量，$ c $ 是光速。
+
+如果希望某个公式带编号，并且在后文中引用可以参考下面的写法：
+\begin{equation}
+E=mc^2
+\label{eq:energy}
+\end{equation}
+
+式\cref{eq:energy}是质能方程。
+
+多行公式有时候希望能够在特定的位置对齐，以下是其中一种处理方法。
+\begin{align}
+P & = UI \\
+& = I^2R
+\end{align}
+
+\verb|&| 是对齐的位置， \verb|&| 可以有多个，但是每行的个数要相同。
+
+矩阵的输入也不难。
+\[
+\mathbf{X} = \left(
+    \begin{array}{cccc}
+    x_{11} & x_{12} & \ldots & x_{1n}\\
+    x_{21} & x_{22} & \ldots & x_{2n}\\
+    \vdots & \vdots & \ddots & \vdots\\
+    x_{n1} & x_{n2} & \ldots & x_{nn}\\
+    \end{array} \right)
+\]
+
+分段函数这些可以用 \verb|case| 环境，但是它要放在数学环境里面。
+\[
+f(x) =
+    \begin{cases}
+        0 &  x \text{为无理数} ,\\
+        1 &  x \text{为有理数} .
+    \end{cases}
+\]
+
+在数学环境里面，字体用的是数学字体，一般与正文字体不同。假如要公式里面有个别文字，则需要把这部分放在 \verb|text| 环境里面，即 \verb|\text{文本环境}| 。
+
+公式中个别需要加粗的字母可以用 \verb|$\bm{math symbol}$| 。如 $ \alpha a\bm{\alpha a} $ 。
+
+以上仅简单介绍了基础的使用，对于更复杂的需求，可以阅读相关的宏包手册，如 \href{http://texdoc.net/texmf-dist/doc/latex/amsmath/amsldoc.pdf}{amsmath}。复杂的公式也不难打出。
+
+\begin{equation}\begin{aligned}
+P(y\mid X,\beta,\sigma^2)P(\beta)P(\sigma^2) & =\prod_{i=1}^n\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(y_i-x_i\beta)^2}{2\sigma^2}\right)\times\mathcal{N}(\beta\mid0,\tau^2) \\
+ & \times\text{Inverse-Gamma}(\sigma^2\mid a,b)
+\end{aligned}\end{equation}
+
+% \begin{equation}
+\begin{align}
+    \mathbf{r}_\odot(t)  = & \mathbf{r}_0  + \mathbf{v}_0(t-t_0) + \frac{1}{2}\mathbf{a}_0(t-t_0)^2 + \frac{1}{6}\mathbf{j}_0(t-t_0)^3 \\
+      &  + \int_{t_0}^t\int_{t_0}^\tau\left[\sum_{k=1}^4\mathbf{a}_k(\tau') + \mathcal{O}(c^{-4})\right]d\tau'd\tau \quad \text{（日心惯性系）} \\
+      \mathbf{r}_\oplus(t) = & \left[\mathbf{r}_\odot(t) - \mathbf{R}_\odot^\oplus(t)\right] \cdot \mathbf{R}_{prec}(t) + \Delta\mathbf{r}_{nut}(t)\quad \text{（地心惯性系）}
+\end{align}
+% \end{equation}
+
+
+
+希腊字母这些如果不熟悉，可以去查找符号文件 \href{http://mirrors.ctan.org/info/symbols/comprehensive/symbols-a4.pdf}{symbols-a4.pdf} ，也可以去 \href{http://detexify.kirelabs.org/classify.html}{detexify} 网站手写识别。另外还有数学公式识别软件 \href{https://mathpix.com/}{mathpix} 。
+
+\textbf{出于工作量，本模板未定义 definition、theorem 、lemma、corollary、assumption、conjecture、axiom、principle、problem、example、proof、solution 等环境，需要者可以自行添加。}
+

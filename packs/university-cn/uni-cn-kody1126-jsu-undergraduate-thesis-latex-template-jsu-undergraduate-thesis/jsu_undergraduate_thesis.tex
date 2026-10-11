@@ -1,0 +1,749 @@
+% =============================================================================
+% 吉首大学本科生毕业论文 LaTeX 模板
+% Author: Kody
+% Repository: https://github.com/kodyyu1126/JSU-Undergraduate-Thesis-LaTeX-Template
+% Compiler: XeLaTeX
+% =============================================================================
+
+\documentclass[12pt, a4paper, fontset=none]{ctexart}
+\renewcommand{\baselinestretch}{1.5} % 全文 1.5 倍行距
+
+% 字体：优先使用 Windows 系统字体，其次使用 macOS 本地字体，最后使用项目 fonts/ 目录。
+% 请使用 XeLaTeX 编译；Windows 系统字体名称为 SimSun、SimHei、KaiTi、FangSong 和 LiSu。
+\newcommand{\configuretimesfont}[1]{%
+  \setmainfont[
+    Path=#1,
+    BoldFont={Times New Roman Bold.ttf},
+    ItalicFont={Times New Roman Italic.ttf},
+    BoldItalicFont={Times New Roman Bold Italic.ttf}
+  ]{Times New Roman.ttf}%
+  \newfontfamily\coverlatin[
+    Path=#1,
+    BoldFont={Times New Roman Bold.ttf},
+    ItalicFont={Times New Roman Italic.ttf},
+    BoldItalicFont={Times New Roman Bold Italic.ttf}
+  ]{Times New Roman.ttf}%
+}
+\newcommand{\configuresongtifont}[1]{%
+  \setCJKmainfont[
+    Path=#1,
+    FontIndex=3,
+    BoldFont=Songti.ttc,
+    BoldFeatures={FontIndex=1}
+  ]{Songti.ttc}%
+  \setCJKfamilyfont{zhsong}[
+    Path=#1,
+    FontIndex=3,
+    BoldFont=Songti.ttc,
+    BoldFeatures={FontIndex=1}
+  ]{Songti.ttc}%
+  \setCJKfamilyfont{zhfs}[Path=#1]{Songti.ttc}%
+  \setCJKfamilyfont{zhkai}[Path=#1]{Songti.ttc}%
+}
+\newcommand{\configurewindowscjkfonts}{%
+  \setCJKmainfont[BoldFont={SimHei},ItalicFont={KaiTi}]{SimSun}%
+  \setCJKfamilyfont{zhsong}{SimSun}%
+  \setCJKfamilyfont{zhhei}{SimHei}%
+  \setCJKfamilyfont{zhfs}{FangSong}%
+  \setCJKfamilyfont{zhkai}{KaiTi}%
+}
+
+% 仅在 Windows 上启用 Windows 字体名；避免其他系统将缺失字体错误映射到替代字体。
+\newif\ifwindowsplatform
+\ExplSyntaxOn
+\sys_if_platform_windows:TF
+  {\windowsplatformtrue}
+  {\windowsplatformfalse}
+\ExplSyntaxOff
+\newif\ifwindowschinesefonts
+\ifwindowsplatform
+  \IfFileExists{C:/Windows/Fonts/simsun.ttc}{%
+    \windowschinesefontstrue
+  }{%
+    \windowschinesefontsfalse
+  }%
+\else
+  \windowschinesefontsfalse
+\fi
+
+% 西文字体：Windows 系统字体 → macOS 本地字体 → 项目内字体文件。
+\ifwindowsplatform
+  \IfFileExists{C:/Windows/Fonts/times.ttf}{%
+    \setmainfont{Times New Roman}%
+    \newfontfamily\coverlatin{Times New Roman}%
+  }{%
+    \configuretimesfont{fonts/}%
+  }%
+\else
+  \IfFileExists{/System/Library/Fonts/Supplemental/Times New Roman.ttf}{%
+    \configuretimesfont{/System/Library/Fonts/Supplemental/}%
+  }{%
+    \configuretimesfont{fonts/}%
+  }%
+\fi
+
+% 中文正文字体：Windows 系统字体 → macOS 本地字体 → 项目内字体文件。
+\ifwindowschinesefonts
+  \configurewindowscjkfonts
+\else
+  \IfFileExists{/System/Library/Fonts/Supplemental/Songti.ttc}{%
+    \configuresongtifont{/System/Library/Fonts/Supplemental/}%
+  }{%
+    \configuresongtifont{fonts/}%
+  }%
+\fi
+\ifwindowschinesefonts
+  \setCJKsansfont{SimHei}%
+\else
+  \IfFileExists{/System/Library/Fonts/STHeiti Medium.ttc}{%
+    \setCJKsansfont[Path=/System/Library/Fonts/,FontIndex=1]{STHeiti Medium.ttc}%
+    \setCJKfamilyfont{zhhei}[Path=/System/Library/Fonts/,FontIndex=1]{STHeiti Medium.ttc}%
+  }{%
+    \setCJKsansfont[Path=fonts/,FontIndex=1]{STHeiti Medium.ttc}%
+    \setCJKfamilyfont{zhhei}[Path=fonts/,FontIndex=1]{STHeiti Medium.ttc}%
+  }%
+\fi
+\providecommand{\songti}{\CJKfamily{zhsong}}
+\providecommand{\heiti}{\CJKfamily{zhhei}}
+\providecommand{\fangsong}{\CJKfamily{zhfs}}
+\providecommand{\kaishu}{\CJKfamily{zhkai}}
+
+% 封面字体同样按 Windows → macOS → 项目内字体文件的顺序选择。
+\ifwindowschinesefonts
+  \setCJKfamilyfont{coverhei}[AutoFakeBold=3]{SimHei}%
+\else
+  \IfFileExists{/System/Library/Fonts/STHeiti Medium.ttc}{%
+    \setCJKfamilyfont{coverhei}[Path=/System/Library/Fonts/,FontIndex=1,AutoFakeBold=3]{STHeiti Medium.ttc}%
+  }{%
+    \setCJKfamilyfont{coverhei}[Path=fonts/,AutoFakeBold=3]{黑体.ttf}%
+  }%
+\fi
+\ifwindowschinesefonts
+  \IfFileExists{C:/Windows/Fonts/lisu.ttf}{%
+    \setCJKfamilyfont{coverlishu}{LiSu}%
+  }{%
+    \setCJKfamilyfont{coverlishu}{SimSun}%
+  }%
+\else
+  \IfFileExists{/System/Library/AssetsV2/com_apple_MobileAsset_Font8/70875a1270987c17cfd6f40cd3d755ec04d03b33.asset/AssetData/Baoli.ttc}{%
+    \setCJKfamilyfont{coverlishu}[Path=/System/Library/AssetsV2/com_apple_MobileAsset_Font8/70875a1270987c17cfd6f40cd3d755ec04d03b33.asset/AssetData/]{Baoli.ttc}%
+  }{%
+    \setCJKfamilyfont{coverlishu}[Path=fonts/]{Baoli.ttc}%
+  }%
+\fi
+\ifwindowschinesefonts
+  \setCJKfamilyfont{coverlabelsong}{SimSun}%
+\else
+  \IfFileExists{/System/Library/Fonts/Supplemental/Songti.ttc}{%
+    \setCJKfamilyfont{coverlabelsong}[Path=/System/Library/Fonts/Supplemental/,FontIndex=0]{Songti.ttc}%
+  }{%
+    \setCJKfamilyfont{coverlabelsong}[Path=fonts/,FontIndex=0]{Songti.ttc}%
+  }%
+\fi
+\newcommand{\coverheiti}{\CJKfamily{coverhei}}
+\newcommand{\coverlishu}{\CJKfamily{coverlishu}}
+\newcommand{\coverlabel}{\CJKfamily{coverlabelsong}}
+\newlength{\thesispaperwidth}
+\newlength{\thesispaperheight}
+
+\usepackage{lipsum} % 宏包生成的测试段落是拉丁文，主要用于测试文档的排版格式，没有实际的语义内容
+
+%% 加载必要的宏包
+\usepackage{geometry} % 控制页边距
+\usepackage{fancyhdr} % 自定义页眉和页脚
+\usepackage[titles]{tocloft} % 目录定制宏包，目录格式由文档类的标题样式控制
+\usepackage{amsmath} % 数学公式
+\usepackage[ruled,vlined]{algorithm2e} % 算法环境
+\usepackage{comment} % 多行注释
+\usepackage{enumitem} %设置列表项目间距
+\usepackage{xcolor} % 颜色设置
+\usepackage{setspace} % 行距设置
+
+
+%% 表格与图像宏包
+\usepackage{caption}     % 自定义表格和图片标题格式 
+\usepackage{array}       % 表格格式控制
+\usepackage{graphicx}    % 插入图片
+\graphicspath{{figures/}}  % 图片存储路径
+\usepackage{float}       % 图片浮动
+\usepackage{subcaption}  % 提供子图环境
+\usepackage{tabu}        % 表格插入
+\usepackage{multicol}    % 合并多列
+\usepackage{multirow}    % 合并多行
+\usepackage{makecell}    % 三线表-竖线
+\usepackage{booktabs}    % 三线表-短细横线
+
+
+%% 页面设置
+% 页边距
+\geometry{top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm}
+% 页眉页脚
+\usepackage{refcount} % 获取页码
+\usepackage{lastpage} % 总页码
+\pagestyle{fancy} 
+\setlength{\headheight}{22pt}
+\fancyhf{} %清空默认页眉
+\fancyhead[C]{\heiti \zihao{-5} 吉首大学本科生毕业论文}
+\fancyfoot[C]{\zihao{-5}\rmfamily\thepage} %页脚
+\fancypagestyle{tocstyle}{%
+  \fancyhf{}
+  \fancyhead[C]{\heiti \zihao{-5} 吉首大学本科生毕业论文}
+  \renewcommand{\headrulewidth}{0.4pt}
+}
+
+
+%% 一二三级标题格式设置
+\ctexset{
+    section = {
+        format = \heiti\zihao{-2}\centering, % 小二号黑体居中
+        name = {第,章},
+        aftername = \hspace{1em}, % 编号后空一个全角空格
+        beforeskip = 0pt,
+        afterskip = \baselineskip,
+    },
+    subsection = {
+        format = \heiti\zihao{3}, % 小三号黑体
+        aftername = \hspace{1em}, % 编号后空一个全角空格
+        indent = 0pt,
+        beforeskip = 12pt,
+        afterskip = 12pt,
+    },
+    subsubsection = {
+        format = \heiti\zihao{-4}, % 小四号黑体
+        aftername = \hspace{1em}, % 编号后空一个全角空格
+        indent = 0pt,
+        beforeskip = 0pt,
+        afterskip = 0pt,
+    },
+}
+% 带编号的一级标题自动另起一页；无编号标题（如目录、附录）不受影响。
+\let\thesissection\section
+\RenewDocumentCommand{\section}{s o m}{%
+  \IfBooleanTF{#1}{%
+    \IfNoValueTF{#2}{\thesissection*{#3}}{\thesissection*[#2]{#3}}%
+  }{%
+    \clearpage
+    \vspace*{-23pt}% 与无编号一级标题保持相同的顶部间距
+    \IfNoValueTF{#2}{\thesissection{#3}}{\thesissection[#2]{#3}}%
+  }%
+}
+
+
+%% 表格、图像、公式设置
+\DeclareCaptionFont{heiti}{\heiti}
+\AtBeginEnvironment{tabular}{\small\songti} % 表格内容：五号宋体，英文沿用 Times New Roman
+% 表、图标题
+\captionsetup[table]{
+  font = {heiti, small}, % 黑体五号
+  labelsep = quad, % 表序与表题之间加一个空格
+  justification = centering, % 标题居中
+  singlelinecheck = on % 单行标题自动居中
+}
+\captionsetup[figure]{
+  font = {heiti, small}, % 黑体五号
+  labelsep = quad, 
+  justification = centering 
+}
+% 图、表按全文顺序编号；公式保留按章编号
+\numberwithin{equation}{section}
+\renewcommand{\thefigure}{\arabic{figure}}
+\renewcommand{\thetable}{\arabic{table}}
+\renewcommand{\theequation}{\arabic{section}-\arabic{equation}}
+\setlength{\intextsep}{.5\baselineskip}
+\setlength{\textfloatsep}{.5\baselineskip}
+\setlength{\floatsep}{.5\baselineskip}
+% 表格内容
+\let\oldtabular\tabular % 保存默认的 \tabular 命令
+\renewcommand{\tabular}{\small\songti\oldtabular} % 自动使用五号宋体
+
+
+%% 参考文献格式设置
+\usepackage[super,square,sort&compress]{natbib} % 显示为上标+方括号
+\usepackage{gbt7714}
+\usepackage{ragged2e} % 提供\justifying命令
+% 覆盖gbt7714的字体设置
+\makeatletter
+\renewcommand{\NAT@bibsetnum}[1]{%
+    \settowidth\labelwidth{\@biblabel{#1}}%
+    \setlength{\leftmargin}{\labelwidth}%
+    \addtolength{\leftmargin}{\labelsep}%
+    \setlength{\itemsep}{0pt} % 取消条目间距
+    \setlength{\parsep}{0pt}  % 取消段落间距
+    \justifying 
+    \songti\zihao{-4} % 中文宋体小四，英文沿用 Times New Roman
+}
+\makeatother
+% 引用样式
+\bibliographystyle{gbt7714-numerical} % 使用国标样式
+\renewcommand{\bibfont}{\songti\zihao{-4}} % 中文宋体小四，英文 Times New Roman
+\renewcommand{\bibsection}{%
+    \vspace*{-23pt}%
+    \section*{\refname}%
+}
+% 重新定义引用编号的分隔符为逗号
+\makeatletter
+\renewcommand{\NAT@sep}{,} 
+\makeatother
+
+
+%% 目录页设置
+% “目录”二字格式
+\renewcommand{\contentsname}{目\hspace{2em}录}
+\renewcommand{\cfttoctitlefont}{\hfill\heiti\zihao{-2}} % 小二黑体居中
+\renewcommand{\cftaftertoctitle}{\hfill\mbox{}\vspace{.55\baselineskip}}
+\setlength{\cftbeforetoctitleskip}{13ex}
+
+% 设置各级目录项格式
+\setcounter{tocdepth}{2} % 目录只显示到二级标题
+\renewcommand{\cftdotsep}{1.5} % 紧凑点引导线
+\setlength{\cftbeforesecskip}{0pt}
+\setlength{\cftbeforesubsecskip}{0pt}
+\newcommand{\tighttocdotfill}{\cleaders\hbox to .5em{\hss .}\hfill}
+% 一级标题：小四号黑体，不缩进
+\renewcommand{\cftsecleader}{\tighttocdotfill} % 右端收紧的点引导线
+\renewcommand{\cftsecfont}{\heiti\zihao{-4}}
+\renewcommand{\cftsecpagefont}{\heiti\zihao{-4}} % 页码字体
+\renewcommand{\cftsecfillnum}[1]{%
+  {\cftsecleader\hbox{.}}\nobreak{\cftsecpagefont #1}\cftsecafterpnum\par
+}
+\setlength{\cftsecindent}{0em} % 顶格
+\renewcommand{\cftsecpresnum}{}
+\renewcommand{\cftsecaftersnum}{\hspace{1em}}
+\setlength{\cftsecnumwidth}{4.6em}
+% 二级标题：小四号黑体，缩进3汉字
+\renewcommand{\cftsubsecfont}{\heiti\zihao{-4}}
+\renewcommand{\cftsubsecpagefont}{\heiti\zihao{-4}}
+\renewcommand{\cftsubsecleader}{\tighttocdotfill}
+\renewcommand{\cftsubsecfillnum}[1]{%
+  {\cftsubsecleader\hbox{.}}\nobreak{\cftsubsecpagefont #1}\cftsubsecafterpnum\par
+}
+\setlength{\cftsubsecindent}{2em}
+\setlength{\cftsubsecnumwidth}{2.5em}
+
+
+% 超链接设置(最后加载）
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black, 
+    urlcolor=black
+}
+
+
+% ================正文开始===================
+\begin{document}
+
+% ============封面页===========
+\setlength{\thesispaperwidth}{\paperwidth}
+\setlength{\thesispaperheight}{\paperheight}
+\setlength{\paperwidth}{8.5in}
+\setlength{\paperheight}{11in}
+\pdfpagewidth=\thesispaperwidth
+\pdfpageheight=\thesispaperheight
+\newgeometry{left=2.1cm,right=2.2cm,top=2.2cm,bottom=2.5cm}
+\pagestyle{plain}
+\pagenumbering{gobble}
+\renewcommand{\baselinestretch}{1}\selectfont
+
+\begin{figure}[t]
+  \parbox[b]{2cm}{
+    \includegraphics[width=3cm]{figures/jishou-university-seal-bw.png}
+  }
+  \parbox[b]{9cm}{
+    \hspace{5cm}
+    \includegraphics[height=2.3cm]{figures/jishou-university-wordmark.jpg}
+    \vskip 0.4cm
+  }
+\end{figure}
+
+\parbox[b]{16cm}{
+  \begin{quotation}
+    \hspace{3.4cm}
+    {\coverlatin\zihao{5}\textbf{\LARGE JISHOU UNIVERSITY}}
+  \end{quotation}
+}
+
+\begin{center}
+  \vspace{0.6cm}
+  \vspace{2\baselineskip}
+  \hspace{0.5cm}{\coverheiti\fontsize{47pt}{1.7cm}\bfseries
+  本\hspace{0.35cm}科\hspace{0.35cm}生\hspace{0.35cm}毕\hspace{0.35cm}业\hspace{0.35cm}论\hspace{0.35cm}文}
+\end{center}
+\vspace{1.8cm}
+
+\renewcommand\arraystretch{1.5}
+% ==================== 封面信息：请在这里修改 ====================
+% 单行题目：\coverthesistitle{单行题目}
+% 双行题目：\coverthesistitle{第一行题目}[第二行题目]
+% 第二行参数存在时，模板会自动增加第二条题目横线。
+\NewDocumentCommand{\coverthesistitle}{m o}{%
+  {\coverlabel\hspace{0.2cm}题\hspace{1.2cm} 目\hspace{0.06cm}：} & \multicolumn{3}{c}{#1} \\ \cmidrule{2-4}
+  \IfValueT{#2}{& \multicolumn{3}{c}{#2} \\ \cmidrule{2-4}}%
+}
+% 修改作者、学号、学院、专业年级、导师、职称和完成时间：
+\newcommand{\coverauthorname}{余同学}
+\newcommand{\coverstudentid}{202240XXXX}
+\newcommand{\covercollege}{计算机科学与工程学院}
+\newcommand{\covermajorgrade}{数据科学与大数据技术 2022级}
+\newcommand{\coveradvisor}{鲁老师}
+\newcommand{\coveradvisortitle}{讲师}
+\newcommand{\coverdate}{2026年7月23日}
+\begin{table}[htbp]\large
+  \centering
+  \hspace{0.25cm}% 扩展右侧填写区，同时保持整个信息栏居中。
+  % 左侧标签为加粗宋体；填写内容为正文同款普通宋体。
+  \coverlatin\songti
+  \oldtabular{cp{3.75cm}c>{\centering\arraybackslash}p{2.8cm}}
+    % 修改论文题目：单行时保留下一行；过长题目可使用下面注释中的双行示例。
+    \coverthesistitle{吉首大学本科生毕业论文\LaTeX{}模板}
+    % \coverthesistitle{物联网环境下 MQTT 协议的安全性分析}[与改进研究] %双栏注释，在{}后加[]即可。
+    {\coverlabel\hspace{0.2cm}作\hspace{1.2cm} 者\hspace{0.06cm}：} & \multicolumn{3}{c}{\coverauthorname} \\ \cmidrule{2-4}
+    {\coverlabel\hspace{0.2cm}学\hspace{1.2cm} 号\hspace{0.06cm}：} & \multicolumn{3}{c}{\coverstudentid} \\ \cmidrule{2-4}
+    {\coverlabel\hspace{0.2cm}所\hspace{0.22cm}属\hspace{0.22cm}学\hspace{0.22cm}院\hspace{0.06cm}：} & \multicolumn{3}{c}{\covercollege} \\ \cmidrule{2-4}
+    {\coverlabel\hspace{0.2cm}专\hspace{0.22cm}业\hspace{0.22cm}年\hspace{0.22cm}级\hspace{0.06cm}：} & \multicolumn{3}{c}{\covermajorgrade} \\ \cmidrule{2-4}
+    {\coverlabel\hspace{0.2cm}指\hspace{0.22cm}导\hspace{0.22cm}教\hspace{0.22cm}师\hspace{0.06cm}：} & \multicolumn{1}{>{\centering\arraybackslash}p{3.75cm}}{\coveradvisor} & {\coverlabel 职\hspace{0.55cm} 称：} & \coveradvisortitle \\ \cmidrule{2-2}\cmidrule{4-4}
+    {\coverlabel\hspace{0.2cm}完\hspace{0.22cm}成\hspace{0.22cm}时\hspace{0.22cm}间\hspace{0.06cm}：} & \multicolumn{3}{c}{\coverdate} \\ \cmidrule{2-4}
+  \endtabular
+\end{table}
+
+\vspace{2.55cm}
+\begin{center}
+  \coverlishu\bfseries\zihao{-2}\LARGE\textbf{吉首大学教务处制}
+\end{center}
+
+\clearpage
+\renewcommand{\arraystretch}{1}
+\setlength{\paperwidth}{\thesispaperwidth}
+\setlength{\paperheight}{\thesispaperheight}
+\newgeometry{top=2.5cm,bottom=2.5cm,left=2.6cm,right=2.5cm}
+\pdfpagewidth=\thesispaperwidth
+\pdfpageheight=\thesispaperheight
+\pagestyle{fancy}
+\renewcommand{\baselinestretch}{1.5}\selectfont
+
+
+% ============目录页===========
+{\color{white} ·}
+\vspace{-1.5em}
+\thispagestyle{tocstyle}
+{\setstretch{1.25}\tableofcontents}
+\clearpage
+\pagenumbering{Roman}
+
+
+% ============中文摘要页===========
+{\color{white} ·} 
+\vspace{-3em}
+
+\begin{center}
+  {\heiti\zihao{-2}吉首大学本科生毕业论文\LaTeX{}模板\par}
+  \vspace{\baselineskip}
+  {\heiti\zihao{-2}摘要\par}
+  \vspace{\baselineskip}
+\end{center}
+\phantomsection
+\addcontentsline{toc}{section}{摘\hspace{1em}要}
+
+{\songti\zihao{-4}
+论文的摘要是对论文研究内容和成果的高度概括。摘要应对论文所研究的问题及其研究目的进行描述，对研究方法和过程进行简单介绍，对研究成果和所得结论进行概括。摘要应具有独立性和自明性，其内容应包含与论文全文同等量的主要信息，使读者即使不阅读全文，也能通过摘要了解论文的总体内容和主要成果。
+
+论文摘要的书写应力求精确、简明。切忌写成对论文书写内容进行提要的形式，尤其要避免“第1章……；第2章……；……”这种或类似的陈述方式。
+
+关键词是为了文献标引工作、用以表示全文主要内容信息的单词或术语。关键词不超过5个，每个关键词之间用分号分隔。
+
+\noindent {\heiti 关键词：}{\songti 关键词1；关键词2；关键词3；关键词4；关键词5\par}
+}
+
+
+\clearpage
+
+
+% ============英文摘要页===========
+\newfontfamily\engfont{Times New Roman} 
+{\color{white} ·} 
+\vspace{-3em}
+
+\begin{center}
+  {\engfont\zihao{-2}Jishou University Undergraduate Graduation Design \LaTeX{} Template\par}
+  \vspace{\baselineskip}
+  {\engfont\zihao{-2}Abstract\par}
+  \vspace{\baselineskip}
+\end{center}
+\phantomsection
+\addcontentsline{toc}{section}{Abstract}
+{\engfont\zihao{-4}
+\hspace*{2em}An abstract of a dissertation is a summary and extraction of research work and contributions. Included in an abstract should be a description of the research topic and research objective, a brief introduction to the methodology and research process, and a summary of the conclusions and contributions of the research. An abstract should be characterized by independence and clarity and carry information equivalent to that of the dissertation. It should convey the general idea and major contributions of the dissertation without requiring the reader to read the full text.
+
+An abstract should be concise and to the point. It is a misunderstanding to make an abstract an outline of the dissertation, and expressions such as “the first chapter”, “the second chapter”, and the like should be avoided.
+
+Keywords are terms used in a dissertation for indexing and reflecting its core information. An abstract may contain a maximum of five keywords, with semicolons used to separate them.
+
+\noindent \textbf{Key words:} Keyword 1；Keyword 2；Keyword 3；Keyword 4；Keyword 5\par
+}
+
+
+% ============正文页===========
+\newpage
+\clearpage
+\pagenumbering{arabic}
+\fancyfoot[C]{\zihao{-5}\rmfamily\thepage}
+
+
+% 第一章：绪论
+\section{绪论}
+
+\subsection{研究背景及意义}
+...(省略内容)
+
+\subsection{国内外研究现状}
+...(省略内容)
+
+\subsection{文章组织结构}
+本文围绕吉首大学本科生毕业论文\LaTeX{}模板的构建与使用展开。首先对模板的适用场景和论文结构进行概述；随后结合图片、表格和公式示例说明常用排版方法；再介绍参考文献的顺序编码制标注与Bib\TeX{}管理流程；继而说明论文写作与打印要求；最后记录模板更新内容，并对模板的使用与后续完善进行总结和展望。
+
+本文共分为六章，组织结构如下：
+
+1) 第1章为绪论，介绍模板的研究背景及意义、国内外研究现状和文章组织结构。
+
+2) 第2章为图表和公式示例，展示图片、多个分图、三线表以及编号和不编号公式的排版方法。
+
+3) 第3章为引用文献与列表示例，说明顺序编码制、Bib\TeX{}文献库、\verb|\cite{}|命令以及常用列表环境的使用方法。
+
+4) 第4章为论文写作与排版说明，介绍论文的主要组成部分、绪论、正文和结论的写法，以及PDF文件的打印要求。
+
+5) 第5章为模板更新记录，用于记录模板版本、更新时间和主要修改内容。
+
+6) 第6章为总结与展望，对模板的主要功能进行总结，并说明后续可完善的方向。
+
+正文之后依次列出参考文献、致谢以及附录“攻读学士学位期间的研究成果”。
+
+
+% 第二章：图表和公式示例
+\section{图表和公式示例}
+
+\subsection{图片示例}
+图片通常在\texttt{figure}环境中使用\verb|\includegraphics|命令插入，如图\ref{fig:example_image_a}所示。建议矢量图片使用PDF格式，例如数据可视化图；照片应使用JPG格式；其他栅格图应使用无损的PNG格式。注意，\LaTeX{}不支持TIFF格式，EPS格式已经过时。
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.55\textwidth]{example-image-a.pdf}
+    \caption{示例图片标题}
+    \label{fig:example_image_a}
+\end{figure}
+
+如果一个图由两个或两个以上分图组成时，各分图分别以(a)、(b)、(c)等作为图序，并须有分图题。推荐使用\texttt{subcaption}宏包处理分图，例如图\ref{fig:example_images_ab}(a)和图\ref{fig:example_images_ab}(b)所示。
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{example-image-a.pdf}
+        \caption{分图A}
+        \label{fig:example_image_a_sub}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{example-image-b.pdf}
+        \caption{分图B}
+        \label{fig:example_image_b_sub}
+    \end{subfigure}
+    \caption{多个分图的示例}
+    \label{fig:example_images_ab}
+\end{figure}
+
+\subsection{表格示例}
+表应具有自明性，表中参数应标明量和单位的符号。为使表格简洁易读，通常采用三线表，如表\ref{tab:sample}所示；必要时可加辅助线，三线表无法清晰表达时可采用其他格式。表序与表题置于表的上方。表单元格中的文字一般应上下、左右居中书写；不宜居中的内容，可采用两端对齐的方式书写。
+\begin{table}[H]
+\caption{表格排版示例}
+\label{tab:sample}
+\centering
+\setlength{\tabcolsep}{1.5em}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{cccc}
+\toprule
+参数名称 & 符号 & 单位 & 示例值 \\
+\midrule
+样本数量 & $n$ & 个 & 1 000 \\
+平均值 & $\bar{x}$ & -- & 12.50 \\
+标准差 & $s$ & -- & 2.35 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{公式示例}
+数学公式可以使用\texttt{equation}和\texttt{equation*}环境。带编号的公式可使用\verb|\eqref|命令引用，引用时应前后带括号，例如式\eqref{eq:sample-linear}。
+\begin{equation}
+    y = ax + b
+    \label{eq:sample-linear}
+\end{equation}
+
+其中，$a$为斜率，$b$为截距。对于无需在正文中引用的数学表达式，可使用不编号的\texttt{equation*}环境，例如：
+\begin{equation*}
+    f(x) = x^2 + 2x + 1
+\end{equation*}
+
+
+% 第三章：引用文献与列表示例
+\section{引用文献与列表示例}
+
+\subsection{引用文献的标注}
+
+这是引用文献的示例\cite{bolton2018customer}。多篇引用示例\cite{majchrzak2016designing,GLXB202112016,XiJinpingReport2022,LiQiangReport2024}。
+
+在引用文献时，可从中国知网、Google Scholar等平台获取文献的Bib\TeX{}格式信息，并将其直接粘贴到\texttt{reference.bib}文件中。粘贴时，请注意删除其中的\texttt{doi}字段，避免文献表中出现不符合学校格式要求的内容。
+
+可以将论文中可能需要引用的文献预先复制到\texttt{reference.bib}中。在正文需要引用的位置使用\verb|\cite{文献键}|命令即可，例如\verb|\cite{bolton2018customer}|；参考文献列表会按照正文中首次引用的顺序自动生成。
+
+注意Bib\TeX{}的编译过程为LaTeX--Bib\TeX--LaTeX。使用本模板的XeLaTeX{}编译方式时，建议依次执行\texttt{xelatex $\rightarrow$ bibtex $\rightarrow$ xelatex $\rightarrow$ xelatex}；编译顺序不正确会导致文献引用和参考文献列表生成有误。
+
+本模板采用顺序编码制，并通过\texttt{natbib}宏包自动生成方括号上标引用。连续的多篇文献会自动压缩为范围形式，无需手动添加上标或方括号。
+
+\subsection{列表环境示例}
+
+LaTeX{}中常用的列表环境包括无序列表\texttt{itemize}和有序列表\texttt{enumerate}。无序列表默认使用圆点作为项目符号，适合并列说明的内容，例如：
+
+\begin{itemize}
+  \item 第一点
+  \item 第二点
+  \item 第三点
+\end{itemize}
+
+有序列表使用连续编号，适合存在步骤或顺序关系的内容。下面的\texttt{enumerate}示例采用“1、2、3”的编号形式：
+
+\begin{enumerate}[label=\arabic*、,leftmargin=4em]
+  \item 第一点
+  \item 第二点
+  \item 第三点
+\end{enumerate}
+
+
+% 第四章：论文写作与排版说明
+\section{论文写作与排版说明}
+
+吉首大学学位论文一般应由8个主要部分组成，依次为：1. 封面；2. 目录；3. 中文摘要；4. 英文摘要（Abstract）；5. 正文（含绪论和总结与展望）；6. 参考文献；7. 致谢；8. 附录。以上各部分均独立成篇，每一章和每一部分均应另起一页。
+
+文中首次出现英文术语或英文简称时，应先写出中文全称，并在圆括号内依次给出英文全称和英文简称；后文再次出现时，可直接使用该简称。例如，“消息队列遥测传输协议（Message Queuing Telemetry Transport，MQTT）”在首次出现时应采用上述写法，后续可直接写作“MQTT”。
+
+\subsection{绪论的写法}
+
+一篇学位论文的绪论大致包含以下几个部分：选题背景及意义、国内外研究现状和论文结构安排。
+
+\begin{itemize}
+  \item 选题背景及意义：论述清楚为什么选择该题目进行研究，即阐述该研究对学科发展的贡献，以及对国计民生的理论意义和现实意义等。
+  \item 国内外研究现状：对本研究主题范围内的文献进行综合述评。“述”的同时应有“评”，指出现有研究的状态和仍待解决的问题，并说明本研究的探索性内容。
+  \item 论文结构安排：介绍本论文的整体写作结构和各章主要内容。
+\end{itemize}
+
+\subsection{正文的写法}
+
+正文是论文作者开展研究和论证的核心内容，不能将他人研究成果不加区分地掺和其中。已经在绪论的文献综述部分介绍过的内容，正文中不宜重复。各章之间应具有有机联系，并符合清晰的逻辑顺序。
+
+\subsection{结论的写法}
+
+结论是对论文主要研究结果和论点的提炼与概括，应精炼、准确、完整，使读者能够全面了解论文的意义、目的和主要工作内容。结论是最终的、总体性的结论，不是正文各章小结的简单重复。结论应包括论文的核心观点，重点阐述作者的创造性工作及所取得研究成果在本领域中的地位、作用和意义，交代研究工作的局限，并提出未来工作的意见或建议。在评价自己的研究成果时，应严格区分自己取得的成果与指导教师及他人的学术成果，做到实事求是，避免使用缺乏证据支持的绝对化表述。
+
+\subsection{打印说明}
+
+打印生成的PDF文件时，为保证打印尺寸与学院提供的Word模板一致，请在打印设置中选择“实际大小”，或将“自定义比例”设置为100\%。同时，需自行在封面、目录和摘要后添加空白页。
+
+
+% 第五章：模板更新记录
+\section{模板更新记录}
+本模板参照吉首大学计算机科学与工程学院本科生毕业设计（论文）模板制作，并参考清华大学LaTeX{}模板完成排版方案。该模板主要适用于吉首大学计算机科学与工程学院本科生毕业设计（论文）；由于各学院模板在细节上存在差异，使用者可下载模板后结合所在学院的具体要求自行修改。
+
+\vspace{\baselineskip}
+\noindent 更新记录：
+
+\noindent\hangafter=1\hangindent=5em
+\makebox[5em][l]{2025年}本模板在21级本科生韩同学制作初稿，形成适用于数学与统计学院的模板（可以通过下面链接自行下载），特此致谢。
+
+\noindent\hangafter=1\hangindent=5em
+\makebox[5em][l]{2026年}本模板由22级本科生余同学与导师鲁老师进一步优化和调整，形成适用于计算机科学与工程学院的模板。
+
+\vspace{\baselineskip}
+\noindent 计算机科学与工程学院本科生毕业论文下载链接\\
+\noindent 分享链接：\href{https://ug.link/dxp4800-273d/filemgr/share-download/?id=64e6de2df9c240529c07acf3a577bac7}{{\engfont https://ug.link/dxp4800-273d/filemgr/share-download/?id=64e6de2df9}}\\
+\noindent \href{https://ug.link/dxp4800-273d/filemgr/share-download/?id=64e6de2df9c240529c07acf3a577bac7}{{\engfont c240529c07acf3a577bac7}}\\
+\noindent 访问密码：{\engfont jsu666}。
+
+\vspace{\baselineskip}
+\noindent 数学与统计学院本科生毕业论文下载链接\\
+\noindent 分享链接：\href{https://ug.link/dxp4800-273d/filemgr/share-download/?id=d467efc385e048c0890e4b8d052435ce}{{\engfont https://ug.link/dxp4800-273d/filemgr/share-download/?id=d467efc385}}\\
+\noindent \href{https://ug.link/dxp4800-273d/filemgr/share-download/?id=d467efc385e048c0890e4b8d052435ce}{{\engfont e048c0890e4b8d052435ce}}\\
+\noindent 访问密码：{\engfont jsu666}。\\[\baselineskip]
+\noindent 如在使用过程中遇到问题，欢迎联系：\\
+\noindent QQ：{\engfont 2386157328}。\\
+\noindent 邮箱：{\engfont kody\_yu@stu.jsu.edu.cn}。\\
+\noindent 欢迎各位吉大学子共同维护本模板。\\
+\noindent 改进建议可通过提交{\engfont Issue}或{\engfont PR}反馈。
+
+
+% 第六章：总结与展望
+\section{总结与展望}
+
+\subsection{总结与讨论}
+...(省略内容)
+
+\subsection{未来工作展望}
+...(省略内容)
+
+\clearpage
+
+
+% ============参考文献===========
+\phantomsection
+\addcontentsline{toc}{section}{参考文献}
+\bibliography{reference}     % bib文件名，不要后缀
+
+
+% ============致谢===========
+\clearpage
+\vspace*{-23pt}
+\section*{致谢}
+\phantomsection
+\addcontentsline{toc}{section}{致谢}
+行文至此，我的本科生涯即将落幕。回首四载校园时光，如白驹过隙，转瞬即逝。这段旅程中，有探索知识的执着，有沉淀自我的成长，更有无数温暖相伴的瞬间。值此离别之际，谨以诚挚之心，向所有陪伴与支持我的人致以最诚挚的谢意。
+
+首先，衷心感谢我的导师XXX教授。在论文选题、研究开展以及论文撰写过程中，导师给予了我悉心的指导和耐心的帮助。导师严谨的治学态度、扎实的专业素养以及认真负责的工作作风，使我受益匪浅，也将激励我在今后的学习与工作中不断前行。
+
+其次，感谢始终理解、支持和鼓励我的家人。正是他们无私的付出与默默的陪伴，使我能够坚定地完成学业。感谢一路同行的朋友和室友，与你们共同度过的学习与生活时光，为我的大学生活留下了许多珍贵而美好的回忆。
+
+最后，衷心感谢参与本论文评审和答辩的各位专家、老师。感谢各位老师在百忙之中审阅论文并提出宝贵意见，使我能够进一步发现不足、完善论文。
+
+本课题承蒙国家自然科学基金项目“XXX”（项目编号：XXX）资助，特此致谢。
+
+\noindent（仅为网络示例，可根据论文实际进行撰写，使用时把模板示例内容尽皆删除即可）
+
+祝各位吉大学子毕业快乐，前程似锦！
+
+
+% ============附录===========
+\clearpage
+\vspace*{-23pt}
+\section*{附录\hspace{1em}攻读学士学位期间的研究成果}
+\phantomsection
+\addcontentsline{toc}{section}{附录\hspace{1em}攻读学士学位期间的研究成果}
+% 本人在攻读学士学位期间取得的成果，如果没有相关成果的类别可删除。
+
+\noindent{\heiti\zihao{-4}期刊论文：}
+\begin{enumerate}[label={（\arabic*）},leftmargin=2em,labelsep=.5em,itemsep=.10\baselineskip]
+    \item 作者姓名，合作者姓名．论文题目[J]．期刊名称，年份，卷（期）：起止页码．
+\end{enumerate}
+
+\noindent{\heiti\zihao{-4}会议论文：}
+\begin{enumerate}[label={（\arabic*）},leftmargin=2em,labelsep=.5em,itemsep=.10\baselineskip]
+    \item 作者姓名，合作者姓名．论文题目[C]．会议名称，会议地点，年份：起止页码．
+\end{enumerate}
+
+\noindent{\heiti\zihao{-4}发明专利：}
+\begin{enumerate}[label={（\arabic*）},leftmargin=2em,labelsep=.5em,itemsep=.10\baselineskip]
+    \item 发明人姓名．专利名称：中国，专利号[P]．授权日期．
+\end{enumerate}
+
+\noindent{\heiti\zihao{-4}软件著作权：}
+\begin{enumerate}[label={（\arabic*）},leftmargin=2em,labelsep=.5em,itemsep=.10\baselineskip]
+    \item 著作权人姓名．软件名称V1.0，登记号：软件著作权登记号．
+\end{enumerate}
+
+% ============正文结束============
+\end{document}

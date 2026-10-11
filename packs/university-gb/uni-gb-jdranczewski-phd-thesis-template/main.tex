@@ -1,0 +1,110 @@
+\documentclass[11pt,a4paper,twoside]{report}
+
+\author{Your Name}
+\title{Thesis title}
+\date{}
+
+\input{thesis_style.sty}
+
+% If you only want to include specific sections to speed up compilation,
+% specify a list here.
+%\includeonly{sections/example}
+
+\begin{document}
+
+\begin{titlepage}
+	% Make sure the title page appears in the Table of Contents (TOC)
+	\addcontentsline{toc}{chapter}{Title page}
+	\vspace*{-0.75in}
+	\hspace*{-.25in}
+	% I don't have the license to distribute the actual Imperial logo, please source it from https://brand.imperial.ac.uk/document/36/show/eyJpZCI6Mjg4LCJzY29wZSI6ImFzc2V0OnZpZXciLCJ0aW1lc3RhbXAiOiIxNzcyNDcwMjkxIn0:imperial-college-london:1tHxM2Zuwy9tzqAjfV-YTl6koKG5PeGPwZ67blkqy80 (aim for the CMYK blue logo in the .eps format, better for print) or replace with the appropiate logo for your university.
+	%	\includegraphics[width=0.5\textwidth]{_headers/IMPERIAL_logo_CMYK_Blue_2024.eps}
+	\includegraphics[width=0.5\textwidth]{_headers/fake-Imperial-logo.pdf}
+%	\begin{center}
+		\vspace*{2cm}
+		\makeatletter
+		\begin{spacing}{1.3}
+			\noindent\Huge\color{darker}\scshape\bfseries\@title
+		\end{spacing}
+
+		\vspace{-.3cm}
+		\large
+		\noindent A thesis submitted in partial fulfilment of the requirements for the PhD degree.
+
+		\vspace{1.5cm}
+		\noindent\textbf{\@author} \\
+		\noindent Imperial College London\\
+		Department of Physics\\
+		June 2025
+
+		\makeatother
+
+		\vspace{3.cm}
+		\large
+		\noindent Supervision:
+
+		\vspace{0.7cm}
+		\noindent\textbf{Prof. One} \\
+		\emph{Imperial College London}
+
+		\vspace{0.7cm}
+		\noindent\textbf{Prof. Two} \\
+		\emph{Another University}
+
+		\vspace{0.7cm}
+		\noindent\textbf{Prof. Threee} \\
+		\emph{A Third University}
+
+		\vspace{1.5cm}
+
+%	\end{center}
+\end{titlepage}
+
+% Inlcude the abstract, acknowledgments, etc
+\include{sections/beginning}
+
+% Microtype should be disabled for the table of contents and similar,
+% since it can mess up the alignment of the numbers
+\microtypesetup{protrusion=false}
+
+% TOC and figure list
+\tableofcontents
+\listoffigures
+
+% Acronyms
+\newpage
+\chapter*{Acronyms}
+
+% These are required to add an unnumbered section to the table of contents
+% and display correct headers
+\addcontentsline{toc}{chapter}{Acronyms}
+\markboth{\scshape ACRONYMS}{\scshape ACRONYMS}
+
+\input{sections/acronym_list}
+
+% back to normal microtype settings for the rest of the text
+\microtypesetup{protrusion=true}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Include all your sections here
+\include{sections/example}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Appendix time!
+\appendix
+% Make the chapter headers say "Appendix" instead of "Chapter"
+\renewcommand{\chaptername}{Appendix}
+\include{sections/appendices}
+
+\bibliographystyle{myIEEEtran}
+% we're making the bibliography take a little less space here
+\begin{spacing}{1.25}
+	\small
+	% argument is your BibTeX string definitions and bibliography database(s)
+	% export "library.bib" from Zotero, I recommend looking up BetterBibTeX
+	\bibliography{IEEEabrv,library.bib}
+\end{spacing}
+
+\end{document}

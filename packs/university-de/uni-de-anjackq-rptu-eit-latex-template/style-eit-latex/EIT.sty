@@ -1,0 +1,209 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% RPTU EIT Style for LaTeX Documents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ProvidesPackage{style-eit-latex/EIT}[2022/11/30 by Matthias Jung, Christian De Schryver, edited by Julian Puderbach]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Language Settings and Options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% defines a global token "isGerman" that can also be used in the LaTeX files later 
+\usepackage[english,ngerman]{babel}
+\RequirePackage{etoolbox}
+\newtoggle{isGerman}
+\togglefalse{isGerman}
+
+% set language by options [de] or [en]
+% default is English
+\DeclareOption{en}{\togglefalse{isGerman}}
+\DeclareOption{de}{\toggletrue{isGerman}}
+\ProcessOptions\relax
+
+% language support
+\iftoggle{isGerman}{
+  	\usepackage[ngerman]{babel}   % German language support 
+}{
+	\usepackage[english]{babel} % English language support
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Layout Settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{geometry}
+\geometry{
+	a4paper,
+	top=35.0mm,
+	left=30.0mm,
+	right=20.0mm,
+	bottom=25.0mm,
+	headsep=8mm,
+	footskip=10mm
+}
+
+% Line distance
+\renewcommand{\baselinestretch}{1.20}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Standard Packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Breaking URLs with hyphens
+\RequirePackage[hyphens]{url}
+
+% Header and footer
+\RequirePackage{fancyhdr}
+
+% Math packages
+\RequirePackage{amsmath}
+\RequirePackage{amsfonts, amssymb}
+\RequirePackage{graphicx}
+
+% Enable bold math with \pmb{...}
+\RequirePackage{bm}
+
+% Get correct links for url in bibliography
+\RequirePackage[hidelinks,bookmarks,hypertexnames=false,debug]{hyperref}
+%\RequirePackage{hyperref}
+\RequirePackage{bookmark}
+
+% Balance columns on last page
+\RequirePackage{flushend}
+
+% Nice figures (a) and (b)
+%\RequirePackage[caption=false]{subfig}
+
+% Get nice fractions as \nicefrac{1}{4}
+\RequirePackage{nicefrac}
+ 
+% Get compact lists with compactitem
+\RequirePackage{paralist}
+
+% Get nice tables
+\RequirePackage{booktabs}
+\RequirePackage{multirow}
+\newcommand{\minitab}[2][c]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+\RequirePackage{tabularx}
+\RequirePackage{xltabular}  % for tabularx options with longtables i.e. for glossaries
+\RequirePackage{environ}    % for tabularx longtables in glossaries
+\newcolumntype{Y}{>{\raggedleft\arraybackslash}X}% raggedleft column X
+
+\iftoggle{isGerman}{
+	\RequirePackage[detect-all, output-decimal-marker = {,}]{siunitx}
+}{
+	\RequirePackage[detect-all]{siunitx}
+}
+
+\RequirePackage{threeparttable} % tables with footnotes
+\RequirePackage{makecell}
+\RequirePackage{stfloats} % allow double column table at the bottom
+
+% Clever references that automatically add Figure, Equation, Table, etc.
+\RequirePackage[capitalize]{cleveref}
+
+% Other Packages:
+\RequirePackage{paratype}
+\RequirePackage{titlesec}
+\RequirePackage{titling}
+\usepackage{booktabs}                   % für booktabs style von Tabellen
+\usepackage{tcolorbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Background and RPTU Corporate Design
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Background for title page
+\RequirePackage{eso-pic}    % for flexible Background options
+\RequirePackage{svg}        % for svg graphics
+\usepackage{vcell}          % for vertical alignment in tables
+
+% Brand Design RPTU including RedHatText:
+\RequirePackage{fontspec}
+
+\setmainfont[ExternalLocation=./style-eit-latex/RedHatFont/fonts/proportional/static/ttf/]{RedHatText-Regular}[%
+Extension = .ttf,
+BoldFont = RedHatText-Bold,                         % default Bold Font
+ItalicFont = RedHatText-Italic,                     % default Italic Font
+BoldItalicFont = RedHatText-BoldItalic,             % default Bold Italic Font
+FontFace={md}{n}{Font=RedHatText-Medium},           % Medium Font
+FontFace={md}{it}{Font=RedHatText-MediumItalic},    % Medium Italic Font
+FontFace={li}{n}{Font=RedHatText-Light},            % Light Font
+FontFace={li}{it}{Font=RedHatText-LightItalic},     % Light Italic Font
+FontFace={bf}{n}{Font=RedHatText-Bold},             % Bold Font
+FontFace={bf}{it}{Font=RedHatText-BoldItalic}]%     % Bold Italic Font
+
+% example for using custom FontFace:
+% {\fontseries{md}\fontshape{n}\selectfont this is an example text for using the RedHatText Medium Font}
+
+\titleformat{\section}{\LARGE\bf\color{rptuschwarz}}{\thesection}{1em}{}
+\titleformat{\subsection}{\Large\bf\color{rptuschwarz}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\large\bf\color{rptuschwarz}}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}{\normalsize\bf\color{rptuschwarz}}{\theparagraph}{1em}{}
+
+% Color definitions from RPTU Brand Manual version 2022-09
+% https://www.startklar2023.de/fileadmin/startklar2023/Brand-Portal/220928_RPTU_Brand_Manual.pdf
+\RequirePackage{color}
+\definecolor{rptublaugrau}{RGB}{80,114,137}
+\definecolor{rptugruengrau}{RGB}{119,182,186}
+\definecolor{rptudunkelblau}{RGB}{4,44,88}
+\definecolor{rptuhellblau}{RGB}{106,178,231}
+\definecolor{rptudunkelgruen}{RGB}{0,107,107}
+\definecolor{rptuhellgruen}{RGB}{38,208,124}
+\definecolor{rptuviolett}{RGB}{76,53,117}
+\definecolor{rptupink}{RGB}{209,56,150}
+\definecolor{rpturot}{RGB}{227,27,76}
+\definecolor{rptuorange}{RGB}{255,162,82}
+\definecolor{rptuschwarz}{RGB}{0,0,0}
+\definecolor{rptuweiss}{RGB}{255,255,255}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Command Definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TODO command:
+\newcommand{\todo}[1]{{\bf \color{rpturot}TODO: [{#1}]}}
+
+% Non-breakable hyphen
+\newcommand{\hyph}{\mbox{-}}
+
+
+% Assert value of reference [when used in images]
+% Usage: \assertRefEqual{label}{expected number}
+\newcommand{\assertRefEqual}[2]{%
+    \begingroup
+        \ifnum \pdfstrcmp{\ref{#1}}{#2\hbox{}} = 0
+            \relax
+        \else
+            \errmessage{Reference #1 expected to be #2, but got \ref{#1}}
+        \fi
+    \endgroup}
+
+
+% Titel generation
+%\newcommand*{\subtitle}[1]{\gdef\@subtitle{#1}}
+%\newcommand*{\@subtitle}{}
+
+%\renewcommand*{\maketitle}{%
+%    \thispagestyle{frontpage}
+%    \vspace{2.5cm}
+%	{\noindent\Huge\bf\color{rptuschwarz}\@title\unskip\strut\par}
+%    {\noindent\LARGE\bf\color{rptuschwarz}\ptc\@subtitle\unskip\strut\par}
+%    {\noindent\color{rptuschwarz}\itshape\@author\unskip\strut\par}
+%    \vspace{1cm}
+%}
+
+
+% Provide \mail command that prints e-mail-adresses as <yyy@yyy.zz> and provides correct link 
+% Usage: \mail{<your e-mail-address>}
+% from: http://tex.stackexchange.com/questions/268/whats-the-best-way-to-write-e-mail-addresses
+\RequirePackage{xstring}
+\newcommand{\thelink}{\@empty}
+\newcommand{\link}[2]{%
+  \IfSubStr{#1}{:}{\renewcommand\thelink{#1}}{\renewcommand\thelink{#1:#2}}%
+  \href{\thelink}{\nolinkurl{#2}}%
+}
+\newcommand{\mail}[1]{
+	\renewcommand\thelink{mailto:#1}
+	<\href{\thelink}{\nolinkurl{#1}}>
+}
+
+\endinput

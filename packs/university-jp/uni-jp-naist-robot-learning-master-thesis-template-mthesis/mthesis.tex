@@ -1,0 +1,110 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ロボットラーニング研究室向け修論テンプレート (Ver. 1.6)
+% 以下のアドレスで最新版が公開されていないか確認してください．
+% https://github.com/naist-robot-learning/master-thesis-template
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,dvipdfmx]{jarticle}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 必要に応じてパッケージを追加．読み込む順番に応じて挙動が変わることがあるので注意．
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}                                     % UTF-8対応
+\usepackage{naist-rll-jmthesis}                                 % ネットに落ちていたものをラボ向けに編集したスタイルファイル
+\usepackage{amsmath, amssymb}                                   % 数式関連
+\usepackage{bm, bbm}                                            % 太字のベクトルと白抜き文字
+\usepackage{siunitx}                                            % SI単位を正しく表記
+\usepackage[dvipdfmx]{graphicx}                                 % 図関連
+\usepackage[dvipdfmx]{color}                                    % 文字色を変えたい (教員に向け変更点などを強調したいときに使う)
+\usepackage[font=footnotesize]{caption}                         % キャプション．(font=footnotesize)はIEEEフォーマットに寄せている．
+\usepackage[font=footnotesize,subrefformat=parens]{subcaption}  % キャプション．(font=footnotesize)はIEEEフォーマットに寄せている．
+\usepackage{enumerate}                                          % enumerateを拡張する
+\usepackage{url}                                                % URL用
+\usepackage{booktabs, multirow}                                 % 表まわり (横罫線のみ表示, 表内のセルを結合可能に)
+\usepackage{algorithm, algorithmicx, algpseudocode}             % 疑似コード用．
+\usepackage[nobreak]{cite}                                      % \cite{}を拡張する．
+\usepackage[dvipdfmx]{hyperref, pxjahyper}                      % ハイパーリンク + PDF見出しの文字化けを防ぐ (\hypersetup{}内は設定)
+\hypersetup{setpagesize=false, bookmarksnumbered=true, bookmarksopen=true, colorlinks=true, linkcolor=black, citecolor=black,}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 新しい命令を定義．必要に応じて追加．
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% refまわり
+\newcommand{\figref}[1]{Fig.~\ref{#1}}                          % 文中で使う
+\newcommand{\figureref}[1]{Figure~\ref{#1}}                     % 文頭でのみ使う
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\algoref}[1]{Algorithm~\ref{#1}}
+\newcommand{\equref}[1]{式(\ref{#1})}
+\newcommand{\secref}[1]{\ref{#1}章}
+\newcommand{\appref}[1]{付録~\ref{#1}}
+% 数式
+\newcommand{\argmax}{\mathop{\rm arg~max}\limits}
+\newcommand{\argmin}{\mathop{\rm arg~min}\limits}
+\DeclareMathOperator*{\inlineargmax}{\rm arg~max}
+\DeclareMathOperator*{\inlineargmin}{\rm arg~min}
+\newcommand{\expected}{{\mathbb{E}}}
+\newcommand{\trace}{{\mathrm{tr}}}
+% 文字色変更 (赤と青だけ簡単に使えるように)
+\newcommand{\red}{\color{red}}
+\newcommand{\blue}{\color{blue}}
+% イディオム
+\newcommand{\etc}{\textit{etc.}}
+\newcommand{\eg}{\textit{e.g.,}~}
+\newcommand{\ie}{\textit{i.e.,}~}
+\newcommand{\naive}{na\"ive }
+\newcommand{\Naive}{Na\"ive }
+\newcommand{\apriori}{\textit{a~priori~}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 修論情報
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{info}
+
+\begin{document}
+% タイトルページ
+\titlepage
+% 審査委員ページ
+\cmemberspage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% アブストラクト (和文，英文)
+\include{tex_files/00_abstract}
+\firstabstract \secondabstract
+% 目次
+\toc \newpage
+% 図と表の目次
+\listoffigures \listoftables \newpage
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{序論} \label{sec: intro}
+\input{tex_files/10_introduction} \newpage
+
+\section{関連研究} \label{sec: rel_work}
+\input{tex_files/20_related_work} \newpage
+
+\section{準備} \label{sec: prelim}
+\input{tex_files/30_preliminary} \newpage
+
+\section{提案手法} \label{sec: proposal}
+\input{tex_files/40_proposal} \newpage
+
+\section{シミュレーション実験} \label{sec: sim_exp}
+\input{tex_files/50_simulation_experiment} \newpage
+
+\section{実機実験} \label{sec: real_exp}
+\input{tex_files/60_real_experiment} \newpage
+
+\section{結論} \label{sec: concl}
+\input{tex_files/70_conclusion.tex} \newpage
+% 謝辞
+\acknowledgements
+\input{tex_files/80_acknowledgement} \newpage
+% 参考文献
+\bibliographystyle{jIEEEtran}
+\bibliography{reference}
+% 付録が不要なら，以下の二行をコメントアウトすること．
+\appendix
+\input{tex_files/90_appendix}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

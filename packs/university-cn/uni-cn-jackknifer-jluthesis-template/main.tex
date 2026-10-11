@@ -1,0 +1,175 @@
+% =========================================================================
+% 吉林大学本科毕业论文（设计）LaTeX 模板
+% 文件名：main.tex
+% =========================================================================
+
+\documentclass{jluthesis}
+
+\begin{document}
+
+	% =====================================================================
+	% 1. 封面与承诺书 (Cover & Commitment)
+	% =====================================================================
+	% 生成封面 (配置信息在 jluthesis.cfg 中修改)
+    \makecover
+	% 插入承诺书：
+	% 如果 docs/commitment.pdf 存在，则优先插入扫描版/签字版 PDF；
+	% 否则回退到 jluthesis.cfg 中配置的文字版承诺书页。
+	\makecommitment
+	
+	% =====================================================================
+	% 2. 前置部分 (Front Matter)
+	% =====================================================================
+	% 页码从摘要开始使用罗马数字 (I, II, ...)
+	\pagenumbering{Roman}
+
+	% ---------------------------------------------------------------------
+	% 中文摘要 (Chinese Abstract)
+	% ---------------------------------------------------------------------
+    \begin{cabstract}
+        这里是中文摘要部分。请在这里简要介绍你的论文内容，例如：本文主要研究了......
+        
+        % 关键词：词与词之间用分号分隔
+        \ckeywords{关键词1；关键词2；关键词3}
+    \end{cabstract}
+	
+	% ---------------------------------------------------------------------
+	% 英文摘要 (English Abstract)
+	% ---------------------------------------------------------------------
+    \begin{eabstract}
+        Here is the abstract in English. This paper focuses on...
+        
+        % Keywords: Separated by semicolons
+        \ekeywords{Keyword1; Keyword2; Keyword3}
+    \end{eabstract}
+	
+	% ---------------------------------------------------------------------
+	% 目录 (Table of Contents)
+	% ---------------------------------------------------------------------
+	% 自动生成目录
+    \makeTOC
+	
+	% =====================================================================
+	% 3. 正文部分 (Main Body)
+	% =====================================================================
+	% 初始化正文格式 (重置页码为阿拉伯数字 1, 2, ...，设置页眉)
+    \startmainmatter
+	
+	% 第一章 (Chapter 1)
+	\section{引言}
+	
+	\subsection{研究背景与意义}
+	在此处撰写研究背景。可以使用引用 \cite{ref1}。
+	
+	\subsection{国内外研究现状}
+	在此处撰写文献综述。例如，文献 \cite{ref2} 指出......
+	
+	\subsection{本文主要工作}
+	本文的主要贡献如下：
+	\begin{enumerate}[(1)]
+		\item 贡献点一......
+		\item 贡献点二......
+	\end{enumerate}
+	
+	% 第二章 (Chapter 2)
+	\section{预备知识}
+	
+	\subsection{相关理论基础}
+	介绍论文用到的数学模型。
+	
+	% 公式示例 (Equation Example)
+	\begin{equation}
+		f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+		\label{eq:normal_dist}
+	\end{equation}
+	
+	% 第三章 (Chapter 3)
+	\section{模型建立与分析}
+	
+	\subsection{算法设计}
+	详细描述你的算法。
+
+	% 代码插入示例 (Code Listing Example)
+	% 更多语言支持可参考 listings 宏包文档
+	\begin{lstlisting}[language=Matlab, caption={Matlab 代码示例}, captionpos=b]
+% 这里是代码示例
+function y = my_function(x)
+	y = x^2 + 2*x + 1;
+end
+	\end{lstlisting}
+	
+
+	% Python 代码插入示例
+	\begin{lstlisting}[language=Python, style=general, caption={Python 代码示例}]
+def hello_world():
+    # 这是一个 Python 函数示例
+    print("Hello, LaTeX!")
+    return True
+	\end{lstlisting}
+
+	% C++ 代码插入示例
+	\begin{lstlisting}[language=C++, style=general, caption={C++ 代码示例}]
+#include <iostream>
+using namespace std;
+
+int main() {
+    # 这是一个 C++ 主函数
+    cout << "Hello World!";
+    return 0;
+}
+	\end{lstlisting}
+	
+	% 第四章 (Chapter 4)
+	\section{数值模拟与分析}
+	
+	\subsection{实验设置}
+	实验说明。
+	
+	% 图片插图示例 (Figure Example)
+	% 图片文件请放在 images/ 目录下
+    \begin{figure}[H]
+        \centering
+        \includegraphics[height=6cm,width=8.5cm]{example.jpg} 
+        \caption{一个示意图}
+        \label{figure:example}
+    \end{figure}
+	
+	\subsection{结果分析}
+	如表 \ref{tab:example} 和图 \ref{figure:example} 所示......
+
+	% 表格插入示例 (Table Example)
+	% 推荐使用三线表 (booktabs 宏包)
+	\begin{table}[H]
+		\centering
+		\caption{实验数据对比表}
+		\label{tab:example}
+		\begin{tabular}{ccc}
+			\toprule
+			指标 & 算法A & 算法B \\
+			\midrule
+			准确率 & 95.2\% & 96.8\% \\
+			召回率 & 94.5\% & 95.1\% \\
+			F1分数 & 94.8\% & 95.9\% \\
+			\bottomrule
+		\end{tabular}
+	\end{table}
+	
+	% 第五章 (Chapter 5)
+	\section{总结与展望}
+	
+	本文总结了......
+	
+	% =====================================================================
+	% 4. 结尾部分 (Back Matter)
+	% =====================================================================
+	
+	% 参考文献 (References)
+	% 自动引用 references.bib 中的内容
+    \makebibliography
+	
+	% 致谢 (Acknowledgment)
+    \begin{acknowledgment}
+	    感谢导师和同学的帮助......
+    \end{acknowledgment}
+	
+\end{document}

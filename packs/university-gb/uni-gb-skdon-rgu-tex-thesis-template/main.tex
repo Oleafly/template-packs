@@ -1,0 +1,153 @@
+\documentclass[11pt, a4paper, twoside, onecolumn, final]{memoir}
+
+% ------------------------------------------------------------------------
+% Margins
+\setlrmarginsandblock{35mm}{30mm}{*}
+\setulmarginsandblock{40mm}{*}{*}
+\OnehalfSpacing
+\checkandfixthelayout
+
+% ------------------------------------------------------------------------
+% Fonts
+\usepackage{fourier}
+\usepackage[T1]{fontenc}
+
+% ------------------------------------------------------------------------
+% Packages
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{natbib}	% flexibility of citation format to allow for Harvard
+\usepackage{titlesec}
+\usepackage{natbib}
+\usepackage{lipsum}  % Dummy text generator
+
+% ------------------------------------------------------------------------
+% Running footer
+\makeevenfoot{plain}{\thepage}{}{}
+\makeoddfoot{plain}{}{}{\thepage}
+
+% ------------------------------------------------------------------------
+% Document Division
+\maxsecnumdepth{subsection}
+\maxtocdepth{subsection}
+
+% ------------------------------------------------------------------------
+% Define custom chapter style:
+\usepackage{anyfontsize}
+\newcommand\YUGE{\fontsize{48}{60}\selectfont}
+
+\makechapterstyle{customchap}{%
+\setlength{\beforechapskip}{0pt}
+\renewcommand*{\chapnumfont}{\YUGE\rmfamily\raggedleft}
+\renewcommand*{\chaptitlefont}{\huge\rmfamily\bfseries\raggedleft}
+\renewcommand*{\printchapternonum}{%
+\vphantom{\printchaptername}%
+\vphantom{\chapnumfont 1}%
+\afterchapternum
+\vskip -\onelineskip}
+\renewcommand*{\printchaptertitle}[1]{\chaptitlefont ##1}
+\renewcommand*{\printchaptername}{}
+\renewcommand*{\printchapternum}{\chapnumfont\thechapter}
+}
+% ------------------------------------------------------------------------
+
+
+% ------------------------------------------------------------------------
+% MAIN DOCUMENT
+\begin{document}
+
+\openleft
+	
+% Front Matter %	
+\frontmatter
+
+% ------------------------------------------------------------------------
+% Title Page
+  
+  {
+  \thispagestyle{empty}
+	\centering
+	\vspace*{0.08\textheight}
+	{\Huge\bfseries Title of Thesis}\\[\baselineskip]
+	{\Large\scshape Thesis Subtitle}\\[\baselineskip]
+	\vfill
+	{\large\scshape Full Name}\par
+	\vfill
+		{\centering\includegraphics[width = 50mm]{images/rgu_logo.png}} \par
+	The Robert Gordon University \par
+	School of Health/Computing/Business
+	\vfill
+	Submitted in partial fulfilment of the requirements of the degree of \par
+	Doctor of Philosophy \par
+	\vfill
+	{\scshape Month, Year}\par
+	\vfill
+  }
+  
+% ------------------------------------------------------------------------
+	
+  \pagestyle{plain}
+  
+  \cleardoublepage
+  
+	% Abstract
+		\include{abstract}
+    
+    \openright
+		
+	% Thesis Dedication
+		\begin{center}
+			\vspace*{7.5cm}
+			This thesis is dedicated to my cat / flatmate / parents.
+			\addcontentsline{toc}{chapter}{Dedication}
+			%\let\cleartorecto\oldcleartorecto % <--- new; restores original macro
+		\end{center}
+	
+	% Acknowledgements %
+	% Put the logos of research partners at the bottom of the page %
+		\include{Acknowledgements}
+		\cleardoublepage
+	
+	% Table of Contents
+		\vspace*{-2.5cm}
+		\tableofcontents
+		\clearpage
+	
+	% Publictions and Conference Proceedings %
+	% A list of published articles and conference proceedings %
+	
+	% List of Tables %
+		\vspace*{-2.5cm}
+		\listoftables
+		\clearpage
+	
+	% List of Figures %
+		\vspace*{-2.5cm}
+		\listoffigures
+		\clearpage
+	
+\include{abbreviations}
+\include{nomenclature}
+\include{glossary}
+\include{preface}
+	
+% Main Matter %
+\mainmatter
+%\pagestyle{ruled}
+  
+% Chapter Style %
+\chapterstyle{customchap}
+\include{chapter1}
+\include{chapter2}
+
+% Changes numbering of chapters to alphabetic form
+\appendix
+\include{appendixA}
+
+% Havard Style
+\bibliographystyle{unsrtnat}
+%\bibliographystyle{agsm}  % Incompatible with memoir since it uses \bf, which is deprecated.
+\bibliography{references}
+
+
+\end{document}

@@ -1,0 +1,364 @@
+% Template for a Economics Tripos Part IIB dissertation
+%\documentclass[12pt,a4paper,twoside,openright]{article}  % for double-sided printing
+\documentclass[12pt,a4paper]{article}
+\usepackage[pdfborder={0 0 0}]{hyperref}  % turns references into hyperlinks
+\usepackage[margin=25mm]{geometry}  % adjusts page layout
+\usepackage{abstract}   % abstract typesetting
+\usepackage{booktabs}   % professional-quality tables
+\usepackage{graphicx}   % allows inclusion of PDF, PNG and JPG images
+\usepackage{natbib}     % natbib citation style 
+\usepackage{newpxtext}  % uses Adobe Palatino-like fonts
+\usepackage{setspace}   % adjusts line spacing
+
+\raggedbottom    % try to avoid widows and orphans
+\sloppy
+\clubpenalty1000%
+\widowpenalty1000%
+
+\setstretch{1.5}    % adjust line spacing to make more readable
+\renewcommand{\abstractnamefont}{\normalfont\large\bfseries}  % larger abstract header font
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title
+
+\pagestyle{empty}
+
+{\noindent \large \textbf{Candidate Number: }1234X}
+
+\vspace*{45mm}
+
+\begin{spacing}{1.5}
+\centering
+\noindent \Huge \textbf{The Approved Title of Your Dissertation Spanning Two Lines}
+\end{spacing}
+
+\vspace*{15mm}
+
+\begin{abstract}
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At
+vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+sanctus est Lorem ipsum dolor sit amet.
+\end{abstract}
+
+\vfill
+
+{\noindent \large \textbf{Word Count: }XXXX}
+
+\clearpage              % remove page number on title page
+\pagenumbering{arabic}  % ... and reset page number to 1
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table of contents list of figures and list of tables (optional)
+
+%\pagestyle{plain}
+%
+%\tableofcontents
+%
+%\listoffigures
+%
+%\listoftables
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Now for the main sections
+
+\pagestyle{headings}
+
+\section{Introduction}
+
+\subsection{Overview of the files}
+
+This document consists of the following files:
+
+\begin{itemize}
+    \item \texttt{makefile} --- The makefile for the dissertation
+    \item \texttt{diss.tex} --- The dissertation
+    \item \texttt{figs} --- A directory containing diagrams and pictures
+    \item \texttt{refs.bib} --- The bibliography database
+\end{itemize}
+
+\subsection{Building the document}
+
+This document was produced using \LaTeXe~which is based upon \LaTeX~\citep{Lamport86}. 
+To build the document you first need to generate \texttt{diss.aux} which, amongst
+other things, contains the references used. This is done by executing the command:
+
+\texttt{pdflatex diss}
+
+\noindent
+Then the bibliography can be generated from \texttt{refs.bib} using:
+
+\texttt{bibtex diss}
+
+\noindent
+Finally, to ensure all the page numbering is correct run \texttt{pdflatex} on
+\texttt{diss.tex} until the \texttt{.aux} files do not change. This usually
+takes 2 more runs.
+
+\subsubsection{The makefile}
+
+To simplify the calls to \texttt{pdflatex} and \texttt{bibtex}, a makefile has
+been provided. It provides the following facilities:
+
+\begin{description}
+    \item\texttt{make} \\
+    Display help information.
+    
+    \item\texttt{make diss.pdf} \\
+    Format the dissertation document as a PDF.
+    
+    \item\texttt{make all} \\
+    Alias for \,\texttt{make diss.pdf} \,(format the dissertation document as a PDF).
+    
+    \item\texttt{make count} \\
+    Display an estimate of the word count.
+    
+    \item\texttt{make clean} \\ 
+    Delete all intermediate files except the source files and the resulting PDFs. 
+    All these deleted files can be reconstructed by typing \,\texttt{make all}.
+    
+    \item\texttt{make distclean} \\ 
+    Delete all files, including the resulting PDFs, except the source files. 
+    All these deleted files can be reconstructed by typing \,\texttt{make all}.
+\end{description}
+
+\subsection{Counting words}
+
+An approximate word count of the body of the dissertation may be obtained using:
+
+\texttt{wc diss.tex}
+
+\noindent
+Alternatively, try something like:
+
+\verb/detex diss.tex | tr -cd '0-9A-Z a-z\n' | wc -w/
+
+\subsection{Figures}
+
+If you wish to include a plot or other image, you can render it as shown for
+Figure~\ref{fig:sample-fig}. You may use colour figures. However, it is best for
+the figure captions and the paper body to be legible if the paper is printed in
+either black/white or in colour.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=.45\textwidth]{figs/sample}
+    \caption{Sample figure caption}
+    \label{fig:sample-fig}
+\end{figure}
+
+Simple diagrams can be written directly in \LaTeX.  For example, see
+Figure~\ref{fig:latexpic1} on page~\pageref{fig:latexpic1} and see
+Figure~\ref{fig:latexpic2} on page~\pageref{fig:latexpic2}.
+
+\begin{figure}
+    \centering
+    \setlength{\unitlength}{1mm}
+    \begin{picture}(125,100)
+        \put(0,80){\framebox(50,10){AAA}}
+        \put(0,60){\framebox(50,10){BBB}}
+        \put(0,40){\framebox(50,10){CCC}}
+        \put(0,20){\framebox(50,10){DDD}}
+        \put(0,00){\framebox(50,10){EEE}}
+        
+        \put(75,80){\framebox(50,10){XXX}}
+        \put(75,60){\framebox(50,10){YYY}}
+        \put(75,40){\framebox(50,10){ZZZ}}
+        
+        \put(25,80){\vector(0,-1){10}}
+        \put(25,60){\vector(0,-1){10}}
+        \put(25,50){\vector(0,1){10}}
+        \put(25,40){\vector(0,-1){10}}
+        \put(25,20){\vector(0,-1){10}}
+        
+        \put(100,80){\vector(0,-1){10}}
+        \put(100,70){\vector(0,1){10}}
+        \put(100,60){\vector(0,-1){10}}
+        \put(100,50){\vector(0,1){10}}
+        
+        \put(50,65){\vector(1,0){25}}
+        \put(75,65){\vector(-1,0){25}}
+    \end{picture}
+    \caption{A picture composed of boxes and vectors}
+    \label{fig:latexpic1}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \setlength{\unitlength}{1mm}
+    \begin{picture}(100,70)
+        \put(47,65){\circle{10}}
+        \put(44,64){abc}
+        
+        \put(37,45){\circle{10}}
+        \put(37,51){\line(1,1){8.5}}
+        \put(34,44){def}
+        
+        \put(57,25){\circle{10}}
+        \put(57,31){\line(-1,3){9.5}}
+        \put(57,31){\line(-3,2){15}}
+        \put(54,24){ghi}
+        
+        \put(32,0){\framebox(10,10){A}}
+        \put(52,0){\framebox(10,10){B}}
+        \put(37,11){\line(0,1){28}}
+        \put(37,11){\line(2,1){17}}
+        \put(57,11){\line(0,2){8}}
+    \end{picture}
+    \caption{A diagram composed of circles, lines and boxes}
+    \label{fig:latexpic2}
+\end{figure}
+
+\subsection{Tables}
+
+Here is a simple example of a table. Note that publication-quality tables
+\textit{do not contain vertical rules}. I strongly suggest the use of the
+\texttt{booktabs} package, which allows for typesetting high-quality,
+professional tables:
+
+\url{https://www.ctan.org/pkg/booktabs}
+
+\noindent
+This package was used to typeset Table~\ref{table:sample-table}. There is another
+example table (Table~\ref{citation-guide}) in Section~\ref{sec:citations}.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lcr}
+        \toprule
+        \multicolumn{2}{c}{A Multi-Column Cell} &  \\
+        \cmidrule(r){1-2}
+        Left Justified & Centred & Right Justified \\
+        \midrule
+        First          & A       & XXX             \\
+        Second         & AA      & XX              \\
+        Last           & AAA     & X               \\
+        \bottomrule
+    \end{tabular}
+    \caption{Sample table caption}
+    \label{table:sample-table}
+\end{table}
+
+\subsection{Footnotes}
+
+Here is a simple example\footnote{A footnote.} of a footnote. Footnotes should
+be used sparingly. Note that footnotes are properly typeset \textit{after}
+punctuation marks.\footnote{As in this example.} Footnotes \textit{are} included
+in the word count.
+
+\subsection{Citations} \label{sec:citations}
+
+This template uses the APA citation format. Citations within the text appear in 
+parentheses as~\citep{Chang14} or, if the author's name appears in the text
+itself, as \citet{Chang14}. Append lowercase letters to the year in cases of
+ambiguities. Treat double authors as in~\citep{Mankiw14}, but write as
+in~\citep{Floud14} when more than two authors are
+involved. Collapse multiple citations as
+in~\citep{Mankiw14,Floud14}. Refrain from using full citations as sentence
+constituents. Instead of ``\citep{Chang14} showed that ...'', write
+``\citet{Chang14} showed that ...''. Your reference list is \textit{not}
+included in the word count.
+
+Table~\ref{citation-guide} shows the supported citation syntax. You are
+encouraged to use the \texttt{natbib} styles. You can use the command
+\verb|\citep| (cite in parentheses) to get ``(author, year)'' citations as in
+\citep{Chang14}. You can use the command \verb|\citet| (cite in text) to get
+``author (year)'' citations as in \citet{Chang14}. You can use the command
+\verb|\citealp| (alternative cite without parentheses) to get ``author, year''
+citations (which is useful for using citations within parentheses, as in
+\citealp{Chang14}).
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lll}
+        \toprule
+        \textbf{Command} & \textbf{Output} & \textbf{Description}\\
+        \midrule
+        \verb|\citep| & \citep{Chang14} & Parenthetical citation \\
+        \verb|\citet| & \citet{Chang14} & Text citation \\
+        \verb|\citealp| & \citealp{Chang14} & Parenthetical citation without parentheses \\
+        \verb|\citealt| & \citealt{Chang14} & Text citation without parentheses \\
+        \verb|\citeauthor| & \citeauthor{Chang14} & Author only (text citation) \\
+        \verb|\citeyear| & \citeyear{Chang14} & Year only (no parentheses) \\
+        \verb|\citeyearpar| & \citeyearpar{Chang14} & Year citation (with parentheses) \\
+        \bottomrule
+    \end{tabular}
+    \caption{The \texttt{natbib} citation commands}
+    \label{citation-guide}
+\end{table}
+
+\subsection{Further information}
+
+See the \LaTeX~notes at
+
+\url{https://www.cl.cam.ac.uk/teaching/current-1/TeX+MATLAB/materials.html}
+
+\noindent
+See also the Unix Tools notes at
+
+\url{https://www.cl.cam.ac.uk/teaching/current-1/UnixTools/materials.html}
+
+\subsection{Acknowledgements}
+
+This template is built for my beloved girlfriend, Jing Zeng, for her Economics
+Tripos Part~IIB dissertation in 2022. It is based on the Computer Science Tripos
+Part~II dissertation template by Martin Richards \citeyearpar{Richards15}, which
+was built upon an earlier version by Simon Moore \citeyearpar{Moore95}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Literature Review}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Theoretical Framework}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Data}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Methodology}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Results}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusion}
+
+I hope that this rough guide to writing a dissertation is \LaTeX\ has been
+helpful and saved you time.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The bibliography
+
+\newpage
+%\addcontentsline{toc}{section}{References}
+\bibliographystyle{apalike}
+\bibliography{refs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The appendices
+
+\newpage
+\appendix
+
+\section{Appendices}
+
+Appendices \textit{are} included in the word count.
+
+\end{document}

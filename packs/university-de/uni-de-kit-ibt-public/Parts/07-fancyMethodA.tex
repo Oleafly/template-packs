@@ -1,0 +1,83 @@
+%!TEX root = ../thesis.tex
+\chapter{Method A}
+\label{chap:methA}
+
+\section{Tables}
+\label{sec:meth:tables}
+Tables are a good way to present quantitative results. Mostly, they look best if you try to avoid vertical grid lines. \Tab{tab:meth:coverage} is an example of a table with a rather complex layout. \Tab{tab:meth:ionConcentrations} uses color to underline the structure and guide the eye. Decide for yourself what you like most and suits your needs best.
+\begin{table}[tb]
+\caption{Degree of coverage of RA elements with paths vulnerable to AFlut for different substrates and antiarrhythmic drugs. Some more description...}
+\begin{center}
+\begin{tabular}{lrrrcrrr}\toprule
+& \multicolumn{7}{c}{\textbf{Degree of coverage}}\\ \cmidrule{2-8}
+& \multicolumn{3}{c}{\textbf{Original CV}} & &\multicolumn{3}{c}{\textbf{Total activation time matched}} \\ \cmidrule{2-4} \cmidrule{6-8}
+& no drug & amiodarone & dronedarone & & no drug & amiodarone & dronedarone \\ \midrule
+\textbf{Control} & 18.1\% & 70.5\% & 0.0\% & & 18.1\% & 0.0\% & 0.0\% \\
+\textbf{cAF} & 96.0\% & 96.3\% & 95.6\% & & 96.2\% & 96.1\% & 94.9\% \\
+\textbf{N588K} & 93.2\% & 94.1\% & 0.0\% & & 93.0\% & 77.8\% & 0.0\% \\
+\textbf{L532P} & 96.2\% & 96.5\% & 34.5\% & & 96.3\% & 96.0\% & 11.1\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+\label{tab:meth:coverage}
+\end{table}
+
+\begin{table}[tb]
+\caption[Ion concentrations and Nernst potential]{Typical concentrations and Nernst potentials of ions in a muscle cell.}
+\centering
+\begin{tabular}{>{\columncolor{lightBlue}}cccc}
+  \toprule\rowcolor{lightBlue}
+  \textbf{Ion}& \multicolumn{2}{c}{\textbf{Concentration ($mmol/kg\,H_2O$)}} & \textbf{Nernst}\\ \rowcolor{lightBlue}
+  \textbf{type}& intracellular & extracellular & \textbf{potential} (mV)\\\rowcolor{lightBlue}
+  \midrule
+  $K^{+}$&\cellcolor{lightYellow} 4.5 &\cellcolor{lightYellow} 160 &\cellcolor{lightYellow} --95.4\\
+  $Na^{+}$&\cellcolor{darkWhite} 144 &\cellcolor{darkWhite} 7 &\cellcolor{darkWhite} 80.2\\
+  $Ca^{2+}$&\cellcolor{lightYellow} 1.3 &\cellcolor{lightYellow} 1e-5~to~1e-4 &\cellcolor{lightYellow} 126.5~to~157.3\\
+  $Cl^{-}$&\cellcolor{darkWhite} 114 &\cellcolor{darkWhite} 7 &\cellcolor{darkWhite} --74.5\\
+  \bottomrule
+\end{tabular}
+\label{tab:meth:ionConcentrations}
+\end{table}
+
+
+\section{Algorithms}
+\label{sec:meth:algorithms}
+\begin{algorithm}[tb]
+\caption{The fast marching method. $\mathcal{N}\left(X\right)$ denotes the neighborhood of $X$.}
+\begin{algorithmic}
+\While{$TRIAL \neq\emptyset$}
+  \State $X \gets \argmin_{X\in TRIAL}\left\{t_a\left(X\right)\right\}$
+  \State $TRIAL \gets TRIAL\setminus\{ X\}$
+  \State $KNOWN \gets KNOWN \cup \left\{ X \right\}$
+  \ForAll{$\left(X_i \in \mathcal{N}\left(X\right) \right) \land \left( X_i \notin KNOWN \right)$}
+    \State $t_a\left(X_i\right) \gets$ update$\left(X_i,X\right)$
+    \If{$X_i \notin TRIAL$}
+      \State $TRIAL \gets TRIAL \cup \left\{X_i\right\}$
+    \EndIf
+  \EndFor
+\EndWhile
+\end{algorithmic}
+\label{alg:meth:fastMarching}
+\end{algorithm}Algorithms in pseudo code can be defined using the \textit{algorithmicx} package: \url{https://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/}. \Alg{alg:meth:fastMarching} gives an example.
+
+\section{References}
+\label{sec:meth:references}
+To reference conveniently and consistently to chapters, sections, figures, tables, algorithms, equations and so on, we defined some macros:\\
+\begin{itemize}
+  \item In \Chap{chap:medFund}
+  \item In \Sec{sec:anatomyPhysiology}..., in \Sec{sec:anatomyPhysiology:elphy}
+  \item In \Fig{fig:med:AP}
+  \item In \Tab{tab:meth:coverage}
+  \item In \Alg{alg:meth:fastMarching}
+  \item Under the assumption of equal anisotropy ratios, \Eq{eq:Fourier1} can be transformed into...
+\end{itemize}
+
+\subsection{Literature References}
+\label{sec:meth:references:literature}
+Regarding literature references, our reference management system \textit{refbase} already covers a good share of relevant literature. The \textit{refbase} entries are exported into a \textit{bibtex} file on the \textit{bordeaux} disk once every night: \textit{/Volumes/bordeaux/bibtex/export.bib}. In the template archive, there is a file \textit{refbase.bib} linking to the correct path on \textit{bordeaux}. References from there can be cited conveniently using the cite key, e.g.~\cite{courtemanche98}. When citing books, you should include the respective chapter~\cite[Chap. 5]{belytschko00} or pages  \cite[pp. 239--240]{belytschko00}. These specifications are not required when citing papers~\cite{riedel02} or preprints~\cite{schuler2021reducing}. You can switch between APA and IEEE citation style in \textit{config.tex}. If you need to preserve capital letters in reference titles (like for example ``ECG'' or if you cite German literature and write the thesis in English), you need to encapsulate these capital letters in curly braces (``{ECG}'') otherwise they will be converted to small letters.\\
+The best way to include additional literature is directly import it to refbase as described in our wiki: \url{https://intern.ibt.uni-karlsruhe.de/wiki/Introduction_to_Refbase}.\\
+At some point you probably want to change some things manually. The preferable way is to do so directly in \textit{refbase}. If this is not possible, you need a local bibtex file. As the \textit{refbase} export comprises several hundreds of thousands of lines and several megabytes, opening it in a text editor can be tedious and cumbersome. Therefore, we have a script \textit{ExtractBibEntriesFromBBL.pl} that extracts the entries you actually used and combines them in a new and smaller bibtex file (recommended name: \textit{reduced.bib}). You just need to pass the \textit{.bbl} file that is created during the compilation of your \LaTeX\ document using \textit{refbase.bib} (usually \textit{thesis.bbl}). Then, you can edit the entries in your local \textit{reduced.bib} file according to your needs. By putting curly braces around one or several characters, you can force them to be included in your references listing the way you defined them, \eg \{P\}-wave. You should do the \textit{ExtractBibEntriesFromBBL.pl} step towards the end of your writing when you feel that you won't include a lot more references. Running the script again will overwrite your local changes. Therefore, the easiest way to include additional references is to produce the bibtex entry right from the \textit{refbase} web interface and paste it into your local \textit{reduced.bib}.
+
+\section{Abbreviations}
+The acronym package helps you to keep track of abbreviations. See also \textit{abbreviations.tex} and \url{https://www.ctan.org/pkg/acronym}.
+\cite{EKGO}

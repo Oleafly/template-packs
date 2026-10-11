@@ -1,0 +1,114 @@
+% Import commonly used packages
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage[HWP]{dhucs-interword}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{setspace}
+\usepackage{etoolbox} % Required for patching commands
+
+% PDF Metadata
+\usepackage[pdfauthor={\AuthorKo},
+            pdftitle={\ThesisTitle},
+            pdfsubject={\ThesisTitle: \ThesisSubtitle},
+            pdfkeywords={서울대학교, 공과대학, 컴퓨터공학부, 졸업논문, SNU, ENG, CSE, thesis, k-means},
+            ]{hyperref}
+
+\geometry{
+  a4paper,
+  top=30mm,
+  bottom=30mm, % Increase bottom margin for better footer placement
+  left=25mm,
+  right=25mm,
+  footskip=15mm % Space for the footer
+}
+
+% Line spacing
+%\linespread{1.6}
+\doublespacing
+
+% Customize section font size and style
+\titleformat{\section} % Apply to \section
+  {\normalfont\fontsize{14pt}{14pt}\bfseries} % Font style: Large size and bold
+  {} % No prefix (e.g., "Section")
+  {0pt} % Space between prefix and title
+  {\thesection\quad} % Section numbering followed by space
+
+
+% Customize chapter format using titlesec
+\titleformat{\chapter}[block]
+  {\centering\normalfont\fontsize{16pt}{16pt}\bfseries} % Centered, bold font
+  {\thechapter.}                       % Chapter number format
+  {10pt}                               % Space between number and title
+  {}
+
+\titlespacing*{\chapter}
+  {0pt}    % Indentation from the left margin
+  {-30pt}  % Space before the chapter title (negative value to reduce)
+  {20pt}   % Space after the chapter title
+
+
+\usepackage{listings}
+\lstset{
+    basicstyle=\ttfamily\fontsize{9pt}{9pt}, % Monospaced font and smaller size
+    numbers=left,              % Line numbers on the left
+    numberstyle=\tiny,         % Line number font size
+    stepnumber=1,              % Line numbering step
+    frame=single,              % Frame around the code
+    tabsize=4,                 % Tab width
+    breaklines=true,           % Line breaking
+    captionpos=b,              % Caption position (bottom)
+    keywordstyle=\color{blue}, % Keyword color
+    commentstyle=\color{gray}, % Comment color
+    stringstyle=\color{red},   % String color
+    lineskip=-2pt % Reduce line spacing
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% Abstract page layout
+% Title block and author block for the English abstract
+\newcommand{\EnglishAbstractHeader}{%
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\vspace*{-1.1cm}
+{
+\centering
+\fontsize{22pt}{22pt}\selectfont \ThesisTitle: \\
+\fontsize{18pt}{20pt}\selectfont \ThesisSubtitle \\
+}
+
+\vspace*{0.8cm}
+
+{
+\flushright
+\fontsize{14pt}{16pt}\selectfont
+\AuthorEn \\
+Computer Science and Engineering \\ 
+College of Engineering \\
+Seoul National University \\
+}
+\vspace*{0.8cm}
+}
+
+\newcommand{\KoreanAbstractHeader}{%
+\chapter*{국문초록}
+\addcontentsline{toc}{chapter}{국문초록}
+}
+
+% Keywords line at the bottom of each abstract
+\newcommand{\EnglishKeywords}[1]{%
+\vfill
+\textbf{Keywords: #1}}
+
+\newcommand{\KoreanKeywords}[1]{%
+\vspace*{1cm}
+\textbf{주요어: #1}}

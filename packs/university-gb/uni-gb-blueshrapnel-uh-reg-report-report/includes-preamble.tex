@@ -1,0 +1,65 @@
+%----------------------------------------   fonts and characters
+% font and input - so latex can include and hyphenate characters with glyphs etc.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+% font
+% adobe designed font - charter
+% latex font - lmodern
+\usepackage{charter}
+%\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage[authoryear,round]{natbib}
+
+%-----------------------------------------   layout
+% page layout
+\usepackage{geometry} % paper size, orientation, page elements
+\geometry{a4paper, margin=17mm}
+
+% change line spacing
+% set space makes it easy to change spacing within document
+% e.g. for table of contents and algorithmic
+\usepackage{setspace}
+\onehalfspacing
+%\linespread{1.5}
+
+% remove paragraph indentation
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+% add horizontal  padding to columns in table
+%\setlength\tabcolsep{0.1em}
+
+% ensure no widows
+\usepackage[all]{nowidow}
+
+%-----------------------------------------   graphics
+\usepackage[pdftex]{graphicx} % include graphic
+\usepackage[export]{adjustbox} % to vertically align figures
+%\graphicspath{ {./figures/} }
+\usepackage{wrapfig}
+\usepackage[font=small,skip=0pt]{caption}
+% for subfigures
+\usepackage{subcaption}
+
+% short arrows - including diagonal where up is \shortarrow{0} clockwise thereafter
+% https://tex.stackexchange.com/questions/144558/is-there-a-short-diagonal-pointing-arrow-symbol
+\usepackage{stmaryrd}  % also requires graphicx, amsmath
+\makeatletter
+\newcommand{\fixed@sra}{$\vrule height 2\fontdimen22\textfont2 width 0pt\shortrightarrow$}
+\newcommand{\shortarrow}[1]{%
+  \mathrel{\text{\rotatebox[origin=c]{\numexpr#1*45}{\fixed@sra}}}
+}
+\makeatother
+
+%-----------------------------------------   table of contents
+\usepackage[toc]{appendix}
+% etoolbox package provides commands for inserting commands around/within environments
+\usepackage{etoolbox}
+% Inserts \clearpage before \begin{appendices}
+\BeforeBeginEnvironment{appendices}{\clearpage}
+
+%-----------------   algorithms
+
+% algorithms
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage[noend]{algpseudocode}
