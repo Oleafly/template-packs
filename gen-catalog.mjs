@@ -147,9 +147,10 @@ const PACK_META = {
 };
 
 const catalog = [];
+const directoryPacks = new Set(Object.keys(JSON.parse(readFileSync("tools/directory-packs.json", "utf8"))));
 for (const packId of readdirSync("packs").sort()) {
   const packDir = join("packs", packId);
-  if (!statSync(packDir).isDirectory()) continue;
+  if (!statSync(packDir).isDirectory() || directoryPacks.has(packId)) continue;
   const files = [];
   let bytes = 0;
   let count = 0;
