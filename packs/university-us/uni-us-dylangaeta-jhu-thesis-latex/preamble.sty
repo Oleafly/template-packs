@@ -1,0 +1,130 @@
+% ================================
+% PDF/A COMPLIANCE (MUST BE FIRST)
+% ================================
+% Load xcolor before pdfx for PDF/A compatibility
+\usepackage[table,dvipsnames]{xcolor}
+\PassOptionsToPackage{utf8}{inputenc}
+% Suppress known harmless warnings from pdfx/xcolor interaction:
+%   - xcolor: pdfx passes obsolete 'hyperref' option to already-loaded xcolor
+%   - pdfx: informational note about enforcing RGB color model for PDF/A-1b
+\usepackage{silence}
+\WarningFilter{xcolor}{Package option}
+\WarningFilter{pdfx}{Setting all color commands to rgb}
+\WarningFilter{pdfx}{Color Model}
+\usepackage[a-1b]{pdfx}
+
+% ================================
+% Fonts and language
+% ================================
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{enumitem}
+
+% ================================
+% Page formatting
+% ================================
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{float}
+\usepackage{placeins}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+
+% ================================
+% Graphics and floats
+% ================================
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{booktabs}
+
+% ================================
+% Color and URLs
+% ================================
+% xcolor and hyperref are loaded above via pdfx
+\usepackage{url}
+
+\hypersetup{
+      colorlinks=true,
+      linkcolor=black,
+      citecolor=blue,
+      filecolor=blue,
+      urlcolor=blue
+  }
+
+% ================================
+% TOC / Lists
+% ================================
+\usepackage{tocbibind}
+\usepackage{tocloft}
+\setlength{\cftfignumwidth}{6em}
+\setlength{\cfttabnumwidth}{6em}
+
+% ================================
+% Labels and numbering
+% ================================
+\renewcommand{\thechapter}{\arabic{chapter}}
+
+\renewcommand{\thefigure}{Figure~\arabic{chapter}.\arabic{figure}}
+\captionsetup[figure]{labelformat=simple, labelsep=space, name={}}
+
+\renewcommand{\thetable}{Table~\arabic{chapter}.\arabic{table}}
+\captionsetup[table]{labelformat=simple, labelsep=space, name={}}
+
+\renewcommand{\theequation}{Equation~\arabic{chapter}.\arabic{equation}}
+
+% ================================
+% Bibliography
+% ================================
+%\usepackage[authoryear]{natbib}
+\usepackage[square,numbers]{natbib}
+\bibliographystyle{abbrvnat}
+
+% ================================
+% Input paths
+% ================================
+\makeatletter
+\def\input@path{%
+    {./}%
+    {figures/}%
+    {introduction/}%
+    {chapter1/}%
+    {chapter2/}%
+    {chapter3/}%
+    {chapter4/}%
+    {chapter5/}%
+    {conclusion/}%
+    {appendix/}%
+    {appendix/appendixA/}%
+    {appendix/appendixB/}%
+    {appendix/appendixC/}%
+}
+
+\graphicspath{%
+    {./}%
+    {figures/}%
+    {introduction/}%
+    {chapter1/figures/}%
+    {chapter2/figures/}%
+    {chapter3/figures/}%
+    {chapter4/figures/}%
+    {chapter5/figures/}%
+    {appendix/appendixA/figures/}%
+    {appendix/appendixB/figures/}%
+    {appendix/appendixC/figures/}%
+}
+\makeatother

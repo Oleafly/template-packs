@@ -1,0 +1,411 @@
+%==============================================================
+% WARNING: This file created from the "DOC" file: UNHTHESIS.DOC
+%          Make edits to that file and then use the DOC_TO_STY
+%          utility to create a new version of this file.
+%==============================================================
+
+
+\everyjob{\typeout{Document Style `UNHThesis'. Released 25 Nov 1990}}
+\immediate\write10{Document Style `UNHThesis'. Released 25 Nov 1990}
+
+
+
+\input unh1\@ptsize.sty\relax           %  Pick-up the pt size and attempt to
+                                        %  read in file: "UNH1<ptsize>.STY"
+
+
+\paperheight 11in
+\paperwidth 8.5in
+
+%\hoffset        -1.09375in      % Pull logical page back to the physical page
+%\voffset        -0.90625in      % edges.  Fuss with these depending upon the
+                                 % printer you're actually using.  These are
+                                 % 'fudged' for the PrintServer 40.
+                                 %
+\oddsidemargin   0.5in           % Bound side of page has 1.5 inch margin.
+\evensidemargin  0.0in           % 'right' margin of 1 inch
+\topmargin       0.0 in         % Header box is half inch from page top.
+\headheight      -0.625in          % Large enough for 11pt type.
+\headsep         0.625in          % This should place body 1in from top of page.
+\textwidth	 6.0in
+\textheight	 9.in
+\footskip        0.5in        % Place bottom numbers 1/2 inch from
+                              % bottom.
+
+
+
+\def\baselinestretch{1.7}
+\footnotesep=20pt               % Increase LaTeX's default spacing between
+                                % footnotes.
+
+
+
+% eaburns -- Need to capitalize *everything*
+\renewcommand{\chaptername}{CHAPTER}
+\renewcommand{\contentsname}{\normalsize TABLE OF CONTENTS}
+\renewcommand{\listfigurename}{\normalsize LIST OF FIGURES}
+\renewcommand{\listtablename}{\normalsize LIST OF TABLES}
+\renewcommand{\bibname}{\normalsize BIBLIOGRAPHY}
+\setcounter{tocdepth}{1} %matches the single depth toc of the grad school
+
+
+
+
+\renewcommand{\thepart}{\Roman{part}} %use arabic numerals for parts
+\renewcommand{\thechapter}{\arabic{chapter}}
+
+%% The following matches UNH Style, uncomment for their stuff
+%\renewcommand{\thepart}{\textmd{\arabic{part}}}
+%\renewcommand{\thechapter}{\textmd{\Roman{chapter}}}
+
+
+%% The standard unh style recommends not numbering sections,
+%% subsections, etc, you can clobber them all like this
+%\renewcommand{\thesection}{{}}               %don't number sections
+%\renewcommand{\thesubsection}{{}}            %don't number subsections
+%\renewcommand{\thesubsubsection}{{}}         %don't number subsubsections
+
+\pagenumbering{roman}                   % Set page numbering to small roman num.
+%RB commented out to get page numbers down on the front pages....
+%\pagestyle{myheadings}                  % Put only page numbers in the header.
+\pagestyle{plain}                  % Put only page numbers in the header.
+\@ifundefined{thechapter}               % If chapter counter undefined;
+    {}                                  %   then do nothing;
+    {\def\thefigure                     %   else define \thefigure format.
+        {\thechapter-\arabic{figure}}   %set figures to be labeled arabically
+     \def\thetable
+     {\thechapter-\arabic{table}}}      %set tables to be labeled arabically
+
+
+
+\def\DOCUMENTtype#1{\gdef\@DOCUMENTtype{#1}}    % Define \DOCUMENTtype{}
+    \def\@DOCUMENTtype{}                        % This is the ALL CAPS version.
+                                                %
+\def\Documenttype#1{\gdef\@Documenttype{#1}}    % Define \Documenttype{}
+    \def\@Documenttype{}                        % This is the mixed case version
+
+\def\documenttype#1{\gdef\@documenttype{#1}}    % Define \documenttype{}
+    \def\@documenttype{}                        % This is the lower case version
+
+                                                %
+\def\prevdegrees#1{\gdef\@prevdegrees{#1}}      % Define \predegrees{}
+\def\@prevdegrees{}                             %
+                                                %
+\def\major#1{\gdef\@major{#1}}                  % Define \major{}
+                                                %
+\def\degree#1{\setbox0\hbox{#1}                 % Define @degreeword depending
+  \gdef\@degree{#1}}                            % upon how many degrees are
+\def\and{\gdef\@degreeword{degrees}             % being earned.  That way
+    \par and \par}                              % we can correctly say either
+\def\@degreeword{Degree}                        % 'degree' or 'degrees'.
+                                                %
+\def\thesisdate#1{\gdef\@thesisdate{#1}}        % Define \thesisdate{}
+                                                %
+\def\degreemonth#1{\gdef\@degreemonth{#1}}      % Define \degreemonth{}
+                                                %
+\def\degreeyear#1{\gdef\@degreeyear{#1}}        % Define \degreeyear{}
+
+\def\signatureblank#1                           % Define a signature blank.
+   {\hfill                                      % Rubber space pushes this
+    \parbox{4in}                                % paragraph box to the right.
+      {\rule{0in}{0.75in}%                      % Build a strut,
+       \hrulefill\null\\*                       %  Make a signature blank
+         {\large                                %  Get a larger font.
+          #1                                    %  Put name/title under line.
+         }                                      %
+      }                                         %
+   }                                            %
+                                                %
+\def\dateblank                                  % Define a date blank.
+   {\hfill                                      % As signature blank above...
+    \parbox{2.5in}                              %
+      {\rule{0in}{0.75in}%                      %
+       \hrulefill\null\\*                       %
+         {\large Date                           %
+         }                                      %
+      }                                         %
+   }                                            %
+                                                %
+                                                %
+\newbox\@titlecommittee                         % Build box to hold several
+                                                % committee member signatures.
+                                                %
+\def\committee#1#2                              % Define \committee{}{}
+   {\setbox\@titlecommittee\vbox                %
+      {\unvbox\@titlecommittee                  % unwrap the vbox
+       \par                                     % skip down
+       \begin{ssp}                      % Get single space environment.
+       \signatureblank{#1 \\ #2}                %  Do a signature line.
+       \end{ssp}                        %
+      }                                         %
+   }                                            %
+                                                %
+\def\supervisor#1#2                             % Define \supervisor{}{}
+   {\gdef\@supervisorname{#1}                   % This is easier since there
+    \gdef\@supervisortitle{#2}                  % is only one supervisor.
+   }                                            %
+                                                %
+\def\UNH{UNIVERSITY OF NEW HAMPSHIRE}           % Short cuts for use in the
+\def\Unh{University of New Hampshire}           % title page.
+                                                %
+
+
+\def\titlepage{                         % Define start of title page.
+    \newpage\centering                  %  Start a new page, center the text.
+    \thispagestyle{empty}               %  Don't do headers or footers.
+    \parindent 4pt                      %  Don't indent 'paragraphs'.
+    \parskip 10pt plus 1fil minus 1fil  %  Set spacing between 'paragraphs'.
+    \def\baselinestretch{1}             %  Set spacing between lines.
+    \@normalsize\vbox to                %
+    \vsize\bgroup\vbox to 9in\bgroup    %
+    }                                   %
+
+\def\endtitlepage{                      % Define end of title page
+    \par\kern 0pt                       %   \kern0pt pushes any depth into
+    \egroup\vss\egroup                  %   the height.  (Thanks to MITTHESIS
+    \newpage}                           %   author and Richard Stone.)
+
+
+\def\maketitle{\begin{titlepage}
+    \large
+                                \vspace*{1.5in}
+               {\def\baselinestretch{1.2} \@title \par}
+                                \vspace*{\fill}\par
+                                      BY
+                                \vspace*{\fill}\par
+                               {\@author}
+                                     \par
+                                 \@prevdegrees
+                                \vspace*{\fill}\par
+                                  \@DOCUMENTtype
+                                \vspace*{\fill}\par
+                           Submitted to the \Unh \\
+                         in Partial Fulfillment of \\
+                   the Requirements for the \@degreeword\ of
+                                \vspace*{\fill}\par
+                                   \@degree
+                                     \par
+                                      in
+                                     \par
+                                    \@major
+                                \vspace*{\fill}\par
+                          \@degreemonth , \@degreeyear
+                                \vspace*{\fill}
+   \vskip \baselineskip
+\end{titlepage}}
+
+
+
+\def\copyrightyear#1                    % Define \copyrightyear{}
+   {\gdef\@copyrightyear{#1}
+   }
+
+\newcommand{\makecopyright}
+    { \vspace*{\fill}
+      \begin{center}
+                             ALL RIGHTS RESERVED\\
+                           \copyright \@copyrightyear\\
+                                   \@author
+      \end{center}
+      \thispagestyle{empty}               % Don't do headers or footers.
+    }
+
+
+
+\def\approvalpage
+   {
+    \newpage                            % Start a new page.
+    \parindent 0pt                      % Don't indent 'paragraphs'.
+    \parskip 10pt plus 1fil minus 1fil  % Set spacing between 'paragraphs'.
+    \@normalsize\vbox to
+    \vsize\bgroup\vbox to 9in\bgroup
+   }
+
+\def\endapprovalpage
+   {\par\kern 0pt                       % As in title page.
+    \egroup\vss\egroup
+   }
+
+\def\makeapproval
+   {
+    \begin{approvalpage}
+       \large
+\vspace*{0.5in}
+% original:\vspace*{0.65in}
+       \begin{ssp}
+         This \@documenttype\ has been examined and approved.
+         \par
+         \signatureblank{\@Documenttype\ director, \@supervisorname \\
+                         \@supervisortitle
+                        }
+         \par
+         \unvbox\@titlecommittee
+         \par
+         \dateblank
+       \end{ssp}
+       \vspace*{\fill}
+    \end{approvalpage}
+    \thispagestyle{empty}
+   }
+
+
+
+\def\dedication
+   {
+    \newpage
+%    \vspace*{-0.75in}             % Major sections have 1.5in top margins.
+    \chapter*{DEDICATION}       % Don't change section counter or display it.
+    \addcontentsline{toc}       % But *do* put an entry for this page into
+       {section}{DEDICATION}    % the table of contents.
+    \@normalsize                %
+    \thispagestyle{plain}       % Put the page number on the bottom.
+   }                            %
+
+\def\enddedication{\par}
+
+
+
+\def\acknowledgments
+   {
+%    \vspace*{0.5in}
+    \chapter*{ACKNOWLEDGMENTS}
+    \thispagestyle{plain}
+    \addcontentsline{toc}{section}{ACKNOWLEDGMENTS}
+    \@normalsize
+   }
+
+\def\endacknowledgments{\par}
+
+
+
+\def\foreword
+   {\thispagestyle{plain}
+%    \vspace*{0.5in}
+    \chapter*{FOREWORD}
+    \addcontentsline{toc}{section}{FOREWORD}
+    \@normalsize
+   }
+
+\def\endforeword{\par}
+
+
+
+\def\abstract
+   {\small
+    \@normalsize
+   }
+
+\def\endabstract{\par}
+
+\def\abstractpage
+   {\newpage
+    \thispagestyle{plain}
+    \vspace*{0.5in}
+    \addcontentsline{toc}{section}{ABSTRACT}
+    \begin{center}
+      {\def\baselinestretch{1.2}
+        ABSTRACT \par\par}
+                            {{\@title} \\
+                              by \\
+                              \@author \\
+                            }
+%                      \def\baselinestretch{1}\@normalsize
+                      \Unh, \@degreemonth, \@degreeyear%\\Advisor: Wheeler Ruml
+% the grad school requires you to submit a version of your title page
+% with advisor's name after the university line  Remove the % in the
+% above line, and obviously change the advisor name where appropriate.
+    \end{center}
+    \par
+    \begin{abstract}
+   }
+
+\def\endabstractpage
+   {\end{abstract}
+%    \addcontentsline{toc}       % But *do* put an entry for this page into
+%       {section}{Abstract}      % the table of contents.
+%    \newpage
+   }
+
+
+
+\newenvironment{Squote}%
+   {\begin{ssp}\begin{quote}}%
+   {\end{quote}\end{ssp}}
+
+\newenvironment{squotation}%
+   {\begin{ssp}\begin{quotation}}%
+   {\end{quote}\end{ssp}}
+
+
+
+{\catcode`\^^M=13
+   \gdef\@gobblecr{\@ifnextchar
+                       {\@gobble}
+                       {\ignorespaces}
+                  }
+}
+
+{\catcode`\ =\active
+    \gdef\@vobeyspaces{\catcode`\ \active \let \@xobeysp}
+}
+
+\def\@xobeysp{\leavevmode{} }
+
+\begingroup
+   \catcode `|=0
+   \catcode `[= 1
+   \catcode`]=2
+   \catcode `\{=12
+   \catcode `\}=12
+   \catcode`\\=12
+   |gdef|@xttytext#1\end{ttytext}[#1|end[ttytext]]
+   |gdef|@sxttytext#1\end{ttytext*}[#1|end[ttytext*]]
+|endgroup
+
+\def\@sttytext{\obeyspaces\@ttytext}
+
+\def\@gobble#1{}
+
+\def\@ttytext
+{  \trivlist
+   \item[]\if@minipage\else\vskip\parskip\fi
+   \leftskip\@totalleftmargin\rightskip\z@
+   \parindent\z@\parfillskip\@flushglue\parskip\z@
+   \@tempswafalse \def\par{\if@tempswa\hbox{}\fi\@tempswatrue\@@par}
+   \obeylines \tt \catcode``=13 \@noligs \let\do\@makeother \dospecials
+}
+
+\def\ttytext
+{   \begin{ssp}
+    \vskip -1em
+    \small
+    \@ttytext \frenchspacing\@vobeyspaces \@xttytext
+}
+
+\def\endttytext
+{  \endtrivlist
+   \normalsize
+   \vskip -0em
+   \end{ssp}
+}
+
+\@namedef{ttytext*}{\@ttytext\@sxttytext}
+\expandafter\let\csname endttytext*\endcsname =\endtrivlist
+
+\def\@makeother#1{\catcode`#112\relax}
+
+\def\TTY{\begingroup \catcode``=13 \@noligs
+\tt \let\do\@makeother \dospecials
+\@ifstar{\@sTTY}{\@TTY}}
+
+\def\@sTTY#1{\def\@tempa ##1#1{##1\endgroup}\@tempa}
+
+\def\@TTY{\obeyspaces \frenchspacing \@sTTY}
+
+
+\begingroup
+\catcode``=13
+\gdef\@noligs{\let`=\@lquote}
+\endgroup
+
+

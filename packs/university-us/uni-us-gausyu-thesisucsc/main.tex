@@ -1,0 +1,83 @@
+
+% LTeX: enabled=false
+% !TeX encoding=utf8
+% !TeX program = pdflatex
+%% This is the main excute file (smaple)
+%
+%%-----------------------------------------
+%% Document Class 
+%%-----------------------------------------
+\documentclass[%
+	% draft, % draft mode (no images, layout errors shown). Commented to switch to final mode
+	12pt, % font size
+	leqno, % put eq num to the left
+]{scrbook} % Classes: scrartcl, scrreprt, scrbook
+%
+%%-----------------------------------------
+%% Preambles
+%%-----------------------------------------
+\input{preambles/basic} % must be loaded first
+\input{preambles/font} % font setting
+\input{preambles/layout} % layout setting
+\input{preambles/section} % section setting
+\input{preambles/math} % math setting
+\input{preambles/index} % index packages
+\input{preambles/refs} % hyperref, careful about its loading
+\input{preambles/bib} % bib packages
+\input{preambles/lmacros} % lower macros
+\input{preambles/bugfix} % bugfix
+%
+%%-----------------------------------------
+%% User-defined preambles
+%%-----------------------------------------
+\input{user/notations} % notations
+\input{user/additions} % additions
+\input{user/enviroments} % enviroments
+%
+%%-----------------------------------------
+%% Pre-contents
+%%-----------------------------------------
+\input{precontents/titlepage} % Title page + copyright
+\input{precontents/front} % abstract + dedication + acknowledgements
+%
+%%-----------------------------------------
+%% Document start
+%%-----------------------------------------
+\begin{document}
+%% Front
+\frontmatter
+\input{metadata} % Metadata of the thesis
+\maketitle
+\begin{singlespace}
+	\tableofcontents
+\addchap{Figures and Tables}
+	\listoffigures
+	\listoftables
+\end{singlespace}
+\begin{abstract}
+	\input{contents/0.1.abstract}
+\end{abstract}
+\begin{dedication}
+	\input{contents/0.2.dedication}
+\end{dedication}
+\begin{acknowledgement}
+	\input{contents/0.3.acknowledgements}
+\end{acknowledgement}
+\addtocontents{toc}{\protect\vspace{15pt}}%
+%% Mainmatter
+\mainmatter
+\input{contents/1.introduction}
+\input{contents/2.preliminary}
+\input{contents/3.mainwork}
+\clearpage
+\appendix
+\part*{Appendix}
+\addparttocentry{}{Appendix}
+	\input{contents/appendix}
+\addtocontents{toc}{\protect\vspace{10pt}}%
+\backmatter
+	\begin{singlespace}
+		\input{contents/index}
+		\input{contents/bib}
+	\end{singlespace}
+\end{document}

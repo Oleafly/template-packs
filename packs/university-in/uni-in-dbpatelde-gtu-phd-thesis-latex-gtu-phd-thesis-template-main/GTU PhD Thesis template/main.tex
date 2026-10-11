@@ -1,0 +1,52 @@
+
+\documentclass[12pt,a4paper]{report}
+
+\input{preamble}
+
+
+\begin{document}
+	
+	\pagenumbering{roman}
+	
+	\include{chapters/00_title_pages}
+	
+	\tableofcontents
+
+	\include{chapters/abbr}
+		
+	\listoffigures
+	\listoftables
+
+
+		 
+		
+	\clearpage 	
+	\pagenumbering{arabic}
+	
+	\include{chapters/01_introduction}
+	\include{chapters/02_literature_review}
+	\include{chapters/03_methodology}
+	\include{chapters/04_results_discussion}
+	\include{chapters/05_conclusion} 
+
+	\clearpage 
+	\bibliographystyle{ieeetr}
+	\bibliography{references}
+	
+	\include{chapters/07_list_of_publications}
+	
+	\cleardoublepage
+	
+	% Appendix chapter titles start from the top of the page
+	\titleformat{\chapter}[display]
+	  {\normalfont\huge\bfseries}
+	  {\chaptertitlename\ \thechapter}{10pt}{\Huge}
+	\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+	\appendix
+	\renewcommand{\thelstlisting}{\Alph{chapter}.\arabic{lstlisting}}
+	\setcounter{lstlisting}{0}
+	\include{chapters/08_appendix}
+	
+	
+\end{document}

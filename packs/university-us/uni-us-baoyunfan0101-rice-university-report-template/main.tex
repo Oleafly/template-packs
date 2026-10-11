@@ -1,0 +1,229 @@
+\documentclass[11pt,letterpaper]{article}
+\input{format}
+
+% =========================================================
+% Required files in the same folder:
+%   1) rice-logo-header.png
+%   2) rice-owl-header.jpg
+%   3) rice-sample-image.jpg
+%   4) references.bib
+% =========================================================
+
+% -------------------- Metadata ----------------------------
+% Edit this block and the body text here.
+\newcommand{\ReportTitle}{Sample Report Title}
+\newcommand{\ReportSubtitle}{A reusable Rice-style template for lightweight reports}
+\newcommand{\ReportType}{Report Type}
+\newcommand{\CourseNumber}{COURSE 000}
+\newcommand{\CourseName}{Course Name}
+\newcommand{\AuthorBlock}{%
+  \begin{tabular}{@{}ll@{}}
+    Author One & netid1 \\
+    Author Two & netid2 \\
+    Author Three & netid3 \\
+  \end{tabular}%
+}
+\newcommand{\InstructorName}{Instructor Name}
+\newcommand{\InstitutionAddress}{6100 Main Street, Houston, TX 77005}
+\newcommand{\ReportDate}{\today}
+\newcommand{\HeaderText}{Rice University Report Template}
+
+% -------------------- PDF Metadata ------------------------
+\hypersetup{
+  pdftitle={\ReportTitle},
+  pdfauthor={Rice University Report Template},
+  pdfsubject={Report template},
+  pdfcreator={LaTeX},
+  pdfkeywords={template, Rice University, \LaTeX, sample content}
+}
+
+\begin{document}
+
+% -------------------- Cover Page --------------------------
+\thispagestyle{empty}
+
+\vspace*{1.2cm}
+\begin{minipage}{0.34\textwidth}
+    \includegraphics[width=0.92\linewidth]{rice-logo-header.png}
+\end{minipage}
+
+\vspace{2.0cm}
+
+{\fontsize{24}{30}\selectfont\bfseries \ReportTitle\par}
+\vspace{0.55em}
+{\Large\color{RiceGray} \ReportSubtitle\par}
+\vspace{1.8cm}
+
+\renewcommand{\arraystretch}{1.22}
+\begin{tabular}{@{}p{0.28\textwidth}p{0.64\textwidth}@{}}
+\textbf{Report Type} & \ReportType \\
+\textbf{Course Number} & \CourseNumber \\
+\textbf{Course Name} & \CourseName \\
+\textbf{Authors} & \AuthorBlock \\
+\textbf{Instructor} & \InstructorName \\
+\textbf{Address} & \InstitutionAddress \\
+\textbf{Date} & \ReportDate \\
+\end{tabular}
+
+\vfill
+
+{\small\color{RiceGray}
+This template uses \texttt{rice-logo-header.png} on the cover page and \texttt{rice-owl-header.jpg} in the body-page header. Together with the sample image shown in \cref{fig:sample-jpg}, these assets are sourced from Rice's brand resources page~\cite{ricebrandresources}.
+\par}
+
+\newpage
+\setcounter{page}{1}
+
+% -------------------- Front Matter ------------------------
+\begin{abstract}
+This template is part of the rice-university-report-template project: \url{https://github.com/baoyunfan0101/rice-university-report-template}. A compact version without a cover page is also available in the repository. This document serves as a reusable template for lightweight reports, course write-ups, project notes, design memos, and technical summaries. The sample content below demonstrates formatting, citations, figures, tables, equations, and code listings.
+\end{abstract}
+
+\vspace{0.5em}
+\textbf{Keywords:} template; Rice University; \LaTeX; sample content
+
+\tableofcontents
+\newpage
+
+% -------------------- Sections ----------------------------
+\section{How to Use This Template}
+
+Most users should spend nearly all of their time editing this file: first the metadata block near the top, then the body sections below. The formatting logic is isolated in \texttt{format.tex}, so style changes can be made there only when needed.
+
+\subsection{Recommended workflow}
+\begin{enumerate}[leftmargin=1.5em,label=\arabic*.]
+    \item Edit the metadata block in \texttt{main.tex}.
+    \item Replace sample text section by section.
+    \item Keep \texttt{format.tex} unchanged unless you want to alter layout, typography, colors, headers, or code style.
+    \item Update entries in \texttt{references.bib} as needed.
+    \item Compile twice so that references and the table of contents resolve correctly.
+\end{enumerate}
+
+\section{Purpose and Scope}
+
+This template is designed to be reusable across different types of report writing. It keeps the formatting system in one supporting file while leaving the main document easy to edit.
+
+\subsection{Example objectives}
+\begin{itemize}[leftmargin=1.5em]
+    \item Provide a clean cover page with structured metadata.
+    \item Keep the body pages visually distinct with the owl image in the running header.
+    \item Demonstrate how to cite a website source and a standard article source~\cite{ricebrandresources,samplemethod2024}.
+    \item Offer sample structures that can be deleted or expanded with minimal effort.
+\end{itemize}
+
+\section{Sample Data and Example Narrative}
+
+The numbers in this section are demonstration values only. They are included so that users can see what a real report would look like before inserting actual results.
+
+\subsection{Sample summary table}
+\Cref{tab:sample-results} shows a compact table style suitable for weekly summaries, implementation reports, or project updates.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Sample evaluation summary for template demonstration only.}
+    \label{tab:sample-results}
+    \rowcolors{2}{RiceLight}{white}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{0.31\textwidth}ccc}
+        \toprule
+        \rowcolor{RiceBlue!12}
+        \textbf{Configuration} & \textbf{Accuracy} & \textbf{F1 Score} & \textbf{Runtime (min)} \\
+        \midrule
+        Baseline workflow & 0.81 & 0.78 & 42 \\
+        Revised workflow & 0.86 & 0.84 & 39 \\
+        Final sample setup & \SampleMetric{0.89} & \SampleMetric{0.87} & \SampleMetric{37} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Sample equation}
+A lightweight technical report may still need a compact mathematical definition. One example is shown in \cref{eq:weighted-score}.
+
+\begin{equation}
+\label{eq:weighted-score}
+S = \alpha A + \beta F - \gamma T,
+\end{equation}
+where $A$ is accuracy, $F$ is the F1 score, $T$ is normalized runtime, and $\alpha$, $\beta$, and $\gamma$ are user-selected weights.
+
+\subsection{Sample figure}
+\Cref{fig:sample-jpg} shows how to include a JPG image. To use your own image, place your file at the desired location and update the file path in the \texttt{\textbackslash includegraphics\{\}} command accordingly (e.g., \texttt{fig/your-image.jpg}).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.84\textwidth]{rice-sample-image.jpg}
+    \caption{Sample JPG figure for template demonstration. The Rice logo, Rice owl image, and this sample figure can all be sourced from Rice brand resources~\cite{ricebrandresources}.}
+    \label{fig:sample-jpg}
+\end{figure}
+
+\section{Sample Code Block}
+
+Many reports need a short implementation excerpt, experiment configuration, or analysis script. \Cref{lst:python-example} demonstrates a compact code listing style.
+
+\begin{lstlisting}[caption={Sample Python snippet for data aggregation.},label={lst:python-example}]
+def weighted_score(accuracy: float, f1: float, runtime: float,
+                   alpha: float = 0.5, beta: float = 0.4, gamma: float = 0.1) -> float:
+    """Compute a simple demonstration score for template examples."""
+    return alpha * accuracy + beta * f1 - gamma * runtime
+
+sample_rows = [
+    {"name": "baseline", "accuracy": 0.81, "f1": 0.78, "runtime": 0.42},
+    {"name": "revised", "accuracy": 0.86, "f1": 0.84, "runtime": 0.39},
+]
+
+best_row = max(sample_rows, key=lambda row: weighted_score(
+    row["accuracy"], row["f1"], row["runtime"]
+))
+print(best_row)
+\end{lstlisting}
+
+\section{Brand Asset Source and Citation Example}
+\label{sec:brand-assets}
+
+This section documents the intended provenance of the Rice logo, Rice owl image, and sample JPG used in this template. It also serves as a compact example of website citation in the body text.
+
+Rice's Brand Guide resources page provides access to Rice brand assets and related materials for the Rice community~\cite{ricebrandresources}. Within this template, that citation explains where the sample assets are expected to come from and provides a ready-made example of web citation formatting.
+
+\section{Sample Discussion}
+
+A strong report template should solve recurring formatting questions in advance while still leaving room for very different types of content. That is why this file includes a structured cover page, body-page headers, restrained color usage, realistic sample data, and an implementation appendix.
+
+\section{Conclusion}
+
+This template provides a practical starting point for Rice-affiliated report writing. To finalize it for real use, replace all sample content, confirm the image assets against the latest Rice brand guidance, and adjust the bibliography style if your course, lab, or team uses a different citation convention.
+
+% -------------------- References --------------------------
+\newpage
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+% -------------------- Appendices --------------------------
+\appendix
+\newpage
+
+\section{Implementation Notes}
+
+This appendix is optional but useful for anyone maintaining the template over time.
+
+\subsection{Included design decisions}
+\begin{longtable}{@{}p{0.30\textwidth}p{0.62\textwidth}@{}}
+\toprule
+\textbf{Element} & \textbf{Decision in this template} \\
+\midrule
+Cover page logo & Uses \texttt{rice-logo-header.png} as a cover element. \\
+Body-page header & Uses \texttt{rice-owl-header.jpg} in the running header. \\
+Formatting system & Kept in \texttt{format.tex} so most users can ignore it. \\
+Typography & Uses \texttt{newtxtext,newtxmath}. \\
+Citation examples & Includes both website and article citations. \\
+Figure example & Uses a JPG filename rather than a drawn placeholder box. \\
+Code example & Includes a Python listing for implementation-oriented reports. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Checklist for users}
+\begin{itemize}[leftmargin=1.5em]
+    \item Confirm that all image filenames match the files in your project directory.
+    \item Replace every placeholder in the metadata block.
+    \item Delete sample sections that are unnecessary for your report type.
+    \item Update or replace the example bibliography entries in \texttt{references.bib}.
+\end{itemize}
+
+\end{document}

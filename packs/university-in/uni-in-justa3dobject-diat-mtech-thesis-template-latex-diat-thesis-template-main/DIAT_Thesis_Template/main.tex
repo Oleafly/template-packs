@@ -1,0 +1,680 @@
+% M.Tech Thesis Report Template MADE BY AAYUSH VISHNOI (JustAnother3DObject)
+
+\documentclass[12pt,a4paper]{report}
+
+% Essential Packages
+\usepackage[utf8]{inputenc}
+
+% D.2.2.1: Margins (Top=30, Left=30, Width=160, Height=245)
+\usepackage[a4paper, top=30mm, left=30mm, textwidth=160mm, textheight=245mm, headheight=15pt, footskip=10mm]{geometry}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{fancyhdr}
+\usepackage{cite}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{times}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+
+% Page setup
+\onehalfspacing % D.2.2.1: Line spacing 1.5
+\setlength{\parindent}{12mm} % D.2.5.1.b: Indent 12mm
+\setlength{\parskip}{2.5\baselineskip} % D.2.5.1.a: Vertical space between paragraphs 2.5 line spacing
+
+% Hyphenation re-enabled for justification
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyfoot[C]{\thepage} % D.2.3.1: Page number center of footer
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.0pt} % No footer rule
+
+% Chapter and Section Formatting
+
+% Dynamic titlespacing commands to handle preliminary vs main chapters
+\newcommand{\prelimtitlespacing}{
+    % D.3.1: Preliminary Headings 25mm from top edge (30mm margin - 5mm = 25mm)
+    \titlespacing*{\chapter}{0pt}{-5mm}{25mm}
+}
+\newcommand{\mainmattertitlespacing}{
+    % D.2.5.2.a: Chapter headings 75mm from paper edge (75mm - 30mm margin = 45mm)
+    \titlespacing*{\chapter}{0pt}{45mm}{25mm}
+}
+
+% D.2.5.2: Chapter Format
+\titleformat{\chapter}[display]
+{\normalfont\fontsize{18}{22}\bfseries\centering} % D.2.5.2.b: 18pt, bold, center, U/L case
+{\chaptertitlename\ \thechapter}
+{10pt}
+{\fontsize{18}{22}\selectfont}
+
+\prelimtitlespacing % Initialize with preliminary spacing
+
+% D.2.5.3.d: Section Format
+\titleformat{\section}
+{\normalfont\fontsize{16}{19}\bfseries\flushleft} % 16pt, bold, left
+{\thesection}
+{1em}
+{}
+
+\titlespacing*{\section}
+{0pt} 
+{15mm} % 15mm above
+{15mm} % 15mm below
+
+% D.2.5.3.d: Sub-section Format
+\titleformat{\subsection}
+{\normalfont\fontsize{14}{17}\bfseries\flushleft} % 14pt, bold, left
+{\thesubsection}
+{1em}
+{}
+
+\titlespacing*{\subsection}
+{0pt} % left
+{15mm} % 15mm above
+{15mm} % 15mm below
+
+% D.2.5.3.c: Include up to Sub-sections (level 2) in TOC
+\setcounter{tocdepth}{2}
+
+% Hyperlink setup
+\hypersetup{
+colorlinks=true,
+linkcolor=black,
+citecolor=blue,
+urlcolor=blue
+}
+
+% Document Information
+\newcommand{\thesistitle}{Your Thesis Title}
+\newcommand{\authorname}{Your Name}
+\newcommand{\rollnumber}{Your Roll Number}
+\newcommand{\guideIname}{Guide 1}
+\newcommand{\guideItitle}{Designation of Guide 1}
+\newcommand{\guideIdept}{Department of Guide 1}
+\newcommand{\guideIinst}{Institute of Guide 1}
+\newcommand{\guideIIname}{Guide 2}
+\newcommand{\guideIItitle}{Designation of Guide 2}
+\newcommand{\guideIIdept}{Department of Guide 2}
+\newcommand{\guideIIinst}{Institute of Guide 2}
+\newcommand{\departmentname}{Your Department}
+\newcommand{\institutename}{Your Institute}
+\newcommand{\submissiondate}{Date}
+\newcommand{\specialization}{Your Specialization}
+
+\begin{document}
+
+% Start Roman numbering from Title Page (page i, unprinted) - D.2.3.3
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% Title Page
+\begin{titlepage}
+\thispagestyle{empty} % D.2.3.3: Title page is considered to be page i, but the number is not typed
+\centering
+\vspace*{0.3cm}
+
+% Institute Logo - Create an 'images' folder and add your logo.png file
+\includegraphics[width=0.12\textwidth]{images/logo.png}\\[0.6cm]
+
+{\LARGE \textbf{\institutename}}\\[0.3cm]
+
+{\Large \departmentname}\\[0.8cm]
+
+{\LARGE \textbf{\thesistitle}}\\[0.8cm]
+
+{\large A Thesis Submitted in Partial Fulfillment of the\\
+Requirements for the Degree of}\\[0.3cm]
+
+{\large \textbf{MASTER OF TECHNOLOGY}}\\[0.2cm]
+
+{\large in}\\[0.2cm]
+
+{\large \textbf{\specialization}}\\[0.8cm]
+
+{\large \textbf{By}}\\[0.2cm]
+
+{\large \authorname}\\[0.15cm]
+
+{\large \rollnumber}\\[0.8cm]
+
+{\large \textbf{Under the Guidance of}}\\[0.4cm]
+
+% Two guides side by side with reduced spacing and smaller font
+\begin{tabular}{p{0.45\textwidth}@{\hspace{0.5cm}}p{0.45\textwidth}}
+\centering\arraybackslash{\large \guideIname} & \centering\arraybackslash{\large \guideIIname}\\[0.15cm]
+\centering\arraybackslash{\small \guideItitle} & \centering\arraybackslash{\small \guideIItitle}\\[0.1cm]
+\centering\arraybackslash{\small \guideIdept} & \centering\arraybackslash{\small \guideIIdept}\\[0.1cm]
+\centering\arraybackslash{\small \guideIinst} & \centering\arraybackslash{\small \guideIIinst}
+\end{tabular}\\[0.6cm]
+
+\vfill
+
+{\large \submissiondate}
+
+\vspace{0.3cm}
+\end{titlepage}
+
+% Approval Sheet
+\cleardoublepage
+\chapter*{Approval Sheet}
+\addcontentsline{toc}{chapter}{Approval Sheet}
+
+\begin{center}
+\thesistitle
+\end{center}
+
+\vspace{1cm}
+
+Undertaken by: \textbf{\authorname} (\rollnumber) is approved for the award of Masters of Technology in \specialization.
+\vspace{2cm}
+
+\begin{flushright}
+\begin{tabular}{c}
+Examiner: \hspace{3cm}\\[1cm]
+\\
+Supervisor: \hspace{3cm}\\[1cm]
+\\
+Chairman: \hspace{3cm}\\[1cm]
+\end{tabular}
+\end{flushright}
+
+\vspace{2cm}
+
+\noindent Date: \rule{3cm}{0.4pt}
+
+\vspace{1cm}
+
+\noindent Place: DIAT, Pune
+
+% Certificate of Course Work - D.3.1: Required Preliminary Page
+\cleardoublepage
+\chapter*{Certificate of Course Work}
+\addcontentsline{toc}{chapter}{Certificate of Course Work}
+
+This is to certify that \textbf{\authorname} (\rollnumber) has satisfactorily completed the course work requirements for the M.Tech degree program in \textbf{\specialization}.
+
+\vspace{2cm}
+
+\noindent\begin{tabular}{@{}p{0.5\textwidth}p{0.5\textwidth}@{}}
+Date: \rule{3cm}{0.4pt} & \hfill\textbf{Head of the Department}\hspace{0pt}\\[0.2cm]
+Place: \rule{3cm}{0.4pt} & \hfill\departmentname\hspace{0pt}\\[0.2cm]
+& \hfill\institutename\hspace{0pt}
+\end{tabular}
+
+% Certificate Page
+\cleardoublepage
+\chapter*{Certificate}
+\addcontentsline{toc}{chapter}{Certificate}
+
+This is to certify that the thesis entitled \textbf{``\thesistitle''} submitted by \textbf{\authorname} (\rollnumber) in partial fulfillment of the requirements for the award of the degree of Master of Technology in \specialization\ at \institutename\ is an authentic work carried out by him/her under our supervision and guidance.
+The matter embodied in this thesis has not been submitted for the award of any other degree or diploma.
+\vspace{1.5cm}
+
+% Guide I
+\noindent\begin{tabular}{@{}p{0.35\textwidth}p{0.65\textwidth}@{}}
+Date: \rule{3cm}{0.4pt} & \hfill\textbf{\guideIname}\hspace{0pt}\\[0.2cm]
+Place: \rule{3cm}{0.4pt} & \hfill Thesis Supervisor\hspace{0pt}\\[0.2cm]
+& \hfill\guideItitle\hspace{0pt}\\[0.2cm]
+& \hfill\guideIdept\hspace{0pt}\\[0.2cm]
+& \hfill\guideIinst\hspace{0pt}
+\end{tabular}
+
+\vspace{1cm}
+
+% Guide II
+\noindent\begin{tabular}{@{}p{0.35\textwidth}p{0.65\textwidth}@{}}
+Date: \rule{3cm}{0.4pt} & \hfill\textbf{\guideIIname}\hspace{0pt}\\[0.2cm]
+Place: \rule{3cm}{0.4pt} & \hfill Thesis Co-Supervisor\hspace{0pt}\\[0.2cm]
+& \hfill\guideIItitle\hspace{0pt}\\[0.2cm]
+& \hfill\guideIIdept\hspace{0pt}\\[0.2cm]
+& \hfill\guideIIinst\hspace{0pt}
+\end{tabular}
+
+% Declaration
+\cleardoublepage
+\chapter*{Declaration}
+\addcontentsline{toc}{chapter}{Declaration}
+
+I hereby declare that the thesis entitled \textbf{``\thesistitle''} which is being submitted by me in partial fulfillment of the requirements for the award of the degree of Master of Technology in \specialization\ at \institutename, is an original work carried out by me under the supervision of \textbf{\guideIname} and \textbf{\guideIIname}.
+I further declare that the work reported in this thesis has not been submitted for the award of any degree or diploma either in this institute or any other institute.
+\vspace{2cm}
+
+\begin{flushright}
+\begin{tabular}{c}
+\textbf{\authorname}\\
+\rollnumber\\
+\departmentname\\
+\institutename
+\end{tabular}
+\end{flushright}
+
+\vspace{1cm}
+
+\noindent Date: \rule{3cm}{0.4pt}
+
+% Plagiarism Declaration
+\cleardoublepage
+\chapter*{Plagiarism Check Declaration}
+\addcontentsline{toc}{chapter}{Plagiarism Check Declaration}
+
+This is to certify that the M Tech thesis entitled \textbf{``\thesistitle''} submitted by \textbf{\authorname} bearing Registration No. \rollnumber\ under the supervision of \textbf{\guideIname} in the \departmentname\ of \institutename\ is the Original research work done by the candidate.
+We have read the provision of DIAT (DU) Plagiarism Policy and it is certified that all the conditions prescribed in the aforesaid policy are complied with in respect of the above mentioned M Tech thesis.
+The thesis has been checked for plagiarism and the report is submitted along with the thesis for further processing.
+\vspace{0.5cm}
+
+\noindent \checkmark\ Originality content (including the contents from his own publications): \textbf{\%}
+
+\vspace{0.3cm}
+
+\noindent \checkmark\ Similarity Reproduction of the content from other sources: \textbf{\%}
+
+\vspace{0.5cm}
+
+We are aware that any issue related to plagiarism in future will have to be addressed by the candidate and the Supervisor(s) concerned.
+\vspace{0.5cm}
+
+\noindent\begin{tabular}{@{}p{0.45\textwidth}p{0.55\textwidth}@{}}
+\textbf{Name of the Candidate:} \authorname & \\[0.3cm]
+Signature: \rule{3cm}{0.4pt} & Date: \rule{3cm}{0.4pt}\\[1.5cm]
+\textbf{Name of Supervisor:} \guideIname & \\[0.3cm]
+Signature: \rule{3cm}{0.4pt} & Date: \rule{3cm}{0.4pt}
+\end{tabular}
+
+% Acknowledgement
+\cleardoublepage
+\chapter*{Acknowledgement}
+\addcontentsline{toc}{chapter}{Acknowledgement}
+
+I would like to express my sincere gratitude to my supervisors \textbf{\guideIname}, \guideItitle, \guideIdept, \guideIinst, and \textbf{\guideIIname}, \guideIItitle, \guideIIdept, \guideIIinst, for their guidance, support, and encouragement throughout this research work.
+Their valuable insights and suggestions have been instrumental in shaping this thesis.
+I am deeply grateful to \textbf{\guideIname} for providing me with the opportunity to work on this challenging problem and for his continuous support in accessing the necessary resources and facilities.
+His expertise in mechanical systems and predictive maintenance has been invaluable to this research.
+I would like to specially thank \textbf{\guideIIname} for her guidance on the machine learning aspects of this work.
+Despite the geographical distance, her regular feedback and discussions helped me develop robust algorithms and understand the theoretical foundations deeply.
+I am also grateful to the faculty members of the \departmentname\ and the Department of Computer Science and Engineering at \institutename\ for their support and valuable suggestions during the progress of this work.
+I would like to acknowledge the support provided by the computational facilities at \institutename\ and the collaboration with \guideIIinst\ which made this research possible.
+I extend my thanks to my fellow researchers and the laboratory staff for their cooperation and assistance.
+I would like to thank my family and friends for their constant support and encouragement throughout this academic journey.
+Lastly, a small thanks to my fellow researcher Aayush Vishnoi for helping me make this report.
+\vspace{0.5cm}
+
+\begin{flushright}
+\textbf{\authorname}
+\end{flushright}
+
+% Abstract
+\cleardoublepage
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+This thesis presents the development and implementation of advanced machine learning techniques for predictive maintenance in industrial systems.
+The primary objective is to predict equipment failures before they occur, thereby reducing downtime and maintenance costs.
+The research was conducted under the joint supervision of experts in mechanical engineering and computer science from \guideIinst\ and \guideIIinst.
+The research focuses on developing novel deep learning architectures that can learn from historical sensor data and identify patterns indicative of impending failures.
+A hybrid approach combining convolutional neural networks (CNN) and long short-term memory (LSTM) networks is proposed to capture both spatial and temporal features in the data.
+The methodology involves collecting data from multiple sensors installed on industrial equipment, preprocessing the data to remove noise and handle missing values, and training the model using labeled failure data.
+The proposed model is evaluated on real-world datasets from manufacturing facilities.
+Results demonstrate that the proposed approach achieves 95\% accuracy in predicting failures 24 hours in advance, outperforming traditional statistical methods and existing machine learning approaches.
+The model successfully identified critical failure modes and provided actionable insights for maintenance scheduling.
+The findings of this research have significant implications for industrial operations, offering a cost-effective solution for implementing predictive maintenance strategies.
+
+\textbf{Keywords:} Predictive Maintenance, Machine Learning, Deep Learning, CNN-LSTM, Industrial Systems, Failure Prediction
+
+% Table of Contents
+\cleardoublepage
+\tableofcontents
+\cleardoublepage
+
+% List of Figures
+\cleardoublepage
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+\cleardoublepage
+
+% List of Tables
+\cleardoublepage
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+\cleardoublepage
+
+% Nomenclature
+\cleardoublepage
+\chapter*{Nomenclature}
+\addcontentsline{toc}{chapter}{Nomenclature}
+
+\begin{tabular}{ll}
+\textbf{Symbol} & \textbf{Description}\\[0.5cm]
+$\alpha$ & Learning rate\\
+$\beta$ & Decay coefficient\\
+$\gamma$ & Discount factor\\
+$\theta$ & Model parameters\\
+$W$ & Weight matrix\\
+$b$ & Bias vector\\
+$h$ & Hidden state\\
+$x$ & Input vector\\
+$y$ & Output prediction\\
+$t$ & Time step\\
+$\sigma$ & Sigmoid activation function\\
+$\mu$ & Mean value\\
+% Add more symbols as needed
+\end{tabular}
+
+\vspace{1cm}
+
+\textbf{Abbreviations}
+
+\begin{tabular}{ll}
+AI & Artificial Intelligence\\
+CNN & Convolutional Neural Network\\
+LSTM & Long Short-Term Memory\\
+ML & Machine Learning\\
+DL & Deep Learning\\
+IoT & Internet of Things\\
+RNN & Recurrent Neural Network\\
+MSE & Mean Squared Error\\
+RMSE & Root Mean Square Error\\
+PdM & Predictive Maintenance\\
+% Add more abbreviations as needed
+\end{tabular}
+
+\cleardoublepage
+
+% Main Content Starts
+\pagenumbering{arabic} % D.2.3.1: Arabic numerals
+\setcounter{page}{1}
+\mainmattertitlespacing % Switch to chapter 75mm top spacing
+
+% Chapter 1: Introduction
+\chapter{Introduction}
+\label{ch:introduction}
+\thispagestyle{empty} % D.2.3.1: Page 1 number not printed
+
+\section{Background}
+Provide background information about your research area.
+Explain the context and importance of the problem you are addressing.
+This work was undertaken as a collaborative effort between the mechanical engineering and computer science domains, leveraging expertise from both \guideIinst\ and \guideIIinst.
+
+\section{Motivation}
+Explain what motivated you to undertake this research. What are the current challenges or gaps that need to be addressed?
+The interdisciplinary nature of this research, guided by experts from different institutions, enabled a comprehensive approach to the problem.
+
+\section{Organization of Thesis}
+This thesis is organized as follows:
+
+\begin{itemize}
+\item Chapter \ref{ch:introduction} provides an introduction to the research problem.
+\item Chapter \ref{ch:literature} presents a comprehensive review of existing literature.
+\item Chapter \ref{ch:gaps} identifies the knowledge gaps in earlier investigations.
+\item Chapter \ref{ch:objectives} defines the scope and objectives of the present research.
+\item Chapter \ref{ch:problem} presents the problem definition.
+\item Chapter \ref{ch:methodology} describes the methodology adopted for solving the problem.
+\item Chapter \ref{ch:results} presents and discusses the results obtained.
+\item Chapter \ref{ch:conclusions} summarizes the conclusions and suggests future work.
+\end{itemize}
+
+% Chapter 2: Review of Literature
+\chapter{Review of Literature}
+\label{ch:literature}
+
+\section{Introduction}
+Provide an introduction to the literature review chapter.
+Explain the organization and scope of the review. This review covers both mechanical engineering aspects of predictive maintenance and computer science perspectives on machine learning, reflecting the interdisciplinary guidance received.
+
+\section{Historical Development}
+Discuss the historical development of the research area. Cite relevant pioneering works.
+
+\section{Recent Advances}
+Present recent advances and state-of-the-art research in your field. Organize this section by themes or chronologically.
+
+\subsection{Predictive Maintenance in Mechanical Systems}
+Discuss mechanical engineering perspectives with relevant citations \cite{reference1}.
+
+\subsection{Machine Learning Applications}
+Discuss computer science and AI approaches with relevant citations \cite{reference2}.
+
+\section{Summary}
+Summarize the key findings from the literature review.
+
+% Chapter 3: Knowledge Gaps
+\chapter{Knowledge Gaps in Earlier Investigations}
+\label{ch:gaps}
+
+\section{Identified Gaps}
+Based on the literature review, identify and discuss the gaps in existing research:
+
+\begin{enumerate}
+\item \textbf{Gap 1:} Limited integration of domain knowledge from mechanical engineering with advanced machine learning techniques.
+\item \textbf{Gap 2:} Insufficient early warning capabilities in existing predictive models.
+\item \textbf{Gap 3:} Lack of interpretability in deep learning models for industrial applications.
+\end{enumerate}
+
+\section{Need for Present Research}
+Explain how your research addresses these gaps and why it is needed.
+The collaborative approach with guidance from both mechanical engineering and computer science experts helps bridge these gaps effectively.
+
+% Chapter 4: Scope and Objectives
+\chapter{Scope and Objectives of Present Research}
+\label{ch:objectives}
+
+\section{Scope of Research}
+Define the scope of your research.
+What are the boundaries and limitations? This research benefits from the combined expertise of supervisors from \guideIinst\ (mechanical systems) and \guideIIinst\ (machine learning).
+
+\section{Research Objectives}
+State your research objectives clearly:
+
+\begin{enumerate}
+\item Objective 1: Develop hybrid CNN-LSTM architecture for predictive maintenance
+\item Objective 2: Implement data preprocessing techniques for industrial sensor data
+\item Objective 3: Achieve early failure prediction with high accuracy
+\item Objective 4: Validate the model on real-world industrial datasets
+\end{enumerate}
+
+% Chapter 5: Problem Definition
+\chapter{Problem Definition}
+\label{ch:problem}
+
+\section{Problem Statement}
+Provide a clear and concise problem statement.
+What exactly are you trying to solve?
+
+\section{Assumptions and Constraints}
+List the assumptions made and constraints considered in your work.
+
+\section{Expected Outcomes}
+What outcomes or results do you expect from this research?
+
+% Chapter 6: Methodology
+\chapter{Methodology for Solution of Problem}
+\label{ch:methodology}
+
+\section{Introduction}
+Introduce the methodology chapter and explain the approach used (combining Numerical/Analytical/Experimental approaches).
+The methodology was developed with input from both supervisors, integrating mechanical domain knowledge with machine learning expertise.
+
+\section{Methodology Overview}
+Provide an overview of your methodology. Include a flowchart if applicable.
+\begin{figure}[h]
+\centering
+% \includegraphics[width=0.8\textwidth]{methodology_flowchart.png}
+\caption{Methodology flowchart}
+\label{fig:methodology}
+\end{figure}
+
+\section{Data Collection and Preprocessing}
+Describe your data collection process and preprocessing steps.
+
+\subsection{Mechanical System Analysis}
+Present the mechanical aspects analyzed under the guidance of \guideIname.
+
+\subsection{Machine Learning Pipeline}
+Present the ML pipeline developed under the guidance of \guideIIname.
+\begin{equation}
+h_t = \text{LSTM}(W_h \cdot x_t + b_h, h_{t-1})
+\label{eq:lstm}
+\end{equation}
+
+\subsection{Computational Details}
+Provide details about computational tools used or experimental apparatus.
+
+\section{Validation}
+Describe how you validated your methodology using both mechanical engineering principles and machine learning validation techniques.
+
+% Chapter 7: Results and Discussions
+\chapter{Results and Discussions}
+\label{ch:results}
+
+\section{Introduction}
+Introduce the results chapter.
+Results are analyzed from both mechanical engineering and machine learning perspectives.
+
+\section{Experimental Results}
+Present your results with appropriate figures and tables.
+\begin{figure}[h]
+\centering
+% \includegraphics[width=0.7\textwidth]{result1.png}
+\caption{Performance comparison of proposed model}
+\label{fig:result1}
+\end{figure}
+
+\subsection{Discussion}
+Discuss the implications of these results from both engineering and computational viewpoints.
+
+\section{Model Performance}
+Present model performance metrics.
+
+\begin{table}[h]
+\centering
+\caption{Comparison of different approaches}
+\label{tab:result1}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Method} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} \\
+\hline
+Proposed CNN-LSTM & 95.0\% & 93.2\% & 96.5\% \\
+\hline
+Standard LSTM & 89.0\% & 87.1\% & 90.8\% \\
+\hline
+Traditional ML & 82.0\% & 80.5\% & 84.2\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Discussion}
+Discuss these results and compare with literature if applicable.
+
+\section{Comparative Analysis}
+Compare your results with existing literature or benchmark solutions.
+
+\section{Summary}
+Summarize the key findings from all results, highlighting contributions from both mechanical and computational perspectives.
+
+% Chapter 8: Conclusions
+\chapter{Conclusions}
+\label{ch:conclusions}
+
+\section{Summary of Work}
+Provide a brief summary of the work carried out in this thesis.
+Acknowledge the interdisciplinary nature of the research and the contributions from both supervisors.
+
+\section{Key Findings}
+List the key findings and contributions of your research:
+
+\begin{enumerate}
+\item Finding 1: Successfully developed hybrid CNN-LSTM model for predictive maintenance
+\item Finding 2: Achieved 95\% accuracy in failure prediction with 24-hour lead time
+\item Finding 3: Demonstrated superior performance compared to existing approaches
+\end{enumerate}
+
+\section{Contributions}
+The main contributions of this work include:
+
+\begin{itemize}
+\item Integration of mechanical domain knowledge with advanced ML techniques
+\item Novel hybrid architecture for industrial applications
+\item Validation on real-world industrial datasets
+\end{itemize}
+
+\section{Recommendations for Future Work}
+Suggest directions for future research based on your findings:
+
+\begin{itemize}
+\item Extension to multiple equipment types
+\item Implementation of explainable AI techniques
+\item Real-time deployment in industrial settings
+\item Collaboration with additional industrial partners
+\end{itemize}
+
+% Chapter 9: Publications (if any)
+\chapter{Publications and Patents from Thesis Work}
+\label{ch:publications}
+
+\section{Journal Publications}
+\begin{enumerate}
+\item \authorname, \guideIname, and \guideIIname, ``Hybrid CNN-LSTM Architecture for Predictive Maintenance in Industrial Systems,'' \textit{Journal of Machine Learning Research}, Vol.
+15, No. 3, pp. 234-251, 2024.
+% Add more publications as needed
+\end{enumerate}
+
+\section{Conference Publications}
+\begin{enumerate}
+\item \authorname, \guideIname, and \guideIIname, ``Deep Learning for Failure Prediction in Manufacturing Equipment,'' in \textit{Proc.
+International Conference on Machine Learning}, Boston, USA, 2024, pp. 1234-1240.
+% Add more publications as needed
+\end{enumerate}
+
+\section{Patents}
+\begin{enumerate}
+\item Patent application filed (if any)
+\end{enumerate}
+
+\section*{Note}
+Publications include collaborative work with both supervisors from \guideIinst\ and \guideIIinst.
+
+% References
+\cleardoublepage
+\begin{thebibliography}{99}
+\addcontentsline{toc}{chapter}{References}
+
+\bibitem{reference1}
+Author1, A. and Author2, B., ``Predictive Maintenance in Industrial Systems,'' \textit{Journal of Mechanical Engineering}, vol. 45, no.
+3, pp. 123-145, 2023.
+
+\bibitem{reference2}
+Author3, C., ``Deep Learning for Time Series Analysis,'' \textit{Machine Learning Journal}, vol. 28, no.
+2, pp. 234-256, 2023.
+
+\bibitem{reference3}
+Author4, D., Author5, E., and Author6, F., ``CNN-LSTM Networks for Predictive Analytics,'' in \textit{Proc.
+International Conference on AI}, San Francisco, USA, 2023, pp. 456-463.
+% Add more references as needed
+% Minimum 30-40 references recommended for M.Tech thesis
+
+\end{thebibliography}
+
+% Appendices (if any)
+\cleardoublepage
+\appendix
+
+\chapter{Additional Data}
+\label{app:data}
+
+Include any additional data, code, or supplementary material here.
+\cleardoublepage
+
+\chapter{Derivations}
+\label{app:derivations}
+
+Include detailed derivations or mathematical proofs here.
+
+\end{document}

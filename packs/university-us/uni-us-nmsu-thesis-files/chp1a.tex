@@ -1,0 +1,258 @@
+\section{HOMOLOGY}\label{homology}
+%The material in this section presents some not entirely trivial 
+ %typesetting problems.  The source code presented here displays some
+ %of the solutions Eduardo found.  At different times during the
+ %writing similar problems were solved differently.  You should try to 
+ %understand why things have been coded as they are in this section
+ %and you should try to find your own optimal solutions to your
+ %typesetting problems.
+%
+%
+%The next line produces an indented paragraph to start the document
+ %unit.  The LaTeX defaults start most units without indentations.
+\hspace{\parindent}
+We now introduce the concepts of simplicial module and of the homology
+associated to a simplicial module.
+As a variation of this, we recall the definition of cyclic module and its
+cyclic homology first given by Loday \cite{Lodaybook}.
+
+The letter $k$ will always denote a commutative ring with identity.
+
+\subsection{Simplicial Homology of a Simplicial Module}
+%The next line produces an indented paragraph to start the document
+ %unit.  The LaTeX defaults start most units without indentations.
+\hspace{\parindent}
+We define simplicial modules and their homology. Also,
+two examples are given.
+The first example is the free simplicial module associated to a simplicial
+set.
+Our second example is the Hochschild complex of a unitary algebra $A$ over
+a ring $k$. 
+
+\begin{defn}
+A simplicial $k$-module $M_*$ is a family of $k$-modules $\{ M_n \}_{n\geq 0}$
+together with $k$-module homomophisms
+$d_i \colon M_n\rightarrow M_{n-1}$
+and
+$s_i \colon M_n\rightarrow M_{n+1}$ 
+for  $ 0\leq i\leq n$
+satisfying the following identities:
+\begin{align}
+d_id_j&=d_{j-1}d_i \quad \text{for} \quad i<j. \label{eq:faces} 
+\\
+s_is_j&=s_{j+1}s_i \quad \text{for}\quad i\leq j \label{eq:degeneracies}
+\\
+d_is_j&=\begin{cases}
+        s_{j-1}d_i & \text{if $i< j$}, \\
+        id         & \text{if $i=j$ or $i=j+1$}, \\
+        s_jd_{i-1} & \text{if $i>j+1$}.
+        \end{cases} \label{eq:mix}
+\end{align}
+\end{defn}
+
+In order to define the homology of a simplicial module define
+$b \colon  M_n \rightarrow M_{n-1}$ to be the boundary map such that
+\begin{equation*}
+               b=\sum_{i=0}^n(-1)^id_i
+\end{equation*}
+
+Relations \eqref{eq:faces} imply $b^2=0$, so we obtain a
+chain complex $(M_*,b)$ and we have the following definition:
+
+\begin{defn}
+Let $M_*$ be a simplicial $k$-module. The homology of the simplicial module
+$M_*$ is given by
+\[ H_n(M_*)=H_n(M_*,b) \]
+where $H_n(M_*,b)$ is the $n$-th homology of the complex $(M_*,b)$.
+\end{defn}
+\begin{example}
+A simplicial set $X$ is a family of sets $\{X_n\}_{n\geq 0}$ together with
+functions $d_i$ and $s_i$ satisfying relations 
+\eqref{eq:faces}-\eqref{eq:mix}.
+A simplicial set gives rise to a free simplicial $k$-module denoted
+$k[X]$ by taking $k[X]_n=k[X_n]$, the free $k$-module with basis
+$X_n$. In this case we usually write
+$H_*(k[X])=H_*(X;k)$.
+Let $Y$ be a topological space and let $X=\Sin(Y)$ be the singular
+complex of $Y$. This has 
+\[ 
+X_n=   \{ \sigma  \colon  
+             \Delta^n\rightarrow Y : \text{$\sigma$ is continuous} \} 
+\]
+with faces and degeneracies induced by the cofaces and codegeneracies
+of $\Delta^n$, where $\Delta^n$ is the geometric simplex of dimension $n$.
+Then $H_*(X;k)$ is singular homology of the space $Y$ with coefficients in $k$.
+\end{example}
+
+\begin{example}\label{tensor_algebra}
+Let $A$ be an associative $k$-algebra and let $A_*$ be the simplicial 
+$k$-module defined by
+\[ 
+    A_n=A^{\otimes (n+1)}
+       = A\otimes_k A\otimes_k \cdots \otimes_k A 
+        \qquad \text{$(n+1)$ factors} 
+\]
+A generator of $A^{\otimes(n+1)}$ is denoted by $(a_0,\dots a_n)$.
+Let
+\[ 
+d_i \colon A_n\rightarrow A_{n-1} 
+\quad \text{and} \quad
+   s_i \colon A_n \rightarrow A_{n+1} 
+\]
+be such that
+\[ 
+d_i(a_0,\dots ,a_n)=\begin{cases}
+                (a_0,\dots , a_ia_{i+1},\dots a_n) & \text{if $0\leq i <n$}, \\
+                (a_na_0,a_1,\dots ,a_{n-1})        & \text{if $i=n$}.
+                \end{cases}
+\]
+\[ 
+s_i(a_0,\dots ,a_n)=(a_0,\dots , a_i,1, a_{i+1},\dots ,a_n) 
+            \quad \text{for} \quad 0\leq i\leq n
+\]
+It can be verified that these functions satisfy the simplicial identities
+and, therefore, the family of modules $A_n=A^{\otimes (n+1)}$ together with
+these maps $d_i$ and $s_i$ is a simplicial module.
+Its homology is known as the
+Hochschild homology of the algebra $A$ and is denoted $HH_*(A)$.
+\end{example}
+
+\subsection{Cyclic Homology of a Cyclic Module}
+%The next line produces an indented paragraph to start the document
+ %unit.  The LaTeX defaults start most units without indentations.
+\hspace{\parindent}
+In this section we describe the definition of cyclic homology given by
+Loday and Quillen \cite{Lodaybook}.
+\begin{defn}
+A cyclic module $M$ is a simplicial module together with an action of
+the cyclic group
+$C_{n+1}=\langle t_{n+1} : (t_{n+1})^{n+1}=1 \rangle$ 
+on $M_n$, for each $n$, such that the following additional relations hold
+\begin{equation}\label{cyclic_relations}
+\begin{array}{lclcl}
+d_it_{n+1}=t_{n}d_{i-1} 
+        &  \text{and} 
+              & s_it_{n+1}=t_{n+2}s_{i-1}     
+                        &\text{for} 
+                             & 1\leq i\leq n, 
+\\
+d_0t_{n+1}=d_n            
+        & \text{and} 
+              &  s_0t_{n+1}=t_{n+2}^2s_n 
+                        &           
+                              &
+\end{array}
+\end{equation}
+where $d_i \colon M_n\rightarrow M_{n-1}$   
+and $s_i \colon M_n \rightarrow M_{n+1}$ for $i=0,1,\dots , n$
+are the simplicial structure maps.
+\end{defn}
+
+Next we will define the cyclic homology of a cyclic module.
+The bicomplex we describe now will reappear in a more conceptual way, after
+we develop $\Tor$ functors associated to cyclic and cocyclic modules.
+
+If we define two operators $T_{n+1}$ and $N_{n+1}$ by
+\begin{equation*}
+T_{n+1}=(-1)^nt_{n+1} \quad \text{and} \quad N_{n+1}=1+T_{n+1}+\dots +T^n_{n+1}
+\end{equation*}
+then we have the following lemma:
+\begin{lemma}\label{cyclic_1}
+Let ${\cal C}(M)$ be the diagram of modules and homomorphisms
+\begin{equation}\label{cyclic_bicomplex_1}
+\xy \xymatrix{
+\vdots \ar[d]_-b   
+          &      \vdots \ar[d]_-{b'}      
+                & \vdots \ar[d]_-b   
+                      &  \vdots   \ar[d]_-{b'}        
+                                 &                 
+\\
+M_2\ar[d]_-b 
+          & \ar[l]_-{1-T_3}\ar[d]_-{b'} M_2 
+                 & \ar[l]_-{N_3} \ar[d]_-{b}M_2 
+                      & \ar[l]_-{1-T_3}\ar[d]_-{b'} M_2 
+                                 & \ar[l]_-{N_3} \cdots       
+\\
+M_1\ar[d]_-b 
+          & \ar[l]_-{1-T_2}\ar[d]_-{b'} M_1 
+                 & \ar[l]_-{N_2} \ar[d]_-{b}M_1 
+                       & \ar[l]_-{1-T_2}\ar[d]_-{b'} M_1 
+                                 & \ar[l]_-{N_2} \cdots       
+\\
+M_0          
+          & \ar[l]_-{1-T_1}             M_0 
+                 & \ar[l]_-{N_1}            M_0 
+                       & \ar[l]_-{1-T_1}             M_0 
+                                  & \ar[l]_-{N_1} \cdots
+}
+\endxy
+\end{equation}
+where $b,b' \colon M_n \rightarrow M_{n-1}$ are defined by
+\begin{equation*}
+b=\sum_{i=0}^{n}(-1)^id_i \quad \text{and} \quad b'=\sum_{i=0}^{n-1}(-1)^id_i
+\end{equation*}
+Then the squares anticommute, the rows and columns
+are complexes, so ${\cal C}(M)$ is a bicomplex.
+\end{lemma}
+\begin{proof}See \cite[page 52]{Lodaybook}
+\end{proof}
+\begin{defn}
+Let $M_*$ be a cyclic module. 
+The cyclic homology of $M_*$ is denoted $HC_*(M_*)$ and is defined as
+\begin{equation*}
+        HC_*(M_*)=H_*(\Tot({\cal C}(M)))
+\end{equation*}
+where ${\cal C}(M)$ is the the bicomplex of lemma \ref{cyclic_1}.
+\end{defn}
+\begin{example}
+Let $A_*$ be the simplicial module defined in example \ref{tensor_algebra}. 
+The action of the cyclic
+group $C_{n+1}=\langle t_n : (t_{n+1})^{n+1}=1 \rangle $ on $A_n$ is given by:
+\[ t_{n+1}(a_0,\dots ,a_n)=(a_n, a_1, \dots , a_{n-1}) \]
+It can be verified that under these definitions $A_*$ becomes a cyclic module.
+In this case we write 
+$HC_*(A)$ instead of $HC_*(A_*)$ for the cyclic homology of $A$.
+\end{example}
+
+The vertical complexes $(M_*,b')$ in the bicomplex \eqref{cyclic_bicomplex_1}
+are contractible, with contracting homotopy 
+$h=T_{n+1}s_n \colon M_n \rightarrow M_{n+1}$.
+Loday's Killing Contractible Complexes Lemma 
+\cite[page 55]{Lodaybook} allows us to delete
+all of these columns of the bicomplex 
+\eqref{cyclic_bicomplex_1} obtaining the following
+double complex:
+\begin{equation*}
+\xy \xymatrix{
+\ar[d]_-b\vdots   & \ar[d]_-b\vdots   &  \ar[d]_-b \vdots \\
+M_2 \ar[d]_-b  & \ar[d]_-b\ar[l]_-B M_1  &  \ar[l]_-B M_0  \\
+M_1 \ar[d]_-b  & \ar[l]_-B M_0  &     \\
+M_0            &                &
+}
+\endxy
+\end{equation*}
+Here 
+$B=(-1)^{n+1}(1-t_{n+1})hN  \colon  M_n\rightarrow M_{n+1}$ 
+and $b$ is the Hochschild boundary map. 
+This bicomplex is called the ${\mathcal B}M$ complex 
+or $(B\text{-}b)$-complex. 
+For the particular case of the cyclic module associated to the algebra 
+$A=T(V)$ as described in
+\ref{tensor_algebra}, the $(B\text{-}b)$-complex
+is used to give an explicit computation \cite{L-Q}. 
+The result is given in the following theorem.
+\begin{theorem}\label{tensor_cyclic_thm}
+Let $V$ be a module over $k$, and let $T(V)$ be its tensor algebra. 
+Then the cyclic homology
+$HC_*(T(V))$ is given by:
+\begin{equation*}
+HC_*(T(V))=HC_*(BS^1,k)\oplus \sum_{m\geq 1} H_*(C_m,V^{\otimes m}) 
+\end{equation*} 
+where the generator $t_m$ of $C_m$ acts on $V^{\otimes m}$ as
+\begin{equation*}
+t_m(v_1v_2\cdots v_m)=v_mv_1\cdots v_{m-1}
+\end{equation*}
+\end{theorem}
+\begin{proof}See \cite[page 581]{L-Q}.
+\end{proof}
+%This is the end of chp1a.tex

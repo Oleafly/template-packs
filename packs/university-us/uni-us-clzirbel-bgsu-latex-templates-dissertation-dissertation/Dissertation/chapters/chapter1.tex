@@ -1,0 +1,146 @@
+\chapter{\texorpdfstring{MATHEMATICS}{}} %upper case only
+
+\setcounter{equation}{0} 
+\numberwithin{equation}{section}
+
+\section{Small figures}
+This section illustrates how to include a small .eps figure.
+You can also use .pdf figures.
+Run PDFLaTeX to compile the LaTeX source code.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width = 4.5 in ]{figures/figure.eps}
+\caption{Caption of a figure.}\label{FigureLabel}
+\end{figure}
+
+\section{Making tables}
+
+\begin{table}[ht]
+\centering \caption{The values of test
+statistics and the corresponding critical values
+at~$t_0.$~~$\alpha=0.1.$~}\label{stanford}\vskip .1in
+\begin{tabular}{|c|c|c|c|c|c|c|}\hline
+$t_0$ & 30 & 60 & 90 & 120 & 150 & 180 \\ \hline
+Critical Value & 11.2282 & 10.5357 & 11.1108 & 11.7942 & 11.7343 & 11.7471\\ \hline
+Test Statistic & 25.3182 & 24.6395 & 24.6049 & 25.6623 & 27.1320 & 29.3247\\ \hline
+\end{tabular}
+\end{table}
+
+\section{Citations}
+
+%If you use the package natbib for citations, here is the example how to cite an article.
+%Many thanks to Dr. Maria Rizzo who worked this section.
+
+The easiest way to cite published works is to look them up with an online tool like\\ \noindent scholar.google.com, copy the BibTeX citation information into the file reference.bib (click the double quotes under the article in Google Scholar), then run BibTex on dissertation.tex.
+Below are the commands to insert citations into your dissertation.
+
+To cite an article use cite, citet, or citep.
+
+For ``in text'' citations use citet:  The original result is attributed to \citet{vn28}.
+Refer to \citet{mardia70} for an example.
+Refer to \cite{mardia70} for an example.
+
+For a ``parenthetical citation'' use citep:  The computations were implemented in R \citep{R}
+using bootstrap \citep{dh97,et93}.
+
+When citing a book, it is helpful to mention where to find the result by indicating
+a chapter or a page number or an equation number:  \citet[Ch.~6]{et93} discuss additional results.
+
+Add your reference information to the file reference.bib.
+Every time you edit reference.bib, run BibTeX on the dissertation.tex file so that LaTeX will know what the references are.
+
+Some articles have more than two authors, and it's nice if the author list is not so long in the text.
+When there are 3 or more authors, \LaTeX~is supposed to be able to show just the first author and say ``et al.'' for the rest.
+But that is not always working exactly the way I would expect!
+Here are some examples, hopefully you can find something that works.
+This is what we get with cite: \cite{test123}.
+This is what we get with citet: \citet{test123}.
+This is what we get with citep: \citep{test123}.
+This is what we get with citeauthor*:  \citeauthor*{test123}.
+
+\section{Large, wide figures in landscape orientation}
+
+It's not hard to incorporate very wide figures by making a landscape page in the middle of the PDF.  However, then you need the page number to move, in order to stay in the upper right corner.  That is handled by special LaTeX code in the following example.
+
+\begin{landscape}
+\thispagestyle{lscape}
+\pagestyle{lscape}
+  \begin{figure}
+    \includegraphics[width=\linewidth,height=\textheight-1in]{figures/figure.pdf}
+    \caption[Short caption for List of Figures]{Long caption to appear under the figure.  Make sure the figure is small enough that the caption stays within the margins.  Note that the page number is still in the upper right corner of the PDF file; this is how it needs to be, so follow the code in chapter1.tex.}
+  \end{figure}
+\end{landscape}
+
+\section{Numbering definitions, theorems, and proofs}
+This section illustrates the appearance of definitions, theorems, proofs, and similar items in mathematical work.
+When it says Definition 1.1, that means that it is the first definition in Chapter 1, then Definition 1.2 is the second definition in Chapter 1.
+The section number is not part of the numbering.
+
+There is a page break here to make it easier to start a screen reader to hear how it reads the equations on the next page.
+
+\pagebreak  
+
+\begin{definition}
+We say that $\lim_{x \to a} f(x) = L$ if for all $\varepsilon > 0$, there exists $\delta > 0$ such that for all $x \in (a-\delta,a+\delta),$ we have $|f(x) - L| < \varepsilon$.
+\end{definition}
+
+\begin{definition}
+An integer $n$ is even if $n=2k$ for some integer $k$.
+Thus, for example, the number $0$ is even because $0=2\cdot 0$.
+\end{definition}
+
+\begin{theorem}[Pythagorean Theorem]
+For a right triangle with edge lengths $a$, $b$, and $c$ where $c$ is the length of the hypotenuse, 
+\begin{equation} \label{PythagoreanTheorem}
+    a^2 + b^2 = c^2
+\end{equation}
+\end{theorem}
+\begin{proof}
+Many proofs are available.  Here, we focus on the structure of the proof.
+
+\noindent
+{\bf Case 1:} Suppose that the triangle is isosceles.
+Then $a = b$ and everything works out well.
+
+\noindent
+{\bf Case 2:} Suppose that the triangle is not isosceles.
+The proof of this case is beyond the scope of this template.
+\end{proof}
+
+\section{Additional numbered results}
+\label{AdditionalNumberedResults}
+
+Now we are starting a new section of Chapter 1.
+We can still refer back to Equation \ref{PythagoreanTheorem}.
+
+\begin{lemma}
+A lemma is a short, technical result that is needed in the proof of a theorem.
+\end{lemma}
+
+Note how equations are numbered.
+\begin{equation} \label{squarebinomial}
+    (a+b)^2 = a^2 + 2 ab + b^2
+\end{equation}
+
+\begin{proposition}
+A proposition is like a little theorem.
+\end{proposition}
+
+\begin{corollary}
+A corollary is an easy result that follows a theorem.
+\end{corollary}
+
+\begin{definition}
+An integer $n$ is odd if $n=2k+1$ for some integer $k$.
+\end{definition}
+
+Note that that was the third definition in Chapter 1, which appears in Section 1.6.
+An alternative way to number is to number each equation, definition, theorem, etc. using the same counter, so that the numbers increase throughout the chapter.
+You can get numbering like that by changing certain lines in the preamble of the file dissertation.tex, as is explained there.
+
+Once again, we can refer back to Equation \ref{PythagoreanTheorem}.
+We can also refer to Equation \ref{squarebinomial}.
+Note that when you are reading the PDF version of this document and you click a link to take you to an equation or a reference, you can press Left Alt plus the left arrow key to get back to where you were.
+That's pretty arcane, but it sure helps you navigate a PDF.
+

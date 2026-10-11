@@ -1,0 +1,420 @@
+% \chapter{Previous Works}
+% \label{chap:previous_works}
+
+% \section{Introduction to Medical Image Synthesis and the Data Scarcity Paradigm}
+% The accurate classification, segmentation, and diagnostic interpretation of Chest X-Rays (CXRs) remain fundamental to modern clinical workflows, providing the primary non-invasive modality for the detection of life-threatening cardiopulmonary conditions such as pneumonia, tuberculosis, pulmonary edema, and lung cancer. Over the past decade, the rapid advancement of deep convolutional neural networks (CNNs) and, more recently, vision transformers (ViTs) has theoretically enabled the development of highly accurate Computer-Aided Diagnosis (CAD) systems. These deep learning architectures possess the capacity to identify subtle, sub-visual pathological features that may elude even experienced thoracic radiologists, potentially mitigating the growing workload in clinical environments. However, the practical deployment and generalizability of these AI systems are chronically hindered by the severe scarcity of annotated, high-quality, and demographically diverse medical imaging data. 
+
+% Unlike natural image datasets, which can be scraped from the internet in the billions, medical imaging datasets are constrained by strict privacy regulations (such as HIPAA in the United States and GDPR in Europe), ethical considerations, and institutional data-sharing barriers. Furthermore, annotating these datasets requires the costly, time-consuming expertise of board-certified radiologists, creating a persistent bottleneck in the supervised learning pipeline. Consequently, real-world medical data natively exhibits a ``long-tailed'' distribution. While common findings like cardiomegaly or pleural effusion may be adequately represented, critical but rare pathologies remain severely underrepresented. When trained on such imbalanced distributions, standard deep learning models exhibit algorithmic bias, overfitting to common classes and failing to generalize to the rare ``tail'' classes that often represent acute clinical emergencies.
+
+% Historically, machine learning practitioners attempted to artificially expand training datasets using traditional affine image augmentation techniques, including rotation, horizontal flipping, scaling, and contrast adjustment. While effective in natural computer vision tasks, these simple geometric and photometric perturbations fail to capture the true biological variance and complex structural deformations induced by actual thoracic diseases. A rotated healthy lung does not simulate the geometric distortion of a pneumothorax, nor does altering the contrast accurately simulate the heterogeneous opacity of interstitial pneumonia. Consequently, models trained on traditionally augmented CXRs frequently learn unrealistic, biologically implausible distributions, severely limiting their performance on out-of-distribution real-world data.
+
+% To overcome these structural limitations, the field of medical image analysis has witnessed a paradigm shift toward data-driven deep generative models capable of synthesizing compositionally diverse, clinically accurate medical images. Generative Artificial Intelligence (GenAI) models learn the underlying multidimensional statistical distribution of the training data, enabling the sampling of novel, high-fidelity synthetic CXRs that reflect genuine anatomical structures and complex disease patterns without compromising patient privacy. The trajectory of this domain has evolved rapidly, transitioning from early continuous-variable architectures, such as Variational Autoencoders (VAEs) and Generative Adversarial Networks (GANs), to highly controllable, text-guided Denoising Diffusion Probabilistic Models (DDPMs) and massive Vision-Language Foundation Models. This chapter exhaustively traces this evolution, detailing the mathematical and architectural breakthroughs, the transition toward multimodal latent space synthesis, and the contemporary imperative for algorithmic fairness, spatial controllability, and anatomical factuality in the generation of synthetic chest radiographs.
+
+% \section{First-Generation Synthesis: Variational Autoencoders}
+% The initial wave of deep generative modeling for medical image synthesis relied heavily on Variational Autoencoders (VAEs). VAEs operate on the principles of probabilistic inference and Bayesian statistics, distinguishing themselves from deterministic autoencoders by enforcing a continuous, structured probability distribution over the latent space. The architecture consists of an encoder network that compresses an input high-dimensional CXR image into a low-dimensional latent representation, mapping the data to a predefined prior distribution, typically a standard multivariate Gaussian $\mathcal{N}(0, \mathbf{I})$. A decoder network then samples from this continuous latent space to reconstruct the image, optimizing a loss function that balances the reconstruction error with the Kullback-Leibler (KL) divergence between the learned latent distribution and the prior.
+
+% The primary advantage of VAEs in the medical domain is their mathematically grounded formulation, which ensures stable training dynamics and yields a highly structured, disentangled latent space. This continuous latent manifold allows for smooth interpolation between different patient phenotypes and pathological states, providing a theoretical mechanism for controlled image synthesis. Research by Huijben (2024) \cite{huijben2024medical} at the Eindhoven University of Technology explored the optimization of conditional VAEs for medical synthesis by enforcing class-specific priors. By promoting well-separated latent representations corresponding to specific disease states, these conditional VAEs demonstrated utility in addressing class imbalance and supporting the training of multi-label classifiers. Further variations, such as Gaussian Mixture Variational Autoencoders (GMVAEs) and Dirichlet VAEs, were explored to better disentangle complex, multi-modal clinical features into class-specific visual representations.
+
+% Despite their theoretical elegance, standalone VAEs exhibit profound practical limitations when applied to the synthesis of diagnostic-quality radiographs. The reconstruction loss (typically Mean Squared Error or L1 norm) heavily penalizes macroscopic structural deviations but fails to incentivize the generation of high-frequency, fine-grained textural details. Consequently, VAE-generated CXRs are notoriously blurry, lacking the sharp demarcations of rib contours, pulmonary vasculature, and interstitial markings required for accurate clinical diagnosis. While a VAE might successfully approximate the global spatial geometry of a thorax, its inability to synthesize subtle, sub-millimeter findings---such as micro-nodules or faint ground-glass opacities---rendered it insufficient as a standalone data augmentation tool for advanced deep learning classifiers.
+
+% To address this blurriness, researchers began hybridizing VAEs with other generative architectures. For instance, the \textit{DiffuseVAE} framework utilized a two-stage approach: a VAE first encoded the original image into a compact, low-dimensional latent code to capture essential structural and low-frequency information, filtering out noise. In the second stage, a Denoising Diffusion Probabilistic Model (DDPM) utilized a reverse diffusion process conditioned on this VAE-generated latent code to synthesize the final output, successfully combining the structural integrity of the VAE with the high-frequency detail synthesis capabilities of diffusion models. Nevertheless, the inherent blurriness of pure VAEs drove the majority of early medical image synthesis research toward a different architectural paradigm: adversarial learning.
+
+% \section{The Adversarial Era: Generative Adversarial Networks (GANs)}
+% To overcome the textural limitations of VAEs, the medical imaging community rapidly adopted Generative Adversarial Networks (GANs). Formulated as a minimax two-player game, a GAN consists of two distinct neural networks trained in direct opposition: a generator network designed to synthesize artificial data from random latent noise, and a discriminator network trained to distinguish between the synthesized data and real images from the training distribution. As training progresses, the generator iteratively refines its parameters guided by the backpropagated gradients from the discriminator, ultimately learning to produce highly realistic, sharp images capable of deceiving the discriminator. Because GANs do not rely on pixel-wise reconstruction metrics like Mean Squared Error, they are exceptionally proficient at rendering the high-frequency textural details that VAEs lack, producing visually striking, photo-realistic radiographs.
+
+% \subsection{Deep Convolutional GANs and Data Augmentation}
+% Early foundational work in CXR synthesis predominantly utilized Deep Convolutional GANs (DCGANs). Madani et al. (2018) \cite{madani2018chest} pioneered the application of DCGANs to generate plausible chest X-ray images from a highly constrained dataset of merely 1,341 real images. Their model successfully learned the underlying distribution of cardiovascular abnormalities, generating synthetic images that achieved an impressive Fréchet Inception Distance (FID) score of 1.289---a widely accepted metric indicating high statistical similarity between the real and generated image distributions. Crucially, when these DCGAN-generated synthetic images were used to augment the training set of a CNN classifier, the model exhibited superior diagnostic performance compared to classifiers trained strictly with traditional affine augmentations. This confirmed that GANs could successfully inject novel, biologically plausible variance into the training pipeline, effectively reducing model overfitting.
+
+% Simultaneously, Salehinejad et al. (2018) \cite{salehinejad2018generalization} applied DCGANs specifically to combat the extreme class imbalance prevalent in multi-label pathology datasets. By targeting a five-class chest pathology classification task, they preferentially generated synthetic images for the rarest conditions. Their results demonstrated that a Deep Convolutional Neural Network (DCNN) trained on a balanced mixture of real and GAN-generated images generalized significantly better across all pathology classes than a network trained on the imbalanced real dataset alone. 
+
+% Subsequent iterations of adversarial networks sought to improve upon the basic DCGAN architecture. Progressive Growing GANs (ProGANs), which incrementally increase the resolution of both the generator and discriminator during training, were utilized to generate high-resolution medical imagery with improved stability. Wasserstein GANs with Gradient Penalty (WGAN-GP) were introduced to stabilize the notoriously erratic gradient backpropagation of traditional GANs by utilizing the Earth Mover's Distance, successfully generating synthetic COVID-19 CXR images with FID scores below 2.0. CycleGANs and their variants enabled unpaired image-to-image translation, allowing researchers to explore cross-modality synthesis (e.g., generating synthetic CTs from X-rays or vice versa).
+
+% \subsection{Limitations and the Problem of Mode Collapse}
+% Despite their capacity to generate sharp, realistic images, GANs present profound theoretical and practical limitations that complicate their clinical deployment. The adversarial training process is highly unstable, characterized by non-convergence and oscillating loss landscapes that require exhaustive hyperparameter tuning. However, the most critical vulnerability of GANs in the medical domain is ``mode collapse''. 
+
+% Mode collapse occurs when the generator discovers a small subspace of the data distribution (a ``mode'') that easily fools the discriminator and subsequently ceases to explore the rest of the latent space. In the context of a highly diverse chest radiograph dataset containing dozens of distinct pathologies, demographics, and anatomical variations, a mode-collapsed GAN might reliably generate pristine images of healthy lungs or common conditions like cardiomegaly, but completely fail to synthesize rare phenomena like cavitary lesions or subtle pneumothoraces. Because the fundamental goal of medical image synthesis is to augment the ``long tail'' of underrepresented diseases, the failure of GANs to capture the entire target distribution fundamentally undermines their utility as a comprehensive data augmentation strategy. 
+
+% Furthermore, enforcing complex spatial or semantic constraints on GANs---such as conditioning the generation on highly detailed, multi-sentence free-text radiology reports---proved architecturally challenging. While conditional GANs (cGANs) could accept simple binary or categorical labels (e.g., ``Pneumonia''), they lacked the robust multimodal integration necessary to render the nuanced, composite clinical findings routinely described by radiologists. These structural limitations ultimately catalyzed the field's transition toward a more statistically robust, mode-covering generative paradigm.
+
+% \section{The Paradigm Shift: Denoising Diffusion Probabilistic Models (DDPMs)}
+% The constraints of adversarial training and the blurriness of autoencoders drove the medical imaging community toward Denoising Diffusion Probabilistic Models (DDPMs). Inspired by non-equilibrium thermodynamics, diffusion models fundamentally re-engineered the generative process. Instead of utilizing a single-step adversarial mapping, DDPMs generate images through a heavily parameterized, iterative Markovian chain. 
+
+% The process is divided into two distinct phases. During the forward (diffusion) process, structured Gaussian noise is incrementally added to a real image over hundreds or thousands of timesteps until the underlying anatomical signal is entirely destroyed, leaving an isotropic Gaussian noise distribution. The model, typically a U-Net architecture equipped with spatial attention mechanisms, is then trained to reverse this process. Starting from pure random noise, the reverse (denoising) process iteratively estimates and subtracts the noise gradient at each timestep, gradually recovering the complex data structure and yielding a novel, high-fidelity synthetic image. 
+
+% Because DDPMs explicitly optimize a variational lower bound on the true data likelihood rather than relying on a surrogate adversarial discriminator, they are mathematically incentivized to map and cover the entire underlying data distribution. This theoretical guarantee entirely eliminates the threat of mode collapse, ensuring that rare thoracic pathologies and subtle anatomical variations are faithfully preserved in the generative latent space.
+
+% \subsection{Empirical Superiority: The Medfusion Benchmark}
+% The unequivocal superiority of diffusion models over GANs in the medical domain was empirically solidified by Müller-Franzes et al. (2023) \cite{muller2023diffusion} through the development and comprehensive benchmarking of \textit{Medfusion}, a conditional latent DDPM specifically engineered for medical image generation. The researchers conducted an exhaustive multimodal comparison across three distinct medical datasets, including the expansive CheXpert dataset comprising 191,027 chest radiographs.
+
+% When benchmarked against the state-of-the-art Progressive Growing GAN (ProGAN) and StyleGAN-3 architectures on the CheXpert dataset, Medfusion achieved drastically superior quantitative metrics. Medfusion recorded an FID score of 17.28, compared to an FID of 84.31 for the ProGAN model, indicating a vastly tighter alignment between the statistical distributions of the synthetic and real radiographs. Beyond standard distribution metrics, the study analyzed the trade-off between generative fidelity (precision) and generative diversity (recall). Medfusion not only exhibited higher fidelity but also generated a significantly broader diversity of anatomical and pathological structures, yielding a recall score of 0.32 on the CheXpert dataset compared to just 0.17 for ProGAN and 0.08 for StyleGAN-3. 
+
+% Furthermore, human expert evaluation through a reader study with board-certified medical experts confirmed that the diffusion-synthesized images demonstrated superior anatomical correctness, realistic texture appearance, and clinical plausibility. This landmark study conclusively demonstrated that DDPMs represent a superior alternative to GANs, providing the necessary combination of photo-realistic textural synthesis and absolute mode coverage required for reliable medical data augmentation.
+
+% \subsection{Latent Diffusion and Computational Viability}
+% Despite their generative supremacy, standard pixel-space DDPMs are notoriously computationally expensive. Reversing the diffusion process across thousands of timesteps in the high-dimensional space of a diagnostic radiograph ($1024 \times 1024$ pixels or higher) requires immense GPU memory and extensive inference times, rendering the architecture impractical for many clinical research facilities. 
+
+% To bypass this computational bottleneck, the field rapidly adopted Latent Diffusion Models (LDMs). LDMs decouple the high-frequency perceptual compression from the generative probabilistic modeling. Utilizing a pre-trained Variational Autoencoder (VAE), the original high-dimensional RGB or grayscale image $\mathbf{x} \in \mathbb{R}^{H \times W \times C}$ is compressed into a low-dimensional latent representation $\mathbf{z} \in \mathbb{R}^{h \times w \times c}$. In typical medical applications, this involves an $8\times$ spatial compression ratio ($h=H/8, w=W/8$). 
+
+% The computationally intensive iterative forward and reverse diffusion processes are then executed entirely within this highly condensed latent space. During inference, the U-Net denoises a latent vector $\mathbf{z}_T \sim \mathcal{N}(0, \mathbf{I})$ step-by-step. Once the latent vector is fully denoised, the VAE's decoder maps the representation back to the high-dimensional pixel space. This architecture drastically reduces the required floating-point operations while preserving the intricate, microscopic structural details essential for radiological interpretation, democratizing access to state-of-the-art synthetic generation.
+
+% \section{Vision-Language Integration: Text-Conditioned Medical Foundation Models}
+% While early latent diffusion models successfully mapped the complex statistical distributions of chest radiographs, they largely functioned via unconditional or simple class-conditional generation (e.g., generating an image strictly based on a ``Pneumonia'' label). However, real-world clinical imaging is highly nuanced and invariably accompanied by free-text radiology reports. These reports, composed by domain experts, detail the exact location, morphological characteristics, severity, and compositional nuance of multiple co-occurring abnormalities. To achieve true clinical utility, generative models needed to bridge the gap between computer vision and Natural Language Processing (NLP), enabling the synthesis of CXRs guided directly by complex, semantically rich free-text descriptions.
+
+% The integration of pre-trained Large Language Models (LLMs) and Vision-Language Models (VLMs) with latent diffusion architectures unlocked this capability, initiating the era of medical foundation models. By injecting text embeddings extracted from clinical prompts into the U-Net denoiser via cross-attention mechanisms, researchers gained fine-grained control over the synthetic image output.
+
+% \subsection{The RoentGen Foundation Model}
+% A seminal breakthrough in this domain is \textit{RoentGen} (Chambon et al., 2024) \cite{chambon2024roentgen}, a vision-language foundation model tailored specifically for chest radiography. The authors identified a critical limitation in applying general-domain multimodal models to healthcare: foundation models like Stable Diffusion, which are pre-trained on billions of natural image-text pairs, suffer from a massive distributional shift when applied zero-shot to medical data. The language used to describe natural scenes structurally and semantically fails to capture the specialized, narrow, but highly rich vocabulary of radiology.
+
+% To overcome this natural-medical distributional shift, the researchers leveraged the MIMIC-CXR dataset---a massive corpus of over 370,000 publicly available chest radiographs paired with their corresponding clinical text reports. RoentGen domain-adapted the pre-trained Stable Diffusion v1.4 architecture by fine-tuning it directly on these medical image-text pairs. The VAE component weights were kept frozen, as prior research indicated that general-domain autoencoders possessed sufficient capacity to compress and reconstruct the grayscale textures of CXRs without additional tuning. Instead, the optimization focused on jointly fine-tuning the U-Net denoiser and the CLIP-based text encoder to align the radiological vocabulary with the visual feature space.
+
+% During inference, a textual prompt is processed by the text encoder, and the resulting embeddings guide the iterative denoising of a random Gaussian latent vector via cross-attention layers. Blinded qualitative evaluations by board-certified thoracic radiologists confirmed that RoentGen could generate highly realistic, visually convincing synthetic CXRs. Crucially, the model exhibited extraordinary compositional diversity and controllability. By altering free-form textual modifiers, users could dictate abnormality extent, laterality (e.g., ``moderate right-sided pleural effusion''), and combine multiple distinct pathological findings into a single coherent image---a task previously impossible with rigid GAN architectures. 
+
+% Furthermore, RoentGen demonstrated immediate clinical utility as a data augmentation engine. Classifiers trained jointly on real images and RoentGen-generated synthetic data exhibited a 5\% improvement in diagnostic performance, and a 3\% improvement when trained on a massive, purely synthetic training set. The fine-tuning process also effectively distilled in-domain medical knowledge into the text encoder, improving its representation capabilities for specific diseases like pneumothorax by up to 25\%.
+
+% \subsection{Architectural Optimizations: Chest-Diffusion}
+% While models like RoentGen achieved state-of-the-art synthesis, the computational complexity of the massive convolutional U-Net backbone within Stable Diffusion remained a barrier to efficient scaling. To resolve this, Huang et al. (2024) \cite{huang2024chest} introduced \textit{Chest-Diffusion}, a novel lightweight text-to-image framework that discarded the heavy U-Net in favor of a highly optimized Transformer-based denoising architecture. 
+
+% Chest-Diffusion employed a domain-specific text encoder explicitly trained on radiological lexicons to extract accurate, expressive linguistic features. These features guided the lightweight Vision Transformer (ViT) denoiser, effectively combining the global receptive field of self-attention mechanisms with the continuous sampling of diffusion. This architectural redesign resulted in a dramatic reduction in computational overhead. Chest-Diffusion operated at a computational budget of just 118.918 GFLOPs---nearly one-third the complexity of standard Stable Diffusion---while simultaneously achieving a superior FID score of 24.456, proving that highly efficient, domain-specific transformer models could out-perform generalized convolutional backbones in medical synthesis.
+
+% \section{The 2025-2026 Frontier: High-Fidelity Spatial Control and Anatomical Grounding}
+% Despite the immense success of text-conditioned models like RoentGen, relying strictly on natural language prompts introduces a critical constraint: the lack of deterministic spatial control. A text prompt dictating ``a 3cm nodule in the left upper lobe'' relies entirely on the model's stochastic interpretation of spatial coordinates. The model arbitrarily determines the precise pixel boundaries, exact shape, and surrounding tissue deformation. While sufficient for global classification augmentations, this lack of spatial grounding renders the synthetic data inadequate for training dense, pixel-level computer vision tasks such as semantic segmentation, exact lesion localization, and bounding-box object detection.
+
+% \subsection{ChexGen and Multimodal Conditioning}
+% To resolve this limitation, Ji et al. (2025) \cite{ji2025chexgen} developed \textit{ChexGen}, a comprehensive generative vision-language foundation model designed to introduce a unified framework for text-, mask-, and bounding box-guided synthesis of chest radiographs. Recognizing that existing public datasets lacked the granular, dense multi-modal annotations required to train such a constrained model, the researchers first engineered the \textit{OpenChest} dataset. Utilizing a cascaded Large Language Model (LLM) pipeline, they converted structured annotations from eight disparate public datasets into highly detailed, standardized radiological reports. This yielded the largest curated CXR dataset to date, comprising approximately 960,000 intricately annotated image-text pairs.
+
+% ChexGen is built upon a highly advanced latent diffusion transformer (DiT) architecture. Unlike prior models, ChexGen's architecture allows for complex multimodal conditioning inputs. During inference, a user can provide an anatomical mask indicating the precise boundary of the lung fields, a bounding box dictating the exact spatial coordinates of a pulmonary opacity, and a text prompt defining the patient's demographics and disease state. 
+
+% The results were unprecedented. When benchmarked against prior state-of-the-art models, ChexGen achieved a remarkably low CLIP-based FID score of 0.89, compared to 4.42 for RoentGen, demonstrating a near-perfect statistical alignment with real-world radiographs. Crucially, the deterministic spatial control afforded by ChexGen unlocked new data augmentation paradigms. By generating precise anatomical masks and corresponding synthetic images, researchers achieved performance improvements of approximately 10\% across highly complex downstream tasks, including rib segmentation and foreign object detection.
+
+% \subsection{Clinically Aware Synthetic Image Generation (CARS)}
+% Further pushing the boundaries of anatomical fidelity, Rafferty et al. (2026) \cite{rafferty2026clinically} introduced \textit{CARS} (Clinically Aware Synthetic Image Generation) to address the persistent issue of anatomical mismatch during feature perturbation. Prior concept-driven synthesis methods altered radiological reports to generate synthetic images but failed to constrain the underlying geometry, resulting in synthetic radiographs where the patient's intrinsic anatomy was inadvertently altered during the synthesis of the pathology. 
+
+% CARS mitigates this by applying targeted, mathematically constrained perturbations directly to clinical feature vectors within the latent space. This allows for the controlled insertion or deletion of specific pathological findings (e.g., removing a pleural effusion to create a ``healthy'' baseline) while explicitly preserving the global anatomical structure of the original source image. When evaluated on the held-out MIMIC-CXR benchmark, fine-tuning models on CARS-generated datasets consistently improved precision-recall performance, drastically reduced predictive uncertainty, and achieved superior model calibration.
+
+% \section{Synthetic Data for Algorithmic Fairness and Bias Mitigation}
+% Beyond the standard applications of data augmentation and performance enhancement, recent literature has uncovered a profound application for generative medical foundation models: the enforcement of algorithmic fairness. Deep learning classifiers deployed on medical imagery are notoriously susceptible to ``shortcut learning.'' Classifiers frequently latch onto protected demographic attributes as spurious correlative shortcuts, resulting in severely degraded diagnostic performance and higher False Negative Rates (FNR) for underrepresented subgroups.
+
+% \subsection{Generative Counterfactual Augmentation (GCA)}
+% Uwaeze et al. (2025) \cite{uwaeze2025generative} proposed a highly effective framework termed Generative Counterfactual Augmentation (GCA) to directly neutralize these demographic disparities. Utilizing a StyleGAN3-based synthesis network, the researchers mapped the latent space of chest radiographs and identified the specific mathematical directions corresponding to age and sex transitions. This allowed the generation of highly structured demographic counterfactuals. By generating demographically complete, balanced synthetic training sets where the correlation between a disease and a specific demographic is mathematically severed, classifiers are forced to rely strictly on the true pathological pixels. Extensive evaluation demonstrated that GCA training reduced False Negative Rate disparities by up to 23\%, ensuring high algorithmic trustworthiness and equitable diagnostic accuracy across all patient populations.
+
+% \section{Synthesis of Doctoral and Master's Theses on Medical Image Generation}
+% The rapid integration of generative architectures into the medical domain is extensively corroborated by recent doctoral theses. Evi Marie Carine Huijben's 2024 PhD thesis \cite{huijben2024medical} at the Eindhoven University of Technology provides a profound investigation into the capacity of deep generative models to overcome structural data limitations. The thesis systematically evaluated conditional VAEs with class-specific priors to address class imbalance. Furthermore, the thesis extensively explored the potential of DDPMs to generate synthetic chest X-rays for multi-label classifier training. A core conclusion drawn from the research is that while DDPMs are capable of generating extraordinary, high-fidelity synthetic images, their clinical viability is not guaranteed by raw visual quality alone. Optimal clinical translation strictly depends on task-specific architectural design, the integration of robust multi-modal metric ensembles, and rigorous out-of-distribution validation to ensure the synthetic features do not subtly distort longitudinal disease progression modeling.
+
+% \section{Summary of Previous Works}
+
+% % create a table with 3 columns: Paper, Contribution, Discussion
+% \begin{table}[h!]
+%     \centering
+%     \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+%         \hline
+%         \textbf{Paper} & \textbf{Contribution} & \textbf{Discussion} \\
+%         \hline
+%         Salehinejad et al. (2018) \cite{salehinejad2018generalization} & Utilized Deep Convolutional GANs (DCGANs) to artificially augment highly imbalanced CXR datasets. & Demonstrated that augmenting datasets with GAN-generated images stabilizes the training of classifiers, though standard GANs remain susceptible to mode collapse. \\
+%         \hline
+%         Madani et al. (2018) \cite{madani2018chest} & Applied GANs for synthetic data generation to classify cardiovascular abnormalities and anomalies. & Proved that GAN-based data augmentation drastically surpasses traditional affine augmentations, particularly in low-data regimens. \\
+%         \hline
+%         Müller-Franzes et al. (2023) \cite{muller2023diffusion} & Introduced \textit{Medfusion}, benchmarking latent DDPMs against state-of-the-art adversarial architectures. & Established the supremacy of diffusion models over GANs in the medical domain, achieving lower FID scores and superior structural diversity. \\
+%         \hline
+%         Chambon et al. (2024) \cite{chambon2024roentgen} & Developed \textit{RoentGen}, a vision-language foundation model adapted from Stable Diffusion using the MIMIC-CXR dataset. & Enabled free-form text-guided synthesis of CXRs, improving downstream classifiers, but lacked deterministic spatial control for dense prediction tasks. \\
+%         \hline
+%         Ji et al. (2025) \cite{ji2025chexgen} & Proposed \textit{ChexGen}, a latent diffusion transformer enabling bounding-box, mask, and text-guided spatial control. & Resolved spatial inaccuracy issues of pure text-to-image models and allowed for the creation of demographically diverse testing cohorts. \\
+%         \hline
+%         Huang et al. (2024) \cite{huang2024chest} & Introduced \textit{Chest-Diffusion}, integrating a domain-specific radiological text encoder with a lightweight Transformer. & Significantly reduced the massive computational footprint of diffusion models while maintaining highly competitive image fidelity scores. \\
+%         \hline
+%         Uwaeze et al. (2025) \cite{uwaeze2025generative} & Engineered Generative Counterfactual Augmentation (GCA) using StyleGAN3 for demographic bias mitigation. & Successfully reduced classifier False Negative Rate disparities across minority groups by generating structured age and sex counterfactuals. \\
+%         \hline
+%         Rafferty et al. (2026) \cite{rafferty2026clinically} & Developed \textit{CARS} to ensure targeted clinical feature perturbation strictly preserves underlying anatomical structures. & Confirmed that anchoring clinical features to original geometries reduces predictive uncertainty and builds clinical trust in synthetic CAD systems. \\
+%         \hline
+%         Huijben (2024) \cite{huijben2024medical} & PhD Thesis comprehensively exploring conditional VAEs and DDPMs to resolve multi-label classification bottlenecks. & Highlighted that while DDPMs produce high-fidelity visuals, optimal clinical translation requires rigorous out-of-distribution metric ensembles. \\
+%         \hline
+%     \end{tabular}
+%     \caption{Summary of Previous Works}
+%     \label{tab:previous_works}
+% \end{table}
+
+%% ============================================================
+%% Chapter: Related Works
+%% Topic:   Synthetic Chest X-ray Generation
+%% Style:   IISc M.Tech thesis (IIScthesisPSnPDF)
+%% ============================================================
+
+\chapter{Related Works}
+\label{chap:related_works}
+
+A comprehensive review by Koetzier et al.~\cite{Koetzier2024} identifies three principal
+applications of synthetic medical data: (i)~data augmentation to improve downstream model
+performance, (ii)~privacy-preserving data sharing that avoids the disclosure of patient-level
+information, and (iii)~novel applications such as cross-modality translation and radiologist
+training. These themes are echoed across nearly all generative work in the medical imaging
+literature, and they collectively motivate the focus of this thesis.
+
+% -----------------------------------------------------------
+\section{Datasets and the Problem of Data Scarcity}
+\label{sec:rw_datasets}
+% -----------------------------------------------------------
+
+CheXNet~\cite{Rajpurkar2017}, an influential early work, demonstrated that a DenseNet-121
+trained on CheXpert-14 could achieve radiologist-level performance on pneumonia detection,
+establishing the pipeline and the dataset conventions that subsequent generation and
+augmentation studies adopt. The practical ceiling demonstrated by CheXNet makes the task of
+evaluating synthetic data particularly well-defined: improvements in classification performance
+on these benchmarks, expressed through the area under the ROC curve (AUROC) or the
+F1~score, serve as the primary downstream metric for assessing the quality of generated images.
+
+% -----------------------------------------------------------
+\section{GAN-based Approaches for Chest X-ray Synthesis}
+\label{sec:rw_gan_cxr}
+% -----------------------------------------------------------
+
+\subsection{Early Conditional Generation}
+
+Generative Adversarial Networks~\cite{Goodfellow2014} established the foundational framework
+that most early CXR synthesis work adopted. The adversarial training objective, which pits a
+generator against a discriminator in a minimax game, proved capable of producing
+visually plausible radiographs without explicit density estimation. Madani et al.~were among the
+first to systematically investigate GAN-based augmentation for CXR pathology classification,
+training a class-specific generator to produce cardiac-abnormality images and demonstrating that
+augmenting a DenseNet classifier with synthetic samples outperformed conventional
+transformations such as flipping and cropping. Salehinejad et al.~extended this approach by
+training separate per-class DCGAN models, using synthetic samples from each model to balance
+the class distribution of the NIH dataset. While effective, such per-class designs are
+computationally prohibitive and fail to model the co-occurrence structure of pathologies that
+frequently appear together on a single radiograph.
+
+GAN-based augmentation was further validated by Sundaram et al.~\cite{Sundaram2021}, who
+evaluated the use of conditional GANs to augment the CheXpert dataset for multi-label
+classification. Their experiments showed that GAN-based augmentation yielded higher downstream
+performance for underrepresented classes compared to conventional augmentation and that this
+benefit was most pronounced in low-data regimes, a finding of direct relevance to rare
+pathology modelling. The authors note that the quality of generated images heavily influences
+the degree of improvement, motivating the subsequent push towards higher-fidelity generation
+architectures.
+
+\subsection{Progressive GAN and Resolution Scaling}
+
+A significant barrier to early GAN synthesis was the difficulty of producing high-resolution
+radiographs at clinically useful resolutions. The Deep Convolutional GAN (DCGAN) architecture
+typically produced images at $64 \times 64$ or $128 \times 128$ pixels, well below the
+$1024 \times 1024$ or $2048 \times 2048$ resolutions of clinical CXRs. The Progressive
+Growing of GANs (PGGAN) framework~\cite{Karras2018ProGAN} addressed this by incrementally
+increasing the resolution during training, starting from low-resolution outputs and
+progressively adding higher-resolution layers until convergence. Segal et al.~\cite{Segal2021}
+applied PGGAN to unsupervised CXR synthesis on the NIH dataset and subjected the
+generated images to radiologist evaluation through a visual Turing test. Although the model
+produced visually convincing radiographs, the study identified two key limitations. First,
+PGGAN is inherently unconditional in its base form, making pathology-controlled generation
+difficult without post-hoc latent optimisation. Second, the progressive growing strategy
+introduces artefacts, where features from lower-resolution training
+stages become fixed in spatial positions, resulting in texture inconsistencies.
+
+To circumvent per-class model constraints, Segal et al. introduced a \emph{latent class
+optimisation} technique that enables efficient multi-modal sampling from a single trained
+PGGAN by searching the latent space for directions corresponding to each pathology class.
+While this provides a scalable alternative to per-class training, it does not guarantee
+generation quality for rare classes with low label prevalence, which showed systematic mode
+dropping in the authors' experiments.
+
+\subsection{StyleGAN and High-Fidelity Synthesis}
+
+StyleGAN2~\cite{Karras2020StyleGAN2} and its data-efficient variant StyleGAN2-ADA~\cite{Karras2020ADA}
+substantially improved both the quality and training stability of high-resolution image
+synthesis. Woodland et al.~\cite{Woodland2022} conducted a rigorous evaluation of
+StyleGAN2-ADA applied to multiple medical imaging modalities, including the NIH
+ChestX-ray14 dataset. Training the model with transfer learning from the Flickr-Faces-HQ
+dataset and adaptive discriminator augmentation, they achieved a record Frechet Inception
+Distance (FID) of 3.52 on NIH. A visual Turing test administered to seven radiologists and 
+radiation oncologists found that clinicians rated generated images as real 42\% of the time, 
+approaching the random-guessing baseline of 50\%.
+The study further demonstrated that the FID score is consistent with expert perceptual
+evaluation in the medical domain, validating its use as a proxy metric for image quality.
+The authors also found that StyleGAN2-ADA produces high-quality results without extensive hyperparameter searches 
+(which we also observed in our experiments).
+
+% -----------------------------------------------------------
+\section{Latent Diffusion Models for Chest X-ray Synthesis}
+\label{sec:rw_ldm_cxr}
+% -----------------------------------------------------------
+
+\subsection{Latent  Diffusion Models}
+
+While GAN-based methods improved the visual fidelity of synthetic CXRs considerably, they
+remained prone to mode collapse and offered limited mechanism for semantic control over the
+generated pathology. Denoising Diffusion Probabilistic Models (DDPMs)~\cite{Ho2020} offered a
+complementary paradigm, learning to reverse a gradual Gaussian noising process and providing
+stable training without adversarial minimax optimisation. Latent Diffusion Models
+(LDMs)~\cite{Rombach2022} extended DDPMs by performing the diffusion process in the compressed
+latent space of a pre-trained variational autoencoder rather than in pixel space, dramatically
+reducing computational cost while preserving image fidelity at high resolutions.
+
+The application of LDMs to CXR synthesis was demonstrated prominently by
+Weber et al.~\cite{Weber2023Cheff}, who proposed \emph{Cheff}, a cascaded latent diffusion
+model capable of generating radiographs at megapixel resolution. Cheff was also conditioned on
+radiology text reports using a text encoder, establishing a report-to-CXR generation
+paradigm. The authors also introduced \emph{MaCheX}, a unified interface aggregating multiple
+public CXR datasets that represents, at the time of publication, the largest open collection
+of chest radiographs, providing the scale necessary to train large generative models
+effectively.
+
+\subsection{Vision-Language Foundation Models for CXR Generation}
+
+A particularly influential line of work adapted large, pre-trained vision-language diffusion
+models to the chest X-ray domain. Chambon et al.~\cite{Chambon2022RoentGen} proposed
+\emph{RoentGen}, which fine-tunes the Stable Diffusion latent diffusion model on a corpus of
+paired CXR images and radiology reports from publicly available datasets. The fine-tuning
+strategy overcomes the distributional shift between natural images, on which Stable Diffusion
+was trained, and the narrow, semantically rich vocabulary of radiology. RoentGen produces
+visually convincing and diverse synthetic radiographs that can be controlled through
+free-form text prompts using radiology-specific language.
+
+Quantitative evaluation showed that a DenseNet-121 classifier trained jointly on real and
+RoentGen-generated synthetic CXRs achieved a 5\% improvement in AUROC compared to one trained
+exclusively on real images. When trained on a purely synthetic dataset at a fraction of the
+real training data volume, the improvement was 3\%. Importantly, fine-tuning on CXR images
+also enriched the representation of rare pathologies in the text encoder: for pneumothorax,
+the model's embeddings improved by 25\% on a linear probing task, suggesting that CXR-adapted
+language models capture clinically meaningful semantics beyond what is conveyed by the image
+alone. A revised and peer-reviewed version of this work was subsequently published in
+\emph{Nature Biomedical Engineering}~\cite{Bluethgen2024}, confirming by board-certified
+radiologists that the generated images are visually plausible across a range of text prompts.
+
+\subsection{Diffusion Models for Data Augmentation and Class Conditioning}
+
+Beyond foundation models, several works explored the use of adapted latent diffusion models
+as a targeted augmentation strategy for specific pathological conditions. Moris
+et al.~\cite{Moris2024} proposed conditioning a latent diffusion model fine-tuned on domain-specific
+CXR data to synthesise images for tuberculosis and lung nodule scenarios. Evaluated on three
+public datasets representative of real-world screening settings, their methodology produced a
+consistent improvement in classifier performance compared to no augmentation, with the
+fine-tuned diffusion model outperforming earlier GAN-based baselines. But the size of datasets are 
+less than 1000 samples. 
+
+Similarly, the use of DDPMs conditioned on demographic and pathological characteristics was
+explored in a study published in \emph{eBioMedicine}~\cite{Ktena2024}, which found that
+supplementing real CheXpert training data with synthetic DDPM-generated CXRs improved both
+overall classifier performance and distributional generalisability across patient demographics.
+This is a significant finding because it suggests that synthetic augmentation addresses not
+only data scarcity but also dataset bias, a persistent concern in clinical AI systems. 
+
+
+% -----------------------------------------------------------
+\section{Privacy-Preserving Data Sharing Using Synthetic CXRs}
+\label{sec:rw_privacy}
+% -----------------------------------------------------------
+
+A recurring motivation in the medical image generation literature is the use of synthetic data
+as a substitute for real patient data in settings where institutional or regulatory constraints
+prevent direct data sharing. Han et al.~\cite{Han2020} provided one of the earliest systematic
+demonstrations of this idea in the CXR domain. Using a progressive GAN trained on a private
+radiograph collection, the authors generated high-resolution synthetic CXRs at resolutions up
+to $1024 \times 1024$ pixels that contained no personal identification information. A panel of
+three expert radiologists and three computer vision researchers was unable to reliably
+distinguish real from synthetic images, validating the concept of using synthesised radiographs
+as a privacy-preserving surrogate dataset. Models trained on synthetic data in this study
+achieved classification performance approaching that of models trained on the original real
+dataset, supporting the feasibility of the fully synthetic training paradigm.
+
+This line of work is particularly relevant in the context of multi-institutional studies,
+where each hospital may hold data under distinct regulatory frameworks. Rather than
+centralising sensitive patient records, institutions could release a synthetic dataset
+generated from their local collection, enabling collaborative model development without
+privacy violation. As Koetzier et al.~\cite{Koetzier2024} note, however, the legal standing
+of synthetic medical images under existing regulations such as HIPAA and GDPR remains
+ambiguous, and updated guidelines with clinician involvement are needed to operationalise
+this paradigm in practice.
+
+% -----------------------------------------------------------
+% \section{Evaluation Metrics for Synthetic CXRs}
+% \label{sec:rw_eval}
+% % -----------------------------------------------------------
+
+% Evaluating the quality of synthetic medical images requires both perceptual and
+% task-oriented metrics. The Fr\'echet Inception Distance (FID) has become the standard
+% automated metric for generative model evaluation across the computer vision and medical
+% imaging literatures. FID measures the distance between the distribution of real and generated
+% images in the feature space of a pre-trained InceptionV3 network. A lower FID indicates
+% that the generated distribution more closely matches the real distribution. The Learned
+% Perceptual Image Patch Similarity (LPIPS) metric~\cite{Zhang2018LPIPS} provides a
+% complementary measure of perceptual similarity at the image level, computing the distance
+% between feature maps extracted from a pre-trained network for a pair of images; lower LPIPS
+% values indicate higher perceptual similarity.
+
+
+
+
+\section{Evaluation Metric}
+
+To measure the quality of generated images we use \textbf{Fréchet Inception Distance (FID)}, which 
+measures the similarity between real and generated image distributions. Lower FID indicates that the 
+distribution of generated images is closer to that of the real images, which means generated images are of 
+higher visual quality and diversity.
+
+FID assumes that feature representations of images (typically extracted using a pretrained 
+Inception network) follow multivariate Gaussian distributions. Let $(\mu_r, \Sigma_r)$ 
+and $(\mu_g, \Sigma_g)$ denote the mean and covariance of real and generated feature distributions, 
+respectively. The FID is defined as:
+
+\begin{equation}
+\text{FID} = 
+\| \mu_r - \mu_g \|_2^2 
++ 
+\mathrm{Tr} \left(
+\Sigma_r + \Sigma_g - 2(\Sigma_r \Sigma_g)^{1/2}
+\right)
+\end{equation}
+
+\noindent
+where:
+\begin{itemize}
+    \item $\mu_r, \mu_g \in \mathbb{R}^{d}$ are the mean feature vectors of real and generated images,
+    \item $\Sigma_r, \Sigma_g \in \mathbb{R}^{d \times d}$ are the covariance matrices,
+\end{itemize}
+
+where $d$ is the dimension of the feature vectors.
+
+
+% -----------------------------------------------------------
+\section{Summary of Key Works}
+\label{sec:rw_summary}
+% -----------------------------------------------------------
+
+Table~\ref{tab:related_works_summary} summarises the key works reviewed in this chapter,
+organising them by generative paradigm, the dataset used, and the reported FID or
+downstream evaluation result where available.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{|p{3.8cm}|p{2.5cm}|p{3.0cm}|p{4.8cm}|}
+\hline
+\textbf{Work} & \textbf{Model Family} & \textbf{Dataset} & \textbf{Key Contribution / Result} \\
+\hline
+Segal et al.~\cite{Segal2021} & PGGAN & NIH ChestX-ray14 & Latent class optimisation for multi-class CXR generation; radiologist Turing test \\
+\hline
+Han et al.~\cite{Han2020} & PGGAN & Private CXR & Privacy-preserving synthetic radiographs at $1024^2$; model parity with real data \\
+\hline
+Woodland et al.~\cite{Woodland2022} & StyleGAN2-ADA & NIH ChestX-ray14 & FID~3.52; 42\% real misclassification by radiologists \\
+\hline
+Chambon et al.~\cite{Chambon2022RoentGen} & LDM (Stable Diffusion) & MIMIC-CXR / CheXpert & Text-controlled CXR synthesis; 5\% AUROC gain with joint real+synthetic training \\
+\hline
+Bluethgen et al.~\cite{Bluethgen2024} & LDM & MIMIC-CXR & Nature BioMed Eng.\ validation of RoentGen; confirmed radiologist-level realism \\
+\hline
+Weber et al.~\cite{Weber2023Cheff} & Cascaded LDM & MaCheX & Megapixel CXR synthesis; report-conditioned generation; MaCheX dataset \\
+\hline
+Mor\'is et al.~\cite{Moris2024} & Adapted LDM & TB/lung nodule & Improved TB and nodule screening via LDM augmentation \\
+\hline
+Prakash et al.~\cite{Prakash_2025_ICCV} & LDM & CheXpert / RSNA & Evaluating effectiveness of synthetic CXRs for classification \& segmentation \\
+\hline
+Sundaram et al.~\cite{Sundaram2021} & Conditional GAN & CheXpert & GAN augmentation improves rare-class classification; benefit amplified in low-data setting \\
+\hline
+\end{tabular}
+\caption{Summary of key related works on synthetic chest X-ray generation. LDM denotes Latent Diffusion Model.}
+\label{tab:related_works_summary}
+\end{table}
+
+In aggregate, the literature reveals a clear trajectory from unconditional or per-class GAN
+models, which demonstrated the feasibility of synthetic CXRs but suffered from mode collapse
+and limited resolution, towards large-scale latent diffusion models that leverage paired
+radiology reports to achieve semantically controlled, high-resolution synthesis with measurable
+improvements in downstream classification. The gap between the two paradigms motivates both
+the GAN-based and diffusion-based experiments conducted in this thesis, as well as the
+investigation of pruning strategies to reduce the computational burden of deployment.

@@ -1,0 +1,350 @@
+\documentclass[11pt, a4paper, oneside]{Thesis} % Paper size, default font size and one-sided paper
+\usepackage{wrapfig}
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{pdfpages}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% prints author names as small caps
+\usepackage{hyperref}
+
+% optimization eqn package
+% \usepackage{optidef}
+\DeclareCaptionJustification{justified}{\leftskip=0pt \rightskip=0pt \parfillskip=0pt plus 1fil}
+\captionsetup{font=normalsize,justification=justified}
+
+%\usepackage{subcaption} %incompatible with subfig
+\graphicspath{{Pictures/}} % Specifies the directory where pictures are stored
+\lstset{inputpath={Codes/}} % Specifies the directory where codes are stored 
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[square, numbers]{natbib} % Use the natbib reference package - read up on this to edit the reference style; if you want text (e.g. Smith et al., 2012) for the in-text references (instead of numbers), remove 'numbers' v
+\usepackage{fancyhdr}
+\hypersetup{urlcolor=black, colorlinks=true} % Colors hyperlinks in blue - change to black if annoyingv`	
+\title{\ttitle} % Defines the thesis title - don't touch this
+
+\begin{document}
+\makeatletter
+\renewcommand*{\NAT@nmfmt}[1]{\textsc{#1}}
+\makeatother
+
+
+\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the pre-content pages
+
+%\setstretch{1.6} % Line spacing of 1.6 (double line spacing)
+
+% Define the page headers using the FancyHdr package and set up for one-sided printing
+\fancyhead{} % Clears all page headers and footers
+\rhead{\thepage} % Sets the right side header to show the page number
+\lhead{} % Clears the left side page header
+
+\pagestyle{fancy} % Finally, use the "fancy" page style to implement the FancyHdr headers
+\fancyhf{}
+\rhead{\thepage}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % New command to make the lines in the title page
+
+% PDF meta-data
+\hypersetup{pdftitle={\ttitle}}
+\hypersetup{pdfsubject=\subjectname}
+\hypersetup{pdfauthor=\authornames}
+\hypersetup{pdfkeywords=\keywordnames}
+
+% Edit fields using Thesis.cls (Don't alter anything else in cls script)
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage}
+\begin{center}
+
+\HRule \\[0.4cm] % Horizontal line
+{\huge \bfseries \ttitle}\\[0.4cm] % Thesis title
+\HRule \\[1.5cm] % Horizontal line
+\large \textit{A Thesis Submitted\\ In Partial Fulfillment of the Requirement\\ for the Degree Of\\ \degreename}\\[0.3cm] % University requirement text
+\textit{by}\\[0.4cm]
+
+\href{http://home.iitk.ac.in/~username}{\authornames}
+
+(\rollno)\\ to the
+
+\vfill
+\graphicspath{ {./Pictures/} }
+\begin{figure}[hb]
+  \centering
+  \includegraphics[width=0.4\linewidth]{redlogo.jpg}
+\end{figure}
+
+\textbf{\DEPTNAME}\\ % Research group name and department name
+\textsc{ \UNIVNAME}\\[1.5cm] % University name
+\large {\submit}\\[2cm] % Date
+
+
+\end{center}
+\end{titlepage}
+
+% comment below to add certificate through pdf file and not Latex
+%--------------------------------------------------------------------------------------
+\Certi{{\vspace{1em}} % Add a gap in the Contents, for aesthetics
+\setcounter{page}{2}
+It is certified that the work contained in this thesis entitled ``\ttitle'' by ``\authornames'' has been carried out under our supervision and that it has not been submitted elsewhere for a degree.
+\\[2cm]
+
+\begin{minipage}{0.4\textwidth}
+	\begin{flushleft} \large
+		%\emph{\large {July, 2020}}\\[2cm] % Date
+	\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.6\textwidth}
+	{\begin{flushright} \large
+		\supname
+		\begin{flushright}
+			{
+			\normalsize{\deptname\\
+			\univname}}
+		\end{flushright}
+	\end{flushright}}
+\end{minipage}
+
+% comment if only one supervisor
+\vspace{30mm}
+\begin{minipage}{0.4\textwidth}
+	\begin{flushleft} \large
+		{\large {\submit}}\\[2cm] % Date
+	\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.6\textwidth}
+	{\begin{flushright} \large
+		\cosupname
+		% change department here, if co-supervisor is not from your department
+		\begin{flushright}
+			{
+			\normalsize{\deptname\\
+			\univname}}
+		\end{flushright}
+	\end{flushright}}
+\end{minipage}
+\vfill{}}
+\clearpage % Start a new page
+%-----------------------------------------------------------------------
+% Include pdf pages of scanned certificate and declaration forms
+%\includepdf[pages={1}, offset = 85.5 -71.5, scale=0.8]{stampedcerti.pdf}
+%\includepdf[pages={1},frame, offset = 71.5 -71.5]{declaration.pdf}
+
+% comment to include scanned Declaration Page and not Latex
+%----------------------------------------------------------------------------------------
+%	DECLARATION PAGE
+%	Your institution may give you a different text to place here
+\Declaration{{\vspace{1em}} % Add a gap in the Contents, for aesthetics
+
+This is to certify that the thesis titled ``\ttitle'' has been authored by me. It presents the research conducted by me under the supervision of \supname\ and \cosupname.
+
+To the best of my knowledge, it is an original work, both in terms of research content and narrative, and has not been submitted elsewhere, in part or in full, for a degree. Further, due credit has been attributed to the relevant state-of-the-art and collaborations (if any) with appropriate citations and acknowledgements, in line with established norms and practices.
+\\[4cm]
+
+\begin{minipage}{0.4\textwidth}
+	\begin{flushleft} \large
+%		\emph{\large {July, 2020}}\\[2cm] % Date
+	\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.6\textwidth}
+	{\begin{flushright} \large
+		\authornames
+		\begin{flushright}
+			{Programme: BT-MT (DUAL DEGREE)\\ 
+			\normalsize{\deptname\\
+			\univname\\
+			Kanpur 208016}}
+		\end{flushright}
+	\end{flushright}}
+\end{minipage}
+
+\vfill{}}
+\clearpage % Start a new page
+%----------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------
+%	ABSTRACT PAGE
+%----------------------------------------------------------------------------------------
+
+%\addtotoc{Abstract} % Add the "Abstract" page entry to the Contents
+
+\abstract{{\vspace{1em}} % Add a gap in the Contents, for aesthetics
+\setcounter{page}{4}
+The thesis work includes ....
+}
+
+\clearpage % Start a new page
+
+%----------------------------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------
+
+\setstretch{1.3} % Reset the line-spacing to 1.3 for body text (if it has changed)
+
+\acknowledgements{\addtocontents{toc}{\vspace{1em}} % Add a gap in the Contents, for aesthetics
+
+First and foremost, I would like to extend my sincerest gratitude to my thesis supervisors .............
+
+}
+\clearpage % Start a new page
+
+%----------------------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES PAGES
+%----------------------------------------------------------------------------------------
+
+% Important for always right head page number in Chapters and TOC
+\fancypagestyle{plain}{%
+\fancyhf{} % clear all header and footer fields
+\fancyhead[RO,RE]{\thepage} %RO=right odd, RE=right even
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}}
+\lhead{\emph{Contents}} % Set the left side page header to "Contents"
+\tableofcontents % Write out the Table of Contents
+\lhead{\emph{List of Figures}} % Set the left side page header to "List of Figures"
+\listoffigures % Write out the List of Figures
+\lhead{\emph{List of Tables}} % Set the left side page header to "List of Tables"
+\listoftables % Write out the List of Tables
+
+%----------------------------------------------------------------------------------------
+%	ABBREVIATIONS
+%----------------------------------------------------------------------------------------
+
+\clearpage % Start a new page
+
+\setstretch{1.5} % Set the line spacing to 1.5, this makes the following tables easier to read
+\lhead{\emph{Abbreviations}} % Set the left side page header to "Abbreviations"
+\listofsymbols{ll} % Include a list of Abbreviations (a table of two columns)
+{
+\textbf{DOF} & \textbf{D}egrees \textbf{o}f \textbf{F}reedom \\
+\textbf{CoM} & \textbf{C}enter \textbf{o}f \textbf{M}ass\\
+%\textbf{Acronym} & \textbf{W}hat (it) \textbf{S}tands \textbf{F}or \\
+}
+
+%----------------------------------------------------------------------------------------
+%	PHYSICAL CONSTANTS/OTHER DEFINITIONS
+%----------------------------------------------------------------------------------------
+%
+%\clearpage % Start a new page
+%
+%\lhead{\emph{Physical Constants}} % Set the left side page header to "Physical Constants"
+%
+%\listofconstants{lrcl} % Include a list of Physical Constants (a four column table)
+%{
+%Speed of Light & $c$ & $=$ & $2.997\ 924\ 58\times10^{8}\ \mbox{ms}^{-\mbox{s}}$ (exact)\\
+%% Constant Name & Symbol & = & Constant Value (with units) \\
+%}
+
+%----------------------------------------------------------------------------------------
+%	SYMBOLS
+%----------------------------------------------------------------------------------------
+
+\clearpage % Start a new page
+\lhead{\emph{Symbols}} % Set the left side page header to "Symbols"
+
+\listofnomenclature{lll} % Include a list of Symbols (a two column table)
+{
+$R_{AB}$ & Rotation matrix from frame $A$ to frame $B$ \\
+% Symbol & Name & Unit \\
+
+}
+
+%----------------------------------------------------------------------------------------
+%	DEDICATION
+%----------------------------------------------------------------------------------------
+%
+\clearpage
+\setstretch{1.3} % Return the line spacing back to 1.3
+%
+ % Page style needs to be empty for this page
+\fancyhf{}
+\rhead{\thepage}
+\dedicatory{Dedicated to someone special} % Dedication text
+%
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - CHAPTERS
+%----------------------------------------------------------------------------------------
+
+\mainmatter % Begin numeric (1,2,3...) page numbering
+
+\pagestyle{fancy} % Return the page headers back to the "fancy" style
+
+% Include the chapters of the thesis as separate files from the Chapters folder
+% Uncomment the lines as you write the chapters
+
+\input{Chapters/Chapter1}
+\input{Chapters/Chapter2} 
+\input{Chapters/Chapter3}
+\input{Chapters/Chapter4} 
+\input{Chapters/Chapter5} 
+\input{Chapters/Chapter6} 
+%\input{Chapters/Chapter7} 
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+\clearpage
+\nocite{*}
+\label{Bibliography}
+
+\lhead{\emph{Bibliography}} % Change the page header to say "Bibliography"
+% apalike was used default
+\bibliographystyle{unsrtnat} % Use the "custom" BibTeX style for formatting the Bibliography
+\addtotoc{Bibliography}
+\bibliography{Bibliography}
+\addtocontents{toc}{\vspace{2em}}
+ % The references (bibliography) information are stored in the file named "Bibliography.bib"
+
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - APPENDICES
+%----------------------------------------------------------------------------------------
+
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+
+\appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
+
+% Include the appendices of the thesis as separate files from the Appendices folder
+% Uncomment the lines as you write the Appendices
+
+\input{Appendices/AppendixA}
+\input{Appendices/AppendixB}
+\input{Appendices/AppendixC}
+%\input{Appendices/AppendixD}
+
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+
+\backmatter
+
+\end{document}

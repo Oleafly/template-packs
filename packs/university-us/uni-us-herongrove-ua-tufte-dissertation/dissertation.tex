@@ -1,0 +1,239 @@
+% There are two copyright options: copyright and copyright. Seriously,
+% the choice boils down to whether you're going to file copyright through
+% ProQuest. If you will, use the copyright option.
+\documentclass[dissertation,notoc,openany]{tufte-book}
+%\documentclass[dissertation,copyright,notoc,openany]{tufte-book}
+
+\setcounter{secnumdepth}{0}
+%\setcounter{chapter}{5}
+
+\bibliographystyle{uabibnat}
+
+%%
+% To use accents
+\usepackage[utf8]{inputenc}
+
+%%
+% For nicely typeset tabular material
+\usepackage{booktabs}
+
+%%
+% For graphics / images
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{figs/}}
+
+\usepackage[export]{adjustbox}
+
+% The fancyvrb package lets us customize the formatting of verbatim
+% environments.  We use a slightly smaller font.
+\usepackage{fancyvrb}
+\fvset{fontsize=\normalsize}
+
+%%
+% Prints a trailing space in a smart way.
+\usepackage{xspace}
+
+%%
+% specifying and applying colors
+\usepackage{color}
+
+%%
+% For table color backgrounds
+\usepackage{colortbl}
+
+%%
+% for code listings (e.g., R)
+\usepackage{listings}
+
+%% color definitions
+\definecolor{lightgray}{rgb}{0.96, 0.955, 0.945}
+\definecolor{numbergray}{rgb}{0.7, 0.7, 0.7}
+\definecolor{midgray}{rgb}{0.5, 0.5, 0.5}
+\definecolor{deepred}{rgb}{0.9,0.1,0.1}
+\definecolor{lightred}{rgb}{0.975, 0.925, 0.925}
+
+% listing add'l keywords
+\lstset{emph={%  
+    auc
+    },emphstyle={\color{red}}%
+}%
+
+\lstdefinestyle{rstyle}{
+	language=R,
+    backgroundcolor=\color{lightgray},
+    commentstyle=\color{midgray},
+    keywordstyle=\color{red},
+    basicstyle=\scriptsize\ttfamily,
+    breakatwhitespace=true,
+    breaklines=true,
+    keepspaces=true,
+    framextopmargin=0pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    stringstyle=\ttfamily,
+    tabsize=2
+}
+ 
+\lstset{style=rstyle}
+
+%%
+% Sometimes you want a full-page figure with no margin notes.
+\newenvironment{pagefigure}{%
+	\begin{figure*}[p]
+	\classiccaptionstyle
+}{\end{figure*}}
+
+%%
+% Sometimes you want a full-page table with no margin notes.
+\newenvironment{pagetable}{%
+	\begin{table*}[p]
+	\classiccaptionstyle
+}{\end{table*}}
+
+%%
+% Would otherwise be `Bibliography', but UA requires `References'
+\renewcommand{\bibname}{References}
+
+%%
+% Prints argument within hanging parentheses (i.e., parentheses that take
+% up no horizontal space).  Useful in tabular environments.
+\newcommand{\hangp}[1]{\makebox[0pt][r]{(}#1\makebox[0pt][l]{)}}
+
+%%
+% Prints an asterisk that takes up no horizontal space.
+% Useful in tabular environments.
+\newcommand{\hangstar}{\makebox[0pt][l]{*}}
+
+%%
+% Emphasize table result
+\newcommand{\redem}[1]{\textcolor{deepred}{\textbf{#1}}}
+
+%%
+% mark TODOs
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+
+%%
+% mark edits
+\newcommand{\edit}[1]{\textcolor{blue}{#1}}
+
+%%
+% Improve chapter title appearance
+\makeatletter
+\titleformat{\chapter}%
+  [block]% shape
+  {\relax\ifthenelse{\NOT\boolean{@tufte@symmetric}}{\begin{fullwidth}}{}}% format applied to label+text
+  {\itshape\huge\thechapter\quad}% label
+  {0pt}% horizontal separation between label and title body
+  {\huge\rmfamily\itshape}% before the title body
+  [\ifthenelse{\NOT\boolean{@tufte@symmetric}}{\end{fullwidth}}{}]% after the title body
+\makeatother
+
+%%
+% More space between figure numbers and titles
+\makeatletter
+     \renewcommand*\l@figure{\@dottedtocline{1}{1em}{2.2em}}
+\makeatother
+
+%%
+% more space between table numbers and titles
+\makeatletter
+     \renewcommand*\l@table{\@dottedtocline{1}{1em}{2em}}
+\makeatother
+
+%%
+% Repeated values, esp in front material.
+\completetitle{A Clever Pun: An Explanatory Subtitle}
+\fullname{Raymond Quentin Smuckles} % Full name (including middle etc.)
+\degreename{Doctor of Philosophy}	% Title of your degree.
+\title{A Clever Pun: An Explanatory Subtitle}
+\author{Raymond Quentin Smuckles}
+
+% Generates the index, if you create one. (Does nothing, otherwise.)
+\usepackage{makeidx}
+\makeindex
+
+\begin{document}
+
+\begin{fullwidth}
+% Set up the title page
+\maketitlepage
+{DEPARTMENT OF NEUROASTROLOGY}	% Title of your department.
+{3030}
+
+% Insert the approval form.  Note that for electronic submission
+% of your Ph. D. dissertation, you must bring *two* copies of the
+% approval page to your final defense.  These must be signed by
+% the committee. 
+\approval
+{February 30, 3030}		% Defense Date	
+{Cassandra Kazenzakis}		% Dissertation Director
+{Cassandra Kazenzakis}		% 1st committee member
+{Cornelius Bear}		% 2nd committee member
+{Lyle Roscoe Gabriel}	% 3rd committee member
+%{} % 4th committee member (leave empty if None)
+%{} % 5th committee member (leave empty if None)
+
+% Include the ``Statement by Author'' for Dissertations
+\statementbyauthor
+\statementbyauthor % Yes, you need the second one of these.
+% If this is a Thesis, use the following form, with your thesis director's
+% name and title in the square brackets like so (you should also omit the 
+% approval form insertion above):
+%\statementbyauthor[Jane M. Doe\\Professor of Chemistry]
+
+% Include the ``Acknowledgements''
+% NB: Strongly encouraged
+\incacknowledgements{acknowledgements}
+
+% Include the ``Dedication''
+% NB: optional
+\incdedication{dedication}
+
+% Create a ``Table of Contents''
+% NB: required
+\tableofcontents
+
+% Create a ``List of Figures''
+% NB: Strongly encouraged
+\listoffigures
+
+% Create a ``List of Tables''
+% NB: Strongly encouraged
+\listoftables
+
+% Include the ``Abstract''
+% NB: required
+\incabstract{abstract}
+
+\end{fullwidth}
+
+% Include the various chapters
+\include{chapters/introduction}
+%\include{chapters/review}
+%\include{chapters/conclusion}
+
+% Include the various appendices
+\appendix
+\include{chapters/appendix_A}
+
+\backmatter
+
+\begin{fullwidth}
+%%
+% Unfortunately, you have to manually set the page number before the 
+% references start. This is because the Grad College insists their be no
+% blank pages, and I haven't figured out how to do this besides manually
+% setting the page count lower and then removing the blank page separately.
+% I use pdftk for this, e.g.,
+% pdftk A=dissertation.pdf B=watermarked_signatures.pdf cat A1 B1 3-91 93-end output dissertation_signed.pdf
+% The above command takes the output of this file, substitutes a water-
+% marked signature page for the second page, then cuts out page 92, and
+% saves the result in dissertation_signed.pdf.
+\setcounter{page}{91}
+% Create the References list
+\bibliography{dissertation}
+\end{fullwidth}
+
+\end{document}

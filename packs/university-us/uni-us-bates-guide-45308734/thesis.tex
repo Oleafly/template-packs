@@ -1,0 +1,71 @@
+% MODEL THESIS FILE
+% This is the file to typeset. It then imports the other .tex files to be typeset.
+
+\documentclass[12pt,oneside]{amsbook}
+%\renewcommand{\baselinestretch}{2} Use this for double-spacing.
+\usepackage{graphicx} % You need graphicx for importing graphics files.
+
+\numberwithin{equation}{chapter}
+% This numbers the equations within each chapter as 1.1, 1.2, 2.1, etc.
+\numberwithin{figure}{chapter}
+% This does the same for the figures.
+
+\theoremstyle{plain} % This is the default style.
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+% [chapter] causes the above to be numbered within each chapter as 1.1, 1.2, ...
+% If you omit [chapter], the numbers will be 1, 2, ...
+
+\theoremstyle{definition}
+\newtheorem*{dfn}{Definition}
+% The asterisk suppresses the numbering of definitions.
+
+\theoremstyle{remark}
+\newtheorem{ex}{Example}
+\newtheorem*{rem}{Remark}
+% The asterisk suppresses the numbering of remarks.
+
+\begin{document}
+
+\frontmatter % Pages here will be numbered with Roman numerals.
+\title[]{Simpsons Rule! An Examination of Math in \emph{The Simpsons} }
+\author{Eric Towne}
+\address{Department of Mathematics\\Bates College\\Lewiston, ME 04240}
+\date{December 16, 2006}
+\maketitle
+
+% Create real cover page.
+\newpage
+\thispagestyle{empty} 			% Suppress numbering of this page.
+\include{cover}       			% Save the file cover.tex to the same folder as thesis.tex.
+\setcounter{page}{2}
+
+\tableofcontents
+% This creates a file called thesis.toc.
+
+% \listoftables
+% \listoffigures
+% Use the above if you have tables/figures and want them listed in the front.
+
+% The following files should be in the same folder as thesis.tex.
+\include{ack}     			% Acknowledgments
+\include{intro}   			% Introduction 
+
+\mainmatter % Pages here will be numbered 1, 2, 3, and so on .
+
+\newcounter{pnumb}                     	% Save page number of intro material
+\setcounter{pnumb}{\value{page}}       	% so that numbering will be consecutive.
+\mainmatter                            	% Begin body
+\setcounter{page}{\value{pnumb}}       	% with consecutive page numbering
+
+% The following files should also be in the same folder as thesis.tex.
+\include{chapter1}
+\include{chapter2} % Use the same command to add more chapters or sections
+
+\backmatter
+\include{appendixA}			% Use \include{appendixB} to include another appendix.
+\include{biblio}
+\end{document}
+	

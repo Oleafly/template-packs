@@ -1,0 +1,99 @@
+% ==================== format.tex ====================
+% Packages, colors, typography, section styles, page styles,
+% and code-listing configuration.
+
+% -------------------- Encoding / Fonts --------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext,newtxmath}
+\usepackage{microtype}
+
+% -------------------- Page Layout -------------------------
+\usepackage[letterpaper,margin=1in,headsep=18pt]{geometry}
+\usepackage{setspace}
+\setstretch{1.08}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.65em}
+
+% -------------------- Graphics / Color --------------------
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+\definecolor{RiceBlue}{HTML}{00205B}
+\definecolor{RiceGray}{HTML}{55565A}
+\definecolor{RiceLight}{HTML}{F4F6F8}
+\definecolor{CodeBg}{HTML}{F7F8FA}
+\definecolor{CodeString}{HTML}{8B1E3F}
+\definecolor{CodeComment}{HTML}{5D6D74}
+
+% -------------------- Tables / Lists ----------------------
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{longtable}
+
+% -------------------- Math / Code -------------------------
+\usepackage{amsmath}
+\usepackage{listings}
+\lstdefinestyle{ricecode}{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{CodeBg},
+  frame=single,
+  rulecolor=\color{RiceBlue!20},
+  xleftmargin=0.6em,
+  xrightmargin=0.6em,
+  aboveskip=0.8em,
+  belowskip=0.8em,
+  showstringspaces=false,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  numbers=left,
+  numbersep=8pt,
+  numberstyle=\scriptsize\color{RiceGray},
+  keywordstyle=\bfseries\color{RiceBlue},
+  commentstyle=\itshape\color{CodeComment},
+  stringstyle=\color{CodeString}
+}
+\lstset{style=ricecode}
+
+% -------------------- Links / Citations -------------------
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=RiceBlue,citecolor=RiceBlue,urlcolor=RiceBlue]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+% -------------------- Section Styling ---------------------
+\usepackage{titlesec}
+\titleformat{\section}
+  {\Large\bfseries\color{RiceBlue}}
+  {\thesection}
+  {0.75em}
+  {}
+  [\vspace{0.25em}\titlerule]
+
+\titleformat{\subsection}
+  {\large\bfseries\color{RiceBlue}}
+  {\thesubsection}
+  {0.75em}
+  {}
+
+\titleformat{\subsubsection}
+  {\normalsize\bfseries\color{RiceGray}}
+  {\thesubsubsection}
+  {0.75em}
+  {}
+
+% -------------------- Header / Footer ---------------------
+\usepackage{fancyhdr}
+\setlength{\headheight}{34pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\raisebox{-0.16cm}{\includegraphics[height=1.18cm]{rice-owl-header.jpg}}}
+\fancyhead[R]{\footnotesize\textsc{\HeaderText}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% -------------------- Utilities ---------------------------
+\newcommand{\Placeholder}[1]{\textit{#1}}
+\newcommand{\SampleMetric}[1]{\textbf{#1}}

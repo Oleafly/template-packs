@@ -1,0 +1,228 @@
+\documentclass[compexam,copyrightcc]{MSUstyle}
+%
+%  Created by Seth Humphries 
+%  Update and maintained by Prof. Mark Owkes mark.owkes@montana.edu
+% 
+%%    Copyright (c) 2007-2012 Seth D. Humphries
+%%    This work is licensed under the Creative Commons
+%%    Attribution-Noncommercial-Share Alike 3.0 License. To view a copy
+%%    of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/;
+%%    or, (b) send a letter to Creative Commons, 171 2nd Street, Suite
+%%    300, San Francisco, California, 94105, USA. 
+%
+%  Version 2.0, check for periodic updates on the bitbucket repository
+%
+% DEFAULTS --------------------
+% The default options are as follows:
+%   \documentclass[12pt,letterpaper,oneside,openright,%
+%       doublespaced,normalmargins,dissertation,final,numreset]{MSUstyle}
+%
+% default options do not need to be entered. Defaults will generate a document 
+% that conforms to the MSU Electronic Thesis/Dissertation  (ETD) guidelines. 
+%
+% MASTERS THESIS ---------------
+%  use \documentclass[thesis]{MSUstyle} to adjustment the front matter according to ETD style rules that
+% are different for a thesis than for a dissertation.
+%
+% COMPREHENSIVE EXAM -----------
+% \use \documenatclass[compexam]{MSUstyle} to format the document for a written
+% comprehensive exam. This only changes "dissertation" to "comprehensive exam";
+% everything else is the same as the dissertation format. This is an acceptable
+% format for the written comprehensive exam in the Electrical and Computer
+% Engineering department; other departments may vary.
+%
+% COPYRIGHT OPTIONS -----------
+% If you want to license your work under a Creative Commons BY 4.0 license,
+% use the copyrightcc option
+%
+% ADDITIONAL OPTIONS ----------
+% 10pt, singlespaced, and draft allow you to require less number of pages for editing
+% A draft version number can be set with, e.g., \draftver{1.0}
+%
+% numberedsections provides numbered chapter and section titles
+%
+% appendsingle/appendmultiple is required if you have one/multiple appendices, remove if you do not have an appendix
+%
+% nonumreset does not add chapter to labels of figures, tables, etc. (not recommended)
+%
+% PRINTING OPTIONS ------------
+% oneside,openright (defaults) 1" margin on all sides of pages (use for electronic documents and submission to grad school)
+% oneside,openright,bigmargin larger margin on left side of pages (optionally use for electronic documents and submission to grad school)
+% twoside,openany  larger margins alternate left/right sides for binding (use for printing on minimal number of pages)
+% twoside,openright larger margins alternate left/right sides for binding and ...
+%                               blank pages added so chapter start on right page (use for nicest printed material)
+
+% ========================= %
+%  Packages                 %
+%  (add as needed)          %
+% ========================= %
+\usepackage[final]{graphicx} %for the \includegraphics command and figures put [final] before ...
+%%    {graphix} if you want figures to show up even while in draft mode
+\usepackage{subcaption}    % to be able to have multiple plots in one figure
+\usepackage{xcolor} % for changing text color in chapters \textcolor{red}{red text read here}. 
+\usepackage[final]{listings} % used for formatting code
+\usepackage[pdftex,hidelinks]{hyperref}
+
+
+
+% Default to using IEEE-style numeric references. Change as desired
+% \usepackage[
+% 	backend=biber,
+% 	style=numeric,
+% 	sorting=none,
+% ]{biblatex}
+
+% \addbibresource{misc.bib}
+
+
+\usepackage{amsmath, amssymb}
+\usepackage{lipsum} % Generates random text
+%\usepackage{showframe} % View margins
+
+\usepackage{booktabs}
+
+\usepackage[section]{placeins}
+
+
+\usepackage{breakurl}
+\usepackage{dirtytalk}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{textcomp}
+\usepackage{multirow}
+\usepackage{bm}
+
+% Style of code listings (Change as needed)
+\lstset{%set Code listings styles
+	language=Matlab, % program language for keywords and comments styles
+	basicstyle=\small, %font size and style
+	identifierstyle=\color{red}, %variable name style
+	stringstyle=\ttfamily, %string style
+	keywordstyle=\color{blue}\bfseries, %language keyword style
+	commentstyle=\color{black}\itshape, %commentstyle
+	breaklines=true,  % sets automatic line breaking
+	breakatwhitespace=false,   %break line not just at whitespaces
+}
+
+\graphicspath{{./figures/}}
+
+% ======================= %
+%  User defined commands  %
+% ======================= %
+\newcommand{\etc}{etc.}
+\newcommand{\eg}{e.g.}
+\newcommand{\ie}{i.e.} 
+
+\def\x{{\mathbf\ x}}
+\def\L{{\cal\ L}}
+
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\Proj}{Proj}
+
+% =============================== %
+%  Definitions: Change as needed  %
+% =============================== %
+\name{Kaveen Gayasara Liyanage} %PUT your FULL name here (First Middle Last)
+\DocTitle{Sparse Representation Method for Whole Graph Embedding} 
+% \OWNwebpage{http://mywebsite.net} %your personal webpage
+\degreetitle{Electrical Engineering} % may be different than department... ie MS in Electrical Engineering is not Elect. and Com. Engnr degree.
+\department{Electrical and Computer Engineering} 
+\committeechair{Dr.\ Bradley Whitaker} 
+\departmentchair{Dr.\ Department Chair}
+\graduatedean{Dr.\ Graduate Dean}
+\submitdate{December 2022} 
+\copyrightyear{\the\year} % add one to year if document submitted in Dec.
+\draftver{1.0} % versioning for use with draft option
+
+% put searchable words you want internet search engines to find here
+\keys{keywords, latex, MSU, Montana State University} 
+ 
+%  Configuration of hyperref package
+\hypersetup{%
+	% bookmarks=true, %show bookmarks when opening pdf
+	bookmarksdepth=3, %show up to subsubsections in pdf bookmarks
+	citecolor=black, %citations show up black
+	colorlinks=true, %use colored links
+	draft=false, % prevents hyperref from draft mode...keeps bookmarks and hyperlinks in draft mode
+	filecolor=black, %included file links are black text
+	linkcolor=black, %the colored links are black for an ETD but can be otherwise
+	pdfauthor={\name}, %pdf document maker is you
+	pdfcreator={\name\ by\ PDFLaTex}, %pdf document maker is you
+	pdfdisplaydoctitle=true, % make display title the same as the document title instead of the filename
+	pdffitwindow=true, %fits one page into the open pdf reader window
+	pdfkeywords={\keys}, %searchable keywords
+	pdfsubject={\degreetype\ for \name}, %the \  is to give a space
+	pdftitle={\DocTitle}, %pdf document title is now ETD title
+	plainpages=false, %use hyperlinks in pages, gets rid of a lot of warnings too
+	urlcolor=black %website links are black text
+}%
+
+% ================================ %
+%         Actual Document                                              %
+% ================================ %
+\begin{document}
+
+% Front matter...before your text
+\begin{preliminary}
+
+  % Dedication page (optional, comment out if not using)
+%   \begin{dedication} 
+%     \input{dedication} 
+%   \end{dedication}
+
+  % Acknowledgements page (optional, comment out if not using)
+  \begin{acknowledgements}
+    \input{acknow} 
+  \end{acknowledgements}
+
+  %vita page (optional, comment out if not using)
+%   \begin{vita}
+%     \input{vita} 
+%   \end{vita}
+
+  % Table of Contents, List of Figures|Tables|etc.
+  \contents\
+  
+  % Nomenclature page (optional, comment out if not using)
+%   \begin{nomen}
+%     \input{nomenclature} 
+%   \end{nomen}
+
+
+  % Abstract
+  \begin{abstract}
+    \input{abstract}
+  \end{abstract}
+\end{preliminary}
+
+% Dissertation chapters:  add/change as needed
+\include{introduction}
+\include{background}
+\include{preliminary_work}
+\include{proposed}
+
+
+% \include{graph_sparse}
+% \include{FeatureRanking}
+
+
+
+
+
+% REFERENCES
+% TODO: "REFERENCES" shows up in all caps in the pdf bookmarks, whereas when using bibtex that was not the case. Other than that, it looks like the formatting is okay when using biblatex instead of bibtex...
+% \printbibliography[heading=bibintoc, title={REFERENCES}]
+\bibliographystyle{ieeetr}
+\bibliography{misc.bib}
+
+
+% APPENDIX
+% If you have an appendix use either the option appendsingle (1 appendix) or appendmultiple (>1 appendix) in your document class
+% If you do not have an appendix comment out below and remove the appendsingle/multiple option from the document class
+% \appendix
+% \include{appendixa}
+%\include{appendixb}
+
+\end{document}
+% do not put anything after this
+

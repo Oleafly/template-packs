@@ -1,0 +1,94 @@
+\chapter[A sample document, eh?]{A SAMPLE DOCUMENT}%Titles must be capitalized.
+
+Before we begin, take a quick look at how this chapter appears in
+the table of contents.  This is because of the `optional' argument
+in the chapter entry.  Also, while reading this chapter, please
+also read its source file SampleChapter3.tex.  Many of the
+comments refer to what is written in the source file.
+
+A double return is interpreted as a new paragraph. A single return
+is ignored (look at the source file).
+
+To type an equation in the line, put it between dollar signs.  For
+example, $a^2+b^2=c^2$.  If it's very important, display the
+equation by using backslash square braces:
+\[
+E=mc^2.
+\]
+If the equation is to be referenced, then do the following:
+\begin{equation}\label{Equation 1}%This is the label of the equation -- LaTeX will number it.
+a^n+b^n=c^n.
+\end{equation}
+(That instruction doesn't make much sense unless you are also
+looking at the .tex file, which in this case, is
+SampleChapter3.tex.)  Equation (\ref{Equation 1}) has no
+non-trivial solutions in the integers. Some results are important:
+
+\begin{theorem}[Fermat's Last Theorem]\label{theorem 1}  The equation
+\[
+x^n+y^n=z^n
+\]
+has no solutions $x,y,z\in \Bbb Z$ for $n\geq 3$ and $xyz\neq 0$.
+\end{theorem}
+
+Theorem \ref{theorem 1} was proved by Wiles.  The proof does not
+appear in \cite{B1}.
+
+Sometimes you might want to have aligned equations, like the
+following:
+\begin{align*}%the * means this equation doesn't have a label.
+\hbox{Force}&=(\hbox{mass})(\hbox{acceleration}) \\ %the \\ tells it to insert a line break.
+F&=ma. % the & is the alignment character.
+\end{align*}
+The * in \verb \begin{align*} \ in the .tex file means that these
+equations have no numbers.  If they are to be numbered, leave the
+* out:
+\begin{align}
+\hbox{Force}&=(\hbox{mass})(\hbox{acceleration}) \\
+F&=ma.
+\end{align}
+If you want only one of these equations numbered, try the
+following:
+\begin{align}
+\hbox{Force}&=(\hbox{mass})(\hbox{acceleration}) \notag\\ %the \notag means no tag here.
+F&=ma.
+\end{align}
+
+A picture is shown in Figure \ref{fig1}.
+\begin{figure}[h]%This [h] tells LaTeX to try to put the picture here.
+                 %Without it, it will go to the top of the next page.
+\begin{center}
+{\mbox{\includegraphics[height=140pt]{fig1.eps}}}
+\end{center}
+\caption{\label{fig1}Isn't this a nice picture?}
+\end{figure}% Be careful with empty lines -- remember, they mean new paragraph.
+    % There are no empty lines before and after the figure environment since
+    % I do not want a new paragraph here.
+For more information about graphics, consult documentation on
+graphicx (run a search on the www.ctan.org site).  Support of
+graphics is really a function of the dvi viewer.  As far as I
+know, the only type of graphic supported by the standard viewer is
+the .eps format.  Adobe Illustrator\footnote{Adobe Illustrator is
+a rather expensive product.  This is the way one does footnotes.
+More text here. } can convert most graphics files to .eps files.
+Figure \ref{fig1}, though, was produced using Maple and saved as a
+\LaTeX\ file (which includes a .eps component).
+
+Though I always use Illustrator\footnote{Another footnote.} to
+create pictures, I understand that any printable graphic file can
+be converted to .eps format. The idea is this -- if it is
+printable, then it can be printed on a postscript printer.  Any
+computer can be set up to print to a postscript printer, even if
+not connected to one.  So, obtain a generic postscript printer
+driver (free from Adobe at www.adobe.com) and set it up to print
+to a file.  While setting it up, choose the option to send files
+to the ``printer'' in .eps format (the default is .ps format).  I
+think I saw full instructions for this in \cite{O}.
+
+For those interested, the commands in Maple that produces
+\ref{fig1} are:
+\begin{trivlist}
+\item plot(\{[2*cos(t),sin(t), t=0..2*Pi],
+[-1+cos(t),.2+sin(t),t=0..2*Pi]\}, axes=none, scaling=constrained,
+color=black);
+\end{trivlist}

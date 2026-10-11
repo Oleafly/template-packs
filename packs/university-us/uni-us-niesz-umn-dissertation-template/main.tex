@@ -1,0 +1,76 @@
+% UMN doctoral dissertation template.
+% Created and customized by Shaozhi Nie with LaTeX implementation assistance
+% from OpenAI Codex (GPT-5). See CREDITS.md for attribution.
+% Replace every bracketed placeholder before submission.
+\documentclass[doctoral,12pt]{uofm}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage[natbibapa]{apacite}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{./figures/}}
+
+% Keep the bibliography in the table of contents and use DOI hyperlinks.
+\makeatletter
+\renewcommand{\bibsection}{%
+  \chapter*{\bibname\@mkboth{\MakeUppercase{\bibname}}{\MakeUppercase{\bibname}}}%
+  \addcontentsline{toc}{chapter}{\bibname}%
+}
+\makeatother
+% uofm.cls aliases table-list entries to figure-list entries. Restore the
+% correct "Table" prefix for List of Tables.
+\makeatletter
+\renewcommand*\l@table[2]{\@dottedtocline{1}{0em}{4.8em}{\tablename~#1}{#2}}
+\makeatother
+\AtBeginDocument{%
+  \renewcommand{\bibname}{Bibliography}%
+  \renewcommand{\refname}{Bibliography}%
+  \renewcommand{\doiprefix}{}%
+  \urlstyle{same}%
+}
+\providecommand{\doi}[1]{}
+\renewcommand{\doi}[1]{\href{https://doi.org/#1}{\nolinkurl{https://doi.org/#1}}}
+
+% Hyperlinked cross-reference helpers.
+\newcommand{\figref}[1]{\hyperref[#1]{Figure~\ref*{#1}}}
+\newcommand{\tabref}[1]{\hyperref[#1]{Table~\ref*{#1}}}
+\newcommand{\eqnref}[1]{\hyperref[#1]{Equation~\ref*{#1}}}
+
+% The class resets the table counter by chapter but does not retain the chapter
+% prefix in its printed form. This keeps the table labels consistent with figures.
+\renewcommand\thetable{\thechapter.\arabic{table}}
+
+\title{Dissertation Title in Title Case}
+\author{YOUR NAME}
+\degree{Doctor of Philosophy}
+\advisor{ADVISOR NAME}
+\date{August 2026}
+\copyrightyear{2026}
+
+\begin{document}
+\maketitle
+\copyrightpage
+
+\frontmatter
+\input{chapters/acknowledgments}
+\input{chapters/dedication}
+\input{chapters/abstract}
+\clearpage
+\tableofcontents
+\clearpage
+\listoffigures
+\listoftables
+
+\mainmatter
+\input{chapters/chapter1}
+\input{chapters/chapter2}
+\input{chapters/chapter3}
+\input{chapters/chapter4}
+\input{chapters/chapter5}
+
+\bibliographystyle{apacite}
+\bibliography{ref}
+\input{chapters/appendix}
+\end{document}

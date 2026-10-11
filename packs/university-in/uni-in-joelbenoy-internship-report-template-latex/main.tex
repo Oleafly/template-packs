@@ -1,0 +1,397 @@
+\documentclass[12pt,a4paper,oneside]{report}
+
+% --- ESSENTIAL PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in,hmarginratio=1:1]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{eso-pic}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+
+% --- COLOR DEFINITIONS ---
+\definecolor{navyblue}{RGB}{31, 73, 125}
+\definecolor{darkblue}{RGB}{20, 50, 90}
+
+% --- HYPERREF CONFIGURATION ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=navyblue,
+    citecolor=navyblue,
+    urlcolor=navyblue
+}
+
+% --- CHAPTER & SECTION HEADING FORMATTING ---
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{navyblue}}
+  {\chaptertitlename\ \thechapter}
+  {10pt}
+  {\Huge}
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{navyblue}}
+  {\thesection}{1em}{}
+
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{navyblue}}
+  {\thesubsection}{1em}{}
+
+% --- RENAME BIBLIOGRAPHY TO REFERENCES ---
+\renewcommand{\bibname}{References}
+
+% --- HEADER & FOOTER SETUP ---
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\thepage}
+
+% --- PARAGRAPH FORMATTING (FLUSH JUSTIFIED, NO INDENTATION) ---
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+% Set global list margins flush with text margin
+\setlist[itemize]{leftmargin=*,labelsep=0.5em}
+
+\begin{document}
+
+% ==========================================
+% PAGE 1: TITLE / COVER PAGE (No Border Box)
+% ==========================================
+\begin{titlepage}
+  \centering
+  \vspace*{0.2cm}
+  
+  % Upper Text Block
+  {\Huge \textbf{INTERNSHIP REPORT}} \\[0.8cm]
+  {\Large \textbf{B.Tech in [Your Course]}} \\[0.5cm]
+  {\large \textbf{DIVISION OF [DEPARTMENT NAME]}} \\[0.4cm]
+  {\large \textbf{[SCHOOL NAME]}} \\[0.4cm]
+  {\large \textbf{[UNIVERSITY NAME]}}
+  
+  \vfill
+  
+  % Logo Centered
+  \includegraphics[width=4.5cm]{logo.png}
+  
+  \vfill
+  \vfill
+  
+  % Lower Text Block (Pushed Further Down)
+  {\Large \textbf{[YOUR NAME]}} \\[0.2cm]
+  {\large \textbf{[YOUR REGISTER NUMBER]}} \\[0.6cm]
+  
+  {\large \textbf{\underline{Internship Details:}}} \\[0.3cm]
+  {\large [Company Name]} \\[0.2cm]
+  {\large [Start Date] -- [End Date]} \\[0.2cm]
+  {\large Academic Year: [Year]} \\[0.8cm]
+  
+  {\Large \textbf{[Project Title]}} \\[0.2cm]
+  {\large [Project Subtitle]}
+  
+  \vspace*{0.2cm}
+\end{titlepage}
+
+% ==========================================
+% ENABLE PAGE BORDER BOX FOR SUBSEQUENT PAGES
+% ==========================================
+\AddToShipoutPictureBG{%
+  \begin{tikzpicture}[remember picture, overlay]
+    \draw[line width=0.8pt, draw=black!70] 
+      ([xshift=1.2cm, yshift=-1.2cm] current page.north west) 
+      rectangle 
+      ([xshift=-1.2cm, yshift=1.2cm] current page.south east);
+  \end{tikzpicture}%
+}
+
+% ==========================================
+% PAGE 2: CERTIFICATE IMAGE PLACEHOLDER (Page ii)
+% ==========================================
+\clearpage
+\pagenumbering{roman}
+\setcounter{page}{2}
+
+\vspace*{\fill}
+\begin{center}
+  \IfFileExists{certificate.png}{%
+    \includegraphics[width=0.85\textwidth,height=0.75\textheight,keepaspectratio]{certificate.png}%
+  }{%
+    \vspace*{3cm}
+    {\Large \textbf{[ ADD CERTIFICATE IMAGE HERE ]}} \\[0.5cm]
+    {\large Upload \texttt{certificate.png} to replace this placeholder page}
+    \vspace*{3cm}
+  }
+\end{center}
+\vspace*{\fill}
+
+% ==========================================
+% PAGE 3: CERTIFICATE RECORD PAGE (Page iii)
+% ==========================================
+\clearpage
+
+% Low opacity background watermark logo
+\begin{tikzpicture}[remember picture, overlay]
+  \node[opacity=0.12, inner sep=0pt] at (current page.center) {
+    \includegraphics[width=0.65\textwidth]{logo.png}
+  };
+\end{tikzpicture}
+
+\begin{center}
+  {\large \textbf{DIVISION OF [DEPARTMENT NAME]}} \\[0.2cm]
+  {\large \textbf{[SCHOOL NAME]}} \\[0.2cm]
+  {\large \textbf{[UNIVERSITY NAME]}} \\[2.2cm]
+  
+  {\Huge \textbf{CERTIFICATE}} \\[1.8cm]
+  
+  {\large Certified that this is a Bonafide record of the internship done by} \\[0.5cm]
+  {\Large \textbf{[Your Name] ([Register Number])}} \\[0.5cm]
+  {\large of [Semester] Semester, [Your Course] in the year [Year] in partial fulfilment requirements for the award of Degree of Bachelor of Technology in [Your Course] of [University Name]} \\[3.0cm]
+\end{center}
+
+\vfill
+\noindent
+\begin{minipage}[t]{0.45\textwidth}
+  \textbf{[Name of HOD]}\\
+  Head of Division
+\end{minipage}\hfill
+\begin{minipage}[t]{0.45\textwidth}
+  \raggedleft
+  \textbf{[Name of Class Coordinator]}\\
+  Class Coordinator
+\end{minipage}
+\vspace*{0.5cm}
+
+% ==========================================
+% PAGE 3: ACKNOWLEDGEMENT
+% ==========================================
+\clearpage
+\chapter*{Acknowledgement}
+\addcontentsline{toc}{chapter}{Acknowledgement}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. I would like to express my sincere gratitude to \textbf{[Company Name]} and \textbf{[Guide Name]} for their valuable support and technical guidance.
+
+I thank my team members and colleagues for their contributions throughout the design, implementation, testing, and deployment stages of the project. Finally, I express my gratitude to \textbf{[Name of HOD]}, Head of Division, and \textbf{[Name of Class Coordinator]}, Class Coordinator, Division of [Department Name], [University Name], for their academic guidance and support.
+
+% ==========================================
+% PAGE 4: ABSTRACT
+% ==========================================
+\clearpage
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac libero nisi. Cras sit amet felis et libero posuere convallis. Fusce finibus, libero non imperdiet interdum, orci magna sodales arcu, ut sodales erat ex ac lorem. Integer non nulla nec odio euismod tristique. Vivamus at diam accumsan, elementum dolor sit amet, efficitur sapien.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. React and Vite were used for component-based frontend development while centralized backend services handled application data storage and state management. Role-aware routing and interface composition allowed users to interact with features appropriate to their responsibilities.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. The development process followed a problem-first engineering approach, progressing through architecture design, backend setup, component implementation, integration, testing, and production deployment.
+
+% ==========================================
+% PAGE 5 & 6: TABLE OF CONTENTS & LIST OF FIGURES
+% ==========================================
+\clearpage
+\tableofcontents
+
+\clearpage
+\listoffigures
+
+% ==========================================
+% MAIN CONTENT CHAPTERS (Arabic Numbering)
+% ==========================================
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% --- CHAPTER 1 ---
+\chapter{Introduction}
+
+\section{Lorem Ipsum}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.
+
+\section{Dolor Sit Amet}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{logo.png}
+  \caption{Lorem ipsum figure title showing high-level system process}
+  \label{fig:arch}
+\end{figure}
+
+\section{Consectetur Adipiscing}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.
+
+\section{Tempor Incididunt}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus fermentum in dolor id facilisis. Suspendisse potenti. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit, neque nec imperdiet pretium, justo diam aliquam risus. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+
+% --- CHAPTER 2 ---
+\chapter{Company Overview}
+
+\section{Lorem Ipsum}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tristique ex in urna sodales, nec scelerisque massa accumsan. Etiam eget ex id massa volutpat eleifend. Cras a sodales massa.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{logo.png}
+  \caption{Lorem ipsum company organization diagram}
+  \label{fig:logo}
+\end{figure}
+
+\section{Dolor Sit Amet}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+\section{Consectetur Adipiscing}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Technical interaction and guidance were provided by company personnel during project discussions and engineering workflows.
+
+\section{Tempor Incididunt}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. The team followed an iterative development sequence moving from requirement analysis to deployment.
+
+% --- CHAPTER 3 ---
+\chapter{Objectives of the Internship}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. The primary objective of the internship was to bridge academic computer science knowledge with practical software engineering workflows.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Technical objectives included strengthening practical knowledge in frontend development, backend integration, role-based application design, progressive web applications, debugging, and production deployment.
+
+% --- CHAPTER 4 ---
+\chapter{Tools and Technologies Used}
+
+\section{Lorem Ipsum}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. HTML5 provided the structural foundation, CSS was used for styling, and JavaScript formed the core application logic.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.45\textwidth]{logo.png}
+  \caption{Lorem ipsum core web technologies architecture}
+  \label{fig:tech}
+\end{figure}
+
+\section{Dolor Sit Amet}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. React was used to build reusable components, React Router managed navigation, and Zustand provided client-side state management.
+
+\section{Consectetur Adipiscing}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Backend services provided real-time database functions, authentication integration, and file object storage.
+
+\section{Tempor Incididunt}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vite was used as the build server, Git and GitHub for version control, and Vercel for production hosting.
+
+% --- CHAPTER 5 ---
+\chapter{Project Work and System Implementation}
+
+\section{Lorem Ipsum}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Responsibilities included requirements analysis, component hierarchy architecture, backend data schema design, and system integration.
+
+\section{Dolor Sit Amet}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dual client applications connected to a unified backend providing data access, server functions, and real-time updates.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.45\textwidth]{logo.png}
+  \caption{Lorem ipsum conceptual data relationships diagram}
+  \label{fig:data_model}
+\end{figure}
+
+\section{Consectetur Adipiscing}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. The interface was assembled from modular React components representing pages, forms, lists, and dialogs.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.45\textwidth]{logo.png}
+  \caption{Lorem ipsum user interface layout structure}
+  \label{fig:ui_layout}
+\end{figure}
+
+\section{Tempor Incididunt}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Centralized database schemas and server-side functions supported real-time synchronization across applications.
+
+\section{Magna Aliqua}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Core entities included users, roles, projects, assignments, attendance records, and notifications.
+
+\section{Ut Enim}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Role-based access control directed authenticated users to appropriate interface layouts.
+
+\section{Minim Veniam}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Management console provided project dashboards, workforce directories, global logs, and administrative settings.
+
+\section{Quis Nostrud}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mobile PWA provided role-specific workflows for field personnel and supervisors.
+
+\section{Ullamco Laboris}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Location-aware features enabled GPS-verified attendance logging and dispute management.
+
+\section{Aliquip Ex Ea}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Field tracking tools supported issue reporting, drawing access, and event notifications.
+
+\section{Commodo Consequat}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Production applications were deployed to cloud hosting platforms.
+
+\section{Duis Aute}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Functional test cases were executed to verify system correctness.
+
+% --- CHAPTER 6 ---
+\chapter{Challenges Faced}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Authentication and navigation had to strictly follow role-specific permissions.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Handling self, proxy, and late check-in conditions required complex validation rules.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Data synchronization kept admin and field clients synchronized without manual polling.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proper loading, empty, and error states were established to prevent UI disruption.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Progressive web application design ensured responsive execution on mobile devices.
+
+% --- CHAPTER 7 ---
+\chapter{Key Learnings from the Internship}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Operational requirements often emerge through practical discussions.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Isolated features were integrated into a broader system architecture.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Modular component architecture enabled rapid feature updates.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Shared queries, mutations, and auth rules remained consistent across apps.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Complex state transitions were traced end-to-end across the stack.
+
+% --- CHAPTER 8 ---
+\chapter{Conclusion}
+
+\section{Lorem Ipsum}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. The internship project successfully addressed key operational needs by developing a web-based system connecting administrative management with field operations.
+
+\section{Dolor Sit Amet}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Future scope includes advanced analytics, enhanced reporting tools, document management workflows, and offline synchronization capabilities.
+
+% ==========================================
+% REFERENCES (Reduced to Exactly 8 Items)
+% ==========================================
+\clearpage
+\addcontentsline{toc}{chapter}{References}
+\begin{thebibliography}{99}
+\setlength{\itemsep}{2pt}
+\setlength{\parsep}{0pt}
+
+\bibitem{ref1} Lorem ipsum dolor sit amet, `Consectetur Adipiscing Elit,'' \url{https://example.com/reference1}.
+
+\bibitem{ref2} Sed do eiusmod tempor, `Incididunt ut Labore et Dolore,'' \url{https://example.com/reference2}.
+
+\bibitem{ref3} Magna aliqua ut enim, `Ad Minim Veniam Quis Nostrud,'' \url{https://example.com/reference3}.
+
+\bibitem{ref4} Exercitation ullamco laboris, `Nisi ut Aliquip ex Ea,'' \url{https://example.com/reference4}.
+
+\bibitem{ref5} Duis aute irure dolor, `In Reprehenderit in Voluptate,'' \url{https://example.com/reference5}.
+
+\bibitem{ref6} Velit esse cillum dolore, `Eu Fugiat Nulla Pariatur,'' \url{https://example.com/reference6}.
+
+\bibitem{ref7} Excepteur sint occaecat, `Cupidatat Non Proident Sunt,'' \url{https://example.com/reference7}.
+
+\bibitem{ref8} In culpa qui officia, `Deserunt Mollit Anim id Est,'' \url{https://example.com/reference8}.
+
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,201 @@
+%--------------------INTRODUCTION--------------------------------------
+%This is the format for IISER Bhopal PhD Thesis for Physics or Mathematics.
+%A modified version of the one originally prepared by Arghya Chattopadhyay (arghya.chattopadhyay@gmail.com). Huge shout out to Arghya for all the hard work!
+
+%Be prepared to modify a bit the IISERB class file to conform with whoever incharge at the academic office PhD section. 
+
+%The formatting related contents (packages, custom layout, fonts, etc.) are now part of the IISERB.cls class file, which also contains the title page layout. 
+%All you have to do is enter your details in the individual details section below. 
+
+%This version: 1.0.1 
+%Created by: Sandeep Aashish
+%contact: sandeepaashish@hotmail.com
+%Date created: January 23, 2020
+
+%--------------------INSTRUCTIONS---------------------------------
+%COMPATIBILITY: pdflatex; bibtex; makeindex (for indexing and nomenclature with nomencl package)
+
+%thesis.tex is the mainfile. Other included files (in folders: chapters, frontmatter, endmatter,commands) have a header: %!TEX root=../thesis.tex .
+%Most of the required .sty files are in styles folder. Add them to your local latex installation folder (if you don't know how, google it!). 
+%bibliography style file hunsrt.bst is also in the styles folder.
+
+%On the first run, follow these steps:
+%pdflatex > makeindex thesis.nlo -s nomencl.ist -o thesis.nls > bibtex > pdflatex (x2)
+
+%You can add these arguments for makeindex in your editor's options menu.
+%=====================================================================================
+
+\documentclass{IISERB}
+
+\makenomenclature
+%For index generation.
+%\makeindex 
+
+%====================Set Graphics path============================
+
+\graphicspath{{figures/}}
+
+
+%=====================Command Modification=========================
+
+%Either enter your modifications here or write them in a seperate file and include it here.
+
+\include{commands/commands}
+
+
+%=====================For Dummyx text, tables and figures===============
+%One can comment this section out
+
+%\usepackage{lipsum}
+%\usepackage{sator}
+
+%===============================================================
+
+
+
+% ------------------------------
+% Individual details (Change these!)
+% ------------------------------
+
+% don't forget to remove the square brackets
+
+\newcommand{\thesistitle}{[Thesis Title]}%Include your thesis title
+\newcommand{\studentname}{[Student Name]}%Change it to your name
+\newcommand{\salutation}{[Mr./Ms.]}% Mr. or Ms. or anything
+\newcommand{\studentrollno}{[Roll Number]}%Change it to your roll number
+\newcommand{\advisorname}{[Supervisor]}%Change it to your advisor's name
+\newcommand{\subject}{[Department]}%Change it to physics or maths
+\newcommand{\thesisdate}{[Month, year]}%Include thesis year
+\newcommand{\vivadate}{[Month, year]}%Include viva date, keep it same as the thesis date while forwarding for evaluation
+\newcommand{\thesisyear}{[year]}%Again input the year for convinience
+\newcommand{\external}{[name of Ex. Examiner]}%Input the name of external examiner
+\newcommand{\memberone}{[name of the oral board examiner]}%Input the name of the member
+\newcommand{\membertwo}{[name of the oral board examiner]}%Input the name of the member
+\newcommand{\memberthre}{[name of the oral board examiner]]}%Input the name of the member
+
+
+
+
+\begin{document}
+
+\frontmatter
+
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+%%%%%%%%%%%%% 2nd title %%%%%%%%%%%%%
+\newpage
+
+\begin{titlepage}
+\maketitle
+\end{titlepage}
+
+
+
+\pagebreak
+
+\input{frontmatter/certificate.tex}
+\addcontentsline{toc}{chapter}{Certificate}
+\newpage
+
+\addcontentsline{toc}{chapter}{Academic Integrity and Copyright Disclaimer}
+\input{frontmatter/disclaimer.tex}
+\newpage
+
+\addcontentsline{toc}{chapter}{Acknowledgement}
+\include{frontmatter/acknwldg}
+\newpage
+
+\addcontentsline{toc}{chapter}{Dedication}
+\input{frontmatter/dedication.tex}
+\newpage
+
+\addcontentsline{toc}{chapter}{Abstract}
+\include{frontmatter/abstract}
+\newpage
+
+\addcontentsline{toc}{chapter}{Table of Contents}
+\tableofcontents
+
+\pagestyle{fancy}
+\clearpage
+
+\pagenumbering{arabic}
+
+
+\mainmatter
+%=====================Chapters==============================================
+\newpage
+
+
+\include{chapters/chapter1}
+
+
+
+
+\include{chapters/chapter2}
+
+
+
+\include{chapters/chapter3}
+
+
+
+\include{chapters/conclusion}
+
+
+\backmatter
+
+%==============================Appendices===================================
+\appendix
+\appendixpage
+%\suppresschapternumber
+%\removedotbetweenchapterandsection
+
+
+\include{chapters/appendixA}
+%========To generate dummy table, delete to write new===============
+%\satortab
+%=========================================================
+%\chapter{Second Appendix}
+%========To generate dummy figure, delete to write new===============
+%\satorfig
+%=========================================================
+
+
+% =============================Bibliography=====================================
+\singlespacing
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{plain}   %bibliography style
+\renewcommand{\bibname}{References} %bibliography chapter header
+\bibliography{endmatter/mybib} %.bib file source
+
+
+%=============Generating List of figures and list of tables================
+
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+
+(Optional for mathematics)
+
+
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+
+(Optional for mathematics)
+
+%====================Symbols================================
+
+\chapter{List of Symbols}
+% \addcontentsline{toc}{chapter}{List of Symbols}%
+
+Optional
+
+\input{commands/symbols.tex}
+
+
+
+
+\include{endmatter/spine}
+
+\end{document}

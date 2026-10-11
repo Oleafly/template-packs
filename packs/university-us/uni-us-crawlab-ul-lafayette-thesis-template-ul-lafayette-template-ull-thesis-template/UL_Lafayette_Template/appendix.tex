@@ -1,0 +1,27 @@
+%!TEX root = ULL_thesis_template.tex 
+\chapter{Sympy Modeling}
+\label{app:code}
+The computer algebra system Sympy was used to model and simulate the dynamic properties of each model. This Python library requires the model frames, points, constants, and dynamic variables to be explicitly defined. These variables are then wrapped in either a Lagrangian or Kane's method function, and the equations of motion are calculated. The code structure is generally the same for all systems modeled in Sympy and is as follows:
+\begin{enumerate}
+\item Dynamic variables and constants definitions: The variable names for the system positions, speeds, and forces are defined as varying with time. The constants are defined without varying with time.
+\item Frame definitions: The global coordinate frame for each model are created. These are then used to define the subsequent frames which rotate about the fixed global frame.
+\item Point definitions: The important points of the system are defined with either time varying variables or constants. Vectors are created between the points to compute the relative velocities and point accelerations.
+\item Inertial definitions: The rigid-bodies or point masses of the system are created with the center of mass defined as one of the aforementioned points. The rigid-body also includes the inertial tensor, which for these planar models only has an $I_y$ component. For Lagrange's method the potential energy of the bodies is also included.
+\item Force definitions: Forces acting on the system are defined here. For Kane's method this includes all spring and damper forces. This is where the boolean operator's are defined. Rotational forces can also be applied to a frame to limit rotational motion.
+\item Differential equations are created and used to simulate the model's motion. 
+\end{enumerate}
+
+\chapter{Equations of Motion}
+\label{app:equations}
+Provided are the equations of motion for the 2-1 \cspm{}, developed from Sympy. They are written as a system of first-order differential equations.
+\section{2-1 Cable Manipulator}
+\label{app:eom_2-1}
+\begin{equation}
+\label{eq:testing}
+\begin{aligned}
+\dot{x}=M_1^4 \\
+\dot{z} =M_1^5\\ 
+\dot{\beta}=M_1^6
+\end{aligned}
+\end{equation}
+\input{EOM/2-1}

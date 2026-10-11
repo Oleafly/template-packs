@@ -1,0 +1,174 @@
+%% -----------------------------------------------------------------------------
+%%
+%% NOTE: You probably don't need to edit
+%% this file very much (or at all), but you 
+%% do need to edit the following.
+%%
+%%         utd-abstract.tex
+%%         utd-appendices.tex
+%%         utd-chapters.tex
+%%         utd-copyright.tex
+%%         utd-dedication.tex
+%%         utd-local.sty
+%%         utd-vita.tex
+%%
+%% -----------------------------------------------------------------------------
+%
+%
+%
+%
+%
+%
+%% 12pt gives 12--14 CPI as required by UTD.
+%%
+%% letterpaper gives US-Letter (8.50in by 11.00in).
+%%
+\documentclass[12pt,letterpaper]{report}
+%
+%
+%
+%
+\usepackage{utd}  
+\usepackage{utd-local}
+\usepackage{local}
+%
+\begin{document}
+    %%
+    %% Change this to change the bibliography style.
+    %% I made the utd style, which produces Author-Year
+    %% citations and DOES NOT decapitalize entries in
+    %% your .bib file. The reason why I did this is
+    %% because it is annoying to carefully capitalize
+    %% titles in your .bib file only to have the
+    %% titles de-capitalized in the bibliography section.
+    %%
+    %% I have included some other possible biliography
+    %% styles. If you don't like the utd style then
+    %% try some other ones.
+    %%
+    %% At the time I submitted my disstertation (2011-05), the
+    %% graduate reader said ``Any style that your
+    %% advisor says OK is OK.''
+    %%
+    \bibliographystyle{utd}
+    %\bibliographystyle{plain}
+    %\bibliographystyle{alpha}
+    %\bibliographystyle{ieeetr}
+    %\bibliographystyle{siam}
+    %\bibliographystyle{acm}
+    %
+    %
+    %
+    %%
+    %% Turn off page numbering and counting for these pages.
+    %%
+    \pagenumbering{gobble}
+        % Page I
+        \utdsignaturepage
+        % Page II
+        \begin{utdcopyrightpage}
+            \input{utd-copyright}
+        \end{utdcopyrightpage}
+        % Page III
+        \begin{utddedication}
+            \input{utd-dedication}
+        \end{utddedication}
+        % Page IV 
+        \utdtitlepage
+    %%
+    %% These pages need to be numbered with roman numerals,
+    %% starting with roman numeral 5.
+    %%
+    % Page V
+    \pagenumbering{roman}
+        \setcounter{page}{5}
+        \begin{utdacknowledgements}
+            \input{utd-acknowledgements}
+        \end{utdacknowledgements}
+        %%
+        %% Comment-out or delete the utdpreface
+        %% environment if you do not need a preface.
+        %% See utd-preface.tex for details.
+        %%
+        \begin{utdpreface}
+            \input{utd-preface}
+        \end{utdpreface}
+        \begin{utdabstract}
+            \input{utd-abstract}
+        \end{utdabstract}
+        %%
+        %% Change the following spacing
+        %% value so that your TOC fills
+        %% however many pages it spans.
+        %%
+        \begin{spacing}{1.25}
+            \tableofcontents 
+        \end{spacing}
+        \clearpage
+        \utdlistoffigures
+        \utdlistoftables
+    %%
+    %% These pages need to be numbered with arabic numerals.
+    %%
+    \pagenumbering{arabic}
+        %%
+        %% Set up the page numbering that UTD requires.
+        %%
+        %%     1. Bottom-center page numbers on the
+        %%        the first page of a chapter.
+        %%
+        %%     2. Top-right page number on all other
+        %%        pages.
+        %%
+        \pagestyle{fancy} 
+            \lhead{}    
+            \chead{}    
+            \rhead{\thepage} 
+            \lfoot{} 
+            \cfoot{} 
+            \rfoot{}
+            \renewcommand{\headrulewidth}{0.00in}
+            \renewcommand{\footrulewidth}{0.00in}
+        %%
+        %% utd-chapters.tex should be full of other 
+        %% \input commands which include the various 
+        %% parts of your document.
+        %%
+        \input{utd-chapters}
+        \clearpage
+        %%
+        %% If you do not have an appendix then
+        %% either remove the following utdappendix
+        %% environment or set \utdappendixcount to 0
+        %% in utd-local.sty.
+        %%
+        \begin{utdappendix}
+            %%
+            %% utd-appendices.tex is just like
+            %% utd-chapter.tex, except you put
+            %% appendices in it.
+            %%
+            \input{utd-appendices}
+        \end{utdappendix}
+        %%
+        %% Change bib to whatever name you are using
+        %% for your .bib file. Mine is called bib.bib
+        %% so I write \bibliography{bib}. If your .bib
+        %% is called mybibdb.bib then you will write
+        %% \biliography{mybibdb}.
+        %%
+        \begin{utdbibliography}
+            \bibliography{bib}
+        \end{utdbibliography}
+    %%
+    %% Turn off page numbering for the VITA.
+    %%
+    \pagestyle{empty}
+        \begin{utdvita}
+            %%
+            %% utd-vita.tex should contain your VITA.
+            %%
+            \input{utd-vita}
+        \end{utdvita}
+\end{document}
+% vim:ts=4:sw=4:et

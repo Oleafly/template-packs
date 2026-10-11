@@ -1,0 +1,43 @@
+%%% Abstract file — content only, no \chapter or formatting commands.
+%%% UF-F15: must be 350 words or fewer (source: bundled template's own
+%%% abstractFile.tex states this cap).
+%%% The class file's \AtBeginDocument block builds the abstract page
+%%% header (degree info, chair, major) automatically — the student just
+%%% provides the abstract prose below.
+
+Graduate schools enforce strict formatting rules on doctoral
+dissertations, but the rules are scattered across web pages, PDF
+guides, and template documentation. Students who already compile their
+dissertation locally still face a tedious manual checklist before
+submission, often performed under time pressure near the term deadline.
+A formatting mistake caught after the first submission deadline can
+delay graduation by a full semester.
+
+This dissertation presents a lightweight static analysis tool that
+validates LaTeX-based dissertations against the University of Florida
+Graduate Editorial Office's formatting specification. The tool operates
+in two complementary layers. A source layer inspects the LaTeX project
+for overrides of the official UF template's defaults — for example, a
+manually inserted \texttt{\textbackslash pagenumbering\{roman\}} that
+would violate the new template's arabic-throughout rule. A PDF layer
+inspects the rendered output for properties the source cannot
+predetermine: actual margins per page, embedded font families, page
+numbering scheme as rendered, and tagged-structure presence for
+accessibility compliance. The two layers are designed to complement
+each other: source-layer findings carry precise location data; PDF-layer
+findings carry rendered-truth confidence.
+
+The analyzer accepts project archives, project directories, or compiled
+PDFs as input. Output is a grouped, severity-tiered report with each
+finding citing the originating UF rule. A demo dissertation that
+satisfies every rule serves as both regression fixture and pedagogical
+reference for new graduate students learning the template.
+
+This work focuses on doctoral dissertations using the Fall 2025+ UF
+template. Master's theses and the older template (accepted through
+Summer 2026) are out of scope for the initial release. The source-layer
+checks are expected to recover the majority of formatting violations
+recorded in the Editorial Office's published rejection patterns, with
+the PDF layer adding defense-in-depth against template bypass scenarios.
+A systematic evaluation on a corpus of public UF dissertations is
+planned for a follow-up study.

@@ -1,0 +1,149 @@
+\chapter{Universal Verification Methodology}
+
+\section{Verification Methodologies}
+
+In hardware design and verification industry there are three major vendors Synopsys, Cadence and Mentor Graphics. Early in the methodology development phases, Vera language was developed by Sun Micro Systems for its ASIC verification projects. Later it has been passed to Synopsys and named as OpenVera which is currently supported in its VCS compiler. Synopsys donated parts of Vera to Verilog to form bases for SystemVerilog. OpenVera uses Reuse Verification Methodology (RVM) which is documented in Synopsys Verification Methodology Manual (VMM).e Hardware Verification Language developed by Verisity used as basis of Universal Verification Methodology (UVM) developed by Cadence. Open Verification Methodology (OVM) contains building block of verification library for semiconductor chips. OVM is originally developed from URM and eRM. It also has parts of Advanced Verification Methodology used by Mentor Graphics. After the era of OVM, new verification methodology was developed by joint efforts of verification industries which is known as Universal Verification Methodology (UVM). UVM combines concepts of OVM as well as VMM. Although major vendors and many other automation tool vendors supports UVM; eRM with e hardware verification language made for highly flexible reusable testbench, supported by Cadence also has been used in parallel. \par
+
+A brief timeline of methodology development has been given in figure \ref{timeline} below,
+
+%Image
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=13cm,height=5cm]{images/timeline}
+	\caption{Timeline: Verification Methodologies \label{timeline}}
+\end{figure}
+
+\section{UVM}
+
+UVM guidelines provide uses of SystemVerilog language to create reusable efficient testbench. UVM class library provides automation to SystemVerilog language. Methodology is used to develop recommended architecture for creating testbench. \par
+
+UVM provides framework for Coverage Driven Verification (CDV). CDV has combination of automatic test generation (pseudo-random pattern generation), self-checking architecture and coverage metrics to reduce time for developing testbench significantly. \par
+
+UVM class library consist of different components for consistent testbench architecture. These classes consist of Environment, Agent, Driver, Sequencer etc. Described classes are also known as verification components. UVM Verification Component (UVC) can be extended to make DUT specific components. UVC are ready to use component for Bus Protocol, Design Module or Systems. UVC have consistent architecture and composed of methods for simulating, verifying and collecting coverage data. \par
+
+UVCs are as described below,
+
+\subsection{Data Items(Transactions)}
+
+Data items are testcases also known as transactions to be applied to DUT to get desired coverage. These transactions can be randomized to get higher coverage. Transactions consist of data packet for Ethernet switch, messages for other secure hash protocols, bus transactions etc. \par
+
+\subsection{Sequencer}
+
+Transaction items described above only consist test specific data items. It does not know how to reach to driver at specific interval of time. Sequencer does this job very well. It randomizes sequences (transactions) to be applied on driver. It checks for driver’s status and sends transactions accordingly. We can add constraints to the sequencer to send data packet in user defined fashion. Sequencer provides synchronization to the driver, constraint randomize transactions, react to the current state of the DUT and also provides system level synchronization for communication protocols.
+
+\subsection{Driver}
+
+Driver is active element in our testbench environment. It takes transactions from sequencer and drives it to DUT. It converts transactions into signals. Driver also provides controlling mechanism like Read/Write, Enable signals and when to drive the DUT.
+
+\subsection{Monitor}
+
+Monitor is passive entity which samples DUT outputs and convert them to transaction. Monitor checks for protocol timing and its violations. It also provides coverage mechanism. Monitor extracts data items and notifies for events. And also collects transactions to be sent to Scoreboard.
+
+\subsection{Agent}
+
+Agent provides higher abstract class by encapsulating Sequencer, Driver and Monitor. Because sequencer, driver and monitor can be reused between different verification environments, agent makes this work easy by combining all three of them. Agents can be both active and passive entity. Active agent can drive and monitor DUT signals while passive agents only monitor DUT.
+
+\subsection{The Environment}
+
+Environment is top level block for UVCs. It consists of one or more agents and other UVC like scoreboard. Figure below describes reusable verification environment. Notice in figure \ref{uvmenv} that the environment class may contain monitor other than provided in agent. Reason is that bus monitor may be independent of specific agents.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=13cm,height=10cm]{images/uvm_env}
+\caption{A Typical Verification Environment \label{uvmenv}}
+\end{figure}
+
+\section{UVM Class Library}
+
+The UVM class library provides all building blocks you need to quickly develop verification environment. It consist of UVM base classes, pre-defined methods like print(), copy() etc. It also consists of utilities, macros and provides Transaction Level Modeling (TLM 1.0) set for communication between UVCs. \par
+
+A Partial hierarchy of UVM components and TLM is provided in figure \ref{uvmclass} below,
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=13cm,height=8cm]{images/uvm_class_lib}
+\caption{A Partial UVM Class Hierarchy \label{uvmclass}}
+\end{figure}
+
+\section{UVM Phases}
+
+All UVM class described above has simulation phases. These UVM phase are used to construct, configure and connect components. Although new() is not a phase, sometimes it is considered to be one. new() is constructor on the parent class. Some of the phases are described below,
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=10cm,height=12cm]{images/phase}
+	\caption{Phases in UVM (source: soccentral.com)\label{phase}}
+\end{figure}
+
+
+	\begin{itemize}
+		\item \textbf{function void build()}
+		is used to construct components of testbench hierarchy. Example is, build\_phase() of agent is used to construct Sequencer, Driver and Monitor.
+		\item \textbf{function void connect()}
+		connects components created by build phase. Again inside the agent connect phase will connect sequencer to driver, and monitor to external component via port and export.
+		\item \textbf{function void end\_of\_elaboration()}
+		is used to configure the components when required.
+		\item \textbf{function void start\_of\_simulation()}
+		prints component hierarchy and other messages. It may be optional.
+		\item function void extract()
+		\item function void check()
+		\item function void report()
+		gives all test pass/fail status and simulation results.
+		\item \textbf{task run()}
+		is considered as main phase of simulation. Simulation will start from here. In this phase all tests executes and processes are forked.
+	\end{itemize}
+	
+\section{TLM 1.0}
+
+Transaction Level Modeling (TLM) provides communication infrastructure for UVCs. UVCs can be made reusable by SystemVerilog implementation of TLM in UVM verification components. A component can communicate with other components that implements specific interface. TLM specifies behavior but does not implement method, it is provided by classes inheriting TLM interface. TLM 1.0 is message passing system while TLM 2.0 is mainly designed for high performance memory-mapped bus-based systems. In TLM 1.0, two main aspects are ports and exports. Here port defines set of methods and function to be used inside connections whereas exports implements those set of methods. These connections are shown in figure \ref{pc} and \ref{getpc} below,
+
+\vspace{0.5cm}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=8cm,height=1.5cm]{images/pc}
+	\caption{Producer-Consumer with put method \label{pc}}
+\end{figure}
+
+\vspace{0.5cm}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=8cm,height=1.5cm]{images/getpc}
+	\caption{Producer Gets from Consumer \label{getpc}}
+\end{figure}
+
+
+
+Here consumer implements set of methods and function that accepts transaction in its argument. And producer calls the function and pass the transaction in argument. \par
+Thereby in cases where we want to connect multiple exports to a single component, ports are not designed to connect to multiple exports. Solution for this is to use analysis port(figure \ref{ap}), it is same like port but we can connect multiple exports to it. When analysis ports have things to send, it will be send to all exports subscribed to this analysis port.
+
+\vspace{0.5cm}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=10cm,height=5cm]{images/ap}
+	\caption{Analysis Port \label{ap}}
+\end{figure}
+
+\vspace{1cm}
+
+\noindent
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{| c | m{2.5cm} | m{4cm} |} 
+		\hline
+		Symbol & Type & Port Declaration  \\ \hline 
+		$\square$ & Port & uvm\_put\_port \#(Transaction) port\_name   \\ \hline
+		$\bigcirc$ & Export & uvm\_put\_imp \#(Transaction, Classname) export\_name  \\ \hline
+		$\Diamond$ & Analysis Port & uvm\_analysis\_port \#(Transaction) analysis\_port\_name \\ \hline
+	\end{tabular}
+	\caption{TLM 1.0 Ports}
+	\label{tlm}
+\end{table}
+
+\section{Conclusion}
+
+As system complexity increases in RTL, it is not feasible to verify it by writing manual test cases in Verilog. By using verification methodologies we can provide test scenarios automatically and in any desired sequence. Also reusability of our verification environment increases using the methodology. \par
+
+This chapter explains UVM methodology and some important aspects of it. We have seen commencement of UVM by the time, UVCs, UVM phases and TLM 1.0 in brief. These concepts will be used in this dissertation work. And understanding of them is necessary to implement verification plan.

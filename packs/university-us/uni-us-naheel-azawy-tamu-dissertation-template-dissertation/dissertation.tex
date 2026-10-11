@@ -1,0 +1,125 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  TAMU dissertation template (generic example)
+%  Naheel Faisal Kamal, 2024
+%  See README.md for usage.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{report}
+\usepackage{tamu/tamuhelper}
+\mkpre{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% YOUR OWN PACKAGES AND COMMANDS
+%% Packages and helper commands required by the template are loaded by
+%% \mkpre{} (see tamu/tamuhelper.sty). Add anything extra here.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{lipsum} % placeholder text, remove when no longer needed
+\setlipsum{language=english} % avoids the 'Unknown language latin' warning when Latin hyphenation patterns are not installed
+
+%% Uncomment for roman numerals on chapters
+% \renewcommand{\thechapter}{\Roman{chapter}}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% CONFIGURATIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%The title of your document goes here.
+%Spacing may need to be adjusted if your title is long
+%and pushes the copyright off the page.
+\renewcommand{\tamumanuscripttitle}{Your Dissertation Title Goes Here}
+
+%Type only Thesis, Dissertation, or Record of Study.
+\renewcommand{\tamupapertype}{Dissertation}
+
+%Your full name goes here, as it is in university records.
+\renewcommand{\tamufullname}{Your Full Name}
+
+%The degree title goes here. See the GPS site for more info.
+\renewcommand{\tamudegree}{Doctor of Philosophy}
+
+%Committee. The title page (tamu/tamuhelper.sty, \mktitlepage) is set up for
+%co-chairs and four members. See README.md for how to change this.
+\renewcommand{\tamuchairone}{Chair Name}
+\newcommand{\tamuchairtwo}{Co-Chair Name}
+\renewcommand{\tamumemberone}{Committee Member One}
+\newcommand{\tamumembertwo}{Committee Member Two}
+\newcommand{\tamumemberthree}{Committee Member Three}
+\newcommand{\tamumemberfour}{Committee Member Four}
+\renewcommand{\tamudepthead}{Department Head Name}
+
+%Type only May, August, or December.
+\renewcommand{\tamugradmonth}{May}
+\renewcommand{\tamugradyear}{20XX}
+%Your department name goes here.
+\renewcommand{\tamudepartment}{Your Department Name}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FRONT PAGES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mktitlepage{}
+
+\includepart{00-front}
+
+\mklists{}
+
+\mkchaptersstart{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MAIN TEXT BEGIN
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Chapter without a reprint footnote
+\chapternormal{Introduction}\label{chap:intro}
+
+\includepart{10-intro}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Chapter based on a published paper (adds the reprint-permission footnote).
+%% Arguments: chapter title, and the citation key of the paper in refs.bib.
+\chapterwithpreprint{Title of the first paper chapter}
+{\mybibentry{doe2024first}}\label{chap:chapter-a}
+
+\includepart{20-chapter-a}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapterwithpreprint{Title of the second paper chapter}
+{\mybibentry{doe2023second}}\label{chap:chapter-b}
+
+\includepart{30-chapter-b}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapterwithpreprint{Title of the third paper chapter}
+{\mybibentry{doe2025third}}\label{chap:chapter-c}
+
+\includepart{40-chapter-c}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapternormal{Conclusion and future work}\label{chap:conc}
+
+\includepart{90-conc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MAIN TEXT END
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mkbib{refs.bib}
+
+\mkappendices{
+
+\chapternormal{Example appendix}\label{chap:appendix-a}
+
+\includepart{95-appendix-a}
+
+}
+
+\end{document}

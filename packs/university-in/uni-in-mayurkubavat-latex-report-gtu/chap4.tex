@@ -1,0 +1,43 @@
+\chapter{Literature Survey}
+
+Literature referred for selecting out various key concepts are divided in four main groups stated below,
+
+
+\section{Choosing Verification Methodology}
+
+Complex verification projects have span of various team of verification engineers which are internal and external to the organization. Due to different incompatible methodologies adaption by these teams, productivity is limited. \par
+
+SystemVerilog provides OOPs features into testbench environment that is sufficient for modeling and verification. SystemVerilog is very expressive language and extends in abstraction level from functional modeling to netlist level expressions. It also provides domain-specific features like constraint randomization, temporal assertions and functional coverage constructs. Although the language has all the features needed SystemVerilog lacks in provisional of additional libraries, toolkit and methodology documentation. \par
+
+To overcome this bottleneck, Accellera has standardized first verification methodology as Universal Verification Methodology (UVM). Evolution of industry standard methodologies as discussed in \cite{svuvm} led to release of UVM 1.0 by Accellera in Feb 2011. Comparison between SystemVerilog and UVM as between e and eRM is also given in \cite{svuvm}. As SystemVerilog is very large and it’s not possible for a working engineer to learn all language features, built in library like UVM comes into play. Shared responsibility between language features and libraries are explained in \cite{svuvm}. \par
+
+UVM is also revolutionary because it is built on older Open Verification Methodology (OVM), which again combines Mentor provided Advanced Verification Methodology (AVM) and Universal Reuse Methodology (URM) by Cadence with concepts of e Reuse Methodology (eRM). UVM also includes code and concepts from Verification Methodology Manual (VMM) by Synopsys. 
+
+\section{Testbench Architecture}
+
+Using standardization in developing testbench allows creation of portable, reusable and compatible components. That in turn promotes creation of Verification IPs (VIP) and Verification Components (VC). Verification Components are ready made reconfigurable codes to be used as verification environments. UVM provide extensive base classes to build VCs. Application of UVM in Unit Level verification is explained in \cite{tbarch}. After creating verification environment for unit level component this environment (VC) can be used in higher hierarchies. Doing this leverages time and expenses done in creation testbench environment of lower level hierarchies. \par
+
+UVM testbench of unit component FIFO buffer module is created and reused in I2C EEPROM slave module in \cite{tbarch}. This helps in defining testbench architecture with reusable component using UVM library method, like VC factory methods and VC communication mechanism. \par
+
+Parameterized testbench architecture is studied from \cite{uvmparam}. It discusses development of parameterized UVM testbench, parameterized connection and DUT-TB connections. Parameterized design in testbench architecture provides highly flexible and reusable testbench, which is used to verify parameterized DUT. Important aspect of verification is layered testbench. In paper \cite{uvmparam} it is shown how to make layered testbench structure parameterized with a method. Advantage of parameterized testbench is, developing single testbench for many designs having different bus widths. For parameterized interfaces, basic verification requirements are to configure driver and monitor with different bus widths. Approach in \cite{uvmparam} help resolve this issue.
+
+\section{Selecting Design Under Test}
+
+
+There are many Cryptographic cores used in wide range of digital systems. Any application requiring security, like password management systems, ATM, Sensor Network, Communication networks employ application of Cryptography with HW/SW. A broad field of Cryptographic primitives is hash functions. Cryptographic Hash Functions are used in security of messages, password verification, to check file integrity and Pseudo Random Number Generation (PRNG). \par
+
+Well known and officially used Hash Function is Secure Hash Algorithm-1 (SHA-1) and SHA-2. Recently serious attack has been published against SHA-1. It is suggested that SHA-1 can be broken in near future. NIST has suggested moving toward SHA-2 algorithm. While moving toward SHA-2 need for other more secure hashing standard is needed for future replacements. While SHA-1 and SHA-2 share same basic architectural elements, SHA-3 has been developed to complement SHA-2 and provide greater security level. Need for different hardware implementations of SHA-3 are discussed in \cite{tosha3}. Detailed structure of SHA-3 Crypto Core and inside functionality are explained in \cite{insha3}. \par
+
+\section{SHA-3 FPGA Implementations}
+
+In \cite{fpgades}, FPGA implementation of Keccak on Xilinx Vertex-5 FPGA is presented. Some of the proposed implementation uses DSP48E block which also comes with Xilinx Vertex-5 FPGA, its name for Xtreme DSP. The paper presents performance comparisons for Keccak implementations with and without Xtreme DSP blocks.Implementation on FPGA requires Keccak specifications, architecture, considerations based on FPGA, which includes whether to use DSP48E block and use of pipelining stages. After that in \cite{fpgades}, synthesis results are recorded with Xilinx ISE 11 tool. Where target board used is XC5VSX240T-2FF1738.  The measurements are based on throughput and area considerations. Results are compared with previous work, which shows considerable improvements. Also it’s stated that for design with low complexity use of DSP block is an inefficient method. The core has been implemented on Xilinx Vertex-5, 6, 7 FPGA technologies. \par
+
+In paper \cite{hight}, two-staged pipelined architecture is implemented which can operate on single or multiple block message lengths. Given SHA-3 pipelined hash core architecture consists, Transformation round, VSX module (used for version selection), initial XORing and Control Unit. As opposed to existing Keccak implementations VSX module is placed after initial XORing. Authors of \cite{hight} had made this choice so as to implement the whole module as one component inside FPGA. This consequently leads to low routing overhead improving delay and area metrics. Proposed architecture is described using VHDL and implemented inside Virtex-5 xc5vlx155t-3FF1136, Virtex-6 xc6vlx240t-3FF784, and Virtex-7 xc7v855t-3FFG1157 FPGA device using Xilinx ISE Design Suit v13.1. Initial logic before P\&R (Post \& Route) verified using ModelSim simulator by applying test vectors. On the board functionalities are verified using Xilinx ChipScope tool. \par
+
+Implementation in \cite{effv5} has combined all five steps of SHA-3 functions in such a way that it has 25 equations of 64-bits word each and having different set of inputs. Throughput thus author gained is highest (best of his knowledge and till date of paper writing) i.e 17.132Gbps and Throughput Per Area (TPA) is 13.27 on Vertex-5 FPGA. \par
+
+Paper \cite{comimp} presents compact design for SHA-3 Keccak on Xilinx Vertex-5 FPGA. By logically merging Rho, Pi and Chi in one single step method in the paper saves 16\% logical recourses for overall implementation. It reduces latency and hence increases of frequency. Design only utilizes 240 slices and has frequency of 301.02 MHz. Design in this paper has Throughput Per Slice ratio (TPS) of 30.1
+
+\section{Conclusion}
+
+Here we have seen various aspects related to choosing verification methodology to develop verification environment, entry of Keccak SHA-3 as newly developed cryptographic hash function. Also various hardware architecture of SHA-3 on FPGA has been stated. That includes implementation of SHA-3 on FPGA with Xtreme DSP blocks and two-staged pipelined architecture, merging of all five state equations and merging of $\rho$, $\pi$ and $\chi$ into one compression box.

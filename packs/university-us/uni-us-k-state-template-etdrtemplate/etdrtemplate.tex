@@ -1,0 +1,433 @@
+% +--------------------------------------------------------------------+
+% | LaTeX Template for K-State Electronic Theses, Dissertations,
+% | and Reports (ETDRs) for theses, dissertations AND reports
+% | 
+% | This template serves all graduate students.  By including particular parts 
+% | of the template, students may create master's theses and master's reports 
+% | and doctoral dissertations (to required formatting standards).  
+% | 
+% | Some guidelines for using the template are shown in comments.  Read
+% | these comments carefully, as they describe changes you will need to
+% | make to the template in order to meet Graduate School requirements.            |
+% |
+% | Additional information on using the template are contained in these
+% | files, which are included when you download the template:
+% |
+% | ReadMe.pdf - A general overview of using the template
+% |
+% | BibTeX Guide.pdf - Detailed guidelines on using BibTeX to create
+% | your bibliography and manage your citations.
+% |
+% | natbib.pdf - Gives detailed information on using the natbib package
+% | and formatting citations
+% | 
+% | As indicated, the .pdfs are portable document format files with 
+% | relevant information.  
+% | 
+% | Lines prefaced with the % symbol (percent symbol) are "commented out"
+% | texts. They are not active code.  
+% | 
+% | Lines that start with \ (backslash) indicate active LaTeX markup code.  
+% | Active code is used to load software packages, load files (such as .tex chapters)
+% | into the main document, load images from the "figures" file (see left menu),
+% | and other code functionalities.  
+% | 
+% | (updated 2023)
+% +--------------------------------------------------------------------+
+
+% +--------------------------------------------------------------------+
+% | The template is designed to be used with PDFLaTeX. Process this
+% | file (etdrtemplate.tex) with PDFLaTeX in order to produce a PDF
+% | version of your ETDR.  If you are using BibTex to manage your
+% | references, you will need to process your file four times:
+% | 1. Run PDFLaTeX
+% | 2. Run BibTex
+% | 3. Run PDFLaTeX
+% | 4. Run PDFLaTeX
+% |
+% | Some LaTeX editors do not explicitly list PDFLaTeX as an option, but
+% | do use PDFLaTeX to produce a PDF file directly from your .tex files.
+% | See the ReadMe file for details.
+% | 
+% | K-State recommends the use of the free version of overleaf.com for outputs
+% | (which only requires one download to output the necessary .pdf).
+% | 
+% | Be sure to test the .pdf for proper pagination, section sequencing, 
+% | information inclusion, captioning, table of contents, list of figures, list of
+% | tables, 1" margins, and proper navigability from the TOC, list of figures, 
+% | list of tables, and so on.  
+% | 
+% +--------------------------------------------------------------------+
+% |
+% +--------------------------------------------------------------------+
+% |
+% | As required by the Graduate School, The template is configured to
+% | contain the following sections in the order shown.
+
+% | Abstract title page (doctoral dissertations only)
+% | Abstract (doctoral dissertations only)
+% | Title page
+% | Copyright page
+% | Abstract
+% | Table of contents
+% | List of figures
+% | List of tables
+% | List of equations (optional) 
+% | List of nomenclature (optional) 
+% | Acknowledgements (optional)
+% | Dedication (optional)
+% | Preface (optional)
+% | Individual Chapters
+% | References or Bibliography
+% | Appendices (as needed)
+% |
+% | Details on removing optional sections are given in the comments below.
+% | 
+% | Depending on the area of study, separate bibliographies may be used in each
+% | chapter (such as if the chapters are prior published works for which the
+% | student has legal rights to use in a dissertation or thesis or report).  
+% |
+% +--------------------------------------------------------------------+
+
+% +--------------------------------------------------------------------+
+% | The LaTeX command \documentclass selects a particular class to
+% | associate with the document.  Within this command, 12pt is
+% | specified for the font size.  You can change this to 11 pt, if
+% | desired.
+% +--------------------------------------------------------------------+
+
+\documentclass[final,letterpaper,12pt,oneside]{class_diss}
+
+% +--------------------------------------------------------------------+
+% | Here are added external packages that will be used throughout
+% | the document.  You can add other packages as needed.  This section is known as the preamble.
+% +--------------------------------------------------------------------+
+
+\usepackage{graphicx} % Extended graphics package.
+\usepackage{amsmath} % American Mathematics Society standards
+\usepackage{amsxtra} % Additional math symbols
+\usepackage{amssymb} % Additional math symbols
+\usepackage{amsthm} % Additional math symbols
+\usepackage{latexsym} % Additional math symbols
+\usepackage{setspace} % Controls line spacing
+\usepackage{nomencl} % Enables nomenclature list addition 
+\usepackage[margin=1in]{geometry} % Sets page margins to 1 inch on all sides
+\usepackage[titles]{tocloft} % Adds leader dots to all entries in the table of contents
+
+% +--------------------------------------------------------------------+
+% |
+% | Citation and Bibliography Style
+% |
+% | The following commands determine the citation and bibliography style.  The
+% | template uses BibTeX for formatting the bibliography.  See "BibTeX Guide.pdf"
+% | for details on formatting citations and references.  The template is set
+% | to use a generic, superscript style, but it can be easily modified
+% | to use author-year styles.
+
+\bibliographystyle{unsrtnat}
+% | If you want to use an author-year citation style, change "unsrtnat" to
+% | "plainnat" in the line above.  You can also use other styles supported
+% | by LaTeX, e.g., acm, ieeetr, siam, etc.  Additional styles
+% | are in the \styles folder and can be invoked like this:
+% | \bibliographystyle{styles/apsrev}.  If the style you use is based
+% | on an author-year citation style, you will need to make changes
+% | in the usepackage and \setcitestyle statements below
+
+\usepackage[super,sort&compress]{natbib}
+% | If you want to use an author-year citation style, change "super" to
+% | "authoryear" in the line above.
+
+\setcitestyle{super}
+% | if you want to use an author-year citation style, change "super" to
+% | "authoryear" in the line above.
+
+% +---------------------------------------------------------------------+
+% | The hyperref package enables cross-references.
+% +---------------------------------------------------------------------+
+
+\usepackage[pdftex, plainpages=false, pdfpagelabels]{hyperref}
+
+\hypersetup{
+    linktocpage=true,
+    colorlinks=true,
+    bookmarks=true,
+    citecolor=blue,
+    urlcolor=blue,
+    linkcolor=blue,
+    citebordercolor={1 0 0},
+    urlbordercolor={1 0 0},
+    linkbordercolor={.7 .8 .8},
+    breaklinks=true,
+    pdfpagelabels=true,
+    }
+% | 
+% | Different bibliography methods may be used in different chapters,
+% | such as in the cases when graduate students may have published prior
+% | to their ETDR and have legal permissions to include prior published
+% | work in their ETDR file.  
+% | 
+% +--------------------------------------------------------------------+
+% | The document begins here.
+% +--------------------------------------------------------------------+
+
+\doublespacing
+\begin{document}
+
+% +--------------------------------------------------------------------+
+% | ******Masters Students -- You Need to Make Some Changes Here******
+% |
+% | The Abstract Title page and Abstract page following the Abstract
+% | Title page are required only for doctoral dissertations.  For
+% | masters theses or reports, comment out or delete the lines:
+% |
+% | \input{abstracttitle.tex} through \end{abstract}.
+% |
+% | Taking the above action will remove the abstract section, which 
+% | is not used in a master's thesis or report.  
+% |
+% | You will also need to uncomment the two lines following the
+% | \begin{abstract} command:
+% |    %\setcounter{page}{-1}
+% |    %\pdfbookmark[0]{Abstract}{PDFAbstractPage}
+% |
+% | Don't uncomment the lines above.  Scroll down several lines until
+% | you see the section "For masters theses or reports, uncomment
+% | the commands..." and uncomment the lines in that section.
+% +--------------------- ----------------------------------------------+
+
+\input{abstracttitle.tex}  % Master's students - comment or delete this line
+
+\begin{abstract} % Masters students - comment or delete this line
+   \setcounter{page}{-1} % Masters students - comment or delete this line
+   \pdfbookmark[0]{Abstract}{PDFAbstractPage} % Masters students - comment or delete this line
+   \input{abstract.tex} % Master's students - comment or delete this line
+   \vfill % Masters students - comment or delete this line
+\end{abstract} % Masters students - comment or delete this line
+
+% +--------------------------------------------------------------------+
+% | Title Page -- Required for both Doctoral and Masters Students
+% +--------------------------------------------------------------------+
+
+\input{title.tex}
+
+% +--------------------------------------------------------------------+
+% | Copyright Page -- Required for both Doctoral and Master's Students
+% +--------------------------------------------------------------------+
+
+\input{copyright.tex}
+
+% +--------------------------------------------------------------------+
+% |  Abstract -- Required for both Doctoral and Master's Students
+% +--------------------------------------------------------------------+
+
+\begin{abstract}
+
+% +--------------------------------------------------------------------+
+% | For master's theses or reports, uncomment the commands on the next
+% | two lines (\setcounter and \pdfbookmark)
+% +--------------------------------------------------------------------+
+
+   %\setcounter{page}{-1}
+   %\pdfbookmark[0]{Abstract}{PDFAbstractPage}
+
+\input{abstract.tex}
+\vfill
+\end{abstract}
+
+% +--------------------------------------------------------------------+
+% | The following commands start a new page and set the page numbering
+% | to lowercase roman numerals.
+% +--------------------------------------------------------------------+
+
+\newpage
+\pagenumbering{roman}
+
+% +--------------------------------------------------------------------+
+% |
+% | *********************** IMPORTANT ******************************
+% |
+% | In the \setcounter command below, set the number to represent the
+% | page number of the table of contents page.  For example, if the
+% | table of contents page is the 6th page of your document, enter 6
+% | in the brackets.  This number may vary, depending on the length of
+% | your abstract.
+% |
+% | Numbers do not appear on the title and abstract pages, but they
+% | are included in the page count.  The table of contents page is the
+% | first page on which page numbers are displayed. Double check all 
+% | parts of the ETDR (in both pdf and LaTeX formats) to catch errors.  
+% +--------------------------------------------------------------------+
+
+\setcounter{page}{6}
+
+% +--------------------------------------------------------------------+
+% | The following command creates a bookmark for the table of contents
+% | in the final PDF document.
+% +--------------------------------------------------------------------+
+
+\pdfbookmark[0]{\contentsname}{contents}
+
+% +--------------------------------------------------------=-----------+
+% | The following command adds dot leaders for all entries in the
+% | table of contents.
+% +--------------------------------------------------------------------+
+
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+
+% +--------------------------------------------------------------------+
+% | The following commands makes all entries and page numbers in the
+% | table of contents appear in normal weight font (not bold).
+% +--------------------------------------------------------------------+
+
+\renewcommand{\cftchapfont}{\mdseries}
+\renewcommand{\cftchappagefont}{\mdseries}
+
+% +--------------------------------------------------------------------+
+% | These commands add the table of contents, list of figures, and
+% | list of tables.
+% +--------------------------------------------------------------------+
+
+\makenomenclature
+\nomenclature{symbol}{definition}
+%  Some fields use the nomenclature for a List of Symbols or Terms.  
+%  This list is sometimes emplaced within chapters.  In other cases, it is introduced early and follows the List of Figures and List of Tables.  
+%  In the location where you want your nomenclature to appear, use the following command <\printnomenclature>
+%  If you put the nomenclature in the Table of Contents, make sure that you are referring to that below  
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+
+
+% +--------------------------------------------------------------------+
+% | Nomenclature (Terms) Page
+% |
+% | If you choose not to have a Nomenclature page, comment out
+% | or delete the following 3 lines.
+% +--------------------------------------------------------------------+
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Nomenclature}
+\input{nomenclature.tex}
+
+
+% +--------------------------------------------------------------------+
+% | Acknowledgements Page
+% |
+% | If you choose not to have an Acknowledgements page, comment out
+% | or delete the following 3 lines.
+% +--------------------------------------------------------------------+
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\input{acknowledge.tex}
+
+% +--------------------------------------------------------------------+
+% | Dedication Page
+% |
+% | If you choose not to have a Dedication page, comment out
+% | or delete the following 3 lines.
+% +--------------------------------------------------------------------+
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Dedication}
+\input{dedication.tex}
+
+% +--------------------------------------------------------------------+
+% | Preface Page
+% |
+% | If you choose not to have a Dedication page, comment out
+% | or delete the following 4 lines.
+% +--------------------------------------------------------------------+
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Preface}
+\input{preface.tex}
+
+
+% +--------------------------------------------------------------------+
+% | This is where the chapter content of your ETDR begins.
+% +--------------------------------------------------------------------+
+
+%\phantomsection
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% +--------------------------------------------------------------------+
+% | Individual chapters of your ETDR are added using the \input
+% | command. Right-click in the left menu and add file first.  Be 
+% | sure to follow the naming protocols such as filename.tex. 
+% +--------------------------------------------------------------------+
+
+\input{chapter1.tex}
+\input{chapter2.tex}
+\input{chapter3.tex}
+
+% +--------------------------------------------------------------------+
+% | Uncomment the lines below to add additional chapters.  You need content 
+% | in the new file for it to show up in the body of your .pdf.  
+% +--------------------------------------------------------------------+
+
+%\input{chapter4.tex}
+%\input{chapter5.tex}
+
+% +--------------------------------------------------------------------+
+% | References
+% +--------------------------------------------------------------------+
+
+% +--------------------------------------------------------------------+
+% | Included for Gather Purpose only.  Do NOT uncomment the next line.
+%input "references.bib"
+% | In order for the WinEDT editor to index references correctly, it
+% | has to know where the "references.bib" file resides.  This
+% | command will be ignored completely by LaTeX
+% |
+% | WinEDT can read file path names with either "\" or "/". LaTeX,
+% | however,doesn't like "\", so it's easier to store a path name
+% | using forward slashes "/".
+% +--------------------------------------------------------------------+
+
+\cleardoublepage
+\phantomsection
+
+% +--------------------------------------------------------------------+
+% | This template uses the BibTeX program to format references.  The
+% | lines below create a separate Bibliography section and add
+% | an entry for "Bibliography" to the Table of Contents.  The actual
+% | data for your references (author, title, journal, date, etc.) are
+% | entered in the references.bib file.  See "Citations and Bibliography"
+% | for details on to creating citations and formatting references.
+% +--------------------------------------------------------------------+
+
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibdata{references}
+\bibliography{references}
+
+% +--------------------------------------------------------------------+
+% | The following commands add the appendices  To add or delete
+% | appendices, add or remove the line
+% |
+% |     \input{appendixX.tex}
+% |
+% | where "X" is the letter designation of the appendix (A, B, C,
+% | etc.) You should have one \input{appendixX.tex} line and a
+% | corresponding file appendixX.tex for each appendix.
+% |
+% |If you do not have any appendices, comment out or delete the three
+% |lines below.
+% |
+% |
+% |
+% +--------------------------------------------------------------------+
+
+\appendix
+\input{appendixA.tex}
+\input{appendixB.tex}
+
+\end{document}

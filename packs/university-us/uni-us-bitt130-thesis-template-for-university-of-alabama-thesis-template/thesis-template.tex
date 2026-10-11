@@ -1,0 +1,175 @@
+%%
+%% THESIS/DISSERTATION TEMPLATE FOR THE UNIVERSITY OF ALABAMA.
+%%
+%% This example is written by Paul Kilgo. It highlights all the (few) features
+%% of uathesis.cls
+%%
+
+%% Use one of the following if writing a thesis/dissertation.
+% \documentclass[thesis]{uathesis}
+\documentclass[dissertation]{uathesis_me}
+
+% \usepackage[unsrt]{natbib}
+\usepackage{notoccite}
+%% Basic packages you'll probably want to use.
+\usepackage{graphicx}                 %% For using \includegraphics{}
+
+\usepackage{cite}                     %% For sorting/collapsing citations.
+\usepackage{color}                    %% For colors used in listings.
+\usepackage{listings}                 %% Code listings (for engineers)
+\usepackage{ragged2e}
+\usepackage{indentfirst}
+\usepackage{array}
+\usepackage{float}
+\usepackage{url} %Look up \url{} command. Makes url links in references active
+\def\UrlBreaks{\do\/\do-}
+\usepackage{breakurl}
+\usepackage[breaklinks]{hyperref}
+\urlstyle{same}
+% \usepackage[hyphens]{url}
+% \usepackage{gensymb}
+%\usepackage{mhchem}
+\usepackage{chemformula} %input chemical formulas using \ce{chemical formula}
+\let\ce\ch
+\usepackage{lscape}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\setlength\parindent{35pt}
+\usepackage{stackrel,amssymb}
+\usepackage{makecell}
+\renewcommand\theadfont{\bfseries} % Added 01/26/2022
+\usepackage{etoolbox} %Added 02/18/2022 Prevents References from being broken up across pages
+
+\usepackage[numbers]{natbib}
+%% Includes
+\input{inc/glossary.tex}
+% TODO: If you have any special commands defined, include them here.
+\usepackage[titletoc]{appendix}%
+
+%% Required parameters (these default to undefined)
+\author{Joe Somebody}       %% Your name!
+\adviser{The Boss}   %% Your adviser/committee chair!
+
+%% The people on your committee.
+%% Use \and to break them up between lines.
+\committee{
+  Andy Smith \and
+  Billy Smith \and
+  Carl Smith
+}
+
+%% Note the use of \and to create line breaks and the
+%% inverted pyramid style requested by the graduate school.
+%% You have to do this manually. Sorry.
+\title{Title of the thesis: the top line should be the longest \and
+  the middle one is second longest \and
+  and the last is shortest}
+
+\degree{Doctor of Philosophy}   %% Change to suit your degree.
+\department{Computer Science}   %% Change to suit your department.
+
+%% These are body text paragraphs to be placed in the front matter.
+\abstract{
+  There is such a thing as \gls{tmi}. My brother once said that \gls{tmi}
+  is what drives the world, some times causing fits of \gls{lol}. If one
+  is to get in a especially deep fit of the \glspl{lol}, then one could
+  find oneself \gls{rotflol}.
+
+  By the way, \gls{alpha} and \gls{beta} are Greek letters.
+}
+
+\dedication{
+  Type or input{} your dedication here.
+}
+
+\acknowledgments{
+  Type or input{} your acknowledgments here.
+}
+
+%% Optional parameters. The default usage is shown.
+\university{The University of Alabama}
+\school{Graduate School}
+\gradyear{\the\year}
+\place{Tuscaloosa, Alabama}
+
+\begin{document}
+
+%% Makes the title, abstract, dedication, table of contents, etc.
+%% Must be before \begin{body}
+\makefrontmatter
+
+%% BODY PORTION
+%% The bulk of your thesis.
+%% Begin your \chapter's here.
+
+\begin{body}
+
+%% Body chapters.
+\chapter{INTRODUCTION}
+
+Take a look at Figure \ref{fig:shapes}. It has some shapes. They're very
+complex and interesting shapes. I could gaze at them for hours.
+
+\begin{figure}% placement can be forced using [H} and other options
+\linespread{1}\selectfont % In case caption is more than two lines.
+  \centering
+  \includegraphics[width=5.0in]{fig/shapes.pdf}
+  \caption{Some shapes which I find very interesting. (has longer line than 1, so that we can try it in LoF.}
+  \label{fig:shapes}
+\end{figure}
+
+\chapter{LITERATURE REVIEW}
+Type or input{} a chapter. \cite{rocket-themoon2167}
+
+\chapter{APPROACH (BECAUSE A LONGER-THAN-1-LINE CHAPTER TITLE IS IMPORTANT)}
+Take a look at Table \ref{tab:love-shapes}. It shows how much I love certain
+shapes.
+
+\begin{table}% placement can be forced using [H} and other options
+\linespread{1}\selectfont % In case caption is more than two lines.
+  \centering
+  \input{tab/love-shapes.tex}
+  \caption{Shapes and corresponding love in Love Standard Units (LSU).}
+  \label{tab:love-shapes}
+\end{table}
+
+\chapter{EXPERIMENT}
+Type or input{} a chapter. \cite{rocket-themoon2167}
+
+\chapter{DISCUSSION}
+Type or input{} a chapter. \cite{rocket-themoon2167}
+
+\chapter{CONCLUSION}
+Type or input{} a chapter. \cite{rocket-themoon2167}
+
+%% Currently adding the references to the table of contents is not automatic
+%% So we are forced to do it manually.
+
+%% TODO: This is not a fix. This line has to come after the \chapter command
+%% in order for the correct page to be inferred for the table of contents.
+
+%Begin Bibliography
+\linespread{1}\selectfont % MAKES SECTION SINGLE-SPACED
+
+\Urlmuskip=0mu plus 0.5mu\relax
+\sloppy
+% \parskip=0pt plus 1fil 
+\AtBeginEnvironment{thebibliography}{\interlinepenalty=10000} %Prevents References from being broken up across pages
+
+
+\renewcommand{\bibsection}{\topskip=1in\chapter*{REFERENCES}\topskip=0in \addcontentsline{toc}{chapter}{REFERENCES}}
+
+
+\bibliographystyle{asme} %Bibliography uses ASME format
+\bibliography{uathesis-plain}
+\setlength{\bibsep}{0pt plus 0.3ex}
+
+%% Appendix chapters.
+\appendix
+
+\chapter{A BIG APPENDIX}
+
+
+
+\end{body}
+\end{document}

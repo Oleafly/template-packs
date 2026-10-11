@@ -1,0 +1,393 @@
+%%% -*-TeX-*-
+%%% ====================================================================
+%%% This file implements updates to the base version 2.00 files of 27
+%%% January 2018.  It exists so that we can maintain long-term
+%%% stability of the 2.00 files, and, if needed, add modifications via
+%%% this single file.  At version 2.00, it does nothing but announce
+%%% its version.
+%%%
+%%% At long intervals, thoroughly tested changes from this file may be
+%%% merged back into the 2.00 *.sty files, with an accompanying
+%%% increase of their version numbers.
+%%%
+%%% [01-Jun-2020] -- Version 2.07: Change to numbered section in
+%%%                  thebibliography for chapterbib documents.
+%%% [01-Jul-2019] -- Version 2.06: Record bibliography entry in the
+%%%                  table of contents.   Make missing references
+%%%                  much more visible, and easy to find by searching
+%%%                  for two question marks (??).  Ensure coloration
+%%%                  of headings of unnumbered sections when color is
+%%%                  in use.  Increase \headheight to eliminate Overfull
+%%%                  \vbox warnings.
+%%% [15-Apr-2019] -- Version 2.05: Record any lists of figures/tables in
+%%%                  the table of contents.
+%%% [01-Mar-2019] -- Version 2.04: Support two-sided printing, and clear
+%%%                  previous running page headers in front matter.
+%%% [31-Jan-2019] -- Version 2.03: Add support for up to nine readers.
+%%% [23-Jan-2019] -- Version 2.02: Fix page number handling in
+%%%                  \prefacesection.
+%%% [23-Jan-2019] -- Version 2.01: Parametrize number box sizes.
+%%% [27-Jan-2018] -- Version 2.00 (no updates supplied)
+%%% ====================================================================
+
+\NeedsTeXFormat {LaTeX2e} [1994/12/01]
+\ProvidesPackage {uuthesis-updates} [2020/06/01 v2.07]
+
+\immediate \write16 {===============================================================================}%
+\immediate \write16 {}%
+\immediate \write16 {This is uuthesis-updates.sty version 2.07 <01 June 2020>}%
+\immediate \write16 {}%
+\immediate \write16 {===============================================================================}%
+
+%%% ====================================================================
+%%% Version 2019/01/23 v2.01
+
+%% Make names for hard-coded dimensions that may need author adjustment:
+
+\newlength {\fignumwidth}
+\newlength {\pagenumwidth}
+\newlength {\parnumwidth}
+\newlength {\secnumwidth}
+\newlength {\subparnumwidth}
+\newlength {\subsecnumwidth}
+\newlength {\subsubsecnumwidth}
+\newlength {\tabnumwidth}
+
+%% Set their default values from book.cls:634--641:
+
+\setlength {\fignumwidth}       {2.3em}
+\setlength {\pagenumwidth}      {1.55em}
+\setlength {\parnumwidth}       {5em}
+\setlength {\secnumwidth}       {2.3em}
+\setlength {\subparnumwidth}    {6em}
+\setlength {\subsecnumwidth}    {3.2em}
+\setlength {\subsubsecnumwidth} {4.1em}
+\setlength {\tabnumwidth}       {2.3em}
+
+%% Redefine macros to use named dimensions for the number boxes:
+
+\renewcommand* {\l@figure}        {\@dottedtocline {1} {1.5em} {\fignumwidth}}
+\renewcommand* {\l@table}         {\@dottedtocline {1} {1.5em} {\tabnumwidth}}
+\renewcommand* {\l@section}       {\@dottedtocline {1} {1.5em} {\secnumwidth}}
+\renewcommand* {\l@subsection}    {\@dottedtocline {2} {3.8em} {\subsecnumwidth}}
+\renewcommand* {\l@subsubsection} {\@dottedtocline {3} {7.0em} {\subsubsecnumwidth}}
+\renewcommand* {\l@paragraph}     {\@dottedtocline {4} {10em}  {\parnumwidth}}
+\renewcommand* {\l@subparagraph}  {\@dottedtocline {5} {12em}  {\subparnumwidth}}
+
+\renewcommand  {\@pnumwidth}      {\pagenumwidth}
+
+%%% ====================================================================
+%%% Version 2019/01/23 v2.02
+
+%%% There is a faulty assumption in uuthesis-base.sty that \prefacesection
+%%% will be invoked only once, and it sets the page counter to match UofUtah
+%%% Thesis Office requirements.  The fix is to reset the page counter only
+%%% when it is sufficiently small.
+
+\renewcommand {\prefacesection} [1]
+{%
+  \newpage
+  %% \typeout{============== DEBUG 1: #1: page counter = \the\c@page}%
+  \thispagestyle{empty}
+  \uunormalspace
+  \ifnum \c@page < 3
+      \setcounter {page} {2}                % UofU Thesis Office demands abstract on p. iii: start one lower
+  \fi
+  %% \typeout{============== DEBUG 2: #1: page counter = \the\c@page}%
+  \chapter*{#1}
+  \addcontentsline{toc}{chapter}{\uppercase{#1}}
+  %% \typeout{============== DEBUG 3: #1: page counter = \the\c@page}%
+}
+
+%%% ====================================================================
+%%% Version 2019/01/31 v2.03
+
+%%% We have so far encountered only one student with a chair and five readers,
+%%% but we allow up to nine readers, because doing so is simple.
+
+\newcommand {\fifthreader}              [1]{\gdef \@fifthreader                {#1}}
+\newcommand {\fifthdateapproved}        [1]{\gdef \@fifthdateapproved          {#1}}
+
+\newcommand {\sixthreader}              [1]{\gdef \@sixthreader                {#1}}
+\newcommand {\sixthdateapproved}        [1]{\gdef \@sixthdateapproved          {#1}}
+
+\newcommand {\seventhreader}            [1]{\gdef \@seventhreader              {#1}}
+\newcommand {\seventhdateapproved}      [1]{\gdef \@seventhdateapproved        {#1}}
+
+\newcommand {\eighthreader}             [1]{\gdef \@eighthreader               {#1}}
+\newcommand {\eighthdateapproved}       [1]{\gdef \@eighthdateapproved         {#1}}
+
+\newcommand {\ninthreader}              [1]{\gdef \@ninthreader                {#1}}
+\newcommand {\ninthdateapproved}        [1]{\gdef \@ninthdateapproved          {#1}}
+
+%%% ====================================================================
+%%% Version 2019/03/01 v2.04
+
+%%% We now permit both one-sided and two-sided printing of theses, even
+%%% if the draft submitted for corrections and approval is printed
+%%% one-sided [the traditional approach].  Thus, we must ensure that
+%%% numbered and unnumbered chapters, and indexes, start on odd-numbered
+%%% pages when the documentclass option twoside has been specified.
+
+%%% The repaired definition of \prefacesection in v2.02 above is not
+%%% sufficient; we need to ensure that the unnumbered chapter heading
+%%% starts on an odd-numbered page, and that any previous running
+%%% page header is eliminated.
+
+\renewcommand {\prefacesection} [1]
+{%
+    \cleardoublepage                    % start unnumbered chapter on odd-numbered page
+    \uunormalspace
+    \ifnum \c@page < 3
+        \setcounter {page} {2}          % UofU Thesis Office demands abstract on p. iii: start one lower
+    \fi
+    \markboth {} {}                     % clear previous running page header
+    \chapter*{#1}
+    \addcontentsline{toc}{chapter}{\uppercase{#1}}
+}
+
+%%% Ensure that the next chapter heading starts on an odd-numbered page
+%%% because we now permit both one-sided and two-sided printing.
+
+\renewcommand {\uumaintext}
+{%
+    \cleardoublepage                    % start chapter on odd-numbered page
+    \uunormalspace
+    \pagestyle{headings}%
+    \pagenumbering{arabic}%
+}
+
+%%% Ensure that index headings start on an odd-numbered page
+%%% because we now permit both one-sided and two-sided printing.
+
+\renewenvironment{theindex}
+                 {%
+                     \cleardoublepage   % start index on odd-numbered page
+                     \if@twocolumn
+                         \@restonecolfalse
+                     \else
+                         \@restonecoltrue
+                     \fi
+                     \twocolumn[\@makeschapterhead{\indexname}]%
+                     \@mkboth{\MakeUppercase\indexname}%
+                             {\MakeUppercase\indexname}%
+                     \addcontentsline {toc} {chapter} {\indexname}%
+                     \thispagestyle {plain}%
+                     \parindent     = \z@
+                     \parskip       = \z@ \@plus .3\p@\relax
+                     \columnseprule = \z@
+                     \columnsep     = 35\p@
+                     \columnsep     = 50\p@
+                     \columnseprule = 0.5\p@
+                     \columnwidth   = \textwidth
+                     \advance \columnwidth by -\columnseprule
+                     \advance \columnwidth by -\columnsep
+                     \advance \columnwidth by -6\p@
+                     \divide \columnwidth by 2
+                     \let \item     = \@idxitem
+                     \raggedright
+                     \sloppy
+                 }
+                 {\if@restonecol \onecolumn \else \clearpage \fi}
+
+\renewcommand {\optionalfront} [1]
+{%
+    \cleardoublepage   % start front-matter unnumbered chapter on odd-numbered page
+    \thispagestyle{empty}%
+    \addcontentsline{toc}{chapter}{\uppercase{#1}}%
+    \chapter*{#1}%
+    \markboth{#1}%
+    \ifnoisy \typeout{#1.} \fi
+}
+
+%%% ====================================================================
+%%% Version 2019/04/15 v2.05
+
+%%% The University of Utah Thesis Office ruled in early April 2019 that
+%%% the table of contents should include entries for the list of figures
+%%% and list of tables.  A check in numerous published books, published
+%%% before and after computer-based typesetting became available, showed
+%%% that some books have such entries, and others do not.  Rather than
+%%% incorporate modified bodies of \listoffigures and \listoftables, we
+%%% preserve their original definitions, and then replace them with
+%%% suitable wrappers.
+
+\let \oldlistoffigures = \listoffigures
+
+\renewcommand {\listoffigures} {%
+    \cleardoublepage
+    \addcontentsline{toc}{chapter}{\uppercase{\listfigurename}}
+    \oldlistoffigures
+}
+
+\let \oldlistoftables  = \listoftables
+
+\renewcommand {\listoftables} {%
+    \cleardoublepage
+    \addcontentsline{toc}{chapter}{\uppercase{\listtablename}}
+    \oldlistoftables
+}
+
+%%% ====================================================================
+%%% Version 2020/06/01 v2.07
+%%% Version 2019/07/01 v2.06
+
+%%% Add bibliography entry in the table of contents, with an optional
+%%% hook to allow insertion of material, such as macro
+%%% (re)definitions, immediately after the \begin{bibliography}
+%%% command produces the chapter heading.  We also have to check for
+%%% the single-space feature supplied by uuthesis-singlespace-bib.sty
+
+%%% Modification of thebibliography from texmf-dist/tex/latex/base/book.cls:668
+\renewenvironment{thebibliography}[1]
+     {%
+      %% NEW: use unnumbered section in chapter bibliographies, else unnumbered chapter
+      %% NEW: record bibliography in table of contents (UofU Thesis Office request)
+      \ifx \undefined \cbunit
+          \chapter*{\bibname}%
+          \addcontentsline{toc}{chapter}{\bibname}
+      \else
+          \section{\bibname}%
+      \fi
+      %% NEW: recognize optional \thebibliographyhook
+      \ifx \undefined \thebibliographyhook \else \thebibliographyhook \fi
+      \ifx \undefined \uuthesissinglespacebib \else \singlespace \fi
+      %% The remainder is unchanged from the LaTeX standard book class:
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist
+      \ifx \undefined \uuthesissinglespacebib \else \doublespace \fi}
+
+%%% Modification of starred section header from texmf-dist/tex/latex/base/latex.ltx:6056
+%%% to typeset heading (argument #4) in color (if color is enabled)
+\def\@ssect#1#2#3#4#5{%
+  \@tempskipa #3\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup
+      \ifx \undefined color \else \color{utahheadingcolor}\fi
+      #4%
+      {%
+          \@hangfrom{\hskip #1}%
+          \interlinepenalty \@M #5\@@par
+      }%
+    \endgroup
+  \else
+    \def\@svsechd{#4{\hskip #1\relax #5}}%
+  \fi
+  \@xsect{#3}}
+
+%%% ====================================================================
+%%% Version 2019/07/01 v2.06
+
+%%% Make missing references in \cite{} command typeset output much more
+%%% visible, because they are too often overlooked. The doubled question
+%%% marks make them easy to find by searching the DVI or PDF output.
+%%% However, if the cite package was loaded, do not change anything,
+%%% because
+
+%% \def \uuwarning #1#2%
+%% {%
+%%    \ifx \undefined \color
+%%        {\Huge \bf #2}%
+%%    \else
+%%        \color{#1}{{\Huge \bf #2}}%
+%%    \fi
+%% }
+
+\def \uuwarning #1#2%
+{%
+    \fbox
+    {%
+        \ifx \undefined \color
+            {\Huge \bf #2}%
+        \else
+            \color{#1}{{\Huge \bf #2}}%
+        \fi
+    }%
+}
+
+\ifx \undefined \@make@cite@list
+
+    \ifx \undefined \cbunit %% normal case: no chapterbib package
+
+        %% Modification of \@citex from texmf-dist/tex/latex/base/book.cls:7492
+        \def\@citex[#1]#2{\leavevmode
+          \let\@citea\@empty
+          \@cite{\@for\@citeb:=#2\do
+            {\@citea\def\@citea{,\penalty\@m\ }%
+             \edef\@citeb{\expandafter\@firstofone\@citeb\@empty}%
+             \if@filesw\immediate\write\@auxout{\string\citation{\@citeb}}\fi
+             % OLD: ?
+             % NEW: bold, large, color, with margin par
+             \@ifundefined{b@\@citeb}{\hbox{\reset@font\bfseries \uuwarning{blue}{??Missing \@citeb??}}%
+               %%
+               %% I wanted a boxed marginal note. Alas, tests show that it is
+               %% visible on an odd-numbered page, but almost entirely off an
+               %% even-numbered page, so suppress it:
+               %%
+               %% \marginpar{\fbox{\uuwarning{red}{\footnotesize Fix this!}}}
+               %%
+               \G@refundefinedtrue
+               \@latex@warning
+                 {Citation `\@citeb' on page \thepage \space undefined}}%
+               {\@cite@ofmt{\csname b@\@citeb\endcsname}}}}{#1}}
+
+    \else %% using chapterbib package
+
+        %% Modification of \@citex from texmf-dist/tex/latex/cite/chapterbib.sty:47
+        \def\@citex[#1]#2{%  Add \@extra@b@citeb to \cite
+          \leavevmode \let\@citea\@empty
+          \@cite{\@for\@citeb:=#2\do
+            {\@citea\let\@citea\citepunct
+             \edef\@citeb{\expandafter\@firstofone\@citeb\@empty}%
+             \if@filesw\immediate\write\@auxout{\string\citation{\@citeb}}\fi
+             \@ifundefined{b@\@citeb \@extra@b@citeb}{\hbox{\reset@font\bfseries \uuwarning{blue}{??Missing \@citeb??}}%
+                \G@refundefinedtrue
+                \@latex@warning{Citation `\@citeb' in file `\@currentipfile'
+                    on page \thepage \space undefined}}%
+              {\@cite@ofmt{\citeform{\csname b@\@citeb
+                    \@extra@b@citeb\endcsname}}}}}{#1}}
+
+    \fi
+
+\else
+
+    %% \usepackage{cite} has been issues: redefine one line of its code
+    %% that checks for undefined references
+
+    \def\@make@cite@list{%
+     \expandafter\ifx\csname b@\@citeb\@extra@b@citeb
+          \endcsname\relax % undefined: output ? and warning
+        \@citea {\bfseries \uuwarning{blue}{??Missing \@citeb??}}\let\@citea\citepunct \G@refundefinedtrue
+        \@warning {Citation `\@citeb' on page \thepage\space undefined}%
+     %% always verbose \oc@verbo \global\@namedef{b@\@citeb\@extra@b@citeb}{?}%
+     \else %  defined
+        \@cite@nonhyper@sanitize
+        \@addto@cite@list
+     \fi}
+
+\fi
+
+%%% ====================================================================
+%%% Version 2019/07/01 v2.06
+
+%%% Because we now have running page headers, the original setting in
+%%% uuthesis-base.sty:150 of \headheight to 0pt is too small, and
+%%% every page produces an Overfull \vbox warning: the 9pt value here
+%%% suffices for 10pt, 11pt, and 12pt options in the \documentclass.
+
+\addtolength {\headheight} {9pt}

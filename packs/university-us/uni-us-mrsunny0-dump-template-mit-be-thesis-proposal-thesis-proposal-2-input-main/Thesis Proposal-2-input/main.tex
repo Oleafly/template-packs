@@ -1,0 +1,130 @@
+%---------------------------------------------------------------------------%
+%								   Preamble									%
+%---------------------------------------------------------------------------%
+% declare document class, 12pt, lettersize and article 
+% could also be report, however section headers turn into chapters
+\documentclass[12pt, lettersize]{article}
+
+% import preamble.sty for packages
+% import refextdoc.sty for subfile crossreferencing
+% note the relative import. Because subfiles (e.g. abstract, introduction, etc.)
+% are located in separate files, for all files to be obtainable by main and subfiles,
+% need to tranverse up to the root directory (../) then back to the appropriate files in /main
+\usepackage{preamble}
+
+% relative imports of images
+% note that graphics path should be encased in {}, ends with / to define directory, 
+% and finally separated by , without any lead or lag spaces.
+% therefore graphicsspath should look like \graphiscpath{{abc/},{xyz/},{123/}}
+% spaces in directory names are not recommended, however the the \usepackage[space]{grffile}
+% will attempt to work with directories with spaces
+\graphicspath{{./images/}}
+
+%---------------------------------------------------------------------------%
+%								Begin Document								%
+%---------------------------------------------------------------------------%
+\begin{document}
+
+%------------------
+% Table of Contents
+%------------------
+\input{titlepage}
+\newpage
+
+%------------------
+% Table of Contents
+%------------------
+\tableofcontents 
+% some thesis documents wil also want a table of contents for figures and tables
+% uncomment the commands below to create a table of contents for figures and tables
+%\listoffigures 
+%\listoftables
+ 
+\newpage
+ 
+% page numbering can be roman (e.g. i, ii, iii, iv), alpha (a, b, c, d)
+% or arabic (1,2,3,4). Change the below option to roman for front matter text
+% such as preface pages, alph for alpha lettering (e.g. Appendix maybe)
+% or arabic for standard page numbering. If you want to restart the page 
+% counter because you are using a new numbering format, you can use 
+% \setcounter{page}{X} where X is the new number you want to count on.
+\pagenumbering{arabic}
+
+%-------------------------------------------------------------------------------------------------------------%
+% Abstract
+%-------------------------------------------------------------------------------------------------------------%
+\input{abstract}
+
+%-------------------------------------------------------------------------------------------------------------%
+% Objective
+%-------------------------------------------------------------------------------------------------------------%
+\input{objective}
+
+%-------------------------------------------------------------------------------------------------------------%
+% Background
+%-------------------------------------------------------------------------------------------------------------%
+\input{background}
+
+%-------------------------------------------------------------------------------------------------------------%
+% Research Design & Methods
+%-------------------------------------------------------------------------------------------------------------%
+\input{methods}
+
+%-------------------------------------------------------------------------------------------------------------%
+% Preliminary Results
+%-------------------------------------------------------------------------------------------------------------%
+\input{results}
+
+%-------------------------------------------------------------------------------------------------------------%
+% Example citation
+%-------------------------------------------------------------------------------------------------------------%
+This is a random citation \cite{nrtagu2001arsenic,lessler1988lead}
+
+%---------------------------------------------------------------------------------------------%
+% Bibliography
+%---------------------------------------------------------------------------------------------%
+\newpage
+
+%-----------------------%
+% automatic bib entries %
+%-----------------------%
+% enter your bibliographies using a .bib file
+% for most formats, the unsrt argument (unsorted) will list the bibliographies as cited in the 
+% text, rather than sorting them alphabetically. For the \bibliography entries, much like the 
+% \graphicspath entries, each relative file directory is separated by a comma, no space,
+% followed by the .bib file name, without the .bib extension
+\bibliographystyle{unsrt} 
+\bibliography{../bib/bib_example}
+% example: \bibliography{../bib/bib_example,../bib/bib_example2,../bib/bib_example3}
+
+%-----------------------------%
+% manual (easier) bib entries %
+%-----------------------------%
+% you can manually insert bibliography entries using thebibliography enviornment
+% note the argument {99} just represents that you expect at least 2 digits worth of 
+% bibliographies. For example, 11 and 99 represent the same amount, and 101 represents
+% 3 digits worth (at most 999 entries) of bibliographies
+
+% \begin{thebibliography}{99} 
+
+% to add a bibliography manually, use \bibitem{ID} with ID being a unique identifier to that 
+% entry. The ID can be used to \cite{ID} to make a reference. Details below \bibitem is the 
+% bibliography itself. It will not be formmatted and will show as is. The details, in whatever
+% format are best taken from Google Scholar
+
+% \bibitem{FSR}
+% THIS IS A BIBITEM
+
+% \end{thebibliography}
+
+%---------------------------------------------------------------------------------------------%
+% Appendix
+%---------------------------------------------------------------------------------------------%
+\newpage
+\appendix
+\input{appendix}
+
+%---------------------------------------------------------------------------%
+%								 End Document								%
+%---------------------------------------------------------------------------%
+\end{document}

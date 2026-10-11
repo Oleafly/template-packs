@@ -1,0 +1,352 @@
+% ==================
+% Indian Institute of Science Thesis Style
+%   -- Modernised rewrite for LaTeX2e (replaces iiscthes.sty / LaTeX 2.09)
+%
+% Original by Sanjay R. Chitnis, CSA, IISc (1990-1991)
+% Modernised by Maha for LaTeX2e compatibility (v2.1, May 2026)
+% ==================
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%1. Package identification & required packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{iisc_thesis_new}[2026/05/15 v2.1 IISc Thesis Style (Maha)]
+
+% Core layout & typography
+\RequirePackage{geometry}
+\RequirePackage{setspace}
+\RequirePackage{fancyhdr}
+
+% Math support
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+
+% Graphics & tables
+\RequirePackage{graphicx}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{longtable}
+\RequirePackage{multirow}
+
+% Fonts & encoding
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{lmodern}
+\RequirePackage{amsfonts}
+
+% Hyperlinks (load last among functional packages)
+\RequirePackage[hidelinks]{hyperref}
+
+% Index support
+\RequirePackage{makeidx}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%2. Page layout 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\geometry{
+  a4paper,
+  left=3.5cm,
+  right=2.5cm,
+  top=2.54cm,
+  bottom=2.54cm,
+  headsep=40pt,
+  textwidth=450pt,
+  textheight=635pt,
+  includeheadfoot
+}
+
+\brokenpenalty=10000
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%3. Line spacing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setstretch{1.5}
+
+\AtBeginDocument{%
+  \setlength{\skip\footins}{20pt plus 4pt minus 4pt}%
+}
+
+\newcommand{\setspacing}[1]{\setstretch{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%4. Front-matter environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{frontmatter}{%
+  \pagenumbering{roman}%
+}{%
+  \newpage
+  \pagenumbering{arabic}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%5. Title-page fonts  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\nonstopmode % Do not stop if the font is not available
+% boldface
+\newfont{\degfntbf}{eufb10 scaled\magstep3} 
+% Bigger
+\newfont{\degfnt}{eufm10 scaled\magstep3} 
+\errorstopmode % revert back to stop on error
+
+\newcommand{\degreebftext}[1]{%
+  {\degfntbf #1}%
+}
+
+\newcommand{\degreetext}[1]{%
+  {\degfntbf #1}%
+}
+
+% Helper: render a text string in Euler Fraktur Bold (mimics \degfntbf) if not available uncomment this
+% Usage: \degreetext{Master of Technology}
+% \newcommand{\degreetext}[1]{%
+%   $\mathfrak{\text{#1}}$%   requires amsfonts + amsmath
+% }
+
+% Helper: render the thesis title in large bold sans-serif (mimics \Titlefnt)
+% Usage: \thesistitlefont{My Thesis Title}
+\newcommand{\thesistitlefont}[1]{%
+  {\sffamily\bfseries\huge #1}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%6. Storage macros & defaults
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\@dept{Department of Computer Science and Automation}
+\def\@faculty{Faculty of Engineering}
+\def\@degree{Doctor of Philosophy}
+\def\@bibtitle{Bibliography}
+\def\@mtechdiscipline{}
+\def\@submitdate{%
+  \ifcase\the\month\or
+    JANUARY\or FEBRUARY\or MARCH\or APRIL\or MAY\or JUNE\or
+    JULY\or AUGUST\or SEPTEMBER\or OCTOBER\or NOVEMBER\or DECEMBER
+  \fi
+  \space\number\the\year}
+
+\newcommand{\dept}[1]{\gdef\@dept{#1}}
+\newcommand{\submitdate}[1]{\gdef\@submitdate{#1}}
+\newcommand{\bibtitle}[1]{\gdef\@bibtitle{#1}}
+\newcommand{\faculty}[1]{\gdef\@faculty{#1}}
+\newcommand{\degreein}[1]{\gdef\@faculty{#1}}
+
+% Booleans
+\newif\iffigurespage  \figurespagetrue
+\newif\iftablespage   \tablespagefalse
+\newif\ifiisclogo     \iisclogofalse
+\newif\ifme           \mefalse
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%7. Degree commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\phd}{%
+  \gdef\@degree{Doctor of Philosophy}\gdef\@mtechdiscipline{}\mefalse}
+
+\newcommand{\mscengg}{%
+  \gdef\@degree{Master of Science (Engineering)}\gdef\@mtechdiscipline{}\mefalse}
+
+\newcommand{\me}{%
+  \gdef\@degree{Master of Engineering}\gdef\@mtechdiscipline{}\metrue}
+
+% \mtech{<discipline>}
+%   Degree line  : "Master of Technology"
+%   Below degree : "IN" then "<discipline>" on next line
+\newcommand{\mtech}[1]{%
+  \gdef\@degree{Master of Technology}%
+  \gdef\@mtechdiscipline{#1}%
+  \mefalse
+}
+
+% Faculty shorthands
+\newcommand{\enggfaculty}{\gdef\@faculty{Faculty of Engineering}}
+\newcommand{\sciencefaculty}{\gdef\@faculty{Faculty of Science}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  IISc Logo helper
+%  Place iisclogo.jpg (or .png / .pdf) next to your .tex file.
+%  Set \iisclogotrue before \maketitle to show it.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\includeiisclogo}[1][0.18\textwidth]{%
+  \IfFileExists{iisclogo.jpg}{%
+    \includegraphics[width=#1]{iisclogo.jpg}%
+  }{%
+  \IfFileExists{iisclogo.png}{%
+    \includegraphics[width=#1]{iisclogo.png}%
+  }{%
+  \IfFileExists{iisclogo.pdf}{%
+    \includegraphics[width=#1]{iisclogo.pdf}%
+  }{%
+    \fbox{\parbox{3.5cm}{\centering\small[IISc Logo\\\texttt{iisclogo.jpg}\\\texttt{not found}]}}%
+  }}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  \maketitle  (title page + copyright page)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\maketitle}{%
+  \begin{titlepage}
+    \setcounter{page}{0}
+    \vspace*{-1.0cm}
+    %--- Thesis title in large bold sans-serif (original: \Titlefnt = cmssdc10 mag4)
+    \begin{center}
+      \thesistitlefont{\@title}
+    \end{center}
+    \vfill
+    %--- Degree block
+    \begin{center}
+      \scshape A \ifme Project Report \else Thesis \fi \\[0.4ex]
+      \ifme
+        Submitted in partial fulfilment of the \\
+        requirements for the Degree of
+      \else
+        Submitted For the Degree of
+      \fi \\[0.8ex]
+      %--- Degree name in Euler Fraktur Bold (original: \degfntbf)
+      {\large\bfseries\degreetext{\@degree}} \\[0.4ex]
+      \ifx\@mtechdiscipline\empty
+      % phd / mscengg / me path  ---  "in the Faculty of ..."
+      \scshape in \ifme\\ \else the \fi \@faculty
+      \else
+      % mtech path  ---  "IN\n<discipline>"
+      \scshape in \\[0.2ex]
+      {\large\bfseries\degreetext{\@mtechdiscipline}} 
+      \fi
+    \end{center}
+    \vfill
+    %--- Author
+    \begin{center}
+      by \\[0.75em]
+      {\large\bfseries\@author}
+    \end{center}
+    \vfill
+    %--- Optional IISc logo
+    \ifiisclogo
+      \begin{center}
+        \includeiisclogo
+      \end{center}
+      \vfill
+    \fi
+    %--- Institute block
+    \begin{center}
+      \@dept \\
+      Indian Institute of Science \\
+      BANGALORE -- 560 012 \\[0.75em]
+      \@submitdate
+    \end{center}
+    \vspace*{-0.5cm}
+    %--- Copyright page (page ii of front matter)
+    \newpage
+    \null
+    \vspace{3in}
+    \begin{center}
+      {\large\bfseries
+        \copyright\ \@author \\
+        \@submitdate \\
+        All rights reserved}
+    \end{center}
+  \end{titlepage}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%8. Preface sections & front-matter helpers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\prefacesection}[1]{%
+  \chapter*{#1}%
+  \addcontentsline{toc}{chapter}{#1}}
+
+\renewenvironment{abstract}%
+  {\null\vfil\prefacesection{Abstract}}%
+  {\par\vfill\null}
+
+\newcommand{\keywords}{\prefacesection{Keywords}}
+\newcommand{\notations}{\prefacesection{Notation and Abbreviations}}
+\newcommand{\acknowledgements}{\prefacesection{Acknowledgements}}
+\newcommand{\vita}{\prefacesection{Vita}}
+\newcommand{\publications}{\prefacesection{Publications based on this Thesis}}
+
+\newenvironment{dedication}{%
+  \thispagestyle{plain}\setcounter{page}{0}\null\vfill
+}{%
+  \par\vfill\null}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%9. Contents / lists helpers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\makecontents}{%
+  \newpage
+  \begin{singlespace}
+    \tableofcontents
+    \newpage
+    \iftablespage
+      \listoftables
+      \newpage
+    \fi
+    \iffigurespage
+      \listoffigures
+      \newpage
+    \fi
+  \end{singlespace}
+}
+
+\newcommand{\chapters}{%
+  \pagenumbering{arabic}%
+  \pagestyle{bfheadings}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%10. Page-heading styles
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fancypagestyle{bfheadings}{%
+  \fancyhf{}%
+  \fancyhead[R]{%
+    \underline{\makebox[\textwidth][l]{%
+      \textbf{\rightmark}\hfill\textrm{\thepage}%
+    }}%
+  }%
+  \renewcommand{\headrulewidth}{0pt}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%11. Bibliography & Index modifications
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\AtBeginDocument{%
+  \renewcommand{\bibname}{\@bibtitle}%
+}
+
+% Wrap thebibliography to add TOC entry
+\let\@iisc@thebibliography\thebibliography
+\renewcommand{\thebibliography}[1]{%
+  \@iisc@thebibliography{#1}%
+  \addcontentsline{toc}{chapter}{\@bibtitle}%
+}
+
+% Wrap theindex to add TOC entry
+\let\@iisc@theindex\theindex
+\renewenvironment{theindex}{%
+  \@iisc@theindex
+  \addcontentsline{toc}{chapter}{Index}%
+}{%
+  \endtheindex
+}
+
+% FIX: use \providecommand so we do NOT redefine \see if already defined
+% by makeidx or any other loaded package.
+\providecommand{\see}[2]{{\em see\/} #1}
+
+\AtEndDocument{\InputIfFileExists{\jobname.ind}{}{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%12. Miscellaneous
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeindex
+\pagestyle{headings}
+
+\newcommand{\nobiblabels}{%
+  \renewcommand{\@biblabel}[1]{}%
+}
+
+\endinput
+%%% end of iisc_thesis_new.sty

@@ -1,0 +1,112 @@
+\chapter{Building the Document\label{ch:building}}
+
+This section describes how to build the document using CMake~\cite{CMake}, the
+cross-platform, open-source build system and was contributed by Izaak
+Beekman. This build system uses the excellent UseLATEX~\cite{UseLATEX}
+CMake package to ensure that all references are resolved and defined
+in the final document and that images are converted to the correct
+type for the desired output. Building \LaTeX{} documents can be a
+tedious and frustrating task, but this CMake based build system
+attempts to remove some of the frustration. Building the
+document this way is not required, an alternate build technique can
+still be used.
+
+\section{Prerequisits}
+\label{sec:building:prerequisits}
+
+This build system has \emph{not} been tested on MS Windows, but, in
+theory, it should work there too. This build system requires a
+working \LaTeX{} distribution, CMake~\cite{CMake}, and the appropriate
+image conversion tools needed by UseLATEX~\cite{UseLATEX} to be installed.
+If UseLATEX hasn't been downloaded and installed into the and have an Internet connection the
+CMakeLists.txt file (which controls the build) will try to download
+UseLATEX.cmake from the appropriate
+source. ImageMagick~\cite{ImageMagick} is used by UseLATEX to perform
+some automatic image format conversions based on the desired output
+type and should be installed as well.
+
+\section{Editing the CMakeLists.txt file}
+\label{sec:building:cmakelists}
+
+As you add and remove chapters, sections, appendices and other text
+with the input and include \LaTeX{} commands, you must update the
+CMakeLists.txt file to tell CMake which files are going to be used to
+build the thesis. There are mechanisms to use wild-cards, also known
+as globbing, to automatically collect files with the '.tex' extension,
+but using this technique can cause problems with automatic dependency
+analysis that is performed by CMake and UseLATEX.\@ This list of
+\LaTeX{} inputs can be stored in a CMake variable and should be passed to the
+``INPUTS'' argument of the ``ADD\_LATEX\_DOCUMENT'' command provided
+by UseLATEX.\@ Additionally the directories with images and figures also
+need to be passed to ``ADD\_LATEX\_DOCUMENT'' as the ``IMAGE\_DIRS''
+argument, to allow UseLATEX to perform the image file
+conversions. Other than maintaining the list of input files and image
+directories, this is the only editing of the CMakeLists.txt file that
+should ever be required. A more thorough discussion of CMake and
+UseLATEX is beyond the scope of this document; both tools are well
+documented on their websites.
+
+\section{Configuring and performing the build}
+\label{sec:building:configuring}
+
+UseLATEX requires an ``out of source'' build, which, in CMake
+terminology, means that the document will be built in a separate
+directory/folder than where you keep the input \LaTeX{} files, images,
+etc. This is advantageous because it helps prevent accidentally
+deleting important files when cleaning up after a \LaTeX{} build. To get
+started, create a build directory then open cmake-gui and enter the
+appropriate paths to the build directory and the top level source
+directory that contains the CMakeLists.txt file. If working from the
+command line, a short cut is to use
+``cmake-gui path/to/top/level/source/directory'' or
+``ccmake path/to/top/level/source/directory'' from within the build
+directory. This will ensure that CMake knows where the build and
+source directories are. The first time ccmake or cmake-gui is run,
+``configure'' the project with the appropriate button. If prompted to
+select a ``generator'' select ``Unix Makefiles.''
+
+Once cmake-gui or ccmake has been launched and ``configured'' for the
+first time, there are some options available to help control the
+build. The configuration options specific to the Princeton University
+thesis template all start with ``PUTHESIS'' and currently control the
+font size, whether or not to build in ``draft mode'' and whether or not a
+list of figures and list of tables is included and the output type:
+``digital'' ``proquest'' or ``print.'' The ``thesis.tex'' file has
+been modified so that it can be used without CMake, but if CMake is
+used to configure and build the project, \emph{no edits of the
+  ``thesis.tex'' file are required to select print, digital or
+  proquest modes.} If ``draft mode'' is enabled, the front matter will
+be omitted, down-sampled images will be used and overfull hboxes will
+be shown, again, without editing the thesis.tex file. The only other
+pertinent options start with ``LATEX:'' LATEX\_SMALL\_IMAGES will
+produced downsampled, 96 dpi images, without turning on ``draft mode''
+and ``LATEX\_USE\_SYNCTEX'' if turned on, will add the appropriate
+synctex flag to the \LaTeX{} invocation and perform appropriate
+transformations so that synctex references will point to the files in
+the source directory and not their copies in the build tree. Finally,
+if a required program is installed, but in a non-standard location
+options exist to tell CMake/UseLATEX where those programs are
+installed. Finally after the options are set to your liking run
+``configure'' again to reconfigure the build for the new options, then
+run the ``generate'' step, and quit out of cmake-gui.
+
+I recommend creating a build directory for each desired output type,
+rather than reconfiguring and rebuild each time you want to create a
+different output. Also, as noted in the
+Appendix~\ref{sec:implementation:switching}, if you choose not to use
+a new directory for each configuration, make sure to ``make auxclean''
+after switching to a different format, before attempting to build the
+document. This will delete the extra meta data files and should
+allow the new format to be successfully built and the project has been
+reconfigured and the build scripts regenerated by CMake.
+
+Once the configuration and build system generation has been performed
+using CMake, the document is built from the command line by running
+``make.'' It will default to building a pdf document, but a list of
+all possible output file formats, as well as other makefile
+``targets'' can be seen by typing ``make help.'' The
+final document should be created by ``make safepdf'' which uses \LaTeX{} to
+produce a `.dvi' file and then converts it to a pdf, rather than using
+pdflatex. This is not the default because it will likely take longer
+to rebuild the document than using pdflatex, the default.
+

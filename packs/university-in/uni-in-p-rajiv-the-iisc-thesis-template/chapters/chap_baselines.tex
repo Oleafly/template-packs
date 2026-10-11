@@ -1,0 +1,55 @@
+\chapter{Foundational Models on Chest X-Rays}
+\label{chap:baselines}
+
+
+\section{Introduction}
+Its very well known that unsupervised models helps learn better image feature than supervised models. 
+For CXR a vast amount of work is done in self-supervised learning like DINO and vision-language pretraining like CLIP.  
+Features or embeddings extracted from these models can be used for various tasks like classification, generation etc.
+Of the various open source models available in the literature we used DINO\footnote{\url{https://huggingface.co/microsoft/rad-dino}} 
+ and Biovil-T\footnote{\url{https://huggingface.co/microsoft/biovil-t}} in this chapter, due to their better performance.
+
+
+The above experiments are done in order to verify the performance of the features extracted from these models, to see how well the 
+embeddings can be classified. These embeddings are used in conditioning diffusion models for CXR image generation.
+
+
+% \include{theories/dino_theory.tex}
+
+% \include{theories/clip_thoery.tex}
+
+\section{Observations}
+
+\begin{enumerate}
+  \item \textbf{Similar performance on full images.} Classification performance of RAD-DINO and BioViL-T features is almost same 
+  for all the pathologies.
+
+  \item \textbf{Joint DINO and Vision-language embeddings:}  Joint (concatenated) RAD-DINO and BioViL-T features also give same performance
+  on classification as above. 
+
+  \item \textbf{Lung segmentation does not improve performance.} With assumption that there is noise associated with the 
+  outside-lung regions, same experiments were performed with lung-segmented images. While RAD-DINO features doesn't show
+  any difference, BioViL-T features show a significant drop in performance for almost all the pathologies. 
+
+\end{enumerate}
+
+\subsection{Inference and Discussion}
+\begin{itemize}
+
+  \item \textbf{BioViL-T:} Vision--language pretraining might be losing some information like relative contrast 
+  while segmenting the lung region.
+
+  \item \textbf{DINO:} DINO might have learned more local features due to image-image pretraining. 
+
+  \item \textbf{Joint Embeddings:} The exact same performance of joint (concatenated) RAD-DINO and BioViL-T features as above, means that 
+  there is no extra information in the Vision-language features than that is present in the DINO features.
+
+%   \item \textbf{Future work:} Dino is able to extract features from local segments while BioViL-T needs the global scale.
+\end{itemize}
+
+\subsection{Results}
+\input{tables/foundational_models}
+
+
+
+

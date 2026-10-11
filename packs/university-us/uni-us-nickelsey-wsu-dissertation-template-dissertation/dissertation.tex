@@ -1,0 +1,213 @@
+\documentclass[12pt,letterpaper]{report}
+\usepackage{epsfig}
+\usepackage{setspace}
+\usepackage{cite}
+\usepackage{helvet}%sets the sffamily font to helvetica
+\usepackage{fancyhdr}
+\usepackage{amsmath} % See http://en.wikibooks.org/wiki/LaTeX/Print_version, for /tfrac and /dfrac use
+\usepackage{graphicx}
+\usepackage{appendix}
+\usepackage{apptools}
+\usepackage{titlesec}
+\usepackage[titles]{tocloft}
+\usepackage{calc}
+\usepackage{setspace}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Format headings
+
+\renewcommand{\chaptername}{CHAPTER}
+
+\titleformat
+{\chapter} % command
+[hang] % shape
+% Add \singlespacing here if it's a problem
+{\normalfont\normalsize\bfseries\center} % format
+{\chaptertitlename\ \thechapter} % label
+{1em} % sep
+{\MakeUppercase} % before code
+
+\titleformat
+{\section} % command
+[hang] % shape
+{\normalfont\normalsize\bfseries} % format
+{\thesection} % label
+{1em} % sep
+{} % before code
+
+\titleformat
+{\subsection} % command
+[hang] % shape
+{\normalfont\normalsize\bfseries} % format
+{\thesubsection} % label
+{1em} % sep
+{} % before code
+
+% No extra space left/before/after headings
+\titlespacing{\chapter}{0in}{-0.5in}{0in}
+\titlespacing{\section}{0in}{0in}{0in}
+\titlespacing{\subsection}{0in}{0in}{0in}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Format table of contents
+
+% set line in table of contents 
+\renewcommand\cftchapafterpnum{\vskip0pt}
+\renewcommand\cftsecafterpnum{\vskip0pt}
+\renewcommand\cftsubsecafterpnum{\vskip0pt}
+\renewcommand\cftsubsubsecafterpnum{\vskip0pt}
+\setlength{\cftbeforechapskip}{0pt}
+
+% turn off indenting in sections & subsections in table of contents 
+\setlength{\cftsecindent}{0em}
+\setlength{\cftsubsecindent}{0em}
+\setlength{\cftsubsubsecindent}{0em}
+
+\edef\fixedchapnumwidth{\cftchapnumwidth}
+\renewcommand{\cftchappresnum}{Chapter~}
+\renewcommand{\cftfigpresnum}{Figure~}
+\renewcommand{\cfttabpresnum}{Table~}
+\renewcommand{\cftchapnumwidth}{5.8 em}
+\renewcommand{\cftfignumwidth}{5.2 em}
+\renewcommand{\cfttabnumwidth}{4.8 em}
+%\addtocontents{toc}{\protect\contentsline{chapter}{Chapter}{Page}}
+
+% fixes appendices
+\makeatletter
+\g@addto@macro\appendix{%
+  \addtocontents{toc}{%
+		\protect\renewcommand{\protect\cftchappresnum}{\appendixname\space}%
+		\protect\renewcommand{\protect\cftchapnumwidth}{6.7 em}%
+  }%
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% This line is to avoid a warning message. May need to use something different.
+\setlength{\headheight}{15pt}
+
+%fix spacing in bib
+\let\oldbibliography\thebibliography
+\renewcommand{\thebibliography}[1]{%
+  \oldbibliography{#1}%
+  \setlength{\itemsep}{0pt}%
+}
+\large
+\doublespacing
+% Text Sizes
+\textwidth  6.5 in
+\textheight 9.0 in
+\topmargin     -0.6in % Maybe -0.625
+
+\oddsidemargin  0.00in
+\evensidemargin 0.00in
+\showboxdepth=0
+\catcode`\@=11 % @ signs are allowed in definitions
+\def\cs2{CS$_2$}
+\sffamily
+% Always indent a paragraph -- even first in a section
+\let\@afterindentfalse\@afterindenttrue
+\@afterindenttrue
+% Always indent a paragraph -- even first in a section
+
+\pagestyle{plain}
+
+\def\Nile{{\sc Nile}}
+%\includeonly{file_list with commas as delimiters, no spaces}  %this option allows only selected range of filesto be included in the output, but all other files are taken into account for page numbering references etc.
+
+\input{header.tex}
+
+\begin{document}
+
+	% sets numbering upto 2nd level in chapter,section, subsection, subsubsection
+	% numbering starts from 0 - so chapter = 0, section = 1, etc
+	\setcounter{secnumdepth}{2} 
+
+	% makes levels up to the 2nd (subsection) appear in the table of contents
+	\setcounter{tocdepth}{2}
+	
+	% set page numbering for the preliminary pages to roman numerals
+	\pagenumbering{roman}
+	\include{title}
+
+	%Include this if you intend to copyright your document
+	%\include{copyright}
+
+	% add dedication and acknowledgements
+	\setcounter{page}{2} 
+	\addcontentsline{toc}{chapter}{Dedication}
+	\include{dedication}
+	\addcontentsline{toc}{chapter}{Acknowledgments}
+	\include{acknowledgements}
+
+	% build table of contents
+	\renewcommand{\contentsname}{Table of Contents}
+  \tableofcontents
+
+	% add list of figures - it requires some formatting changes
+	{
+		\newpage
+		\addcontentsline{toc}{chapter}{List of Figures}
+
+		% change the left margin to match the rest of the document
+		\setlength\cftfigindent{0cm}
+		\singlespacing
+
+		% double space between each entry - this will have to be changed 
+		% if document font size changes
+		\setlength{\parskip}{12pt}
+		\listoffigures 
+	}
+	
+	% start the body of the work on a new page
+	\newpage
+
+	\pagenumbering{arabic}
+  \pagestyle{fancy}
+  \fancyhead{} 
+	\fancyfoot{} % clear all header and footer fields
+  \chead[]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+	\fancypagestyle{plain}{%
+		% clear all header and footer fields
+		\fancyhf{} 
+		% except the center
+		\fancyhead[C]{\thepage} 
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}
+	}
+
+	% insert chapters
+	% Add more chapters by copying chapters/chapter_1.tex and adding a line for it here	
+	\include{chapters/chapter_1}
+	
+	% insert appendices
+	% Comment the following line if you don't have an appendix
+	% for a new appendix, copy appendices/appendix_a.tex and add a new line here
+	\begin{appendices}
+	\include{appendices/appendix_header}
+	\include{appendices/appendix_a}
+	\end{appendices}
+
+	\addcontentsline{toc}{chapter}{Bibliography}
+  \bibliographystyle{unsrt}
+  \bibliography{references}
+
+	\newpage
+
+	% add abstract
+  \addcontentsline{toc}{chapter}{Abstract}        
+	\include{abstract}
+
+	% add autobiographical statement
+	\addcontentsline{toc}{chapter}{Autobiographical Statement}
+  \include{autobio}
+
+\end{document} 
+% done 

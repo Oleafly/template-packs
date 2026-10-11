@@ -1,0 +1,103 @@
+% This is a latex template file for UC San Diego dissertation organized by Zhongyang Zhang (mirakuruyoo@gmail.com).
+
+\documentclass[12pt]{ucsddissertation}
+% mathptmx is a Times Roman look-alike (don't use the times package)
+% It isn't clear if Times is required. The OGS manual lists several
+% "standard fonts" but never says they need to be used.
+\usepackage{mathptmx}
+\usepackage[NoDate]{currvita}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{ragged2e}
+\usepackage{microtype}
+\usepackage{lipsum}
+
+\usepackage[breaklinks=true,pdfborder={0 0 0}]{hyperref}
+\usepackage{graphicx}
+\AtBeginDocument{%
+	\settowidth\cvlabelwidth{\cvlabelfont 0000--0000}%
+}
+
+% OGS recommends increasing the margins slightly.
+\increasemargins{.1in}
+
+% These are just for testing/examples, delete them
+\usepackage{trace}
+%\usepackage{showframe} % This package was just to see page margins
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\overfullrule5pt
+% ---
+
+% Required information
+\title{This is the Title of My Dissertation}
+\author{My Full Legal Name}
+\degree{My Degree Title}{Doctor of Philosophy/Doctor of Musical
+Arts/\par Doctor of Education}
+% Each member of the committee should be listed as Professor Foo Bar.
+% If Professor is not the correct title for one, then titles should be
+% omitted entirely.
+\chair{Professor Eta Theta}
+\cochair{Professor Gamma Delta} % Optional
+% Your committee members (other than the chairs) must be in alphabetical order
+\committee{Professor Lambda Kappa}
+\committee{Professor Iota Mu}
+\committee{Professor Epsilon Zeta}
+\degreeyear{2018}
+
+% Start the document
+\begin{document}
+% Begin with frontmatter and so forth
+\frontmatter
+\maketitle
+\makecopyright
+\makesignature
+
+% Dedication (optional): Who, if anyone, would you like to dedicate your thesis to?
+\input{contents/dedication}
+
+% Epigraph (optional). Write some cool sentences here!
+\input{contents/epigraph}
+
+% Next comes the table of contents, list of figures, list of tables,
+% etc. If you have code listings, you can use \listoflistings (or
+% \lstlistoflistings) to have it be produced here as well. Same with
+% \listofalgorithms.
+\tableofcontents
+\listoffigures
+\listoftables
+
+\input{contents/preface}
+
+\input{contents/acknowledgement}
+
+\input{contents/vita}
+
+% Put your maximum 350 word abstract here.
+\input{contents/abstract}
+
+% This is where the main body of your dissertation goes!
+\mainmatter
+
+% Optional Introduction
+\input{contents/introduction}
+
+\chapter{An ordinary page}
+\input{contents/chapter1/paper}
+
+\chapter{Figures and Such}
+\input{contents/chapter2/paper}
+
+\chapter{About Reference}
+\input{contents/chapter3/paper}
+
+\appendix
+\Blinddocument
+
+% Stuff at the end of the dissertation goes in the back matter
+\backmatter
+\bibliographystyle{plain} % Or whatever style you want like plainnat
+\bibliography{ref, contents/chapter1/ref, contents/chapter2/ref, contents/chapter3/ref}
+
+\end{document}

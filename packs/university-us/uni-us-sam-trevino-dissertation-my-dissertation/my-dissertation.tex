@@ -1,0 +1,134 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This template is distributed with ABSOLUTELY NO WARRANTY.
+% It serves as a guideline and constitutes a basic structure for a
+% thesis/dissertation. The user assumes full responsibility for formatting
+% and typesetting their document and for verifying that all the thesis
+% requirements set by the University of Tennessee are met. Please refer to the most
+% recent UT thesis guide (http://gradschool.utk.edu/thesesdissertations/formatting/)
+% or contact the thesis consultant (http://gradschool.utk.edu/thesesdissertations/).
+% Please report any bugs to the thesis consultant.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% O P T I O N S:
+% 1. thesis/dissertation
+% 2. monochrome
+% 3. all options provided by the report class
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%First, is this a thesis or dissertation? Choose one by commenting out the one you don't need:
+%\documentclass[thesis,letterpaper,12pt]{utthesis} % thesis
+\documentclass[dissertation,letterpaper,12pt]{utthesis} %dissertation
+% some alternatives are:
+%\documentclass[thesis,monochrome,letterpaper,12pt]{utthesis} %thesis, monochrome text
+\renewcommand{\baselinestretch}{1.5} 	 % line Spacing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TO DO: FILL IN YOUR INFORMATION BELOW - READ THIS SECTION CAREFULLY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{My Thesis or Dissertation Title}	       	% title of thesis/dissertation
+\author{Smokey Volunteer}                			% author's name
+\copyrightYear{2017}            				% copyright year of your thesis/dissertation
+\graduationMonth{May}           				% month of graduation for your thesis/dissertation
+\degree{Doctor of Philosophy}	    			% degree: Doctor of Philosophy, Master of Science, Master of Engineering...
+\university{The University  of Tennessee, Knoxville}	% school name
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LOAD SOME USEFUL PACKAGES. 
+% No need to change anything here, although if you'd like to add packages you can do that here. Note that packages preloaded with the utthesis class are: amsmath,amsthm,amssymb,setspace,geometry,hyperref,and color
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{nomencl}                    % produces a nomenclature
+\usepackage{float}                      % figure floats
+\usepackage[numbers]{natbib}                     % this package allows you to link your references
+\usepackage{graphicx}					% graphics package
+\graphicspath{ {figures/}{figures/eps/}{figures/pdf/} }% specify the path where figures are located
+\usepackage{fancyhdr}                   % fancy headers and footers
+\usepackage{url}                        % nicely format url breaks
+\usepackage[inactive]{srcltx}		 	% necessary to use forward and inverse searching in DVI
+\usepackage{relsize}                    % font sizing hierarchy
+\usepackage{booktabs}                   % professional looking tables
+\usepackage[config, labelfont={bf}]{caption,subfig} % nice sub figures
+\usepackage{mathrsfs}                   % additional math scripts
+\usepackage[titletoc]{appendix}			% format appendix correctly
+\usepackage{pdflscape}					% to produce landscape pages if necessary
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This section formats landscape pages properly with the correct page number.
+% This code is only necessary when landscape pages are needed and can be left alone
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\fancypagestyle{mylandscape}{
+	\fancyhf{} %Clears the header/footer
+	\fancyfoot{% Footer
+    \makebox[\textwidth][r]{% Right
+      \rlap{\hspace{.75cm}% Push out of margin by \footskip
+        \smash{% Remove vertical height
+          \raisebox{4.87in}{% Raise vertically
+            \rotatebox{90}{\thepage}}}}}}% Rotate counter-clockwise
+  \renewcommand{\headrulewidth}{0pt}% No header rule
+  \renewcommand{\footrulewidth}{0pt}% No footer rule
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    \pagenumbering{alph} % this is needed to clear certain issues with the hyperref package
+    %
+    \addToPDFBookmarks{0}{Front Matter}{rootNode} % create a root node named "Front Matter" in the pdf bookmarks
+    \addToPDFBookmarks{1}{Title}{a} % add a pdf bookmark to the title page
+    \makeTitlePage % make the title page.
+    %
+    \pagenumbering{roman}
+    \setcounter{page}{2}
+    %
+    \makeCopyrightPage % make the copyright page
+    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%The dedication and acknowledgments are optional. If you wish not to include them, simply comment out both the "\addToPDF..." line and the "\include{...}" line for each.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \addToPDFBookmarks{1}{Dedication}{b} % add a pdf bookmark to the dedication page
+    \include{front-matter/dedication} % include the dedication
+
+    \addToPDFBookmarks{1}{Acknowledgments}{c} % add a pdf bookmark to the acknowledgments page
+    \include{front-matter/acknowledgments} % include the acknowledgments
+    
+    \addToPDFBookmarks{1}{Abstract}{e} % add a pdf bookmark to the abstract page
+    \include{front-matter/abstract} % your abstract
+
+    \addToPDFBookmarks{0}{Table of Contents}{f}
+    \tableofcontents % generate a table of contents
+    \listoftables % generate a list of tables
+    \listoffigures % generate a list of figures
+   
+    \newpage
+    \pagenumbering{arabic}
+    \setcounter{page}{1}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % INCLUDE THE CHAPTERS STARTING WITH THE NOMENCLATURE IF PRESENT
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \include{front-matter}
+    \include{chapters/chapter-1}
+    \include{chapters/chapter-2}
+    \include{chapters/chapter-3}
+    \include{chapters/chapter-4}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % BIBLIOGRAPHY
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \makeBibliographyPage % make the bibliography title page
+\newpage
+
+% To make the bibliography, use \utbiblio{#1}{}{} command. Always use "#1" for the first entry. The second entry is your bibliography style, and the third entry is the name of your bibliography file (.bib file extension) 
+% bibliography style - recommend using apalike-doi as it hyperlinks DOIs
+% Be sure to run BibTeX in order to generate the bibliography correctly.
+
+\utbiblio{#1}{apalike}{references-dissertation}
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % APPENDIX - OPTIONAL - COMMENT OUT IF NOT NEEDED
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    \makeAppendixPage{2}   % Input the number of appendices
+    \appendix    
+    \include{back-matter/appendix-1}
+    \include{back-matter/appendix-2}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % A VITA IS REQUIRED
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \addToTOC{Vita}
+    \include{back-matter/vita}
+\end{document}

@@ -29,12 +29,12 @@ Example data and correspondence are labeled so you can replace them with your ow
 
 ## Template index
 
-This collection contains **4,669 templates**. Choose an engine for the full index, or open a starter table below.
+This collection contains **5,174 templates**. Choose an engine for the full index, or open a starter table below.
 
 | Engine | Templates | With previews |
 | --- | ---: | ---: |
-| [LaTeX](docs/templates-latex.md) | 1,326 | 1,326 |
-| [Typst](docs/templates-typst.md) | 3,340 | 3,340 |
+| [LaTeX](docs/templates-latex.md) | 1,814 | 1,814 |
+| [Typst](docs/templates-typst.md) | 3,357 | 3,357 |
 | [Markdown](docs/templates-markdown.md) | 3 | 3 |
 
 Template names open the main source file. **All files** opens the complete folder, including any supporting files. **Website** links go to published gallery pages. Community imports and newly added templates may not be listed there yet.
@@ -150,7 +150,7 @@ Template names open the main source file. **All files** opens the complete folde
 | [Worksheet](packs/coursework/worksheet/main.tex) | [Files](packs/coursework/worksheet/) | [Preview](packs/coursework/worksheet/preview.png) | [View](https://oleafly.com/templates/worksheet/) |
 | [Year Calendar](packs/creative-misc/calendar-year/main.tex) | [Files](packs/creative-misc/calendar-year/) | [Preview](packs/creative-misc/calendar-year/preview.png) | [View](https://oleafly.com/templates/calendar-year/) |
 
-[Browse all 1,326 LaTeX templates](docs/templates-latex.md).
+[Browse all 1,814 LaTeX templates](docs/templates-latex.md).
 
 </details>
 
@@ -165,7 +165,7 @@ Template names open the main source file. **All files** opens the complete folde
 | [Typst Modern CV](packs/resume-plus/typst-modern-cv/main.typ) | [Files](packs/resume-plus/typst-modern-cv/) | [Preview](packs/resume-plus/typst-modern-cv/preview.png) | [View](https://oleafly.com/templates/typst-modern-cv/) |
 | [Typst Research Poster](packs/slides-posters/typst-research-poster/main.typ) | [Files](packs/slides-posters/typst-research-poster/) | [Preview](packs/slides-posters/typst-research-poster/preview.png) | Not listed |
 
-[Browse all 3,340 Typst templates](docs/templates-typst.md).
+[Browse all 3,357 Typst templates](docs/templates-typst.md).
 
 </details>
 

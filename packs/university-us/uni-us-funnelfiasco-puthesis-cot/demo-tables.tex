@@ -1,0 +1,407 @@
+%
+%  demo-tables.tex  2009-09-29  Mark Senn  https://engineering.purdue.edu/~mark
+%
+%  Demonstrate how to do tables.
+%
+
+\chapter{Demonstrate Tables}
+
+\begin{tabular}{ll}
+    \bf Label& \bf Number\\
+    ta:text-only& \ref{ta:text-only}\\
+    ta:fruit&     \ref{ta:fruit}
+\end{tabular}
+
+\newlength{\ta}
+\newlength{\tb}
+\newlength{\tc}
+
+\settowidth{\ta}{\vbox{\hbox{Money}\hbox{Market}}}
+\settowidth{\tb}{\vbox{\hbox{Stocks}\hbox{and}\hbox{Bonds}}}
+\settowidth{\tc}{\vbox{\hbox{Money}\hbox{Market}\hbox{and}\hbox{Stocks}}}
+
+%{\renewcommand{\baselinestretch}{1}
+%  \begin{table}
+%    \caption{%
+%      \hfil Allocation of the IRA and Keogh Wealth\hfil\break
+%      \mbox{}\hfil for Investors With or Without Brokerage Accounts\hfil
+%    }
+%    \label{tab:ira}
+%    \begin{center}
+%      \begin{tabular}%
+%        {%
+%          |%
+%          c%
+%          |%
+%          >{\centering\hspace{0pt}}m{\the\ta}%  Money Market
+%          |%
+%          c%                                    Stocks 
+%          |%
+%          c%                                    Bonds
+%          |%
+%          c%                                    Diversified
+%          |%
+%          >{\centering\hspace{0pt}}m{\the\tb}%  Stocks and Bonds
+%          |%
+%          >{\centering\hspace{0pt}}m{\the\tc}%  Money Market and Stocks
+%          |%
+%          c%                                    Others
+%          |%
+%        }
+%        \hline
+%        IMP&
+%          Money Market&
+%          Stocks&
+%          Bonds&
+%          Diversified&
+%          Stocks and Bonds&
+%          Money Market and Stocks&
+%          Others\tabularnewline
+%        \hline
+%        1& 14.19\%& 57.71\%& 12.21\%& 4.50\%& 7.36\%& 3.04\%& 0.99\%\tabularnewline \hline
+%        2& 14.08\%& 58.18\%& 12.32\%& 4.44\%& 7.30\%& 2.80\%& 0.88\%\tabularnewline \hline
+%        3 &14.26\%& 58.09\%& 12.27\%& 4.50\%& 7.19\%& 2.75\%& 0.94\%\tabularnewline \hline
+%        4 &13.94\%& 58.11\%& 12.14\%& 4.78\%& 7.35\%& 2.68\%& 0.99\%\tabularnewline \hline
+%        5 &13.92\%& 58.13\%& 11.93\%& 4.56\%& 7.60\%& 2.98\%& 0.88\%\tabularnewline \hline
+%      \end{tabular}
+%    \end{center}
+%    This table presents the allocations of the wealth in the IRA
+%    and Keogh accounts in various asset classes.
+%    Results from each set of imputed data are presented here.
+%    The first column lists the number of the imputations,
+%    and rest of the columns lists various allocations.
+%    Entrees under each asset class show the percentage of investors
+%    who have most of their IRA
+%    and Keogh wealth invested in that particular asset class.
+%    The asset class Diversified
+%    includes stocks,
+%    bonds,
+%    and money market investments.
+%    The asset class Others
+%    include investments in various life insurance products,
+%    annuities,
+%    real estate, etc.
+%    \medskip
+%    \footnotesize SOURCE: Survey of Consumer Finances,
+%    2001,
+%    Federal Reserve Board,
+%    USA.\par
+%  \end{table}
+%}
+
+\begin{table}
+    This table contains only text.
+    Let's cite Lamport's book here: \cite{Lamport:1994}.
+    \caption{%
+        This is the caption.
+        Let's cite Lamport's book again here: \cite{Lamport:1994}.%
+    }
+    \label{ta:text-only}
+\end{table}
+
+\begin{table}
+    % \halign{...} is more flexible than \begin{table}...\end{table}.
+    \hbox to \textwidth{%
+         \hfill
+        \vbox{\halign{
+            \strut #&            % 0. \strut
+            #\hfil\qquad&        % 1. left
+            \hfil #\hfil\qquad&  % 2. center
+            \hfil #\cr           % 3. right
+            %
+            & apple& banana& cherry\cite{Lamport:1994}\cr
+            & aardvark& boa constrictor& coyote\cr
+        }}
+        \hfill
+    }
+    \caption[short caption for table of contents]{%
+        This is a really long and boring caption.
+        It goes on and on as if it thinks what it says is important.
+        Here is some more of it.
+        The citation for ``Lamport::1994'' is ``\cite{Lamport:1994}''.%
+    }
+    \label{ta:fruit}
+\end{table}
+
+% This is loosely based on page 106 of _A Guide to LaTeX_, third edition,
+% by Helmut Kopka and Patrick W. Daly.
+%\begin{longtable}{|l|l|}
+%  \caption{2.2 ``State'' Abbreviations}\\
+%  \hline
+%  ``State''& Abbreviation\\
+%  \hline \endfirsthead
+%  \caption[]{\emph{continued}}\\
+%  \hline
+%  ``State''& Abbreviation\\
+%  \hline \endhead
+%  \hline
+%  \multicolumn{2}{r}{\emph{continued on next page}}
+%  \endfoot
+%  \hline\endlastfoot
+%  Alabama& AL\\
+%  Alaska& AK\\
+%  American Samoa& AS\\
+%  Arizona& AZ\\
+%  Arkansas& AR\\
+%  Armed Forces Europe& AE\\
+%  Armed Forces Pacific& AP\\
+%  Armed Forces the Americas& AA\\
+%  California& CA\\
+%  Colorado& CO\\
+%  Connecticut& CT\\
+%  Delaware& DE\\
+%  District of Columbia& DC\\
+%  Federated States of Micronesia& FM\\
+%  Florida& FL\\
+%  Georgia& GA\\
+%  Guam& GU\\
+%  Hawaii& HI\\
+%  Idaho& ID\\
+%  Illinois& IL\\
+%  Indiana& IN\\
+%  Iowa& IA\\
+%  Kansas& KS\\
+%  Kentucky& KY\\
+%  Louisiana& LA\\
+%  Maine& ME\\
+%  Marshall Islands& MH\\
+%  Maryland& MD\\
+%  Massachusetts& MA\\
+%  Michigan& MI\\
+%  Mississippi& MS\\
+%  Missouri& MO\\
+%  Montana& MT\\
+%  N Minnesota
+%  Nebraska& NE\\
+%  Nevada& NV\\
+%  New Hampshire& NH\\
+%  New Jersey& NJ\\
+%  New Mexico& NM\\
+%  New York& NY\\
+%  North Carolina& NC\\
+%  North Dakota& ND\\
+%  Northern Mariana Islands& MP\\
+%  Ohio& OH\\
+%  Oklahoma& OK\\
+%  Oregon& OR\\
+%  Pennsylvania& PA\\
+%  Puerto Rico& PR\\
+%  Rhode Island& RI\\
+%  South Carolina& SC\\
+%  South Dakota& SD\\
+%  Tennessee& TN\\
+%  Texas& TX\\
+%  Utah& UT\\
+%  Vermont& VT\\
+%  Virgin Islands, U.S.& VI\\
+%  Virginia& VA\\
+%  Washington& WA\\
+%  West Virginia& WV\\
+%  Wisconsin& WI\\
+%  Wyoming& WY\\
+%\end{longtable}
+
+\newcommand{\cbackslash}{\char'134}
+\newcommand{\copencurly}{\char'173}
+\newcommand{\cclosecurly}{\char'175}
+
+\newlength{\twidth}
+\newlength{\theight}
+
+\setlength{\twidth}{\textwidth}
+\setlength{\theight}{\textheight}
+
+\begin{sidewaystable}
+    % The following two lines compensate for what I think is a bug.
+    \setlength{\textwidth}{\theight}
+    \setlength{\textheight}{\twidth}
+    \caption{%
+        2.3 sidewaystable mode
+        {\tt\cbackslash begin\copencurly table\cclosecurly\/}%
+        \ldots
+        {\tt\cbackslash end\copencurly table\cclosecurly\/} table%
+    }
+    \hbox to \textwidth{
+        \hfill
+        \begin{tabular}{lcr}
+            apple& banana& cherry\\
+            aardvark& boa constrictor& coyote\\
+        \end{tabular}
+        \hfill
+    }
+\end{sidewaystable}
+
+\begin{sidewaystable}
+    % The following two lines compensate for what I think is a bug.
+    \setlength{\textwidth}{\theight}
+    \setlength{\textheight}{\twidth}
+    \caption{%
+        2.4 sidewaystable mode
+        {\tt\cbackslash halign\copencurly ...\cclosecurly\/} table%
+    }
+    \hbox to \textwidth{%
+        \hfill
+        \vbox{\halign{
+            \strut #&            % 0. \strut
+            #\hfil\qquad&        % 1. left
+            \hfil #\hfil\qquad&  % 2. center
+            \hfil #\cr           % 3. right
+            %
+            & apple& banana& cherry\cr
+            & aardvark& boa constrictor& coyote\cr
+        }}
+        \hfill
+    }
+\end{sidewaystable}
+
+\begin{table}
+    \begin{tabular}{lcr}
+        apple& banana& cherry\\
+        aardvark& boa constrictor& coyote\\
+        apple& banana& cherry\\
+        aardvark& boa constrictor& coyote\\
+        apple& banana& cherry\\
+        aardvark& boa constrictor& coyote\\
+        apple& banana& cherry\\
+        aardvark& boa constrictor& coyote\\
+        apple& banana& cherry\\
+        aardvark& boa constrictor& coyote\\
+        apple& banana& cherry\\
+        aardvark& boa constrictor& coyote\\
+        apple& banana& cherry\\
+        aardvark& boa constrictor& coyote\\
+        apple& banana& cherry\\
+        aardvark& boa constrictor& coyote\\
+    \end{tabular}
+    \caption{2.5 left hand table}
+\end{table}
+
+\begin{table}
+    \begin{tabular}{lcr}
+        apple& banana& cherry\\
+        aardvark& boa constrictor& coyote\\
+    \end{tabular}
+    \caption{2.6 left hand table}
+\end{table}
+
+\begin{sidewaystable}
+    % The following two lines compensate for what I think is a bug.
+    \setlength{\textwidth}{\theight}
+    \setlength{\textheight}{\twidth}
+    \caption{%
+        2.7 sidewaystable mode
+        {\tt\cbackslash begin\copencurly table\cclosecurly\/}%
+        \ldots
+        {\tt\cbackslash end\copencurly table\cclosecurly\/} table%
+    }
+    \hbox to \textwidth{%
+        \hfill
+        \begin{tabular}{lcr}
+            apple& banana& cherry\\
+            aardvark& boa constrictor& coyote\\
+        \end{tabular}
+        \hfill
+    }
+\end{sidewaystable}
+
+%\newlength{\ta}
+%\settowidth{\ta}{\vbox{\hbox{Money}\hbox{Market}}}
+%\newlength{\tb}
+%\settowidth{\tb}{\vbox{\hbox{Stocks}\hbox{and}\hbox{Bonds}}}
+%\newlength{\tc}
+%\settowidth{\tc}{\vbox{\hbox{Money}\hbox{Market}\hbox{and}\hbox{Stocks}}}
+%
+%  {\renewcommand{\baselinestretch}{1}
+%\begin{table}
+%  \caption{\hfil Allocation of the IRA and Keogh Wealth\hfil\break\mbox{}\hfil for Investors With or Without Brokerage Accounts\hfil}
+%  \label{tab:ira}
+%  \begin{center}
+%    \begin{tabular}%
+%      {%
+%        |%
+%        c%
+%        |%
+%        >{\centering\hspace{0pt}}m{\the\ta}%  Money Market
+%        |%
+%        c%                                    Stocks 
+%        |%
+%        c%                                    Bonds
+%        |%
+%        c%                                    Diversified
+%        |%
+%        >{\centering\hspace{0pt}}m{\the\tb}%  Stocks and Bonds
+%        |%
+%        >{\centering\hspace{0pt}}m{\the\tc}%  Money Market and Stocks
+%        |%
+%        c%                                    Others
+%        |%
+%      }
+%      \hline
+%      IMP&
+%        Money Market&
+%        Stocks&
+%        Bonds&
+%        Diversified&
+%        Stocks and Bonds&
+%        Money Market and Stocks&
+%        Others\tabularnewline
+%      \hline
+%      1& 14.19\%& 57.71\%& 12.21\%& 4.50\%& 7.36\%& 3.04\%& 0.99\%\tabularnewline \hline
+%      2& 14.08\%& 58.18\%& 12.32\%& 4.44\%& 7.30\%& 2.80\%& 0.88\%\tabularnewline \hline
+%      3 &14.26\%& 58.09\%& 12.27\%& 4.50\%& 7.19\%& 2.75\%& 0.94\%\tabularnewline \hline
+%      4 &13.94\%& 58.11\%& 12.14\%& 4.78\%& 7.35\%& 2.68\%& 0.99\%\tabularnewline \hline
+%      5 &13.92\%& 58.13\%& 11.93\%& 4.56\%& 7.60\%& 2.98\%& 0.88\%\tabularnewline \hline
+%    \end{tabular}
+%  \end{center}
+%  This table presents the allocations of the wealth in the IRA
+%  and Keogh accounts in various asset classes.
+%  Results from each set of imputed data are presented here.
+%  The first column lists the number of the imputations,
+%  and rest of the columns lists various allocations.
+%  Entrees under each asset class show the percentage of investors
+%  who have most of their IRA
+%  and Keogh wealth invested in that particular asset class.
+%  The asset class Diversified
+%  includes stocks,
+%  bonds,
+%  and money market investments.
+%  The asset class Others
+%  include investments in various life insurance products,
+%  annuities,
+%  real estate, etc.
+%  \medskip
+%  \footnotesize SOURCE: Survey of Consumer Finances,
+%  2001,
+%  Federal Reserve Board,
+%  USA.\par
+%\end{table}
+%  }
+
+\begin{table}
+    \caption{Presidents}
+    \begin{center}
+        \begin{tabular}{cl}
+            \#& Name\\
+            1&  George Washington\\
+            2&  John Adams\\
+            3&  Thomas Jefferson\\
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}
+    \caption{Presidents with horizontal and vertical lines}
+    \begin{center}
+        \begin{tabular}{|c|l|}
+            \hline
+            \#& Name\\
+            \hline
+            1&  George Washington\\
+            \hline
+            2&  John Adams\\
+            \hline
+            3&  Thomas Jefferson\\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}

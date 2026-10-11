@@ -1,0 +1,216 @@
+\documentclass[
+12pt, % The default document font size, options: 10pt, 11pt, 12pt
+oneside, % Two side (alternating margins) for binding by default, uncomment to switch to one side
+english, 
+onehalfspacing, % Single line spacing, alternatives: onehalfspacing or doublespacing
+% draft, % Uncomment to enable draft mode (no pictures, no links, overfull hboxes indicated)
+%nolistspacing, % If the document is onehalfspacing or doublespacing, uncomment this to set spacing in lists to single
+%liststotoc, % Uncomment to add the list of figures/tables/etc to the table of contents
+%toctotoc, % Uncomment to add the main table of contents to the table of contents
+%parskip, % Uncomment to add space between paragraphs
+%nohyperref, % Uncomment to not load the hyperref package
+headsepline, % Uncomment to get a line under the header
+%chapterinoneline, % Uncomment to place the chapter title next to the number on one line
+%consistentlayout, % Uncomment to change the layout of the declaration, abstract and acknowledgements pages to match the default layout
+]{MastersDoctoralThesis} % The class file specifying the document structure
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{scrextend}
+%\changefontsizes[14pt]{14pt}
+
+% To include the City Pings table
+% which was printed as a PDF via Google Sheets
+% \usepackage{pdfpages}
+
+\usepackage{palatino}
+\usepackage{url}
+
+% https://tex.stackexchange.com/questions/54055/using-lower-case-roman-numerals-in-enumerate-lists
+\usepackage{enumerate}
+
+% \usepackage{natbib}
+% \bibliographystyle{unsrtnat}
+\usepackage[backend=bibtex,citestyle=numeric,natbib=true,sorting=none]{biblatex}
+\addbibresource{References.bib}
+
+\usepackage[autostyle=true]{csquotes}
+
+\usepackage{lipsum}
+\usepackage{xargs}
+
+% Leave todo comments in the PDF!
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\newcommandx{\bug}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=green,backgroundcolor=green!25,bordercolor=green,#1]{#2}}
+\newcommandx{\fixme}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+
+% https://www.overleaf.com/learn/latex/Code_Highlighting_with_minted
+\usepackage{minted}
+\setminted{fontsize=\footnotesize,baselinestretch=1,linenos,frame=lines,framesep=10pt}
+
+% Figures directory is located in the root
+\graphicspath{ {./figures/} }
+
+\usepackage{titlesec}
+
+% https://tex.stackexchange.com/questions/45817/theorem-definition-lemma-problem-numbering
+% \usepackage{amsthm}
+% \theoremstyle{definition}
+% \newtheorem{defn}[thm]{Definition}
+
+% https://tex.stackexchange.com/questions/89354/forcing-math-mode-to-be-on-the-same-line
+% \binoppenalty=3000
+% \relpenalty=3000
+
+% ???
+\usepackage{fixltx2e}
+
+%----------------------------------------------------------------------------------------
+%	MARGIN SETTINGS
+%----------------------------------------------------------------------------------------
+
+\geometry{
+	paper=a4paper, % Change to letterpaper for US letter
+	inner=2.5cm, % Inner margin
+	outer=3.8cm, % Outer margin
+	bindingoffset=.5cm, % Binding offset
+	top=1.5cm, % Top margin
+	bottom=1.5cm, % Bottom margin
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+
+%----------------------------------------------------------------------------------------
+%	THESIS INFORMATION
+%----------------------------------------------------------------------------------------
+
+\thesistitle{Improving security \& performance of PoW Blockchains using Anchors}
+\supervisor{Prof. Vinay J. Ribeiro}
+\degree{Master of Technology}
+\author{Shadab Zafar}
+\addresses{}
+
+\subject{Blockchain}
+\keywords{}
+
+\university{IIT Delhi}
+\department{Department of Computer Science and Engineering}
+\faculty{Prof. Vinay J. Ribeiro}
+
+\begin{document}
+
+\frontmatter
+
+\pagestyle{plain}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage}
+\begin{center}
+\includegraphics[width=30mm,height=30mm]{iitd-logo-large}
+\\
+\vspace*{.06\textheight}
+{\scshape\LARGE \univname\par}\vspace{1.5cm}
+\textsc{\Large Masters Thesis}\\[0.5cm]
+
+\HRule \\[0.4cm]
+{\huge \bfseries \ttitle\par}\vspace{0.4cm}
+\HRule \\[1.5cm]
+
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+\authorname
+\end{flushleft}
+\end{minipage}
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushright} \large
+\emph{Supervisor:} \\
+\supname
+\end{flushright}
+\end{minipage}\\[3cm]
+
+\vfill
+
+\large \textit{
+	A thesis submitted in partial fulfillment of the requirements\\
+	for the degree of \degreename
+}\\[0.3cm]
+	\textit{in the}\\[0.4cm]
+	\deptname\\[1cm]
+
+	{\large \monthyeardate\today}
+
+\end{center}
+\end{titlepage}
+
+\makecertificate
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{abstract}
+\addchaptertocentry{\abstractname}
+
+An abstract describes the entire work in a short passage or two.
+
+\end{abstract}
+
+%----------------------------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%----------------------------------------------------------------------------------------
+
+\begin{acknowledgements}
+\addchaptertocentry{\acknowledgementname}
+First, I'd like to thank \supname, without whose guidance and supervision this work would not have been possible.
+Next, I'd like to thank my co-authors and lab-mates Ovia Seshadri and Aditya Kumar for discussing the finer details of the projects and helping me whenever I was stuck.
+
+This work would've moved considerably slowly had it not been for the helpful folks in the Bitcoin community (Slack, IRC, StackOverflow, Reddit etc.)
+I've received help from many people, but I'd specially like to thank Gregory Maxwell and Luke Dashjr for taking time out of their lives and helping me figure out the peculiarities of the Bitcoin Core client.
+\end{acknowledgements}
+
+%----------------------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES PAGES
+%----------------------------------------------------------------------------------------
+
+\tableofcontents
+
+\listoffigures
+% \listoflistings
+% \listoftables
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - CHAPTERS
+%----------------------------------------------------------------------------------------
+
+\mainmatter
+
+\pagestyle{thesis}
+
+% https://tex.stackexchange.com/questions/59726/change-size-of-section-subsection-subsubsection-paragraph-and-subparagraph-ti
+
+\include{chapters/Chapter-1.tex}
+
+%----------------------------------------------------------------------------------------
+%	THESIS CONTENT - APPENDICES
+%----------------------------------------------------------------------------------------
+
+% \appendix
+
+%\include{Appendices/AppendixA}
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+% \bibliography{References}
+\printbibliography[heading=bibintoc]
+
+% \fixme{Add URLs to every ref, so page count increases!}
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

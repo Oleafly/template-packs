@@ -1,0 +1,157 @@
+\chapter{Disease descriptions}
+\label{sec:pathologies}
+
+\section{Chest Pathologies in CXR}
+
+Chest X-ray images encode a broad spectrum of pathological findings, ranging from subtle parenchymal opacities 
+to gross structural abnormalities. A thorough understanding of these conditions is essential for appreciating 
+the challenges posed to both radiologists and automated diagnostic systems. In this work, we focus on 
+pathologies annotated in the CheXpert dataset, which we group below by anatomical compartment.
+
+\subsection{Airspace and Parenchymal Diseases}
+
+Airspace diseases are characterized by abnormal filling or collapse of the alveolar spaces, and are among 
+the most commonly encountered findings on CXR.
+
+\subsubsection{Atelectasis}
+Atelectasis refers to the partial or complete collapse of lung tissue, resulting in reduced or absent aeration 
+of the affected region. On CXR, it typically manifests as increased opacity with associated volume loss, 
+displacement of fissures, and shift of the mediastinum toward the affected side. It may arise from 
+obstruction of a bronchus, external compression, or loss of surfactant.
+
+\subsubsection{Consolidation}
+Consolidation occurs when the normally air-filled alveoli are replaced by fluid, cells, or other material, 
+resulting in a homogeneous increase in lung density. It is radiologically characterised by airspace opacification 
+with air bronchograms, and is commonly associated with pneumonia, pulmonary haemorrhage, or organising 
+pneumonia.
+
+\subsubsection{Lung Opacity}
+Lung opacity is a broad descriptor encompassing any increase in radiodensity within the pulmonary parenchyma, 
+including ground-glass opacity and frank consolidation. It may reflect a range of underlying processes 
+including infection, oedema, haemorrhage, and interstitial fibrosis. Automated classification systems often 
+encounter difficulty in disambiguating opacity subtypes due to their overlapping appearances.
+
+\subsubsection{Lung Lesion}
+Lung lesions refer to discrete focal abnormalities within the pulmonary parenchyma, including nodules, 
+masses, and cavitary lesions. They carry significant clinical importance as potential indicators of 
+malignancy, tuberculosis, or fungal infection. Due to their relatively small size and low prevalence 
+in population-level datasets, they present a significant challenge for deep learning models.
+
+\subsubsection{Pneumonia}
+Pneumonia is an infectious process resulting in inflammatory consolidation of one or more lung lobes. 
+Radiographic findings include lobar or segmental opacification, air bronchograms, and in advanced cases, 
+pleural effusion. Despite being a clinically common diagnosis, it exhibits significant visual overlap with 
+other airspace pathologies, contributing to label uncertainty in automated annotation pipelines.
+
+\subsubsection{Edema}
+Pulmonary oedema arises from accumulation of fluid in the alveolar and interstitial spaces, most commonly 
+secondary to cardiac failure or acute lung injury. CXR findings include bilateral perihilar opacification 
+in a ``butterfly'' or ``bat-wing'' distribution, Kerley B lines, and upper lobe vascular redistribution. 
+It is frequently co-occurring with cardiomegaly and pleural effusions, introducing multi-label complexity 
+in classification tasks.
+
+\subsection{Pleural Diseases}
+
+Pleural pathologies affect the lining of the lungs and chest wall, and are readily identifiable on CXR 
+due to the distinct density interfaces they produce.
+
+\subsubsection{Pleural Effusion}
+Pleural effusion refers to abnormal accumulation of fluid within the pleural space. On an upright CXR, 
+small effusions present as blunting of the costophrenic angle, while larger effusions cause homogeneous 
+basal opacification with a meniscal upper border. Pleural effusion is one of the most prevalent and 
+reliably labelled findings in large-scale CXR datasets.
+
+\subsubsection{Pleural Other}
+This label encompasses less common pleural abnormalities not captured under effusion, including pleural 
+thickening, pleural plaques (often associated with asbestos exposure), and fibrothorax. These findings 
+are less common in general populations, resulting in significant class imbalance in CXR datasets.
+
+\subsubsection{Pneumothorax}
+Pneumothorax is defined as the presence of air in the pleural space, leading to lung collapse. It presents 
+as a hyperlucent region at the lung apex devoid of vascular markings, with a visible pleural line. 
+Tension pneumothorax, a life-threatening variant, may cause mediastinal shift away from the affected side. 
+Automated detection of pneumothorax is clinically critical due to its potential for rapid deterioration.
+
+\subsection{Cardiac and Mediastinal Diseases}
+
+\subsubsection{Cardiomegaly}
+Cardiomegaly is defined as an abnormal enlargement of the cardiac silhouette, commonly assessed via 
+the cardiothoracic ratio on CXR. A ratio exceeding 0.5 on a posteroanterior (PA) view is generally 
+considered diagnostic. It is associated with a range of underlying conditions including congestive heart 
+failure, valvular disease, and cardiomyopathy. Cardiomegaly is notable in this work as it is one of 
+the pathologies for which latent space visualization was performed in \Cref{chap:VAE}.
+
+\subsubsection{Enlarged Cardiomediastinum}
+Enlargement of the cardiomediastinal silhouette encompasses widening of the mediastinum beyond normal 
+anatomical limits. This may reflect mediastinal masses, lymphadenopathy, aortic aneurysm, or superior 
+vena cava dilation, in addition to cardiomegaly. Distinguishing cardiomegaly from a widened mediastinum 
+is often context-dependent and contributes to label ambiguity in automated annotation.
+
+\subsection{Structural and Traumatic Findings}
+
+\subsubsection{Fracture}
+Rib and clavicular fractures are identifiable on CXR as cortical discontinuities with or without 
+displacement. They are clinically relevant as they may indicate underlying pulmonary contusion, 
+pneumothorax, or haemothorax. Fractures represent one of the most infrequent labels in standard 
+CXR datasets, contributing to severe class imbalance.
+
+\subsection{Support Devices}
+
+\subsubsection{Support Devices}
+This label encompasses the presence of medical devices visible on CXR, including endotracheal tubes, 
+central venous catheters, chest drains, pacemaker leads, and nasogastric tubes. Correct identification 
+of device placement is clinically important for patient safety. From a machine learning perspective, 
+the presence of support devices may confound pathology classification, as critically ill patients 
+with devices often concurrently exhibit multiple pathologies.
+
+\subsection{No Finding}
+
+The \textit{No Finding} class denotes CXRs with no identifiable radiographic abnormality. It constitutes 
+the largest class in most CXR datasets due to the natural prevalence of healthy subjects in screening 
+populations. In automated classification, the dominance of this class relative to rare pathologies 
+contributes to significant label imbalance, necessitating careful handling during model training 
+and evaluation.
+
+\subsection{Summary and Challenges}
+
+\Cref{tab:pathology_overview} summarises the pathologies described above. A consistent challenge 
+across all categories is the co-occurrence of multiple findings within a single image, the subtlety 
+of early-stage disease, and the substantial variability in radiographic appearance arising from 
+differences in patient positioning, exposure settings, and anatomy. These factors collectively 
+motivate the development of robust generative models capable of producing high-fidelity, 
+pathology-controlled synthetic CXR images.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{llp{7.5cm}}
+\toprule
+\textbf{Category} & \textbf{Pathology} & \textbf{Key Radiographic Feature} \\
+\midrule
+\multirow{6}{*}{Airspace / Parenchymal}
+    & Atelectasis            & Increased opacity with volume loss \\
+    & Consolidation          & Homogeneous opacification, air bronchograms \\
+    & Lung Opacity           & Generalised increase in radiodensity \\
+    & Lung Lesion            & Discrete focal nodule or mass \\
+    & Pneumonia              & Lobar/segmental consolidation \\
+    & Edema                  & Bilateral perihilar opacification \\
+\midrule
+\multirow{3}{*}{Pleural}
+    & Pleural Effusion       & Costophrenic blunting, basal opacity \\
+    & Pleural Other          & Thickening, plaques, fibrothorax \\
+    & Pneumothorax           & Hyperlucent zone, visible pleural line \\
+\midrule
+\multirow{2}{*}{Cardiac / Mediastinal}
+    & Cardiomegaly           & Cardiothoracic ratio $>$ 0.5 \\
+    & Enlarged Cardiomediastinum & Widened mediastinal silhouette \\
+\midrule
+Structural / Traumatic & Fracture & Cortical discontinuity of ribs/clavicle \\
+\midrule
+Device-related & Support Devices & Visible catheters, tubes, leads \\
+\midrule
+Normal & No Finding & Absence of radiographic abnormality \\
+\bottomrule
+\end{tabular}
+\caption{Overview of CXR pathologies considered in this work, grouped by anatomical category.}
+\label{tab:pathology_overview}
+\end{table}

@@ -1,0 +1,216 @@
+\long\def\ignore#1{}
+
+%   Author:  Arthur Baragar, baragar@unlv.edu
+%   April, 2002.
+% This is my attempt to create a UNLV thesis style.  Please note 
+% that I don't make the rules.  This file might need some tweaking.
+% I've tried to describe what does what.
+%
+% This should be used with 
+%   \documentclass[oneside,12point]{book}
+%   \usepackage{amsthm,amssymb,amsmath,setspace,UNLVthesis}
+%   \pagestyle{unlv}
+% For the abstract, use
+%   \chapter*{Abstract}\addcontentsline{toc}{schapter}{ABSTRACT}
+% and proceed with the contents of the abstract. 
+% For the bibliography, use
+%    \begin{thebibliography}{10}
+%    \addcontentsline{toc}{schapter}{\bibname}
+%    \begin{spacing}{1} %This makes it single spaced.
+%and at the end, insert
+%    \end{spacing}
+%    \end{thebibliography}
+% The {10} can be changed -- replace it with the longest marker in the bibliography.
+
+%This renames the title for the table of contents, etc.
+\renewcommand\contentsname{TABLE OF CONTENTS}%Different title for the table of contents. 
+\renewcommand\listfigurename{LIST OF FIGURES}
+\renewcommand\listtablename{LIST OF TABLES}
+\renewcommand\bibname{BIBLIOGRAPHY}
+
+%This defines the look of the first page of a chapter.
+\def\@makechapterhead#1{%
+  \vspace*{40\p@}%Space above.
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        \centering  \MakeUppercase{\@chapapp}\space \thechapter%Center "Chapter 1".
+        \par\nobreak
+        \vskip 18\p@%Space between Chapter 1 and name of chapter.
+      \fi
+    \fi
+    \interlinepenalty\@M
+    \centering  #1\par\nobreak %Center the chapter title.
+    \vskip 0\p@
+  }}
+\renewcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
+                    \thispagestyle{unlvplain}%
+                    \global\@topnum\z@
+                    \@afterindenttrue %This means the first paragraph is indented (after chapter or section heads).
+                    \secdef\@chapter\@schapter}
+
+%This defines the look of the first page of an unnumbered chapter (like the table of contents).
+\def\@makeschapterhead#1{%
+  \vspace*{40\p@}%This is space above
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \centering  #1\par\nobreak 
+        %This is where chapter* headings are centered.
+    \vskip 18\p@%Space below.
+  }}
+  
+%This defines the style of section headings.
+\renewcommand\section{\@startsection {section}{1}{0pt}%An irrelevant option (because of \centering below.
+                                   {\baselineskip}%the beforeskip
+                                   {1pt}%the afterskip
+                                   {\centering\normalfont}}%This is where the section headings are centered.
+\renewcommand \thesection {} %This means there are no section numbers.
+%This defines the look of section entries in the table of contents.
+\renewcommand\@dotsep{1.5}
+\renewcommand*\l@section{\@dottedtocline{1}{0em}{0em}}  
+%Second argument defines spacing before section titles.  Third is the gap for numbers (there aren't any).
+  
+
+%This defines the look of chapter entries in the table of contents.
+\renewcommand*\l@chapter[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode 
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      %\vskip -1\baselineskip 
+      %\@dottedtocline{0}{0em}{1.5em}{CHAPTER #1}{#2}\par
+      \hskip -\leftskip CHAPTER #1\nobreak\ \dotfill\  \nobreak\hb@xt@\@pnumwidth{\hss #2}\par  
+        %This is where chapter heads in toc is defined.
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
+%\renewcommand*\l@chapter{\@dottedtocline{0}{1.5em}{2.3em}}
+\newcommand*\l@schapter[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode 
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      %\vskip -1\baselineskip\@dottedtocline{0}{0em}{2.3em}{#1}{#2}\par
+      \hskip -\leftskip #1\nobreak\ \dotfill\  \nobreak\hb@xt@\@pnumwidth{\hss #2}\par  
+        %This is where chapter heads in toc is defined.
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
+  
+% These commands make the table of contents single spaced.  
+\AtBeginDocument{
+\addtocontents{toc}{\protect\begin{spacing}{1}}% These commands make the table of contents
+\addtocontents{lot}{\protect\begin{spacing}{1}}% single spaced.  These commands are closed
+\addtocontents{lof}{\protect\begin{spacing}{1}}}% in \AtEndDocument
+
+\AtEndDocument{\addtocontents{toc}{\protect\end{spacing}}
+\addtocontents{lof}{\protect\end{spacing}}
+\addtocontents{lot}{\protect\end{spacing}}
+\hbox{}\thispagestyle{empty}} % I had to insert an empty page so that
+% these commands were sent to the toc files.  I haven't yet figured out
+% how to avoid it.  
+
+%This kills the header -- leaving only the page numbers in normal size.  It is invoked using \pagestyle{unlv} in the preamble.
+\newcommand{\ps@unlv}{
+  \renewcommand{\@oddhead}{\hfill \normalsize \thepage}
+  \renewcommand{\@evenhead}{\normalsize \thepage}
+ }
+\newcommand{\ps@unlvplain}{
+  \renewcommand{\@oddhead}{}
+  \renewcommand{\@evenhead}{}
+  \renewcommand{\@oddfoot}{\hfil \normalsize \thepage \hfil}                       
+ }
+
+%This makes it double spaced.
+\renewcommand{\baselinestretch}{2.0}
+
+%These define the page layout -- fairly self explanatory.    
+\setlength{\oddsidemargin}{0.5in}
+\setlength{\textwidth}{6in}
+\setlength{\textheight}{8.75in}
+\setlength{\topmargin}{-.25in}
+\setlength{\headsep}{\baselineskip}
+
+%These commands govern figure spacing
+\setlength{\intextsep}{3\baselineskip}%The spacing for figures between text.
+\setlength{\textfloatsep}{3\baselineskip}%The spacing separating a figure from text at the top or bottom of a page.
+\setlength{\belowcaptionskip}{-\baselineskip}%Adjustment to get the above to work properly.
+
+%These commands adjust footnote parameters.
+\setlength{\footnotesep}{2\baselineskip}% Footnotes have doublespaces between them.
+\addtolength{\skip\footins}{-\baselineskip}
+\renewcommand{\footnoterule}{\vspace*{\baselineskip}\noindent\rule{2in}{.5pt}\vspace*{-.5\baselineskip}}
+%This was stolen from the setspace.sty package by Geoffrey Tobin.  
+%It makes the footnotes single spaced and normalsize.
+\long\def\@footnotetext#1{%
+  \insert\footins{%
+% GT:  Next line added.  Hook desired here!
+    \def\baselinestretch {1}%\setspace@singlespace}%My only modification.
+    \reset@font\normalsize %UNLV style wants footnotes in normal font size.
+    \interlinepenalty\interfootnotelinepenalty
+    \splittopskip\footnotesep
+    \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
+    \hsize\columnwidth
+    \@parboxrestore
+    \protected@edef\@currentlabel{%
+      \csname p@footnote\endcsname\@thefnmark
+    }%
+    \color@begingroup
+      \@makefntext{%
+        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
+    \color@endgroup}}
+
+
+
+% The rest of this is garbage.  I have left it here to remind me 
+% of how some things can be achieved.
+%\renewcommand{\belowcaptionskip}{\baselineskip}
+\ignore{Put this in later.
+%This changes the caption environment for figures, tables, etc.
+\newsavebox{\test@cap@box}
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox{\test@cap@box}{#2}%
+  \ifdim\wd\test@cap@box=0pt
+    \sbox\@tempboxa{{#1} #2}% This is what is set with \caption{}
+  \else
+    \sbox\@tempboxa{{#1.}  #2}%
+  \fi
+  \ifdim \wd\@tempboxa >\hsize
+    \begin{center}\parbox[t]{4.1in}{{#1.} #2}\end{center}%\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+}
+
+
+
+%Some experiments ....
+%\newsavebox{\test@sec@box}
+%\renewcommand{\section}[2][]{%
+%    \sbox{\test@sec@box}{#1}
+%    \ifdim\wd\test@sec@box=0pt \def\@mytocsecname{#2} \else \def\@mytocsecname{#1} \fi%
+%    \@mysection[\@mytocsecname]{#2}\vskip -.5\baselineskip}
+%This redefines the section number to be empty.
+%This is how I got around the obove problem.  This definition includes how the 
+%toc entry looks.  There are no section numbers, so nothing should depend on the
+%section number.
+%\renewcommand{\section}{\secdef\@section\@section}
+%\newcommand{\@section}[2][?]{%
+%    \addcontentsline{toc}{section}{\protect\hskip 10pt #1}%
+%    {\vskip .5\baselineskip \centerline{#2}\vskip -\baselineskip}}

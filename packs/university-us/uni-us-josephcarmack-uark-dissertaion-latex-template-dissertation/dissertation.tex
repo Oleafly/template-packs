@@ -1,0 +1,152 @@
+\documentclass[12pt,a4paper,oneside]{book}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% start of the preamble
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% set the margins to 1 inch
+\usepackage[margin=1in]{geometry}
+% for including figures
+\usepackage{graphicx}
+% use etoolbox package for patching \chapter command to get no page numbering
+% in the front matter
+\usepackage{etoolbox}
+% for equation formatting
+\usepackage{amsmath,amsthm}
+% bibliography packages (square brackets, numbers, and other options etc.)
+\usepackage[square,numbers,sort&compress,comma,sectionbib]{natbib}
+% set the spacing between bibliography entries
+\setlength{\bibsep}{12pt}
+% for having separate bibliographies for each chapter
+\usepackage{chapterbib}
+% sets default double spacing and for use of the 
+% \doublespacing and \singlespacing commands
+\usepackage[doublespacing]{setspace}
+% for getting rid of over/under-full hbox warnings
+\usepackage[T1]{fontenc}
+% for doing custom 'description' lists used to create the ListOfPublishedPapers
+\usepackage{enumitem}
+% for doing custom 'description' lists used to create the ListOfPublishedPapers
+\usepackage{calc}
+% for getting correct word breakup when hyphenating
+\hyphenation{con-sti-tu-tion-al}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% adjust the table of contents to have 12 pt font and same font family as the
+% rest of the document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% package for using \cft* commands used below
+\usepackage{tocloft}
+
+% change font for chapters, sections, subsections, and subsubsections entries
+% in the table of contents
+\renewcommand{\cftchapfont}{\normalfont\rmfamily\bfseries}   
+\renewcommand{\cftsecfont}{\normalfont\rmfamily}   
+\renewcommand{\cftsubsecfont}{\normalfont\rmfamily}   
+\renewcommand{\cftsubsubsecfont}{\normalfont\rmfamily}   
+
+% no page numbers for table of contents
+\tocloftpagestyle{empty}
+
+% remove white space above table of contents heading and below it.
+\setlength{\cftbeforetoctitleskip}{-27.73pt}
+\setlength{\cftaftertoctitleskip}{0pt}
+
+% change font for the table of contents heading
+\renewcommand{\cfttoctitlefont}{\normalfont\rmfamily\bfseries}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Customize Headings for Chapters and sections to all be same font, size, and
+% minimize white space
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% for using \titleformat and \titlespacing commands below
+\usepackage[explicit]{titlesec}
+
+% format chapter headings using the following two commmands:
+% 
+% \titleformat{<command to format>}[<shape>]{<format>}{<label format>}{<label spacing>}{<before title code>}
+%
+% \titlespacing{<command>}{<distance from left margin>}{<before verticle space>}{<after verticle space>}
+%
+
+% format chapter headings
+\titleformat{\chapter}[display]{\normalfont\bfseries}
+{\chaptertitlename\ \thechapter}{0pt} {#1}
+\titlespacing{\chapter}{0pt}{-27.73pt}{2em}
+
+% format section headings
+\titleformat{\section}[block]{\normalfont\bfseries} {\thesection}{0.5em} {#1}
+\titlespacing{\section}{0pt}{\parskip}{\parskip}
+
+% format subsection headings
+\titleformat{\subsection}[block]{\normalfont\bfseries}
+{\thesubsection}{0.5em} {#1}
+\titlespacing{\subsection}{0pt}{\parskip}{\parskip}
+
+% format subsubsection headings
+\titleformat{\subsubsection}[block]{\normalfont\bfseries}
+{\thesubsubsection}{0.5em} {#1}
+\titlespacing{\subsubsection}{0pt}{\parskip}{\parskip}
+
+% if you are going to use other headings they will also have to be formated
+% using the \titleformat and \titlespacing commands
+
+% format \section* headings so there is a one line space after them and they
+% are added to the table of contents. Only the bibliographies are \section* and
+% must be added to the bibliography. For some reason the bibliography headings
+% do not have a space after the them without this modification
+\titleformat{name=\section,numberless}[block]{\normalfont\bfseries}
+{}{0pt}{\addcontentsline{toc}{section}{#1}#1}
+\titlespacing{name=\section,numberless}{0pt}{\parskip}{12pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% end of preamble
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% start of the front matter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% this page style removes page headers, footers, and page numbers which is
+% required for the front matter
+\pagestyle{empty}
+
+% start a group for making the changes to \chapter command local to this group
+\begingroup
+% use the \patchcmd from the etoolbox package to change the pagestyle for the
+% \chapter command from plain to empty. This is necessary because the front
+% matter uses chapters and we don't want them to have page numbers.
+\patchcmd{\chapter}{plain}{empty}{}{}
+
+% include the front matter tex files: titlepage, abstract, acknowledgements,
+% and listOfPublishedPapers. All of which use \chapter sectioning.
+\include{frontmatter/titlepage}
+\include{frontmatter/abstract}
+\include{frontmatter/acknowledgements}
+\tableofcontents
+\include{frontmatter/listOfPublishedPapers}
+
+% ends group controlling chapter page style for frontmatter
+\endgroup
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% end of the front matter and beginning of the main matter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\mainmatter                 % restarts page numbering at page 1
+\pagestyle{plain}           % no headers or footers, just page number
+
+% include each chapter in the disseration
+\include{chapters/chapter1/chapter1}
+\include{chapters/chapter2/chapter2}
+\include{chapters/chapter3/chapter3}
+\include{chapters/chapter4/chapter4}
+\include{chapters/chapter5/chapter5}
+\include{chapters/chapter6/chapter6}
+\include{chapters/chapter7/chapter7}
+
+\end{document}

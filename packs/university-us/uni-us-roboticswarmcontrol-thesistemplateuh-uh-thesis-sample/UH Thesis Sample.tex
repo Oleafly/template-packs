@@ -1,0 +1,124 @@
+\documentclass[12pt]{report}
+\usepackage{ECE_Dissertation_Style}
+\usepackage{amsmath,amssymb,latexsym,float,epsfig,subfigure,overpic}
+%these margins allow you to use the default "shrink oversize pages" option when printing
+\usepackage[lmargin=1.40 in, rmargin=0.86 in,tmargin=1.0 in,bmargin=1.0 in]{geometry}
+\usepackage{indentfirst}
+\usepackage{afterpage}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{etoolbox}
+%%% bookmarks - color them black
+\hypersetup{
+	colorlinks=true,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=black
+}
+%Set graphics path
+\graphicspath{{./pictures/pdf/},{./pictures/ps/},{./pictures/png/},{./pictures/jpg/}}
+\captionsetup{format=hang}
+%Fill pages with text and floats
+\renewcommand\textfraction{.1}
+\renewcommand\topfraction{.9}
+\renewcommand\bottomfraction{.7}
+\renewcommand\floatpagefraction{.7}
+%Remove white space above chapter headings
+\makeatletter
+\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter head
+\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter* head
+\makeatother
+
+
+\begin{document}
+
+%Set limits on font sizes for headings
+\chapternumberfont{\fontsize{16}{20}\selectfont}
+\chaptertitlefont{\centering\fontsize{16}{20}\selectfont}
+\sectionfont{\fontsize{14}{16}\selectfont}
+\subsectionfont{\fontsize{12}{14}\selectfont}
+
+%%
+%%
+\title{My Research in a Nutshell} %% If you want to specify a linebreak
+                               %% in the thesis title, you MUST use
+                               %% \protect\\ instead of \\, as \\ is a
+                               %% fragile command that \MakeUpperCase
+                               %% will break!
+\author{Anne Smith}
+\department{Department of Electrical and Computer Engineering}
+
+%% Can have up to four readers in addition to the advisor.
+%% All have the form
+%%
+%%  \reader{Name}[Department][Institution]
+%%
+%% The second and third arguments are optional, but if you wish to
+%% supply the third, you must supply the second. Department defaults
+%% to the department defined above and Institution defaults to a blank.
+
+\advisor{Aaron T. Becker, Assistant Professor}
+\firstreader{Joseph Reich, Assistant Professor}
+\secondreader{Daniel Corder, Professor}[Department of Computer Science]
+%\setcounter{secnumdepth}{2}
+\degree{Master of Science}
+\major{Electrical Engineering} 
+
+\copyrighttrue
+\copyrightyear{2017}
+\submitdate{May 2017} % Must be the month and year of graduation,
+                         % not thesis approval! As of 2010, this means
+                         % this text must be May, August, or December
+                         % followed by the year.
+
+%defaults to thesis option
+\dissertationfalse
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COVER PAGES:  Flyleaf, copyright page, title page, signature page
+%
+\makecoverpages
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ACKNOWLEDGMENTS
+%
+% Put acknowledgments in a file called "ack.tex" and it'll be inputted here.
+\begin{acknowledgements}
+\input{chap/ack}
+\end{acknowledgements}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABSTRACT
+%
+% Put acknowledgments in a file called "abs.tex" and it'll be inputted here.
+\abstitlep
+\abstractsection
+\input{chap/abs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLE OF CONTENTS
+%
+% print table of contents, figures and tables here.
+\makecontentspages
+%%
+
+\prefacesection
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INSERT REAL CONTENT HERE
+%
+\include{chap/intro}
+\include{chap/results}
+\include{chap/conclusion}
+
+
+\bibliographystyle{IEEEtran}
+\addcontentsline{toc}{chapter}{References}
+\bibliography{IEEEabrv,thesisrefs}
+
+%any appendices go here
+
+\afterpage{\blankpage}
+\end{document}

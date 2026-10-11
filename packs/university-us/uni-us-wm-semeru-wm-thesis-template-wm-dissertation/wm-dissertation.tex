@@ -1,0 +1,164 @@
+%  W&M PhD Dissertation LaTeX File
+\documentclass[cpp,11pt]{wmthesis}
+\usepackage[linesnumbered, ruled, vlined]{algorithm2e}
+\usepackage{graphicx}
+\usepackage{balance}
+\usepackage{caption}
+\usepackage{moresize}
+\usepackage{pbox}
+\usepackage{mathtools}
+\usepackage[TABBOTCAP]{subfigure}
+\setlength{\textfloatsep}{2pt}
+\usepackage{paralist}
+\usepackage{hyperref}
+\usepackage[T1]{fontenc}
+\usepackage{balance}
+\usepackage[dvipsnames,table,xcdraw]{xcolor}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage{verbatim}
+\usepackage[all]{nowidow}
+\usepackage{float}
+\usepackage{xspace}
+\usepackage{amssymb}
+\usepackage{ifthen}
+\usepackage{pifont}
+\usepackage{textcomp}
+\usepackage{pict2e,picture}
+\usepackage{url}
+%\usepackage{pstricks}
+\usepackage{epsfig}
+\usepackage[subfigure]{tocloft}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{rotating}
+\usepackage[numbers]{natbib}
+\usepackage{mdwlist}
+\usepackage{colortbl}
+\usepackage[normalem]{ulem}
+\renewcommand{\rmdefault}{cmr} % Arial
+\renewcommand{\sfdefault}{cmr} % Arial
+\renewcommand{\cftchapfont}{\rm } %no bold in toc
+\renewcommand{\cftchappagefont}{\rm } %no bold in toc
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=0.5pt] (char) {#1};}}
+
+\include{macro}
+
+
+% The wmthesis class is based on the latex report class whic
+% only indents paragraphs if they immediately follow other paragraphs.  The
+% dissertation lady says this is wrong.  I tend to give more credence
+% to Dr. Knuth (author of TeX) on this issue, since the other way looks really
+% crappy.  If you want the first line of every paragraph indented,
+% uncomment the next line to include the indentfirst package. -- rem
+% \usepackage{indentfirst}
+% Not sure if this is still an option -- Ruth
+
+\def\BEGINITEMIZE{\begin{itemize}}
+\def\ENDITEMIZE{\end{itemize}}
+
+\def\defaultpenalty{1000} \clubpenalty=\defaultpenalty
+\widowpenalty=\defaultpenalty
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%   I put all of my specially defined commands in this file to ensure
+%%   that I maintain consistency since I changed some notation 
+%%   usage between publications. Feel free to delete and/or modify
+%%   to suit your purpose.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%--Some general purpose macros.
+%%----------------------------------------------------------------
+% Usage:
+%     \inputfig{filename} 
+%        or
+%     \inputfig[scaling_factor]{filename} 
+%        filename.ps    is expected to be in the directory ../figs
+%        scaling_factor the amount of scaling to be applied 
+%                       (a decimal fraction between 0.0 and 1.0
+%           
+\newcommand{\inputfig}[2][\empty]{ %
+   \begin{center} %
+   	\ifx\empty#1 \includegraphics{../figs/#2}
+	\else\scalebox{#1}{\includegraphics{../figs/#2}}\fi
+   \end{center}}
+
+% Usage: 
+%     \inputplot{filename}
+%        filename.ps is expected to be in the directory ../plots/ps
+\newcommand{\inputplot}[1]{
+   \begin{center}\includegraphics{../plots/ps/#1.ps}\end{center}}
+
+%%----------------------------------------------------------------
+% Set the title that will be printed on the Contents page
+%%----------------------------------------------------------------
+% The negative vspace is used to make sure that only one line is
+% between the title and the first line for each of these pages.
+\renewcommand{\contentsname}{\begin{center}\Large\normalfont TABLE OF CONTENTS\vspace{-.5in}\end{center}}
+\renewcommand\listfigurename{\begin{center}\Large\normalfont LIST OF FIGURES\vspace{-.35in}\end{center}}
+\renewcommand\listtablename{\begin{center}\Large\normalfont LIST OF TABLES\vspace{-.35in}\end{center}}
+
+%%----------------------------------------------------------------
+%%----------------------------------------------------------------
+
+\begin{document}
+\doublespacing
+
+%%--Set thesis info.
+%%--*IMPORTANT* Title cannot be in ALL CAPS
+\thesisTitle{Clever Thesis Title}
+\thesisAuthor[Student Full Name]{Student Shortened Name}
+\thesisMonth{August}
+\thesisYear{2018}
+\thesisAdvisor{Associate Professor FirstName LastName}
+% location and degrees added 
+% note that the degree should be spelled out, not abbreviated
+\thesisLocation{Hometown, HomeState, HomeCountry}
+\thesisDegreeOne{Bachelor of Arts, University Name, 2013}
+\thesisDegreeTwo{Master of Science, University Name, 2015}
+%\thesisDegreeThree{Master of Science, College of William and Mary, 2015}
+\thesisCommittee[Computer Science]{\ThesisAdvisor}
+\thesisCommittee[Computer Science]{Associate Professor FirstName LastName}
+\thesisCommittee[Computer Science]{Assistant Professor FirstName LastName}
+\thesisCommittee[Computer Science]{Assistant Professor FirstName LastName}
+\thesisCommittee[Computer Science]{Professor FirstName LastName}
+
+\thesisDedication{Insert heartfelt dedication here...}
+
+%%-- Insert contents of acknowledge.tex and abstract.tex.  Don't
+%%forget to check these files for formatting hints.
+\thesisAcknowledge{acknowledge}
+\thesisAbstract{abstract} 
+
+%%--Create the dissertation Prolog
+\makeThesisProlog
+
+%%--Include the dissertation chapters.
+\include{Chapter-Introduction}
+
+
+% Start calling the chapters Appendices
+\appendix
+\input{appendixA}
+%\input{appendixB}
+%\input{appendixC}
+
+
+%--List of references not actually cited in the document.
+%\nocite{NDSS04DTLS}
+
+%--Include the bibliography
+\makeThesisBib{references}
+%\bibliography{references}
+%% I did not include the following in my dissertation, so I have no knowledge
+%% of their formatting compliance. -- Ruth
+%\makeThesisVita{vita}
+%%\makeUMIAbstract{abstract}
+\end{document}

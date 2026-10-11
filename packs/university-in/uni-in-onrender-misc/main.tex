@@ -1,0 +1,230 @@
+% =========================================================================
+% main.tex — PhD Thesis LaTeX Template
+% -------------------------------------------------------------------------
+% Originally developed by Indrajit Ghosh (2024–2025)
+% Indian Statistical Institute, Bangalore Centre
+%
+% License: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+% https://creativecommons.org/licenses/by-nc/4.0/
+%
+% This template provides a clean structure for typesetting PhD theses using LaTeX.
+% It includes title setup, PDF metadata, GPG signing guide, and example chapters.
+%
+% To adapt it for your own use:
+%   1. Replace the constants below with your information.
+%   2. Edit or add chapters under the "chapters/" directory.
+%   3. Compile with: pdflatex → biber → pdflatex → pdflatex
+%
+% For questions or suggestions, contact: indrajitghosh912@gmail.com
+% =========================================================================
+
+% How to Use the \index{} Command
+% ------------------------------------------------------------
+% The \index{} command allows you to create entries for the index of your document.
+% Follow the steps below to enable and use it in your LaTeX project:
+%
+% 1. Use the \index{} command immediately after the word or phrase you want to index.
+%    For example:
+%       Hi, I am Indrajit Ghosh, \index{Indrajit} the author of this \LaTeX\ \index{\LaTeX} file.
+%
+%    In this example:
+%       - "Indrajit" will appear as an index entry.
+%       - "\LaTeX" will also appear as an index entry.
+%
+% 2. To generate the index, compile your document as follows:
+%       pdflatex main
+%       makeindex main
+%       pdflatex main
+%
+% This will produce an index section (usually at the end of your document) listing
+% all indexed terms with their corresponding page numbers.
+% ------------------------------------------------------------
+
+
+
+\documentclass[a4paper,11pt,twoside,openright]{book}
+
+% Input color definitions
+\input{colors}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Thesis Constants (change as needed)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ThesisTitle}{A Comedic Exploration of Algebraic Absurdities: Functorial Adventures in Infinite Dimensions}
+\newcommand{\ThesisSubtitle}{(With Occasional Proofs and Existential Crises)} % Keep it empty if not required
+\newcommand{\Author}{Indrajit Ghosh}
+\newcommand{\ThesisYear}{May 2025}
+\newcommand{\AuthorHomepage}{https://indrajitghosh.onrender.com/}
+\newcommand{\PhdAdvisor}{Dr. Advisor Here}
+\newcommand{\AdvisorHomepage}{https://www.isibang.ac.in/~statmath/faculty.html}
+\newcommand{\Institute}{Indian Statistical Institute}
+\newcommand{\Department}{Theoretical Statistics \& Mathematics Unit}
+\newcommand{\Centre}{Bangalore Centre}
+
+\newcommand{\AuthorAddress}{
+    {\small%
+        \Department\\%
+        \Institute%
+        \ifthenelse{\equal{\Centre}{}}{}{, \Centre}%
+    }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PDF Metadata
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\pdfTitle}{Indrajit Ghosh's Mathematical Comedy Thesis 2025}
+\newcommand{\pdfAuthor}{Indrajit Ghosh}
+\newcommand{\pdfSubject}{Mathematics and Existential Humor}
+\newcommand{\pdfKeywords}{Operator Algebras, Humor, Infinite Dimensions, Set Theory}
+\newcommand{\pdfCreator}{TeXLive}
+\newcommand{\pdfCreationDate}{\today}
+\newcommand{\pdfColorLink}{true}
+\newcommand{\pdfLinkColor}{royalblue}
+\newcommand{\pdfUrlColor}{deepblue}
+\newcommand{\pdfCiteColor}{forestgreen}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include preamble and AMS environment setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{preamble}
+
+% =========================================================================
+% USAGE GUIDE: Theorem-Like Environments
+% =========================================================================
+%
+% Your preamble defines standard AMS-style environments and some additional
+% helpers for structuring mathematical content. Use them as follows:
+%
+% -------------------
+% Theorem Environments
+% -------------------
+%
+% \begin{theorem}[Optional Name]
+%   Statement of the theorem goes here.
+% \end{theorem}
+%
+% \begin{lem}[Optional Name]
+%   Statement of the lemma.
+% \end{lem}
+%
+% \begin{prop}[Optional Name]
+%   Statement of the proposition.
+% \end{prop}
+%
+% \begin{cor}[Optional Name]
+%   Statement of the corollary.
+% \end{cor}
+%
+% -------------------
+% Definition/Example
+% -------------------
+%
+% \begin{definition}[Optional Name]
+%   Define a concept, object, or structure.
+% \end{definition}
+%
+% \begin{example}[Optional Name]
+%   Provide an example illustrating a definition or theorem.
+% \end{example}
+%
+% \begin{exercise}[Optional Name]
+%   Pose a problem or exercise for the reader (optional numbering with example counter).
+% \end{exercise}
+%
+% -------------------
+% Remarks/Notes
+% -------------------
+%
+% \begin{remark}[Optional Name]
+%   Add remarks or observations.
+% \end{remark}
+%
+% \begin{note}
+%   Use for unnumbered notes.
+% \end{note}
+%
+% \begin{case}[Optional Name]
+%   Use for enumerating cases in proofs.
+% \end{case}
+%
+% \begin{notation}
+%   State notational conventions.
+% \end{notation}
+%
+% -------------------
+% tcolorbox (Optional Boxed Theorems)
+% -------------------
+%
+% For visually highlighted statements, use tcolorbox with theorem styling:
+%
+% \begin{theo}{Name of Theorem}{label}
+%   Statement of theorem goes here.
+% \end{theo}
+%
+% This produces a boxed theorem with optional label for referencing.
+%
+% =========================================================================
+% NOTES:
+% - All theorem-like environments are numbered by chapter by default.
+% - Equations are numbered within sections (see preamble: \numberwithin{equation}{section}).
+% - Optional names for theorems/lemmas appear in parentheses after the environment.
+% =========================================================================
+
+
+\begin{document}
+
+    \input{chapters/coverpage.tex}
+    \thispagestyle{empty}
+    \clearpage
+
+    \frontmatter
+
+    \input{chapters/titlepage.tex}
+    \thispagestyle{empty}
+
+    \chapter*{Abstract}
+    \input{chapters/abstract.tex}
+    \addcontentsline{toc}{chapter}{Abstract}
+
+    \chapter*{Dedication}
+    \input{chapters/dedication.tex}
+    \addcontentsline{toc}{chapter}{Dedication}
+
+    \chapter*{Acknowledgements}
+    \input{chapters/acknowledgements.tex}
+    \addcontentsline{toc}{chapter}{Acknowledgements}
+
+    \pdfbookmark[section]{\contentsname}{toc}
+    \tableofcontents
+
+    \printnoidxglossary[type=symbols,style=long,title={List of Symbols}]
+    \thispagestyle{empty}
+
+    \mainmatter
+
+    % =============================================================
+    % Funny Mathematical Chapters
+    % =============================================================
+
+    \chapter{Introduction}
+    \label{chap:intro}
+    \input{chapters/introduction.tex}
+
+    \chapter{Category Theory and the Existential Crisis of Sets}
+    \label{chap:category_crisis}
+    \input{chapters/category_crisis.tex}
+
+    \chapter{The Spectrum Always Rings Twice: Adventures in Functional Analysis}
+    \label{chap:spectrum_fun}
+    \input{chapters/spectrum_fun.tex}
+
+    \backmatter
+
+    \nocite{*}
+    \printbibliography[
+        heading=bibintoc,
+        title={Bibliography}]
+
+    \printindex
+
+\end{document}

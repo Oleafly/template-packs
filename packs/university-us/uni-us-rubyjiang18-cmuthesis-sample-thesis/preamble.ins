@@ -1,0 +1,147 @@
+%%%%%
+% define the general variables for the title page and the public oral announcement page
+%%%%%
+\degree{Doctor of Materials Science and Engineering}
+\department{Materials Science and Engineering}
+\chairperson{Prof.\ First M. Last (MSE, Advisor)} % your advisor is also the committee chair
+\advisor{Prof.\ First M. Last}
+\committee{%
+Prof.\ First1 Last1 (MSE)\\
+Prof.\ First2 Last2 (MSE)\\  
+Prof.\ First3 Last3 (somewhere else)
+}%
+\title{This the complete thesis title}
+\author{Yourfirst M. Yourlast}
+\date{Someday, Somemonth 14} % overview or defense date 
+\degreedate{Somemonth, 2014}
+\time{Someday, Somemonth 14\\ % same thing, but here we also enter the time
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 9:00 AM}
+\place{WEH 2327 (Mehl Room)}
+\newcommand{\shortthesistitle}{A short title for headers}
+\newcommand{\shortauthor}{Y.M. Yourlast}
+\previousdegrees{B.S., Materials Science and Engineering, Carnegie Mellon University\\
+M.S., Materials Science and Engineering, Carnegie Mellon University}
+%%%%%
+% define your own special commands, e.g., abbreviations for things you use frequently
+%%%%%
+\input{mycommands.ins}
+
+%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%
+% The entries below should not be changed by the user... 
+%%%%%%%%%%%%%%%
+
+% define a number of toggles for the frontmatter
+\newtoggle{overviewannouncement}
+\newtoggle{defenseannouncement}
+\newtoggle{titlepage}
+\newtoggle{dedication}
+\newtoggle{abstract}
+\newtoggle{acknowledgements}
+\newtoggle{publist}
+\newtoggle{ToC}
+\newtoggle{figuretablelist}
+\newtoggle{symbollist}
+% and set all toggles to false by default
+\togglefalse{overviewannouncement}
+\togglefalse{defenseannouncement}
+\togglefalse{titlepage}
+\togglefalse{dedication}
+\togglefalse{abstract}
+\togglefalse{acknowledgements}
+\togglefalse{publist}
+\togglefalse{ToC}
+\togglefalse{figuretablelist}
+\togglefalse{symbollist}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% format the special page headings, using the fancyheadings package
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]
+  {\markboth{\uppercase{\thechapter.\ #1}}{}}
+\renewcommand{\sectionmark}[1]
+  {\markright{\uppercase{\thesection.\ #1}}}
+\lhead[\itshape \thepage]{\itshape \rightmark}
+\rhead[\itshape \leftmark]{\itshape \thepage}
+\chead{}
+\lfoot[\small\itshape\shortauthor]{\small\itshape\shortthesistitle }
+\rfoot[\small\itshape\shortthesistitle]{\small\itshape\shortauthor}
+\cfoot{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  STUFF RELATED TO FIGURES
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\iftoggle{oldpreamble}{% this is only for backwards compatibility with the older preamble file
+% declare the locations for the figures
+ \newcommand{\FigFolder}{./figures/} 
+% labels for figures and tables, to simplify changes in the order
+% of the chapters.  Five of them need to be renewcommand-ed
+% at the beginning of each chapter.
+%
+\newcommand{\FigLabel}{fig01:}
+\newcommand{\TabLabel}{tb01:}
+\newcommand{\ChapLabel}{chap01:}
+\newcommand{\SecLabel}{sec01:}
+\newcommand{\SsecLabel}{ssec01:}
+\newcommand{\figref}[1]{Fig.~\ref{\FigLabel #1}}
+\newcommand{\tabref}[1]{Table~\ref{\TabLabel #1}}
+% this deals with the figure environment and is called with
+% 2 arguments:  \insertfigure{filenamebase}{caption}
+% where filenamebase is identical to the label,
+% and caption is whatever the caption is
+\newcommand{\insertfigure}[2]{%
+		\begin{figure}[ht]
+			\centering
+			\leavevmode
+			\epsffile{\FigFolder #1}
+			\caption{#2}
+			\label{\FigLabel #1}
+		\end{figure}
+}
+% the following command allows for the setting of the figure width (3rd parameter)
+\newcommand{\insertfigurew}[3]{%
+		\begin{figure}[ht]
+			\centering
+			\leavevmode
+			\epsfxsize=#3\epsffile{\FigFolder #1}
+			\caption{#2}
+			\label{\FigLabel #1}
+		\end{figure}
+}}{% use the new preamble commands
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+%
+% \insertfigure{filenamebase}{caption}
+\newcommand{\insertfigure}[2]{%
+		\begin{figure}[!tb]
+			\centering
+			\leavevmode
+			\epsffile{#1}
+			\caption{#2}
+			\label{#1}
+		\end{figure}
+}
+% the following command allows for the setting of the figure width (3rd parameter)
+\newcommand{\insertfigurew}[3]{%
+		\begin{figure}[!tb]
+			\centering
+			\leavevmode
+			\epsfxsize=#3\epsffile{#1}
+			\caption{#2}
+			\label{#1}
+		\end{figure}
+}}
+
+\hyphenpenalty=10
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% and list all files used at the end of the run	
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\listfiles 

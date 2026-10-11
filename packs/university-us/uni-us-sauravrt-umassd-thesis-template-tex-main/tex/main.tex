@@ -1,0 +1,160 @@
+% PhD dissertation template for ECE Dept at UMassD
+%
+%
+
+\documentclass[
+12pt,
+letterpaper,
+% draft  % Uncomment to enable draft mode
+]
+{report}
+
+\usepackage[noadjust]{cite}
+\usepackage{hyperref}   % Generates bookmarks on pdf viewers
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[]{graphicx}
+% \usepackage{fancyvrb}   % Fancy verbatim package 
+% \usepackage{bm}   % Bold math symbols
+\usepackage{stmaryrd}
+\usepackage{subfig}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{ragged2e}
+\usepackage[]{appendix}
+\numberwithin{equation}{chapter}
+
+% --------------------------------------------
+% Setup to get the chapter names to appear in 
+% proper format in the table of contents
+% 
+\usepackage[titles, subfigure]{tocloft}
+\usepackage{calc}
+\renewcommand{\cftchappresnum}{Chapter }
+\renewcommand{\cftchapaftersnum}{:}
+\addtolength\cftchapnumwidth{\widthof{Chapter}}
+% ---------------------------------------------
+
+% Letterpaper size: 8.27in x 11in
+% % Margin reset using Geometry package (easiest to use)
+\usepackage[top=1in, bottom=1.3in,
+left=1.5in, right=1.1in,
+footskip=0.3in]{geometry}
+
+% Specify the path containing your figures. This allows you to simply specify the figure filename with \includegraphics rather than explicitly specify the path to the figure file.
+\graphicspath{{../figures/pdf/}}
+\renewcommand{\figurename}{Fig.}
+
+\newcommand{\thesistitle}{Awesome thesis title}
+\newcommand{\authorname}{John Doe}
+
+% -------------------------------------------
+% Following snippet enables proper formatting of author names
+% in the bibliography. This template uses IEEE bibliography format
+% Ref: http://www.michaelshell.org/tex/ieeetran/bibtex/
+%
+% Define \bstctlcite
+\makeatletter
+\def\bstctlcite{\@ifnextchar[{\@bstctlcite}{\@bstctlcite[@auxout]}}
+\def\@bstctlcite[#1]#2{\@bsphack
+ \@for\@citeb:=#2\do{%
+   \edef\@citeb{\expandafter\@firstofone\@citeb}%
+   \if@filesw\immediate\write\csname#1\endcsname{\string\citation{\@citeb}}\fi}%
+ \@esphack}
+\makeatother
+% -------------------------------------------
+
+% ------------------------------------------
+% \raggedright
+
+\begin{document}
+\bstctlcite{IEEEexample:BSTcontrol} % Control for IEEEtrans.bst to disable repeated name
+
+% % -------------------Front Matter-----------------------
+\setcounter{page}{1}
+\pagenumbering{roman}  % Front matter needs to use roman page numbering
+
+\input{cover_page.tex}
+\clearpage
+
+\input{permission_cp.tex}
+\clearpage
+
+\setcounter{page}{2}
+\input{sig_page.tex}
+\clearpage
+
+\input{abstract}
+\clearpage
+
+\input{acknowledge}
+\clearpage
+
+% Table of contents
+\renewcommand\cftchapfont{\normalfont}
+\renewcommand\cftchappagefont{\normalfont}
+\renewcommand{\contentsname}{Table of contents}
+\setlength{\cftbeforechapskip}{0.05in}
+\onehalfspacing
+\setcounter{tocdepth}{2}
+\tableofcontents
+\clearpage 
+
+% List of figures
+\setlength{\cftfigindent}{0em}
+\setlength{\cftbeforefigskip}{0.05in}
+\renewcommand{\listfigurename}{List of figures}
+\addcontentsline{toc}{chapter}{\listfigurename{}}
+\listoffigures
+\clearpage
+
+% \addcontentsline{toc}{chapter}{List of Tables}
+% \listoftables
+% \newpage 
+
+% --------- End of Front Matter---------------------------------
+
+% ---------- Start of Chapters----------------------------------
+
+%\onehalfspacing
+\doublespacing
+\thispagestyle{plain}
+\setcounter{page}{1}  % Restart counter
+\pagenumbering{arabic}
+
+% Main body
+\input{mycommands} % Macro definitions saved in  mycommands.tex
+\input{chapter_intro}
+\input{chapter_litrev} 
+\input{chapter_conclusion}
+
+% ---------- End of Chapters----------------------------------
+% % Back matter
+% \e{IEEEexample:BSTcontrol}
+
+\begin{appendices}
+\addtocontents{toc}{\def\protect\cftchappresnum{Appendix }}
+\addtocontents{toc}{\addtolength\cftchapnumwidth{\widthof{ix }}}
+\input{appendix}   % Define appendix in appendix.tex file
+\end{appendices}
+\clearpage
+
+
+% Un-comment the section below to enable bibliography
+% All bibtex entries are stored in ../refs/myrefs.bib
+% This requires IEEEtran.bst be present in ../refs/
+%
+% Bibliography
+% \addcontentsline{toc}{chapter}{Bibliography}
+% \bibliographystyle{../refs/IEEEtran}
+% \bibliography{../refs/IEEEabrv,../refs/myrefs}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
+

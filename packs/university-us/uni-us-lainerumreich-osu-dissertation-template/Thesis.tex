@@ -1,0 +1,100 @@
+\documentclass{osudissert96}
+% To change the dissertation to a Master's Thesis, include a documentclass
+% option such as [masters], [ms], [ma], etc.  Also available are [osudraft]
+% and [twoside].  As a reminder, documentclass options are a
+% comma-separated list, e.g. \documentclass[ms,osudraft]{osudissert96}
+
+% All package imports, custom definitions, and accessibility requirements
+\input{preamble}
+
+\begin{document}
+
+% Title Page
+\author{Author Name}
+\title{Title}
+\authordegrees{M.S.}  % Degrees thus far, not including this one.
+\unit{Department of Computer Science and Engineering}
+
+\advisorname{Advisor Name}
+\member{Member 1}
+\member{Member 2}
+
+% Accessibility and metadata requirements for title and author
+\makeatletter % to use @title and @author
+\hypersetup{
+  pdftitle={\@title}, % accessibility requirements for title
+  pdfauthor={\@author}, 
+}
+\makeatother
+
+\maketitle % Creates the title page
+
+% EITHER a copyright or BLANK page.
+% If you get rid of \disscopyright, restore the \blankpage line after it
+\disscopyright
+%\blankpage
+
+% Abstract
+\begin{abstract}
+  \input{abstract}
+\end{abstract}
+
+%  Dedication
+% \dedication{\textit{
+% Dedicated to...
+% }}
+
+% Bring in Acknowledgement and Vita 
+\include{ack}
+\include{vita}
+
+
+
+% Table of Contents with Listings, Algorithms and Symbols added
+\renewcommand{\lstlistlistingname}{List of Listings\\ \par
+\thispagestyle{plain}%
+\vspace{6.5ex} % add space after title
+{\normalsize \hspace{1em} \textbf{Listing} \hfill \textbf{Page}}
+\vspace{-5.5ex} % reduce space after headers
+}
+
+\renewcommand{\listalgorithmname}{List of Algorithms\\ \par
+\thispagestyle{plain}%
+\vspace{6.5ex} % add space after title
+{\normalsize \hspace{1em} \textbf{Algorithm} \hfill \textbf{Page}}
+\vspace{-5.5ex} % reduce space after headers
+}
+
+\tableofcontents
+\listoftables
+\listoffigures
+\cleardoublepage % or \clearpage
+\phantomsection % use with hyperref to get linking to work correctly
+\addcontentsline{toc}{chapter}{List of Algorithms}{\listofalgorithms}
+\cleardoublepage % or \clearpage
+\phantomsection % use with hyperref to get linking to work correctly
+\addcontentsline{toc}{chapter}{List of Listings}{\lstlistoflistings}
+
+% List of Symbols
+\cleardoublepage % or \clearpage
+\phantomsection % use with hyperref to get linking to work correctly
+\addcontentsline{toc}{chapter}{List of Symbols} % use {section} if using article class
+\chapter*{List of Symbols}  % or \section* if using article class
+\input{symbols}
+
+% Chapters
+\include{ch1.Introduction}    
+\include{ch2.Background}   
+% Other chapters
+\include{ch7.Conclusion} 
+
+% Bibliography
+\bibliographystyle{plain}
+\bibliography{bibfile}
+
+% Appendices
+\appendix
+\include{appendix_1}
+\include{appendix_2}
+
+\end{document}

@@ -1,0 +1,129 @@
+\documentclass[11pt]{report}
+\usepackage{unhthesis}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{theapa}
+\usepackage{array}
+\usepackage[usenames]{color}
+\usepackage[chatter]{rotating}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{amsfonts}
+\usepackage{rawfonts}
+\usepackage{singlespace}
+%\usepackage{comment}
+\usepackage{tabularx}
+
+\renewenvironment{description}[1][0pt]
+  {\list{}{\labelwidth=0pt \leftmargin=#1
+   \let\makelabel\descriptionlabel}}
+  {\endlist}
+
+% code
+\newcommand{\bncode}{
+\begin{tabbing}
+00. nn\=nn\=nn\=nn\=nn\=nn\=nn\=nn\=nn\=nn\kill
+}
+\newcommand{\ecode}{\end{tabbing}}
+
+\usepackage{ifthen}
+\newlength{\zerowidth}
+\settowidth{\zerowidth}{0}
+\newcounter{codeline}
+\newenvironment{code}{
+  \newcommand{\cl}{ % code line
+    \refstepcounter{codeline}
+    \ifthenelse{\value{codeline}<10}
+               {\hspace{\zerowidth}\arabic{codeline}}
+               {\arabic{codeline}}.
+  }
+  \begin{tabbing}
+    00. nn\=nn\=nn\=nn\=nn\=nn\=nn\=nn\=nn\=nn\=nn\kill
+} {\end{tabbing}}
+
+% stuff
+\newcommand{\parahead}[1]{\noindent {\bf #1}:}
+\newcommand{\citep}[1]{\citeauthor{#1}~\shortcite{#1}}
+\newcommand{\citeq}[1]{\citeauthor{#1}~\citeyear{#1}}
+
+
+\title{Dissertation Title}
+\author{Student Name}
+\prevdegrees{BS of Computer Science?, Somewhere, Year}
+\major{Computer Science}
+\degree{Doctor of Philosophy}
+\degreemonth{Month}
+\degreeyear{Year}
+
+\thesisdate{\today}
+\DOCUMENTtype{DISSERTATION}
+\Documenttype{Dissertation}
+\documenttype{dissertation}
+
+\begin{document}
+\maketitle
+
+% Copyright page (optional)
+\copyrightyear{2018}
+\makecopyright
+
+% Approval page
+\supervisor{Your supervisor}{Their info}
+
+\committee{Committee member 1}{Their Info}
+
+\committee{Committee member 2}{Their Info}
+
+\committee{Committee member 3}{Their Info}
+
+\committee{Committee member 4}{Their Info}
+
+\makeapproval
+
+
+% Dedication page
+\begin{dedication}
+
+\end{dedication}
+
+% Acknowledgement page
+\begin{acknowledgments}
+
+\end{acknowledgments}
+
+% Table of contents
+\tableofcontents
+\listoftables
+\addcontentsline{toc}{section}{LIST OF TABLES}
+\listoffigures
+\addcontentsline{toc}{section}{LIST OF FIGURES}
+
+\include{abstract}
+
+% Start numbering pages
+\pagenumbering{arabic}
+
+% Use arabic numerals for parts
+\renewcommand{\thepart}{{\Roman{part}}}
+
+\setcounter{chapter}{-1}
+
+\include{introduction}
+
+\part{\label{part:one}Part 1 Title}
+
+\include{chapter1}
+
+\part{\label{part:two}Part 2 Title}
+
+\include{chapter2}
+
+\include{conclusion}
+
+%\appendix
+
+\bibliographystyle{theapa}
+\bibliography{master}
+
+\end{document}

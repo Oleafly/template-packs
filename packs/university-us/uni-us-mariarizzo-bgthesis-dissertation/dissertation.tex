@@ -1,0 +1,134 @@
+%    This file is part of BGSU.cls The BGSU (Thesis and Dissertation LaTeX class)
+%
+%    BGSU.cls is free software: you can redistribute it and/or modify
+%    it under the terms of the GNU General Public License as published by
+%    the Free Software Foundation, either version 3 of the License, or
+%    (at your option) any later version.
+%
+%    BGSU.cls is distributed in the hope that it will be useful,
+%    but WITHOUT ANY WARRANTY; without even the implied warranty of
+%    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%    GNU General Public License for more details.
+%
+%    You should have received a copy of the GNU General Public License
+%    along with BGSU.cls  If not, see <http://www.gnu.org/licenses/>.
+%
+%    Note that this only applies to the example and template files and BGSU.cls
+%    itself. Any actual document content (such as your thesis or dissertation text)
+%    belongs solely to you and you can do with it what you please.
+
+\documentclass{BGSU}
+
+% For thesis, open BGSU.cls and change line 57 to \def\@doctype{Thesis}
+
+% packages amsmath and amsthm are loaded in BGSU.cls file
+
+\usepackage{amsmath}   % load the AMS math package
+\usepackage{amsthm}    % allows AMS definitions for theorems, proofs, etc.
+\usepackage{amssymb}   % allows the use of AMS symbols like blackboard bold
+\usepackage{graphicx}  % for including graphics files and images
+\usepackage{caption}
+\captionsetup[table]{labelsep=space}
+\captionsetup[figure]{labelsep=space}
+\usepackage{epstopdf}
+\usepackage{tocloft}
+\setlength{\cftbeforetoctitleskip}{-25pt}
+\setlength{\cftbeforeloftitleskip}{-25pt}
+\setlength{\cftbeforelottitleskip}{-25pt}
+\usepackage{times}     % Times New Roman (nimbus version)
+\usepackage{listings}  % allows program codes embeded with original forms
+\usepackage{bookmark}  % make it possible to add PDF bookmarks at will
+\usepackage{pdflscape} % make it possible to use landscape environment
+\usepackage[nottoc,notlof,notlot]{tocbibind} % keep list of figures, tables, out of the table of contents, also keep the table of contents out of the table of contents
+\usepackage[longnamesfirst]{natbib} %You need to insert comment (%) if you don't want to use natbib for bibliography
+
+% number theorems, etc. within chapter
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{remark}{Remark}[chapter]
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{convention}{Convention}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{notation}{Notation}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
+\newtheorem{example}{Example}[chapter]
+
+% Change the text below -----------------------------------------------
+
+\title{An example dissertation}
+\author{Nate Iverson}
+\degree{Doctor of Philosophy}
+\date{August 2007}
+\advisor{Corneliu Hoffman}
+\gfr{Darth Vader} % graduate faculty representative
+\committee{Kit Chan \\ \\ Warren McGovern}
+\keywords{Algebraic topology; Bayesian analysis; more specific to your research}
+\subject{Algebra; statistics; broad terms like this}
+
+\begin{document}
+
+\frontmatter   % makes page #'s lower case roman
+
+\maketitle     % produce the title page using the information above
+
+\copyrightpage % copyrighting your dissertation is optional
+
+\begin{abstract}
+\input{frontmatter/abstract}
+\end{abstract}
+
+% optional section ``Some students choose to personalize their manuscripts
+% with an appropriate quotation or illustration''
+% formatting and placement is up to you.
+\begin{dedication}
+\input{frontmatter/dedication}
+\end{dedication}
+
+% optional but encouraged section ``as a means to recognize and express
+% appreciation to the people who were influential in preparing and completing
+% the manuscript''
+\begin{acknowledgments}
+\input{frontmatter/acknowledgments}
+\end{acknowledgments}
+
+\pdfbookmark[section]{\contentsname}{toc}  % put toc in PDF bookmarks
+\tableofcontents
+\pagebreak
+\pdfbookmark[section]{LIST OF FIGURES}{figures}
+\listoffigures
+\pagebreak
+\pdfbookmark[section]{LIST OF TABLES}{tables}
+\listoftables
+
+% preface section is optional
+\begin{preface}
+\input{frontmatter/preface}
+\end{preface}
+
+\mainmatter % starts over page counter and gives regular page numbers
+
+\input{chapters/chapter1}
+\input{chapters/chapter2}
+\input{chapters/chapter3}
+\input{chapters/chapter4}
+\input{chapters/chapter5}
+
+\backmatter
+
+%bibliography section: there are two options here. 1. Uncomment the following codes and use \bibitem{} to add more articles.
+%\begin{thebibliography}{99}
+%\bibitem{forina1991class} Forina, M., Armanino, C., Leardi, R., and Drava, G. (1991). A class-modelling technique based on potential functions. \textit{Journal of Chemometrics,} {\textbf{5(5)},} 435-453.
+%\end{thebibliography}
+
+%2. Using natbib package (you may use other bibliography types). Refer to http://en.wikibooks.org/wiki/LaTeX/Bibliography_Management
+\bibliographystyle{chicago}    %% this one looks best
+%\bibliographystyle{apalike}   %% looks okay for dissertations but it puts quotes around titles in references
+\setcitestyle{authoryear, open={((},close={))}}
+\bibliography{reference}
+
+% appendix section: if you have more than one appendix section, you should use APPENDIX A, APPENDIX B, ....
+\mbox{}\newpage
+\phantomsection
+\appendix
+\input{chapters/appendix}
+\end{document}

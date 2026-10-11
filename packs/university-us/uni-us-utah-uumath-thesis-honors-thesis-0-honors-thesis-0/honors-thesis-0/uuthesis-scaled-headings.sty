@@ -1,0 +1,161 @@
+%%% -*-TeX-*-
+%%% ====================================================================
+%%% This file contains commands to adjust the font sizes used in
+%%% headings.  The changes alter the low-level internals of ONLY the
+%%% standard LaTeX macros \Large, \LARGE, \huge, and \Huge, which are
+%%% used in the definitions of sectional commands, and the title page.
+%%% The definitions of \scriptsize, \tiny, \normalsize, and \large are
+%%% NOT changed.  It is unlikely that the redefinitions here will
+%%% conflict with those of other standard LaTeX packages, even
+%%% hyperref, so this package should always be safe to use.
+%%%
+%%% After loading this package, the user can then issue any of these
+%%% five commands to adjust heading sizes:
+%%%
+%%%     \uusmallerheadings
+%%%     \uusmallerheadings
+%%%     \uunormalheadings % <--- default: same as not loading this package
+%%%     \uulargerheadings
+%%%     \uulargestheadings
+%%%
+%%% [03-May-2018] -- original version 2.00
+%%% ====================================================================
+
+\NeedsTeXFormat {LaTeX2e} [1994/12/01]
+\ProvidesPackage {uuthesis-scaled-headings} [2018/05/03 v2.00]
+
+\immediate \write16 {==============================================================================}%
+\immediate \write16 {}%
+\immediate \write16 {This is uuthesis-scaled-headings.sty version 2.00 <03 May 2018>}%
+\immediate \write16 {}%
+\immediate \write16 {==============================================================================}%
+
+% \ifx \@xxvbs \undefined \else \endinput \fi % Behave reasonably if this package is loaded multiple times
+
+%%% NB: The definitions of the size-change commands \scriptsize
+%%% through \Huge are set in the base class file (here, book.cls), and
+%%% their values are used in the definitions of sectional macros
+%%% (\part, \chapter, ..., \subsubsection).  The sectional macros are
+%%% complex, and redefined in several packages, including hyperref.
+%%% Thus, we want to avoid touching those definitions.
+%%%
+%%% Experiments show that redefining the size-change commands after
+%%% loading the base class does not affect the output of the
+%%% already-defined sectional macros.  What DOES work is to redefine
+%%% the symbolic names for the point sizes \@viiipt ... \@xxvpt.
+
+%%% Original definitions from
+%%% /usr/uumath/texlive/2018/texmf-dist/tex/latex/base/bk11.clo:77
+%%%
+%%%      \newcommand\scriptsize{\@setfontsize\scriptsize\@viiipt{9.5}}
+%%%      \newcommand\tiny{\@setfontsize\tiny\@vipt\@viipt}
+%%%      \newcommand\large{\@setfontsize\large\@xiipt{14}}
+%%%      \newcommand\Large{\@setfontsize\Large\@xivpt{18}}
+%%%      \newcommand\LARGE{\@setfontsize\LARGE\@xviipt{22}}
+%%%      \newcommand\huge{\@setfontsize\huge\@xxpt{25}}
+%%%      \newcommand\Huge{\@setfontsize\Huge\@xxvpt{30}}
+
+%%% Plain TeX's conventions are for size families related by powers of
+%%% 1.2, with \magstephalf being sqrt(1.2) = 1.095... providing an
+%%% intermediate size after the base size.
+%%%
+%%%      8,  8.76,  9.60, 11.52, 13.82, 16.59, 19.91, ...
+%%%      9,  9.86, 10.80, 12.96, 15.55, 18.66, 22.39, ..
+%%%     10, 10.95, 12,    14.4,  17.28, 20.74, 24.88, ...
+%%%     11, 12.05, 13.20, 15.84, 19.01, 22.81, 27.37, ...
+%%%     12, 13.15, 14.40, 17.28, 20.74, 24.88, 29.86, ...
+%%%     13, 14.24, 15.60, 18.72, 22.46, 26.96, 32.35, ...
+%%%     14, 15.34, 16.80, 20.16, 24.19, 29.03, 34.84, ...
+%%%     15, 16.43, 18.00, 21.60, 25.92, 31.10, 37.32, ...
+%%%     16, 17.53, 19.20, 23.04, 27.65, 33.18, 39.81, ...
+%%%     ...
+
+\newcommand {\uusmallestheadings}
+{   % values from 8pt sequence
+    \def \@xivpt    {11.52}
+    \def \@xviipt   {13.82}
+    \def \@xxpt     {16.59}
+    \def \@xxvpt    {19.91}
+
+    \def \@xivbs    {16}        % rounded + 4pt
+    \def \@xviibs   {19}        % rounded + 5pt
+    \def \@xxbs     {21}        % rounded + 4pt
+    \def \@xxvbs    {25}        % rounded + 5pt
+}
+
+\newcommand {\uusmallerheadings}
+{   % values from 9pt sequence
+    \def \@xivpt    {12.96}
+    \def \@xviipt   {15.55}
+    \def \@xxpt     {18.66}
+    \def \@xxvpt    {22.39}
+
+    \def \@xivbs    {17}        % rounded + 4pt
+    \def \@xviibs   {21}        % rounded + 5pt
+    \def \@xxbs     {23}        % rounded + 4pt
+    \def \@xxvbs    {27}        % rounded + 5pt
+}
+
+\newcommand {\uunormalheadings}
+{   % values from 10pt sequence
+    %% Original definitions from
+    %% /usr/uumath/texlive/2018/texmf-dist/tex/latex/base/latex.ltx:2751
+
+    \def \@xivpt    {14.40}
+    \def \@xviipt   {17.28}
+    \def \@xxpt     {20.74}
+    \def \@xxvpt    {24.88}
+
+    \def \@xivbs    {18}        % rounded + 4pt
+    \def \@xviibs   {22}        % rounded + 5pt
+    \def \@xxbs     {25}        % rounded + 4pt
+    \def \@xxvbs    {30}        % rounded + 5pt
+}
+
+\newcommand {\uulargerheadings}
+{   % values from 12pt sequence
+    \def \@xivpt    {17.28}
+    \def \@xviipt   {20.74}
+    \def \@xxpt     {24.88}
+    \def \@xxvpt    {29.86}
+
+    \def \@xivbs    {21}        % rounded + 4pt
+    \def \@xviibs   {26}        % rounded + 5pt
+    \def \@xxbs     {29}        % rounded + 4pt
+    \def \@xxvbs    {35}        % rounded + 5pt
+}
+
+\newcommand {\uulargestheadings}
+{   % values from 14pt sequence
+    %%%     14, 15.34, 16.80, 20.16, 24.19, 29.03, 34.84, ...
+
+    \def \@xivpt    {20.16}
+    \def \@xviipt   {24.19}
+    \def \@xxpt     {29.03}
+    \def \@xxvpt    {34.84}
+
+    \def \@xivbs    {24}        % rounded + 4pt
+    \def \@xviibs   {29}        % rounded + 5pt
+    \def \@xxbs     {33}        % rounded + 4pt
+    \def \@xxvbs    {40}        % rounded + 5pt
+}
+
+%%% NB: The value syntax is
+%%%
+%%%     \@setfontsize \NAME-OF-SIZE \FONT-POINT-SIZE \BASELINESKIP
+%%%
+%%% Thus, having changed \@xivpt through \@xxvpt, which are used in
+%%% \Large through \Huge, we need to adjust their baseline skip values
+%%% as well.
+
+\renewcommand {\Large}  {\@setfontsize \Large \@xivpt  \@xivbs }
+\renewcommand {\LARGE}  {\@setfontsize \LARGE \@xviipt \@xviibs}
+\renewcommand {\huge}   {\@setfontsize \huge  \@xxpt   \@xxbs  }
+\renewcommand {\Huge}   {\@setfontsize \Huge  \@xxvpt  \@xxvbs }
+
+%%% The user can now invoke any of these three names to alter
+%%% heading sizes by reasonable amounts:
+
+%%% \uusmallerheadings
+%%% \uulargerheadings
+\uunormalheadings

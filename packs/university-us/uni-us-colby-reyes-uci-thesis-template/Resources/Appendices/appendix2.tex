@@ -1,0 +1,79 @@
+% The original template (from Trevor) had a custom \appendix command,
+% but I found it to break figure/table counters. I'm not sure how
+% reliable my fix is, so I ended up reverting back to the standard
+% latex version, and renaming the custom command to \myappendix.  You
+% can try both and see how things work out:
+% 1) Call \appendix once, and then make each appendix a \chapter
+% 2) Call \myappendix once, and then make each appendix a \section.
+
+%\appendix
+\chapter{Example Tables}
+
+% Appendix sections, subsections etc should not appear in the table of 
+% contents. So set tocdepth to 0 and set it back to 2 at the end. Do 
+% this for each appendix.
+\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
+
+\section{Standard Table}
+\label{sec:table_examples}
+\begin{table}[H] % <-- The [H] option means to force the figure/table to stay at this location in the document
+  \centering
+  \begin{tabular}{|rr|r|}
+    \hline
+    $x$ & $y$ & $z$ \\
+    \hline
+    14 & 12 & -2 \\
+    0 & 33 & -25 \\
+    -3 & 11 & 22 \\
+    4 & 4 & 6 \\
+    \hline
+  \end{tabular}
+  \caption{Example table of coordinates.}
+  \label{tab:coordinates}
+\end{table}
+
+\section{Long (multi-page) Table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Example Long/Multi-page Table                                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+    \begin{longtable}{|p{0.05\linewidth}|p{0.35\linewidth}|p{0.55\linewidth}|}
+    \caption{Scenario 3 workflow instructions as given to participant.}\\
+    \hline
+    \textbf{Step} & \textbf{Instructions} & \textbf{Explanation} \\
+    \hline
+    \hline
+    \endfirsthead
+    \multicolumn{3}{c}%
+    {\tablename\ \thetable\ -- \textit{Continued from previous page}} \\
+    \hline
+    \textbf{Step} & \textbf{Instructions} & \textbf{Explanation} \\
+    \hline
+    \hline
+    \endhead
+    \hline \multicolumn{3}{r}{\textit{Continued on next page}} \\
+    \endfoot
+    \hline
+    \endlastfoot
+    1 & xyz & xyz\\
+    \hline
+    2 & xyz & xyz \\
+    \hline
+    3 & xyz & xyz \\
+    \hline
+    4  & xyz & xyz \\
+    \hline
+    5 & xyz & xyz \\
+    \hline
+    6 & xyz & xyz \\
+    \hline
+    \end{longtable}
+    \label{tab:sample_longtable}
+\end{center}
+
+\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+
+%%% Local Variables: ***
+%%% mode: latex ***
+%%% TeX-master: "thesis.tex" ***
+%%% End: ***

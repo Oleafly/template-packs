@@ -1,0 +1,92 @@
+% ---- ETD Document Class and Useful Packages ---- %
+% v1.7.0 released November 18, 2025.
+% https://github.com/uchicago-library/uchicago-dissertation
+\documentclass{ucetd}
+
+\usepackage[T1]{fontenc}
+\usepackage{subcaption,graphicx}
+\usepackage{natbib}
+\usepackage{mathtools}  % loads amsmath
+\usepackage{amssymb}    % loads amsfonts
+\usepackage{amsthm}
+\usepackage[titletoc]{appendix}
+
+%% Use these commands to set biographic information for the title page:
+\newcommand{\thesistitle}{Thesis Title}
+\newcommand{\thesisauthor}{Thesis Author}
+\newcommand{\orcid}{xxxx-xxxx-xxxx-xxxx}
+\department{Thesis Department}
+\division{Thesis Division}
+\degree{Type of Degree}
+\date{Graduation Date}
+
+\title{\thesistitle}
+\author{\thesisauthor}
+
+%% Use these commands to set a dedication and epigraph text
+\dedication{Dedication Text}
+\epigraph{Epigraph Text}
+
+\usepackage{doi}
+\usepackage{xurl}
+\hypersetup{bookmarksnumbered,
+            linktoc=all,
+            pdftitle={\thesistitle},
+            pdfauthor={\thesisauthor},
+            pdfsubject={},                                % Add subject/description
+            % pdfkeywords={keyword1, keyword2, keyword3}, % Uncomment and revise keywords
+            pdfborder={0 0 0}}
+% See https://github.com/k4rtik/uchicago-dissertation/issues/1
+\makeatletter
+\let\ORG@hyper@linkstart\hyper@linkstart
+\protected\def\hyper@linkstart#1#2{%
+  \lowercase{\ORG@hyper@linkstart{#1}{#2}}}
+\makeatother
+
+\begin{document}
+%% Basic setup commands
+% If you don't want a title page comment out the next line and uncomment the line after it:
+\maketitle
+%\omittitle
+
+% These lines can be commented out to disable the copyright/dedication/epigraph pages
+\makecopyright{\orcid}
+\makededication
+\makeepigraph
+
+
+%% Make the various tables of contents
+\tableofcontents
+\listoffigures
+\listoftables
+
+\acknowledgments
+% Enter Acknowledgements here
+
+\abstract
+% Enter Abstract here
+
+\mainmatter
+% Main body of text follows
+
+\chapter{Introduction}
+% Introductory stuff
+
+\chapter{A Chapter}
+\section{Introduction}
+% Intro to chapter one
+
+\begin{appendices}
+  \chapter{Title}
+\end{appendices}
+% appendix A
+
+\makebibliography
+\nocite{*}
+% Format a LaTeX bibliography
+
+% Figures and tables, if you decide to leave them to the end
+%\input{figure}
+%\input{table}
+
+\end{document}

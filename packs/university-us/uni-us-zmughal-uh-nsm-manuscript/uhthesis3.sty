@@ -1,0 +1,391 @@
+%  University of Houston PhD/MS thesis style -- modifications to the report style
+% For LaTeX version 2.09
+%
+% Author: Dimitrios Georgakopoulos (dimitris@cs.uh.edu)
+%
+% The float and footnote macros bellow are stolen from the
+% Stanfford University thesis style.
+
+\typeout{Document Style Option `uhthesis' <31 Aug 90>.}
+
+\long\def\comment#1{}
+\comment{
+
+Example of use:
+    \documentstyle[12pt,uhthesis]{report}
+    \begin{document}
+    \title{Transaction Management in\\ Multidatabase Systems}
+    \author{Dimitrios Georgakopoulos}
+    \adviser{Dr. Marek Rusinkiewicz, Chairman}
+    \firstreader{Dr. Farok Bastani}
+    \secondreader{Dr. Paulina Markenscoff\\Computer Engineering Department}
+
+    \makecoverpages
+    \begin{abstract}
+       This thesis tells you all you need to know about...
+    \end{abstract}
+    \begin{acknowledgements}
+        I would like to thank...
+    \end{acknowledgements}
+    \makecontentspages
+    \chapterpages
+
+    \chapter{Introduction}
+         ...
+    \chapter{Conclusions}
+         ...
+    \appendix
+    \chapter{A Long Proof}
+         ...
+    \bibliographystyle{plain}
+    \bibliography{mybib}
+    \end{document}
+
+Documentation:
+    This style file modifies the standard report style to follow the
+    Dean's Office "Preparing your Thesis/Dissertation for Submission
+    to the college of Natural Sciences and Mathematics: A Guideline".
+
+    The \makecoverpages command creates a copyright page (optionally),
+    the title page and, and the signature page.  The \begin{abstact}
+    command creates the abstract page.  The abstract itself should be
+    included between a \begin{abstact} and an \end{abstact} command,
+    as usual. Your (optional) acknowlegments should be included in the
+    (optional) \begin{acknowledments} ...\end{acknowledments} section.
+    The \makecontentspages command produces the table of contents, the
+    list of tables (optional) and the list of figures (optinal). Finally,
+    the \chapterpages command sets the page style of the main body of
+    your thesis.
+
+    The following commands can control what goes in the front matter
+    material:
+
+    \title{thesis title}
+    \author{author's name}
+        \degree{author's degree}{type of thesis}
+                - e.g. \degree{Masters of Science}{Thesis}
+                - if \degree is ommitted,
+                  \degree{Doctor of Philosophy}{Dissertation} is assumed
+    \department{author's department}
+        - Computer Science if omitted
+        \college{the college or school the thesis is submitted to}
+                - College of Natural Sciences and Mathematics if omitted
+    \adviser{the adviser's name}
+    \firstreader{the first reader's name}
+    \secondreader{the second reader's name}
+    \thirdreader{the third reader's name}
+    \fourthreader{the fourth reader's name}
+    \fifthreader{the fifth reader's name}
+    \threereaderstrue or \threereadersfalse
+        - print or don't print a third reader in the
+                  signature page (true by default)
+    \fourreaderstrue or \fourreadersfalse
+        - print or don't print a fourth reader in the
+                  signature page (true by default)
+    \fivereaderstrue or \fivereadersfalse
+        - print or don't print a fifth reader in the
+                  signature page (true by default)
+    \submitdate{month year in which the thesis is submitted}
+        - date LaTeX'd if omitted
+    \copyrighttrue or \copyrightfalse
+        - produce or don't produce a copyright page (true by default)
+    \figurelisttrue or \figurelistfalse
+        - produce or don't produce a List of Figures page
+          (true by default)
+    \tablelisttrue or \tablelistfalse
+        - produce or don't produce a List of Tables page
+          (true by default)
+
+
+    This style uses interline spacing that is 1.6 times normal, except
+    in the figure and table environments where normal spacing is used.
+    That can be changed by doing:
+       \renewcommand{\baselinestretch}{1.6}
+       (or whatever you want instead of 1.6)
+    Unfortunately, that command probably won't take effect unless it comes
+    before the \begin{document} or after something like \small \normalsize.
+
+    The example above shows the 12pt substyle being used.  This seems to give
+    acceptable looking results, but it may be omitted to get smaller print.
+}
+
+% First thing we do is make sure that report has been loaded.  A
+% common error is to try to use uhthesis as a documentstyle.
+\@ifundefined{chapter}{\@latexerr{The `uhthesis' option should be used
+with the `report' document style}}{}
+
+% Disallow page breaks at hyphens (this will give some underfull vbox's,
+% so an alternative is to use \brokenpenalty=100 and manually search
+% for and fix such page breaks)
+\brokenpenalty=10000
+
+% Use 1.6 times the normal baseline-to-baseline skip
+\renewcommand{\baselinestretch}{1.7}
+
+% Roman page numbers in cover pages
+\pagenumbering{roman}
+
+% Redefine the macro used for floats (including figures and tables)
+% so that single spacing is used.
+% (Note \def\figure{\@float{figure}set single spacing} doesn't work
+%  because figure has an optional argument)
+\def\@xfloat#1[#2]{\ifhmode \@bsphack\@floatpenalty -\@Mii\else
+   \@floatpenalty-\@Miii\fi\def\@captype{#1}\ifinner
+      \@parmoderr\@floatpenalty\z@
+    \else\@next\@currbox\@freelist{\@tempcnta\csname ftype@#1\endcsname
+       \multiply\@tempcnta\@xxxii\advance\@tempcnta\sixt@@n
+       \@tfor \@tempa :=#2\do
+                        {\if\@tempa h\advance\@tempcnta \@ne\fi
+                         \if\@tempa t\advance\@tempcnta \tw@\fi
+                         \if\@tempa b\advance\@tempcnta 4\relax\fi
+                         \if\@tempa p\advance\@tempcnta 8\relax\fi
+         }\global\count\@currbox\@tempcnta}\@fltovf\fi
+    \global\setbox\@currbox\vbox\bgroup
+    \def\baselinestretch{1}\@normalsize
+    \boxmaxdepth\z@
+    \hsize\columnwidth \@parboxrestore}
+
+% Redefine the macro used for footnotes to use single spacing
+\long\def\@footnotetext#1{\insert\footins{\def\baselinestretch{1}\footnotesize
+    \interlinepenalty\interfootnotelinepenalty
+    \splittopskip\footnotesep
+    \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
+    \hsize\columnwidth \@parboxrestore
+   \edef\@currentlabel{\csname p@footnote\endcsname\@thefnmark}\@makefntext
+    {\rule{\z@}{\footnotesep}\ignorespaces
+      #1\strut}}}
+
+% \author, \title are defined in report style; here are the rest definitions
+% Define degree & thesis type
+% it takes two arguments: author's degree and thesis/disseration/whatever
+% defaults Doctor of Philosophy and Dissertation
+\def\degree#1#2{
+    \gdef\@degree{#1}
+    \gdef\@thesistype{#2}}
+\def\@degree{\rm Doctor of Philosophy}
+\def\@thesistype{\rm Dissertation}
+
+% Define college/school  -- default College of Natural Sciences and Mathematics
+\def\college#1{\gdef\@college{#1}}
+\def\@college{\rm College of Natural Sciences and Mathematics}
+
+% Define department -- default Computer Science
+\def\department#1{\gdef\@department{#1}}
+\def\@department{\rm Computer Science}
+
+% Thesis advisor and committee
+\def\adviser#1{\gdef\@adviser{#1}}
+\def\firstreader#1{\gdef\@firstreader{#1}}
+\def\secondreader#1{\gdef\@secondreader{#1}}
+\def\thirdreader#1{\gdef\@thirdreader{#1}}
+\def\fourthreader#1{\gdef\@fourthreader{#1}}
+\def\fifthreader#1{\gdef\@fifthreader{#1}}
+\def\submitdate#1{\gdef\@submitdate{#1}}
+
+% \author, \title in report
+\def\@title{}
+\def\@author{}
+\def\@adviser{}
+\def\@firstreader{}
+\def\@secondreader{}
+\def\@thirdreader{}
+\def\@fourthreader{}
+\def\@fifthreader{}
+\def\@submitdate{\ifcase\the\month\or
+  January,\or February,\or March,\or April,\or May,\or June,\or
+  July,\or August,\or September,\or October,\or November,\or December,\fi
+  \space \number\the\year}
+
+\newif\ifcopyright
+\copyrighttrue
+
+\newif\iffigurelist
+\figurelisttrue
+
+\newif\iftablelist
+\tablelisttrue
+
+\newif\ifthreereaders
+\threereaderstrue
+
+\newif\iffourreaders
+\fourreaderstrue
+
+\newif\iffivereaders
+\fivereaderstrue
+
+%Cover pages
+\def\titlep{%
+        \newpage
+    \thispagestyle{empty}%
+        \setcounter{page}{1}
+    \begin{center}
+        \Large\uppercase\expandafter{\@title}
+        \end{center}
+    \vskip.3in
+        \centerline{\vrule width 1.5in height 0.4pt}
+    \vskip.4in
+    \begin{center}
+        \rm A \expandafter{\@thesistype}\\
+        Presented to\\
+                the Faculty of the Department of
+            \expandafter{\@department}\\
+        University of Houston
+    \vskip.3in
+        \centerline{\vrule width 1.5in height 0.4pt}
+    \vskip.4in
+        In Partial Fulfillment\\
+                of the Requirements for the Degree\\
+        \expandafter{\@degree}
+    \vskip.3in
+        \centerline{\vrule width 1.5in height 0.4pt}
+    \vskip.5in
+        \rm By\\
+        \@author\\
+        \@submitdate\\
+    \end{center}}
+
+\def\copyrightpage{%
+%   \newpage
+        \thispagestyle{empty}%
+        \setcounter{page}{1}
+        \null\vskip2.5in
+    \begin{center}
+        \copyright \  COPYRIGHTED BY\\
+            \vskip.5in
+                \underline{\@author}\\
+            \vskip.5in
+                \underline{\@submitdate}
+    \end{center}}
+
+
+\def\signaturepage{%
+      \newpage
+      \begin{center}
+        \Large\uppercase\expandafter{\@title}
+      \end{center}
+      \vspace{.4in}
+      \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\
+           \@author}}
+      \vspace{0.15in}
+%      \hspace{0in} \rm APPROVED:
+      \rightline{ APPROVED:\hspace{2.71in} }
+      \vspace{.375in}
+      \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\ \@adviser}}
+      \vspace{.375in}
+      \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\ \@firstreader}}
+      \vspace{.375in}
+
+      \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\ \@secondreader}}
+      \vspace{.375in}
+      \ifthreereaders
+        \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\ \@thirdreader}}
+      \fi
+      \vspace{.375in}
+      \iffourreaders
+        \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\ \@fourthreader}}
+      \fi
+      \vspace{.375in}
+      \iffivereaders
+        \rightline{\shortstack[l]{\vrule width 3.75in height 0.4pt\\ \@fifthreader}}
+      \fi
+      \vspace{.4in}
+
+      \rightline{\shortstack[l]{\vrule width 3.75in height
+                 0.4pt\\Dean, \expandafter{\@college}}}}
+
+\def\makecoverpages{%
+    \ifcopyright\copyrightpage\fi
+    \titlep
+    \signaturepage}
+
+
+%Abstract cover page
+\def\abstractp{%
+        \newpage
+    \begin{center}
+        \Large\uppercase\expandafter{\@title}
+        \end{center}
+    \vskip.3in
+        \centerline{\vrule width 1.5in height 0.4pt}
+    \vskip.5in
+    \begin{center}
+        \rm An Abstract of a \expandafter{\@thesistype}\\
+        Presented to\\
+                the Faculty of the Department of
+            \expandafter{\@department}\\
+        University of Houston
+    \vskip.4in
+        \centerline{\vrule width 1.5in height 0.4pt}
+    \vskip.5in
+        In Partial Fulfillment\\
+                of the Requirements for the Degree\\
+        \expandafter{\@degree}
+    \vskip.4in
+        \centerline{\vrule width 1.5in height 0.4pt}
+    \vskip.5in
+        \rm By\\
+        \@author\\
+        \@submitdate\\
+    \end{center}}
+
+%Abstract
+\def\abstract{
+            \def\baselinestretch{1.6}\@normalsize
+            \abstractp
+            \newpage
+            \begin{center}
+                  \Huge \bf Abstract
+            \end{center}}
+
+\def\endabstract{
+                 \def\baselinestretch{1.7}\@normalsize}
+
+%Acknowledgements
+\def\acknowledgements{
+            \newpage
+            \begin{center}
+            \large {\ }  \bf Acknowledgements
+            \end{center}}
+
+%\def\endacknowledgements{}
+
+%Table of contents
+\def\makecontentspages{
+        \def\baselinestretch{1}\@normalsize
+    \tableofcontents
+    \newpage
+    \iffigurelist
+          \listoffigures
+          \newpage
+        \fi
+    \iftablelist
+          \listoftables
+          \newpage
+        \fi
+        \def\baselinestretch{1.7}\@normalsize}
+
+%Chapter page definition
+\def\chapterpages{
+        % Put the page number on the top of the page
+%        \def\@oddhead{\rm\hfil\thepage\hfil}
+%        \def\@oddfoot{}
+%        \let\@evenhead\@oddhead
+%        \let\@evenfoot\@oddfoot
+
+    \pagenumbering{arabic}}
+
+% Redefine \thebibliography to go to a new page and put an entry in the
+% table of contents
+\let\@ldthebibliography\thebibliography
+\renewcommand{\thebibliography}[1]{
+        \newpage
+        \def\baselinestretch{1}\@normalsize
+    \addcontentsline{toc}{chapter}{Bibliography}
+    \@ldthebibliography{#1}}
+
+% Single space for drafts
+\def\singlespace{
+        \def\baselinestretch{1}\@normalsize}
+
+%That's all folks

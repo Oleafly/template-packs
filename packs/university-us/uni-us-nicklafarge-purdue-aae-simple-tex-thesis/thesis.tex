@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Preamble Options
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Select build mode from:
+%     quick - try to compile quickly (no extras, remove front pages)
+%     debug - add grid lines/compile times (print variables)
+%     proof - local version of "final" 
+%     final - Final publishable version (calls PurdueThesis - requires LuaLaTeX)
+\def\ZZbuildmode{debug}
+
+% Input arguments required by PurdueThesis
+\input{a-template/te00-template-options.tex}
+
+% Build the document this will select the document class based on :
+%    quick/debug/proof - Local simplified PurdueTheiss.cls file
+%                final - Official PurdueThesis.cls file
+\RequirePackage{ifthen}
+\ifthenelse{\equal{\ZZbuildmode}{final}}
+{\documentclass{PurdueThesis}}{\documentclass{PurdueThesisNL}}
+
+% Set up the latex document w/ imports, definitions, and 
+% template customizations
+\input{a-template/te0-template.tex}
+
+% TODO: not sure if everything should use \input
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+% Ducument 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\begin{document}
+\maketitle
+
+% Front matter (title, acknowledgements, abstract, etc)
+\input{b-front/fr0-front.tex}
+
+% Input all chapters here
+\input{ch1-intro/in0-intro.tex}
+\input{ch2-background/bk0-background.tex}
+% ...
+
+% Appendices
+\input{ch8-appendices/ap0-appendices.tex}
+
+% Back content (vita, bib settings, etc.)
+\input{d-back/bk0-end.tex}
+
+\end{document}

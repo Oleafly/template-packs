@@ -1,0 +1,228 @@
+\documentclass[12pt]{article}
+
+%==========================================================================
+%									BEGIN OF PREAMABLE
+%==========================================================================
+
+
+%_______________________________________________________________________________________________________________
+%______________________PACKAGES_____________________________________________________________________________
+
+	\usepackage{mathptmx}
+	\usepackage[bitstream-charter]{mathdesign}
+	\usepackage[T1]{fontenc}
+	\usepackage[section]{placeins}
+	\usepackage{adjustbox}
+	\usepackage{geometry}
+	\usepackage{amsmath}
+	\usepackage{setspace}
+	\usepackage[authoryear]{natbib}
+	\usepackage[titletoc, toc, page]{appendix}
+	\usepackage{tabularx}
+	\usepackage{rotating, booktabs}
+	\usepackage{enumitem}
+	\usepackage{graphicx}
+	\usepackage{pdflscape}
+	\usepackage[referable]{threeparttablex}
+	\usepackage[british]{babel}
+	\usepackage{titlesec}
+	\usepackage{subcaption}
+	\usepackage{caption}
+	\usepackage{pdflscape}
+	\usepackage{siunitx}
+	\usepackage{xcolor}
+	\usepackage{verbatim}
+	\usepackage{sectsty}
+	\usepackage{array}
+	\usepackage{hyperref}
+	\usepackage{multirow}
+	\usepackage{datetime}
+	\usepackage{fancyhdr}
+	
+	
+	\usepackage{blindtext}  % generate random text
+
+%_____________________________________________________________________________________________	
+%_____________CUSTOMISATION_____________________________________________________________
+	
+
+	
+	\renewcommand{\familydefault}{\rmdefault}
+		\newtheorem{theorem}{Theorem}[section]
+		\newtheorem{assumption}[theorem]{Assumption}
+		\newtheorem{proposition}[theorem]{Proposition}
+		\newtheorem{corollary}[theorem]{Corollary}
+		\newtheorem{definition}[theorem]{Definition}
+
+\newcolumntype{L}{>{\centering\arraybackslash}m{2cm}}
+	\newcolumntype{Y}{>{\centering\arraybackslash}X}
+	 \newcolumntype{W}{>{\centering\arraybackslash}m{5.5cm}}
+	 \newcolumntype{K}{>{\arraybackslash}m{9.5cm}}
+	\geometry{verbose,tmargin=1.5in, bmargin=1in, lmargin=1in, rmargin=1in}
+		\setlength{\parindent}{24pt}
+		
+\newenvironment{proof}{\paragraph*{Proof:}}{\hfill$\square$}
+
+\renewlist{tablenotes}{enumerate}{1}
+\makeatletter
+\setlist[tablenotes]{label=\tnote{\alph*},ref=\alph*,itemsep=\z@,topsep=\z@skip,partopsep=\z@skip,parsep=\z@,itemindent=\z@,labelindent=\tabcolsep,labelsep=.2em,leftmargin=*,align=left,before={\footnotesize}}
+\makeatother
+
+\makeatletter
+\@addtoreset{section}{part}
+\makeatother
+
+\def\copyrightpage{
+  \newpage
+  \thispagestyle{empty}    % No page number
+  \addtocounter{page}{-1}
+  \part*{}            % Required for \vfill to work
+  \begin{center}
+   \vfill
+   \copyright\ Copyright by \textbf{YOUR NAME HERE} \textbf{YEAR HERE}\\
+   All Rights Reserved
+  \end{center}}
+  
+  
+ \def\dedication{
+  \newpage 
+  \thispagestyle{fancy}
+  \addtocounter{page}{-1}
+\pagenumbering{roman}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rhead{\thepage}
+\def\enddedication{\par\vfil\newpage}
+}
+
+ \def\ackn{
+  \newpage 
+  \thispagestyle{fancy}
+
+
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rhead{\thepage}
+\def\endackn{\par\vfil\newpage}
+}
+
+\addto\captionsbritish{
+	\renewcommand{\partname}{Chapter}
+	\renewcommand{\contentsname}{Table of Contents}
+	}
+%==========================================================================
+%									END OF PREAMABLE
+%==========================================================================
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+\textbf{\Large SOME ESSAYS ON SOME STUFF}
+
+\vspace{0.8cm}
+By
+
+\textbf{SOMEONE WHO BARELY CARES}
+
+\vspace{3cm}
+
+\textsc{A dissertation submitted in partial fulfilment of the}
+
+\textsc{requirements for the degree of}
+
+\vspace{2cm}
+
+\textsc{Doctor of Philosophy}
+
+\textsc{(Economics)}
+
+\vspace{1cm}
+
+at the 
+
+\textbf{UNIVERSITY OF WISCONSIN - MADISON}
+
+SOME YEAR IN THE FUTURE
+
+\vspace{2cm}
+\begin{flushleft}
+Date of final oral examination: \emph{SOME TIME IN THE FUTURE}
+\end{flushleft}
+
+\begin{flushleft}
+The dissertation is approved by the following members of the Committee:
+\end{flushleft}
+
+\begin{description}
+\item [Professor A] Professor, Economics
+\item [Professor B] Professor, Economics
+\item [Professor C] Professor, Economics
+\item [Professor D] Professor, Economics
+\item [Professor E] Professor, Agricultural and Applied Economics
+\end{description}
+
+\end{center}
+\end{titlepage}
+
+\copyrightpage
+
+
+% DEDICATION
+\begin{dedication}
+\large{\textbf{Dedications}}
+
+\doublespacing
+\emph{THANK SOME PEOPLE}
+
+\end{dedication}
+\clearpage
+
+\newpage
+\begin{ackn}
+\large{\textbf{Acknowledgement}}
+
+
+\end{ackn}
+
+\newpage
+\begin{ackn}
+\large{\textbf{Abstracts}}
+
+
+\end{ackn}
+
+\newpage
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rhead{\thepage}
+
+\tableofcontents
+\doublespacing
+
+\newpage
+\pagestyle{fancy}
+\pagenumbering{arabic}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rhead{\thepage}
+
+\input{CHAP1_SAMPLE}
+
+\newpage
+\input{CHAP2_SAMPLE}
+
+\newpage
+\input{CHAP3_SAMPLE}
+\newpage
+\singlespacing
+\nocite{*}
+\bibliographystyle{apa}\bibliography{REF_SAMPLE}
+\newpage
+\begin{appendices}
+\doublespacing
+\input{APPENDIX_SAMPLE}
+
+\end{appendices}
+\end{document}

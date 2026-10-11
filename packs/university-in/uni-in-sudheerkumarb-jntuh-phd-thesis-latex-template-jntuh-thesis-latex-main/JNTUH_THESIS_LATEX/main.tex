@@ -1,0 +1,181 @@
+\documentclass[12pt,a4paper,oneside]{report}
+
+% ── Page Geometry ────────────────────────────────────────────
+\usepackage[
+    left=1.5in,
+    right=1.0in,
+    top=1.0in,
+    bottom=1.0in
+]{geometry}
+
+% ── Font Setup (pdfLaTeX compatible) ────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage{tgbonum}    % Bookman-style font with proper bold support
+
+% ── Packages ─────────────────────────────────────────────────
+\usepackage{setspace}           % line spacing
+\usepackage{titlesec}           % chapter/section formatting
+\usepackage{tocloft}            % TOC formatting
+\usepackage{graphicx}           % figures
+\usepackage{caption}            % captions
+\usepackage{booktabs}           % professional tables
+\usepackage{amsmath,amssymb}    % mathematics
+\usepackage{hyperref}           % hyperlinks
+\usepackage{url}
+\usepackage{fancyhdr}           % headers and footers
+\usepackage{emptypage}          % suppress headers on empty pages
+\usepackage{parskip}            % paragraph spacing
+\usepackage{microtype}          % better text justification
+\usepackage{natbib}             % bibliography
+
+% ── Line Spacing ─────────────────────────────────────────────
+\onehalfspacing
+
+% ── Paragraph Indentation ────────────────────────────────────
+\setlength{\parindent}{1.25em}
+
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\setlist[enumerate]{
+    label=\arabic.,
+    leftmargin=1.5in,
+    labelsep=0.15in,
+    itemsep=0.4em,
+    topsep=0.4em
+}
+
+% ── Caption Formatting ───────────────────────────────────────
+\captionsetup{
+    font=small,
+    labelfont=bf
+}
+
+% ── Chapter Title Formatting ─────────────────────────────────
+\titleformat{\chapter}[display]
+  {\normalfont\Large\bfseries\centering}
+  {\MakeUppercase{\chaptertitlename}\ \thechapter}
+  {12pt}
+  {\Large\MakeUppercase}
+
+% ── Section Formatting ───────────────────────────────────────
+\titleformat{\section}
+  {\normalfont\normalsize\bfseries\MakeUppercase}
+  {\thesection}
+  {1em}
+  {}
+
+% ── Subsection Formatting ────────────────────────────────────
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsection}
+  {1em}
+  {}
+
+
+% ── Numbering by Chapter ─────────────────────────────────────
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
+\renewcommand{\theequation}{\thechapter.\arabic{equation}}
+
+\numberwithin{figure}{chapter}
+\numberwithin{table}{chapter}
+\numberwithin{equation}{chapter}
+
+% ── Header / Footer ──────────────────────────────────────────
+\pagestyle{fancy}
+
+\fancyhf{}
+
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{\thepage}
+
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ── Hyperref Setup ───────────────────────────────────────────
+\hypersetup{
+    colorlinks = true,
+    linkcolor  = black,
+    citecolor  = black,
+    urlcolor   = blue,
+    pdftitle   = {PhD Thesis - JNTUH},
+    pdfauthor  = {Research Scholar Name}
+}
+
+% ============================================================
+%  DOCUMENT BEGINS
+% ============================================================
+\begin{document}
+
+% ── Front matter (Roman numerals) ───────────────────────────
+\pagenumbering{roman}
+
+% % Blank page 1
+% \thispagestyle{empty}\mbox{}\newpage
+
+% % Blank page 2
+% \thispagestyle{empty}\mbox{}\newpage
+
+% Page 3 – Title / Cover page (Appendix-1)
+\input{frontmatter/titlepage}
+
+% Page 4 – Declaration (Appendix-2)
+\input{frontmatter/declaration}
+
+% Page 5 – Supervisor Certificate (Appendix-3)
+\input{frontmatter/certificate_supervisor}
+
+% Page 6 – Head of Organisation Certificate (Appendix-4)
+\input{frontmatter/certificate_hod}
+
+% Page 7 – Acknowledgement
+\input{frontmatter/acknowledgement}
+
+% Page 8 – Abstract
+\input{frontmatter/abstract}
+
+% Pages 9-10 – TOC, LOT, LOF, Notation
+\tableofcontents
+\newpage
+\listoftables
+\newpage
+\listoffigures
+\newpage
+\input{frontmatter/notation}
+
+% ── Main matter (Arabic numerals) ───────────────────────────
+\pagenumbering{arabic}
+
+% Chapter 1 – Introduction
+\input{chapters/chapter1_introduction}
+
+% Chapter 2 – Literature Survey
+\input{chapters/chapter2_literature}
+
+% Chapter 3 – Theoretical Analysis
+\input{chapters/chapter3_theory}
+
+% Chapter 4 – Experimental Investigations
+\input{chapters/chapter4_experiments}
+
+% Chapter 5 – Experimental Results
+\input{chapters/chapter5_results}
+
+% Chapter 6 – Discussion of Results
+\input{chapters/chapter6_discussion}
+
+% Chapter 7 – Summary, Conclusions and Recommendations
+\input{chapters/chapter7_conclusion}
+
+% ── References / Bibliography ───────────────────────────────
+\bibliographystyle{plain}
+\bibliography{references/references}
+
+% ── Appendices ───────────────────────────────────────────────
+\appendix
+\input{appendices/appendix_a}
+
+% Blank page at end
+\thispagestyle{empty}\mbox{}\newpage
+
+\end{document}

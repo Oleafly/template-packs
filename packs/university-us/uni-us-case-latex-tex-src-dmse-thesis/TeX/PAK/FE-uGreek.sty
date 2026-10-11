@@ -1,0 +1,166 @@
+\NeedsTeXFormat{LaTeX2e}[1995/12/01] 
+\ProvidesPackage{FE-uGreek}[2016/06/14 v1.2 Frank Ernst] 
+\typeout{}
+\typeout{FE-uGreek.sty}
+\typeout{16-06-14 Frank Ernst}
+\typeout{}
+\typeout{Upright Greek letters.}
+\typeout{}
+\typeout{Options:}
+\typeout{Global parameter uGreekMag changes magnification of upright
+  Greek letters.}
+\typeout{Purpose: Accommodate different apparent parent font sizes.}
+\typeout{}
+
+\RequirePackage{relsize}
+\@ifundefined{uGreekMag}{%
+  \newcommand{\uGreekMag}{1.0}}{}
+% Upright Greek Letters
+% 
+% Source: Springer TeX, Kloeckl 432
+%
+% Unfortunately, a dynamic definition based on a test using 
+% \ifthenelse does not work in figure captions. Back to the roots!
+%
+\newif\ifuGreekUseLucida
+\uGreekUseLucidafalse
+\newif\ifuGreekUseMinionPro
+\uGreekUseMinionProfalse
+\newif\ifuGreekUseArev
+\uGreekUseArevfalse
+\newif\ifuGreekUseHeuristica
+\uGreekUseHeuristicafalse
+%
+% select Euler fonts (eurm10, Kloeckl 432):
+\newcommand{\uGreekEuler}[1]{\usefont{U}{eur}{m}{n}#1}
+\newcommand{\uGreekEulerBold}[1]{\usefont{U}{eur}{b}{n}#1}
+\newcommand{\uGreekLucida}[1]{\usefont{OML}{hlcm}{m}{n}#1}
+\newcommand{\uGreekLucidaBold}[1]{\usefont{OML}{hlcm}{b}{n}#1}
+\newcommand{\uGreekMinionPro}[1]{\usefont{OML}{pmnm}{m}{n}#1}
+\newcommand{\uGreekMinionBold}[1]{\usefont{OML}{pmnm}{b}{n}#1}
+\newcommand{\uGreekArev}[1]{\usefont{OML}{pmnm}{m}{n}#1}
+\newcommand{\uGreekArevBold}[1]{\usefont{OML}{pmnm}{b}{n}#1}
+\newcommand{\uGreekHeuristica}[1]{\usefont{OML}{pmnm}{m}{n}#1}
+\newcommand{\uGreekHeuristicaBold}[1]{\usefont{OML}{pmnm}{b}{n}#1}
+%
+\newcommand{\uGreekDef}[2]{%
+  \newcommand{#1}%
+  {\ifuGreekUseLucida%
+    \mbox{\uGreekLucida{{\relscale{\uGreekMag}\char#2}}}%
+   \else%
+    \ifuGreekUseMinionPro%
+      \mbox{\uGreekMinionPro{{\relscale{\uGreekMag}\char#2}}}%
+    \else
+      \ifuGreekUseArev%
+        \mbox{\uGreekArev{{\relscale{\uGreekMag}\char#2}}}%
+    \else
+      \ifuGreekUseHeuristica%
+        \mbox{\uGreekHeuristica{{\relscale{\uGreekMag}\char#2}}}%
+      \else
+        \mbox{\uGreekEuler{{\relscale{\uGreekMag}\char#2}}}\fi\fi\fi\fi}}
+
+\newcommand{\uGreekDefBold}[2]{%
+  \newcommand{#1}%
+  {\ifuGreekUseLucida\mbox{\uGreekLucida{{\relscale{\uGreekMag}\char#2}}}%
+        \typeout{}%
+        \typeout{*** Warning: Lucida upright greek boldface not available.}%
+        \typeout{}%
+      \else\mbox{\uGreekEulerBold{{\relscale{\uGreekMag}\char#2}}}\fi}}
+
+\newcommand{\uGreekDefLucida}[2]{%
+  \newcommand{#1}%
+  {\mbox{\uGreekLucida{{\relscale{\uGreekMag}\char#2}}}}}%
+
+\newcommand{\uGreekDefEuler}[2]{%
+  \newcommand{#1}%
+  {\mbox{\uGreekEuler{{\relscale{\uGreekMag}\char#2}}}}}%
+
+%% \ifthenelse{\boolean{uGreekUseLucida}}%
+%%  {\uGreekDefLucida{\ualpha}{11}
+%%   \uGreekDefLucida{\ubeta}{12}
+%%   \uGreekDefLucida{\udelta}{14}
+%%   \uGreekDefLucida{\ugamma}{13}
+%%   \uGreekDefLucida{\uepsilon}{15}
+%%   \uGreekDefLucida{\umu}{22}
+%%   \uGreekDefLucida{\uGamma}{0}
+%%   \uGreekDefLucida{\uDelta}{1}
+%%   \uGreekDefLucida{\uPi}{5}
+%%   \uGreekDefLucida{\uSigma}{6}
+%%   \uGreekDefLucida{\uOmega}{10}
+%%   \uGreekDefLucida{\upi}{25}
+%%   \uGreekDefLucida{\uchi}{31}
+%%   \uGreekDefLucida{\pdif}{64}}
+%%  {\uGreekDefEuler{\ualpha}{11}
+%%   \uGreekDefEuler{\ubeta}{12}
+%%   \uGreekDefEuler{\udelta}{14}
+%%   \uGreekDefEuler{\ugamma}{13}
+%%   \uGreekDefEuler{\uepsilon}{15}
+%%   \uGreekDefEuler{\umu}{22}
+%%   \uGreekDefEuler{\uGamma}{0}
+%%   \uGreekDefEuler{\uDelta}{1}
+%%   \uGreekDefEuler{\uPi}{5}
+%%   \uGreekDefEuler{\uSigma}{6}
+%%   \uGreekDefEuler{\uOmega}{10}
+%%   \uGreekDefEuler{\upi}{25}
+%%   \uGreekDefEuler{\uchi}{31}
+%%   \uGreekDefEuler{\pdif}{64}}
+
+\uGreekDef{\uGamma}{0}
+\uGreekDef{\uDelta}{1}
+\uGreekDef{\uTheta}{2}
+\uGreekDef{\uLambda}{3}
+\uGreekDef{\uXsi}{4}
+\uGreekDef{\uPi}{5}
+\uGreekDef{\uSigma}{6}
+\uGreekDef{\uUpsilon}{7}
+\uGreekDef{\uPhi}{8}
+\uGreekDef{\uPsi}{9}
+\uGreekDef{\uOmega}{10}
+\uGreekDef{\ualpha}{11}
+\uGreekDef{\ubeta}{12}
+\uGreekDef{\udelta}{14}
+\uGreekDef{\ugamma}{13}
+\uGreekDef{\uepsilon}{15}
+\uGreekDef{\uvarepsilon}{34}
+\uGreekDef{\utheta}{18}
+\uGreekDef{\umu}{22}
+\uGreekDef{\upi}{25}
+\uGreekDef{\usigma}{27}
+\uGreekDef{\uomega}{33}
+\uGreekDef{\uchi}{31}
+\uGreekDef{\urho}{26}
+\uGreekDef{\pdif}{64}
+
+\uGreekDefBold{\uGammab}{0}
+\uGreekDefBold{\uDeltab}{1}
+\uGreekDefBold{\uThetab}{2}
+\uGreekDefBold{\uLambdab}{3}
+\uGreekDefBold{\uXsib}{4}
+\uGreekDefBold{\uPib}{5}
+\uGreekDefBold{\uSigmab}{6}
+\uGreekDefBold{\uUpsilonb}{7}
+\uGreekDefBold{\uPhib}{8}
+\uGreekDefBold{\uPsib}{9}
+\uGreekDefBold{\uOmegab}{10}
+\uGreekDefBold{\ualphab}{11}
+\uGreekDefBold{\ubetab}{12}
+\uGreekDefBold{\udeltab}{14}
+\uGreekDefBold{\ugammab}{13}
+\uGreekDefBold{\uthetab}{18}
+\uGreekDefBold{\uepsilonb}{15}
+\uGreekDefBold{\uvarepsilonb}{34}
+\uGreekDefBold{\umub}{22}
+\uGreekDefBold{\upib}{25}
+\uGreekDefBold{\usigmab}{27}
+\uGreekDefBold{\uomegab}{33}
+\uGreekDefBold{\uchib}{31}
+\uGreekDefBold{\urhob}{26}
+\uGreekDefBold{\pdifb}{64}
+
+% Find out about more upright Greek letters with the following macro:
+\newcommand{\showAllUprightGreekLetters}{
+  \newcounter{i}\setcounter{i}{0}
+  \whiledo{\value{i}<200}
+    {\arabic{i}: \mbox{\uGreekEuler{\char\value{i}}}\\
+    \stepcounter{i}}}
+

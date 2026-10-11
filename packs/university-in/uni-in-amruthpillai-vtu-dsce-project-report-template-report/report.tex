@@ -1,0 +1,71 @@
+% Memoir is more versatile than other document classes like article, report, book etc,
+\documentclass[12pt,a4paper,oneside]{memoir}
+
+% To handle image, like scaling
+\usepackage{graphicx}
+\usepackage[english]{babel}
+
+% Used for modifying page layout
+\usepackage[a4paper,right=1in]{geometry}
+
+% For referencing contents,figure,table...
+\usepackage[hidelinks]{hyperref}
+
+% For including source code
+\usepackage{listings}
+
+% For using text colors
+\usepackage{color}
+
+% To attach pdf files
+\usepackage{pdfpages}
+
+% Document starts here
+\begin{document}
+
+\newlength{\toptafiddle}
+\newlength{\bottafiddle}
+\definecolor{therablue}{RGB}{41, 134, 230}
+
+\include{title} % Include Title Page, (i.e. title.tex)
+
+% Page layout according to VTU specification
+% Right: 1.25in, Left: 1in, Top & Bottom: 0.75in in each page
+
+\setlength{\oddsidemargin}{0.25in} % Left side margin {1in by default + 0.25in}
+
+% Header specification
+\setlength{\headheight}{\onelineskip}
+\setlength{\headsep}{6pt}
+\setlength{\topmargin}{-0.25in}
+
+% Footer specification
+\setlength{\footskip}{\onelineskip}
+\setlength{\footnotesep}{\onelineskip}
+
+% A4 paper height = 11.69in
+% thus 11.69in - 9.67in - 1in (top + header) is approx 0.75in left for bottom
+\setlength{\textheight}{9.67in}
+
+\brokenpenalty=10000 % Disallow page breaks at hyphens
+
+\OnehalfSpacing % Line Spacing set to 1.5
+
+\include{certificate}
+
+\pagenumbering{roman}
+\pagestyle{plain}
+
+\include{acknowledgement}
+\include{tableofcontents}
+\include{abstract}
+
+\pagestyle{myheadings}
+\makeheadrule{myheadings}{\textwidth}{0.4pt}
+\makefootrule{myheadings}{\textwidth}{0.4pt}{\footruleskip}
+
+\makeoddhead{myheadings}{\small{Project Report on \emph{Therabot - Your Pocket Therapist}}}{}{\small{Chapter \thechapter}}
+\makeoddfoot{myheadings}{\small{Dept Of CSE, DSCE, Bengaluru}}{}{\small{\thepage}}
+\pagenumbering{arabic}
+
+\end{document}

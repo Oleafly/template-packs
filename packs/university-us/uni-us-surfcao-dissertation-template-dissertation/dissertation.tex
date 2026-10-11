@@ -1,0 +1,70 @@
+% Root File for a UCSB Dissertation
+\documentclass[12pt,oneside,final]{ucthesis}
+%\documentclass[12pt,oneside,final]{ucthesis}
+%todo: final options: [12pt,oneside,final]
+\def\dsp{\def\baselinestretch{2.0}\large\normalsize} 
+\def\newblock{\hskip .11em plus .33em minus .07em}
+\dsp 
+\bibliographystyle{agsm}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{url} 
+\usepackage{amsmath,amsthm} 
+\usepackage{graphics}
+\renewcommand{\thefootnote}{}
+\renewcommand{\today}{}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+%%set page size
+\usepackage{ifpdf}
+\ifpdf
+\setlength{\pdfpagewidth}{8.5in}
+\setlength{\pdfpageheight}{11in}
+\else
+\fi
+%% Including the required packages
+
+%\usepackage{figcaps}
+%\usepackage{graphics,epsfig,slashbox}
+\usepackage{amssymb, amsmath, amsfonts, latexsym, makeidx, verbatim, xspace,textcomp}
+\usepackage{epsfig, graphicx, graphics}
+\graphicspath{{./chap1/}{./chap2/}{./chap3/}{./chap4/}{./chap5/}{./chap6/}{./conclusion/}{./appendixA/}{./appendixB/}} % the chapters
+% spacing in figures and tables and their captions can be
+% changed here (\ssp for single-space, empty for same as surrounding 
+% text); for this to work, the command \figsp has to be included
+% in every figure and table right after the \begin{figure}
+%\def\figsp{\ssp}
+\def\figsp{}
+%Document Portion:
+\begin{document}
+%% Front Matter:
+\input{title}          % First Page
+\maketitle             % Make Title Page
+
+\dsp
+\begin{frontmatter}
+\approvalpage
+\copyrightpage
+\input{dedicate}
+\input{acknowledgements}
+\input{vitae}
+\input{abstract}
+\tableofcontents
+\listoffigures
+\listoftables
+\end{frontmatter}
+
+\include{./chap1}
+\include{./chap2}
+\include{./chap3}
+\include{./chap4}
+\include{./chap5}
+\include{./chap6}
+\ssp  % bibliography can be single-spaced for UC thesis format
+\bibliography{library-no-urls}
+%\part*{\addcontentsline{toc}{part}{Appendices}Appendices}
+\addcontentsline{toc}{part}{Appendices}
+\appendix
+%\include{./appendixA}
+\include{./appendixB}
+\end{document}

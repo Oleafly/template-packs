@@ -1,0 +1,148 @@
+\documentclass[hidelinks,12pt,letterpaper]{report}
+
+% makeindex <filename>.nlo -s nomencl.ist -o <filename>.nls
+\usepackage[square,numbers]{natbib}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{afterpage}
+\usepackage{textcase}
+\usepackage{pdfpages}
+% for Images
+\usepackage{graphicx}
+% for theorems, definitions, exmaples
+\usepackage{amsthm,amsmath,amssymb,amsbsy,mathrsfs,mathtools}
+\usepackage{dcolumn,array}
+\usepackage{tocloft}
+\usepackage{asudis}
+\usepackage{subfigure}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage[refpage]{nomencl}
+\usepackage{etoolbox}
+\usepackage{caption} 
+\usepackage[utf8]{inputenc}
+\usepackage{titlesec}
+\captionsetup[table]{skip=5pt}
+% \renewcommand{\nomname}{List of Notations}
+\renewcommand*{\pagedeclaration}[1]{\unskip\dotfill\hyperpage{#1}}
+
+\makenomenclature
+\usepackage{lipsum}
+\makeatletter
+\newcommand{\nomentry}[2]{% to sort by pages
+	\nomenclature[\two@digits{\value{page}}]{#1}{#2}%
+} 
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{defn}{Definition}[chapter]
+\newtheorem{exm}{Example}[chapter]
+\newtheorem*{keyobservation}{Key Observation}
+\newtheorem{corollary}{Corollary}
+
+\def\diaend{\hspace*{\fill} $\diamond$}
+\def\boxend{\hspace*{\fill} $\Box$}
+\def\parag{{\vspace{0.15in} \noindent}}
+\def\dotend{\hspace*{\fill} $\circ$}
+\def\circend{\hspace*{\fill} $\circ$}
+		
+\begin{document}
+
+
+%-----------------------front matter
+\pagenumbering{roman}
+\title{\doublespace Thesis/Dissertation Title}
+\author{John Doe}
+\degreeName{Degree Name}
+\defensemonth{Defense Month}
+
+\gradmonth{Graduation Month}
+\gradyear{Graduation Year}
+
+\chair{John Doe}
+\memberOne{John Doe 2}
+\memberTwo{John Doe 3}	
+\memberThree{John Doe 4}
+\memberFour{John Doe 5}
+\maketitle
+\doublespace
+
+% Dedication Page
+\pagenumbering{roman}
+\include{abstract}
+\dedicationpage{\\ \leavevmode\vfill\textit{Add dedication here\\ Dedication content will be center and middle aligned}\vfill}
+
+\include{acknowledgement}
+\tableofcontents
+
+% List of Tables
+\addtocontents{toc}{~\hfill Page\par}
+\newpage
+\addcontentsline{toc}{part}{LIST OF TABLES}
+\renewcommand{\cftlabel}{Table}
+\listoftables
+\addtocontents{lot}{Table~\hfill Page \par}
+
+% List of Figures
+\newpage
+\addcontentsline{toc}{part}{LIST OF FIGURES}
+\addtocontents{lof}{Figure~\hfill Page \par}
+\addtocontents{toc}{CHAPTER \par}
+\renewcommand{\cftlabel}{Figure}
+\listoffigures
+
+\clearpage
+
+\newpage
+
+% Main Thesis Content
+\doublespace
+\pagenumbering{arabic}
+
+% Introduction
+\include{chapter1}
+
+% Related Work
+\include{chapter2}
+
+% Proposed Approach
+\include{chapter3}
+
+% Experimental Evaluation
+\include{chapter4}
+ 
+% Conclusion
+\include{chapter5}
+
+\newpage
+% --------------------------- back matter
+{\singlespace
+% Making the references a "part" rather than a chapter gets it indented at
+% level -1 according to the chart: top of page 4 of the document at
+% ftp://tug.ctan.org/pub/tex-archive/macros/latex/contrib/tocloft/tocloft.pdf
+\addcontentsline{toc}{part}{REFERENCES}
+\bibliographystyle{asudis}
+\bibliography{references}
+
+\clearpage
+\addtocontents{toc}{APPENDIX \par}
+
+\appendix
+\renewcommand\chaptername{APPENDIX}
+
+\singlespace
+\chapter{LIST OF NOTATIONS AND ABBREVIATIONS}
+\markboth{\MakeUppercase\nomname}{\MakeUppercase\nomname} 
+Appendix should auto compile
+%\renewcommand{\nomname}{\vspace{-1.05in}\begin{center} \normalsize APPENDIX A \end{center}}
+\renewcommand{\nomname}{\vspace{-1.05in}\begin{center} \normalsize  \end{center}}
+% \printnomenclature[1.5cm]
+
+\printnomenclature
+\include{appendix_B}
+\clearpage
+
+
+\end{document}

@@ -1,0 +1,126 @@
+\documentclass[12 pt , letterpaper , twoside , openany ]{book}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Thesis/Dissertation Specific values: Must be entered before using rahulbhadani_thesis.sty package
+\newcommand{\authorname}{Candidate Name}
+\newcommand{\disstitle}{Dissertation Title\xspace}
+\newcommand{\disstitleshort}{Short Dissertation Title\xspace}
+\newcommand{\department}{Department of XYZ}
+\newcommand{\degreename}{DOCTOR OF PHILOSOPHY\xspace}
+\newcommand{\academicsession}{2022}
+\newcommand{\copyrightyear}{2022}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%% General customization fetched from rahulbhadani.sty
+\usepackage{rahulbhadani_dissertation}
+\let\cleardoublepage=\clearpage
+%%%% Document specific customization goes here %%%%
+\usepackage{fancyhdr}
+ \renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}
+
+\makeatletter
+\newcommand{\globalcolor}[1]{%
+  \color{#1}\global\let\default@color\current@color
+}
+\makeatother
+
+\AtBeginDocument{\globalcolor{gray}}
+
+\newcommand{\solution}{\textcolor{green}{\section{Solution:}}}
+\newcommand{\intro}[1]{\textcolor{ArizonaBlue}{#1}}
+
+
+% Custom Header and Footer
+\fancyhf{}
+\rhead{\textsc{\disstitleshort} -- \textsc{Page \thepage}}
+%\lfoot{\small{\textsc{\authorname} -- \textsc{The University of Arizona}}}
+\lfoot{\textcolor{darkslateblue}{\hrule\small{\textsc{\authorname} -- \textsc{The University of Arizona}}}}
+
+
+%Document Title
+\title{{ { \Large\textsc{\disstitle}}}}
+
+\author{
+by\\ 
+\authorname
+\vspace{30pt}
+\\
+------------------------------------------------------------\vspace{-5pt}
+\\
+Copyright~~\textcopyright ~~Candidate 2022
+\vspace{12pt}
+\\
+A Dissertation Submitted to the Faculty of the\\ \\
+\textsc{\department}\\ \\
+\small In Partial Fulfillment of the Requirements \\
+\small For the Degree of\\ \\
+\uppercase{\degreename}\\ \\
+\small In the Graduate College\\ \\
+\uppercase{THE UNIVERSITY OF ARIZONA}
+}
+
+\date{\academicsession}
+\makeindex  
+\graphicspath{ {figures/} }
+\begin{document}
+%\fontsize{12}{14}\selectfont
+\frontmatter
+\maketitle
+\includepdf[pages={1}]{Co-chairs.pdf}
+
+%\newpage
+%
+%\thispagestyle{plain}
+%\vspace*{\fill}
+%\begin{center}
+%
+%\large \Leo \Leo \Leo  \\ 
+%-------------------------------------------------------\\ 
+%\small Copyright \textcopyright ~~\authorname, \copyrightyear
+%\vspace*{\fill}
+%\end{center}
+
+\newpage
+\thispagestyle{plain}
+\noindent
+\Large{\textsc{\color{ArizonaOasis}
+{Acknowledgements}}}\\
+\rule{\linewidth}{0.4pt}
+\normalsize
+
+I would like to acknowledge ...
+
+\tableofcontents 
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Figures}
+\listoffigures
+
+
+\newpage
+\thispagestyle{plain}
+\noindent
+\LARGE{\textsc{\color{ArizonaOasis}{Abstract}}}\\
+\rule{\linewidth}{0.4pt}
+\normalsize
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}
+In this dissertation, ....
+
+
+\mainmatter
+
+
+
+
+\input{introduction.tex}
+
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliography{bibliography}
+
+\end{document}

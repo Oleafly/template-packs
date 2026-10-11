@@ -1,0 +1,209 @@
+\documentclass[phd,draft]{cornell}
+%\documentclass[phd,tocprelim,draft]{cornell} 
+% Options: phd/masters, draft/semifinal/final, tocprelim
+% draft --> don't render figures
+% tocprelim --> include preliminary sections in table of contents
+
+\let\ifpdf\relax % not sure what this does...
+
+%Some possible packages to include
+\usepackage{graphicx}
+%\usepackage[final]{graphicx} % add [final] to ensure that figures are printed even if \documentclass[draft] is on
+%\usepackage[draft]{graphicx} %instead of setting entire \documentclass[draft], can just disable figure rendering like so:
+%\includegraphics[draft=false]{image.pdf} %to render figure even when in draft mode, set it with this
+
+\usepackage{palatino}
+\usepackage{tabularx} 
+\usepackage{threeparttable} %http://tex.stackexchange.com/questions/68605/table-with-foot-note since \tablenotemark{} is AGU specific!
+\usepackage{longtable}
+%\usepackage{amssymb}
+%\usepackage{amsmath}
+\usepackage{lscape}
+\usepackage{rotating}
+\usepackage{adjustbox} % for shrinking tables to fit on a page instead of rotating to landscape orientation
+
+% Glossary 
+% NOTE: if really ambitious you can generate a proper referenced index!
+% see: http://texblog.org/2014/01/15/glossary-and-list-of-acronyms-with-latex/
+%\usepackage{glossaries}
+\usepackage[acronym,nomain,nonumberlist]{glossaries} 
+%nomain allows definitions throughout text
+%nonumberlist prevents page numbers from showing up in acronym list (index style), ok if only referencing acronym definition (first occurence with gls)
+% Generate the glossary
+\makeglossaries % comes before \begin{document}
+% NEED TO RUN the following command line scripts to generate glossary/acronym index file so that it list shows up in final PDF:
+% Simplified command (requires PERL): 
+%makeglossaries Thesis
+% Glossary
+%makeindex -s Thesis.ist -t Thesis.glg -o Thesis.gls Thesis.glo
+% List of acronyms:
+%makeindex -s Thesis.ist -t Thesis.alg -o Thesis.acr Thesis.acn
+
+% Turn labels and references into hyperlinks!!!!
+%\usepackage{hyperref}
+% AWESOME. But must compile with pdflatexmk
+
+% Bibliography
+\usepackage{natbib} 
+\bibliographystyle{agu08}
+
+%\usepackage{setspace} %singlespace by default
+%\onehalfspacing
+%\singlespacing
+%\doublespacint
+
+% Line numbering
+%\usepackage{lineno}
+%\linenumbers*[1]
+
+%if you're having problems with overfull boxes, you may need to increase
+%the tolerance to 9999
+\tolerance=9999
+
+% Set document spacing, margins, etc
+\usepackage{caption} %required to make []{} short-long captions to work
+%\usepackage{hangcaption} %non-standard default format for some reason in cornell.tex template
+%\renewcommand{\caption}[1]{\singlespacing\hangcaption{#1}\normalspacing}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.75}
+
+% ==================================================================================
+
+% FRONT MATTER
+% ----------------------------------
+\title {My thesis title}
+\author {My Name}
+\conferraldate {May}{2017}
+\degreefield {Ph.D.}
+\copyrightholder{My name}
+\copyrightyear{2017}
+
+\begin{document}
+
+\maketitle 
+\makecopyright
+
+
+% ABSTRACT
+% ----------------------------------
+\begin{abstract}
+\centerline{\textbf{ABSTRACT}} %Labelling Abstract maybe not necessary...
+What this thesis is about
+\end{abstract}
+
+
+% BIOGRAPHY
+% ----------------------------------
+\begin{biosketch}
+How I came to write this thesis
+\end{biosketch}
+
+
+% ACKNOWLEDGEMENTS
+% ----------------------------------
+\begin{dedication}
+To whom I dedicate this thesis
+\end{dedication}
+
+\begin{acknowledgements}
+I acknowledge some people
+\end{acknowledgements}
+
+
+% TABLE OF CONTENTS
+% ----------------------------------
+\contentspage
+\tablelistpage
+\figurelistpage %NOTE: automatically includes full caption
+%\listoffigures %is default graphicx command that is aware of short/long caption formatting
+% see cornell.cls for other optional pages:
+%\abbrlist %simple alternative to \glossaries
+%\symlist %list of symbols
+
+% More document spacing, margins, etc
+\normalspacing \setcounter{page}{1} \pagenumbering{arabic}
+\pagestyle{cornell} \addtolength{\parskip}{0.5\baselineskip}
+
+
+% ACRONYM DEFINITIONS
+% ----------------------------------
+%\input{acronyms}
+%Need to reference acronyms w/n sections, like {cvz}, {insar}, {snaphu}, for them to show up in glossary at the end.
+% NOTE: could write these in separate files, and import them use \input{} and \include{} commands
+% http://web.science.mq.edu.au/~rdale/resources/writingnotes/latexstruct.html
+%\textbf{Appendices}\\
+%Appendices include supplementary material related to each chapter including data tables and other auxiliary figures. 
+
+
+% =======================================
+% CH1 - INTRODUCTION
+% =======================================
+\chapter{My first chapter}
+\label{Intro}
+
+Some things you should know to start
+
+\section{The first section}
+\label{first}
+To begin...
+% NOTE: This section could be much better organized: WHAT make Uturuncu, Lazufre, and the CVZ unique?!
+\subsection{The first subsection}
+\label{utulaz}
+Some more specific things to know
+
+\subsection{A subsequent subsection}
+How about this?
+
+\section{The second section}
+\label{GVD}
+To continue...
+
+% database updates log: http://www.volcano.si.edu/gvp_data_updates.cfm
+\subsection{More subsections!}
+A claim that...
+
+\section{Narrative Outline}
+Maybe a good idea to outline the chapters of this thesis
+
+\textbf{Chapter \ref{Timeseries}}\\
+In chapter 1 I do this
+
+\textbf{Chapter \ref{Uturuncu}}\\
+in chapter 2 I do this
+
+\textbf{Chapter \ref{Lazufre}}\\
+Chapter 3 is awesome!  I do this
+
+\begin{table}
+\begin{tabular}{cccccccc}
+\hline
+%1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+Satellite & Path\/Orbit & Geometry & \# Dates    & \# IFGs  & Date1      &  Date2     &  $\mathrm{B_{\perp}}$  \\
+\hline
+ALOS & 420  & Dsc.  & 4        & 3      & 2007/07/21 & 2008/01/21 & 690   \\
+ALOS & 98  &  Asc.   & 17        & 49      & 2007/03/05 & 2011/03/16 & 2000   \\
+ALOS & 99  & Asc.     & 14        & 42      & 2007/02/04 & 2011/02/15 & 2000   \\
+TSX & 111\_009  & Dsc. & 6 & 8 	& 2012/06/10 & 2014/10/27 & 460  \\
+\end{tabular}
+\caption[A heading for this table]
+{The caption for this table. These numbers mean nothing to me;  Doctor Scott did them for his thesis.}
+\label{tab:newdata}
+\end{table}
+
+
+
+%\chapter{Glossary}
+%NOTE: need to replace occurence of acronyms here in main text
+%\printglossaries  %not sure if shows up in table of contents
+
+%\chapter{More Acknowledgements}
+% ---------------------------------------------------------
+%In addition to the personal recognitions at the beginning of this document I include additional acknowledgments here:
+% Moved it all to the beginning!
+
+
+
+\end{document}
+% =================================================
+% =================================================

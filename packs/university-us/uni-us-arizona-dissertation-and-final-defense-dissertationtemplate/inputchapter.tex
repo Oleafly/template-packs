@@ -1,0 +1,64 @@
+\chapter{Another Example} 
+\thispagestyle{fancy} %Resets custom page number location on first chapter page
+
+\section{Big Files}
+For big projects (like a thesis) it is sometimes helpful to separate your chapters indo different documents. This
+can be done with the \verb=\input= command. Simply save your chapter as a separate .tex file without a header or
+preamble, and then input it into the main dissertation file. Try to avoid using the \verb=\include= command as \LaTeX\
+can get cranky with the formatting when ``including'' a .tex file.
+
+\section{Non-Breaking Spaces}
+The tilde character can be used to mark a non-breaking space. \LaTeX\ does a great job of lining words up, putting
+in line breaks where appropriate, and making the text flow properly. However, there are some cases where you really
+don't want \LaTeX\ to toss in a carriage return. The places that spring to mind are between numbers and their units,
+and between Figure and Table references and their values. So for example, you don't want something like this in your
+document:
+
+\begin{quote}
+	Blah blah blah blah blah blah blah blah blah is 10\\
+	m from foo to bar.
+\end{quote}
+
+So always use the tilde when you use numbers with units, like 9.8~m~s$^{-2}$, and with references, like Figure~\ref{samplefig}.
+This way \LaTeX\ will never put a line break between those elements.
+
+
+\section{Hyperlinks}
+You may have noticed a lot of blue text in this template. Those are internal hyperlinks that are automatically set up by 
+the \texttt{hyperref} package. You can change the colors of the links by messing with the options in the preamble. For the
+most part these links should set themselves up to work just fine by themselves. If you notice weird behavior you can usually
+find solutions online. If not the use of the hyperlinks is purely for convenience when working with large documents and is not
+required by the Grad College.
+
+You can also use this package to include web links. Long links can sometimes escape the page margins though, so I recommend
+giving them custom text: \href{https://grad.arizona.edu/gsas/dissertations-theses/dissertation-and-thesis-formatting-guides}
+{A link to the UA Thesis guidelines.}
+
+\section{Tables}
+On the next page is a sample table, placed on the page by itself. Again, this table is pretty small, so it could 
+probably just be placed on a page with text. To do this remove the \emph{p!} from the command. Working with tables in
+\LaTeX\ is notoriously difficult (although Overleaf has made it easier of late), so make liberal use of StackExchange 
+and Google. 
+
+A comment on \texttt{deluxetable}. \texttt{deluxetable} is a special table package from the AAS formatting standards that
+some people insist is much nicer than the default \LaTeX\ table. These people are wrong, and \texttt{deluxetable} is evil.
+Therefore I have not included a way for this template to work with \texttt{deluxetable}. If you want to try, that's your
+choice, but I cannot guarantee it won't break the template.
+
+\begin{table}[p!]
+\begin{center}
+\caption[Short table caption for LOT]{Sample table caption (to appear with the actual table). \label{sampletable}}
+\vspace{0.3in}
+\begin{tabular}{ccc}
+\hline 
+\hline
+Col A & Col B & Col C \\
+\hline
+1 & 2 & 3 \\
+4 & 5 & 6\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+By the way, you can reference Tables like you can figures (Table~\ref{sampletable}).

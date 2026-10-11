@@ -1,0 +1,161 @@
+%%% -*-TeX-*-
+%%% ====================================================================
+%%% This file defines the appearance of the committee approval page in
+%%% the doctoral dissertation or master's thesis front matter.  The
+%%% two cases are distinguished here by the absence of third and fourth
+%%% reader data for the latter.
+%%%
+%%% [31-Jan-2019] -- version 2.01: support up to nine doctoral readers
+%%% [27-Jan-2018] -- version 2.00: extend for master's thesis
+%%% [17-Feb-2016] -- version 1.00: doctoral dissertation only
+%%% ====================================================================
+
+\NeedsTeXFormat {LaTeX2e} [1994/12/01]
+\ProvidesPackage {uuthesis-approval} [2019/04/16 v2.02]
+
+\immediate \write16 {===============================================================================}%
+\immediate \write16 {}%
+\immediate \write16 {This is uuthesis-approval.sty version 2.02 <16 April 2019>}%
+\immediate \write16 {}%
+\immediate \write16 {===============================================================================}%
+
+\newcommand {\@uubfunderline} [1]{\underline{\kern 0.5em \textbf {#1}\kern 0.5em}}
+
+\long \def \dissertationapproval
+{%
+    \newpage
+    \thispagestyle{empty}
+
+    \newif \if@uubachelorsthesis
+    \newif \if@uumastersthesis
+    \newif \if@uudoctoraldissertation
+
+    \@uubachelorsthesisfalse
+    \@uumastersthesisfalse
+    \@uudoctoraldissertationfalse
+
+    \ifx \undefined \@thirdreader
+        \relax
+    \else
+        \@uudoctoraldissertationtrue
+    \fi
+
+    \ifx \undefined \@thirdreader
+        \@uumastersthesistrue
+    \fi
+
+    \ifx \undefined \@secondreader
+        \@uubachelorsthesistrue
+        \@uumastersthesisfalse
+        \@uudoctoraldissertationfalse
+    \fi
+
+
+    \begin{center}
+        \if@uudoctoraldissertation
+            \textbf{\large The University of Utah Graduate School} \\[8ex]
+            \textbf{\large STATEMENT OF DISSERTATION APPROVAL}
+        \else
+            \if@uumastersthesis
+                \textbf{\large The University of Utah Graduate School} \\[8ex]
+                \textbf{\large STATEMENT OF THESIS APPROVAL}
+            \fi
+
+            \if@uubachelorsthesis
+                \textbf{\large The University of Utah Honors College} \\[8ex]
+                \textbf{\large STATEMENT OF THESIS APPROVAL}
+            \fi
+        \fi
+    \end{center}
+%
+    \vfill
+    \begin{center}
+        \renewcommand{\arraystretch}{1.5}
+        \newcommand{\@uuunderdate}{\kern 2em{\tiny Date Approved}\kern 0.5em}
+
+        \if@uudoctoraldissertation      % doctoral dissertation: four readers
+            \begin{tabular}{lll}
+               The dissertation of               & \multicolumn{2}{l}{\@uubfunderline{\@author}} \\
+              \multicolumn{3}{l}{has been approved by the following supervisory committee members:} \\[4ex]
+              \@uubfunderline{\@committeechair}, & Chair(s)                   & \@uubfunderline{\@chairdateapproved} \\[-2.00ex]
+                                                 &                            & {\@uuunderdate} \\
+              \@uubfunderline{\@firstreader},    & Member                     & \@uubfunderline{\@firstdateapproved} \\[-2.00ex]
+                                                 &                            & {\@uuunderdate} \\
+              \@uubfunderline{\@secondreader},   & Member                     & \@uubfunderline{\@seconddateapproved} \\[-2.00ex]
+                                                 &                            & {\@uuunderdate} \\
+              \@uubfunderline{\@thirdreader},    & Member                     & \@uubfunderline{\@thirddateapproved} \\[-2.00ex]
+                                                 &                            & {\@uuunderdate} \\
+              \@uubfunderline{\@fourthreader},   & Member                     & \@uubfunderline{\@fourthdateapproved} \\[-2.00ex]
+                                                 &                            & {\@uuunderdate} \\
+              %
+              \ifx \undefined \@fifthreader
+              \else
+              \@uubfunderline{\@fifthreader},    & Member                     & \@uubfunderline{\@fifthdateapproved} \\[-2.00ex]
+                                                 &                            & {\@uuunderdate} \\
+              \fi
+              %
+              \ifx \undefined \@sixthreader
+              \else
+              \@uubfunderline{\@sixthreader},    & Member                     & \@uubfunderline{\@sixthdateapproved} \\[-2.00ex]
+                                                 &                            & {\@uuunderdate} \\
+              \fi
+              %
+              \ifx \undefined \@seventhreader
+              \else
+              \@uubfunderline{\@seventhreader},  & Member                     & \@uubfunderline{\@seventhdateapproved} \\[-2.00ex]
+                                                 &                            & {\@uuunderdate} \\
+              \fi
+              %
+              \ifx \undefined \@eighthreader
+              \else
+              \@uubfunderline{\@eighthreader},   & Member                     & \@uubfunderline{\@eighthdateapproved} \\[-2.00ex]
+                                                 &                            & {\@uuunderdate} \\
+              \fi
+              %
+              \ifx \undefined \@ninthreader
+              \else
+              \@uubfunderline{\@ninthreader},    & Member                     & \@uubfunderline{\@ninthdateapproved} \\[-2.00ex]
+                                                 &                            & {\@uuunderdate} \\
+              \fi
+              %
+                                                 &                            & \\[3ex]
+              \multicolumn{3}{l}{by \@uubfunderline{\@departmentchair}, Chair/Dean of} \\
+              \multicolumn{3}{l}{the Department/College/School of \@uubfunderline{\@approvaldepartment}} \\
+              \multicolumn{3}{l}{and by \@uubfunderline{\@graduatedean}, Dean of The Graduate School.}
+            \end{tabular}
+
+        \else
+
+            \if@uumastersthesis % master's thesis: only two readers, and change in document type [dissertation -> thesis]
+                \begin{tabular}{lll}
+                   The thesis of                     & \multicolumn{2}{l}{\@uubfunderline{\@author}} \\
+                  \multicolumn{3}{l}{has been approved by the following supervisory committee members:} \\[4ex]
+                  \@uubfunderline{\@committeechair}, & Chair(s)                   & \@uubfunderline{\@chairdateapproved} \\[-2.00ex]
+                                                     &                            & {\@uuunderdate} \\
+                  \@uubfunderline{\@firstreader},    & Member                     & \@uubfunderline{\@firstdateapproved} \\[-2.00ex]
+                                                     &                            & {\@uuunderdate} \\
+                  \@uubfunderline{\@secondreader},   & Member                     & \@uubfunderline{\@seconddateapproved} \\[-2.00ex]
+                                                     &                            & {\@uuunderdate} \\[4ex]
+                  \multicolumn{3}{l}{by \@uubfunderline{\@departmentchair}, Chair/Dean of} \\
+                  \multicolumn{3}{l}{the Department/College/School of \@uubfunderline{\@approvaldepartment}} \\
+                  \multicolumn{3}{l}{and by \@uubfunderline{\@graduatedean}, Dean of The Graduate School.}
+                \end{tabular}
+            \fi
+
+            \if@uubachelorsthesis 
+                \begin{tabular}{lll}
+                   The thesis of                     & \multicolumn{2}{l}{\@uubfunderline{\@author}} \\
+                  \multicolumn{3}{l}{has been approved by the following supervisory committee members:} \\[4ex]
+                  \@uubfunderline{\@committeechair}, & Chair(s)                   & \@uubfunderline{\@chairdateapproved} \\[-2.00ex]
+                                                     &                            & {\@uuunderdate} \\
+                  \@uubfunderline{\@firstreader},    & Member                     & \@uubfunderline{\@firstdateapproved} \\[-2.00ex]
+                                                     &                            & {\@uuunderdate} \\
+                  \multicolumn{3}{l}{by \@uubfunderline{\@departmentchair}, Chair/Dean of} \\
+                  \multicolumn{3}{l}{the Department/College/School of \@uubfunderline{\@approvaldepartment}} \\
+                  \multicolumn{3}{l}{and by \@uubfunderline{\@graduatedean}, Dean of The Honors School.}
+                \end{tabular}
+            \fi
+        \fi
+    \end{center}
+    \vfill
+}

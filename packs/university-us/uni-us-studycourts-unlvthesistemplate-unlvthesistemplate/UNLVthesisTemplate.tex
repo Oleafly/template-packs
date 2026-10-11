@@ -1,0 +1,176 @@
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+% This package was originally developed by Professor Arthur   %
+% Baragar. It was updated in 2016 by Professor Rebecca Gill.  %
+% For more information on this revised template, contact Dr.  %
+% Gill at rebecca.gill@unlv.edu. See below for revisions.     %
+% The content in the sample chapters was contributed by both  %
+% Baragar and Dr. Gill. Additional content explaining the     %
+% current (as of June 2016) UNLV Graduate College formatting  %
+% requirements is taken directly from the September 17, 2015  %
+% "Organization of the Thesis and Dissertation Compiled       %
+% Manuals."  This template has been revised by Kenneth Retzl  %
+% and Kate Eugenis as they wrote their dissertations.         %
+% Particular thanks is due to Kenneth Retzl for fixing the    %
+% page numbers on landscape pages to be in line with UNLV     %
+% Grad College Standards.                                     % 
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+%                R E V I S I O N   H I S T O R Y                %
+%                                                               %
+% 12/8/2017: Updates to footnote style, headers for sections    %
+%             prior to Chapter 1, changes in the look of        %
+%             sections and sub sections. Modified the location  %
+%             of page numbers so as to not overlap the foot-    %
+%             notes.  Finally, adding packages to put page      %
+%             numbers on landscape pages on the correct edge.   %
+%             Updates to sample chapters to show the table      %
+%             and figure code in action. Other slight           %
+%             modifications to improve looks and                %
+%             functionality - too many to name here.            %
+% 6/29/2016: Updates to language in the sample chapters.        %
+%	     Extended discussion of how to organize the             %
+%	     bibliography using natbib. Replaced original CV        %
+%            page with a CV template using the article class.   %
+% 6/21/2016: Overhaul of the original Baragar template to       %
+%            meet UNLV Graduate College requirements as per     %
+%            the September 17, 2015 "Organization of the        %
+%            Thesis and Dissertation Compiled Manuals" here     %
+%            www.unlv.edu/sites/default/files/page_files/27/    %
+%            GradCollege-ThesisDissertation-Manual.pdf          %
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+
+\documentclass[oneside,12pt]{book}
+% The option oneside is required for UNLV theses.
+% Font can be 11 or 12 point only
+\usepackage{amsthm,amssymb,amsmath,latexsym,graphicx} 
+% Optional packages.
+\usepackage{setspace,UNLVthesis} 
+% Required packages.  
+\usepackage[round]{natbib}
+% This loads the natbib package, which is a powerful bibliography formatting system.
+\bibpunct[, ]{(}{)}{;}{a}{}{,}
+% This command sets the formatting of the citations. Adjust as needed for your style.
+\usepackage{url}
+\urlstyle{same}
+% The URL package is used to format the URLs in the document. This way, you don't have to "escape" the characters that appear in the URL. You'll just type \url{www.myurl.com}. The second command makes sure that they appear in the same font as the rest of the document.
+\usepackage{pdfpages}
+\usepackage{booktabs, caption}	
+% This package formats the tables correctly.
+\usepackage{rotating}
+%\usepackage{float}
+\pagestyle{unlv} 
+% This is defined in UNLVthesis.sty. 
+\setlength{\footskip}{40pt}
+\usepackage{longtable}
+\usepackage{tablefootnote}
+% Allows me to add footnotes to tables.
+\usepackage{threeparttable}
+\usepackage[english]{babel} 
+% This is for the dummy text in the chapters. You won't need this.
+\usepackage{dcolumn}
+\usepackage{adjustbox}
+\usepackage{blindtext}
+\usepackage{amssymb}
+% This is also for demonstration purposes only. You should remove all commands related to this package when you insert your own text. They all begin with \blind or \Blind.
+\usepackage{rotating, floatpag, fancyhdr}
+\usepackage[capitalise, noabbrev]{cleveref}
+% This package lets you use the \cref command to make cross references. Don't load packages after this one; this one needs to go in last.
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}  
+\newtheorem{lemma}[theorem]{Lemma}
+% These define the format and numbering of theorem like environments. Corollaries and Lemmas are numbered as theorems. These may be commented out when theorems are not used.
+
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem*{introduction}{Introduction}
+\newtheorem*{conclusion}{Conclusion}
+% This environment is not in italics, like theorems are.These define the format and numbering of definition like environments. The * means it is unnumbered. Again, these can be commented out when theorems are not used
+
+% Put definitions here.  
+	
+	% This creates the page style for a landscape page
+	\fancypagestyle{floatpage}{
+		\fancyhf{}
+		\renewcommand{\headrulewidth}{0pt}
+		\fancyfoot[C]{\makebox[\textwidth][r]{
+				\smash{\raisebox{\dimexpr\footskip+.5\textheight}{\rotatebox{90}{\thepage}}}}}
+	}
+	
+	% This creates a page style for a portrait page
+	\fancypagestyle{plain}{
+		\fancyhf{}
+		\renewcommand{\headrulewidth}{0pt}
+		\fancyfoot[C]{\thepage}
+	}
+	
+\begin{document}
+
+\pagenumbering{roman}
+	% Items before Chapter 1 have roman numbers (if any).
+\include{SampleTitlepage} 
+	% Replace this file name with the name of your title page.
+\include{SampleCopyright} 
+	% A copyright statement is optional, but recommended. Rename.
+    % The copyright page has no page number -- the title page is always page i and the
+   % Thesis Approval page is always page ii. The Graduate College inserts this for you.
+\newpage \setcounter{page}{3}
+
+\include{SampleAbstract} 
+	% This is where the abstract goes. Rename. 
+\include{SampleAcknowledgements}  
+	% This is optional. Rename.
+\include{SampleDedication} 
+	% This is also optional. Rename.
+	% You could add a preface here if you want. See the formatting guide.
+
+%%% TESTING TOCLOFT
+%\cleardoublepage
+%\tableofcontents
+%\cleardoublepage
+%\addtocontents{lof}{\lofheading}% add heading to the first page in LoF
+%\listoffigures
+%\cleardoublepage
+%\addtocontents{lot}{\lotheading}% add heading to the first page in LoT
+%\listoftables
+%\cleardoublepage
+%
+%\mainmatter
+%\addtocontents{toc}{\tocheading}% add heading to the first page in ToC, after frontmatter entries
+%
+%\mainmatterchaptoc% activation of chapter entries formatting in the mainmatter
+%%%
+
+\renewcommand\contentsname{Table of Contents} 
+	% This adjusts the way the Table of Contents label looks.
+\tableofcontents 
+	% This inserts table of contents. Use headings and subheadings consistently in your chapters and they will appear properly here. See the note in SampleChapter1 about how to use the square brackets as a hack to get the colon to appear between the chapter number and the chapter title. 
+\listoftables \addcontentsline{toc}{schapter}{\listtablename}
+	% Comment out if there are no tables. If you use an appendix, be sure to label these with the appropriate table notations. Tables in the appendices need to appear in this list.
+\listoffigures \addcontentsline{toc}{schapter}{\listfigurename}
+	% Comment out if there are no figures. If you use an appendix, be sure to label these with the appropriate figure notations. Figures in the appendices need to appear in this list.
+
+
+
+\newpage 
+	% This sets the page numbers properly.
+	
+\pagenumbering{arabic} 
+	% Chapter 1 begins on page 1.
+
+\include{SampleChapter1} 
+	% Replace these with your chapters. Rename these as necessary.
+\include{SampleChapter2}
+
+\include{SampleChapter3}
+
+\include{SampleAppendix} 
+	% Optional. Duplicate if you need more than one appendix. Note the labeling requirements; if you have more than one appendix, they need to be labeled Appendix A: Title, Appendix B: Title, etc.
+\include{SampleBibliography} 
+	% There are some special commands in this file.
+\includepdf[pagecommand={\thispagestyle{plain}}]{cv.pdf}
+	% You will need to open the cv.tex file and edit the contents. Next, compile the document. That creates the pdf file that is referenced in the command above. Then, your cv will appear with page numbers in the correct spot in your document.
+
+\end{document}

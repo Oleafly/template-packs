@@ -1,0 +1,63 @@
+%%% Chapter 1 — Introduction
+%%% UF-F10: this is the first of three chapters (intro / body / summary).
+%%% UF-F11: heading hierarchy uses \chapter, \section, \subsection,
+%%%         \subsubsection. The class auto-formats all five tiers.
+
+\chapter{INTRODUCTION}\label{ch:intro}
+
+Doctoral students at the University of Florida must submit their
+dissertations through the Graduate Information Management System
+(GIMS). Before submission, the dissertation must conform to a detailed
+formatting specification maintained by the Graduate Editorial Office.
+Common reasons for rejection include incorrect margins, omitted
+required sections, non-functional hyperlinks, and improper use of
+spacing or fonts.
+
+This dissertation introduces a tool that helps students catch such
+issues automatically before they trigger a rejection. The work is
+motivated by three observations: (1) the official UF LaTeX template
+already enforces most formatting rules by construction, but students
+can and do override the template; (2) some properties --- for example,
+the rendered margin on a page that includes a wide figure --- cannot be
+determined from source alone; and (3) students near a submission
+deadline benefit from a fast, offline tool that flags likely
+problems with references back to the UF rule being violated.
+
+If you are reading this as a soon-to-be doctor: the formatting
+specification is finite, the rules are mechanical, and the validator
+is on your side. You wrote the dissertation. The hard part is done.
+
+\section{Background}
+
+The UF Graduate School publishes its formatting specification at
+\texttt{success.grad.ufl.edu/td/formatting/}. The UF IT Help Desk
+publishes the LaTeX template at
+\texttt{it.ufl.edu/helpdesk/graduate-resources/}. The current template,
+updated for Fall 2025, requires LuaLaTeX with TeX Live 2025 to enable
+PDF tagging for accessibility.
+
+\section{Contributions}
+
+This dissertation makes three contributions.
+
+\subsection{A two-layer validator architecture}
+
+A static analyzer that inspects both LaTeX source and rendered PDF.
+Source-layer checks are precise and localizable to file and line.
+PDF-layer checks confirm rendered-output truths the source layer
+cannot predict.
+
+\subsection{A rule-by-rule catalog with citations}
+
+A documented mapping from UF formatting specification entries to
+machine-checkable detection strategies, published as
+\texttt{docs/uf-rules.md} so that the tool's checks can be audited
+against the official specification.
+
+\section{Organization of this Dissertation}
+
+Chapter~\ref{ch:methods} describes the validator's architecture in
+detail. Chapter~\ref{ch:conclusion} summarizes findings and discusses
+future work. Appendix~\ref{app:rules} lists supplementary rule
+identifiers, and Appendix~\ref{app:fixtures} describes the synthetic
+broken inputs used to verify the validator's coverage.

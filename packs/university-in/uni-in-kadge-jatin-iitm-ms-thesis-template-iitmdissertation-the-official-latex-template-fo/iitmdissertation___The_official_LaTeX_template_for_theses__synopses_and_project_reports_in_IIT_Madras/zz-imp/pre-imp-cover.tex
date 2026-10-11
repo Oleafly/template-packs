@@ -1,0 +1,100 @@
+% \newgeometry{
+%     left    = 1.25in,
+%     right   = 0.5in,
+%     top     = 1in,
+%     bottom  = 1.34in,
+%     foot    = 0.67in,
+% }
+%
+% \AddToShipoutPictureBG{%
+%     \color{\dissertationTitleTapeColor}
+%     \AtPageLowerLeft{%
+%         \rule{\dimexpr 1in + \oddsidemargin\relax}{\paperheight}%
+%     }%
+% }
+
+\begin{minipage}{0.44\textwidth}
+    \quad\includegraphics[width=0.5\textwidth]{iitm-logo}
+\end{minipage}
+\hfill
+\begin{minipage}{0.55\textwidth}
+    \setstretch{1}
+    \textupper{\asserttoken{dissertationDepartment}{Department of {\TeX} Engineering}}
+    \par
+    \textupper{Indian Institute of Technology Madras}
+    \par
+    \textupper{Chennai -- 600036}
+\end{minipage}
+\par
+\makebox[\textwidth][l]{\rule{\paperwidth}{1mm}}
+
+\begin{center}
+\vspace*{\parskip}
+\setlength{\fboxrule}{2pt}
+\setlength{\fboxsep}{10pt}
+% \fbox{%
+        \begin{minipage}{0.75\textwidth}
+        \begin{center}
+            {\bfseries\LARGE\asserttoken{dissertationTitle}{The Title of the Thesis Will Appear Here if you Set it}}
+        \end{center}
+        \end{minipage}
+%      }
+\end{center}
+
+\if\relax\the\dissertationImage\relax%
+    \def\diss@image{nodissimageprovided}
+\else
+    \def\diss@image{images/\the\dissertationImage}
+\fi
+
+\vspace{\parskip}
+
+\IfFileExists
+    {\diss@image}
+    {\begin{center}
+        \includegraphics[width=0.225\textheight]{\diss@image}
+     \end{center}}
+    {\vspace{0.1\textheight}}
+
+\vspace{\dimexpr2\parskip}
+
+\begin{center}
+    \begin{minipage}[c]{0.9\textwidth}
+        \begin{center}
+            \begingroup
+                \itshape
+                A \asserttoken{dissertationType}{Whatever}
+                \par
+                \ifdississynopsis
+                To be \else\fi
+                Submitted by
+            \endgroup
+            \par
+            \textupper{{\bfseries\asserttoken{dissertationAuthorName}{Firstname Lastname}}}
+        \end{center}
+    \end{minipage}
+\end{center}
+
+\vspace{\dimexpr2\parskip}
+
+\begin{center}
+    \begin{minipage}[c]{0.9\textwidth}
+        \begin{center}
+            \begingroup
+                \itshape
+                For the award of the degree
+                \par
+                Of
+            \endgroup
+            \par
+            \textupper{{\bfseries\asserttoken{dissertationDegree}{Whatever Degree}}}
+            \par
+            \asserttoken{dissertationMonth}{January}\ \asserttoken{dissertationYear}{2022}
+        \end{center}
+    \end{minipage}
+\end{center}
+
+% \newpage
+%
+% \restoregeometry
+% \ClearShipoutPictureBG

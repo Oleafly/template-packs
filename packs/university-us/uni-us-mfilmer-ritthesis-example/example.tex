@@ -1,0 +1,338 @@
+% This class inherits from the LaTeX standard report class and should support
+% many of the options supported by it, as well as a few extra. These extra
+% options are described here.
+%
+% By default the document uses doublespacing, if this is unsedired, these
+% options are provided:
+% singlespacing, onehalfspacing, doublespacing
+%
+% By default the lists: table of contents, list of figures, list of tables and
+% list of symbols (toc, lof, lot, los) use onehalfspacing. This can
+% be overridden with the options:
+% singlespacelists, onehalfspacelists, doublespacelists
+% If different spacing is desired for different lists, the following macros can
+% be redefined t set up the desired spacing:
+% \@tocspacing, \@lofspacing, \@lotspacing, \@losspacing
+% For example:
+% \renewcommand*\@lofspacing\singlespacing
+% Will set single spacing on the list of figures, and the remaining lists will
+% use whatever was set by the class options, or the default.
+%
+% If the microsystems title page and signature sheet should be used:
+% microsys
+%
+% The bibliography is single spaced by default. If this is undesired, these
+% options will change the bibliography spacing:
+% singlespacebib, onehalfspacebib, doublespacebib
+%
+% Most pages, other than the first page of a chapter or a list, or a special
+% page, such as the signature sheet, have a header showing the current chapter
+% name. This may be undesired, and can be removed with the option:
+% nohead
+%
+% Page numbers are located in the bottom right corner of the page. If instead
+% they should be centered, this option will do so:
+% pagenumcenter
+%
+% This class can also be used to write a proposal. When doing so, the top level
+% sectioning elements are sections rather than chapters, and the document is
+% centered on the page, rather than offset for binding as the thesis is. The
+% proposal formatting can be achieved with the option:
+% proposal
+%
+% In order to create a buildable document, you first must include a lot of
+% information about your school and program, much of this information can be
+% automatically included by using one or more of the following options:
+% ms, phd, microe, microsys, rit
+%
+% If using either 'microe', 'cmpe' or 'microsys', then none of the other options
+% should be necessary. However, if using either the 'ms', or the 'phd' option,
+% 'rit' is likely a desired option as well
+%
+
+\documentclass[microe]{ritthesis}
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Packages %%%%%
+%%%%%%%%%%%%%%%%%%%%
+% Used for filler text but will almost certainly be of no use in a real thesis
+\usepackage{lipsum}
+% Generally you will want to use the graphicx package to display images
+\usepackage{graphicx}
+% You can set the graphicspath if you want to use pictures no in the same
+% directory as the .tex file
+%\graphicspath{{images/}}
+
+% If subfigures or subtables are desires, the subcaption package is the
+% recommended way to go. This package should not be used unless subfigures or
+% subtables (or any other functionality it provides) is desired. It will not
+% work if the subfig package is used.
+%\usepackage{subfig}
+\usepackage{subcaption}
+
+% Use these commands to set up the author, title, and date
+\author{Matthew J. Filmer}
+% You most likely need to insert a line break or two to make the title wrap
+% more evenly
+\title{A \LaTeX{} Document Class for a Masters Thesis\\in Microelectronic Engineering at RIT}
+\date{June 23, 2014}
+
+% You can further customize the appearance of the title and author by
+% uncommenting and changing:
+% \makeatletter
+% \renewcommand{\thetitle}{\textbf{\large\@title}}
+% \renewcommand{\theauthor}{\textsc{\@author}}
+% \makeatother
+% But I like small caps, so that is how I made it
+
+% There are also a bunch of other commands that can be changed, were this not
+% a masters thesis in microelectronic engineering at RIT. Those would be the
+% following:
+% \renewcommand*{\universityname}{Rochester Institute of Technology}
+% \renewcommand*{\collegename}{Kate Gleason College of Engineering}
+% \renewcommand*{\departmentname}{Department of Electrical and Microelectronic Engineering}
+% \renewcommand*{\logo}{kgcoelogohoriz}
+% \renewcommand*{\degreename}{Master of Science}
+% \renewcommand*{\degreefield}{Microelectronic Engineering}
+% Some or all of these may be set by a class option such as 'microe', 'rit', or
+% 'phd' and are therefore not required in every document.
+
+% Each of these commands can be repeated as many times as necessary
+% Used to create the lines on the signature sheet. There is an optional first
+% argument for each of these to specify title (the default is Dr.)
+\advisor{Assistant Professor}{Joe}{Smith}
+\committee{Professor}{Thomas}{Thomas}{}
+\committee{Dean of the College}{Philip}{Jones}{}
+%\committee[Mr.]{Bystander}{Robert}{van Rosenson XXXVIII}{King of the Committee}
+
+% If you want a second "Certified By" section
+\certifiedby[Mr.]{Bystander}{Robert}{van Rosenson XXXVIII}{King of the Committee}
+\certifiedby[Mr.]{Bystander}{Robert}{van Rosenson XXXVIII}{King of the Committee}
+
+\renewcommand\certificationmessage{Here you can insert a certification message. Perhaps something along the lines of ``We the undersigned committee members certify that the student has completed the requirements.'' But you should probably make it sounds better than that.}
+
+% You can customize the signature line by redefinding the following:
+% \renewcommand*\@siglinelength\linewidth
+% \setlength\@siglineheight{1pt}
+
+% This command makes testing the proposal option easier
+% it should not be used in a real document
+% It just redefines \chapter to be the same as \section
+\providecommand{\chapter}[1]{\section{#1}}
+
+% Begin the document, the way you always do in LaTeX
+\begin{document}
+	
+% This starts the pages that get roman numerals at the beginning of the
+% document. Generally is the first thing in the document.
+\frontmatter
+
+% Instead of \frontmatter it is possible to do what that macro does
+% manually, if more control was desired. If that is the case, uncomment and
+% change, or just use the individual macros:
+% \renewcommand{\frontmatter}{\pagenumbering{roman}\maketitlepage\makesignaturepage}
+% Each of these commands can also be changed, but for details on that you
+% should look in ritthesis.cls to see how they are defined
+
+% The following three environments are optional and can be included in any
+% order. Each of these environments has an optional argument to either include
+% or suppress inclusion of the environment in the table of contents. Simply use
+% either 'n' or 'y' to suppress the entry, or include the entry, in the toc.
+% By default, only the abstract is included in the toc.
+
+% The acknowledgments environment will create an acknowledgments section,
+% complete with a correctly spelled title. Change the following to rename
+%\renewcommand{\acknowledgmentsname}{Acknowledgments}
+\begin{acknowledgments}
+\lipsum[4-6]
+\end{acknowledgments}
+
+% The dedication environment will create a dedication section, change the
+% following to rename
+%\renewcommand{\dedicationname}{Dedication}
+\begin{dedication}
+\lipsum[7]
+\end{dedication}
+
+% The abstract environment is very similar to the acknowledgments environment
+% and is used the same. Change the following to rename
+%\renewcommand{\abstractname}{Abstract}
+\begin{abstract}
+\lipsum[1-2]
+\end{abstract}
+
+% Makes the table of contents, list of figures, and list of tables, in that
+% order. This command makes a table of contents entry for each of these lists
+\makealllists
+
+% Here you can generate a list of symbols, or a list of abbreviations, or whatever
+% other custom lists you may desire. These lists are built using the longtable
+% environment, and takes similar arguments
+% You can change the list of symbols name by either uncommenting the following line
+% and making the desired change, or by providing the optional argument to the
+% listofsymbols environment
+%\renewcommand{\listofsymbname}{List of Symbols}
+% The first argument is column alignment options and uses the same syntax as the
+% argument for the longtable environment (which is similar to the tabular environment)
+% The second argument is the column headers, separated by ailgnment characters (&)
+% If you want multiple extra tables, such as a table of acronyms, and a table of symbols
+% you can just use this environment multiple times, with different names
+\begin{listofsymbols}[List of Symbols]{lp{0.6\linewidth}r}{Term & Description & Units/Value}
+$C_D^\prime$ 	& Depletion region capacitance per unit area 			& F/cm\textsuperscript{2}\\
+$C_{ox}^\prime$ & Oxide capacitance per unit area 						& F/cm\textsuperscript{2}\\
+$\mathcal{E}$	& Electric field 										& V/cm\\
+$E_c$ 			& Energy at the conduction band edge 					& eV\\
+$E_F$			& Fermi level											& eV\\
+$E_g$			& Band gap energy 										& eV\\
+$E_v$ 			& Energy at the valence band edge 						& eV\\
+$E_x, E_y$		& Electric field normal and parallel to the gate		& V/cm\\
+$\hbar$			& Reduced Planck constant 								& $6.582\times 10^{-16}$ eV$\cdot$s\\
+$I_D$			& Drain current											& A\\
+$J_t$			& Band to band tunneling current density 				& A/cm\textsuperscript{2}\\
+$k$				& Boltzmann's constant 									& $8.617\times 10^{-5}$ eV/K\\
+$m^*$			& Carrier effective mass 								& kg\\
+$N_A$			& Acceptor concentration 								& cm\textsuperscript{-3}\\
+$N_c$			& Effective density of states in the conduction band 	& cm\textsuperscript{-3}\\
+$n_i$ 			& Intrinsic carrier concentration						& cm\textsuperscript{-3}\\
+$q$				& Elementary charge  									& $1.602\times 10^{-19}$ C\\
+$S$ 			& Subthreshold swing 									& V/dec\\
+$T$				& Temperature											& K\\
+$V_{DS}$		& Drain--Source voltage 								& V\\
+$V_{eff}$		& Effective reverse bias voltage						& V\\
+$V_{FB}$ 		& Flatband voltage 										& V\\
+$V_G$ 			& Gate voltage 											& V\\
+$\epsilon_s$	& Permittivity of a semiconductor 						& F/cm\\
+$\mu_n, \mu_p$  & Mobility of electrons and holes respectively 			& cm/V$\cdot$s\\
+$\Psi_s$ 		& Surface potential										& V\\
+\end{listofsymbols}
+
+% The \mainmatter macro starts the main matter. This starts arabic numbering,
+% and adds a header (except on the first page of a chapter).
+\mainmatter
+
+% This class uses the fancyhdr package to build the headers. You could probably
+% customize the headers by changing the plain page style, as well as the fancy
+% page style. There is no guarantee anything you do works though. (In fact,
+% there isn't a guarantee anything in ritthesis.cls works.)
+
+% Likewise, the chapter and section headers are formatted using the titlesec
+% package. You should be able to customize them by using that package's
+% commands, specifically \titleformat
+
+% Begin new chapters the way you always do it LaTeX
+\chapter{Doing things the hard way}
+
+% Same goes for sections
+\section{First sections aren't as much fun as first comments}
+The first paragraph in a chapter\footnote{and probably section} is not indented. I can probably change this, but it is the \LaTeX{} default. Here is an example of an equation, it is numbered within the chapter.
+
+% Equations are numbered within chapters. Typeset them the way you normally do
+\begin{equation}
+\pi\times r^2
+\label{equ:area}
+\end{equation}
+
+\section{second section!}
+
+\subsection{subsection}
+
+\subsubsection{subsubsection}
+
+% I don't think most people will use paragraph and subparagraph. But they are
+% included here for completeness
+\paragraph{paragraph}
+
+\subparagraph{subparagraph}
+
+\lipsum{}
+\chapter[Everyone knows]{Everyone knows, the second chapter is the best chapter}
+\lipsum{}
+
+% Also include figures the normal way, using the graphicx package, or however
+% you choose to do it
+\begin{figure}
+\centering
+\includegraphics{kgcoelogohoriz}
+\caption{Trust me, this is a figure}
+\label{fig:samp}
+\end{figure}
+
+% A subfigure can be created using the environments provided in the subcaption
+% package
+\begin{figure}
+\centering
+\begin{subfigure}{0.25\linewidth}
+\centering
+\includegraphics[width=\linewidth]{kgcoelogovert}
+\caption{Left subfigure}
+\label{fig:sub:left}
+\end{subfigure}
+\quad\quad\quad\quad
+\begin{subfigure}{0.25\linewidth}
+\centering
+\includegraphics[width=\linewidth]{kgcoelogovert}
+\caption{Right subfigure}
+\label{fig:sub:right}
+\end{subfigure}
+\caption{This is the caption for the entire figure}
+\label{fig:sub}
+\end{figure}
+
+some more\footnote{aoeu} text
+
+% Tables are unchanged as well
+\begin{table}
+\centering
+\caption{Example of a table}
+\label{tab:samp}
+\begin{tabular}{cc}
+\toprule
+a		& b\\
+\midrule
+1		& 5\\
+2		& 9\\
+3		& 2\\
+4		& 2\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\chapter[Example chapter]{Example chapter with an excessively long title such that it might be forced to break. Apparently it works}
+\lipsum[8-12]
+
+% Citing some stuff
+\nocite{cheung,zhao,cao,zhang}
+
+% Citing everything
+\nocite{*}
+
+% Making the bibliography, using the IEEE format. By default the IEEE format
+% won't replace author's names with et al., even when there are a lot of
+% authors. Consult the IEEE LaTeX format documentation for how to change that,
+% if desired.
+\makebibliography{example}
+
+% The theappendix environment is used when there is only one appendix.
+% Otherwise use \appendix. Do not use both the theappendix environment
+% and \appendix
+\begin{theappendix}{Single appendix title}
+	\section{stuff}
+	\lipsum[15-21]
+\end{theappendix}
+
+% \appendix begins the appendicies. If you have just one appendix, it should
+% technically be just "Appendix" not "Appendix A" and should be referred to in
+% the text as "the appendix".
+\appendix
+
+% Begin a new appendix by starting new chapters
+\chapter{Sample Appendix}
+
+% You can make sections in appendicies, but I don't think many people will
+\section{test section---probably not necessary}
+\lipsum[6-12]
+\chapter{Another Sample Appendix}
+\lipsum[10-11]
+
+% and finally, end the document
+\end{document}

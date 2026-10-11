@@ -1,0 +1,95 @@
+\chapter{Introduction}
+\pagenumbering{arabic} % needed to begin traditional numbering
+% remove below this line and add your intro.
+
+This thesis is written in \LaTeX\cite{knuthwebsite}. There is an example of
+an accessible figure in Figure \ref{fig:logo}.
+
+\lipsum[3]
+
+\section{Some Section Name}
+
+\lipsum[1]
+
+We can reference Figure \ref{fig:logo} just like that. The figure should also
+have alt text for accessibility as provided by the alt tag.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=.5\textwidth,alt={This is alt text for a figure of the CWRU logo.}]{./images/cwru_logo.eps}
+    \caption{This is a figure of the CWRU logo.}
+    \label{fig:logo}
+\end{figure}
+
+\lipsum[1]
+
+An interesting table shown as Table \ref{table:mnist_example1_ex}. The table is
+pretty big but we shrink to the linewidth using the resizebox command.
+
+\begin{table}[h!]
+        \renewcommand{\arraystretch}{1.3}
+        \captionof{table}{Explainability Matrix for MNIST Example one}\label{table:mnist_example1_ex}
+        \centering
+        \resizebox{\linewidth}{!}{%
+        \begin{tabular}{| c | c | c | c | c | c || c | c | c |}
+        \cline{4-9}
+        \multicolumn{3}{c}{} & \multicolumn{3}{|c||}{PDF Effectiveness} & \multicolumn{3}{c|}{PDF Explainability} \\
+        \hline
+        $F_j$ & Property & Class Vote & $E(j,0)$ & $E(j,4)$ & $E(j,9)$ & $Ex(0)$ & $Ex(4)$ & $Ex(9)$ \\
+        \hline
+        \hline
+        $F_1$ & Stroke & $4$ &  & $1.0$ &  &  & $1.0$ & \\ 
+        \hline
+        $F_2$ & Circle & $0$ & $0.039$ &  &  & $1.0$ &  & \\
+        \hline
+        $F_3$ & Crossing & $0$ & $0.018$ &  &  & $1.0$ &  & \\
+        \hline
+        $F_4$ & Ellipse & $0$ & $0.004$ &  &  & $1.0$ &  & \\
+        \hline
+        $F_5$ & Ell-Cir & $0$ & $0.069$ &  &  & $1.0$ &  & \\
+        \hline
+        $F_6$ & Endpoint & $4$ &  & $0.974$ &  &  & $1.0$ & \\
+        \hline
+        $F_7$ & Encl. Reg. & $0$ & $0.021$ &  &  & $1.0$ &  & \\
+        \hline
+        $F_8$ & Line & $9$ &  &  & $0.496$ &  &  & $1.0$ \\
+        \hline
+        $F_9$& Convex Hull & $4$ &  & $0.826$ &  &  & $1.0$ & \\
+        \hline
+        $F_{10}$& Corner & $4$ &  & $0.538$ &  &  & $1.0$ & \\
+        \hline
+        $F_{11}$& No Property & $4$ &  & $1.0$ &  &  & $0.0$ & \\
+        \hline
+        \hline
+        \multicolumn{3}{|c|}{Weights - $WE(c)$ / $\sum E(j,c)X_j$} & $0.151$ & $4.337$ & $0.496$ & $0.151$ & $3.337$ & $0.496$ \\
+        \cline{0-8}
+        \multicolumn{3}{|c|}{Confidence / Explainability} & $3.03\%$ & $87.0\%$ & $9.96\%$ & $100\%$ & $76.9\%$ & $100\%$ \\
+        \cline{0-8}
+        \end{tabular}
+        }
+\end{table}
+
+\lipsum[1]
+
+\begin{table}[h!]
+    \renewcommand{\arraystretch}{1.3}
+    \captionof{table}{Explanation for MNIST Example two} \label{table:mnist_example2_explanation}
+    %\centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{| m{0.06\linewidth} | m{0.14\linewidth} | m{0.17\linewidth} | m{0.55\linewidth} |}
+    \hline
+     Class & Confidence & Explainability & Explainable Description \\
+    \hline \hline
+    $2$ & $93.1\%$ & $80.0\%$ & Confidence is high for interpreting this character as a two due to the stroke, endpoint, convex hull, corner, and line properties. \\ 
+    \hline
+    $8$ & $5.37\%$ & $100\%$ & Confidence is low for interpreting this character as an eight due to the ellipse-circle property. \\
+    \hline
+    $0$ & $1.53\%$ & $100\%$ & Confidence is low for interpreting this character as a zero due to the circle, fill, crossing, and ellipse properties. \\
+    \hline
+    \end{tabular}
+    }
+\end{table}
+
+\section{Another Section Name}
+
+\lipsum[1]

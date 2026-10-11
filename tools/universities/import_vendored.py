@@ -15,11 +15,13 @@ COUNTRIES = {
     "GB": "the UK",
     "HK": "Hong Kong",
     "IE": "Ireland",
+    "IN": "India",
     "JP": "Japan",
     "KR": "Korea",
     "MO": "Macau",
     "SK": "Slovakia",
     "TW": "Taiwan",
+    "US": "the United States",
 }
 KIND_CATEGORY = {
     "thesis": "Theses & Reports",
@@ -93,7 +95,10 @@ def main():
     parser.add_argument("--staging", required=True)
     parser.add_argument("--results", required=True)
     parser.add_argument("--input", required=True)
+    parser.add_argument("--index", help="index.json to read entries from (defaults to universities/index.json)")
+    parser.add_argument("--countries", help="comma-separated country codes; only these packs are replaced and the rest are kept")
     args = parser.parse_args()
+    only = {code.strip().upper() for code in args.countries.split(",")} if args.countries else None
     inputs = {}
     for line in open(args.input):
         if line.strip():
@@ -105,11 +110,16 @@ def main():
             if line.strip():
                 row = json.loads(line)
                 inventory.setdefault(row.get("repo"), []).append(row)
-    index = {entry["id"]: entry for entry in json.load(open(os.path.join(ROOT, "universities", "index.json")))["entries"]}
+    index = {entry["id"]: entry for entry in json.load(open(args.index or os.path.join(ROOT, "universities", "index.json")))["entries"]}
+    rebuilt = {f"university-{code.lower()}" for code in only} if only else None
     for pack in os.listdir(os.path.join(ROOT, "packs")):
-        if pack.startswith("university-"):
+        if pack.startswith("university-") and (rebuilt is None or pack in rebuilt):
             shutil.rmtree(os.path.join(ROOT, "packs", pack))
-    hosted, placed, skipped, countries = {}, 0, 0, set()
+    hosted_path = os.path.join(ROOT, "universities", "hosted.json")
+    hosted = {}
+    if rebuilt is not None and os.path.exists(hosted_path):
+        hosted = {key: place for key, place in json.load(open(hosted_path)).items() if place["pack"] not in rebuilt}
+    placed, skipped, countries = 0, 0, set()
     for order, line in enumerate(open(args.results)):
         result = json.loads(line)
         staged = os.path.join(args.staging, result.get("template", ""))
@@ -136,6 +146,9 @@ def main():
                 "license": None if record.get("license_spdx") in (None, "NOASSERTION", "OTHER") else record.get("license_spdx"),
                 "official": record.get("official") == "yes" or None,
             }
+        if only is not None and (entry["country"] not in only or result["id"] in hosted):
+            skipped += 1
+            continue
         manifest, source = manifests(entry, result, order)
         pack = f"university-{entry['country'].lower()}"
         target = os.path.join(ROOT, "packs", pack, manifest["id"])
@@ -152,10 +165,10 @@ def main():
             "engine": entry["engine"],
         }
         countries.add(entry["country"])
-    open(os.path.join(ROOT, "universities", "hosted.json"), "w").write(json.dumps(hosted, ensure_ascii=False, indent=1) + "\n")
+    open(hosted_path, "w").write(json.dumps(hosted, ensure_ascii=False, indent=1) + "\n")
     meta_path = os.path.join(ROOT, "tools", "directory-packs.json")
     meta = json.load(open(meta_path))
-    for key in [key for key in meta if key.startswith("university-")]:
+    for key in [key for key in meta if key.startswith("university-") and (rebuilt is None or key in rebuilt)]:
         del meta[key]
     for code in sorted(countries):
         country = COUNTRIES.get(code, code)
@@ -165,6 +178,8 @@ def main():
             "category": "Theses & Reports",
             "group": "university",
         }
+    university = sorted(key for key in meta if key.startswith("university-"))
+    meta = {**{key: value for key, value in meta.items() if not key.startswith("university-")}, **{key: meta[key] for key in university}}
     open(meta_path, "w").write(json.dumps(meta, ensure_ascii=False, indent=2) + "\n")
     print(f"placed {placed} university templates in {len(countries)} packs for {len(hosted)} directory entries, skipped {skipped}")
 

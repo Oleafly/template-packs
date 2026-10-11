@@ -1,0 +1,70 @@
+\chapter{Getting to know \LaTeX\ for your WSU graduate thesis}
+
+\LaTeX\ is an awesome code-based, open source framework for scientific word processing. It is particularly powerful in fields which require frequent use of equations and adaptive in-text references. This template provides the necessary prerequisites to satisfy the 2017 formatting requirements of the Washington State University Graduate School. The text found here is intended to inform and serve as an example of formatting commands in \LaTeX.
+
+\section{Using this template}
+
+To use this template, begin with the file \verb|/main/main_thesis.tex|. As you work with your thesis, you can include additional packages to meet your needs by including them in the header \verb|main_thesis.tex|. Going through the main file, replace all personal information with your specifics in the section labeled ``Information".
+
+Then under the ``Main Content" in the main file, you may need to uncomment, rename, or add to the inclusion of chapter files depending on how many chapters you will be including.
+
+That is about it for global formatting!
+
+Your chapters are simply included by replacing the files \verb|ChapterX.tex| with the body of your text as they are in the template files. Each chapter is included as the main file is compiled.
+
+\section{Including figures, tables, and equations}
+
+Figures are included as Fig. \ref{fig:butch} is done, as an example.
+\begin{figure}[H] %The [H] flag forces the figure placement to land HERE. (requires float package)
+    \centering
+    \includegraphics[width=0.4\linewidth]{butch}
+    \caption{An image of the Butch statue taken from the 2015-2016 Graduate Student Survival Guide.}
+    \label{fig:butch}
+\end{figure}
+The figure environment can be anchored to a single place in the text with the \verb|[H]| flag or allowed to float to an appropriate place by omitting the flag. A caption briefly explains the figure while an appropriate label is assigned to the figure to make for easy reference in the body of the text.
+
+The image file itself needs to be either in the folder \verb|/main/| or in the folder \verb|/Figures/|. Notice that you do not use the file name's suffix when including it (eg. jpg, gif, eps, etc.). There are two primary ways to compile your \LaTeX\ document: PDFTeXify or LaTeX. The former will work with .jpg, pdf, and .png file types while the latter requires .eps file types. More details can be found online at\\
+\url{https://en.wikibooks.org/wiki/LaTeX/Importing_Graphics#Supported_image_formats}.
+
+Table \ref{tab:tab1} is an example of a short table. Typing these structures in by hand can be quite tedious, but there are a variety of tools available online, including the package \verb|csvsimple| to import Excel files directly, to help in generating a tabular environments.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c||c|c|}
+  \hline
+  % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+  a  & 1 & 2 \\\hline
+  b  & 3 & 4 \\
+  c  & 5 & 6 \\
+  \hline
+\end{tabular}
+\caption{A table}
+\label{tab:tab1}
+\end{table}
+
+Eq. \ref{eq:Schrodinger} is an example of an equation.
+\begin{align}
+    \left(-\frac{\hbar^2}{2m}\nabla^2+V(\vec{x})\right)\psi(\vec{x}) = E\psi(\vec{x})
+    \label{eq:Schrodinger}
+\end{align}
+
+\section{Managing a bibliography}
+
+One of the more powerful and convenient tools used while compiling a \LaTeX\ document is BibTeX. BibTeX is the file format and compiling routine used to take a text file containing bibliographic data and create a particular style of bibliography, complete with in-text references. The source data BibTeX comes from a .bib file which is a collection of inputs of the form
+\begin{verbatim}
+@Article{asimov59.01,
+  author  = {Isaac Asimov},
+  title   = {The Last Question},
+  journal = {Science Fiction Quarterly},
+  year    = {1959},
+  month   = {November},
+}
+\end{verbatim}
+The recommended .bib file manager is JabRef (\url{www.jabref.org}). This program is an open source interface used to organize and input bibliographic data in a simple, fill-in-the-blank manner which then generates the necessary .bib file. Within the text you cite using a short BibTeX key\cite{asimov59.01} then one then simply points to the .bib file near the end of the main .tex file. Compiling with BibTeX will sometimes require consecutive Bib/TeX compiles.
+
+\subsection{Bibliography styles}
+
+The standard style of bibliography used in this template may not be to your liking. By including the appropriate .bst file, BibTeX will automatically use the corresponding bibliographic style. A list of common styles and further explanation can be found here:  \\
+\url{https://www.reed.edu/cis/help/LaTeX/bibtexstyles.html}
+
+One need only find the appropriate .bst file (this is all open-source after all), save it into the main folder, then use that style's name (without the .bst suffix) in the argument of \verb|\bibliographystyle{}|. 

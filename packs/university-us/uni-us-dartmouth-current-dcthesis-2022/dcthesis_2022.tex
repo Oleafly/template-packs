@@ -1,0 +1,156 @@
+\documentclass{dcthesis}
+
+%This version of the thesis template has been updated by Mits Kobayashi for the September 2022 thesis guidelines provided by Guarini Graduate School.
+
+%  Some good options are draft and singlespacing, for drafts, and *final*,
+%for the final cut, and noheadings, for a printout without headings.  
+%You can also use the copyright option to add a copyright.  Note:
+%final will enforce a bunch of different options, like oneside, 12pt
+%and doublespacing, as well as make the margins correct.   Draft, has
+%larger margins and is appropriate for twosided printing.   
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%    IMPORTANT     %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Because dvips doesn't know/care about the page size of the dvi file
+%  its working on, and because its so important that the margins of
+%  your thesis are correct you have to make sure that you are using
+%  the command dvi -t letter *thesisnamehere*
+%
+%  If you are using a terminal this is straightforward, but if you are
+%  using a tex editing program it make take a little bit of searching
+%  before you figure out how to make this work. 
+%  
+%  Alternatively, you might consider compiling using pdflatex, which
+%  compiles straight to a PDF and doesn't have this problem.  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some Defaults
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\committee[F. Jon Kull, Ph.D.]{}{}{}{}
+\school{Dartmouth College}{Hanover, New Hampshire}
+\degree{Doctor of Philosophy}
+\field{Mathematics}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Additional Packages (add as desired)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{setspace} % to reduce line spacing on cover page
+
+%\usepackage{index} %Uncomment if you would like to have an index. Compiling with an index takes more work than compiling without one. You will have to look up how to use the index package.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Formatting
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Change or add to as desired. 
+%  These two commands make the first enumerations look like (a)
+%  And the second level like (i).  
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\renewcommand{\labelenumii}{(\roman{enumii})}
+%  These commands make the section headings Boldface and not all
+%  caps. It also removes the chapter numbers  
+\renewcommand{\chaptermark}[1]{\markboth{{\sc #1}}{{\sc #1}}}
+\renewcommand{\sectionmark}[1]{\markright{{\sc \thesection\ #1}}}
+%  These commands have lowercase headings with chapter numbers. 
+%\renewcommand{\chaptermark}[1]{markboth{#1}{}}
+%\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}} 
+		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Theorem Declarations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A basic set of theorem declarations.  Add or remove as desired. 
+\newtheorem{prop}{Proposition}[chapter]
+\newtheorem{theorem}[prop]{Theorem}
+\newtheorem{lemma}[prop]{Lemma}
+\newtheorem{corr}[prop]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[prop]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[prop]{Remark}
+\newtheorem{example}[prop]{Example}
+\newtheorem*{claim}{Claim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Indicies
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%This is for an index.  More work is needed for a notation index
+%\makeindex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add your math macros here
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title Page Information
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Your personal info goes here!
+\title{Pretty Okay}
+\author{The Myth}
+\date{\today}
+\field{Mathematics}
+\degree{Doctor of Philosophy}
+%As an optional arguement to \committee you can specify the dean of graduate studies.
+\committee{LGF}{The Mustache}{The Big Cheese}{Totally Real Subfield}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Front end of thesis
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frontmatter
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Abstract
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%NOTE:  Must be less than 350 words.  
+\chapter*{Abstract}
+%This is so the abstract appears in the ToC
+\addcontentsline{toc}{section}{Abstract}
+Write your abstract here.
+
+\chapter*{Preface}
+\addcontentsline{toc}{section}{Preface}
+Preface and Acknowledgments go here!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Table of Contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+
+%Add a list of tables
+%\listoftables
+
+%Add a list of figures
+%\listoffigures
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Main Portion of Thesis
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  YOUR THESIS HERE!  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{chapter1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Backend of thesis (references and the like)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+
+%Add your bibliography filename and uncomment these lines
+%\bibliographystyle{amsplain}
+%\addcontentsline{toc}{chapter}{References}
+%\bibliography{}
+
+%Uncomment if you want an index
+%\printindex
+
+\end{document}

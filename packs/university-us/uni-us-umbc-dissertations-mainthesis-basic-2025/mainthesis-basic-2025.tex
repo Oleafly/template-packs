@@ -1,0 +1,155 @@
+%Use this template when typing your own Bibliography.tex file
+
+%This template was prepared by Dorothea F. Brosius of the
+%Institute for Electronics and Applied Physics, University of Maryland, College Park, MD
+%The template was last updated in September 2023
+%Thesis Main Page used with thesis.sty based on the
+%University of Maryland Electronic Thesis and Dissertation (ETD) Style Guide, 2021 Edition
+
+% Select the version that fits how you are making this LaTeX document (its driver).
+% The first two are the most likely ones to be needed.
+
+ \newcommand{\mydriver}{pdflatex} %Making a PDF directly using pdflatex.
+%\newcommand{\mydriver}{dvipdfmx} %Making a DVI and converting that to PDF using dvipdfmx.
+%\newcommand{\mydriver}{dvipdfm} %Making a DVI and converting that to PDF using dvipdfm.
+%\newcommand{\mydriver}{dvips} %Making a DVI and converting that to PS using dvips (may later be converted to PDF).
+%\newcommand{\mydriver}{dvipsone} %Making a DVI and converting that to PS using dvipsone (may later be converted to PDF).
+%\newcommand{\mydriver}{ps2pdf} %Same as the one for dvips except it is compatible with Ghostscript's PDF writer.
+
+\documentclass[12pt,\mydriver]{thesis}  %12pt is larger than 11pt
+\usepackage[margin=1cm]{caption}
+\usepackage{titlesec}
+   \titleformat{\chapter}
+      {\normalfont\large}{Chapter \thechapter:}{1em}{}
+\usepackage{tikz}
+\usepackage{times}
+\usepackage[USenglish]{babel}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{lscape}
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{multirow}
+\usepackage{epstopdf}
+\usepackage{tabls}
+\usepackage{wrapfig}
+\usepackage{slashbox}
+\usepackage{subeqn}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{supertabular}
+\usepackage[onehalfspacing]{setspace} %used for footnote spacing
+
+\usepackage{tocloft,calc}
+\renewcommand{\cftlottitlefont}{\hspace*{\fill}\large}
+\renewcommand{\cftafterlottitle}{\hspace*{\fill}}
+\renewcommand{\cftloftitlefont}{\hspace*{\fill}\large}
+\renewcommand{\cftafterloftitle}{\hspace*{\fill}}
+\renewcommand{\cftchapaftersnum}{:\ }
+\renewcommand{\cftchappresnum}{\chaptername\space}
+\setlength{\cftchapnumwidth}{\widthof{\textbf{Appendix\ }}}
+\makeatletter
+\g@addto@macro\appendix{%
+  \addtocontents{toc}{%
+    \protect\renewcommand{\protect\cftchappresnum}{\appendixname\space}%
+  }%
+}
+\setlength{\cftchapnumwidth}{6em} %adds space between chapter/appendix and title in toc
+
+%hyperref
+\usepackage[colorlinks=true,urlcolor=black,linkcolor=blue,citecolor=blue]{hyperref}
+
+\newcommand{\tbsp}{\rule{0pt}{18pt}} %used to get a vertical distance after \hline
+\renewcommand{\baselinestretch}{2}
+\setlength{\textwidth}{6.75in}
+\setlength{\textheight}{9in}
+\setlength{\topmargin}{-.55in}
+%\setlength{\topmargin}{-.7in}
+%\setlength{\topmargin}{0in}    % use this setting if the printer makes
+%the top margin 1/2 inch instead of 1 inch
+\setlength{\oddsidemargin}{-.1in}   % sets left margin to 1 inch
+\setlength{\parindent}{.4in}
+\pagestyle{empty}
+
+\hyphenation{tem-po-ral-ly}
+
+\begin{document}
+\pagestyle{empty}
+\include{Abstract} %(must be first, required, non-numbered)
+\include{Titlepage} %(must follow Abstract, required, non-numbered)
+\include{Copyright} %(highly recommended, non-numbered)
+
+%Pages from this point start at lower-case Roman number ii)
+\pagestyle{plain} \pagenumbering{roman} \setcounter{page}{2}
+
+\phantomsection %create the correct anchor for the bookmark
+\include{Preface or Foreword}  %(if present, start at lower-case Roman number ii)
+ \addcontentsline{toc}{chapter}{Preface}
+
+%\phantomsection %create the correct anchor for the bookmark
+%\addcontentsline{toc}{chapter}{Foreword}
+%\include{Foreword} %(if present, lower-case Roman)
+
+\phantomsection %create the correct anchor for the bookmark
+\addcontentsline{toc}{chapter}{Dedication}
+\include{Dedication} %(if present, lower-case Roman)
+
+\phantomsection %create the correct anchor for the bookmark
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\include{Acknowledgements} %(if present, lower-case Roman)
+    \cleardoublepage
+
+\phantomsection %create the correct anchor for the bookmark
+\vspace*{-2.5cm}   %raising the Table of Contents to 1 inch top margin
+    \addcontentsline{toc}{chapter}{Table of Contents}
+    \renewcommand{\contentsname}{Table of Contents}
+\renewcommand{\baselinestretch}{1}
+\small\normalsize
+\tableofcontents %(required, lower-case Roman)
+\newpage
+
+\phantomsection %create the correct anchor for the bookmark
+\vspace*{-2.5cm} \addcontentsline{toc}{chapter}{List of Tables}
+    \renewcommand{\contentsname}{List of Tables}
+\listoftables %(if present, lower-case Roman)
+\newpage
+
+\phantomsection %create the correct anchor for the bookmark
+\vspace*{-2.5cm}
+ \addcontentsline{toc}{chapter}{List of Figures}
+    \renewcommand{\contentsname}{List of Figures}
+\listoffigures %(if present, lower-case Roman)
+%\newpage
+
+% LIST OF ABBREVIATIONS
+\phantomsection %create the correct anchor for the bookmark
+\vspace*{-1.5in} \addcontentsline{toc}{chapter}{Abbreviations}
+   \renewcommand{\contentsname}{List of Abbreviations}
+\include{Abbreviations-supertabular}  %If the list is more than one page, use this file
+%\include{Abbreviations}
+
+\newpage
+\setlength{\parskip}{0em}
+\renewcommand{\baselinestretch}{2}
+\small\normalsize
+
+%Pages from this point start at Arabic numeral 1
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\include{Chapter1}
+%\include{Chapter2}
+\titleformat{\chapter}
+{\normalfont\large}{Appendix \thechapter:}{1em}{}
+\include{AppendixA}
+
+\renewcommand{\baselinestretch}{1}
+\small\normalsize
+
+\vspace*{-2in}
+ \addcontentsline{toc}{chapter}{Bibliography}
+\include{Bibliography} %To be used when typing your own bibliography
+\bibliographystyle{unsrt}
+
+
+\end{document}

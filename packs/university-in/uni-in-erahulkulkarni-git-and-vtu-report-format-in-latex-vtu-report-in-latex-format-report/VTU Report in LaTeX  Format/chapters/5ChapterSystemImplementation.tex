@@ -1,0 +1,166 @@
+\chapter{System Implementation}
+
+\section{Introduction}
+This chapter explains the algorithmic procedure of the implementation of CSC and TAC division, TDC update, biological cell migration, 
+ECM proteolysis by biological cell and an algorithm of the entire system.
+
+\section{Biological properties and its implementation}
+CSC driven tumor growth follows a stem-cell like hierarchical cell division and specification program, 
+a hierarchical cell division program was considered to implement cell division in the model. 
+In this  model, a CSC can either divide symmetrically (where it generates 2 CSC) or asymmetrically (where a single CSC generates 1 CSC and 1 TAC). 
+TAC generated  through asymmetric division of CSC possess a proliferation potential of $\beta$ i.e. 
+it can divide maximum $\beta$ number of times~\cite{poleszczuk2015}. 
+
+\section{Pre settings for Cellular Automata}
+
+This CA model is based on a discrete model of hierarchically structured cells.
+Biological cells are modelled as matrix element in a 200 x 200 two dimensional matrix.
+Two extra rows above and below, and to left and right enclose the CA. 
+One of them to provide cell to migrate, and one to provide the neighbourhood for the migrated cell.
+Every Simulation Step, cell is selected in random to apply update function, as to avoid any bias in the way that cells are chosen \cite{MicroenvironmentalVariables}.
+Each cell can be in only one of four states CSC, TAC, TDC or ES.
+
+~\\In CA, we are considering properties of age, doubling time, size, fiber degradation potential, sensing radius, remaining rounds of amplification and motility potential for BCs
+and Fiber Density(FD) for ES.
+
+\begin{enumerate}
+ \item Type to represent if cell is BC(CSC, TAC or TDC) or ES.
+ \item Identity of cell $ \in \Z^+ $, which is unique for each cell and identifies it.
+
+ \subsection{Properties of biological cell}
+ \begin{enumerate}
+  \item Age $\in$ $\N$, holds age of BC. 
+  \item Doubling time $\in$ $\N$, is time after which CSC or TAC divide.
+  \item Size $\in$ $\N$, decides how many matrix cells the BC occupy, for all the simulations we set it to 1. 1 BC or ES occupies one matrix cell.
+  \item Proteolysis propensity $\in$  (0,1), $\lambda$ is factor proteolysis of neighbourhood ES by BC, initially set to 0.5 for BCs.
+  \item Sensing radius $\in$ $\N$ is number of immediate neighbours properties a cell can sense, we use 1 which gives eight cells surrounding the given cell or forms Moore neighbourhood.
+  Eight neighbours of a cell are the cells surrounding the cell one each above and below, to left and right and four diagonally.
+  \item Remaining rounds of amplification  $\in$ $\N$ is still how many divisions can TAC undergo before it stops dividing.
+  \item Motility potential $\in$  (0,1), $\mu$ is P(BC will move).
+ \end{enumerate}
+ 
+\end{enumerate}
+
+~\\This CA model investigates the growth dynamics of CSCs with different parameters and compare population of BCs, 
+to predict BC heterogeneity, saturation as a function of $\alpha$, $\beta$, $\gamma$, $\sigma$, $\mu$ and $\lambda$.
+All simulation is seeded with one CSC in the center of CA, and varying are parameters ($\alpha$, $\beta$, $\gamma$), 
+$\sigma$,
+$\mu$, 
+$\lambda$ and assuming uniform nutrient supply.
+
+
+\section{Cell division}
+In this project the model considers CSCs and TACs as the only BC that divide. Every BC age. 
+CSCs and TACs divide into present and a randomly selected neighbouring ES only when their age $\ge$ Doubling Time and the ES has no fibers,
+analogous to cells growing for some time before dividing again.\\\
+
+\noindent Algorithm: Cell Division, checks the type of cell and initiate respective divide.\\\
+
+\begin{algorithm}[H]
+ %\caption{Cell Division}
+     \SetAlgoLined
+     \KwData{present cell and neighbourhood ES details}
+     \KwResult{ initiate CSC or TAC division if conditions hold }
+     
+	\begin{algorithmic}
+	      \IF{  cell.type == CSC }
+		\STATE cell.divideCSC();
+		\ELSIF{  cell.type == TAC }
+		\STATE cell.divideTAC();
+	      \ENDIF
+	\end{algorithmic}
+		    
+\end{algorithm}
+
+
+\section{Simulation}
+
+Simulation algorithm: At each iteration of the simulation, 
+a CA cells is randomly selected and evolved based on some mechanistic rules (Algorithm of Simulation). 
+If the selected site is of type S (free space) or E (ECM site) then nothing happens. 
+Else (if selected site is C (cancer cell)) the age of the cell is increased by an amount $\delta$ which is determined based on fiber density of the neighbourhood ~\cite{klein2009, ulrich2009}. 
+After increasing cell age, the cell select a neighbouring ECM\_SITE or FREE\_SITE randomly. 
+BCs can move into or divide in neighbourhood ES only if FD = 0. 
+If there is no ECM\_SITE or FREE\_SITE in neighbourhood of cell, 
+cell undergo transformation where it can either convert to a TDC. If the type of cell is TAC and its current $\beta$ value is greater than 0, 
+or die out and if the type of cell is TDC and its age is equal to $\gamma$ value.\\\
+
+\begin{algorithm}[H]
+	\label{algo}
+	%\caption{Simulation algorithm}
+	\SetAlgoLined
+	%\KwData{ Cellular Automata }
+	%\KwResult{ CSC, TAC division, and proliferation of Biological Cells, Run ITERATIONS times, change in properties of ES and also Type of Biological Cells }
+	%Save initial state of system;\\\
+	\noindent Algorithm of Simulation\\
+	\For {\rm 1 to NUM\_OF\_ITERATIONS}
+	{
+		\For {\rm ROWS * COLUMNS times }
+		{
+			cell  $\gets$ Randomly select an automata cell;			
+			\eIf{\rm (cell.type == E OR  cell.type == S)}
+			{
+				// No action is performed
+			}
+			{   
+				// Increase cell age by $\delta$, $\delta =  1 + 1.125 *  \frac{[FD]}{[FD]+1}$; $\delta$ = 1 for TDC; \\
+				cell.age  $\gets$ cell.age + $\delta$  \\				
+				\eIf{\rm There is no ECM\_SITE or FREE\_SITE in neighbourhood}
+				{
+					\If{\rm cell.type ==  TAC AND cell.$\beta$ = 0}
+					{				      
+						cell.type = TDC
+					}					
+					\If{\rm cell.type ==  TDC AND cell.age = $\gamma$}
+					{ 
+						cell.type = ECM\_SITE
+					}
+				}
+				{
+					neighbourES  $\gets$ randomly select one ECM\_SITE from neighbourhood;										
+					\eIf{\rm neighbourES.FiberDensity = 0}
+					{				      						
+						\eIf{\rm cell.age $\ge$  DOUBLING\_TIME and cell.type == CSC or TAC }
+						{
+							\eIf{\rm cell.type ==  CSC }
+							{				      
+								Perform symmetrical division of cell with probability $\alpha$ or asymmetrical division with probability (1-$\alpha$).
+							}
+							{ 					  
+								Generate two daughter cells with $\beta$ less than the mother $cell$.
+							}	
+						}
+						{				    
+							Move $cell$ to neighbourES free site with probability $\mu$.   	      
+						}						
+					}
+					{												
+						$\lambda = 0.5625\times \frac{{[FD]}}{[FD]+1} $\; 
+						neighbourES.FiberDensity = neighbourES.FiberDensity - $\lambda$ ;
+					}
+				}								
+			}	   	   			
+		}
+		Save state of system;
+	}
+\end{algorithm}
+
+
+\section{The main results}
+Four main conclusions that can be drawn from implementation are as follows 
+(Color code to used to represent BCs in images are CSC as red, TAC as green, TDC as blue, ES as grey and free space as white. 
+TAC with higher remaining rounds of amplification as higher green values.
+ES with higher fiber content with as higher grey value):
+ 
+\bfseries{ECM confinement can check tumor growth in absence of ECM proteolysis}
+    \normalfont : 
+    Availability of free space is one of the main prerequisites for cell division. In tissue environment, 
+    presence of other type of cells and ECM fibers creates a space constraints for dividing cells. 
+
+\section{Conclusion}
+This chapter covered detailed algorithmic procedures for the biological properties of divide, move 
+and mathematical formulae applied to update proteolysis propensity and FD in ES.
+The analysis of results suggests CSC symmetric division rate fosters tumor growth and controls intratumor cellular heterogeneity, 
+ECM confinement can check tumor growth in absence of ECM proteolysis, 
+increased cell motility facilitates cancer progression in confined ECM by enhancing TAC content of tumor population and ECM confinement enhances tumor progression in presence of ECM proteolysis and increased cell motility.
+

@@ -1,0 +1,131 @@
+%To be used with Bibtex files using Natbib commands
+%September 2023 - This template was prepared by Dorothea F. Brosius of the
+%Institute for Electronics and Applied Physics, University of Maryland, College Park, MD
+
+%Thesis Main Page used with thesis.sty based on the
+%University of Maryland Electronic Thesis and Dissertation (ETD) Style Guide, 2021 Edition
+
+% Select the version that fits how you are making this LaTeX document (its driver).
+% The first two are the most likely ones to be needed.
+ \newcommand{\mydriver}{pdflatex} %Making a PDF directly using pdflatex.
+%\newcommand{\mydriver}{dvipdfmx} %Making a DVI and converting that to PDF using dvipdfmx.
+%\newcommand{\mydriver}{dvipdfm} %Making a DVI and converting that to PDF using dvipdfm.
+%\newcommand{\mydriver}{dvips} %Making a DVI and converting that to PS using dvips (may later be converted to PDF).
+%\newcommand{\mydriver}{dvipsone} %Making a DVI and converting that to PS using dvipsone (may later be converted to PDF).
+%\newcommand{\mydriver}{ps2pdf} %Same as the one for dvips except it is compatible with Ghostscript's PDF writer.
+
+\documentclass[12pt,\mydriver]{thesis}  %12pt is larger than 11pt
+\usepackage[letterpaper, margin=1in]{geometry}
+
+\usepackage{lipsum}
+\title{ALL CAPS TITLE}
+\author{Your full name}
+\year=2023
+
+\include{preamble}
+
+\begin{document}
+\pagestyle{empty} % front matter style
+\include{src/abstract} %(must be first, required, non-numbered)
+\include{src/titlepage} %(must follow Abstract, required, non-numbered)
+\include{src/copyright} %(highly recommended, non-numbered)
+
+% Pages from this point start at lower-case Roman number ii)
+\pagestyle{plain} \pagenumbering{roman} \setcounter{page}{2}
+
+% Pages from this point need to be double spaced
+\renewcommand{\baselinestretch}{2}
+\normalsize % need to start normal size text for double space
+
+%% A front matter section (dedication, preface, etc.)
+
+\phantomsection %create the correct anchor for the bookmark
+\addcontentsline{toc}{chapter}{Front Matter Section}
+\begin{center}
+\large{Front Matter Section}
+\end{center} 
+\lipsum[5-6]
+\newpage
+
+\phantomsection %create the correct anchor for the bookmark
+\addcontentsline{toc}{chapter}{Table of Contents}
+    \renewcommand{\contentsname}{Table of Contents}
+\renewcommand{\baselinestretch}{1}
+\normalsize
+\tableofcontents %(required, lower-case Roman)
+\newpage
+
+% \phantomsection %create the correct anchor for the bookmark
+% \addcontentsline{toc}{chapter}{List of Tables}
+%     \renewcommand{\contentsname}{List of Tables}
+% \listoftables %(if present, lower-case Roman)
+% \newpage
+
+% \phantomsection %create the correct anchor for the bookmark
+% \addcontentsline{toc}{chapter}{List of Figures}
+%     \renewcommand{\contentsname}{List of Figures}
+% \listoffigures %(if present, lower-case Roman)
+% \newpage
+
+% % LIST OF ABBREVIATIONS
+\phantomsection %create the correct anchor for the bookmark
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+\begin{center}
+\large{Abbreviations}
+\end{center} 
+
+If needed. Use a table.
+\newpage
+
+% Main matter formatting
+\setlength{\parskip}{0em}
+%Pages from this point start at Arabic numeral 1
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\renewcommand{\baselinestretch}{2}
+\normalsize
+
+\chapter{A Chapter}
+A citation~\cite{fan2022}.
+
+\section{A Section}
+\lipsum[1-2]
+
+\subsection{A sub-section}
+\lipsum[2]
+
+\newpage
+\chapter{A Chapter}
+A citation~\cite{fan2022}.
+
+\section{A Section}
+\lipsum[1]
+
+%% Appendix
+\appendix
+\setcounter{chapter}{0}
+\renewcommand{\chaptername}{Appendix}
+\renewcommand{\thechapter}{\Alph{chapter}}
+\titleformat{\chapter}{\normalfont\large}{Appendix \thechapter:}{1em}{}
+
+\chapter{Lorem}
+A citation~\cite{fan2022}.
+\lipsum[3]
+\newpage
+
+\chapter{Ipsum}
+A citation~\cite{fan2022}.
+\lipsum[3]
+\newpage
+
+%%Bibliography
+
+\renewcommand{\baselinestretch}{1}
+\normalsize
+\addcontentsline{toc}{chapter}{Bibliography}
+
+\newpage
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,176 @@
+\chapter{Simulation Results}
+
+Based on the test scenarios and testcases created in chapter 5, simulation results obtained from the testcases are,
+
+\section{Input golden message sequence}
+
+\begin{tcolorbox}
+
+	\begin{verbbox}
+	
+//sha3_base_test defined as virtual class
+// It can't be extended
+virtual class sha3_base_test extends uvm_test;
+
+	sha3_env env_h;		//sha3_env handle
+	sequencer sequencer_h;	//sequencer handle
+	
+	// Build Phase and End_of_elaboration phase with print() method
+
+	// Constructor new()
+	
+endclass: sha3_base_test
+	\end{verbbox}
+	\resizebox{0.95\textwidth}{!}{\theverbbox}
+	
+\end{tcolorbox}
+
+Test sequence for tr1\_test is defined in tr1\_seq class pseudo code for which looks like given below,
+
+
+\begin{tcolorbox}
+
+	\begin{verbatim}
+	
+class tr1_seq extends uvm_sequence #(uvm_sequence_item);
+   //factory registration macro
+
+	sequencer sequencer_h;
+	uvm_component uvm_component_h;	//Temporary handle.
+	
+	//Constructor method and handing over 
+	//env_h.agent.sequencer_h to the sequencer handle
+
+	task body();
+		//Start	sequences on sequencer_h
+	endtask : body
+
+endclass : tr1_seq
+	\end{verbatim}
+	
+\end{tcolorbox}
+
+Simulation waveform for tr1\_test testcase is as shown below,
+
+%Image
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=13cm,height=8cm]{images/tr1_test}
+	\caption{Test Scenario: Test Requirement 1 \label{tr1test}}
+\end{figure}
+
+Figure \ref{tr1test} above shows Test Requirement 1, which is application of golden message in hash functions. Golden message applied is "The quick brown fox jumps over the lazy dog". For that output hash value is:
+
+\begin{tcolorbox}
+
+	\begin{verbbox}
+	
+d135bb84d0439dbac432247ee573a23ea7d3c9deb2a968eb31d47c4fb45f1ef4
+422d6c531b5b9bd6f449ebcc449ea94d0a8f05f62130fda612da53c79659f609
+	\end{verbbox}
+	\resizebox{0.95\textwidth}{!}{\theverbbox}
+	
+\end{tcolorbox}
+
+Which matches output shown in the waveform. Also for tr1\_test, test hierarchy using print() method created is given below,
+
+
+\begin{center}
+\begin{tcolorbox}
+
+	\begin{verbbox}
+
+# ----------------------------------------------------------------
+# UVM-1.0p1 
+# (C) 2007-2011 Mentor Graphics Corporation
+# (C) 2007-2011 Cadence Design Systems, Inc.
+# (C) 2006-2011 Synopsys, Inc.
+# ----------------------------------------------------------------
+# UVM_INFO @ 0: reporter [RNTST] Running test tr1_test...
+# ------------------------------------------------------------------
+# Name                       Type                        Size  Value
+# ------------------------------------------------------------------
+# uvm_test_top               tr1_test                    -     @460 
+#   env_h                    sha3_env                    -     @468 
+#     agent                  sha3_agent                  -     @475 
+#       agent_ap             uvm_analysis_port           -     @493 
+#       driver               sha3_driver                 -     @501 
+#         rsp_port           uvm_analysis_port           -     @516 
+#         sqr_pull_port      uvm_seq_item_pull_port      -     @508 
+#       monitor              sha3_monitor                -     @524 
+#         monitor_ap         uvm_analysis_port           -     @642 
+#       sequencer_h          uvm_sequencer               -     @531 
+#         rsp_export         uvm_analysis_export         -     @538 
+#         seq_item_export    uvm_seq_item_pull_imp       -     @632 
+#         arbitration_queue  array                       0     -    
+#         lock_queue         array                       0     -    
+#         num_last_reqs      integral                    32    'd1  
+#         num_last_rsps      integral                    32    'd1  
+#     scoreboard             sha3_scoreboard             -     @482 
+#       fifo                 uvm_tlm_analysis_fifo #(T)  -     @664 
+#         analysis_export    uvm_analysis_imp            -     @703 
+#         get_ap             uvm_analysis_port           -     @695 
+#         get_peek_export    uvm_get_peek_imp            -     @679 
+#         put_ap             uvm_analysis_port           -     @687 
+#         put_export         uvm_put_imp                 -     @671 
+#       scoreboard_ae        uvm_analysis_export         -     @656 
+# ------------------------------------------------------------------
+	\end{verbbox}
+	\resizebox{0.95\textwidth}{!}{\theverbbox}
+	
+\end{tcolorbox}
+\end{center}
+
+
+\section{Input empty message sequence}
+
+Test Requirement 2 checks for application of empty input message on design under test. Here, empty string is represented by ``" and shown in waveform as sequence of zeros. Application of tr2\_test on Low throughput SHA-3 Core leads to message digest after 24 clocks. And High throughput core yields same 512-bits of output digest in 12 clock cycles.\par
+Pseudo code for Test Requirement is given below,
+
+\begin{tcolorbox}
+
+	\begin{verbatim}
+	class tr3_seq extends base_sequence;
+   `uvm_object_utils(tr3_seq);
+
+	// Sequence handles
+	
+	function new(string name = "tr3_seq");
+		super.new(name);
+		
+		//Create Sequences
+	endfunction : new
+
+	task body();
+		//Start sequences
+	endtask : body
+
+endclass : tr3_seq
+	\end{verbatim}
+	
+\end{tcolorbox}
+
+%Image
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=13cm,height=8cm]{images/tr2_test}
+	\caption{Test Scenario: Test Requirement 2 \label{tr2_test}}
+\end{figure}
+
+
+\section{Input very long message sequence}
+%Image
+In test requirement 3 we apply boundary case, which is to apply a long string so as to make buffer\_full signal high. TR3\_TEST uses reset\_seq as well as long\_msg\_seq test sequences created for previous testcases.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=13cm,height=8cm]{images/tr3_test}
+	\caption{Test Scenario: Test Requirement 3 \label{tr3_test}}
+\end{figure}
+
+\section{Coverage Results}
+%Image
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=13cm,height=8cm]{images/tr3_cov}
+	\caption{Coverage Results \label{tr3cov}}
+\end{figure}

@@ -1,0 +1,30 @@
+%%% -*-LaTeX-*-
+
+\chapter* {\LaTeX{} Processing for this Thesis}
+
+With the help of definitions and rules in the \texttt{Makefile}, this
+thesis is typeset in under \emph{four seconds} with a \emph{single}
+operating-system command:
+
+\begin{Verbatim}
+    make
+\end{Verbatim}
+
+\noindent
+That asks the \texttt{make} utility to run these commands to produce a
+consistent typeset thesis in Portable Document Format (PDF):
+
+\begin{Verbatim}
+    egrep -v '^%|^ *$' honors-thesis-0.tex > honors-thesis-0.stripped
+
+    pdflatex honors-thesis-0.tex
+    bibtex honors-thesis-0
+
+    [same command block, repeated 3 more times]
+\end{Verbatim}
+
+\noindent
+The \texttt{egrep} filtering step is needed to remove empty lines and
+comments, producing the bare \LaTeX{} commands shown earlier.  Cross
+references in the thesis text, and also inside bibliography entries,
+require multiple runs of \texttt{pdflatex} and \texttt{bibtex}.

@@ -1,0 +1,29 @@
+\chapter{Robot Prediction}
+% xzt: do not delete
+\pagestyle{plain}
+
+This is chapter 4.
+
+\section{Algorithm}
+
+Algorithm~\ref{alg:gpu_mapping} is an example from \cite{xie2024scope, xie2023stochastic} for placing an algorithm in the dissertation.
+
+\begin{algorithm}[t]
+    \setstretch{1.5}
+    \DontPrintSemicolon
+    \caption{GPU-accelerated OGM mapping}
+    \label{alg:gpu_mapping}
+    
+    \KwInput {compensated lidar measurements ${\mathbf{y}^R_{t-\tau:t}}$}
+    \KwOutput {local environment map $\mathbf{m}$}
+    
+    \begin{algorithmic}[1]  
+        \FORALL{time steps $n$ from $t-\tau$ to $t$}
+            \FORALL{\textbf{parallel} grid cells $\mathbf{m}_i$ in the perceptual field of $\mathbf{y}^R_{n}$}    
+            
+            \STATE    $l_i = l_i + \log \frac{p(\mathbf{m}_i|\mathbf{y}^R_{n})}{1-p(\mathbf{m}_i|\mathbf{y}^R_{n})} - \log \frac{p(\mathbf{m}_i)}{1-p(\mathbf{m}_i)}$
+            
+            \ENDFOR 
+        \ENDFOR
+    \end{algorithmic}
+\end{algorithm}

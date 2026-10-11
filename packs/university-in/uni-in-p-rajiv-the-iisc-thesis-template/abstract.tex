@@ -1,0 +1,36 @@
+% Synthetic Chest X-ray (CXR) image generation has many uses, given there is scarcity
+% of CXR data to train models. By leveraging generative adversarial networks (GANs)
+% and diffusion models, previous works \cite{} have shown that synthetic datasets
+% help mitigate this problem of scarcity. These synthetic images facilitate data
+% augmentation for pathologies and improve model classification accuracy thus
+% providing a scalable solution in this domain. In this work, we explore the
+% current methodologies for generating high-fidelity medical images and evaluate
+% their impact on classification accuracy.
+
+
+
+Synthetic data generation has emerged as a promising approach to address data scarcity and 
+privacy constraints in medical imaging. In this work, we studied potential of generative 
+models for synthesizing chest X-ray (CXR) images, we evaluated Generative Adversarial Networks (GANs) 
+and diffusion-based models under a low-data regime. Our focus lies in generating disease-specific 
+images. Through extensive experimentation, we observe that both GANs and diffusion models struggle to 
+reliably capture disease-specific features when conditioned explicitly. To verify this limitation, 
+we verified both existing cxr-image generation models and our own approaches viz. finetuning of diffusion models on MIMIC-cxr using 
+1. disease labels 2. Complete doctor generated reports 3. LoRA-disease specific fine tuning etc., to understand underlying reason we 
+verfied foundational models in CXR domain viz. Rad-DINO, Bio ViL-T. The main direction we verified is how well the generated images 
+could be helpful in CXR disease classification. Through our experiments we found that synthetic image generation models 
+struggle to generate images with specified conditioning. 
+
+
+% We further explored an automatic filtering pipeline using RadGraph-based evaluation, 
+% where generated reports were compared against the original prompts. However, we observed that 
+% RadGraph scores remained consistently low, typically in the range of 0.15–0.35, even for visually 
+% plausible and clinically consistent generations.
+% This behavior can be attributed to the inherent mismatch between simplified prompts 
+% and full radiology reports, as well as the sensitivity of RadGraph to linguistic variations 
+% and report structure. Importantly, we find that RadGraph scores do not reliably correlate with 
+% disease correctness, as the metric evaluates overall graph similarity rather than the presence 
+% of specific pathologies.
+% Consequently, threshold-based filtering using RadGraph scores was found to be ineffective. 
+% This highlights a key limitation of current evaluation metrics for synthetic medical image 
+% generation, motivating the need for disease-specific or task-aware evaluation strategies.

@@ -1,0 +1,135 @@
+\chapter[: A Sample Document]{Going Beyond the Text}
+
+One of the more difficult formatting challenges you'll have is dealing with the various special features that many dissertations and theses require. You're likely to need tables, figures, equations, algorithms, or other non-prose representations of your work. Below are some examples of how to accomplish this.
+
+First, a couple of notes from the Graduate College. This is taken directly from the formatting guidelines. This template will accomplish most of this automatically, provided that you use the labeling templates you'll find in this chapter. The first level content below is from the Graduate College, and my commentary for each appears in the second level content.
+
+\begin{itemize}
+	\item Be sure that all inserted information (images, tables, graphs, diagrams, etc.) are labeled with a title and number (Example: Table 1. Total Graduate Students from 1986 to 1997). If applicable, the label listed in the text must match the label listed in the List of Tables or List of Figures exactly. The numbering must be consecutive, per the requirements of your style.
+		\begin{itemize}
+			\item This will happen automatically, provided that you use the proper environments and label tags. The examples are below. 
+		\end{itemize}
+	\item If a table or a figure is landscape oriented, the table's/figure's label must be landscaped oriented to match.
+		\begin{itemize}
+			\item There is an example of this below in \cref{fig:fig2} on \cpageref{fig:fig2}. 
+		\end{itemize}
+	\item If you have 5 or more of an embedded item (tables, figures, equations, algorithms, etc.), the must be referenced in a list in the front of your document. The list should be titled ``List of...,'' so tables would be ``List of Tables,''  figures would be ``List of Figures,'' etc. If you 4 or fewer of an item, it does not need to appear in a list. 
+		\begin{itemize}
+			\item This is already automated in this template \textit{except} for lists of equations or theorems. To do this, you would need to use the \textsf{tocloft} package. This would require completely rewriting the \texttt{UNLVthesisTemplate.tex} and \texttt{UNLVthesis.sty} files. Dr.\ Gill hopes to undertake this formatting overhaul in an upcoming version of the template.
+		\end{itemize}	
+	\item Tables and figures must be clearly delineated from the text. This can be done by line breaks, (a double space), borders, or a delineation that is approved by your style guide. The title and description of tables, figures, images, etc. are considered to be part of the table, figure, or image and must be clearly delineated from the text as well.
+		\begin{itemize}
+			\item This is automated in the template. You can also use the placement operators and (if you must) vertical or horizontal spacing adjustments to get the look you want. 
+		\end{itemize}
+	\item Images, tables, diagrams, graphs, etc. embedded into your document must fit on a single page. You can use a smaller font size on tables, figures, and other inserted materials. If a table does not fit within your text on a single page it must be moved to an appendix. You can either give	each table its own appendix or you can create a single appendix containing multiple tables.
+		\begin{itemize}
+			\item If you have a table that spans more than one page, it has to go in an appendix. You will probably want to use the \textsf{longtable} package to accomplish that. 
+		\end{itemize}
+
+\end{itemize} 
+
+\section{Equations, Algorithms, and Theorems}
+
+In the current version of this template, there is no support for a table of equations. If you have more than five numbered equations in your thesis or dissertation, you are required to include a table of equations. In order to do this, you will probably have to use the \textsf{tocloft} package. If you do that, you'll basically need to rewrite much of the \texttt{UNLVthesisTemplate.tex} and \texttt{UNLVthesis.sty} documents. Dr.\ Gill is currently working on incorporating the \textsf{tocloft} package into a future version of this template.
+
+To type an equation in the line, put it between dollar signs.  For
+example, $y = \beta_0 + \beta_1 X_1 + \varepsilon$.  If you would like to highlight that equation without numbering it, you can use this notation:  $$y = \beta_0 + \beta_1 X_1 + \varepsilon$$
+If the equation is to be referenced, then do the following:
+\begin{equation}\label{eq:Equation1}
+	%This is the label of the equation -- LaTeX will number it.
+	y = \beta_0 + \beta_1 X_1 + \varepsilon
+\end{equation}
+
+Note that, if you have five or more numbered equations in your thesis or dissertation, you'll need to include a Table of Equations. You can then reference the equation (\cref{eq:Equation1}) has no
+non-trivial solutions in the integers. 
+
+Some results are important, and you may wish to express them as a theorem.
+
+\begin{theorem}[Fermat's Last Theorem]\label{theorem 1}  The equation $x^n+y^n=z^n$ has no solutions $x,y,z\in \mathbb Z$ for $n\geq 3$ and $xyz\neq 0$.
+\end{theorem}
+
+You can then reference the theorem using the \textsf{cleveref} package. \Cref{theorem 1} was proved by Wiles.  The proof does not appear in \citet{kopka2004guide}.
+
+Sometimes you might want to have aligned equations, like the following:
+\begin{align} %\label{eq:Equations} put the label here to label both, removing individual labels
+	\frac{\partial\hat{Y}}{\partial X_1} &= B_1 \label{eq:Equation2} \\
+	\frac{\partial\hat{Y}}{\partial X_2} &= B_2 \label{eq:Equation3}
+\end{align}
+
+You could also choose to place the label directly after the align command, which would label the pair of equations instead of labeling each of the equations separately. 
+
+\section{Figures and Tables}
+
+You will probably need to use figures or tables in your dissertation or thesis. Below are a few examples here so that you can see how to do this properly. Remember to label these figures and tables so that they appear properly in your list of tables and/or list of figures.
+
+
+
+A picture is shown in  \cref{fig:fig1}.
+\begin{figure}[h]
+		%This [h] tells LaTeX to try to put the picture here. Without it, it will go to the top of the next page. There are a number of other placement operators that can help you achieve the look that you want.
+	\centering
+\thisfloatpagestyle{plain}
+\label{fig:fig1}
+\caption{This is a Figure}
+{\mbox{\includegraphics[height=140pt]{fig1.png}}}
+\end{figure}
+	% Be careful with empty lines -- remember, they mean new paragraph.
+    % There are no empty lines before and after the figure environment since
+    % I do not want a new paragraph here.
+
+Now, let's try to include a landscape image. This is required for images (or tables) that are too wide to fit on a single page. Obviously, \LaTeX\ is going to put this where it will fit, so you'll have to look to \cpageref{fig:fig2} to find \cref{fig:fig2}.
+
+\begin{sidewaysfigure}
+	\centering
+	\caption{This is a Landscape Figure}
+		\label{fig:fig2}
+		\thisfloatpagestyle{floatpage}
+			\includegraphics[scale = .5]{huge-placeholder.png}
+\end{sidewaysfigure}
+
+You can use all sorts of different programs to create graphics.\footnote{Dr.\ Gill likes using \textsf{R} to make cool data visualizations!} Usually, .png files seem to work best in \LaTeX\ . If your graphics are in a different format, you can just open the image in my default ``paint'' program and save the image as a .png file. 
+
+You might also want to include a table. Your \LaTeX\ editor might include a wizard for creating tables easily. Dr.\ Gill actually likes to use an online table editor from the Tables Generator website: \url{http://www.tablesgenerator.com/}. Be sure to put your table in the tabular environment and include a caption. See an example in \cref{sampletable} This will ensure that your table is included in your list of tables (which is required!). 
+
+\begin{table}[htbp]
+	\begin{singlespace} % For some reason, all tables default to double space
+	\center % remove if you don't want centering
+	\thisfloatpagestyle{plain}
+\caption{A Table of Made-Up Undergraduate Score Statistics}
+\label{sampletable}
+\begin{tabular}{lllllll} \toprule
+Subject & Mean  & SD    & Median & Min & Max & N  \\ \midrule
+Reading & 60.80 & 17.63 & 61     & 27  & 92  & 25 \\
+Writing & 60.00 & 19.02 & 60     & 25  & 99  & 25 \\
+Verbal  & 60.00 & 14.31 & 62     & 40  & 91  & 25 \\
+History & 55.20 & 19.56 & 51     & 26  & 95  & 25 \\
+Math    & 54.40 & 19.29 & 50     & 23  & 92  & 25 \\
+Science & 50.80 & 17.96 & 25     & 20  & 82  & 25 \\
+\bottomrule
+\end{tabular}
+\end{singlespace}
+\end{table}
+
+For a landscape table:
+
+\begin{sidewaystable}
+	\begin{singlespace}
+		\centering
+		\thisfloatpagestyle{floatpage}
+\label{sampletable2}
+\caption{Sideways table with correct page number placement}
+\begin{tabular}{lllllll} \toprule
+	Subject & Mean  & SD    & Median & Min & Max & N  \\ \midrule
+	Reading & 60.80 & 17.63 & 61     & 27  & 92  & 25 \\
+	Writing & 60.00 & 19.02 & 60     & 25  & 99  & 25 \\
+	Verbal  & 60.00 & 14.31 & 62     & 40  & 91  & 25 \\
+	History & 55.20 & 19.56 & 51     & 26  & 95  & 25 \\
+	Math    & 54.40 & 19.29 & 50     & 23  & 92  & 25 \\
+	Science & 50.80 & 17.96 & 25     & 20  & 82  & 25 \\
+	\bottomrule
+	\end{tabular}
+	\end{singlespace}
+\end{sidewaystable}
+
+
+Remember, long tables (using the \textsf{longtable} package, perhaps) need to be placed in the appendices. 

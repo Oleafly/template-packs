@@ -1,0 +1,81 @@
+\wrappedappendix{Special Notes for \LaTeX{} Users, Including a \\
+	\hbox to 1.0in{}Demonstration of Wrapping Appendix Titles}
+{Special Notes for \LaTeX{} Users, Including a Demonstration of Wrapping Appendix Titles}
+%\chapter{Special Notes for \LaTeX{} Users}
+\label{app:latex-notes}
+
+\newcommand{\cmd}[1]{\texttt{$\backslash$#1}}
+
+It is strongly recommended that you use this file as a template for your
+thesis, since it greatly simplifies conforming to the required formatting
+standards.
+
+There are several important points that students using the \LaTeX{} version of
+this template should verify before submitting a thesis.
+
+\section{Front Matter}
+
+Much of the front matter (i.e., the Roman numbered pages) is automatically
+generated.  Use \cmd{renewcommand} command to customize the fields of these
+templates.  For example,
+\texttt{\cmd{renewcommand}$\{$\cmd{thesisauthor}$\}\{$your name here$\}$} will
+customize the author name.
+
+\sloppy
+Most authors will need to customize the \cmd{thesismonth}, \cmd{thesisyear},
+\cmd{thesisauthor}, \cmd{thesisauthorlastname}, \cmd{thesisdefensedate},
+\cmd{thesistitle}, \cmd{thesisshorttitle}, \cmd{thesisdepartment},
+\cmd{thesisfield}, \cmd{thesissupervisor}, and \cmd{thesiscommittee}
+fields.  Examples of these can be seen in the sample \texttt{thesis-main.tex}
+file.
+
+\fussy
+You must also specify \texttt{phdthesis}, \texttt{dscthesis}, or
+\texttt{mastersthesis} when selecting the \cmd{documentclass}.  An
+example can also be seen in the sample \texttt{thesis-main.tex} file.
+
+\section{Table of Contents and Bibliography}
+
+The Table of Contents is automatically generated.  \texttt{latex} should be run
+twice in succession after making any changes to the Table of Contents.
+
+Due to the way \LaTeX{} formats the Table of Contents, long appendix titles
+will not automatically wrap and indent properly.  If you need to use a long
+appendix title, you must manually wrap and indent the appendix's
+table-of-contents entry.  The \cmd{wrappedappendix} command is defined in this
+template to assist with this; an example is seen at the top of the sample
+\texttt{thesis-appendixD.tex}.  This requirement only applies to appendix
+titles: other section titles will automatically wrap properly, including
+entries in the List of Tables and List of Figures.
+
+If changes need to be made to the Table of Contents' formatting, you can use
+the \cmd{addtocontents} command to insert some formatting commands
+directly into the Table of Contents page.  More significant changes can be made
+by editing the \texttt{.toc} file that \LaTeX{} automatically generates.
+However, editing this file by hand is not recommended unless absolutely
+necessary, since it will automatically be re-generated the next time \LaTeX{}
+is run.
+
+Like the Table of Contents, the Bibliography is automatically generated.  After
+editing the bibliography file, you should run \texttt{latex}; run
+\texttt{bibtex}; and re-run \texttt{latex} twice in succession.
+
+\section{Widows and Page Breaks}
+
+\LaTeX{} may create widows if you have a paragraph followed by a list.  To get
+rid of this widow, you must force \LaTeX{} to break the page somewhere else.
+Either insert a \cmd{newpage} command before the paragraph, or insert a
+\cmd{samepage} command between the paragraph and the list.
+
+\LaTeX{} may also create widows in the Tables of Contents.  You can force
+\LaTeX{} to break the page in a more convenient location by inserting
+\cmd{addtocontents$\{$toc$\}\{$\cmd{newpage}$\}$} before the corresponding
+\cmd{chapter}, \cmd{section}, \cmd{subsection}, or \cmd{subsubsection} command
+in the text.
+
+Excluding these two situations, \LaTeX{} should not create orphans or widows.
+However, in some situations it may place page breaks at strange places --- such
+as several inches above the bottom margin --- in order to avoid creating
+orphans or widows.  You can fix this by altering the \cmd{clubpenalty} or
+\cmd{widowpenalty}, or by manually adding \cmd{newpage}s where \LaTeX{} guesses
+incorrectly.

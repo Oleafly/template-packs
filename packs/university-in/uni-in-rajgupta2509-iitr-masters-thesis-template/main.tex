@@ -1,0 +1,132 @@
+% ============================================================
+%  MAIN THESIS FILE
+%  M.Tech Thesis Template — Department of Earth Sciences
+%  Indian Institute of Technology Roorkee
+%
+%  HOW TO USE THIS TEMPLATE:
+%  1. Fill in your details in the config block below.
+%  2. Write your chapter content in chapters/ch1_*.tex etc.
+%  3. Update references.bib with your citations.
+%  4. Compile:
+%     - Overleaf: just click Recompile — Overleaf handles multiple passes automatically.
+%     - Local (VS Code / terminal): pdflatex → bibtex → pdflatex → pdflatex
+%
+%  NOTE: You may see "Underfull \vbox" warnings in the compile log — these are
+%  harmless and caused by blank pages inserted between chapters. Ignore them.
+% ============================================================
+
+\documentclass[12pt, a4paper, twoside]{report}
+
+% ============================================================
+%  STUDENT CONFIGURATION — EDIT ONLY THIS BLOCK
+% ============================================================
+% \newcommand{\ThesisTitle}{Full Title of Your Thesis Here}
+\newcommand{\ThesisTitle}{Full Title of Your Thesis Here}
+\newcommand{\AuthorName}{Your Full Name}
+\newcommand{\EnrolNo}{XXXXXXXXX}
+\newcommand{\YearOfStudy}{5th Year}              % e.g. "5th Year"
+\newcommand{\Semester}{10th Semester}             % e.g. "10th Semester"
+\newcommand{\SupervisorName}{Prof. Full Name}
+\newcommand{\SupervisorDesignation}{Associate Professor}
+\newcommand{\Department}{Department of Earth Sciences}
+\newcommand{\DepartmentShort}{Earth Sciences}    % short form for AI form
+\newcommand{\Institute}{Indian Institute of Technology, Roorkee}
+\newcommand{\InstituteShort}{IIT Roorkee}
+\newcommand{\InstituteCity}{Roorkee -- 247667, India}
+\newcommand{\Degree}{Integrated Master of Technology}
+\newcommand{\Specialization}{Geophysical Technology}
+\newcommand{\ThesisMonth}{May}
+\newcommand{\ThesisYear}{2026}
+\newcommand{\SubmissionDate}{May 12, 2026}        % exact date for declaration and AI form
+\newcommand{\SubmissionPeriod}{June 2025 to May 2026} % work period for declaration
+% ============================================================
+
+% ---- Preamble (all packages and settings) ------------------
+\input{preamble}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+% ---- Front Matter ------------------------------------------
+\pagenumbering{roman}
+
+\input{frontmatter/titlepage}       % page 0, no number printed
+
+\clearoddpage
+\input{frontmatter/declaration}
+
+\clearoddpage
+\input{frontmatter/acknowledgements}
+
+\clearoddpage
+\input{frontmatter/abstract}
+
+% Table of Contents
+\clearoddpage
+\tableofcontents
+
+% List of Figures
+\clearoddpage
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+
+% List of Tables
+\clearoddpage
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+
+% List of Symbols and Abbreviations
+\clearoddpage
+\input{frontmatter/symbols}
+
+% ---- Main Matter -------------------------------------------
+% Reset table counter after frontmatter longtables (symbols list)
+\setcounter{table}{0}
+
+% Switch to arabic numerals for main content, starting at page 1 with the Introduction chapter
+
+\clearoddpage\input{chapters/ch1_introduction}
+\clearoddpage\input{chapters/ch2_literature_survey}
+\clearoddpage\input{chapters/ch3_methods}
+\clearoddpage\input{chapters/ch4_results}
+\clearoddpage\input{chapters/ch5_conclusions}
+
+% ---- Bibliography ------------------------------------------
+\clearoddpage
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{seg}         % SEG author-year style (default)
+% \bibliographystyle{ieeetr}    % IEEE numbered style (swap if needed)
+\bibliography{references}
+
+% ---- Appendices --------------------------------------------
+\clearoddpage
+\appendixmodetrue
+\addtocontents{toc}{%
+  \protect\vspace{6pt}%
+  \protect\noindent\textbf{Appendices}\protect\par\protect\vspace{2pt}%
+}
+\addtocontents{toc}{\protect\setlength{\cftchapindent}{1.5em}}
+\input{backmatter/appendices}
+\addtocontents{toc}{\protect\setlength{\cftchapindent}{0pt}}
+\appendixmodefalse
+
+% ---- AI Use Disclosure -------------------------------------
+\clearoddpage
+\input{backmatter/ai_disclosure}
+
+% ---- Turnitin Similarity Report ----------------------------
+\clearoddpage
+\addcontentsline{toc}{chapter}{Turnitin Similarity Report}
+
+% you have to include the no. of pages in the actual Report PDF and adjust the \includepdf commands accordingly, typically it will be 2-3 starting pages.
+% comment our the placeholder page and uncomment and update the filename below once you have your report.
+
+\includepdf[pages=1,fitpaper=false,scale=0.90,offset=10mm 0mm,pagecommand={}]{Turnitin_report.pdf}
+\includepdf[pages=2,fitpaper=false,scale=0.90,offset=-10mm 0mm,pagecommand={}]{Turnitin_report.pdf}
+% \includepdf[pages=3,fitpaper=false,scale=0.90,offset=10mm 0mm,pagecommand={}]{Turnitin_report.pdf}
+% \includepdf[pages=4,fitpaper=false,scale=0.90,offset=-10mm 0mm,pagecommand={}]{Turnitin_report.pdf}
+
+% ============================================================
+\end{document}
+% ============================================================

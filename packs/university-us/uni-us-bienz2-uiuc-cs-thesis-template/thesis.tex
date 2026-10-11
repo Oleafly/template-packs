@@ -1,0 +1,185 @@
+\pdfsuppresswarningpagegroup=1
+\documentclass[tocnosub,noragright,centerchapter,fullpagesingle,12pt]{uiuc_csthesis18}
+
+% Updated version of the ECE department's latex resources
+
+% Use draftthesis for notes and date markings on every page.  Useful when you
+%   have multiple copies floating around.
+% Use offcenter for the extra .5 inch on the left side. Needed with fullpage and fancy.
+% Use mixcasechap for compatibility with hyperref package, which does NOT like all caps default
+% Use edeposit for the adviser/committee on the title page.
+% Use tocnosub to suppress subsection and lower entries in the TOC.
+% PhD candidates use "proquest" for the proquest abstract.
+
+\makeatletter
+
+\usepackage{setspace}
+\usepackage{epsfig}  % for figures
+\usepackage{lscape}  % Useful for wide tables or figures.
+
+\usepackage[ruled,vlined,linesnumbered,resetcount,algochapter]{algorithm2e}
+\SetCommentSty{scriptsize}
+\SetKwComment{tcc}{\{}{\}}
+\SetKwInput{Input}{Input}
+\SetKwInput{Output}{return}
+\SetKwIF{If}{ElseIf}{Else}{if}{}{else if}{else}{endif}
+\SetKwFor{While}{while}{}{endw}
+\SetKwFor{ForEach}{for each}{}{endfch}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{mathtools}
+\newcommand{\shat}[1]{\vphantom{#1}\smash[t]{\hat{#1}}}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{rotating}
+\usepackage[title]{appendix}
+\usepackage{tikz}
+
+\usepackage{url}
+
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{xfrac}
+%\usepackage{algorithm}
+
+\usepackage{multirow}
+\usepackage{longtable}
+
+\usepackage{tikz}
+\usetikzlibrary{fit,calc,patterns}
+
+\newtheorem{remark}{Remark}[chapter]
+\newtheorem{example}{Example}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+\setcounter{secnumdepth}{2}
+
+\graphicspath{{figures/}}
+
+\newcommand{\code}[1]{{\textnormal{\texttt{#1}}}}
+\newcommand{\nnz}{\textnormal{\texttt{nnz}}}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node(#1) {};}
+\newcommand{\ppn}{\textnormal{\texttt{ppn}}\xspace}
+\newcommand*\Laplace{\mathop{}\!\mathbin\bigtriangleup}
+\newcommand*\Div{\mathop{}\!\mathbin\bigtriangledown\cdot}
+\newcommand*\Grad{\mathop{}\!\mathbin\bigtriangledown}
+
+
+% Uncomment the appropriate one of the following four lines:
+%\msthesis
+\phdthesis
+%\otherdoctorate[abbrev]{Title of Degree}
+%\othermasters[abbrev]{Title of Degree}
+
+\title{Title Here}
+\author{Author Name}
+\department{Computer Science}
+\degreeyear{Year}
+
+% Advisor name is required for
+% - doctoral students for the ProQuest abstract
+% - master's students who do not have a master's committee
+\advisor{Advisor}
+
+% Uncomment the \committee command for
+% - all doctoral students
+% - master's students who have a master's committee
+\committee{Professor <Advisor>, Chair and Director of Research\\Professor
+2nd Committee Member\\Assistant Professor 3rd Committee Member\\Dr. Outside
+Committee Member, Outside Location} % etc.
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COPYRIGHT
+%
+%\copyrightpage
+%\blankpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE
+%
+\maketitle
+
+%\raggedright
+\parindent 1em%
+
+\frontmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABSTRACT
+%
+\begin{abstract}
+%\input{abstract}
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DEDICATION
+%
+\begin{dedication}
+To someone
+\end{dedication}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ACKNOWLEDGMENTS
+%
+% Put acknowledgments in a file called "ack.tex" and it'll be inputted here.
+\begin{acknowledgments}
+%\input{ack}
+\end{acknowledgments}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLE OF CONTENTS
+%
+\tableofcontents
+
+\mainmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INSERT REAL CONTENT HERE
+%
+
+\chapter{Introduction}
+%\input{intro}
+
+\chapter{Background} \label{chapter:background}
+%\input{background}
+
+\chapter{First Content Chapter} \label{chapter:content1}
+\emph{Portions of this chapter appear in the paper "", in submission to
+<journal>~\cite{citation}.}
+%\input{content1/paper.tex}
+
+\chapter{Second Content Chapeter}\label{chapter:content2}
+\emph{Portions of this chapter appear in the publication ""~\cite{citation}.}
+%\input{content2/paper.tex}
+
+\chapter{Third Content Chapter} \label{subchapter:nap_spmv}
+\emph{Portions of this chapter appear in the paper "", to appear in
+<journal>~\cite{citation}.}
+%\input{content3/paper.tex}
+
+\chapter{Conclusions}
+%\input{conclusion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDIX  - Chapter about any codebase you have created,
+%           - Any additional plots or info can also have an appendix
+%
+\appendix
+%\chapter{Codebase} \label{chapter:codebase}
+%\input{codebase}
+\backmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BIBLIOGRAPHY
+%
+
+\bibliographystyle{IEEE_ECE}
+\bibliography{thesisbib}
+
+\end{document}
+\endinput
+

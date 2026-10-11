@@ -1,0 +1,53 @@
+%%% Chapter 3 — Closing summary
+%%% UF-F10: third chapter, satisfies the "closing summary chapter" rule.
+
+\chapter{CONCLUSION}\label{ch:conclusion}
+
+This dissertation presented a two-layer validator for the University of
+Florida doctoral dissertation formatting specification.
+Chapter~\ref{ch:intro} motivated the work and outlined contributions.
+Chapter~\ref{ch:methods} described the source-layer and PDF-layer
+checks, formalized the override-detection problem in
+Lemma~\ref{lem:override}, stated soundness in
+Theorem~\ref{thm:source-soundness}, gave the margin acceptance
+criterion in Equation~\ref{eq:margin}, summarized severity tiers in
+Table~\ref{tab:severity}, sketched the architecture in
+Figure~\ref{fig:architecture}, and showed the input-mode routing in
+Figure~\ref{fig:input-modes}. Supplementary rule identifiers are
+listed in Appendix~\ref{app:rules}; synthetic broken inputs used to
+verify the validator's rule coverage are described in
+Appendix~\ref{app:fixtures}.
+
+\section{Findings}
+
+Most UF formatting rules are enforced by the \texttt{ufdissertation}
+class, which means the validator's primary job is to detect overrides
+of the template's correct defaults rather than to re-implement the
+formatting rules themselves. A small set of rules genuinely require
+inspection of the rendered PDF; these are concentrated in the
+geometric and accessibility categories.
+
+\section{Limitations}
+
+The validator targets the Fall 2025+ UF template only. Older templates
+(accepted through Summer 2026) are detected and the validator exits
+with a clear message rather than producing potentially misleading
+output. Master's theses are out of scope for the initial release.
+
+\section{Future Work}
+
+Future releases will expand input surfaces: a Chrome extension for
+students writing in Overleaf, and a Visual Studio Code extension for
+students using a git-plus-editor workflow. External URL liveness
+checks, deferred from the initial release to keep the validator
+network-free, will be added behind an opt-in flag.
+
+\section{A Final Word}
+
+To the student who used this demo as a reference for their own
+dissertation: congratulations. The fact that you reached this section
+of this document means you are within reach of submission. Take a
+breath, work through the checklist in Appendix~\ref{app:checklist},
+and submit when ready. The graduate school has seen better
+dissertations than yours and worse, and the difference between them
+was never the margins.

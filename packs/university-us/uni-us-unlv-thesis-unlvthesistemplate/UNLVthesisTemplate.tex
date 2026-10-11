@@ -1,0 +1,65 @@
+\documentclass[oneside,12pt]{book}
+    % The option oneside is required for UNLV theses.
+    % The 12pt is optional -- UNLV will allow 10pt too.
+    % 10pt is the default, so to switch to 10pt, just delete 12pt in the above.
+\usepackage{amsthm,amssymb,amsmath,graphicx} % Optional packages.
+\usepackage{setspace,UNLVthesis} % Required packages.  Look at UNLVthesis.sty to see how
+    % LaTeX is instructed to set things up.  This file may need some tweaking.
+    % setspace.sty is not normally part of MikTeX.  It can be obtained from www.ctan.org.
+    % Do a search on setspace.sty.
+    % The files setspace.sty and UNLVthesis.sty should be in the same directory
+    % as this file (or in a directory of MikTeX where LaTeX will know to find it
+    % -- for example, where other style files are).
+\pagestyle{unlv} %  This is defined in UNLVthesis.sty.  Headings are empty except for page numbers,
+    % and the page numbers are the same size as the text.  Most documents use a different size so that
+    % it it is difficult to mistake it as part of the text.
+
+%These define the format and numbering of theorem like environments.
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}%Corollaries and Lemmas are numbered as theorems.
+\newtheorem{lemma}[theorem]{Lemma}
+
+%These define the format and numbering of definition like environments.
+\theoremstyle{definition}%This environment is not in italics, like theorems are.
+\newtheorem{definition}{Definition}
+\newtheorem*{introduction}{Introduction}%The * means it is unnumbered.
+\newtheorem*{conclusion}{Conclusion}
+
+% Put definitions here.  For example, suppose you often use the Greek characters
+% alpha, beta, etc., which in LaTeX are \alpha, \beta, etc. (in math mode only).
+% Then it may be easier to create shortcuts for these commands, such as:
+%\def\aa{\alpha}
+%\def\bb{\beta}
+% Now, instead of typing \alpha, we can type \aa.
+% Here's another I often use:
+\def\Bbb#1{{\mathbb #1}} % \Bbb is an obsolete command, but I'm old
+% and still use it, so I define it to do what it used to do.  The usage
+% is like \Bbb R, which will produce a blackboard bold R, and is literally
+% translated to {\mathbb R}.  Note that this command includes a single
+% argument.
+
+\begin{document}
+
+\pagenumbering{roman}% Items before Chapter one have roman numbers (if any).
+\include{SampleTitlepage} %Replace this file name with the name of your title page.
+    % A copyright statement is optional and would be placed here.
+    % The copyright page has no page number -- the title page is always page i and the
+    % Thesis Approval page is always page ii.
+\newpage \setcounter{page}{3} %The Thesis Approval page is page ii.  It is inserted separately.
+\include{SampleAbstract} % This is where the abstract goes.
+
+\tableofcontents %inserts table of contents
+\listoffigures \addcontentsline{toc}{schapter}{\listfigurename}% Comment these out if there are no figures or tables.
+\listoftables \addcontentsline{toc}{schapter}{\listtablename}%
+\include{SampleAcknowledgements}  %Acknowledgements come after the tables.
+
+\newpage % Do not remove this command.  It's there to make sure the page numbering is correct.
+\pagenumbering{arabic} %Chapter 1 begins on page 1.
+
+\include{SampleChapter1} %Replace these with your chapters.
+\include{SampleChapter2}
+\include{SampleChapter3}
+\include{SampleBibliography} %There are some special commands in this file.
+\include{SampleVita}  %The Vita is the last page.
+
+\end{document}

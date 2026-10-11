@@ -1,0 +1,75 @@
+% from report.cls
+% modified the pagestyle to fancy so that page numbers print in the
+% upper left corner on pages with new chapters
+% Modified the chapter titles to only print the chapter title
+% Modified the first page of the chapter to start printing at the top of the page 
+
+\renewcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
+       					             \pagestyle{fancy}%
+       					             \global\@topnum\z@
+   					                 \@afterindentfalse
+   					                 \secdef\@chapter\@schapter}
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+               		  		     \refstepcounter{chapter}%
+               		  		     \typeout{\@chapapp\space\thechapter.}%
+               			         \addcontentsline{toc}{chapter}%
+                                 {\protect\numberline{\thechapter}#1}%
+               			      \else
+          			             \addcontentsline{toc}{chapter}{#1}%
+         			          \fi
+                   \ifnum\value{chapter}=1                  %% begin chapter 1 with arabic numbers on page number 1
+                      \pagenumbering{arabic}
+                   \fi
+                    \chaptermark{#1}%
+                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                    \if@twocolumn
+                      \@topnewpage[\@makechapterhead{#2}]%
+                    \else
+                      \@makechapterhead{#2}%
+                      \@afterheading
+                    \fi}
+\def\@makechapterhead#1{%
+%  \vspace*{50\p@}%
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+%  uncomment 9/4 below
+        \normalsize\bfseries \@chapapp\space \thechapter  %%%  this prints "Chapter N" 
+                                                                                      %%%  we are only printing the chapter name
+        \par\nobreak
+%        \vskip 20\p@
+    \fi
+    \interlinepenalty\@M
+    \normalsize \bfseries #1\par\nobreak
+    \vskip 40\p@			
+
+  }}
+
+%this text is from report.cls - to change the size of the subsection headings so they aren't giant.  
+
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\normalfont\normalsize\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+
+
+%    added this July 2009 to make the table of contents, list of figures etc start at 1.5 inches from top of page
+\def\@makeschapterhead#1{%
+  \vspace*{-25\p@}%        change from 50 to -25
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \Huge \bfseries  #1\par\nobreak
+    \vskip 40\p@
+  }}
+
+
+

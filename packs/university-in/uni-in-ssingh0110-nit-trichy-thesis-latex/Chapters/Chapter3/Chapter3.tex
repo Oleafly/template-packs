@@ -1,0 +1,40 @@
+\chapter{CHAPTER NAME GOES HERE}
+\section{INTRODUCTION}
+DR programs are a portfolio of signaling schemes from the utility to consumers for load shifting/shedding with a given deadline.
+   
+\section{SAMPLE ALGORITHM} 
+Furthermore, the pseudocode depicted in algorithm \ref{C5:A:Priority} explicitly describes the underlying load prioritization subroutine.
+% Below given depicts use of algorithm package
+% Modify as per the requirement of your algorithm 
+% To learn more about modifications, please refer https://en.wikibooks.org/wiki/LaTeX/Algorithms
+\begin{algorithm}[!htb]
+\caption{Load Prioritization Subroutine}
+\label{C5:A:Priority}
+\begin{algorithmic}
+\State $P_R^t = MDL - P^t$\Comment{\textbf{\textit{Remaining power}}}
+\State $j = 1$ \Comment{\textbf{\textit{iterator}}}
+\State $X = [i_1,i_2,i_3,........,i_N]$ \Comment{\textbf{\textit{load numbers}}}
+\State $Y = [h_1^t,h_2^t,h_3^t,........,h_N^t]$\Comment{{\textbf{\textit{load priority array}}}}
+\State $Z = [\{X(1):Y(1)\},\{X(2):Y(2)\},.........,\{X(N):Y(N)\}]$ \Comment{\textbf{\textit{{\{key:value\} pair}}}}
+\State $z = [sorted(Z\{key:value\})]$\Comment{\textbf{\textit{descending order of value}}}
+\For{$j$ \textit{in range}\ $1$ $\rightarrow$ $length(z)$}
+\If {$P_{z[j]}$ $>$ $P_R$}
+\State $H[z\{j\}]\gets 0$
+\Else
+\State $H[z\{j\}]\gets 1$
+\EndIf
+\State \textbf{end}
+\State $P_R^t \gets P_R^t-P_{z[j]}$
+\EndFor
+\State \textbf{end}
+\For{$k$ \textit{in range}\ $1$ $\rightarrow$ $length(H)$}
+\If {$H(k)==1$}
+\State \texttt{load status} $=$ \texttt{ON}
+\Else
+\State \texttt{load status} $=$ \texttt{OFF}
+\EndIf
+\State \textbf{end}
+\EndFor
+\State \textbf{end}
+\end{algorithmic}
+\end{algorithm}

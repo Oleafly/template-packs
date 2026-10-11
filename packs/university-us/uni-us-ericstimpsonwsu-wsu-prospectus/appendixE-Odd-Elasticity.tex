@@ -1,0 +1,538 @@
+% Create appendix with unnumbered section
+%\section*{APPENDIX E - Odd Elasticity Notes}
+\appendixsection{E}{Odd Elasticity Notes}
+\setappendixlabel{E}
+
+% Add appendix to toc at section level
+\label{appendix:oddElasticity}
+
+% Mathematic maros
+\newcommand{\diff}[1]{{\text{d}#1}\,}
+\newcommand{\partialderivative}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\const}{\text{[constant]}}
+\newcommand{\fel}{f_{\text{el}}}
+
+% Special math symbols
+
+\tikzsymbolsdefinesymbol {fcompress} { S }
+  {%
+    \begin{tikzpicture}[/tikzsymbolsstyle, x=1.3ex, y=1.3ex, scale=#1, line width=0.07ex*\tikzsymbolsscaleabs]
+        \draw[draw=teal, fill=teal!20, thick] (0.75,0.75) circle [radius=0.75];
+        \draw[{Stealth[length=3]}-{Stealth[length=3]}, draw=teal, thick] (0, 0.75) -- (1.5, 0.75);
+        \draw[{Stealth[length=3]}-{Stealth[length=3]}, draw=teal, thick] (0.75, 0) -- (0.75, 1.5);
+    \end{tikzpicture}
+  }
+
+\tikzsymbolsdefinesymbol {frotate} { S }
+  {%
+    \begin{tikzpicture}[/tikzsymbolsstyle, x=1.3ex, y=1.3ex, scale=#1, line width=0.07ex*\tikzsymbolsscaleabs]
+        \draw[draw=teal, fill=teal!20, thick] (0.75,0.75) circle [radius=0.75];
+        \draw[draw=teal, thick] (.35,.75) arc (-180:90:0.4);
+        \draw[-{Stealth[length=3]}, draw=teal, thick] (0.75, 1.15) -- (0.74, 1.157);
+    \end{tikzpicture}
+  }
+
+\tikzsymbolsdefinesymbol {fskewone} { S }
+  {%
+    \begin{tikzpicture}[/tikzsymbolsstyle, x=1.3ex, y=1.3ex, scale=#1, line width=0.07ex*\tikzsymbolsscaleabs]
+        \draw[draw=teal, fill=teal!20, thick] (0.75,0.75) circle [radius=0.75];
+        \draw[{Stealth[length=3]}-{Stealth[length=3]}, draw=teal, thick] (0, 0.75) -- (1.5, 0.75);
+        \draw[draw=teal, thick] (0.75, 0) -- (0.75, 1.5);
+        \draw[-{Stealth[length=3]}, draw=teal, thick] (0.75, 1.5) -- (0.75, 0.75);
+        \draw[-{Stealth[length=3]}, draw=teal, thick] (0.75, 0) -- (0.75, 0.75);
+    \end{tikzpicture}
+  }
+\tikzsymbolsdefinesymbol {fskewtwo} { S }
+  {%
+    \begin{tikzpicture}[/tikzsymbolsstyle, x=1.3ex, y=1.3ex, scale=#1, line width=0.07ex*\tikzsymbolsscaleabs]
+        \begin{scope}[rotate=45]
+            \draw[draw=teal, fill=teal!20, thick] (0.75,0.75) circle [radius=0.75];
+            \draw[{Stealth[length=3]}-{Stealth[length=3]}, draw=teal, thick] (0, 0.75) -- (1.5, 0.75);
+            \draw[draw=teal, thick] (0.75, 0) -- (0.75, 1.5);
+            \draw[-{Stealth[length=3]}, draw=teal, thick] (0.75, 1.5) -- (0.75, 0.75);
+            \draw[-{Stealth[length=3]}, draw=teal, thick] (0.75, 0) -- (0.75, 0.75);
+            \end{scope}
+    \end{tikzpicture}
+  }
+
+\tikzsymbolsdefinesymbol {compression} { S }
+  {%
+    \begin{tikzpicture}[/tikzsymbolsstyle, x=1.1ex, y=1.1ex, scale=#1, line width=0.07ex*\tikzsymbolsscaleabs]
+        \draw[fill=black!20] (0, 0) rectangle (1.8, 1.8);
+    \end{tikzpicture}
+  }
+
+\tikzsymbolsdefinesymbol {rotation} { S }
+  {%
+    \begin{tikzpicture}[/tikzsymbolsstyle, x=1.1ex, y=1.1ex, scale=#1, line width=0.07ex*\tikzsymbolsscaleabs]
+        \begin{scope}[rotate=20]
+            \draw[fill=black!20] (0, 0) rectangle (1.5, 1.5);
+        \end{scope}
+    \end{tikzpicture}
+  }
+
+\tikzsymbolsdefinesymbol {skewone} { S }
+  {%
+    \begin{tikzpicture}[/tikzsymbolsstyle, x=1.1ex, y=1.1ex, scale=#1, line width=0.07ex*\tikzsymbolsscaleabs]
+        \draw[fill=black!20] (0, 0) rectangle (1.8, 1.25);
+    \end{tikzpicture}
+  }
+
+\tikzsymbolsdefinesymbol {skewtwo} { S }
+  {%
+    \begin{tikzpicture}[/tikzsymbolsstyle, x=1.1ex, y=1.1ex, scale=#1, line width=0.07ex*\tikzsymbolsscaleabs]
+        \begin{scope}[cm={1,0.2,0.2,1,(0,0)}]
+            \draw[fill=black!20] (0, 0) rectangle (1.5, 1.5);
+        \end{scope}
+    \end{tikzpicture}
+  }
+
+% Macro to draw a rectangle with specified coordinates, stroke color, and fill color
+\newcommand{\drawRectangle}[5]{%
+    \draw[fill=#5, draw=#4] #1 rectangle #2; % Use #4 for stroke and #5 for fill
+}
+
+% Fixed \drawRod macro
+\newcommand{\drawRod}[5]{%
+    \drawRectangle{#1}{#2}{#3}{#4}{#5}; % Use the \drawRectangle macro
+    \foreach \x/\label in {0.9/$\vec{x}_1$, 1.9/$\vec{x}_2$, 2.9/$\vec{x}_3$, 3.9/$\vec{x}_4$, 4.9/$\vec{x}_5$} {%
+        \draw[blue, fill=blue!20] (\x,#3) circle(0.1) node[anchor=south] {\scriptsize \label}; % Correct font size
+    }
+}
+
+% Macro to draw a hashed wall
+\newcommand{\drawHashWall}[5]{%
+    \begin{scope}
+        \clip (#1,#2) rectangle (#3,#4); % Define clipping
+        \draw[fill=black,draw=black] (#3+#5,#2) rectangle (#3,#4);          % Draw the wall line
+        \pgfmathparse{#1+0.1}\let\secondvalue\pgfmathresult
+        \pgfmathparse{#2-#4}\let\height\pgfmathresult
+        \pgfmathparse{#3+\height}\let\thirdvalue\pgfmathresult
+        \foreach \x in {#1,\secondvalue,...,\thirdvalue} {%
+            \draw (\x,#2) -- +(-\height,-\height); % Draw diagonal hash marks
+        }
+    \end{scope}
+}
+
+\subsection{Introduction to Elasticity}
+
+Elasticity is a fundamental property of a condensed matter body, characterizing how that body responds to small deformations caused by external forces. Intuition about elasticity has largely developed in the context of passive solids. If one temporarily, gently squeezes, pulls, compresses, or stretches a solid, the solid will change shape in response; when the external force is removed, the solid returns to its original shape. This is generally what is meant by elasticity. Recent research opens the door to describing elasticity in active systems, where the description changes in subtle ways; those subtleties are discussed in greater detail later. For now, to simplify, active systems are defined as those that can consume energy from the background to generate internal forces, and therefore internal energy can change with time, while passive systems are defined as ones in which the internal energy is constant.
+
+The description of elasticity is broadly applicable to a wide range of condensed matter systems and, in general, applies to any order parameter with a ground state separated from other states by an energy barrier. Here the focus is on a subset of systems that can be modeled as a collection of "molecules" with pairwise interactions that form simple energy wells having a well-defined minimum at some equilibrium separation. Unless otherwise stated, all molecules and the bonds that join them are taken to be identical (the system is homogeneous), and the bond energy wells are independent of spatial orientation (the system is isotropic). Given such a system, the molecules arrange to minimize the total bond energy; displacing any molecule increases the potential energy between that molecule and its bound neighbors. The elastic potential energy $\fel$ is defined as the difference between the energy of the perturbed state and the ground state.
+
+When a body is deformed by external forces, some molecules are directly displaced, changing the distance between them and neighboring molecules -- these changes are referred to as strains -- thus increasing the elastic potential energy $\fel$.  This increase in elastic potential energy creates restorative forces, called stresses, within the material.  When strains and the associated stresses are sufficiently small, the system is said to lie in the \textit{linear} regime, where only first-order effects need to be considered.  When local strains are larger, higher-order effects become more relevant, until eventually the stresses overwhelm the short-range interactions of existing bonds, resulting in dislocations, fractures, etc.  Thus, the theory of elasticity is primarily concerned with providing a mathematical description of the restorative forces, or stresses, induced by small strains, where the body will return to its unperturbed size and shape if the straining force is removed.
+
+Here the conceptual and mathematical framework around the theory of elasticity is developed, culminating in a description of atypical elasticity that can be observed in some active systems called `odd elasticity'.  For the mathematical framework, the development follows the linear theory of elasticity by Landau and Lifschitz \cite{landau2012theory}, although the scope is sometimes narrowed to the present areas of interest and the notation simplified accordingly.  In particular, systems exhibiting homogeneity and isotropy are assumed throughout the discussion, and systems that are confined to a two-dimensional surface are assumed once it becomes important to do so.
+
+\subsection{Conceptual Framework}
+Before introducing the formalism, the previous description of elasticity is further refined.  First, to avoid being unnecessarily specific, a body is considered to be a fixed collection of \textit{molecules}, along with \textit{bonds} between pairs of molecules, which exert equal and opposite forces on each member of the pair.  By assumption, there exists an arrangement of the molecules such that the net force on each molecule from all of its bonds sums to zero, and this state is henceforth referred to as the mechanical equilibrium of the body or simply the ground state.  It is also assumed that each molecule has a sufficient number of bonds to fix its equilibrium position relative to its neighbors. Intuitively, a body with $d$ degrees of freedom requires a minimum of $d$ bonds per molecule to fix the ground state position of every molecule in the body (i.e., a 3D body requires at least three bonds per molecule).  Then, a body is said to be \textit{undeformed} when each of its constituent molecules assumes its equilibrium position relative to its neighbors.
+
+When subjected to an external force, the molecule(s) on which that force acts will begin to move, straining the bonds between these molecules and their neighbors and creating stress forces between the moving molecules and their neighbors.  The nearby molecules will themselves move in response to these stresses, subsequently inducing new strains and stresses on the next nearest molecules, and so on, such that the external force propagates through the body via stresses on the bonds.  A new equilibrium is reached when the sum of all bond strains forces throughout the body is equal in direction and magnitude to the external force that induced the strain, i.e. the total net force is zero.  Finally, although a real-world system is comprised of a finite number of molecules with discrete positions, this development follows a continuum model in which deformations, the strains they cause, and induced stresses are continuous fields with well-defined spatial derivatives.  In the following sections, the formalism produces mathematical definitions to calculate a linear elastic response before turning to active matter systems and odd elasticity.
+
+\subsection{Strain Tensor}\label{sec:el-landau-strain-tensor}
+
+A long, thin rod is held fixed at one end and forced to bend by pushing down on the other end, as depicted in Figure \ref{fig:el-thin-rod-displacement}.  The bending of the rod causes the position of molecules within the rod, whose positions are denoted $\vec{x}$, to be displaced by a vector $\vec{u}$, from which a function $\vec{u}(\vec{x})$ is defined.  An important point is that a uniform displacement does not create a strain within the rod but simply results in a translation of the body.  Similarly, a non-uniform displacement field that results in a simple rotation of the rod about some axis does not create a strain within a body.  To better understand what characteristics of a displacement field are required to induce strains in a body, the relevant metric is postulated to be the change in distance between nearby points of the relaxed and deformed body.
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}
+        % Top rod
+        \drawRod{(0,1.9)}{(5,2.1)}{2.0}{black}{gray!50};
+        \node[anchor=west] at (0.8, 1.25) {\small (a) Long thin rod, anchored on the left.};
+
+        % Bottom rod
+        \drawRod{(0,-0.1)}{(5,0.1)}{0.0}{black!20}{gray!20};
+
+        % Bent rod
+        \path[fill=gray!50, draw=black] 
+            (0,-0.1) to[out=0, in=150] (4.7,-1.1) --
+            (4.8,-0.9) to[out=150, in=0] (0,0.1) -- cycle;
+
+        % Displacement vectors
+        \foreach \x/\xend/\yend in {4.9/4.66/-0.95, 3.9/3.77/-0.52, 2.9/2.84/-0.22, 1.9/1.88/-0.07, 0.9/0.898/-0.01} {
+            \draw[blue, dashed, dash pattern=on 1pt off 1pt, fill=blue!20] (\x,0) circle(0.1);
+            \draw[blue, fill=blue!20] (\xend,\yend) circle(0.1);
+            \draw[->, blue] (\x,0) -- (\xend,\yend);
+        }
+        \node[anchor=west] at (0.8, -1.25) {\small (b) Bent rod.};
+
+        % Top wall
+        \drawHashWall{-0.5}{2.4}{-0.01}{1.6}{-0.05}
+
+        % Bottom wall
+        \drawHashWall{-0.5}{0.4}{-0.01}{-0.4}{-0.05};
+
+        % Add legend
+        \node[anchor=west] at (5.5, 0) {
+            \begin{tikzpicture}
+                \draw[->, blue] (0,0) -- (0.5,0);
+                \node[anchor=west] at (0.5,0) {$\vec{u}(\vec{x})$};
+            \end{tikzpicture}
+        };
+    \end{tikzpicture}
+    \caption{Illustration of a bent, long thin rod and the associated displacement vector field $\vec{u}$.  The field, which is continuous, is depicted by drawing it at five distinct points within the body of the rod. (a) Initial position. (b) Bent states.}
+    \label{fig:el-thin-rod-displacement}
+\end{figure}
+
+To describe how these distances change mathematically, the position of a point $\vec{x}'$ is defined in the deformed body such that $\vec{x}'(\vec{x}) = \vec{x} + \vec{u}(\vec{x})$, explicitly treating both $\vec{x}'$ and $\vec{u}$ as functions of $\vec{x}$.  Two nearby points within the relaxed body separated by $d\vec{x}$, with a distance between the points given by $\diff{l} = |d\vec{x}| = \sqrt{\diff{{x_1}^2} + \diff{{x_2}^2} + \diff{{x_3}^2}}$ will have, after a deformation, a distance given by $\diff{l'} = |d\vec{x}'| = \sqrt{\diff{{x'_1}^2} + \diff{{x'_2}^2} + \diff{{x'_3}^2}}$.  Moving forward, the general summation rule is employed to write $\diff{l^2} = \diff{{x_i}^2}$ and $\diff{l'}^2 = \diff{{x'_i}^2} = (\diff{x_i} + \diff{u_i})^2$ [for clarity, the last expression should be interpreted to mean $\diff{l'}^2 = \sum_{i=1}^{3} (\diff{x_i} + \diff{u_i})^2$, where $i$ is one of $\{x, y, z\}$].
+
+After substituting $\diff{u_i} = (\partial u_i/\partial x_k)\diff{x_k}$, then
+
+\begin{equation}\label{eqn:el-landau-dlprime}
+\diff{l'^2} = \diff{l^2} + 2 \partialderivative{u_i}{x_k}\diff{x_i} \diff{x_k} + \partialderivative{u_i}{x_k}\partialderivative{u_i}{x_l}\diff{x_k}\diff{x_l}.
+\end{equation}
+%
+The second term on the right is a summation over indices $i$ and $k$, and can be written in a symmetrical form by,
+
+\begin{align*}
+2 \partialderivative{u_i}{x_k}\diff{x_i} \diff{x_k} 
+    &= \partialderivative{u_i}{x_k} \diff{x_i} \diff{x_k} + \partialderivative{u_i}{x_k} \diff{x_i} \diff{x_k} \\
+    &= \partialderivative{u_i}{x_k} \diff{x_i} \diff{x_k} + \partialderivative{u_k}{x_k} \diff{x_k} \diff{x_i} & \text{[exchanging $i$ and $k$ in the second term]} \\
+\Rightarrow 2 \partialderivative{u_i}{x_k}\diff{x_i} \diff{x_k} &= \left( \partialderivative{u_i}{x_k} + \partialderivative{u_k}{x_i}\right) \diff{x_i} \diff{x_k}. 
+\end{align*}
+%
+The third term of Eq.~\ref{eqn:el-landau-dlprime} is modified by exchanging indices $i$ and $l$, giving
+
+\begin{equation*}
+\partialderivative{u_i}{x_k}\partialderivative{u_i}{x_l}\diff{x_k}\diff{x_l} = \partialderivative{u_l}{x_k} \partialderivative{u_l}{x_i}\diff{x_k}\diff{x_i},
+\end{equation*}
+%
+so that Eq.~\ref{eqn:el-landau-dlprime} now reads
+
+\begin{align*}
+\diff{l'}^2
+    &= \diff{l^2} + \left( \partialderivative{u_i}{x_k} + \partialderivative{u_k}{x_i}\right) \diff{x_i} \diff{x_k} + \partialderivative{u_l}{x_k} \partialderivative{u_l}{x_i}\diff{x_i}\diff{x_k} \\
+    &= \diff{l^2} + \left( \partialderivative{u_i}{x_k} + \partialderivative{u_k}{x_i} + \partialderivative{u_l}{x_k} \partialderivative{u_l}{x_i} \right) \diff{x_i} \diff{x_k}
+\end{align*}
+%
+This gives us the final form for $\diff{l'}^2$
+
+\begin{equation}\label{eqn:el-landau-deformed-length}
+\diff{l'}^2 = \diff{l^2} + 2 u_{ik} \diff{x_i} \diff{x_k},
+\end{equation}
+%
+where $u_{ik}$ is called the \textit{strain tensor} and is defined by
+
+\begin{equation}\label{eqn:el-landau-strain-tensor}
+u_{ik} \equiv \frac{1}{2} \left( \partialderivative{u_i}{x_k} + \partialderivative{u_k}{x_i} + \partialderivative{u_l}{x_k} \partialderivative{u_l}{x_i} \right) \approx \frac{1}{2}  \left( \partialderivative{u_i}{x_k} + \partialderivative{u_k}{x_i} \right).
+\end{equation}
+
+The last term of the second expression is removed from the final expression because it is of second-order in a linear theory of small deformations.  From this definition (with or without the last term), it follows that the strain tensor is symmetric since $u_{ik} = u_{ki}$.
+
+To characterize deformations, additional terminology is introduced.  Consider a strain tensor where $u_{ik} = \delta_{ik} \times \const$, with $\delta_{ik}$ the Kronecker delta function.  Then $u_{xx} = u_{yy} = u_{zz} = \const$, while $u_{xy} = u_{yz} = u_{xz} = 0$.  Comparing with Eq.~\ref{eqn:el-landau-strain-tensor}, this strain tensor gives $\diff{l'} = \diff{l} ( 1 + \text{constant} )$, resulting in the volume of the body changing by a factor of $( 1 + \text{constant} )^d$, where $d$ is the dimensionality of the system, but no change in the shape of the system.  A deformation where $u_{ik} = \delta_{ik} \times \const$ is called a \textit{hydrostatic compression}.  By contrast, a deformation in which $u_{ii} = 0$ and generally $u_{jk} \ne 0$ results in a change of shape but not the volume of a portion of the body and is known as \textit{pure shear}.
+
+An immediate consequence of defining the displacement field $u_i$ and the strain tensor $u_{ij}$, is that the elastic free energy function $\fel$, which in principle is some function of $u_i$, must actually be a function of $u_{ij}$ rather than of $u_i$ directly.  An intuitive way to see this distinction is to consider a uniform translation given by, for example, $u_x = 1$ meter.  In the context of an elastic deformation, $1$ meter is huge, but since it is uniform over the entire body, the body has simply moved $1$ meter in the $x$-direction, and, as previously noted, a translation is not a deformation.  More subtly, it can also be argued that $\fel$ must be a function of $(u_{ij})^2$, plus higher powers which are ignored in a linear theory.  To see this, consider $u_{ij}$ of the undeformed body.  In the undeformed body, every molecule is in its equilibrium position, and  $u_{ij} = 0$ from Eq.~\ref{eqn:el-landau-strain-tensor}.  Then, mechanical stability requires that
+
+\begin{equation}\label{eqn:el-landau-mechanical-stability}
+\left. \partialderivative{\fel}{u_{ij}} \right|_{u_{ij} = 0} = 0.
+\end{equation}
+%
+This can only be true when the $u_{ij}$ terms of $\fel$ are higher than order one.
+
+\subsection{Stress Tensor}
+
+As noted in the introduction, when an undeformed body in a state of mechanical equilibrium is subjected to external forces, the molecules in the body rearrange themselves, inducing stresses between the molecules until the total of these stresses equals the magnitude and direction of the external forces.  Considering any portion of the body, the total force acting on that portion is given simply by $\int \vec{F} \diff{V}$, where $\vec{F}$ is the force per unit volume (and $F_i$ is the component of the force in the $i$th direction).  A consequence of Newton's third law is that these forces sum to zero within the confines of this portion of the body (provided the body is moving quasistatically), so that the net force acting on the portion of the body is reducible to the sum of forces acting on the surface of that body portion.  Mathematically, this can be expressed
+
+\begin{equation}
+\int F_i \diff{V} = \int \partialderivative{\sigma_{ik}}{x_k} \diff{V} = \oint \sigma_{ik} \diff{f_k}
+\end{equation}
+%
+where $\sigma_{ik}$ is the $i$th component of the stress force acting on a unit area perpendicular to the $k$th-axis.  Thus $\sigma_{xx}(\vec{x})$, for example, is the stress induced on a unit area of the $yz$-plane at $\vec{x}$ in the $x$-direction, while $\sigma_{yz}(\vec{x})$ is the $y$-component of stress induced on a unit area of the $xy$-plane at $\vec{x}$ in the $z$-direction.
+
+The characterizations defined above for strains [see \ref{sec:el-landau-strain-tensor}] can also be used to characterize stresses.  For example, $\sigma_{ij} = \delta_{ij} \times \const$
+defines a \textit{compressive stress} (or \textit{pressure}), while $\sigma_{ii} = 0$, $\sigma_{ij} \ne 0$ for $i \ne j$ defines a \textit{pure shear stress}.
+
+\subsection*{Elastic Modulus Tensor}
+
+The elastic modulus tensor, $C_{ijkl}$, is a tensor of rank four and can be defined using a form of Hooke's law
+
+\begin{equation}\label{eqn:el-landau-hookes-law}
+\sigma_{ij}(\vec{x}) = C_{ijkl} u_{kl}(\vec{x}),
+\end{equation}
+%
+where $u_{kl}(\vec{x})$ gives us a compression or elongation, $C_{ijkl}$ serves as a spring constant, and $\sigma_{ij}$ defines the generated force.  Writing $C_{ijkl}(\vec{x})$ is avoided under the assumption that the system in consideration is spatially homogeneous.  A consequence of Eq.~\ref{eqn:el-landau-hookes-law} is that the elastic energy potential is given by
+
+\begin{equation}
+\fel = \frac{1}{2} C_{ijkl} u_{ij} u_{kl},
+\end{equation}
+%
+at least for passive systems where $\fel$ is expected to be well-defined.
+
+The elastic modulus tensor allows calculation of the internal stresses induced by a particular deformation.  Appealing to Eq.~\ref{eqn:el-landau-strain-tensor}, exchanging the $k$ and $l$ indices in Eq.~\ref{eqn:el-landau-hookes-law} leaves it unchanged, thus $C_{ijkl} = C_{ijlk}$.  For isotropic bodies, $C_{ijkl} = C_{jikl}$ and $C_{ijkl} = C_{klij}$.  Thus, although the tensor $C_{ijkl}$ generally has $d^4$ different components, where $d$ is the dimensionality of the system, an isotropic system in three dimensions, for example, has only 21 independent components due to these symmetries.
+
+\subsection{Change of Basis in 2D}\label{sec:el-landau-change-of-basis}
+
+For the remainder of this discussion, systems are further restricted to two spatial degrees of freedom (i.e., 2D systems), which arbitrarily lie in the $xy$-plane.  In this case, Eq.~\ref{eqn:el-landau-hookes-law} can be written in an equivalent matrix form, as
+
+\begin{equation}\label{eqn:el-landau-hookes-law-matrix}
+\begin{pmatrix}
+\sigma_{xx} \\
+\sigma_{xy} \\
+\sigma_{yx} \\
+\sigma_{yy} \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+C_{xxxx} & C_{xxyx} & C_{xxxy} & C_{xxyy} \\
+C_{yxxx} & C_{yxyx} & C_{yxxy} & C_{yxyy} \\
+C_{yyxx} & C_{yyyx} & C_{yyxy} & C_{yyyy} \\
+C_{xyxx} & C_{xyyx} & C_{xyxy} & C_{xyyy} \\
+\end{pmatrix}
+\begin{pmatrix}
+u_{xx} \\
+u_{xy} \\
+u_{yx} \\
+u_{yy} \\
+\end{pmatrix}.
+\end{equation}
+
+\begin{table}
+    \centering
+    \begin{tabular}{cccll}
+       Strain & Stress & Matrix Form & Name & Description \\ \hline \\
+       $\compression[0.8] \rightarrow \compression$ & \fcompress & $\tau^0 = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} $ & compression (dilation) & same shape, volume increases (decreases) \\ \rule{0pt}{30pt} 
+       $\compression[0.8] \rightarrow \rotation$ & \frotate & $\tau^1 = \begin{pmatrix} 0 & -1 \\ 1 & 0 \end{pmatrix} $ & rotation & same shape and volume \\ \rule{0pt}{30pt} 
+       $\compression[0.8] \rightarrow \skewone$ & \fskewone & $\tau^2 = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} $ & skew 1 & shape changes (lengths of sides), same volume \\ \rule{0pt}{30pt} 
+       $\compression[0.8] \rightarrow \skewtwo$ & \fskewtwo & $\tau^3 = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} $ & skew 1 & shape (angles) and volume change \\
+    \end{tabular}
+    \caption{Schematic depictions of geometric transformations and a matrix representation of each transform.}
+    \label{tab:el-landau-geometric-basis}
+\end{table}
+
+While Eq.~\ref{eqn:el-landau-hookes-law-matrix} is numerically convenient, a geometrically motivated basis can be introduced to facilitate a sharper discussion of 2D elasticity.  A general displacement vector field $\vec{u}(\vec{x})$ can be treated as a combination of compression, rotation, and two types of skew transformations \cite{scheibner2020odd}, depicted schematically in Table \ref{tab:el-landau-geometric-basis}.  The matrix forms of these transformations are given by $\tau^\alpha, \alpha = 0, 1, 2, 3$ and the components of the displacement field $u^\alpha(\vec{x})$ are given by
+%
+\begin{equation}
+u^\alpha(\vec{x}) = \tau_{ij}^\alpha u_{ij}(\vec{x}).
+\end{equation}
+%
+Similarly, the stress tensor $\sigma_{ij}(\vec{x})$ can be transformed to this basis by
+%
+\begin{equation}
+\sigma^\alpha(\vec{x}) = \tau_{ij}^\alpha \sigma_{ij}(\vec{x}).
+\end{equation}
+
+The elements of the elastic modulus tensor $C_{ijkl}$ in the new basis $C^{\alpha \beta}$ are given by
+%
+\begin{equation}
+C^{\alpha \beta} = \frac{1}{2} \tau_{ij}^\beta C_{ijkl} \tau_{kl}^\alpha.
+\end{equation}
+%
+Then the form of Hooke's law given in Eq.~\ref{eqn:el-landau-hookes-law-matrix} can either be written explicitly as
+%
+\begin{equation}\label{eqn:el-landau-hookes-law-matrix-newbasis}
+\begin{pmatrix}
+\sigma^0(\vec{x}) \\
+\sigma^1(\vec{x}) \\
+\sigma^2(\vec{x}) \\
+\sigma^3(\vec{x}) \\
+\end{pmatrix}
+=
+\begin{pmatrix}
+C^{00} & C^{01} & C^{02} & C^{03} \\
+C^{10} & C^{11} & C^{12} & C^{13} \\
+C^{20} & C^{21} & C^{22} & C^{23} \\
+C^{30} & C^{31} & C^{32} & C^{33} \\
+\end{pmatrix}
+\begin{pmatrix}
+u^1(\vec{x}) \\
+u^2(\vec{x}) \\
+u^3(\vec{x}) \\
+u^4(\vec{x}) \\
+\end{pmatrix},
+\end{equation}
+%
+or represented geometrically as
+%
+\begin{equation}\label{eqn:el-landau-hookes-geometric}
+\begin{pmatrix}
+\fcompress \\
+\frotate \\
+\fskewone \\
+\fskewtwo
+\end{pmatrix}
+=
+\begin{pNiceMatrix}[c][columns-width = auto]
+\fcompress \: \compression & \fcompress \: \rotation & \fcompress \: \skewone & \fcompress \: \skewtwo \\
+\frotate   \: \compression & \frotate   \: \rotation & \frotate   \: \skewone & \frotate   \: \skewtwo \\
+\fskewone  \: \compression & \fskewone  \: \rotation & \fskewone  \: \skewone & \fskewone  \: \skewtwo \\
+\fskewtwo  \: \compression & \fskewtwo  \: \rotation & \fskewtwo  \: \skewone & \fskewtwo  \: \skewtwo \\
+\end{pNiceMatrix}
+\begin{pmatrix}
+\compression \\
+\rotation \\
+\skewone \\
+\skewtwo
+\end{pmatrix},
+\end{equation}
+%
+where, for example, the coefficient $\fcompress \: \skewone$ from the elastic modulus matrix, corresponding to $C^{02}$ in Eq.~\ref{eqn:el-landau-hookes-law-matrix-newbasis}, represents the amount of compressive stress generated by a skew strain that elongates one edge of a rectangle while contracting the other at constant volume.
+
+Further constraints on the elastic modulus tensor $C^{\alpha \beta}$ can be added for various 2D systems.
+
+\subsection{Deformation dependence}
+Since the elastic response to a deformation is a result of changes in the length of bonds between pairs of molecules in a body, a simple rigid-body rotation does not result in elastic stresses within the body.  Thus $C^{\alpha 1} = 0$, or geometrically
+
+\begin{align}
+\begin{pmatrix}
+\fcompress \\
+\frotate \\
+\fskewone \\
+\fskewtwo
+\end{pmatrix}
+&=
+\begin{pNiceMatrix}[c]
+\fcompress \: \compression & \color{red}{0} & \fcompress \: \skewone & \fcompress \: \skewtwo \\
+\frotate   \: \compression & \color{red}{0} & \frotate   \: \skewone & \frotate   \: \skewtwo \\
+\fskewone  \: \compression & \color{red}{0} & \fskewone  \: \skewone & \fskewone  \: \skewtwo \\
+\fskewtwo  \: \compression & \color{red}{0} & \fskewtwo  \: \skewone & \fskewtwo  \: \skewtwo \\
+\end{pNiceMatrix}
+\begin{pmatrix}
+\compression \\
+\rotation \\
+\skewone \\
+\skewtwo
+\end{pmatrix}. & \text{[deformation dependence]}
+\end{align}
+
+The deformation dependence constraint for 2D bodies, while quite general, might be dropped under certain conditions.  For example, imagine a pseudo-2D system where the body of interest is on a substrate that is fixed in space.  In this case, a small rotation of the 2D body strains the bonds that bind it to the substrate, and $C^{11}$ is nonzero.
+
+\subsection*{Conservation of Angular Momentum}
+For angular momentum to be conserved, deformations of a body cannot generate internal torques.  This is equivalent to requiring that $C^{1 \beta} = 0$, or geometrically
+
+\begin{align}
+\begin{pmatrix}
+\fcompress \\
+\frotate \\
+\fskewone \\
+\fskewtwo
+\end{pmatrix}
+&=
+\begin{pNiceMatrix}[c]
+\fcompress \: \compression & \fcompress \: \rotation & \fcompress \: \skewone & \fcompress \: \skewtwo \\
+\color{red}{0} & \color{red}{0} & \color{red}{0} & \color{red}{0} \\
+\fskewone  \: \compression & \fskewone  \: \rotation & \fskewone  \: \skewone & \fskewone  \: \skewtwo \\
+\fskewtwo  \: \compression & \fskewtwo  \: \rotation & \fskewtwo  \: \skewone & \fskewtwo  \: \skewtwo \\
+\end{pNiceMatrix}
+\begin{pmatrix}
+\compression \\
+\rotation \\
+\skewone \\
+\skewtwo
+\end{pmatrix}.
+\end{align}
+
+For passive systems, this condition generally holds, though special cases may arise, such as when there are interactions between the system and a medium that itself has internal torques. 
+
+\subsection{Conservation of Energy}
+Conservation of energy is a fundamental requirement of any system, provided all sources and sinks of energy in the system are accounted for.  In particular, if elasticity can be derived from an elastic free energy potential, then the elastic free energy potential $f_{\text{el}}$ is defined by
+%
+\begin{equation}\label{eqn:el-landau-elastic-free-energy}
+f_{\text{el}} = \frac{1}{2} C_{ijkl} u_{ij} u_{kl}.
+\end{equation}
+%
+From this definition, $C_{ijkl} = C_{klij}$ must hold, since exchanging $i$ and $j$ with $k$ and $l$ does not change the free energy.  In the geometric basis, this can be written $C^{\alpha \beta} = C^{\beta \alpha}$.
+
+\subsection*{Isotropy}
+
+For a 2D system, the elastic modulus tensor must remain invariant under a rotation of the $xy$-coordinate system.  In the geometric basis defined above, a general rotation of angle $\theta$ in the $xy$-plane can be expressed by the rotation matrix
+%
+\begin{equation}
+R^{\gamma \sigma}(\theta) =
+\begin{pmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & \cos(2 \theta) & \sin(2 \theta) \\
+0 & 0 & -\sin(2 \theta) & \cos(2 \theta) \\
+\end{pmatrix},
+\end{equation}
+%
+where the elastic modulus tensor under rotation by angle $\theta$ transforms as
+%
+\begin{equation}
+C^{\alpha \beta} \rightarrow R^{\alpha \gamma}(\theta) C^{\gamma \sigma} R^{\beta \sigma}(\theta).
+\end{equation}
+%
+Carrying out the matrix multiplication, gives
+%
+\begin{equation}
+C^{\alpha \beta} = 2
+\begin{pmatrix}
+C^{00} & C{01} & 0 & 0 \\
+C^{10} & C{11} & 0 & 0 \\
+0 & 0 & C^{22} & C^{23} \\
+0 & 0 & -C^{23} & C^{22} \\
+\end{pmatrix}.
+\end{equation}
+%
+Thus, in the case of a homogeneous, isotropic, passive 2D system, we only have two independent elastic modulus components, which we call $B$ and $\mu$, giving us the following geometric statement of Hooke's law for linear elasticity in homogeneous, isotropic, passive 2D systems,
+%
+\begin{equation}\label{eqn:el-landau-hookes-geometric-passive}
+\begin{pmatrix}
+\fcompress \\
+\frotate \\
+\fskewone \\
+\fskewtwo
+\end{pmatrix}
+=
+\begin{pNiceMatrix}[c][columns-width = auto]
+B & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 \\
+0 & 0 & \mu & 0\\
+0 & 0 & 0 & \mu
+\end{pNiceMatrix}
+\begin{pmatrix}
+\compression \\
+\rotation \\
+\skewone \\
+\skewtwo
+\end{pmatrix}.
+\end{equation}
+
+It is quite easy to interpret Hooke's law as depicted in Eq.~\ref{eqn:el-landau-hookes-geometric-passive}.  Small compressive strains are coupled to compressive stresses through the bulk modulus $B$, while the two types of pure shear strain couple directly to stresses of the same type through the shear modulus $\mu$.
+
+Next, implications when moving from passive to active systems in 2D are considered.
+
+\subsection{Odd Elasticity}
+
+In an active system, the molecules of the body can convert a background energy source into self-propulsion and other local forces between molecules.  In passive systems, the intramolecular forces are due to the bonds between them.  In an isotropic system, the potential well of a bond depends only upon the radial distance between molecules, and the forces that are generated by moving molecules closer together or further apart are purely radial.  That is, the forces are parallel to the bonds and are referred to as longitudinal interactions.  A characteristic feature of many active systems is the generation of short-range transverse interactions between pairs of molecules, i.e., perpendicular to the axis of the bond between them.  If present, these transverse forces give rise to internal torques and cause the system to apparently violate conservation of angular momentum, though in reality, opposing torques are simply transferred to a medium or the environment, which is often ignored.
+
+Furthermore, the ability of active system molecules to turn background energy into self-propulsion means that the system can appear to violate conservation of energy from a purely mechanical perspective.  Thus, if considering only homogeneity and isotropy, the following geometric statement of Hooke's law for an active system becomes,
+%
+\begin{equation}\label{eqn:el-landau-hookes-geometric-active}
+\begin{pmatrix}
+\fcompress \\
+\frotate \\
+\fskewone \\
+\fskewtwo
+\end{pmatrix}
+=
+\begin{pNiceMatrix}[c][columns-width = auto]
+B & 0 & 0 & 0 \\
+A & 0 & 0 & 0 \\
+0 & 0 & \mu & K^\circ \\
+0 & 0 & -K^\circ & \mu
+\end{pNiceMatrix}
+\begin{pmatrix}
+\compression \\
+\rotation \\
+\skewone \\
+\skewtwo
+\end{pmatrix},
+\end{equation}
+%
+where two new moduli $A$ and $K^\circ$ were introduced.  The modulus $A$ couples a compression of the body to a torque strain within the material, while the $K^\circ$ couples the two types of shear strain antisymmetrically.  In the form of Hooke's law depicted in Eq.~\ref{eqn:el-landau-hookes-geometric-active}, the elastic modulus tensor is neither purely symmetric like a typical passive system nor purely antisymmetric, the defining characteristic of odd elasticity, due to the $A$ modulus.  Nonetheless, the $A$ modulus is a common feature of the elastic response of many active matter systems that give rise to the antisymmetric shear strains, and thus it is the presence of antisymmetric shear strain terms $\pm K^\circ$ that are used loosely to define odd elasticity.
+
+\subsection*{Research on Spinners}
+Much of the research in active matter systems is relatively recent, although the matter that makes up most living systems is necessarily active.  Odd elasticity may play an important role in understanding the behavior of some types of active matter systems more than others.  In 2015, Alexander Petroff et al., observed a rapidly spinning Thiovolum majus [T. majus] bacterium that spontaneously formed active 2D crystals with hexagonal symmetry in aqueous solutions.  The rapid spinning of the bacteria creates vortices, propelling the bacterium to a fixed surface, where the fluid flows at the surface are longitudinally attractive at long-range and transverse at short-range.  The long-range forces draw nearby neighbors closer, while the short-range transverse interactions cause pairs of bacteria to rotate around one another.  Larger clumps stabilize to form triangular crystals with periodic ordering \cite{petroff2015fast}.  In 2022, Tzer Tan et al., found that starfish embryos exhibit similar spinning behavior at comparable length scales ($\sim 10 \mu$m) but vastly different timescales ($\sim 50$ vs. $>1$ Hz, respectively) \cite{petroff2015fast, tan2022odd}.  Nonetheless, many of the same active crystal features are exhibited by both groups of organisms.
+
+The antisymmetric shear strain $K^\circ$ present in both of these systems is important in its own right, as it gives rise to non-reciprocity between the two types of shear strain.  In an underdamped system, the elastic interactions expressed by any of the previous representations of Hooke's law can give rise to elastic wave behaviors similar to those in spring-block systems\cite{Shankar2019prx, tan2022odd, bililign2022motile, huang2025anomalous}.  However, odd elasticity can give rise to odd elastic waves which inherit non-reciprocity from the $\pm K^\circ$ modulii and can thus propagate differently in different directions and even unidirectionally along an edge, breaking time-reversal symmetry.  In overdamped systems, noise dynamics due to collisions between active molecules can drive these odd elastic waves \cite{choi2024noise}.  It has proven possible to replicate these systems with floating robots affixed with propellers on their underside, recreating the tornadic flows which drive the biological systems, providing a mechanical analogue which can be tuned to increase the range of parameters or to test novel behaviors, as well as providing a more controlled system for verifying theoretical models and predictions.
+
+\subsection*{Active fluids and membranes}
+
+Odd elasticity has not yet been observed in naturally occurring multicellular organisms \cite{tan2022odd} or membranes, though it has been reported in a variety of artificial systems \cite{fossati2024odd}.  Models such as the one explored by Fossati et al., show that active thick plates exhibit two independent odd elastic moduli, one of which disappears in the thin plate film limit, exhibiting chiral edge modes and unidirectional propagation at plate borders \cite{fossati2024odd}.  There models suggest that odd elasticity, though unobserved, is present in cellular membrane structures, and that the lack of observation is primarily due to limitations in suitable microscopy technique \cite{fossati2024odd}.
+
+In work by Ishimoto et al., the ability of single-cell organisms lacking flagella was modeled.  These types of organisms swim through a viscous medium by deforming their body shapes.  Odd elasticity within the body of the organism gives rise to the pattern of motion, or periodic deformations, required for locomotion of this kind, though the authors found that the speed at which such organisms are capable of moving requires can only be explained by extending odd elasticity beyond the linear regime \cite{ishimoto2023odd}.  In their research, they develop a universal description of nonlocal, non-reciprocal interactions of an elastic (odd, nonlinear, or otherwise) in a viscous fluid \cite{ishimoto2023odd}.
+
+\subsection*{Future directions}
+
+Far from being a mundane detail that surfaces in a variety of active matter systems, studies like those mentioned above \cite{tan2022odd, fossati2024odd, ishimoto2023odd, choi2024noise} demonstrate that odd elasticity is an important driver of mechanisms that are critical to some of the basic functions of life.  Odd elasticity leads to a set of dynamics like chirality, non-reciprocity, and time-reversal symmetry violation that characterize the type of mobility only found in living things and give rise to critical macroscopic behaviors.  We should anticipate finding that odd elasticity plays a crucial role in a wide range of active systems, from active crystals, to modern information flows, or even animal and human migration patterns.

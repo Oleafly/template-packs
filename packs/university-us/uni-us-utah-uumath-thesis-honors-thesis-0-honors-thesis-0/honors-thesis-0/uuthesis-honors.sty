@@ -1,0 +1,105 @@
+%%% -*-TeX-*-
+%%% ====================================================================
+%%% This file defines the appearance of the committee approval page in
+%%% the honors degree in Bachelor of Arts (or Science) front matter. It
+%%% appears as the title page of the document, whereas Masters and
+%%% Doctoral degrees have \titlepage + optional \copyrightpage +
+%%% \dissertationapproval.
+%%%
+%%% The design is patterned after a sample at
+%%%
+%%%     https://honors.utah.edu/course-planner-degree-requirements/thesis-information/thesis-resources/
+%%%
+%%% in the link "Thesis template" to an off-campus Web site.
+%%%
+%%% Usage:
+%%%
+%%%    In document preamble:
+%%%
+%%%        ...
+%%%        \usepackage{uuthesis-honors}
+%%%        ...
+%%%        \honorsdean             {The name (and maybe degree) of current Honors Dean}
+%%%        \honorsfacultyadvisor   {The name of your Department's Honors Faculty Advisor}
+%%%
+%%%    After \begin{document}:
+%%%
+%%%        \titlepage
+%%%
+%%% [22-Apr-2019] -- version 1.00
+%%% ====================================================================
+
+\NeedsTeXFormat {LaTeX2e} [1994/12/01]
+\ProvidesPackage {uuthesis-honors} [2019/04/22 v1.00]
+
+\immediate \write16 {===============================================================================}%
+\immediate \write16 {}%
+\immediate \write16 {This is uuthesis-honors.sty version 1.00 <22 April 2019>}%
+\immediate \write16 {}%
+\immediate \write16 {===============================================================================}%
+
+\newcommand   {\honorsdean}             [1] {\gdef \@honorsdean                  {#1}}
+\newcommand   {\honorsfacultyadvisor}   [1] {\gdef \@honorsfacultyadvisor        {#1}}
+
+\newcommand   {\@honorsboxwidth}            {2.75in}
+\newcommand   {\@honorsbox}             [1] {\makebox[\@honorsboxwidth][l]{#1}}
+\newcommand   {\@honorsrule}                {\@honorsbox{\hrulefill}}
+
+\renewcommand {\titlepage}
+{
+    \pagenumbering {roman}
+    \thispagestyle {empty}
+    % ------------------------------------------------------------------
+    \vfill
+    %
+    \begin{center}
+        \large \bf \@title
+    \end{center}
+    %
+    % ------------------------------------------------------------------
+    \vfill
+    %
+    \begin{center}
+        by                                                                                      \\[1ex]
+        \@author
+    \end{center}
+    %
+    % ------------------------------------------------------------------
+    \vfill
+    %
+    \begin{center}
+        A Senior Honors Thesis Submitted to the Faculty of                                      \\
+        The University of Utah                                                                  \\
+        In Partial Fulfillment of the Requirements for the                                      \\[2ex]
+        Honors Degree in \@degree
+    \end{center}
+    %
+    % ------------------------------------------------------------------
+    \vfill
+    %
+    \begin{center}
+        In                                                                                      \\[2ex]
+        \@department
+    \end{center}
+    % ------------------------------------------------------------------
+    \vfill
+    %
+    Approved:                                                                                   \\[8ex]
+    %
+    \@honorsrule                               \hfill     \@honorsrule                          \\
+    \@honorsbox{\@committeechair}              \hfill     \@honorsbox{\@departmentchair}        \\
+    \@honorsbox{Thesis Faculty Supervisor}     \hfill     \@honorsbox{Chair, \@department}      \\[8ex]
+    %
+    \@honorsrule                               \hfill     \@honorsrule                          \\
+    \@honorsbox{\@honorsfacultyadvisor}        \hfill     \@honorsbox{\@honorsdean}             \\
+    \@honorsbox{Honors Faculty Advisor}        \hfill     \@honorsbox{Dean, Honors College}     \\[2ex]
+    %
+    \begin{center}
+        \@submitdate                                                                            \\
+        Copyright \copyright{} \@copyrightyear                                                  \\
+        All Rights Reserved
+    \end{center}
+    %
+    % ------------------------------------------------------------------
+    \vfill
+}

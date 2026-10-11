@@ -1,0 +1,178 @@
+\newcommand*{\memfontfamily}{zpl1}
+\newcommand*{\memfontpack}{newpxtext}
+\documentclass[letterpaper, 12pt, extrafontsizes, oneside]{memoir}
+\usepackage{newpxmath}
+\usepackage[english]{babel}
+\usepackage{microtype}
+\usepackage[numbers, sort&compress]{natbib}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{siunitx}
+\usepackage{hyperref}
+
+% 1" margins; page numbmers 3/4" from bottom of page
+\setlrmarginsandblock{1in}{1in}{*}
+\setulmarginsandblock{1in}{1in}{*}
+\setheadfoot{\onelineskip}{1.25\onelineskip}
+\checkandfixthelayout
+
+% Double-spaced body text
+\DoubleSpacing
+
+% Styles
+% Based on "crosshead"
+\makechapterstyle{cornell}{%
+  \setlength{\beforechapskip}{2\onelineskip}%
+  \renewcommand*{\chapterheadstart}{\vspace{\beforechapskip}}%
+  \setlength{\afterchapskip}{2\onelineskip plus .2\onelineskip
+                             minus 0.2\onelineskip}%
+  \renewcommand*{\printchaptername}{}%
+  \renewcommand*{\printchaptertitle}[1]{\chaptitlefont\MakeUppercase{##1}} %
+  \renewcommand*{\chapternamenum}{}%
+  \renewcommand*{\chapnumfont}{\sffamily\LARGE\bfseries}%
+  \renewcommand*{\chaptitlefont}{\chapnumfont}%
+  \renewcommand*{\printchapternum}{%
+    \centering\chapnumfont \thechapter\quad}%
+  \renewcommand{\afterchapternum}{}%
+  \renewcommand*{\printchapternonum}{\centering}}
+
+\chapterstyle{cornell}
+% TODO: Don't emphasize "et al."
+\bibliographystyle{apsrev4-1}
+
+% Title setup
+\title{A Study in Scarlet}
+\author{John Hamish Watson}
+\date{August 2014}
+
+\begin{document}
+
+\frontmatter
+
+% Subsequent pages are counted but unnumbered
+\pagestyle{empty}
+
+% Title page
+\null\vskip 2em \vspace*{\droptitle}
+{\begin{center}\sffamily{\LARGE\bfseries\MakeTextUppercase{\thetitle}}\par\end{center}\vskip 0.5em}
+{\begin{vplace}\begin{center}\large
+A Dissertation\\
+Presented to the Faculty of the Graduate School\\
+of Cornell University\\
+in Partial Fulfillment of the Requirements for the Degree of\\
+Doctor of Philosophy
+\end{center}\end{vplace}}
+{\begin{center}\large
+by\\
+\theauthor\\
+\thedate
+\par\end{center}}
+\clearpage
+
+% Copyright page
+\begin{vplace}
+\begin{center}
+\textcopyright{} 2014 \theauthor
+\end{center}
+\end{vplace}
+\cleardoublepage
+
+% Subsequent pages are uncounted
+\savepagenumber
+\pagestyle{empty}
+
+% Abstract
+{\begin{center}\large
+\MakeTextUppercase{\thetitle}
+\par\end{center}\vskip 0.5em}
+{\begin{center}\large
+\theauthor, Ph.D.\\
+Cornell University 2014
+\par\end{center}\vskip 0.5em}
+
+The abstract states the problem, describes the methods and procedures used, and gives the main results or conclusions of the research.
+The abstract usually does not exceed 350 words in length (about one-and-one-half correctly spaced pages---but not more than two pages).
+\cleardoublepage
+
+% Subsequent pages are numbered
+\pagestyle{plain}
+\restorepagenumber
+
+% Biographical Sketch
+\chapter{Biographical Sketch}
+The biographical sketch is written in third-person voice and contains your educational background.
+Sometimes additional biographical facts are included.
+\clearpage
+
+% Dedication (optional)
+\addcontentsline{toc}{chapter}{Dedication}
+\begin{vplace}
+  \begin{center}
+    The dedication page is not required and can contain whatever text that you would like to include.
+    Text on this page does not need to be in English.
+  \end{center}
+\end{vplace}
+\clearpage
+
+% Acknowledgements
+\chapter{Acknowledgements}
+The acknowledgments may be written in first-person voice.
+If your research has been funded by outside grants, you should check with the principal investigator of the grant regarding proper acknowledgment of the funding source.
+Most outside funding sources require some statement of acknowledgment of the support; some also require a disclaimer from responsibility for the results.
+\cleardoublepage
+
+% Table of Contents
+\renewcommand*{\contentsname}{Table of Contents}
+\tableofcontents
+\clearpage
+
+\listoffigures
+\clearpage
+
+\listoftables
+%\clearpage
+\cleardoublepage
+
+% Preface (optional)
+\chapter{Preface}
+Preface text.
+\cleardoublepage
+
+\mainmatter
+
+% Body of Dissertation
+\chapter{Introduction}
+Please note that smaller font size may be appropriate for footnotes or other material outside of the main text.
+
+The following suggestions are based on best practice or historic precedent, but are not required.
+Chapter headings may be included that conform to the standard of your academic field.
+Textual notes that provide supplementary information, opinions, explanations, or suggestions that are not part of the text must appear at the bottom of the page as footnotes.
+Lengthy footnotes may be continued on the next page.
+Placement of footnotes at the bottom of the page ensures they will appear as close as possible to the referenced passage.
+
+\begin{figure}
+ \includegraphics[width=\linewidth]{cu-insignia-black}
+ \caption[An example figure]{
+  An example of a figure: the Cornell insignia.
+ }\label{fig:figure}
+\end{figure}
+
+An example citation~\citep{PhysRev.73.803}.  A reference to Fig.~\ref{fig:figure}.
+
+% TODO: Example table
+
+\cleardoublepage
+
+% TODO: Appendices
+%Place in an appendix any material that is peripheral, but relevant, to the main text of the dissertation or thesis.
+%Examples could include survey instruments, additional data, computer printouts, details of a procedure or analysis, a relevant paper that you wrote, etc.
+%The appendix may include text that does not meet the general font and spacing requirements of the other sections of the dissertation or thesis.
+
+\backmatter
+
+% Bibliography
+\SingleSpacing
+\setlength{\bibsep}{2\baselineskip}
+\bibliography{references}
+
+\end{document}

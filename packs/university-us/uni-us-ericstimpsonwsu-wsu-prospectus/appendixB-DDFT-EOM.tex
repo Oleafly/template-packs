@@ -1,0 +1,22 @@
+% Create appendix with unnumbered section
+\appendixsection{B}{Dynamic density functional theory - Equation of Motion}
+\setappendixlabel{B}
+
+% Add appendix to toc at section level
+\label{appendix:ddft-eom}
+
+The root of dynamic density functional theory is a desire to describe a system's evolution under a specific set of conditions \cite{marconi2000dynamic}.  Specifically, if the equilibrium state is the state that minimizes the energy functional, then a system out of equilibrium should evolve by descending the energy landscape towards the equilibrium state.  Thus, the dynamic equation that describes the evolution of the system must cause the free energy to decrease with time.  Under the assumption that $\denseR$ is a conserved quantity, this can be written in the form of a continuity equation, where the rate of change of the density $\partial_t \denseRT$ is determined by the gradient of a flux.
+
+\begin{equation}
+\partialt \denseRT = \Gamma \grad \cdot \left( \denseRT \grad \frac{\delta F[\dense]}{\delta \denseRT} \right)
+\label{eq-ddft-central-equation}
+\end{equation}
+%
+where $\Gamma$ is the mobility.  Additional terms can be added to Eq.~\ref{eq-ddft-central-equation} for system-specific considerations like stochastic noise $\eta$ or external potentials $U_\text{ext}$.
+
+\begin{equation}
+\partialt \denseRT = \Gamma \grad \cdot \left( \denseRT \grad \left( \frac{\delta F[\dense]}{\delta \denseRT} + U_\text{ext} \right) \right) + \grad \cdot \left( \sqrt{2 \Gamma k_B T \denseRT} \; \noiseRT \right)
+\label{eq-ddft-central-equation-stochastic}
+\end{equation}
+
+Several important assumptions are implied by Eqs.~\ref{eq-ddft-central-equation}~and~\ref{eq-ddft-central-equation-stochastic}.  First, it is assumed that the energy functional $F$ can be determined and is valid for out-of-equilibrium states.  While it is generally not possible to write $F$ exactly in terms of the one-body density $\denseR$, $F$ can often be written to a good approximation for states near equilibrium.  Typical DDFT models consider particles which interact through a two-body central potential of the form $U_2(|\posn{1} - \posn{2}|)$, where $\posn{i}$ is the center of mass of the $i$-th particle.  Second, it is assumed that the adiabatic approximation holds, i.e., the system relaxes quasi-statically to the ground state.  Under this assumption, the interaction with the density in Eq.~\ref{eq-ddft-central-equation} can be expressed as the functional derivative of the free energy, where it is safe to assume that the equal-time two-point correlation functions of the equilibrium and nonequilibrium states are identical.  Third, hydrodynamic and inertial effects are ignored.  In other words, the system is assumed to be overdamped, or, to a good approximation, that momentum dissipates much more quickly than density and can thus be ignored.

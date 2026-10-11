@@ -1,0 +1,182 @@
+% Create appendix with unnumbered section
+%\section*{APPENDIX C - PFC Rescaling}
+\appendixsection{C}{PFC Rescaling}
+\setappendixlabel{C}
+
+% Add appendix to toc at section level
+\label{appendix:pfc-rescaling}
+
+Adapted from Eq.~5 or Eq.~13 in Ref.~\cite{huang2010phase}, the PFC model was derived from classical dynamical density functional theory (DDFT) [see also \cite{teeffelen2009derivation-3a7} for an earlier derivation].  Eq.~13 is given here
+
+\begin{align}\label{eq-pfc-vacancy-free-energy-ddft}
+\frac{\mathcal{F}}{\rho_l k_B T} = \int \dpos \left[ (1 + n)\ln(1 + n) + \frac{1}{2}B^x n (2 R^2 \nabla^2 + R^4 \nabla^4) n + \frac{1}{2}{B_\text{l}}' n^2 + \frac{1}{3} \tilde{B} n^3 + \frac{1}{4} \tilde{B}_4 n^4 \right]
+\end{align}
+%
+where the LHS is referred to as the ``free energy functional".  The phase field crystal (PFC) density $n$ is defined by
+
+\begin{align}\label{eq-pfc-density}
+n \equiv \frac{\rho - \densel}{\densel}, \quad \rho \ge 0 \Rightarrow n \ge -1.
+\end{align}
+%
+where $\densel$ is a reference atomic density distribution function defined by the supercooled liquid state.  The various coefficients in the equation above are themselves defined in terms of $n$-point correlation functions $C^{(n)}$, or more specifically, the coefficients of their Fourier transforms $\hat{C}^{(n)}_i$ as,
+
+\begin{align}
+{B_\text{l}}' = B^l - 1 = \densel \hat{C}_0, \quad B^x = \densel \frac{(\hat{C}_2)^2}{4 \hat{C}_4}, \quad R = \sqrt{2 \hat{C}_4/\hat{C}_2}, \\
+\tilde{B} = \densel^2 \hat{C}^{(3)}_0/2, \quad \tilde{B}_4 = \densel^3 \hat{C}^{(4)}_0/6, 
+\end{align}
+%
+where the Fourier transform of the $n$-point correlation function $C^{(n)}(\pos_1,\ldots,\pos_n)$ is expanded as a power series in $k, k', k''$.  Example for $n=2$ is shown here
+
+\begin{align}
+C^{(2)} \overset{\mathcal{F}}{\rightarrow} \hat{C}^{(2)}(k) = - \hat{C}^{(2)}_0 + \hat{C}^{(2)}_2 k^2 - \hat{C}^{(2)}_4 k^4 + \cdots.
+\end{align}
+
+%\begin{align}
+%C^{(2)} \overset{\mathcal{F}}{\rightarrow} \hat{C}^{(2)}(q) = - \hat{C}^{(2)}_0 + \hat{C}^{(2)}_2 q^2 - \hat{C}^{(2)}_4 q^4 + \cdots.
+%\end{align}
+%
+%\begin{align}
+%\hat{C}^{(2)}(q) \overset{\mathcal{F}^{-1}}{\rightarrow} = - \hat{C}^{(2)}_0 - \hat{C}^{(2)}_2 \nabla^2 - \hat{C}^{(2)}_4 \nabla^4 + \cdots = C^{(2)}.
+%\end{align}
+%
+For $n=2$, the superscript has been omitted for brevity such that $\hat{C}^{(2)}_i = \hat{C}_i$, while for $C^{(n)}$ with $n \ge 3$, the Fourier transform of $C$ has $n-1$ wave number arguments $k_1, \dots, k_{n-1}$, so expanding in a power series of $k$ would, in principle, require terms of the form $(k_1)^{a_1} \cdot (k_2)^{a_2} \cdots (k_{n-1})^{a_{n-1}}$.  However, in practice, only the coefficient of the $k_1 = k_2 = \cdots = k_{n-1} = 0$ term is actually used and is written $\hat{C}^{(n)}_0$.
+
+The free energy functional in Eq.~\ref{eq-pfc-vacancy-free-energy-ddft} was renamed from $\mathcal{F}$ to $F$ and rewritten by factoring the gradient terms into a perfect square and renaming the leading coefficients on the polynomial terms as
+
+\begin{align}
+F(n) = \int d\vec{r} \left[ (1+n)\ln(1+n) + \frac{1}{2}B^x n (R^2\nabla^2 + 1)^2 n - \frac{1}{2} rn^2 - \frac{1}{3}\tau_0 n^3 + \frac{1}{4}v_0 n^4 \right],
+\end{align}
+%
+where
+
+\begin{align}
+-r = {B_\text{l}}' - B^x, \quad -\tau_0 = \frac{1}{2} {\densel}^2 {\hat{C}_0}^{(3)}, \quad v_0 = \frac{1}{6}{\densel}^3 {\hat{C}_0}^{(4)}.
+\end{align}
+
+The Cahn-Hilliard equation (conserved dynamics) describes the evolution of the system in time by a diffusion equation.
+
+\begin{align}
+\partialt n(\pos, t) &= M \vec{\nabla} \cdot \left[ (1 + n)\vec{\nabla} \frac{\delta F}{\delta n} \right] \simeq M \nabla^2 \mu \\
+\Rightarrow \partialt n(\pos, t) &= D \nabla^2 \left[ \ln(1+n) + B^x (R^2 \nabla^2 + 1)^2 n - r n - \tau_0 n^2 + v_0 n^3 \right], \quad D = \frac{M}{k_B T}
+\end{align}
+%
+with a slowly varying chemical potential $\mu = \frac{\delta F}{\delta n}$.
+
+\subsection{Length \& Time Scale}
+Introduce length scale $R$, time scale $R^2/D$, and reciprocal lattice spacing $q_0 = 1$, giving
+
+\begin{subequations}
+\begin{align}
+&F(n) = \int d\vec{r} \left[ (1+n)\ln(1+n) + \frac{1}{2}B^x n (\nabla^2 + {q_0}^2)^2 n - \frac{1}{2} rn^2 - \frac{1}{3} \tau_0 n^3 + \frac{1}{4}v_0 n^4 \right], \label{eq-pfc-nlnn-free-energy} \\
+&\partialt n(\pos, t) = \nabla^2 \left[ \ln(1+n) + B^x (\nabla^2 + {q_0}^2)^2 n - r n - \tau_0 n^2 + v_0 n^3 \right]. \label{eq-pfc-nlnn-dndt}
+\end{align}
+\end{subequations}
+
+From these two equations [Eqs.~\ref{eq-pfc-nlnn-free-energy}, \ref{eq-pfc-nlnn-dndt}], two main branches will be discussed.  The first branch involves expanding $(1+n)\ln(1+n)$ as a power series in $n$ and leads to the standard PFC formulation.  The second branch keeps the logarithmic terms and instead shifts the density order parameter $n \rightarrow \phi - 1$.  Comparing to Eq.~\ref{eq-pfc-density}, this shift gives $\phi = \dense/\densel$; thus $\phi$ is a simple rescaling of $\dense$ and therefore positive-definite.  This second branch leads to the log PFC formulation.
+
+\subsection{Standard PFC}
+
+%Historically, the standard PFC model was introduced by Elder et al. without explicitly t
+The standard PFC model can be achieved by replacing the logarithmic terms in Eqs.~\ref{eq-pfc-nlnn-free-energy}, \ref{eq-pfc-nlnn-dndt} with a power series around $n = 0$ as
+%
+\begin{align}
+(1+n)\ln(1+n) \approx n + \frac{1}{2}n^2 - \frac{1}{6}n^3 + \frac{1}{12}n^4 + \mathcal{O}(n^5).
+\end{align}
+%
+When truncated after the fourth power, the expansion coefficients can be incorporated into Eqs.~\ref{eq-pfc-nlnn-free-energy}, \ref{eq-pfc-nlnn-dndt} as
+%
+\begin{subequations}
+\begin{align}
+& F(n) = \int d\vec{r} \left[ \frac{1}{2}B^x n (\nabla^2 + {q_0}^2)^2 n + \frac{1}{2} \left( -r + 1 \right)n^2 + \frac{1}{3} \left( -\tau_0 - \frac{1}{2} \right) n^3 + \frac{1}{4} \left( v_0 + \frac{1}{3} \right) n^4 \right], \\
+& \partialt n(\pos, t) = \nabla^2 \left ( \frac{\delta F}{\delta n} \right ) = \nabla^2 \left[ B^x (\nabla^2 + {q_0}^2)^2 n + (-r + 1) n + \left( - \tau_0 - \frac{1}{2} \right) n^2 + \left( v_0 + \frac{1}{3} \right) n^3 \right],
+\end{align}
+\end{subequations}
+%
+where the first-order term in the expansion, $n$, is dropped from the integral because it is constant in the functional derivative, and therefore irrelevant to the diffusive dynamics of $n$.  A rescaling of $n$ given by $n \rightarrow (v_0 + 1/3)^{(-1/4)} n$ gives
+%
+\begin{subequations}
+\begin{align}
+& F(n) = \int d\vec{r} \left[ \frac{1}{2}\beta n (\nabla^2 + {q_0}^2)^2 n + \frac{1}{2} \epsilon n^2 + \frac{1}{3} g n^3 + \frac{1}{4} n^4 \right], \\
+& \partialt n(\pos, t) = \nabla^2 \left[ \beta (\nabla^2 + {q_0}^2)^2 n + \epsilon n + g n^2 + n^3 \right],
+\end{align}
+\end{subequations}
+%
+with
+%
+\begin{subequations}\label{eq-std-pfc-model}
+\begin{align}
+& \beta = B^x \left(v_0 + \frac{1}{3} \right)^{-\frac{1}{2}} \label{eq-std-pfc-beta}  \\
+& \epsilon = (-r + 1) \left(v_0 + \frac{1}{3} \right)^{-\frac{1}{2}}, \label{eq-std-pfc-epsilon} \\
+& g = \left( -\tau_0 - \frac{1}{2} \right) \left(v_0 + \frac{1}{3} \right)^{-\frac{3}{4}}, \label{eq-std-pfc-g} \\
+& n = (v_0 + 1/3)^{(-1/4)} \left( \frac{\dense - \densel}{\densel} \right). \label{eq-std-pfc-n}
+\end{align}
+\end{subequations}
+%
+In this final form, the standard PFC model has three model parameters, $\beta$, $\epsilon$, and $g$, along with PFC density $n$.
+
+\subsection{Log PFC}
+The logarithmic PFC model diverges from the standard PFC model after Eqs.~\ref{eq-pfc-nlnn-free-energy}, \ref{eq-pfc-nlnn-dndt} by keeping the logarithmic terms in these equations.  Defining $\phi = 1 + n = \dense / \densel$, the density order parameter $\phi$ becomes positive definite and
+%
+\begin{subequations}
+\begin{align}
+&F(n) = \int d\vec{r} \left[ (1+n)\ln(1+n) + \frac{1}{2}B^x n (\nabla^2 + {q_0}^2)^2 n - \frac{1}{2} r n^2 - \frac{1}{3} \tau_0 n^3 + \frac{1}{4} v_0 n^4 \right] \\ % \label{eq-pfc-nlnn-free-energy} \\
+&\partialt n(\pos, t) = \nabla^2 \left[ \ln(1+n) + B^x (\nabla^2 + {q_0}^2)^2 n - r n - \tau_0 n^2 + v_0 n^3 \right] % \label{eq-pfc-nlnn-dndt}
+\end{align}
+\end{subequations}
+%
+becomes
+%
+\begin{subequations}
+\begin{align}
+&F(\phi) = \int d\vec{r} \left[ \phi \ln \phi + \frac{1}{2}B^x (\phi - 1) (\nabla^2 + {q_0}^2)^2 (\phi - 1) \right. \nonumber \\
+&\quad\quad\quad\quad\quad\quad\quad \left. - \frac{1}{2} r(\phi - 1)^2 - \frac{1}{3} \tau_0 (\phi - 1)^3 + \frac{1}{4}v_0 (\phi - 1)^4 \right] \label{eq-pfc-philnphi-free-energy} \\
+&\partialt \phi(\pos, t) = \nabla^2 \left[ \ln \phi + B^x (\nabla^2 + {q_0}^2)^2 (\phi - 1) - r (\phi - 1) - \tau_0 (\phi - 1)^2 + v_0 (\phi - 1)^3 \right]. \label{eq-pfc-philnphi-dndt}
+\end{align}
+\end{subequations}
+%
+Expanding powers of $(\phi - 1)$ and collecting powers of $\phi$, keeping second order and higher --- first order and constant terms are inconsequential in Eq.~\ref{eq-pfc-philnphi-dndt} --- followed by rescaling $\phi \rightarrow v_0^{-1/4} \phi$ gives
+%
+\begin{subequations}
+\begin{align}
+& F(\phi) = \int d\vec{r} \left[ \phi \ln \phi +  \frac{1}{2}\beta \phi (\nabla^2 + {q_0}^2)^2 \phi + \frac{1}{2} \epsilon \phi^2 + \frac{1}{3} g \phi^3 + \frac{1}{4} \phi^4 \right], \\
+& \partialt \phi(\pos, t) = \nabla^2 \left[ \ln \phi + \beta (\nabla^2 + {q_0}^2)^2 \phi + \epsilon \phi + g \phi^2 + \phi^3 \right],
+\end{align}
+\end{subequations}
+%
+where the $v_0$ prefactor is omitted from the $\phi \ln \phi$ term because in the diffusion equation it is reduced to an inconsequential constant.  The rescaled log PFC model parameters are then
+%
+\begin{subequations}\label{eq-log-pfc-model}
+\begin{align}
+& \beta = B^x v_0^{-\frac{1}{2}}, \label{eq-log-pfc-beta} \\
+& \epsilon = (-r + 2 \tau_0 + 3 v_0) v_0^{-\frac{1}{2}}, \label{eq-log-pfc-epsilon} \\
+& g = ( -\tau_0 - 3 v_0) v_0^{-\frac{3}{4}}, \label{eq-log-pfc-g} \\
+& \phi = v_0^{-\frac{1}{4}} \left( \frac{\dense}{\densel} \right). \label{eq-log-pfc-phi}
+\end{align}
+\end{subequations}
+%
+This gives the final form for the logarithmic PFC model.  To disambiguate the log PFC rescaled parameters defined in Eqs.~\ref{eq-log-pfc-model} from the std PFC rescaled parameters defined in Eqs.~\ref{eq-std-pfc-model}, the parameters will be subscripted as $\{ \betalog, \epsilonlog, \glog \}$ or $\{ \betastd, \epsilonstd, \gstd \}$ whenever clarification is necessary.
+This gives the final form for the logarithmic PFC model.  To disambiguate the log PFC rescaled parameters defined in Eqs.~\ref{eq-log-pfc-model} from the std PFC rescaled parameters defined in Eqs.~\ref{eq-std-pfc-model}, the parameters will be subscripted as $\{ \betalog, \epsilonlog, \glog \}$ or $\{ \betastd, \epsilonstd, \gstd \}$ whenever clarification is necessary.
+
+In particular, Eqs.~\ref{eq-std-pfc-model} and \ref{eq-log-pfc-model} can be combined to calculate conversions between model parameters of the standard and log PFC models (with $v_0 = 1$).
+%
+\begin{subequations}\label{eq-log-to-std-pfc-model-app}
+\begin{align}
+& \betastd = \left( \frac{3}{4} \right)^{\frac{1}{2}} \betalog, \label{eq-log-to-std-pfc-beta-app} \\
+& \epsilonstd = \left( \frac{3}{4} \right)^{\frac{1}{2}}(\epsilonlog + 2 \glog + 4), \label{eq-log-to-std-pfc-epsilon-app} \\
+& \gstd = \left( \frac{3}{4} \right)^{\frac{3}{4}} \left( \glog + \frac{5}{2} \right), \label{eq-log-to-std-pfc-g-app} \\
+& n = \left( \frac{4}{3} \right)^{\frac{1}{4}}(\phi - 1), \label{eq-log-to-std-pfc-phi-app}
+\end{align}
+\end{subequations}
+%
+or
+%
+\begin{subequations}\label{eq-std-to-log-pfc-model-app}
+\begin{align}
+& \betalog = \left( \frac{4}{3} \right)^{\frac{1}{2}} \betastd, \label{eq-std-to-log-pfc-beta-app}  \\
+& \epsilonlog = \left( \frac{4}{3} \right)^{\frac{1}{2}} \epsilonstd - 2 \left( \frac{4}{3} \right)^{\frac{3}{4}} \gstd + 1, \label{eq-std-to-log-pfc-epsilon-app} \\
+& \glog = \left( \frac{4}{3} \right)^{\frac{3}{4}} \gstd - \frac{5}{2}, \label{eq-std-to-log-pfc-g-app} \\
+& \phi = \left( \frac{3}{4} \right)^{\frac{1}{4}} n + 1. \label{eq-std-to-log-pfc-n-app}
+\end{align}
+\end{subequations}
+
+

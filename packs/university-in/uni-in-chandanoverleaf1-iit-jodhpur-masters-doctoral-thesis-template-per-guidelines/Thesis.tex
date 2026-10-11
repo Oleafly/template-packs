@@ -1,0 +1,240 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% Author: Chandan Mukherjee %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% Email: chandan.2@iitj.ac.in, chandan.iitj@gmail.com %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Masters/Doctoral Thesis (Unofficially)
+% LaTeX Template
+% Based on guidelines by the Indian Institute of Technology Jodhpur (IIT Jodhpur)
+%
+% This template was downloaded from:
+% http://www.LaTeXTemplates.com
+%
+%% The author is in no way held responsible for any loss, damage, or issues arising from the %% use of this template. It is provided "as is" without any guarantees. Users are encouraged %% to verify and modify the template to meet their specific requirements.
+
+%
+%
+% This template is based on a template by:
+% Steve Gunn (http://users.ecs.soton.ac.uk/srg/softwaretools/document/templates/)
+% Ajit Kumar Sahoo, (ajit@uohyd.ac.in)
+% 
+%
+% Template license:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\documentclass[11pt, openright, twoside]{report}
+\usepackage{subfiles}
+\usepackage[nolist,nohyperlinks]{acronym}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}% Required for inputting international characters
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+% \newcommand{\HRule}{\rule{.9\linewidth}{.6pt}}
+\usepackage{geometry}
+\usepackage{chngcntr}
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+\usepackage{afterpage}
+\usepackage[export]{adjustbox}
+\usepackage{datetime}
+\usepackage{lipsum}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{fontspec}
+\usepackage{tocbibind}
+% \usepackage[toc,page]{appendix} 
+\usepackage{nomencl}
+\usepackage{etoolbox}
+\makenomenclature
+
+
+% ---------------------------   Packages end here ------------------------
+
+
+
+%%%%%%%%%%%%%%%%%%%%  Format for new dates  %%%%%%%%%%%%%%%%
+\newdateformat{monthyeardate}{%
+  \monthname[\THEMONTH], \THEYEAR}
+\newcommand\myemptypage{
+    \null
+    \thispagestyle{empty}
+    %\addtocounter{page}{-1}
+    \newpage
+    }
+% \usepackage{mathpazo} % Use the Palatino font by default
+%%%% The font used shall be “Book Antiqua” for the entire text in the body of the Thesis. %%%%
+\setmainfont[ Path = font/,
+             BoldFont={bookb}, 
+             ItalicFont={booki},
+             BoldItalicFont={bookbi}
+             ]{bookr}
+%%%%  “Candara” is used for the chapter titles of the Thesis. 
+% Set sans serif font to Candara font
+\setsansfont[  Path = font/,
+ BoldFont={CandaraB}, 
+ ItalicFont={Candarai},
+ BoldItalicFont={CandaraB}
+ ]{CandaraBI}
+
+
+
+\newgeometry{
+	paper=a4paper, % Change to letterpaper for US letter
+        total={210mm,297mm },
+	inner=3.23cm, % Inner margin
+	outer=1.5cm, % Outer margin
+	bindingoffset=.5cm, % Binding offset
+	top=2.5cm, % Top margin
+	bottom=2.5cm, % Bottom margin
+	% showframe, % Uncomment to show how the type block is set on the page
+}
+\usepackage{setspace}
+\setstretch{1.5}
+\usepackage[explicit]{titlesec}  %title control and formatting
+
+% %%%%%%%%% formatting the chapters  %%%%%%%
+\titleformat{\chapter}[display]
+% {\normalfont\bfseries\filcenter}-- Edited 
+% {\fontsize{27}{27}\bfseries}
+{\fontsize{27}{27}\sffamily\bfseries\filleft}{\hfil \thechapter}{}{{#1}}  %spacing between titles
+%%%%% ----------------------------------------%%%%%%%%%%%%
+
+
+%%%%%%%%% formatting the sections  %%%%%%
+% Set formats for each heading level
+\titleformat{\section}{\Large\bfseries\sffamily}{\thesection}{0.5em}{\MakeUppercase{#1}}
+\titleformat{\subsection}{\large\bfseries\sffamily}{\thesubsection}{0.5em}{\MakeUppercase{#1}}
+\titleformat{\subsubsection}{\sffamily}{\thesubsubsection}{0.5em}{\MakeUppercase{#1}}
+% Define a new fontfamily for the subsubsection font
+% Don't use \fontspec directly to change the font
+%%%%% ----------------------------------------%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%% Change %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ttitle}{Title of the Doctoral Thesis}
+\newcommand{\supname}{Name of the Supervisor} 
+\newcommand{\degree}{Name of the Degree}
+\newcommand{\authorname}{Name of the Student}
+\newcommand{\rn}{Roll Number of the Student}
+\newcommand{\univname}{IIT Jodhpur} 
+\newcommand{\deptname}{Name of the Department}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \large 
+\begin{document}
+\include{preliminaryPages/coverPage}
+\myemptypage
+\pagenumbering{roman}
+\setcounter{page}{3}
+\include{preliminaryPages/declaration}
+\myemptypage
+\include{preliminaryPages/certificate}
+\myemptypage
+\include{preliminaryPages/abstract}
+\myemptypage
+\include{preliminaryPages/acknowledgments}
+\myemptypage
+\include{preliminaryPages/dedication}   %%%% Optional %%%%%
+\begin{flushright}
+\tableofcontents
+\clearpage
+\listoffigures
+\listoftables
+\include{preliminaryPages/nomenclature}
+\include{preliminaryPages/abbreviation}
+\end{flushright}
+
+% resume page numbering for the rest of the document
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1} % set the page number appropriately
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Chapter 1 (Introduction)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%input{chapter1}
+
+\subfile{chapters/chapter1.tex}
+% \input{chapters/chapter1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Chapter 2 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subfile{chapters/chapter2.tex}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % Chapter 3
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \subfile{chapter3.tex}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % Chapter 4
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \subfile{chapter4.tex}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % Chapter 5 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \subfile{chapter5.tex}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % Chapter 6 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \subfile{chapter6.tex}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % Chapter 7  (Conclusion and future scope)
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \subfile{chapter7.tex}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % Appendices
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix % Cue to tell LaTeX that the following "chapters" are Appendices
+
+% Include the appendices of the thesis as separate files from the Appendices folder
+% Uncomment the lines as you write the Appendices
+
+% \include{appendices/AppendixA}
+% \include{appendices/AppendixB}
+% % \include{appendices/AppendixC}
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % Publications
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %Use this section to highlight any publications from the work presented in your thesis.
+
+\include{chapters/publications}
+
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % Bibliography
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %Add your bibliography file here
+%\nocite{*}
+\bibliographystyle{unsrt}
+\bibliography{chapters/refs}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

@@ -1,0 +1,81 @@
+% LTeX: enabled=false
+%%-----------------------------------------
+%% Standard notations
+%%-----------------------------------------
+\createbunch{\mathbb}{N,Z,Q,R,C,F,K,T,D,W,M} % like \N
+\NewDocumentCommand \Aff {} {\mathbb{A}} % Affine Space
+\NewDocumentCommand \Vect {} {\mathbb{V}} % Vector Space
+\createbunch{\ensuremath\fun}
+	{Hom,End,Aut,Ext,Tor,Cotor,Ker,Coker,coker,Id,id,tr,pt,Ob,Mor,Pic,Gal,Mod,Gr,gr,Ind,Proj,Ho,Sq} % List the use math operators
+\NewDocumentCommand \zero {} 
+	{\mathbb{0}} % zero object
+\NewDocumentCommand \one {} 
+	{\mathbb{1}} % unit object
+\NewDocumentCommand \vac {} 
+	{\ket{0}} % vacuum vector
+\NewDocumentCommand \Gm {} 
+	{\fun{\mathbb{G}}_{\mathrm{m}}} % Multiplicative group
+\NewDocumentCommand \Ga {} 
+	{\fun{\mathbb{G}}_{\mathrm{a}}} % Additive group
+\NewDocumentCommand \Dedekind {} 
+	{\mathcal{O}} % Dedekind domain
+\NewDocumentCommand \dedekind {} 
+	{{\scriptstyle\Dedekind}} % small Dedekind domain
+\NewDocumentCommand \Osheaf {} 
+	{\fun{\mathscr{O}}} % Structure sheaf
+\NewDocumentCommand \bigO {} 
+	{\fun{\mathbf{O}}} % Big O
+%%% Yoneda embedding from Theo Johnson-Freyd and Claudia Scheimbauer
+\DeclareFontFamily{U}{min}{}
+\DeclareFontShape{U}{min}{m}{n}{<-> udmj30}{}
+\NewDocumentCommand\yo{}{\!\text{\usefont{U}{min}{m}{n}\symbol{'207}}\!}
+% 
+%%% valuation ring
+\NewDocumentCommand \OK { O{K} } { \mathscr{O}_{#1} }%valuation ring	
+\NewDocumentCommand \mK { O{K} } { \mathfrak{m}_{#1} }%valuation ring	
+%
+\NewDocumentCommand \Kalg { O{K} } { {#1}^{\mathrm{alg}} } % alg closure
+\NewDocumentCommand \Ksep { O{K} } { {#1}^{\mathrm{sep}} } % sep closure
+% 
+%%-----------------------------------------
+%% Put your customized macros here
+%%-----------------------------------------
+\NewDocumentCommand \iso {} 
+	{\cong} % isomorphism
+\NewDocumentCommand \dual { m }
+	{ \ifblank{#1}{(\:\cdot\:)}{#1}^{\vee} } % dual
+\NewDocumentCommand \opp { m }
+	{ \ifblank{#1}{(\:\cdot\:)}{#1}^{\mathrm{op}} } % opposite
+\NewDocumentCommand \qbinom { m m }
+  { \genfrac{[}{]}{0pt}{}{#1}{#2} } % q-binomial
+\NewDocumentCommand \vect { m } 
+	{ \mathbf{#1} }%Vector
+\NewDocumentCommand \sequence { m O{1} O{n} }
+  { \ensuremath{ {#1}_{#2},\cdots,{#1}_{#3} } }%Creat a sequence
+\NewDocumentCommand \sequencesum { m O{1} O{n} }
+  { \ensuremath{ {#1}_{#2} + \cdots + {#1}_{#3} } }%Creat a sequence and then take summation
+\NewDocumentCommand \sequenceprod { m O{1} O{n} }
+  { \ensuremath{ {#1}_{#2} \cdot \cdots \cdot {#1}_{#3} } }%Creat a sequence and then take product
+
+%
+%%% Long arrows
+\DeclareRobustCommand\longepimorphism
+	{\relbar\joinrel\twoheadrightarrow} % eprmorphism
+\NewDocumentCommand\longepi{}{\longepimorphism}
+\DeclareRobustCommand\longmonomorphism
+	{\lhook\joinrel\longrightarrow} % monomorphism
+\NewDocumentCommand\longmono{}{\longmonomorphism}
+%
+%%% Text in math
+\NewDocumentCommand \txforall {O{\qquad}} {#1\text{for all}#1}%
+\NewDocumentCommand \txand {O{\qquad}} {#1\text{and}#1}%
+\NewDocumentCommand \txst {O{~}} {#1\text{s.t.}#1}%
+%
+%%% Conditions
+\NewDocumentCommand \condition { m m } {	&	&	#1	&	(#2)	}%
+%
+%%% colors 
+\NewDocumentCommand \blue {} { \color{blue} }
+\NewDocumentCommand \magenta {} { \color{magenta} }
+\NewDocumentCommand \red {} { \color{red} }
+%

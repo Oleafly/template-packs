@@ -1,0 +1,172 @@
+% ****************************************************************************************** % 
+% Dissertation template and document class for University of Mississippi
+% Adapted by Caroline LaRoche Turnage-Butterbaugh from the dissertation template and document class for Princeton University
+% Author  : Jeffrey Scott Dwoskin <jdwoskin@princeton.edu>
+% Adapted from: http://www.math.princeton.edu/graduate/tex/puthesis.html
+% ****************************************************************************************** %
+
+
+% Note: This .tex file contains some code to force the overall document to adhere to the standards required by the university. Likely these can be achieved in the olemissthesis.cls file. 
+
+\documentclass[12pt]{olemissthesis}
+
+
+%%%% Author & title page info
+
+\title{THE TITLE MUST BE IN ALL CAPS}
+\submitted{May 2023}  % degree conferral date 
+\copyrightyear{2023}  % year in which the copyright is secured by publication of the dissertation.
+\author{Author's Name} % How your name will appear on the Copyright page
+\authorcap{AUTHOR'S NAME} % How your name will appear on the Title page
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
+%%%% Use packages
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{latexsym}
+\usepackage{enumerate}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{ulem}
+\usepackage{amsfonts}
+\usepackage{verbatim}
+\usepackage{amsthm}
+\usepackage{dsfont}
+\usepackage{url}
+\usepackage{tocloft}
+
+%\usepackage{refcheck}
+
+
+
+
+%\usepackage[left=1in,right=1in,top=1in,bottom=1in,footskip=.25in]{geometry}
+\usepackage{titlesec}
+\setlength\parindent{0.5in}
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
+%%%% Define commands
+
+% Define any custom commands that you want to use.
+\DeclareMathOperator*{\meas}{meas}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\numberwithin{equation}{section}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+
+
+%%%% These commands are necessary to adhere to the university's standards. 
+\renewcommand{\chaptername}{}
+\titleformat{\chapter}[hang]{\normalfont\centering}{\chaptertitlename\ \thechapter}{1 em}{} 
+\titleformat{\section}{\normalfont}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont}{\thesection}{1em}{}
+
+\titlespacing*{\chapter}{0pt}{.75in}{40pt}
+
+
+\renewcommand{\contentsname}{\normalfont\normalsize\begin{center} TABLE OF CONTENTS\end{center}}
+\renewcommand{\cftchapfont}{\normalfont\normalsize}
+\renewcommand\cftchappagefont{\normalfont}
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\
+%%%% Front-matter
+
+\abstract{
+\input{abstract}
+}
+
+\dedication{
+\input{dedication}
+}
+
+
+\acknowledgements{
+\input{acknowledgements}
+}
+
+\vita{
+\input{vita}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Import chapters
+
+\begin{document}
+
+\makefrontmatter
+\normalem %%\normalem makes \emph produce italicized text instead of underlined text. 
+
+% \include lets us split up the document (and each include starts a new page):
+\include{ch-intro/chapter-intro}
+%\appendix % all chapters following will be labeled as appendices
+%\include{ch-appendicies/appendix}
+
+\include{ch-two/chapter-two}
+
+% Make the bibliography single spaced
+\singlespacing
+
+
+% add the Bibliography to the Table of Contents
+\cleardoublepage
+\ifdefined\phantomsection
+  \phantomsection  % makes hyperref recognize this section properly for pdf link
+\else
+\fi
+\addcontentsline{toc}{chapter}{BIBLIOGRAPHY}
+
+% include your .bib file. Formatting guidelines require a page that says "Bibliography" and then have the references on the next page.
+\newpage
+\topskip0pt
+\vspace*{\fill}
+\begin{center}\normalfont\normalsize{BIBLIOGRAPHY}\end{center}
+\vspace*{\fill}
+
+\newpage
+\begingroup
+  \def\chapter*#1{}
+\bibliography{thesis}{}
+\bibliographystyle{amsplain}
+\endgroup
+
+
+% add the VITA to the Table of Contents
+\cleardoublepage
+\doublespacing
+\ifdefined\phantomsection
+  \phantomsection  % makes hyperref recognize this section properly for pdf link
+\else
+\fi
+\addcontentsline{toc}{chapter}{VITA}
+\vspace*{.8in} % makes Vita top margin 2"
+\begin{center}
+VITA
+\end{center}
+\vspace{.15in}
+\input{vita}
+
+
+
+\end{document}
+

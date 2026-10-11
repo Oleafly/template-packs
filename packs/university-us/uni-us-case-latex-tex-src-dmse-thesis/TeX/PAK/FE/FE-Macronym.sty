@@ -1,0 +1,153 @@
+%% FE-Macronym.sty
+%% 12-02-03 Frank Ernst
+%% Department of Materials Science and Engineering
+%% Case Western Reserve University
+%% e-mail fxe5@case.edu
+%
+% PURPOSE:   
+% Simplify definition of acronyms.
+%
+% SHORT DESCRIPTION: Use initialization like 
+%
+% "\macronym{ABC}{Definition of ABC}"
+%
+% to generate corresponding commands \ABC. The first call to "\ABC"
+% will reproduce the meaning. Every further call will just show the
+% acronym, "ABC". Pass trailing "s", "'s" etc as optional parameters,
+% e.g. "\ABC's". Some frequently used examples are included.
+%
+%
+% 13-12-30 
+%
+% First define \ACRONYM to \relax and subsequently use \renewcommand...
+% In this way, definitions can be overwritten by new ones. More
+% importantly, they can be "refreshed". For example, Section H often in
+% SF proposal is an independent section in which all acronyms should be
+% defined from scratch. This can now be accomplished by *repeating* the
+% corresponding definitions the beginning of the file.
+% --------------------------------------------------------------------
+
+\NeedsTeXFormat{LaTeX2e}[1997/06/01]
+
+\ProvidesPackage{FE-Macronym}[2006/09/03 v1.0 LaTeX document class]
+
+\RequirePackage{FE-Color}
+\RequirePackage{xargs}
+
+
+\newboolean{doAcro}
+\setboolean{doAcro}{true}
+
+\DeclareOption{t}{\setboolean{doAcro}{true}}
+\DeclareOption{on}{\setboolean{doAcro}{true}}
+\DeclareOption{yes}{\setboolean{doAcro}{true}}
+\DeclareOption{y}{\setboolean{doAcro}{true}}
+
+\DeclareOption{f}{\setboolean{doAcro}{false}}
+\DeclareOption{off}{\setboolean{doAcro}{false}}
+\DeclareOption{no}{\setboolean{doAcro}{false}}
+\DeclareOption{n}{\setboolean{doAcro}{false}}
+
+\ProcessOptions\relax
+
+
+% Acronym definition. 
+% On first call, reproduce the meaning, then set it to void.
+% Star form always reproduces meaning.
+\def\macronym#1#2{%
+  % Define macro ACRONYM@mean producing acronym meaning.
+  \expandafter\def\csname #1@mean\endcsname{
+    (\textcolor{feplum}{#2\csname #1@add\endcsname})}%
+  % Set ACRONYM@xpnd equal to ACRONYM@mean.
+  \expandafter\def\csname #1@xpnd\endcsname{
+    (\textcolor{feplum}{#2\csname #1@add\endcsname})}%
+  % Define \ACRONYM to something, so we can overwrite the definition and
+  % always use "renewcommand" below.
+  \expandafter\def\csname #1\endcsname{\relax}
+  % Check doAcro.
+  \ifthenelse{\boolean{doAcro}}
+    % doAcro is TRUE.
+    {% Define macro \ACRONYM with optional argument [#1].
+      % (for e.g. "'s" or "s").
+      \expandafter\renewcommand\expandafter{\csname #1\endcsname}[1][]{%
+        % Check for star form.
+        \@ifstar%
+        {\expandafter\def\csname #1@add\endcsname{##1}%
+          #1##1\csname #1@mean\endcsname}
+        {\expandafter\def\csname #1@add\endcsname{##1}%
+          #1##1\csname #1@xpnd\endcsname%
+          \expandafter\def\csname #1@xpnd\endcsname{}}}}
+    % doAcro is FALSE.
+    {% Define macro \ACRONYM with optional argument [#1].
+      \expandafter\renewcommand\expandafter{\csname #1\endcsname}[1][]{%
+        \expandafter\def\csname #1@add\endcsname{##1}%
+        #2##1}}}
+
+
+% xnym: Acronym definition with one optional argument. This optional
+% first argument COMPLEX-ACRONYM, in brackets, typically is an acronym
+% that cannot be defined as a control sequence. The second, mandatory
+% argument ACRONYM will be used to define a command \ACRONYM with an
+% optional argument to ammend e.g. "'s" or "s". Calling \ACRONYM will
+% either produce ACRONYM or -- if provided -- COMPLEX-ACRONYM. On the
+% first call, this will be ammended by the DEFINITION, which is the
+% third (mandatory) argument.
+\newcommand {\xnym}[3][\@empty]{
+  % Define macro ACRONYM@mean producing acronym meaning. #2@add is the
+  % ammendment, e.g. "'s" or "s", to be defined later.
+  \expandafter\def\csname #2@mean\endcsname{
+    (\textcolor{feplum}{#3\csname #2@add\endcsname})}%
+  % Set ACRONYM@xpnd equal to ACRONYM@mean.
+  \expandafter\def\csname #2@xpnd\endcsname{
+    (\textcolor{feplum}{#3\csname #2@add\endcsname})}%
+  % Define \ACRONYM to something (\relax), so we can overwrite the
+  % definition and always use "renewcommand" below.
+  \expandafter\def\csname #2\endcsname{\relax}
+  % Define macro \ACRONYM with optional argument [#1]
+  % (for e.g. "'s" or "s").
+  \expandafter\renewcommand\expandafter{\csname #2\endcsname}[1][]{%
+    % Check for star form.
+    \@ifstar%
+    {\expandafter\def\csname #2@add\endcsname{##1}%
+      #1##1\csname #2@mean\endcsname}
+    {\expandafter\def\csname #2@add\endcsname{##1}%
+      #1##1\csname #2@xpnd\endcsname%
+      \expandafter\def\csname #2@xpnd\endcsname{}}}}
+
+
+% XAcronym definition. 
+% On first call, reproduce the meaning, then set it to void.
+% Star form always reproduces meaning.
+\def\xmacronym#1#2{%
+  % Define macro ACRONYM@mean producing acronym meaning.
+  \expandafter\def\csname #1@mean\endcsname{
+    (\textcolor{feplum}{#2\csname #1@add\endcsname})}%
+  % Set ACRONYM@xpnd equal to ACRONYM@mean.
+  \expandafter\def\csname #1@xpnd\endcsname{
+    (\textcolor{feplum}{#2\csname #1@add\endcsname})}%
+  % Define macro \ACRONYM with two optional argument [#1][#2].
+  % #1 serves for e.g. "'s" or "s". #2 serves to activate a control
+  % sequence as replacement for \ACRONYM.
+  \expandafter\newcommand\expandafter{\csname #1\endcsname}[1][]{%
+    % Check for star form.
+    \@ifstar%
+    {\expandafter\def\csname #1@add\endcsname{##1}%
+      #1##1\csname #1@mean\endcsname}
+    {\expandafter\def\csname #1@add\endcsname{##1}%
+      #1##1\csname #1@xpnd\endcsname%
+      \expandafter\def\csname #1@xpnd\endcsname{}}}}
+
+% % Acronym definition. 
+% % On first call, reproduce the meaning, then set it to void.
+% \def\macronym#1#2{%
+%   % Define macro producing acronym definition.
+%   \expandafter\def\csname #1@mean\endcsname{
+%     (\textcolor{feplum}{#2\csname #1@add\endcsname})}%
+%   % Define macro with argument #1 name and optional argument
+%   % (for e.g. "'s" or "s").
+%   \expandafter\newcommand\expandafter{\csname #1\endcsname}[1][]{%
+%     \expandafter\def\csname #1@add\endcsname{##1}%
+%     #1##1\csname #1@mean\endcsname%
+%     \expandafter\def\csname #1@mean\endcsname{}}}
+
+\input{FE-Macronyms.tex}

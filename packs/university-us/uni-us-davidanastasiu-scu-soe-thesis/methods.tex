@@ -1,0 +1,128 @@
+\chapter{Methods}\label{ch:methods}
+
+\section{Mini-introduction to LaTeX}\label{sec:latex}
+
+This chapter needs to be filled out. For now, it contains some very basic examples.
+
+
+\subsection{Equations}\label{sec:latex:equations}
+
+Equations and mathematical formulas can be included in-line, within the text, for example when explaining that $\norm{\vec x}_2$ signifies the $\ell_2$ norm of a vector, as long as the included math formula or symbols are short (less than half a line). For longer formulas, or formulas that need to be referenced later in the text, one should use the \texttt{equation} macro or related macros, e.g., \texttt{align}. For example, the dot-product of two vectors, $\vec x$ and $\vec y$, is defined as
+\begin{equation}\label{eq:dot-product}
+    \langle \vec x, \vec y \rangle = \vec{x}^T\vec{y} = \sum_{j=1}^m x_j\times y_j.
+\end{equation}
+
+Note that equations can be assigned labels and referenced throughout the text. However, unlike figures and tables (see next sections), the equation should be defined prior to its reference. Now that we can defined the formula for the vector dot-product, we can now refer to Equation~\ref{eq:dot-product} to remind readers of its definition.
+
+\subsection{Figures}\label{sec:latex:figures}
+
+Figures should contain a caption at the bottom. The caption is a sentence or phrase that describes the content of the figure. As such, it should start with a capital letter and end with a period. The caption is not a title, so subsequent words after the first word should not be capitalized unless they are proper names. A figure should be introduced in the text prior to its inclusion in the text. When referring to the figure, make use of the  \texttt{{\textbackslash}figurename} macro, provided by the IEEE style, to ensure style compliance. Additionally, use a non-breaking space character to connect the \figurename~text with the number assigned to the figure reference. This will ensure that \figurename~and the reference will be included on the same line. For example, \figurename~\ref{fig:proj-arch} introduces our project architecture. Note that font sizes in figures and tables may be smaller than the rest of the thesis. However, they should be readable.
+
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/proj-arch.pdf}
+  \caption{Project architecture.}
+  \label{fig:proj-arch}
+\end{figure}
+
+
+\subsection{Tables}\label{sec:latex:tables}
+
+Tables should contain a caption at the top. Unlike figures, the caption in the table is the table title, and it should be capitalized accordingly. The table should be presented in the text prior to its inclusion in the text. Moreover, references to tables should follow the same directions as those for figures, except use the \texttt{{\textbackslash}tablename} macro. For example, \tablename~\ref{tbl:dataset} introduces statistics about the dataset used in our analysis.
+
+\begin{table}[!htb]
+\caption{Dataset Characteristics}
+\label{tbl:dataset}
+\centering
+\input{tables/dataset}
+\end{table}
+
+\subsection{Algorithms}\label{sec:latex:algorithms}
+
+LaTeX provides powerful macros for writing algorithms. Note that labels can be included within the algorithm, which allows the writer to refer to specific lines in the algorithm. The algorithm should be introduced first. Note that the label referring to the whole algorithm is placed right after the caption. Similar to a table, the caption is a title and should be capitalized accordingly. For example, Algorithm~\ref{alg:proj-motif} describes the process for producing a normalized 2-hop left-projection of a bipartite graph described by the vertex sets $V^1$ and $V^2$ and the edge set $E$. Long algorithms (greater than half a page) should be relegated to the Appendix.
+
+\begin{algorithm}[!htb]
+\caption{The Normalized 2-hop Left-Projection Algorithm}\label{alg:proj-motif}
+\small
+\begin{algorithmic}[1]
+\Procedure{Project}{$V^1,V^2,E$}\Comment{Construct the left projection $G^1$}
+%%
+\item[] \quad\; // Initialize and compute degree vectors.
+\For {$(v^1_i, v^2_j) \in E$} \Comment{Count neighbors}
+\State $\lambda_n(i) \gets \lambda_n(i) + 1$
+\State $\lambda_m(j) \gets \lambda_m(j) + 1$
+\EndFor
+\item[] \quad\; // SpGEMM
+%%
+\For {$v^1_i \in V^1$} \label{alg:proj-motif-spgemm1}
+\State $acc(:) \gets 0$ \Comment{Initialize output row accumulator data structure}
+\For {$v^2_k \in \Gamma(v^1_i)$}
+\State $l \gets  (1/\lambda_n(i)) \times \times w_{i,k} \times (1/\lambda_m(k))$ \label{alg:proj-motif-lk}
+\For {$v^1_j \in \Gamma(v^2_k)$}
+\If {$v^1_j \ne v^1_i$} \Comment{Avoid computing output diagonal}
+\State $acc(j) \gets acc(j) + l \times w_{j,k}$ \label{alg:proj-motif-accum}
+\EndIf
+\EndFor
+\EndFor
+\State $C(i,:) = acc(:)$
+\EndFor\label{alg:proj-motif-spgemm2}
+\item[] \quad\; // Normalize rows of $C$
+%%
+\For {$i = 1, \ldots, |V^1|$}\label{alg:proj-motif-norm1}
+\State $n_i \gets 0$
+\For {$j = 1, \ldots, |V^2| \text{ s.t. } C(i,j) > 0$}
+\State $n_i \gets n_i + \text{abs}(C(i,j))$
+\EndFor
+\For {$j = 1, \ldots, |V^2| \text{ s.t. } C(i,j) > 0$}
+\State $C(i,j) \gets C(i,j) / n_i$
+\EndFor
+\EndFor\label{alg:proj-motif-norm2}
+\State \textbf{return} $C$\Comment{Edge set weight matrix for $G^1$}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+After introducing the algorithm, one can then refer to sections of the algorithm in the process of describing it in the text. For example, note that line~\ref{alg:proj-motif-accum} denotes the accumulation of projection weights for a vertex $v_i^1$ in $V^1$. For theses that contain many mathematical symbols, it is a good idea to provide the reader with a reference for the meaning of these symbols. This table is generally included in the preliminary chapters, after the introduction. We will include an example here. \tablename~\ref{tbl:notation-g} provides a reference for notation used throughout the paper that the algorithm above is included in.
+
+\begin{table}[!htb]
+\caption {Graph and Projection Notation} \label{tbl:notation-g}
+\centering
+\small
+ \begin{tabular}{l l}
+ \hline
+ \textbf{Symbol} & \textbf{Meaning} \\ 
+ \hline
+ $G$ & A graph topology. \\
+ $V^1$, $V^2$ & The left and right node partitions in a bipartite graph. \\
+ $E$ & The set of edges in $G$. \\
+ $|X|$ & The cardinality of set $X$. \\
+ $v^1_i \in V^1$ & A vertex in the left node partition $V^1$. \\
+ $v^2_j \in V^2$ & A vertex in the right node partition $V^2$. \\
+ $(v^1_i, v^2_j, w_{i,j})\in E$ & The edge connecting nodes $v^1_i$ and $v^2_j$ with weight $w_{i,j}$ in graph $G$. \\
+ $\Gamma(v^1_i)$ & The set of vertices in $V^2$ adjacent to $v^1_i$, i.e., its neighborhood. \\
+ $\lambda_n,\lambda_m$ & Node degree vectors for the left and right partitions.\\
+ $A \in \mathbb{R}^{n\times m}$ & The edge weight matrix for the bipartite graph $G$; $A(i,j) = w_{i,j}$. \\
+ $B$ & Weighted adjacency matrix for graph $G$.\\
+ \hline
+ $G^1 = (V^1, E^1)$ & The left projection graph.\\
+ $G^2 = (V^2, E^2)$ & The right projection graph.\\
+ $G^b = (V, E^b)$ & The biprojection graph.\\
+ $(v^1_i, v^1_j, s^1_{i,j})\in E^1$ & The edge connecting $v^1_i$ and $v^1_j$ with weight $s^1_{i,j}$ in the left projection graph. \\
+ $W^1$ & Edge weight matrix for the left projection graph; $W^1(i,j) = s^1_{i,j}$.\\
+ $W^2$ & Edge weight matrix for the right projection graph; $W^2(i,j) = s^2_{i,j}$.\\
+ $W$ & Weighted adjacency matrix for the bi-projection graph of $G$.\\
+ \hline
+ \end{tabular}
+\end{table}
+
+\subsection{Location of Floats}\label{sec:latex:floats}
+
+Floats (e.g., algorithms, tables and figures) should not follow the IEEE standard of being placed at the top or bottom of the page. In a thesis, they must appear right after their reference and not break any paragraphs, i.e., they should be placed in the text, after the paragraph in question. Use the location hint \texttt{[!htb]} to let LaTeX know the float should be placed in between paragraphs. If the float takes up an entire page and the last paragraph on the current page does not fit in its entirety, it should be moved after the float page to avoid breaking the continuity of the paragraph, leaving some blank lines at the end of the current page.
+
+Pages that contain only floats will have floats vertically centered, which will produce additional blank lines between the floats in the page or between a float and the top and bottom of the page. The thesis guidelines specifically prohibit additional white space in the thesis. This case and the one discussed in the previous paragraph are the only acceptable reasons for having extra blank lines in the text.
+
+\subsection{Citations}\label{sec:latex:citations}
+When citing papers, it is advisable to collect BibTeX records for the papers that you wish to cite, which will be automatically processed into the correct citation style by the LaTeX/BibTeX compiler. Citing a work by Anastasiu and Karypis~\cite{anastasiu-dsaa2016}, for example, is as simple as writing ``Anastasiu and Karipis\textasciitilde{\textbackslash}cite\{anastasiu-dsaa2016\},'' where \textit{anastasiu-dsaa2016} is the key associated with the paper's BibTeX record in the \textit{references.bib} file. Note the non-breaking space character (\textasciitilde) between the word before the citation and the \textit{{\textbackslash}cite} command. It gets translated into a space, and does not allow LaTeX to print the citation on a different line than the connecting word. This, of course, does not work if you put a space between the word and the non-breaking space character, e.g., ``Karypis \textasciitilde{\textbackslash}cite\{anastasiu-dsaa2016\}''.
+
+When citing papers with a single author, one should refer to the work by citing the author's last name. For example, Anastasiu~\cite{anastasiu-idsc2017} used a combination of heuristic candidate selection and search space filtering to efficiently identify approximate nearest neighbors. When the work has two authors, both authors should be referenced by their last name, as in the previous example of the work by Anastasiu and Karypis~\cite{anastasiu-dsaa2016}. Finally, if there are more than two authors, one should reference the first author's last name, followed by the phrase \textit{et al.}, which is short for the Latin \textit{et alia} and means ``and others''. Note the placement of the period. As an example, Kapoor et al.~\cite{kapoor-fie2018} discuss the benefits of competitive active learning in engineering education. Note that it is not necessary to mention authors by last name when listing multiple works as examples or evidence of a statement. For example, many recent works have developed filtering-based methods for nearest neighbor graph construction~\cite{anastasiu-icde2014, anastasiu2015, anastasiu-sc2015, anastasiu-sc2016}.
+

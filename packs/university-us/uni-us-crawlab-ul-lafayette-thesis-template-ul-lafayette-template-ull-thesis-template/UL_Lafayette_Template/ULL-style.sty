@@ -1,0 +1,112 @@
+\ProvidesPackage{ULL-style}[7/17/2017 v1.0 ULL style parameters]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% These are the various parameters used to create the correctly formatted
+% ULL thesis. 
+%
+% Created by: Forrest Montgomery Jul 17, 2017
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages required for the style guide
+\usepackage{titlesec}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Changes the page numbers in TOC to normal font
+\renewcommand{\cftchappagefont}{\normalfont}
+
+% Changes the Chapter dots in the TOC to normal font
+\renewcommand{\cftchapleader}{\cftdotfill{\cftsecdotsep}}
+
+% Note:
+% If the grad school does not like how the captions of the figures or tables is wrapped by Latex use this form to force a linebreak:
+% \caption[What is displayed\newline in the TOC]{What is displayed under the Figure}
+% This method will also work with the other commands in latex i.e. \chapter[]{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Places Table and Figure in front 
+% for List of Figures and Tables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\cftfigpresnum}{\bfseries Figure }
+\renewcommand{\cfttabpresnum}{\bfseries Table }
+
+\setlength{\cftfignumwidth}{5em}
+\setlength{\cfttabnumwidth}{5em}
+
+\setlength\parindent{0.5in}
+
+% remove indentation from figures in lof
+\setlength{\cftfigindent}{0pt}
+% remove indentation from tables in lot
+\setlength{\cfttabindent}{0pt}
+
+% Ensure proper numbering of the sections and subsections
+\renewcommand{\thesection}{\thechapter.\@arabic\c@section}
+\renewcommand{\thesubsection}{\thesection.\@arabic\c@subsection}
+
+% Add a period after the subsection label
+\newcommand{\addperiod}[1]{#1.}
+\titleformat{\subsection}[runin]
+  {\normalfont\bfseries}
+  {\thesubsection}
+  {1em}
+  {\addperiod}
+
+% Centers the TOC title
+\renewcommand{\contentsname}{\hfill\bfseries\normalsize Table of Contents\hfill}   
+\renewcommand{\cftaftertoctitle}{\hfill}
+
+% adds leader dots from chapter titles to page numbers
+\renewcommand\cftchapdotsep{\cftdotsep}
+
+% Making the sections and subsections Uppercase
+\makeatletter
+\patchcmd{\l@section}{#1}{\bfseries #1}{}{}
+\patchcmd{\l@subsection}{#1}{\bfseries #1}{}{}
+\makeatother
+
+% Gets rid of whitespace above the TOC LOF and LOT
+\setlength{\cftbeforetoctitleskip}{0pt}
+\setlength{\cftbeforeloftitleskip}{0pt}
+\setlength{\cftbeforelottitleskip}{0pt}
+
+\setlength{\cftfigindent}{0pt}  % remove indentation from figures in lof
+\setlength{\cfttabindent}{0pt}  % remove indentation from tables in lot
+
+% Add a period after figures and tables in the \contents pages
+\renewcommand{\cftfigaftersnum}{.}
+\renewcommand{\cfttabaftersnum}{.}
+
+\cftsetindents{figure}{0em}{5.5em}
+\cftsetindents{table}{0em}{5.5em}
+
+\setlength\cftbeforefigskip{12pt}
+\setlength\cftbeforetabskip{12pt}
+
+% Set the distance below the TOC the text will start
+\setlength{\cftaftertoctitleskip}{5pt}
+\setlength{\cftafterloftitleskip}{15pt}
+\setlength{\cftafterlottitleskip}{15pt}
+
+% Centers the LOF and LOT
+\renewcommand{\cftlottitlefont}{\hspace*{\fill}\Huge\bfseries}
+\renewcommand{\cftafterlottitle}{\hspace*{\fill}}
+\renewcommand{\cftloftitlefont}{\hspace*{\fill}\Huge\bfseries}
+\renewcommand{\cftafterloftitle}{\hspace*{\fill}}
+% Suppresses the page numbers on everything till the second page of TOC
+%\tocloftpagestyle{empty}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Makes new command iraggedright which
+% indents and left justifies 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newcommand\iraggedright{%
+  \let\\\@centercr\@rightskip\@flushglue \rightskip\@rightskip
+  \leftskip\z@skip}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

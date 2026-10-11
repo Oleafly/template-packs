@@ -1,0 +1,139 @@
+\chapter{Secure Hash Algorithm-3 Standard}
+
+A number of cryptographic standards are specified in various Federal Information Processing Standard Publications (FIPS PUBs) and issued by National Institute of Standards and Technology (NIST). Some of them are encryption standards which includes Data Encryption Standard (DES), Triple-DES, Advanced Encryption Standard (AES) and RSA. Encryption standards are used in encryption of electronic data. Hash standards are used to check integrity of data, in authentication and to protect sensitive information. It includes Message Digest algorithm MD5, Secure Hash Standard-1 (SHA-1), SHA-2 and SHA-3. \par
+
+FIPS 180-4 specifies secure hash algorithms, SHA-1, SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224 and SHA-512/256. From which SHA-1 is currently used in many applications. In 2005, cryptanalysis found theoretical attacks on SHA-1 and algorithm might not be secure for ongoing use. NIST required many applications in federal agencies to move to SHA-2 after 2010. Although no successful attacks have been found on SHA-2, it shares same structural elements as SHA-1. So, NIST decided to organize competition to develop new hash standard which is called SHA-3. Current research shows that SHA-2 will be secure for future applications but if it became vulnerable it would take years to find replacement. That’s why SHA-3 is considered complement of SHA-2 rather than replacement\cite{insha3}. In 2012 NIST selected Keccak for SHA-3 algorithm out of five Round-3 candidates. SHA-3 is also called as Keccak (pronounced “ket-chak”) SHA-3 and also Keccak algorithm.
+
+\section{Comparison Parameters of Cryptographic Hash Functions}
+
+Table below compares some properties of hash functions \cite{shs} like message size, word size, output digest size etc.
+
+\begin{table}[ht]
+	\centering
+	
+\begin{tabular}{|m{2cm}||>{\centering}m{1.6cm}|>{\centering}m{1.3cm}|>{\centering}m{0.9cm}|>{\centering}m{1.2cm}|>{\centering}m{0.9cm}|m{1.2cm}|} 
+\hline
+ Algorithm & Output Size(bits) & Internal State Size & Block Size & Length Size & Word Size & Rounds  \\ \hline 
+ MD5 & 128 & 128 & 512 & 64 & 32 & 84 \\ \hline
+ SHA-1& 160 & 160 & 512 & 64 & 32 &80 \\ \hline
+ SHA-224, SHA-256 & 256/224 & 256 & 512 & 64 & 32 & 84 \\ \hline
+ SHA-384, SHA-512, SHA-512/224, SHA-512/256 & 384/512/ 224/256 & 512 & 1024 & 128 & 64 & 80 \\ \hline
+ SHA-3 & 224/256/ 384/512 & 1600 & 1600 - 2*bits & - & 64 & 24 \\ \hline
+ SHA3-224 & 224 & 1600 & 1152 & - & 64 & 24 \\ \hline
+ SHA3-256 & 256 & 1600 & 1088 & - & 64 & 24 \\ \hline
+ SHA3-384 & 384 & 1600 & 832 & - & 64 & 24 \\ \hline
+ SHA3-512 & 512 & 1600 & 576 & - & 64 & 24 \\ \hline
+\end{tabular}
+\caption{Parameters of Cryptographic Hash Functions}
+\label{table:1}
+\end{table}
+
+\section{Keccak SHA-3}
+
+Draft FIPS-202 is new SHA-3 standard based on Keccak, the algorithm NIST has selected as the winner of the public SHA-3 Cryptographic Hash Algorithm Competition \cite{fips202}. The SHA-3 family consists of four cryptographic hash functions and two extendable output functions. All six functions share common structure called as the sponge construction described in 3.2.1. \par
+
+The four SHA-3 hash functions are SHA3-224, SHA3-256, SHA3-384 and SHA3-512. Here suffix denotes length of output message digest. Two extendable output functions (XOFs) are SHAKE128 and SHAKE256. Where suffix number indicates security strength that these two functions support.
+
+\subsection{Keccak-p Permutations}
+
+Keccak-p permutations are based on the equation Keccak-p[b, nr]. Here two parameters are length of the string to be permuted, called width b and number of iteration of an internal round called nr. \par
+
+A round of Keccak-p permutation Rnd consists of a sequence of five round transformations. It is called step-mappings. Set of b-bit to the permutation is called state. Seven possible values for Keccak-p is in table below,
+
+\begin{table}[ht]
+	\centering
+	
+\begin{tabular}{|c||c|c|c|c|c|c|c|} 
+\hline
+ b & 25 & 50 & 100 & 200 & 400 & 800 & 1600 \\ \hline
+ w = b/25 & 1 & 2 & 4 & 8 & 16 & 32 &64 \\ \hline
+ l = log2(b/25) & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
+\end{tabular}
+\caption{Keccak-p Permutation width and related quantities}
+\label{table:2}
+\end{table}
+
+‘A’ is state array denotes 5-by-5-by-w, which represents state. A state represents three dimension array A[x, y, z] where, 0 $\leq$ x $<$ 5, 0 $\leq$ y $<$ 5, 0 $\leq$ z $<$ w. Converting from state array to string and vice-versa, and labelling conventions are given in \cite{fips202}. \par
+
+The five step mappings that comprise a round of Keccak-p[b, nr] are denoted by $\theta$, $\rho$, $\pi$, $\chi$, and $\iota$. Each step mapping denoted by A takes an array and update it to A’. This is shown in figure \ref{state} below,
+
+%Image
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=12cm,height=15cm]{images/state}
+	\caption{Parts of the state array organized by dimensions \label{state}}
+\end{figure}
+
+
+\subsection{Sponge Construction}
+
+SHA-3 uses sponge construction in its underlying structure which is same general structure provided in other iterative hash functions. Sponge construction build a function SPONGE[f,pad,r]. Where,
+
+f is internal function used to process input block,
+r is the size of input block, also called bit rate,
+pad is padding algorithm.
+
+Figure \ref{sponge} below shows the sponge construction of Keccak SHA-3.
+%Image
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=12cm,height=6cm]{images/sponge}
+	\caption{Sponge Construction \label{sponge}}
+\end{figure}
+
+
+\subsection{Keccak[c] Specification}
+
+Keccak is family of sponge function with function as Keccak-p = [b, 2l+12] permutation as underlying function and padding rule pad1*01. Any specific function from family is defined by choices of parameters rate r and capacity c such that r+c is {25, 50, 100, 200, 400, 800, 1600}. This is values of b specified in table 2.
+
+DUT we have selected consist of 512-bit hash value for which value of b is 1600-bits. So, if we consider case with b=1600, Keccak family is denoted by Keccak[c]; in this case r is determined by choice of c. And
+
+Keccak[c] = SPONGE[Keccak-p[1600, 24], pad10*1, 1600 –c]
+Thus, given M and output d we have,
+
+Keccak[c] (M, d) = SPONGE[Keccak-p[1600, 24], pad10*1, 1600 –c] (M, d)
+
+\subsection{SHA-3 Function Specification}
+
+Four SHA-3 hash functions defined from Keccak-p function specification in 2.2.3 and by appending two bits to the message are,
+
+\vspace{0.5cm}
+\begin{BVerbatim}
+	SHA3-224(M) = Keccak [448] (M || 01, 224)
+	SHA3-256(M) = Keccak[512] (M || 01, 256)
+	SHA3-384(M) = Keccak[768] (M || 01, 384)
+	SHA3-512(M) = Keccak[1024] (M || 01, 512)
+\end{BVerbatim}
+
+And the two SHA-3 XOFs defined from Keccak are as following,
+
+\vspace{0.5cm}
+\begin{BVerbatim}
+	SHAKE128(M, d) = Keccak[256] (M || 1111, d)
+	SHAKE256(M, d) = Keccak[512] (M || 1111, d)
+\end{BVerbatim}
+
+Here, two `11' bit appended to message provides domain specification. That is to distinguish XOFs from other four functions. And last two `11' bits appended to message for compatibility with Sakura coding scheme. This scheme supports development of function called tree hashing, in which parallel processing is applied to compute and update digest of long messages more efficiently\cite{sha3ref}.
+
+
+\section{Application of Cryptographic Hash Functions}
+
+\subsection{Verify Message Integrity}
+
+Cryptographic hash functions are used to determine if any changes made to a message or file. For example, compare message digest (hash value) before and after transmission. MD5 or SHA-1 hashes are posted on website or forum for the integrity of software being downloaded. An MD5 hash generated from an OpenOffice.org download (v2.3.0 for Win32, English language) looks like this: beda08800f9505117220b6db1deb453a
+
+\subsection{Password Verification}
+
+Storing passwords as plaintext can result in massive security breach if password file goes to eavesdropper’s hands. So, it’s secure to store message digest of each password instead of plaintext. That is why secure website has options for password reset instead of retrieving old passwords. 
+
+\subsection{File or Data Identifier}
+
+Message digest are also used for reliably identifying files on several code management systems like Git, Mercurial or Monotone etc. uses sha1sum of various types of content (file content, directory trees, ancestry information, etc.) to uniquely identify them. Peer to Peer file sharing and Magnet links are other examples of Hash identifiers.
+
+\subsection{PRG and Key Derivation}
+
+Hash functions are also used to generate pseudorandom bits or to derive multiple keys from a single key.
+
+\section{Conclusion}
+
+This chapter explains details of Secure Hash Algorithm-3 cryptographic algorithm. It also gives comparison between MD5 and SHA family primitives. Important step to look upon is Keccak SHA-3 specifications at algorithmic level. Some applications of Cryptographic Hash Functions are also given.

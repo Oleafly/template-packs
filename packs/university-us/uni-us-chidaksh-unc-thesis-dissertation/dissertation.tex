@@ -1,0 +1,218 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% HEADER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Use the `masters' option for a master's thesis, or `doctoral' (default) for a PhD.
+\documentclass[11pt,masters]{unc_dissertation}
+
+%Font packages
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+%Bibliography - use natbib for \citep/\citet commands
+\usepackage[round,authoryear]{natbib}
+\bibliographystyle{plainnat}
+
+% longtable needed for abbreviations list
+\usepackage{longtable}
+
+%% Math Packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{amssymb}
+
+%% Commonly useful packages (trim to what you need) %%%%%%%%%%%
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{listings}
+\lstset{basicstyle=\scriptsize\ttfamily, breaklines=true, breakatwhitespace=false}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable, skins}
+\usepackage{soul}
+\usepackage{caption}
+
+%% Hyperref colors — UNC grad school requires black font throughout
+\hypersetup{colorlinks=true, citecolor=black, linkcolor=black, urlcolor=black}
+% Fix MakeUppercase incompatibility with hyperref PDF strings
+\pdfstringdefDisableCommands{%
+  \let\MakeUppercase\relax
+  \let\textsc\relax
+}
+
+%% Example custom commands — define your own here %%%%%%%%%%%%%
+% \newcommand{\std}[1]{{\scriptsize$\pm$#1}}
+% \newcommand{\hlc}[2][yellow!50]{{\sethlcolor{#1}\hl{#2}}}
+
+%% Example: a titled, breakable colored box (handy for appendix listings) %%
+\newtcolorbox{promptbox}[1]{
+  enhanced,
+  colback=gray!5!white,
+  colframe=black!50,
+  colbacktitle=black!70,
+  coltitle=white,
+  fonttitle=\bfseries\small\sffamily,
+  title={#1},
+  left=6pt, right=6pt, top=6pt, bottom=6pt,
+  before skip=10pt, after skip=10pt,
+  breakable,
+  arc=3pt
+}
+
+\usepackage{indentfirst}
+
+%% Flush footnotes to the left
+\usepackage[hang,flushmargin]{footmisc}
+
+%% Packages for Graphics & Figures %%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+
+%% UNC Graduate School compliance overrides %%%%%%%%%%%%%%%%%%
+
+% Single-space multi-line chapter titles; bold ALL-CAPS appendix headings.
+\makeatletter
+\def\@makechapterhead#1{%
+  \begin{center}%
+    \my@addappropriatespace%
+    \ifmy@appendix
+      \textls*[25]{\textbf{\MakeUppercase{\@chapapp}\enspace\thechapter}}%
+      \par\vspace{\baselineskip}%
+      \begin{singlespace}{\large\bfseries\MakeUppercase{#1}}\end{singlespace}%
+    \else
+      \textls*[25]{\textbf{\MakeUppercase{\@chapapp}\enspace\thechapter}}%
+      \par\vspace{\baselineskip}%
+      \begin{singlespace}{\large\bfseries #1}\end{singlespace}%
+    \fi
+    \par
+  \end{center}%
+}
+\makeatother
+
+% Footnote: begin directly below the solid line.
+% \footnoterule: no trailing kern; \footnotesep: small strut so the first line
+% sits immediately below the rule (cls default is \baselineskip which leaves a
+% full empty line above the footnote text).
+\setlength{\footnotesep}{19pt}
+\renewcommand{\footnoterule}{%
+  \kern-3pt
+  \hrule width 2in height 0.4pt
+  \kern-8pt%
+}
+
+% Bibliography: single-spaced within entry, one double-spaced blank line between entries.
+% natbib exposes \bibsep for this; cls already sets \singlespacing inside thebibliography.
+\setlength{\bibsep}{\baselineskip}
+\renewcommand{\bibfont}{\singlespacing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DOCUMENT SETTINGS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Your Thesis Title Here}
+\author{Your Name}
+\advisor{Advisor Name}
+\readerA{Committee Member A}
+\readerB{Committee Member B}
+% \readerC{Committee Member C}
+% \readerD{Committee Member D}
+\dissyear{2026}
+\dissdept{Department of Computer Science in the College of Arts and Sciences}
+
+\input{abstract.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+
+\pagestyle{plain}
+
+%%%%%%%%%%%%%%%%%
+%% INITIAL THINGS
+%%%%%%%%%%%%%%%%%
+
+\frontmatter
+
+\maketitle
+
+\chapter*{Acknowledgements}
+\input{acknowledgements.tex}
+
+% The graduate school requires that entries are double spaced.
+% They also require that multiple lines in a single entry are single spaced.
+\newlength{\oldbaselineskip}
+\setlength{\oldbaselineskip}{\the\baselineskip}
+\newlength{\oldparskip}
+\setlength{\oldparskip}{\the\parskip}
+
+\setlength{\baselineskip}{0.5\oldbaselineskip}
+\setlength{\parskip}{0.5\oldbaselineskip}
+
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+% Restore original spacings
+\setlength{\baselineskip}{1.0\oldbaselineskip}
+\setlength{\parskip}{1.0\oldparskip}
+
+% Manual List of Abbreviations (alphabetically arranged per UNC guidelines).
+% \my@isalisttrue forces the cls to use listtitleextra (0in) instead of
+% fronttitleextra (1in), so the heading sits 1" from the top edge.
+% Delete this block if your thesis has no abbreviations.
+\makeatletter
+\my@isalisttrue
+\chapter*{LIST OF ABBREVIATIONS}
+\my@isalistfalse
+\makeatother
+{\singlespacing\vspace{-5pt}
+\begin{tabbing}
+\hspace{1.5in}\=\kill
+ABC \> Example Abbreviation One \\[0.5\baselineskip]
+XYZ \> Example Abbreviation Two \\[0.5\baselineskip]
+\end{tabbing}
+}
+
+\mainmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%MAIN CHAPTERS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{plain}
+
+\chapter{First Chapter Title}
+\input{chapter1.tex}
+
+\chapter{Second Chapter Title}
+\input{chapter2.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% APPENDICES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+
+\chapter{First Appendix Title}
+\input{appendixA.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BIBLIOGRAPHY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\backmatter
+
+\bibliography{dissertation}
+
+\end{document}

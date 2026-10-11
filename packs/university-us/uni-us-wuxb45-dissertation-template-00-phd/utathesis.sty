@@ -1,0 +1,675 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Module     : utaphd.sty
+% Title      : Univ. of TX at Arlington LaTeX style file for dissertations
+%
+% Programmer : Terry Sergeant (sergeant@cse.uta.edu)
+% Start Date : 24 Sep 1996
+% Finish Date: 22 Oct 1996
+% Programmer : Vasant Prabhu (prabhu@uta.edu)
+% Start Date : 17 Oct 2001
+% Finish Date: 13 Dec 2001
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% DESCRIPTION
+%
+% This is a LaTeX style file designed for use by Ph.D. students at
+% UTA.  There is another style file (thesis.sty) for the same purpose
+% but it seems to be outdated in terms of graduate school requirements.
+% This file used thesis.sty as a template, but MUCH has been changed.
+%
+% It is assumed that others who use this file will want to make
+% modifications and improvements.  Such enhancements are encouraged
+% and there is a place below set aside specifically for documenting
+% such actions.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% MODIFICATIONS
+% The original utaphd.sty file has been again modified (July 21, 2003) to utathesis.sty by
+% Vasant K. Prabhu (prabhu@uta.edu) to conform to EE Department requirements;
+% (a) Copyright page has been added;
+% (b) A dedication page has been added;
+% (c) A biographical statement page has been added.
+%
+%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% SAMPLE USAGE
+%
+%     LATEX 2.09 USAGE:
+%       \documentstyle[12pt,utaphd]{report}
+%
+%     LATEX 2e USAGE:
+%       \documentclass[12pt]{report}
+%       \usepackage{utaphd}
+%
+%     SAMPLE FRONT MATTER:
+%       \graduationmonth{December}
+%       \graduationyear{1996}
+%       \defensedate{November 11, 1996}
+%       \author{Name of Author}
+%       \committee{Chair}{member2}...{member5}
+%       \title{Your Title}
+%
+%       \signaturepagePhd
+%       \titlepage
+%       \begin{acknowledgements}
+%         I would like to thank \ldots \\
+%       \end{acknowledgements}
+%       \begin{abstract}
+%         \indent Text of abstract goes here.
+%       \end{abstract}
+%       \tableofcontents
+%       \listoffigures
+%       \listoftables
+%       \addtocontents{toc}{\noindent\mbox{Chapter}}%
+%     FIRST AND FOLLOWING CHAPTERS:
+%       \chapter{INTRODUCTION}
+%       Text of first chapter goes here.
+%
+%     APPENDIX
+%       \appendix
+%       \chapter{FIRST APPENDIX NAME}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MARGINS AND SUCH
+%%%%%%%%%%%%%%%%%%%%%
+
+\typeout{U.T. Arlington dissertation format, v0.2 - 22 Oct 1996}
+\oddsidemargin 0.25in
+\evensidemargin 0.25in
+\textheight 612\p@   % 612 pts is 8.5"
+% a text width of 6 inches will allow a total of 2.5 inches for the left and right margins
+% use less than 6 inches if you want wider margins
+% Darin Brezeale, January 3, 2008
+\textwidth 6.0in
+%\textwidth 6.25in
+\footskip 0.25in
+\topmargin \p@
+\headheight 1.5ex
+\headsep 12\p@
+\parindent 30\p@
+\itemsep 0\p@        % keeps spacing within lists consistent
+\parsep 0\p@         % keeps spacing within lists consistent
+\parskip 0\p@        % keeps spacing b/t pars consistent
+\topsep 0\p@         % consistent spacing b/t lists & paragraphs
+\partopsep 0\p@      % consistent spacing b/t lists & paragraphs
+\topskip 0\p@        % keeps top margin consistent
+\textfloatsep 25\p@  % proper spacing for floats
+\intextsep 25\p@     % proper spacing for floats
+
+\clubpenalty= 10000           % no orphans allowed
+\widowpenalty= 10000          % no widows allowed
+\displaywidowpenalty= 10000   % no widows allowed in "displayed" text
+\def\myskip{\vskip 9\p@}
+\def\stretchv@l{1.15}
+\renewcommand{\baselinestretch}{\stretchv@l} % double spacing
+\pagenumbering{roman}
+\renewcommand{\floatpagefraction}{0.8}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% VARIABLES TO BE SPECIFIED BY USER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\author#1{
+  \def\auth@r{#1}
+  \def\auth@rcaps{\uppercase{#1}}}
+\def\committee#1#2#3#4#5{
+  \def\superpr@f{#1}
+  \def\memb@rA{#2}
+  \def\memb@rB{#3}
+  \def\memb@rC{#4}
+  \def\memb@rD{#5}}
+\def\title#1{\def\ti@tle{#1}}
+\def\degree#1{\def\d@gree{#1}}
+\def\graduationmonth#1{\def\gr@duationmonth{#1}}
+\def\graduationyear#1{\def\gr@duationyear{#1}}
+\def\defensedate#1{\def\defensed@te{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% OTHER VARIABLES AND CONSTANTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\appr@val
+  {The members of the Committee approve the doctoral \vspace{-.5ex}\\
+   dissertation of { \auth@r} \par}
+\def\d@gree{DOCTOR OF PHILOSOPHY}
+\def\d@greeinit{Ph.D.}
+\def\printDefenseDate{
+\makeatletter
+\begin{flushright}
+    \defensed@te
+\end{flushright}
+\makeatother}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% REDEFINITION OF CHAPTERS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\@chapapp}{CHAPTER}
+\def\appfl@g{APPENDIX}
+\def\contentsfl@g{CONTENTS}
+
+\def\chapter{
+  \textheight 612pt           % 612 pts is 8.5"
+\clearpage
+  \global\@topnum\z@          % keeps floats away from top of page
+  \@afterindenttrue
+  \secdef\@chapter\@schapter} % tells where definitions for the
+                              % regular and star forms are ...
+
+\def\@makechapterhead#1{
+  \thispagestyle{plain}
+  \ifx\@chapapp\appfl@g{}                   % if chapter is an appendix
+    \vspace*{\fill}\vspace*{-45\p@}         % space to center of page
+   { \parindent \z@ %\centering             % center title (no indent)
+      \ifnum \c@secnumdepth >\m@ne          % if printing chapter numbers
+       \large\bf \@chapapp{} \thechapter
+        \par \vskip 4\p@
+      \fi
+     \large \bf #1\par \nobreak \vfill \newpage}
+     \par \vskip 16\p@
+  \else
+    \vspace*{36\p@}                         % space down to make 2in total
+    {\parindent \z@ %\centering              % center title (no indent)
+      \ifnum \c@secnumdepth >\m@ne          % if printing chapter numbers
+       \large\bf \@chapapp{} \thechapter   % prints Chapter X
+        \par \vskip 4\p@
+      \fi
+     \large \bf #1\par \nobreak \vskip 4\p@ }
+     \par \vskip 16\p@
+  \fi }
+
+\def\@makeschapterhead#1{
+ \thispagestyle{plain}
+  \ifx\@chapapp\appfl@g{}
+    \vspace*{\fill}\vspace*{-45\p@}         % space to center of page
+    { \parindent \z@ \centering
+%     \large \bf #1\par \nobreak \vfill \newpage }
+      \normalsize  #1\par \nobreak \vfill \newpage }
+  \else
+    \vspace*{36\p@}                         % space down to make 2in total
+    { \parindent 0pt \centering
+%      \large \bf #1\par \nobreak \vskip 4\p@ }
+       \normalsize  #1\par \nobreak \vskip 4\p@ }
+  \fi }
+
+\def\@chapter[#1]#2{
+\thispagestyle{plain}
+\ifnum \c@secnumdepth >\m@ne              % if chapters are numbered
+\refstepcounter{chapter}                % increment counter
+    \typeout{\@chapapp\space\thechapter.}   % show typesetting progress
+    \ifx\@chapapp\contentsfl@g{}\else
+      \addcontentsline{toc}{chapter}
+        {\protect\numberline{\thechapter.}#1}
+    \fi
+  \else                                     % chapters are NOT numbered
+    \ifx\@chapapp\contentsfl@g{}\else
+      \addcontentsline{toc}{chapter}{#1}
+    \fi
+  \fi
+  \chaptermark{#1}
+  \@makechapterhead{#2} \@afterheading
+  \ifx\@chapapp\appfl@g{}
+    \pagestyle{plain}
+%     \pagestyle{myheadings}  % this puts the page number in the upper right
+  \else
+    \ifnum\value{chapter}=1
+      \markboth{}{}
+     \pagestyle{plain}
+%     \pagestyle{myheadings}  % this puts the page number in the upper right
+      \pagenumbering{arabic}
+    \fi
+  \fi
+  \textheight 612\p@ }         % 612 pts is 8.5"
+
+\def\@schapter#1{
+  \thispagestyle{plain}
+  \ifx\@chapapp\contentsfl@g{}\else
+    \addcontentsline{toc}{chapter}{#1}
+  \fi
+  \@makeschapterhead{#1} \@afterheading }
+
+%
+% All headings/subheadings should be of the same size and produce no
+% extra spaces
+%
+\def\section{\@startsection {section}{1}{\z@}{4.6ex plus -1ex minus
+       -.2ex}{.3ex plus .2ex}{\large\bf}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{3.9ex plus -1ex minus
+       -.2ex}{.2ex plus .2ex}{\large\bf}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{3.25ex plus
+      -1ex minus -.2ex}{1.5ex plus .2ex}{\large\bf}}
+
+\def\newheadline{\protect\\}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SIGNATURE PAGE
+%%%%%%%%%%%%%%%%%
+
+\def\signaturepagePhD{
+  \newpage \thispagestyle{empty}
+  \vspace*{36\p@}
+%  {\centering \large\bf\ti@tle \par }
+   {\centering \normalsize\ti@tle \par }
+  \vspace{1in}
+  \noindent\appr@val
+  \vspace{0.25in}
+
+  {\hskip -37\p@
+  \begin{tabular}{p{2.3in}p{3.5in}}
+       \rule{0ex}{8ex}\superpr@f & \hrule \\     % Signature line with Supervisor's Name - modified by V K Prabhu
+  %      \rule{0ex}{8ex}\superpr@f & \\
+     \end{tabular} \par}
+  \vspace*{-0.2in}
+  \noindent Supervising Professor
+  %\noindent Supervising Professor \hspace*{0.85in} \hrulefill \hspace*{0.27in}
+
+  \vspace*{-0.15in}
+
+  {\hskip -37\p@
+    \begin{tabular}{p{2.3in}p{3.5in}}
+      \rule{0ex}{8ex}\memb@rA & \hrule \\
+      \rule{0ex}{6ex}\memb@rB & \hrule \\
+      \rule{0ex}{6ex}\memb@rC & \hrule \\
+      \rule{0ex}{6ex}\memb@rD & \\
+%     \rule{0ex}{6ex}Mini~Vasudevan & \hrule \\
+      \rule{0ex}{6ex}Dean of the Graduate School & \hrule
+    \end{tabular} }
+  \newpage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE PAGE
+%%%%%%%%%%%%%%
+
+\def\titlepage{
+  \newpage \thispagestyle{empty}
+  \vspace*{54\p@}
+  {\centering
+%   {\large\bf\ti@tle} \\
+    {\normalsize\ti@tle} \\
+    \vspace{0.5in}
+    by \\ \auth@rcaps \\
+    \vspace{1in}
+        Presented to the Faculty of the Graduate School of \\
+    The University of Texas at Arlington in Partial Fulfillment \\
+        of the Requirements \\ for the Degree of \\
+    \vspace{0.5in}
+    \d@gree \\
+    \vspace{2.25in}
+    THE UNIVERSITY OF TEXAS AT ARLINGTON \\
+    \gr@duationmonth\ \gr@duationyear \par}
+  \newpage }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%VKP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE PAGE
+%%%%%%%%%%%%%%
+
+\def\copyrightpage{
+  \newpage \thispagestyle{empty}
+  \null\vfill
+        \begin{center}
+  %             \large
+                \normalsize
+                \ Copyright \copyright\ by
+                {\auth@r}                     % author name
+                { \gr@duationyear}           % copyright year
+                \\
+                All Rights Reserved
+        \end{center}
+        \vfill
+
+  \newpage }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     Commands Defined For Use By Thesis Author
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \dedication : Use for a dedication, copyright, or epigraph.
+%               Produces a page with no number for the text which follows
+%               If you want centering, do it yourself with
+%               \begin{center} and \end{center}.
+%
+\newcommand{\dedication}{
+        \chapter*{\vspace*{-6.5in}BIOGRAPHICAL STATEMENT}
+%       \thispagestyle{empty}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%VKP%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ACKNOWLEDGEMENTS PAGE
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{acknowledgements}{\ackhead}{\acktail}
+\def\ackhead{\chapter*{ACKNOWLEDGEMENTS}}
+\def\acktail{\printDefenseDate\par\newpage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABSTRACT PAGE
+%%%%%%%%%%%%%%%%
+
+\renewenvironment{abstract}{
+  \chapter*{ABSTRACT}
+  \myskip\myskip
+% {\centering {\large\bf\ti@tle}\par\myskip
+  {\centering {\normalsize\ti@tle}\par\myskip
+              %Publication No. \rule{0.5in}{0.5\p@}\par\myskip
+              \auth@r , \d@greeinit\par
+        The University of Texas at Arlington, \gr@duationyear\par\myskip}
+  \myskip\noindent Supervising Professor: \superpr@f \par\myskip
+}{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLE OF CONTENTS
+%%%%%%%%%%%%%%%%%%%%
+
+\def\tableofcontents{
+  \@restonecolfalse
+  \if@twocolumn\@restonecoltrue\onecolumn\fi
+  \def\@chapapp{CONTENTS}
+  \chapter*{TABLE OF CONTENTS\@mkboth{CONTENTS}{CONTENTS}}
+  \renewcommand{\@chapapp}{CHAPTER}
+  \@starttoc{toc}\if@restonecol\twocolumn\fi}
+
+\renewcommand*{\l@chapter}     {\@dottedtocline{0}{0em}{1.5em}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LIST OF FIGURES
+%%%%%%%%%%%%%%%%%%
+
+\def\listoffigures{
+  \@restonecolfalse
+  \if@twocolumn\@restonecoltrue\onecolumn\fi
+  \chapter*{LIST OF ILLUSTRATIONS\@mkboth{LIST of ILLUSTRATIONS}{LIST OF ILLUSTRATIONS}}
+  \@starttoc{lof}
+  \if@restonecol\twocolumn\fi
+  \addtocontents{lof}{\noindent\mbox{Figure}\hfill\mbox{Page}}}
+
+\def\l@figure{\@dottedtocline{1}{1em}{2.3em}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LIST OF TABLES
+%%%%%%%%%%%%%%%%%
+
+\def\listoftables{
+  \@restonecolfalse
+  \if@twocolumn\@restonecoltrue\onecolumn\fi
+  \chapter*{LIST OF TABLES\@mkboth{LIST of TABLES}{LIST OF TABLES}}
+  \@starttoc{lot}
+  \if@restonecol\twocolumn\fi
+  \addtocontents{lot}{\noindent\mbox{Table}\hfill\mbox{Page}}}
+
+\let\l@table\l@figure
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDICES
+%%%%%%%%%%%%%
+%
+% The redefinition of @sect here is so that sections in the appendices
+% won't be added to the table of contents.  There is probably a better
+% way, but I don't know what it is.  I tried simply reseting tocdepth,
+% but it apparently won't change things mid-stream.
+%
+%%%%%%%%%%%%%
+
+\def\@sect#1#2#3#4#5#6[#7]#8{%
+     \ifnum #2>\c@secnumdepth
+       \let\@svsec\@empty\else
+       \refstepcounter{#1}%
+       \protected@edef\@svsec{\@seccntformat{#1}}%
+     \fi
+     \@tempskipa #5\relax
+      \ifdim \@tempskipa>\z@
+        \begingroup #6\relax
+          \@hangfrom{\hskip #3\relax\@svsec}%
+                    {\interlinepenalty \@M #8\par}%
+        \endgroup
+       \csname #1mark\endcsname{#7}
+           \ifx\@chapapp\appfl@g{}
+           \else
+              \addcontentsline
+              {toc}{#1}{\ifnum #2>\c@secnumdepth \else
+                      \protect\numberline{\csname the#1\endcsname}\fi
+                    #7}
+           \fi
+      \else
+        \def\@svsechd{#6\hskip #3\relax  %% \relax added 2 May 90
+                   \@svsec #8\csname #1mark\endcsname{#7}
+           \ifx\@chapapp\appfl@g{}
+           \else
+             \addcontentsline
+                           {toc}{#1}{\ifnum #2>\c@secnumdepth \else
+                           \protect\numberline{\csname the#1\endcsname}%
+                                     \fi
+                       #7}
+           \fi}
+     \fi
+     \@xsect{#5}}
+
+\def\appendix{
+  \par
+  \setcounter{chapter}{0}
+  \setcounter{section}{0}
+  \addtocontents{toc}{\noindent\mbox{Appendix}}
+  \def\@chapapp{APPENDIX}
+  \def\thechapter{\Alph{chapter}}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THE BIBLIOGRAPHY
+%%%%%%%%%%%%%%%%%%%
+%
+% It is recommended that you use BIBTeX so you won't have to worry
+% about formatting details.
+%
+%%%%%%%%%%%%%%%%%%%
+
+\def\thebibliography#1{
+  \renewcommand{\@chapapp}{CHAPTER}
+  \chapter*{REFERENCES\@mkboth{REFERENCES}{BIBLIOGRAPHY}}
+  \textheight 612pt \list{[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}
+  \leftmargin\labelwidth
+  \advance\leftmargin\labelsep
+  \usecounter{enumi}} \def\newblock{\hskip .11em plus .33em minus -.07em}
+  \sloppy \sfcode`\.=1000\relax}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\thebiography{
+  \renewcommand{\@chapapp}{CHAPTER}
+  \chapter*{BIOGRAPHICAL STATEMENT}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FLOATS, ETC.
+%%%%%%%%%%%%%%%%
+% The graduate school requirements for tables and figures (float) are:
+%   1. triple space between float any text
+%   2. triple space between any caption/heading and text
+%   3. double space between caption and float
+%   4. floats in appendices don't go in table of contents
+%
+% FOR FIGURES
+%   1. Caption is below figure
+%   2. Captions end with a period
+%
+% FOR CENTERED TABLES
+%   1. TABLE # appears centered above the heading
+%   2. Heading is centered above table in all caps and no period
+%   3. Table of contents entries are NOT all caps
+%
+% FOR FLUSH-LEFT TABLES
+%   1. Heading is above table
+%   2. Heading has form: Table #. Heading Text (with no period)
+%
+% OTHER CONSIDERATIONS
+% Since \baselinestretch has been changed to obtain double-spacing,
+% the contents of tables get double-spaced as well.  The environments
+% below have been change to make contents of floats single-spaced and
+% to provide correct spacing.
+%
+% A new environment called TABLE has been defined for use with
+% centered tables.  A caption command appearing within the TABLE
+% environment will produce the graduate school-like heading.
+%
+%%%%%%%%%%%%%%%%
+
+\renewenvironment{figure}
+    {\def\floatk@nd{fig}
+     \renewcommand{\baselinestretch}{1}
+     \@float{figure}}
+    {\end@float \renewcommand{\baselinestretch}{\stretchv@l}}
+\renewenvironment{figure*}
+    {\def\floatk@nd{fig}
+     \renewcommand{\baselinestretch}{1}
+     \@dblfloat{figure}}
+    {\end@dblfloat \renewcommand{\baselinestretch}{\stretchv@l}}
+
+\renewenvironment{table}
+    {\def\floatk@nd{tab}
+     \renewcommand{\baselinestretch}{1} \@float{table}}
+    {\end@float \renewcommand{\baselinestretch}{\stretchv@l}}
+\renewenvironment{table*}
+  {\def\floatk@nd{tab}
+   \renewcommand{\baselinestretch}{1} \@dblfloat{table}}
+  {\end@dblfloat \renewcommand{\baselinestretch}{\stretchv@l}}
+
+\newenvironment{TABLE}
+    {\def\floatk@nd{TAB}
+     \renewcommand{\baselinestretch}{1} \@float{table}}
+    {\end@float \renewcommand{\baselinestretch}{\stretchv@l}}
+\newenvironment{TABLE*}
+  {\def\floatk@nd{TAB}
+   \renewcommand{\baselinestretch}{1} \@dblfloat{table}}
+  {\end@dblfloat \renewcommand{\baselinestretch}{\stretchv@l}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CAPTIONING COMMANDS
+%%%%%%%%%%%%%%%%%%%%%%
+%
+% See comments for FLOATS, ETC. for information above what the
+% modified captioning command does.
+%
+%%%%%%%%%%%%%%%%%%%%%%
+\def\figk@nd{fig}
+\def\tabk@nd{tab}
+\def\TABk@nd{TAB}
+\newbox\@tempboxb
+
+\long\def\@caption#1[#2]#3{
+  \par
+  \ifx\@chapapp\appfl@g{}  % float in appendices don't go in toc
+  \else
+    \addcontentsline{\csname ext@#1\endcsname}{#1}
+{\protect\numberline{\csname the#1\endcsname}
+                    {\ignorespaces #2}}
+  \fi
+  \begingroup
+    \@parboxrestore
+    \normalsize
+    \@makecaption{\csname fnum@#1\endcsname}{\ignorespaces #3}\par
+  \endgroup}
+
+%\long\def\@makecaption#1#2{%
+%  \ifx\floatk@nd\figk@nd
+%    \setlength\abovecaptionskip{0.8\baselineskip}
+%    \setlength\belowcaptionskip{0\p@}
+%  \else
+%    \setlength\abovecaptionskip{\baselineskip}
+%    \setlength\belowcaptionskip{\baselineskip}
+%  \fi
+%  \vskip\abovecaptionskip
+%  \ifx\floatk@nd\TABk@nd
+%    \sbox\@tempboxb{\small TABLE~\thetable}%
+%    \sbox\@tempboxa{\small \uppercase{#2}}%
+%  \else
+%    \ifx\floatk@nd\figk@nd
+%      \sbox\@tempboxa{#1. #2.}%
+%    \else
+%      \sbox\@tempboxa{#1. #2}%
+%    \fi
+%  \fi
+%  \ifdim \wd\@tempboxa >\hsize
+%    \ifx\floatk@nd\TABk@nd
+%      {\small TABLE~\thetable\par\vskip 0.6\baselineskip #2\par}
+%    \else
+%      \ifx\floatk@nd\figk@nd
+%        #1. #2.\par
+%      \else
+%        #1. #2\par
+%      \fi
+%    \fi
+%  \else
+%    \global \@minipagefalse
+%    \ifx\floatk@nd\TABk@nd
+%      \hbox to\hsize{\hfil\box\@tempboxb\hfil}\par\vskip 0.6\baselineskip%
+%      \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+%    \else
+%      \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+%    \fi
+%  \fi
+%  \vskip\belowcaptionskip}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LISTING ENVIRONMENTS
+%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Environments such as description, enumerate and itemize are not
+% supposed to add extra spacing between items.
+%
+%%%%%%%%%%%%%%%%%%%%%%
+
+\def\@listI{\leftmargin\leftmargini
+            \parsep 0\p@
+            \topsep 0\p@
+            \itemsep0\p@}
+
+\def\@listii {\leftmargin\leftmarginii
+              \labelwidth\leftmarginii
+              \advance\labelwidth-\labelsep
+              \parsep 0\p@
+              \topsep 0\p@
+              \itemsep0\p@}
+
+\def\@listiii {\leftmargin\leftmarginiii
+               \labelwidth\leftmarginiii
+               \advance\labelwidth-\labelsep
+               \parsep 0\p@
+               \topsep 0\p@
+               \itemsep0\p@}
+
+\def\@listiv {\leftmargin\leftmarginiv
+              \labelwidth\leftmarginiv
+              \advance\labelwidth-\labelsep
+              \parsep 0\p@
+              \topsep 0\p@
+              \itemsep0\p@}
+
+\def\@listv  {\leftmargin\leftmarginv
+              \labelwidth\leftmarginv
+              \advance\labelwidth-\labelsep
+              \parsep 0\p@
+              \topsep 0\p@
+              \itemsep0\p@}
+
+\def\@listvi {\leftmargin\leftmarginvi
+              \labelwidth\leftmarginvi
+              \advance\labelwidth-\labelsep
+              \parsep 0\p@
+              \topsep 0\p@
+              \itemsep0\p@}

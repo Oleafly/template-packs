@@ -1,0 +1,72 @@
+\documentclass[12pt]{niuthesis}
+% \documentclass[12pt,singlespacing]{niuthesis}
+
+% some packages are loaded here, include any others you need here
+\usepackage{latexsym}		% to get LASY symbols
+\usepackage{graphicx}		% to insert PostScript figures
+\usepackage{rotating}           % defines sidways table and figure env.
+% \usepackage{hyperref}		% to insert hyperrefs
+\usepackage{natbib}    % for better bibliography management
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some LaTeX macros
+%%Here is where you can define any custom LaTeX macros or commands you want to use in your dissertation.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Choose the chapter(s) / files you want to work with
+
+%%% use this to compile all chapters
+\def\files{Chapter1/ch1,refs}
+
+%%% use this to work with only one chapter
+% \def\files{ch2}
+
+\includeonly{\files}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\title{Your Dissertation Title Here}
+
+\author{Your Name}
+
+\major{Your Major/Program}
+\degree{Dissertation}{Ph.D.}{Doctor of Philosophy}
+\degreedate{May}{Year}
+\department{Department of XXXX}
+\director{Your Advisor's Name}
+
+\begin{abstract}
+  This is where you write your abstract of the dissertation as a whole. The abstract should briefly introduce the problem, summarize the chapters, and preview some conclusions. A diss abstract can be longer than a typical journal article abstract, perhaps even a page or two.
+\end{abstract}
+
+\begin{acknowledgments}
+  Here's where you acknowledge folks who helped, probably your advisor and committee, perhaps funding agencies, influential professors and peers and anyone else you want to thank. You can be as formal or informal as you like here.
+\end{acknowledgments}
+
+\begin{dedication}
+  Here is where you can dedicate your dissertation to someone, if you wish. Common dedications include spouses, family members, mentors, or anyone else who has been particularly supportive. You can be as formal or informal as you like here, and you can even include a quote if you like. This is not required, but it is a moment to be very sweet and reflect on the PhD journey as a whole.
+\end{dedication}
+
+% comment this to suppress prologue
+\MakeThesisPrologue % includes table of contents
+% \tableofcontents
+
+\include{Chapter1/ch1}		% file with Chapter 1 contents
+%\include{Chapter2/ch2}		% file with Chapter 2 contents
+
+%\include{refs}		
+%%The example dissertation has a separate .tex file for references, creating an manual bibliography environment. It is generally preferred to use BibTeX or BibLaTeX for references, which can be done by including the appropriate commands in the preamble and then using \bibliography{yourbibfile} at the end. 
+
+\bibliographystyle{chicago}   % or apalike, plainnat, etc. — check your field's style
+\bibliography{refs}     % matches the filename refs.bib
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Appendices
+
+\appendix
+%\include{Chapter1/app1}			% file with Appendix A contents
+%%Appendices can be specific to a chapter or general to the whole dissertation, depending on how you organize your files. If it is specific, put it in the same folder as the chapter and name it app1, app2, etc. If it is general, you can put it in the same directory as the diss or in a separate folder. You can also have a mix of both.
+
+\end{document}

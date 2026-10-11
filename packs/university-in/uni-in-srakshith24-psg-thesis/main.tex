@@ -1,0 +1,65 @@
+\documentclass[openany, a4paper]{extbook}
+
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc}
+
+%\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{mathtools}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usepackage{fullpage}
+
+\usepackage[small, explicit]{titlesec}
+\titleformat{\chapter}[display]{\bfseries\centering}{\Large CHAPTER \thechapter}{1em}{\Large #1}
+
+\usepackage[titles]{tocloft}
+\renewcommand{\cftdot}{}
+
+\newcommand\textbox[1]{%
+  \parbox{.333\textwidth}{#1}%
+}
+
+\renewcommand{\contentsname}{CONTENTS}
+
+\renewcommand{\bibname}{BIBLIOGRAPHY}
+
+\renewcommand{\baselinestretch}{1.5}
+
+\graphicspath{{./chapters/}}
+
+\begin{document}
+  
+    % Title
+    \input{chapters/0.title.tex}
+        
+    % Table of Contents
+    \input{chapters/0.toc.tex}
+
+    % Acknowledgements
+    \input{chapters/0.ack.tex}
+
+    \chapter*{}
+    \addcontentsline{toc}{chapter}{SYNOPSIS}
+    \begin{center}
+        \textbf{\Large SYNOPSIS}
+    \end{center}
+
+    \vspace{1.5cm}
+
+    % Insert Synopsis here
+    <SYNOPSIS>
+
+    % Insert Chapters here
+    \input{chapters/chapter} % Just an example, add the chapters in order.
+
+    \bibliographystyle{abbrv}
+    \bibliography{chapters/ref}
+    \nocite{*}
+    \addcontentsline{toc}{chapter}{BIBLIOGRAPHY}
+\end{document}

@@ -1,0 +1,56 @@
+%%% This is a complete thesis template which includes almost all the things required to prepare your thesis according to the revised IIITDM formatting guidelines of Feb 2021
+
+\documentclass[PhD]{iiitdm}
+%%%  Color option can be 'NoColor' if you don't want any colorband in PhD thesis
+%\documentclass[PhD,NoColor]{iiitdm}
+%%%  Printing mode 'PrntForm' to leave relevant blank pages when printing the thesis
+%\documentclass[PhD,PrntForm,NoColor]{iiitdm}
+
+%%%  Default LaTeX packages used in this template are placed in '01_packages' file
+%%%  Any custom commands in the '02_commands' file under '0_settings' folder
+\input{0_settings/01_packages}
+\input{0_settings/02_commands}
+
+
+%%%%%%%%%%%   LaTeX document starts here   %%%%%%%%%%%%%%%%
+\begin{document}
+	
+%%%  Preamble will have all the files related to pages that comes before chapters
+%%%  Roman Numbering starts from acknowledgments and ends before chapters start
+\input{0_settings/03_preamble}
+
+
+%%%  The main text of chapters will follow from this point so set the page numbering
+%%%  to arabic from here on.
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Chapters come here.
+\include{C_chap/C01_chap1}
+\include{C_chap/C02_chap2}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Appendices come here.
+\appendix
+%%%  Sets the label in the table of contents to "Appendix"
+\addtocontents{toc}{\string\let\string\chapappname\string\appendixname}
+%%%  The appendices have to be included with `\input`, not `\include`
+%%%   due to a bug in LaTeX, otherwise the appendices will also be
+%%%   labeled "Chapter"
+%%%  Right way: \input{appendix-a/appendix-a}
+\input{D_appx/D01_app1}
+\input{D_appx/D02_app2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  Bibliography with 'refs' file as the main library that contains all references needed
+\begin{singlespace}
+  \bibliography{refs}
+\end{singlespace}
+\addcontentsline{toc}{chapter}{REFERENCES}
+
+%%%  The following sections are only required for research programmes: PhD   %%%%%%%%%%
+%%%  They have to be included in the final-approved thesis after viva-voce, so uncomment them only in the end %%%%%%
+\input{0_settings/04_postamble}
+
+\end{document}

@@ -1,0 +1,102 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title: Certificate Page
+% Purpose: Certificate page for UG thesis
+% Compiler: pdflatex
+% OS: Manjaro 
+% Version: V5
+% Written on: July 05, 2025
+% Revision Date: July 05, 2025
+% Author: Kingsuk Majumdar
+% Copyright (c) 2025 Kingsuk Majumdar
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Setup background logo for certificate page only
+\clearpage
+
+% Put this file in Frontmatter/ directory as Certificate.tex
+
+\thispagestyle{empty}
+\vspace*{-0.5cm}
+
+% Header with logo and college info
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}m{2cm}@{\hspace{1cm}}m{13cm}@{}}
+%\IfFileExists{college_logo.png}{\includegraphics[width=2.5cm,height=2.5cm]{college_logo.png}}{\IfFileExists{college_logo.jpg}{\includegraphics[width=2.5cm,height=2.5cm]{college_logo.jpg}}{\framebox[2.5cm][c]{LOGO}}} 
+\includegraphics[width=0.95\linewidth]{college_logo.png}&
+\begin{tabular}{@{}c@{}}  
+\large{\textbf{\MakeUppercase{\GetCollege}}}\\ 
+%\small{\GetAffiliation}\\
+\textbf{\GetDepartment}\\
+\textbf{\GetAddress}
+\end{tabular}
+\end{tabular}
+\end{table}
+
+\vspace{-1.0cm}
+\noindent\rule{\textwidth}{2pt}
+\vspace{-0.8cm}
+\begin{center}
+\textbf{\large \MakeUppercase{Certificate of Approval}}
+\end{center}
+
+\vspace{0.1cm}
+This report is hereby approved as a creditable work for final year project 
+[\GetPaperName\ (\GetPaperCode)] on ``\textbf{\GetThesisTitle}'' carried out and
+presented by \textbf{\GetGroupNo}:
+
+\vspace{-0.3cm}
+\begin{center}
+\GenerateStudentList
+\end{center}
+
+\vspace{-0.3cm}
+in partial fulfillment of the requirements for the award of Degree of \GetDegreeType\ in \GetDepartment\ from \GetCollege,
+\GetLocation\ under the supervision of \textbf{\GetSupervisor}%
+\ifnum\GetHasCoSupervisor>1\relax\ and \textbf{\GetCoSupervisor}\fi\ as per the requirement of the
+curriculum of \GetUniversity\ during the academic year \GetAY.
+
+\vspace{0.2cm}
+
+% Co-Supervisor section (if applicable) - spans full width
+\ifnum\GetHasCoSupervisor>1\relax
+\begin{flushleft}
+(Signature of Co-Supervisor)\\[0.1cm]
+\textbf{\GetCoSupervisor}\\
+\GetCoSupervisorDesignation\\
+\GetCoSupervisorDept\\
+\GetCoSupervisorCollege\\[0.1cm]
+Place: \underline{\hspace{3cm}} \hspace{2cm} Date: \underline{\hspace{3cm}}
+\end{flushleft}
+\vspace{0.3cm}
+\fi
+% Space adjustment 
+\ifnum\GetHasCoSupervisor =1 \relax
+\vspace{1.8cm}
+\fi
+% Supervisor and HoD section - side by side layout
+\begin{minipage}[t]{0.47\textwidth}
+\begin{flushleft}
+(Signature of Supervisor)\\[0.2cm]
+\textbf{\GetSupervisor}\\
+\GetSupervisorDesignation\\
+\GetSupervisorDept\\
+\GetSupervisorCollege\\[0.1cm]
+Place: \underline{\hspace{2.5cm}}\\
+Date: \underline{\hspace{2.5cm}}
+\end{flushleft}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.47\textwidth}
+\begin{flushright}
+(Signature of Head of Department)\\[0.2cm]
+\textbf{\GetHoD}\\
+\GetHoDDesignation\\
+\GetHoDDept\\
+\GetCollege\\[0.1cm]
+Place: \underline{\hspace{2.5cm}}\\
+Date: \underline{\hspace{2.5cm}}
+\end{flushright}
+\end{minipage}
+\clearpage
+
+\cleardoublepage

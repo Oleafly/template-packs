@@ -1,0 +1,134 @@
+
+% ----------------------------------------------------------
+% SAMPLE SLU Ph.D. Dissertation (external BibTeX demo)
+% ----------------------------------------------------------
+\documentclass[12pt,oneside]{book}
+
+% ------------ Packages & layout ---------------------------
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{ragged2e}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{titling}
+\usepackage{caption}
+\usepackage{etoolbox}
+\usepackage{hyperref}
+\usepackage{lmodern}
+\usepackage[numbers]{natbib}      % BibTeX interface
+\usepackage{lipsum}
+
+% ---------------- BibTeX style (in preamble) --------------
+\bibliographystyle{plain}         % swap for plainnat / apa etc.
+
+% ------------- Paragraph & spacing ------------------------
+\doublespacing
+\setlength{\parindent}{0.5in}
+\setlength{\RaggedRightParindent}{0.5in}
+\RaggedRight
+
+\AtBeginEnvironment{quote}{\singlespacing
+  \setlength{\RaggedRightParindent}{0.5in}\RaggedRight}
+\AtBeginEnvironment{quotation}{\singlespacing
+  \setlength{\RaggedRightParindent}{0.5in}\RaggedRight}
+\captionsetup{font=singlespacing, justification=raggedright, singlelinecheck=false}
+
+% ---------------- TOC title styling -----------------------
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\renewcommand{\cfttoctitlefont}{\normalfont\bfseries\MakeUppercase\centering}
+\renewcommand{\cftaftertoctitle}{\hfill}
+
+% -------------------- Meta-data ---------------------------
+\newcommand{\thesistitle}{USING EXTERNAL BIB\TeX{} IN AN SLU DISSERTATION}
+\newcommand{\authorname}{Jane Q. Doe, B.A., M.A.}
+\newcommand{\degree}{Doctor of Philosophy}
+\newcommand{\graduationyear}{2025}
+\newcommand{\committeelist}{%
+Professor Alice Example, Chairperson and Advisor\\[1em]
+Associate Professor Bob Scholar\\[1em]
+Assistant Professor Carol Mentor}
+
+% -------------- Chapter heading style ---------------------
+\titleformat{\chapter}[block]
+  {\normalfont\bfseries\centering\MakeUppercase}
+  {CHAPTER \thechapter:}{1em}{}
+
+% ===================  DOCUMENT  ===========================
+\begin{document}
+
+% ---------- Title page (unnumbered) -----------------------
+\begin{titlepage}\begin{center}\doublespacing
+{\Large\bfseries \thesistitle\par}\vfill
+\authorname\par\vfill
+A Dissertation Presented to the Graduate Faculty of\\
+Saint Louis University in Partial Fulfillment\\
+of the Requirements for the Degree of\\[1em]
+\degree\par\vfill
+\graduationyear
+\end{center}\end{titlepage}
+
+% ---------- Copyright page — page i -----------------------
+\clearpage
+\pagenumbering{roman}\setcounter{page}{1}
+\thispagestyle{plain}
+\begin{center}
+\copyright\ \graduationyear\ \authorname\\
+ALL RIGHTS RESERVED
+\end{center}
+\clearpage
+
+% ---------- Committee page — page ii ----------------------
+\thispagestyle{plain}
+\noindent\textbf{COMMITTEE IN CHARGE OF CANDIDACY:}\\[2em]
+\committeelist
+\clearpage
+
+% ---------- Abstract --------------------------------------
+\chapter*{Abstract}\addcontentsline{toc}{chapter}{Abstract}
+\singlespacing
+\lipsum[1]
+\doublespacing\clearpage
+
+% ---------- TOC & lists -----------------------------------
+\tableofcontents\clearpage
+\listoftables\clearpage
+\listoffigures\clearpage
+
+% ---------- Main matter -----------------------------------
+\mainmatter
+
+\chapter{INTRODUCTION}
+Placeholder text is indispensable in publishing workflows~\cite{ipsum2020}.
+The origins of \TeX{} are well documented by~\citet{knuth1986}.
+
+\section{Motivation}
+This study builds upon the methodology of~\cite{doe2024}.
+
+\chapter{METHODOLOGY}
+\lipsum[4]
+
+\chapter{RESULTS}
+\lipsum[5]
+
+\chapter{DISCUSSION}
+\lipsum[6]
+
+% ---------- Appendices ------------------------------------
+\appendix
+\chapter{APPENDIX A: SURVEY INSTRUMENT}
+\lipsum[12]
+
+% ---------- References ------------------------------------
+\backmatter
+\singlespacing
+\bibliography{sample_refs}  % External .bib file
+\doublespacing
+
+% ---------- Vita Auctoris ---------------------------------
+\chapter*{Vita Auctoris}\addcontentsline{toc}{chapter}{Vita Auctoris}
+Jane Q. Doe was born in Placeholder City. She earned her B.A.\ in Philosophy
+from Example University in 2020 and an M.A.\ in Bioethics from Sample College
+in 2022.
+
+\end{document}

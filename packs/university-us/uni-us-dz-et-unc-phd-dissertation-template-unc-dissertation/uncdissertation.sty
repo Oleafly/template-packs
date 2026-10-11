@@ -1,0 +1,881 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{uncdissertation}[1997/11/25]
+\def\mydepartment{Department of Economics} 
+
+
+
+\RequirePackage{ifthen}
+\RequirePackage{setspace}   % Changed doublespace to setspace -- MCW 4/13/03
+\RequirePackage{comment}
+
+\DeclareTextCommandDefault{\copyright}{{\textcircled{\textsf{c}}}}
+
+
+
+\ifthenelse{\@ptsize = 0}{\setstretch{1.25}}{} % 10-point
+\ifthenelse{\@ptsize = 1}{\setstretch{1.21}}{} % 11-point
+\ifthenelse{\@ptsize = 2}{\setstretch{1.24}}{} % 12-point
+\def\unc@adjusttitlespacing{\vspace*{-\baselineskip}\vspace*{-1ex}}
+\def\unc@adjustabstractspacing{\vspace*{-2\baselineskip}\vspace*{-2ex}}
+\def\unc@adjustchapterspacing{\vspace*{-\baselineskip}}
+\def\unc@adjustbibspacing{\vspace*{-\baselineskip}}
+
+\DeclareOption{double}{                  % Set up double spacing
+  \ifthenelse{\@ptsize = 0}{\setstretch{1.67}}{} % 10-point
+  \ifthenelse{\@ptsize = 1}{\setstretch{1.62}}{} % 11-point
+  \ifthenelse{\@ptsize = 2}{\setstretch{1.66}}{} % 12-point
+  \def\unc@adjusttitlespacing{\vspace*{-\baselineskip}\vspace*{-1ex}}
+  \def\unc@adjustabstractspacing{\vspace*{-2\baselineskip}\vspace*{-1.6ex}}
+  \def\unc@adjustchapterspacing{\vspace*{-\baselineskip}\vspace*{0.6ex}}
+  \def\unc@adjustbibspacing{\vspace*{-\baselineskip}\vspace*{-1.2ex}}
+}
+
+\DeclareOption{single}{
+  \setstretch{1}                % Set up single spacing
+  \def\unc@adjusttitlespacing{\vspace*{-\baselineskip}\vspace*{-1ex}}
+  \def\unc@adjustabstractspacing{\vspace*{-2\baselineskip}\vspace*{-2ex}}
+  \def\unc@adjustchapterspacing{\vspace*{-\baselineskip}\vspace*{-0.5ex}}
+  \def\unc@adjustbibspacing{\relax}
+}
+
+\DeclareOption{nodraft}{\unc@nodraft}
+\DeclareOption{bottom}{\unc@bottom}
+\DeclareOption{draft}{\unc@draft} % timestamp each page
+
+\DeclareOption{nofront}{\unc@nofront} % condense front matter
+\DeclareOption{nolists}{\unc@nolists} % condense front matter
+
+\DeclareOption{narrow}{\unc@narrow}
+\DeclareOption{debug}{\thesisdebugmargins}
+
+\def\unc@pageheight  {11in}
+\def\unc@pagewidth   {8.5in}
+\def\unc@leftmargin  {1in}   % use 1 5/16'' margin -MCW
+\def\unc@rightmargin {1in}   % use 1 1/16'' margin -MCW
+\def\unc@topmargin   {1in}
+\def\unc@bottommargin{1in}
+
+\def\unc@narrow{%
+\typeout{(Using slightly narrow margins for mpar)}
+\def\unc@pageheight  {11in}
+\def\unc@pagewidth   {8.5in}
+\def\unc@leftmargin  {1.75in}
+\def\unc@rightmargin {1.5in}
+\def\unc@topmargin   {1in}
+\def\unc@bottommargin{1in}
+\unc@setmargins
+}
+
+\def\unc@setmargins{%
+\headheight 2ex
+\headsep .5in                 % [XII. PAGINATION]
+\footskip .5in                % [XII. PAGINATION]
+\advance\footskip 1ex
+
+\textheight\unc@pageheight
+\advance\textheight -\unc@topmargin
+\advance\textheight -\unc@bottommargin
+\advance\textheight -\headheight
+\advance\textheight -1ex        %extra footskip
+
+\topmargin\unc@topmargin
+\advance\topmargin -1in
+\advance\topmargin -\voffset
+\advance\topmargin -\headsep
+
+\textwidth\unc@pagewidth
+\advance\textwidth -\unc@leftmargin
+\advance\textwidth -\unc@rightmargin
+
+\oddsidemargin\unc@leftmargin
+\advance\oddsidemargin -1in
+\advance\oddsidemargin -\hoffset
+\if@twoside
+\evensidemargin\unc@rightmargin
+\advance\evensidemargin -1in
+\advance\evensidemargin -\hoffset
+\else
+\evensidemargin\oddsidemargin
+\fi
+
+\marginparwidth\oddsidemargin
+\advance\marginparwidth -\marginparsep
+}
+
+\def\thesisdebugmargins{%
+\typeout{Margins (in inches):}
+\newcount\unc@tmp
+\newcount\unc@inches
+\newcount\unc@hundredths
+\def\unc@convert##1{%
+\unc@tmp=\csname ##1\endcsname
+\unc@inches=\unc@tmp
+\divide \unc@inches by 65536
+\divide \unc@inches by 72
+\divide \unc@tmp by 47186     % hundreths
+\unc@hundredths=-\unc@inches
+\multiply\unc@hundredths 100
+\advance\unc@hundredths \unc@tmp
+\typeout{ ##1 = \the\unc@inches .\two@digits{\the\unc@hundredths}}
+}
+\unc@convert{textheight}
+\unc@convert{topmargin}
+\unc@convert{headheight}
+\unc@convert{headsep}
+\unc@convert{voffset}
+\unc@convert{footskip}
+\unc@convert{textwidth}
+\unc@convert{oddsidemargin}
+\unc@convert{evensidemargin}
+\unc@convert{hoffset}
+\unc@convert{marginparwidth}
+\unc@convert{marginparsep}
+}
+
+
+
+\newcommand{\unc@draftnote}{}
+
+\def\thesistype#1{\gdef\unc@type{#1}}
+
+\def\thesisuniversity#1{\gdef\unc@university{#1}}
+
+\gdef\unc@type{dissertation} \gdef\unc@university{University of North Carolina at Chapel Hill}
+
+\def\thesisdegree#1{\gdef\unc@degree{#1}}
+\gdef\unc@degree{Doctor of Philosophy}
+
+\def\thesisdepartment#1{\gdef\unc@department{#1}}
+\gdef\unc@department{\mydepartment}
+
+\def\thesislocation#1{\gdef\unc@location{#1}}
+\gdef\unc@location{Chapel Hill}
+
+\def\thesisyear#1{\gdef\unc@year{#1}}
+\gdef\unc@year{\the\year}
+
+\def\thesistitle#1{\gdef\unc@title{#1}}
+\gdef\unc@title{Title}
+
+\def\thesisauthor#1{\gdef\unc@author{#1}\gdef\unc@AUTHOR{\uppercase{#1}}}
+\gdef\unc@author{Author}
+\gdef\unc@AUTHOR{AUTHOR}
+
+\def\thesisadvisortitle#1{\gdef\unc@advisortitle{#1}}
+\gdef\unc@advisortitle{}
+\def\thesisadvisor#1{\gdef\unc@advisora{#1}}
+\gdef\unc@advisora{}
+\def\thesisadvisora#1{\gdef\unc@advisora{#1}}
+\def\thesisadvisorb#1{\gdef\unc@advisorb{#1}}
+
+\def\thesisreadertitle#1{\gdef\unc@readertitle{#1}}
+\gdef\unc@readertitle{}
+\def\thesisreadera#1{\gdef\unc@readera{#1}}
+\def\thesisreaderb#1{\gdef\unc@readerb{#1}}
+\def\thesisreaderc#1{\gdef\unc@readerc{#1}}
+\def\thesisreaderd#1{\gdef\unc@readerd{#1}}
+\def\thesisreadere#1{\gdef\unc@readere{#1}}
+\def\thesisreaderf#1{\gdef\unc@readerf{#1}}
+\def\thesisreaderg#1{\gdef\unc@readerg{#1}}
+
+\def\thesismembertitle#1{\gdef\unc@membertitle{#1}}
+\gdef\unc@membertitle{}
+\def\thesismembera#1{\gdef\unc@membera{#1}}
+\def\thesismemberb#1{\gdef\unc@memberb{#1}}
+\def\thesismemberc#1{\gdef\unc@memberc{#1}}
+
+\def\thesistitlefont#1{\gdef\unc@titlefont{#1}}
+\gdef\unc@titlefont{\large\sc}
+\def\thesisauthorfont#1{\gdef\unc@authorfont{#1}}
+\ifthenelse{\@ptsize=0}{\gdef\unc@authorfont{\large}}{}
+\ifthenelse{\@ptsize=1}{\gdef\unc@authorfont{\large}}{}
+\ifthenelse{\@ptsize=2}{\gdef\unc@authorfont{}}{}
+\def\thesistitlepagefont#1{\gdef\unc@titlepagefont{#1}}
+\ifthenelse{\@ptsize=0}{\gdef\unc@titlepagefont{\large}}{}
+\ifthenelse{\@ptsize=1}{\gdef\unc@titlepagefont{\large}}{}
+\ifthenelse{\@ptsize=2}{\gdef\unc@titlepagefont{}}{}
+
+
+\def\thesismaketitle{
+  \pagenumbering{roman}\setcounter{page}{1}\thispagestyle{empty}
+  \begin{spacing}{1}\reset@font
+    \vspace*{.8125in}
+    \begin{center}
+      \begin{spacing}{1}
+        {\unc@titlefont\unc@adjusttitlespacing\unc@title}
+      \end{spacing}
+    \vspace{1 in}
+  
+      	{\unc@titlepagefont \unc@author}
+    \end{center}
+     \vspace{.8125in}
+   \begin{center}
+  \begin{minipage}{6.35in}
+    \begin{center}
+      {\unc@titlepagefont
+      A \unc@type{} submitted to the faculty at the \unc@university{}\\
+      in partial fulfillment of the requirements for the degree of \unc@degree{} in the \unc@department{}.}
+    \end{center}
+  \end{minipage}
+\end{center}
+    \vspace{.6875in} %% PKE 3/29/07: CHANGED FROM .2 TO .9in
+    \begin{center}
+      {\unc@titlepagefont \unc@location} \\
+      {\unc@titlepagefont \unc@year} \\
+      \vspace{1.0625 in}
+     \hfill\unc@signatures
+    \end{center}
+  \end{spacing}
+  \newpage
+  }
+
+\def\unc@signatureline#1#2{\vspace{0.35in}\hbox to 3in{\hfil\shortstack{\vrule
+      width 3in height 0.0pt\\{\unc@titlepagefont #1, #2}}}}
+
+
+
+
+
+\def\unc@signatures{
+  \begin{minipage}{2.3in}                                               %% KM: changed the width of minipage from 1.95in to 1.5in in 2014.
+    \begin{flushleft}{\unc@titlepagefont Approved by:}\end{flushleft}
+    \@ifundefined{unc@advisora}{}%
+    \begin{flushleft}{\unc@advisora}\end{flushleft}  %% PKE 3/30/07: ADDED LINE
+        \@ifundefined{unc@readera}{}%
+    \begin{flushleft}{\unc@readera}\end{flushleft}    %% PKE 3/30/07: ADDED LINE
+    
+    
+    
+    
+    \@ifundefined{unc@readerb}{}%
+    \begin{flushleft}{\unc@readerb}\end{flushleft}    %% PKE 3/30/07: ADDED LINE
+    \@ifundefined{unc@readerd}{}%
+       {\unc@signatureline{\unc@readerd}{\unc@readertitle}}
+    \@ifundefined{unc@readere}{}%
+       {\unc@signatureline{\unc@readere}{\unc@readertitle}}
+    \@ifundefined{unc@readerf}{}%
+       {\unc@signatureline{\unc@readerf}{\unc@readertitle}}
+    \@ifundefined{unc@readerg}{}%
+       {\unc@signatureline{\unc@readerg}{\unc@readertitle}}
+       \@ifundefined{unc@membera}{}%
+    \begin{flushleft}{\unc@membera}\end{flushleft}   %% PKE 3/30/07: ADDED LINE
+    \begin{flushleft}{\unc@memberb}\end{flushleft}   %% PKE 3/30/07: ADDED LINE
+     \@ifundefined{unc@memberb}{}%
+          \@ifundefined{unc@memberc}{}%
+      {\unc@signatureline{\unc@memberc}{\unc@membertitle}}
+  \end{minipage}
+  }
+
+\def\thesismakecopyright{
+  \thispagestyle{plain}
+  \mbox{}\vfill
+  \begin{spacing}{1.1}
+    \begin{center}
+      \copyright{} \unc@year \\
+      \unc@author \\
+      ALL RIGHTS RESERVED
+    \end{center}
+    \vspace{.84375in}
+  \end{spacing}
+  \newpage
+  }
+
+\def\unc@nofront{
+  \def\thesismaketitle{
+    \pagenumbering{roman}\setcounter{page}{1}\thispagestyle{empty}
+    \begin{spacing}{1}\reset@font
+      \vspace*{1in}
+      \begin{center}
+        \begin{spacing}{2}
+          {\unc@titlefont\unc@adjusttitlespacing\unc@title}
+        \end{spacing}
+        \vspace{0.5in}
+        {\unc@authorfont by} \\
+        \vspace{0.5in}
+        {\unc@authorfont \unc@author}
+      \end{center}
+      \vspace{0.5in}
+      \begin{center}\unc@draftnote\end{center}
+    \end{spacing}
+    }
+  \def\thesismakecopyright{}%
+  \excludecomment{dedication}%
+  \excludecomment{acknowledgments}%
+  \renewenvironment{abstract}{%
+    \global\@topnum\z@
+    \@afterindentfalse
+    \begin{center}\bfseries
+      \vspace{0.5in} \abstractname
+    \end{center}%
+    \quotation}{\endquotation\newpage}%
+  }
+
+\def\unc@nolists{%
+  \renewcommand{\listofabbreviations}{}%
+  \renewcommand{\listoffigures}{}%
+  \renewcommand{\listoftables}{}%
+  }
+
+\def\unc@draft{%
+  \renewcommand{\ps@plain}{%
+    \renewcommand{\@oddhead}{\hfil\textrm{\thepage}}%
+    \renewcommand{\@evenhead}{\textrm{\thepage}\hfil}%
+    \@ifundefined{unc@authorinit}{
+       \renewcommand{\@oddfoot}{\hfil Draft of \unc@timestamp}
+       \renewcommand{\@evenfoot}{Draft of \unc@timestamp\hfil \unc@authorinit}
+    } {
+       \renewcommand{\@oddfoot}{\unc@authorinit \hfil Draft of \unc@timestamp}
+       \renewcommand{\@evenfoot}{Draft of \unc@timestamp\hfil}
+    }
+    }%
+  \renewcommand{\unc@draftnote}{\emph{\bf (Draft of \unc@timestamp)}}
+  }
+
+\def\unc@mydraft{%
+  \renewcommand{\ps@plain}{%
+    \renewcommand{\@oddhead}{\hfil\textrm{\thepage}}%
+    \renewcommand{\@evenhead}{\textrm{\thepage}\hfil}%
+    \renewcommand{\@oddfoot}{\hfil Draft of \unc@timestamp}%
+    \renewcommand{\@evenfoot}{Draft of \unc@timestamp\hfil}%
+    }%
+  \renewcommand{\unc@draftnote}{\emph{\bf (Draft of \unc@timestamp)}}
+  }
+
+\def\unc@nodraft{%
+  \renewcommand{\ps@plain}{%
+    \renewcommand{\@oddhead}{}%
+    \renewcommand{\@evenhead}{}%
+    \renewcommand{\@oddfoot}{\hfil\textrm{\thepage}\hfil}%
+    \renewcommand{\@evenfoot}{\hfil\textrm{\thepage}\hfil}%
+    \let\@mkboth\@gobbletwo%
+    }%
+  }
+
+\def\unc@bottom{%
+  \renewcommand{\ps@plain}{%
+    \renewcommand{\@oddhead}{}%
+    \renewcommand{\@evenhead}{}%
+    \renewcommand{\@oddfoot}{\hfil\textrm{\thepage}\hfil}%
+    \renewcommand{\@evenfoot}{\hfil\textrm{\thepage}\hfil}%
+    \let\@mkboth\@gobbletwo%
+    }%
+  }
+
+\newcount\unc@hour
+\newcount\unc@minute
+
+\unc@hour=\time
+\divide\unc@hour 60
+\unc@minute=-\unc@hour
+\multiply\unc@minute 60
+\advance\unc@minute \time
+
+\def\unc@timestamp{\today{} at
+  \two@digits{\the\unc@hour}:\two@digits{\the\unc@minute}}
+
+\def\authorinit#1{\gdef\unc@authorinit{#1}}
+
+
+\renewcommand{\abstractname}{\normalsize{Abstract}} %% PKE 3/29/07: CHANGED {ABSTRACT} to {Abstract}
+\renewcommand{\contentsname}{\normalsize{TABLE OF CONTENTS}}
+\renewcommand{\listtablename}{\normalsize{LIST OF TABLES}}
+\renewcommand{\listfigurename}{\normalsize{LIST OF FIGURES}}
+\renewcommand{\bibname}{\normalsize{REFERENCES}}
+
+\renewenvironment{abstract}{%
+  \cleardoublepage\thispagestyle{plain}
+  \global\@topnum\z@
+  \@afterindentfalse\reset@font
+  \vspace*{0.42in}
+  \begin{center}
+    \normalsize\textbf{ABSTRACT}
+  \end{center}
+  \vspace{24pt}
+  \begin{spacing}{1}
+  \begin{center}
+    \uppercase{\unc@AUTHOR}: \unc@title\\[12pt]
+    (Under the direction of
+    \@ifundefined{unc@advisorb}%
+       {\unc@advisora}{\unc@advisora{} and \unc@advisorb})
+  \end{center}
+  \end{spacing}
+  \vspace{24pt}
+}{\vfill\newpage}
+
+
+\newenvironment{dedication}%
+  {\cleardoublepage\thispagestyle{plain}\global\@topnum\z@\@afterindentfalse}%
+  {\newpage}
+
+\newcommand{\acknowledgmentsname}{\normalsize{Acknowledgments}}
+\newenvironment{acknowledgments}{%\chapter*{\normalsize{\MakeUppercase{\acknowledgmentsname}}}}{}
+	\phantom{} %\vspace{1in}
+     \begin{center}\huge{\MakeUppercase{\textbf{\acknowledgmentsname}}}\end{center}} %% PKE 3/29/07: ADDED THIS LINE
+
+\newcommand{\colophonname}{Colophon}
+\newenvironment{colophon}{\chapter*{\colophonname}}{}
+
+\newcommand{\glossaryname}{Glossary}
+\renewenvironment{glossary}{\chapter*{\glossaryname}}{}
+
+
+\def\unc@first{0}
+\renewcommand{\chapter}{
+  \if@openright\cleardoublepage\else\clearpage\fi
+	\cleardoublepage
+  \thispagestyle{plain}
+  \global\@topnum\z@
+  \@afterindentfalse
+  \secdef\@chapter\@schapter}
+  
+\def\@makechapterhead#1
+{\cleardoublepage %
+
+  \ifnum\unc@first=0%
+     \def\unc@first{1}\pagenumbering{arabic}\setcounter{page}{1}\fi
+  \ifthenelse{\equal{\appendixname}{\@chapapp}}{}{\thispagestyle{fancy}}%
+  {\parindent \global\@topnum\z@ \raggedright \reset@font
+    \begin{center}
+      \ifthenelse{\equal{\appendixname}{\@chapapp}}
+        {}
+        {\begin{spacing}{1}\vspace*{1.13in}\end{spacing}}
+      \huge\bfseries\unc@adjustchapterspacing
+     \ifnum \c@secnumdepth >\m@ne
+  \interlinepenalty\@M
+  \@chapapp{} \thechapter: #1\par\nobreak
+\else
+  \interlinepenalty\@M
+  #1\par\nobreak
+\fi
+    \end{center}
+    \vskip 40\p@}}
+
+\def\@makeschapterhead#1{%\cleardoublepage%
+ 
+  {\parindent \z@   \raggedright
+    \begin{center}
+    \ifthenelse{\equal{#1}{\contentsname}\or\equal{#1}{\colophonname}%
+              \or\equal{#1}{\acknowledgmentsname}}%
+    {\relax}
+    {\addcontentsline{toc}{chapter}{#1}} % [XIX. TABLE OF CONTENTS]
+  \ifthenelse{\equal{#1}{\bibname}}
+  
+  {\unc@adjustbibspacing}{\relax}%
+    
+      \ifthenelse{\equal{#1}{\bibname} \or \equal{#1}{\listfigurename} \or
+                  \equal{#1}{\listtablename} \or
+                  \equal{#1}{\listabbreviationname}}
+        {}
+        {\begin{spacing}{1}\vspace*{1.125in}\end{spacing}}
+      \reset@font
+      \interlinepenalty\@M
+      \huge\bfseries\unc@adjustchapterspacing #1\par\nobreak
+    \end{center}
+    \vskip 40\p@
+    }}
+
+
+\def\xspace{\futurelet\next\@xspace}
+\def\@xspace{%
+  \ifx\next\bgroup\else
+  \ifx\next\egroup\else
+  \ifx\next\/\else
+  \ifx\next\ \else
+  \ifx\next~\else
+  \ifx\next.\else
+  \ifx\next,\else
+  \ifx\next:\else
+  \ifx\next;\else
+  \ifx\next?\else
+  \ifx\next'\else
+  \ifx\next)\else
+  \ifx\next-\else
+  \space
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi%
+  }
+
+\def\abbreviation#1#2#3{%
+  \unc@addabbreviation{#2}{#3}
+  \def#1{\relax}%
+  \setbox0=\hbox{#3}%
+  \ifdim\wd0>0pt\gdef#1{\abbreviationfinal{#1}{#2}\empty%
+    #3 (#1)\xspace}
+  \else\gdef#1{#2\protect\xspace}%
+  \fi
+  }
+
+\def\abbreviationfinal#1#2#3{%
+  \def#1{\relax}%
+  \setbox0=\hbox{#3}%
+  \ifdim\wd0>0pt\gdef#1{\abbreviationfinal{#1}{#2}\empty%
+    #3 (#1)\xspace}
+  \else\gdef#1{#2\protect\xspace}%
+  \fi
+  }
+
+\def\abbreviationr#1#2#3{%
+  \unc@addabbreviation{#2}{#3}
+  \def#1{\relax}%
+  \setbox0=\hbox{#3}%
+  \ifdim\wd0>0pt\gdef#1{\abbreviationrfinal{#1}{#2}\empty%
+    #1 (#3)\xspace}
+  \else\gdef#1{#2\protect\xspace}%
+  \fi
+  }
+
+\def\abbreviationrfinal#1#2#3{%
+  \def#1{\relax}%
+  \setbox0=\hbox{#3}%
+  \ifdim\wd0>0pt\gdef#1{\abbreviationrfinal{#1}{#2}\empty%
+    #1 (#3)\xspace}
+  \else\gdef#1{#2\protect\xspace}%
+  \fi
+  }
+
+\def\unc@addabbreviation#1#2{%
+  \protected@write\@auxout
+  {\let\label\@gobble \let\index\@gobble \let\glossary\@gobble}%
+  {\string\@writefile{loa}{\protect\abbreviationline{#1}{#2}}}%
+  \typeout{\protect #1 #2}
+  }
+
+\def\abbreviationline#1#2{\makebox[1in][l]{\textbf{#1}} #2\newline}
+\def\listabbreviationname{LIST OF ABBREVIATIONS}
+\newcommand{\listofabbreviations}{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\listabbreviationname
+      \@mkboth{\uppercase{\listabbreviationname}}%
+              {\uppercase{\listabbreviationname}}}%
+    \@starttoc{loa}%
+    \if@restonecol\twocolumn\fi
+    }
+
+\def\trademark#1#2#3{%
+  \def#1{\relax}%
+  \setbox0=\hbox{#3}%
+  \ifdim\wd0>0pt\gdef#1{\trademark{#1}{#2}\empty%
+    #1{}\footnote{\rm #2 is a trademark of #3.}\xspace}%
+  \else\gdef#1{#2\xspace}%
+  \fi
+  }
+
+\def\regtrademark#1#2#3{%
+  \def#1{\relax}%
+  \setbox0=\hbox{#3}%
+  \ifdim\wd0>0pt\gdef#1{\regtrademark{#1}{#2}\empty%
+    #1{}\footnote{#2 is a trademark of #3.}\xspace}%
+  \else\gdef#1{#2\xspace}%
+  \fi
+  }
+
+\def\regtrademarkfull#1#2#3{%
+  \def#1{\relax}%
+  \setbox0=\hbox{#3}%
+  \ifdim\wd0>0pt\gdef#1{\regtrademarkfull{#1}{#2}\empty%
+    #1{}\footnote{#3}\xspace}%
+  \else\gdef#1{#2\xspace}%
+  \fi
+  }
+
+\newlength{\@shortcaptionsize}
+\def\shortcaption{\refstepcounter\@captype \@dblarg{\@shortcaption\@captype}}
+\long\def\@shortcaption#1[#2]#3{\par\addcontentsline{\csname
+  ext@#1\endcsname}{#1}{\protect\numberline{\csname
+  the#1\endcsname}{\ignorespaces #2}}\begingroup
+    \@parboxrestore
+    \normalsize
+    \@makeshortcaption{\csname fnum@#1\endcsname}{\ignorespaces #3}\par
+  \endgroup}
+\long\def\@makeshortcaption#1#2{%
+  \vskip\abovecaptionskip
+  \setlength{\@shortcaptionsize}{.75\hsize}%
+  \sbox\@tempboxa{#1: #2}%
+  \ifdim \wd\@tempboxa >\@shortcaptionsize
+    \hbox to\hsize{\hfil\parbox[t]{\@shortcaptionsize}{#1: #2}\hfil}
+  \else
+    \global \@minipagefalse
+    \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+
+
+\ExecuteOptions{nodraft}
+\unc@setmargins
+\ProcessOptions
+\AtBeginDocument{\pagestyle{plain}}
+
+
+
+
+
+
+\usepackage{amsmath} % Some math symbols
+\usepackage{amssymb}
+\usepackage{appendix}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{boxedminipage}
+\usepackage{changepage}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{mathrsfs}
+\usepackage{mdwlist}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{subfig}
+\usepackage{tikz}
+\usepackage{url}
+\usepackage{verbatim}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathmorphing}
+
+\brokenpenalty=10000
+\urlstyle{same}
+
+
+\usepackage{natbib} % For references
+\bibpunct{(}{)}{;}{a}{}{,} % Reference punctuation
+
+\usepackage[compact]{titlesec}
+\titleformat{\chapter}[display]{\normalfont\filcenter}{\MakeUppercase\chaptertitlename\ \thechapter}{12pt}{\MakeUppercase}
+
+\newcommand{\addLOFspace}[1][12pt]{\addtocontents{lof}{\protect\addvspace{#1}}}
+\newcommand{\addLOTspace}[1][12pt]{\addtocontents{lot}{\protect\addvspace{#1}}}
+\titlespacing{\chapter}{0pt}{.6875in}{12pt}
+\titlespacing{\section}{0pt}{*0}{*0}
+\titlespacing{\subsection}{0pt}{*0}{*0}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\bibsep}{12pt}
+\setlength{\footnotesep}{12pt}
+\def\citeapos#1{\citeauthor{#1}'s (\citeyear{#1})}
+\def\citeaposs#1{\citeauthor{#1}' (\citeyear{#1})}
+\newcommand{\R}{\texttt{R}\space} % Write R in typewriter font
+\newcommand{\subsubsubsection}[1]{\vspace{.5em} \noindent \textit{\underline{#1}}}
+
+
+\newcommand{\subsubsubsubsection}[1]{\vspace{.5em} \noindent \textit{#1}}
+\newcommand{\fnote}[1]{\footnote{\footnotesize{#1}}}
+\renewcommand{\headrulewidth}{0pt}
+\makeatletter
+\newcommand\tinyv{\@setfontsize\tinyv{2pt}{6}}
+\makeatother
+\titleformat{\section}{\normalsize\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\small}{\thesubsubsection}{1em}{}
+
+\usepackage[subfigure]{tocloft}
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\renewcommand{\cfttoctitlefont}{\hfill\normalsize\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill\mbox{}}
+\renewcommand{\listfigurename}{\textbf{LIST OF FIGURES}}
+\renewcommand{\cftloftitlefont}{\hfill\normalsize\textbf}
+\renewcommand{\cftafterloftitle}{\hfill}
+\renewcommand{\listtablename}{\textbf{LIST OF TABLES}}
+\renewcommand{\cftlottitlefont}{\hfill\normalsize\textbf}
+\renewcommand{\cftafterlottitle}{\hfill}
+\renewcommand{\cftchapdotsep}{\cftdotsep} %chapters with dots to pg. number
+\renewcommand{\cftchapfont}{\normalfont}
+\renewcommand{\cftchappagefont}{\normalfont}
+\renewcommand{\cftchappresnum}{CHAPTER\ }
+\renewcommand{\cftchapaftersnum}{:\ }
+\settowidth{\cftchapnumwidth}{CHAPTER 10:\ }
+
+\cftpagenumbersoff{part}
+\setlength{\cftbeforetoctitleskip}{.6875in}
+\setlength{\cftbeforelottitleskip}{-.375in}
+\setlength{\cftbeforeloftitleskip}{-.34375in}
+\setlength{\cftbeforechapskip}{12pt}
+\setlength{\cftbeforesecskip}{12pt}
+\setlength{\cftbeforesubsecskip}{12pt}
+\setlength{\cftbeforefigskip}{12pt}
+\setlength{\cftbeforetabskip}{12pt}
+
+
+
+\makeatletter
+\cftsetrmarg{6em}
+
+\renewcommand*{\l@chapter}[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip \cftbeforechapskip
+    {\leftskip \cftchapindent\relax
+     \rightskip \@tocrmarg plus 1fil\relax
+     \parfillskip -\@tocrmarg\relax
+     \parindent \cftchapindent\relax\@afterindenttrue
+     \interlinepenalty\@M
+     \leavevmode
+     \@tempdima \cftchapnumwidth\relax
+     \let\@cftbsnum \cftchappresnum
+     \let\@cftasnum \cftchapaftersnum
+     \let\@cftasnumb \cftchapaftersnumb
+     \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+     \hyphenpenalty=10000\exhyphenpenalty=10000\relax
+     {\cftchapfont #1}\nobreak
+     \cftchapfillnum{#2}}%
+  \fi}
+
+\renewenvironment{abstract}{%
+  \cleardoublepage\thispagestyle{plain}%
+  \global\@topnum\z@
+  \@afterindentfalse\reset@font
+  \vspace*{0.42in}
+  \begin{center}
+    \normalsize\textbf{ABSTRACT}
+  \end{center}
+  \vspace{24pt}
+  \begin{center}
+    \begingroup\setstretch{1}
+      \uppercase{\unc@AUTHOR}: \unc@title\par
+      (Under the direction of
+      \@ifundefined{unc@advisorb}%
+         {\unc@advisora}{\unc@advisora{} and \unc@advisorb})\par
+    \endgroup
+  \end{center}
+  \vspace{24pt}
+}{\vfill\newpage}
+\makeatother
+
+\addtolength{\skip\footins}{1ex}%% push 1st ftn further from text
+\settoheight{\footnotesep}{\footnotesize !}%% space between footnotes
+\addtolength{\footnotesep}{11.25pt}%% 10.25pt for 11pt size
+\brokenpenalty=10000 % End of footnote spacing commands.-SBL
+
+\makeatletter
+\renewcommand\footnoterule{%
+  \kern-3\p@
+  \hrule \@width 1.5in
+  \kern 2.6\p@
+}
+\makeatother
+
+\usepackage[breaklinks = true]{hyperref}
+\hypersetup{pdfborder={0 0 0}}
+
+
+\usepackage{mathptmx}
+
+\usepackage[dvipsnames]{xcolor}
+\definecolor{nberblue}{RGB}{0,90,155}
+\hypersetup{
+    colorlinks,
+    citecolor=Blue, % blue
+        linkcolor=purple,
+    urlcolor= nberblue
+}
+\doublespacing
+
+
+\usepackage{amsfonts}
+\usepackage{longtable}
+\usepackage{bbm}
+\usepackage{adjustbox}
+\usepackage{float}
+\usepackage{amsthm}
+\usepackage{pbox}
+\usepackage{nth}
+
+
+
+
+\usepackage{etoolbox}
+
+\usepackage{lipsum}   % for generating dummy text
+\usepackage[hang,flushmargin]{footmisc}  %for footnote no space
+\usepackage{array}    % for using the 'm' column type in tabular
+\renewcommand{\arraystretch}{1.0}
+
+
+\usepackage{import}
+\renewcommand{\labelitemi}{}
+\makeatletter \renewenvironment{proof}[1][\proofname]
+{\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{lem}{Lemma}[chapter]
+\newtheorem{rmk}{Remark}[chapter]
+\newtheorem{cor}{Corollary}[chapter]
+\newtheorem{prop}{Proposition}[chapter]
+\newtheorem{exmp}{Example}[chapter]
+\newtheorem{pr}{Problem}[chapter]
+\newtheorem{ex}{Exercise}[chapter]
+\newtheorem{sol}{Solution}[chapter]
+
+
+\usepackage{graphics}
+\usepackage{epsfig}
+
+\newcommand{\Hquad}{\hspace{0.5em}} 
+
+
+
+\usepackage{pdflscape}
+
+\usepackage{eso-pic}
+\usepackage{caption}
+\newcommand{\landscapepageno}{%
+  \AddToShipoutPictureFG*{%
+    \AtPageLowerLeft{%
+      \put(306,0.5in){\makebox[0pt][c]{\thepage}}%
+    }%
+  }%
+}
+
+\usepackage{tabularx}
+
+
+
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+
+
+
+\renewcommand{\arraystretch}{1.5}
+
+
+
+
+\usepackage{accents}
+\newcommand{\ubar}[1]{\underaccent{\bar}{#1}}
+\setcounter{MaxMatrixCols}{12}
+\usepackage{enumitem}
+\usepackage{pifont} % for ticks
+
+
+
+
+
+\renewcommand{\labelitemi}{}
+\makeatletter \renewenvironment{proof}[1][\proofname]
+{\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+
+\usepackage{chngcntr}
+\usepackage{apptools}
+
+
+\definecolor{uncblue}{RGB}{75, 165, 211}
+\definecolor{nberblue}{RGB}{0, 90, 155}
+\definecolor{resgreen}{RGB}{34, 84, 67}
+\definecolor{pennblue}{RGB}{0, 44, 119}
+\definecolor{pennred}{RGB}{152, 30, 50}
+
+\hypersetup{
+hidelinks,
+pdfborder={0 0 0}
+}
+\linespread{1.2}
+\renewcommand{\baselinestretch}{1.3}
+\usepackage{nameref}
+
+
+\makeatletter

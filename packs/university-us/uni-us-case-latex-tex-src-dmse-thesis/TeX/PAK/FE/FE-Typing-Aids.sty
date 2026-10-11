@@ -1,0 +1,379 @@
+% FE Typing Aids
+%
+% Note: Math delimiters ``\(`` and ``\)'' are not robust commands. 
+% When included in a figure environment, for example, they lead to 
+% bizarre error messages in the .aux file. Since these messages do
+% not include appropriate line breaks, they cause a buffer overflow
+% when BibTeX reads the .aux file.
+%
+% Therefore, ``FE-Typing-Aids'' exclusively uses the robust ``$'' 
+% math delimiters.
+
+
+\RequirePackage{amsmath} 
+\RequirePackage{FE-uGreek}
+\RequirePackage{xifthen}
+
+
+% Abbreviation for ensuremath.
+\let\M\ensuremath
+
+% Abbreviation for macro programming.
+\let\X\expandafter
+\newcommand{\cmd}[1]{\csname #1\endcsname}
+\let\CS=\csname
+\let\SC=\endcsname
+
+% Subscripts and superscripts.
+\newcommand*{\lo}[1]{$_{\text{#1}}$}
+\newcommand*{\hi}[1]{$^{\text{#1}}$}
+\newcommand*{\mhi}[1]{$^{#1}$}
+\newcommand*{\mlo}[1]{$_{#1}$}
+% Alternative implementation (Kopka 408).
+% \newcommand*{\lo}[1]{$_{\mbox{\scriptstyle{#1}}}$}
+% \newcommand*{\hi}[1]{$^{\mbox{\scriptstyle{#1}}}$}
+
+% Ranges.
+\newcommand{\rg}[2]{\M{(#1..#2)}}
+
+% Tables
+\newcommand*{\nt}{\\[\parsep]} 
+\newcommand*{\nl}{\newline}
+\let\mcol\multicolumn
+
+% Units
+\newcommand{\atpct}{at\%}
+\newcommand{\pct}[1]{#1\,\%}
+\newcommand{\apct}[1]{#1\,at\%}
+\newcommand{\mpct}[1]{#1\,mass\%}
+\newcommand{\wpct}[1]{#1\,wt\%}
+\newcommand*{\degC}{\M{^{\circ}\text{C}}}
+\newcommand*{\micron}{\umu m}
+\renewcommand*{\deg}[1]{$#1^{\circ}$}
+\newcommand*{\adeg}[1]{$\approx #1^{\circ}$}
+\newcommand*{\mdeg}[1]{#1^{\circ}}
+\newcommand*{\dirdeg}[2]{$#1^{\circ}\!\!\leftrightarrow\!#2^{\circ}$}
+
+% ISO conventions for typesetting mathematics (Beccari 1997)
+% from: A Guide to LaTeX, H. Kopka and P. W. Daly (1999), p. 142
+\RequirePackage{amsmath}
+%\renewcommand*{\vec}[1]{\boldsymbol{#1}}
+\newcommand*{\me}{\mathrm{e}}
+\newcommand*{\mi}{\mathrm{i}}
+\newcommand*{\dif}{\mathrm{d}}
+\newcommand*{\ip}{\mi\upi}
+\newcommand*{\tp}{2\upi}
+\newcommand*{\tpi}{2\upi\mi}
+\newcommand*{\xlnx}[1]{#1\Ln\left[#1\right]}
+%slanted sans-serif font for matrices and tensors
+%\DeclareMathAlphabet{\mathsfsl}{OT1}{cmss}{m}{sl} 
+\DeclareMathAlphabet{\mathsfsl}{T1}{\sfdefault}{m}{it} 
+\newcommand*{\tensym}[1]{\mathsfsl{#1}}
+\newcommand*{\matsym}[1]{\mathsfsl{#1}}
+
+% Binomial coefficient.
+\newcommand*{\bcoeff}[2]{\M\left(\begin{array}{c}#1\\#2\end{array}\right)}
+
+% Textfractions.
+\newcommand*{\textfrac}[2]{%
+  \leavevmode\kern0.1em\raisebox{0.5ex}{\scriptsize #1}%
+  \kern-0.1em/\kern-0.15em\raisebox{-0.25ex}{\scriptsize #2}}
+
+% Mean value.
+\newcommand*{\mean}[1]{\ifmmode\left< #1 \right>\else$\left< #1 \right>$\fi}
+
+% Quantities and Units
+\newcommand*{\qu}[2]{\M{#1\,\text{#2}}}
+\let\Q\qu
+\newcommand*{\aq}[1]{$\approx\!\!#1$}
+\newcommand*{\aqu}[2]{\mbox{$\approx\!#1$\,#2}}
+\let\aQ\aqu
+% Ranges and Intervals 
+\newcommand{\qui}[4][]{%
+  \ifthenelse{\isempty{#1}}
+  {\M{(#2..#3)\,\text{#4}}}
+  {\M{#1(#2..#3)\,\text{#4}}}}
+\let\Qi\qui
+
+% Crystallography
+\newcommand*{\plane}[1]{\ifmmode\left( #1 \right)\else$\left( #1 \right)$\fi}
+\newcommand*{\planes}[1]{\ifmmode\left{ #1 \right}\else$\left\{ #1 \right\}$\fi}
+\newcommand*{\dir}[1]{\ifmmode\left[ #1 \right]\else$\left[ #1 \right]$\fi}
+\newcommand*{\dirs}[1]{\ifmmode\left< #1 \right>\else$\left< #1 \right>$\fi}
+\newcommand*{\fcc}{face-centered cubic}
+\newcommand*{\bcc}{body-centered cubic}
+\newcommand*{\orel}[2]{\M{#1^{\circ}\langle #2\rangle}}
+
+% Physics
+\newcommand{\kbt}{\M k_{\text{B}}T}
+
+% Materials
+\newcommand*{\ruxsey}{Ru$_x$Se$_y$}
+\newcommand*{\gesix}[1]{$\text{Ge}_{#1}\-\text{Si}_{(1-#1)}$}
+\newcommand*{\sigex}[1]{$\text{Si}_{(1-#1)}\-\text{Ge}_{#1}$}
+\newcommand*{\gesixy}[2]{$\text{Ge}_{#1}\-\text{Si}_{#2}$}
+\newcommand*{\sigexy}[2]{$\text{Si}_{#1}\-\text{Ge}_{#2}$}
+\newcommand*{\alumina}{Al\lo{2}O\lo{3}}
+\newcommand*{\chromia}{Cr\lo{2}O\lo{3}}
+\newcommand*{\spinel}{MgAl\lo{2}O\lo{4}}
+\newcommand*{\crtn}{Cr\lo{2}N}
+\newcommand*{\cuinse}{Cu--In--Se}
+\newcommand*{\cuinsex}[3]{Cu\lo{#1}--In\lo{#2}--Se\lo{#3}}
+\newcommand*{\acuinse}{\ualpha-Cu--In--Se}
+\newcommand*{\cis}{Cu\-In\-Se\lo{2}}
+\newcommand*{\acis}{\ualpha-Cu\-In\-Se\lo{2}}
+\newcommand*{\cuprite}{Cu\lo{2}\kern-0.05emO}
+\newcommand*{\silica}{SiO\lo{2}}
+\newcommand{\fexniy}{Fe\mlo{x}Ni\mlo{y}}
+\newcommand*{\hagg}{Fe\lo{5}C\lo{2}}
+\newcommand*{\tifive}{Ti\,--\,6\,Al\,--\,4\,V}
+\newcommand*{\sintrd}{Si\lo{3}N\lo{4}}
+\newcommand*{\water}{H\lo{2}O}
+\newcommand*{\gamfe}{$\gamma$-Fe}
+\newcommand*{\mfct}{\M{M_5\text{C}_2}}
+\newcommand*{\msct}{\M{M_7\text{C}_3}}
+\newcommand*{\ffct}{Fe\lo{5}C\lo{2}}
+\newcommand*{\fsct}{Fe\lo{7}C\lo{3}}
+\newcommand*{\mtcs}{\M{M_{23}\text{C}_6}}
+\newcommand*{\csct}{Cr\lo{7}C\lo{3}}
+\newcommand*{\ctcs}{Cr\lo{23}C\lo{6}}
+\newcommand*{\titn}{Ti\lo{2}N}
+\newcommand*{\urea}{CO(NH\lo{2})\lo{2}}
+\newcommand*{\cdo}{CO\mlo{2}}
+\newcommand*{\mc}[2]{M\lo{#1}C\lo{#2}}
+\newcommand*{\fec}[2]{Fe\lo{#1}C\lo{#2}}
+\newcommand*{\labsix}{LaB\lo{6}}
+\newcommand*{\cs}{Cu\lo{2}S}
+\newcommand*{\cxs}[1][2-x]{$\text{Cu}_{#1}\text{S}$}
+\newcommand*{\ctxs}{$\text{Cu}_{2-x}\text{S}$}
+\newcommand*{\tio}{TiO\lo{2}}
+\newcommand{\afe}{\ualpha-Fe}
+\newcommand{\gfe}{\ugamma-Fe}
+\newcommand*{\asp}{\ualpha$^\prime$-Fe\lo{16}N\lo{2}}
+\newcommand*{\adp}{\ualpha$^\prime$$^\prime$-Fe\lo{16}N\lo{2}}
+\newcommand*{\ass}{au\-ste\-ni\-tic stain\-less steel}
+\newcommand*{\asss}{au\-ste\-ni\-tic stain\-less steels}
+\newcommand*{\ltc}{low-tem\-pe\-ra\-ture car\-bu\-ri\-za\-tion}
+\newcommand*{\Ltc}{Low-tem\-pe\-ra\-ture car\-bu\-ri\-za\-tion}
+\newcommand*{\ltcd}{low-tem\-pe\-ra\-ture car\-bu\-rized}
+\newcommand*{\Ltcd}{Low-tem\-pe\-ra\-ture car\-bu\-rized}
+\newcommand*{\LTCd}{LTC'd}
+\newcommand*{\LTNd}{LTN'd}
+\newcommand*{\LTNCd}{LTNC'd}
+\newcommand*{\NSEd}{NSE'd}
+\newcommand{\sstos}{AISI\,316}
+\newcommand{\sstosl}{AISI\,316\,L}
+\newcommand*{\aisi}[1]{AISI\,#1}
+\newcommand*{\sphase}{S-phase}
+\newcommand*{\pemfc}{proton-exchange-membrane fuel cell}
+\newcommand*{\fccnp}{fuel-cell catalyst nanoparticle}
+\newcommand*{\fc}{fuel cell}
+\newcommand*{\alsp}{Al--\spinel}
+\newcommand*{\alspi}{Al--\spinel\ interface}
+\newcommand*{\alspis}{Al--\spinel\ interfaces}
+\newcommand*{\dpalsp}{$\phi_{\text{Al}}-\phi_{\text{\spinel}}$}
+\newcommand*{\cose}{CoSe\lo{2}}
+\newcommand*{\comnse}{Co$_x$Mn$_{(1-x)}$Se\mlo{2}}
+\newcommand*{\conis}{Co$_x$Ni$_{(1-x)}$S\mlo{2}}
+\renewcommand*{\cos}{CoS\mlo{2}}
+
+% Latin
+\newcommand*{\eg}{e.\,g.}
+\newcommand*{\ie}{i.\,e.}
+\@ifundefined{etal}{\newcommand*{\etal}{\textit{et~al.}}}{}
+\newcommand*{\etc}{\textit{etc.}}
+\newcommand*{\insitu}{\emph{in situ}}
+\newcommand*{\exsitu}{\emph{ex situ}}
+
+% Instruments
+\newcommand*{\tf}{Tecnai~F30}
+\newcommand*{\vtuhvspm}{variable-temperature ultra-high vacuum
+  scanning probe microscope}
+
+% Acronyms
+\newcommand*{\lom}{light-optical microscopy}
+\newcommand*{\sem}{scanning electron microscopy}
+\newcommand*{\fib}{focused ion beam}
+\newcommand*{\spm}{scanning probe microscopy}
+\newcommand*{\stm}{scanning tunneling microscopy}
+\newcommand*{\afm}{atomic force microscopy}
+\newcommand*{\tem}{transmission electron microscopy}
+\newcommand*{\hrtem}{high-resolution transmission electron microscopy}
+\newcommand*{\qhrtem}{quantitative high-resolution transmission
+  electron microscopy} 
+\newcommand*{\atem}{analytical transmission electron microscopy} 
+\newcommand*{\eftem}{energy-filtering transmission electron microscopy} 
+\newcommand*{\xrd}{X-ray diffraction}
+\newcommand*{\xeds}{X-ray energy-dispersive spectrometry}
+\newcommand*{\eels}{electron energy-loss spectrometry}
+\newcommand*{\esi}{electron-spectroscopic imaging}
+\newcommand*{\stem}{scanning transmission electron microscopy}
+\newcommand*{\haadf}{high-angle annular dark-field}
+\newcommand*{\sad}{selected-area electron diffraction}
+\newcommand*{\xps}{X-ray photoelectron spectrometry}
+\newcommand*{\xpsesca}{X-ray photoelectron spectrometry, also known as ESCA~-- electron spectroscopy for chemical analysis}
+\newcommand{\leap}{local-electrode atom probe}
+\newcommand*{\uhv}{ultra-high vacuum}
+
+% Affiliations
+\newcommand*{\cwru}{CWRU} % "\case" seems to be defined in AMSMath
+\newcommand*{\ccse}{Case Center for Surface Engineering}
+\newcommand*{\scsam}{Swagelok Center for Surface Analysis of Materials}
+\newcommand*{\dmse}{Department of Materials Science and Engineering}
+\newcommand*{\mpimf}{Max-Planck-Ins\-ti\-tut f\"ur Metall\-for\-schung}
+
+% Arrows
+\newcommand*{\rarr}{\M{\rightarrow}}
+\newcommand*{\rArr}{\M{\Rightarrow}}
+\newcommand*{\larr}{\M{\leftarrow}}
+\newcommand*{\lArr}{\M{\Leftarrow}}
+\newcommand*{\darr}{\M{\leftrightarrow}}
+\newcommand*{\dArr}{\M{\Leftrightarrow}}
+
+% Miscellaneous
+\newcommand*{\rt}{room-tem\-pe\-ra\-ture}
+\newcommand{\peq}{para-equilibrium}
+\newcommand{\cpeq}{carbon para-equilibrium}
+\newcommand{\Xc}{X_{\text{C}}}
+\newcommand{\Xn}{X_{\text{N}}}
+\newcommand{\Xcr}{X_{\text{Cr}}}
+
+
+%%% Complex Macros %%%
+
+% Figures
+\newcommand{\Fig}[2][]{Fig#1~\ref{fig:#2}}
+\newcommand{\Figure}[2][]{Figure#1~\ref{fig:#2}}
+\newcommand{\Figs}[2][]{Figs#1~\ref{fig:#2}}
+\newcommand{\Figures}[2][]{Figures#1~\ref{fig:#2}}
+\newcommand{\Tab}[2][]{Table#1~\ref{tab:#2}}
+\newcommand{\Table}[2][]{Table#1~\ref{tab:#2}}
+\newcommand{\Eqn}[2][]{(\ref{eq:#2})}
+\newcommand{\Equation}[2][]{Equation#1~(\ref{eq:#2})}
+
+% Equations
+\newcommand{\Eq}[2][]{(\ref{eq:#2})}
+
+% Define macro with arbitrary name to typeset the caption,
+% insert the caption, and define label with the same name.
+\newcommand*{\figLabCap}[2]{\expandafter\gdef\csname #1\endcsname{#2}
+  \csname #1\endcsname \label{fig:#1}}
+
+% Macro to post figures based on \figLabCap.
+\newcommand*{\figPost}[2] {
+  \vspace{36pt}
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=#2]{../FIG/#1}
+    \caption{\csname #1\endcsname}
+  \end{figure}}
+
+% Macro to post column figures based on \figLabCap.
+\newcommand*{\figPostV}[2] {
+  \begin{figure}
+      \vspace{-36pt}
+    \begin{minipage}[c]{0.5\textwidth}
+      \hfill\includegraphics[width=#2]{../FIG/#1}
+    \end{minipage}
+    \quad
+    \begin{minipage}[l]{0.5\textwidth}
+      \caption{\csname #1\endcsname}
+    \end{minipage}
+ \end{figure}}
+
+% Highlight figures where first mentioned.
+\newcommand*{\FigureI}[1] {\textbf{Figure~\ref{#1}}}
+\newcommand*{\FigI}[1] {\textbf{Fig.~\ref{#1}}}
+\newcommand*{\FiguresI}[1] {\textbf{Figures~\ref{#1}}}
+\newcommand*{\FigsI}[1] {\textbf{Figs.~\ref{#1}}}
+
+% Standard references to figures, equations, tables.
+\def\reftype#1:#2{#1}
+\newcommand*{\sref}[1]{%
+  \let\rt=\reftype{#1}%
+  \let\ft=\string fig%
+  \ifthenelse{\equal{\rt}{\ft}}
+  {TRUE}
+  {FALSE}
+  Fig~\ref{Mist}}
+
+
+% Number with comma separator: remove halfspace after comma.
+% The Advanced TeXbook p138.
+\def\numcomsep{\begingroup\catcode`\,=13\ensuremath\donum}
+{\catcode`\,=13\gdef,{\comma\!}\gdef\donum#1{#1\endgroup}}
+
+
+% Lists
+
+% In-line lists.
+\newcounter{nlit}
+\renewcommand{\thenlit}{\roman{nlit}}
+\newcommand{\lis}{\setcounter{nlit}{1}(\thenlit)}
+\newcommand{\lit}{\addtocounter{nlit}{1}(\thenlit)}
+
+% In-colum lists.
+\newcounter{itemNr}
+\newenvironment{clist}[1][\theitemNr.~\,]
+{\begin{list}{#1}{
+    \setlength{\itemindent}{0pt}
+    \setlength{\labelsep}{0pt}
+    \setlength{\labelwidth}{0pt}
+    \setlength{\leftmargin}{0pt}
+    \usecounter{itemNr}}}
+{\end{list}}
+
+
+% Currency
+
+% Dollars using SI conventions. Optional argument "x" produces "/x",
+% i.e. "per x".
+\newcommand{\usdper}[1]{%
+  \expandafter\ifx\csname empty#1\endcsname\empty\else/#1\fi}
+\newcommand{\usd}[2]{#2\,\$\usdper{#1}}
+\newcommand{\usdk}[2]{#2\,k\$\usdper{#1}}
+\newcommand{\usdM}[2]{#2\,M\$\usdper{#1}}
+\newcommand{\usdG}[2]{#2\,G\$\usdper{#1}}
+\newcommand{\usdT}[2]{#2\,T\$\usdper{#1}}
+
+%\newcommand*{\dollar}[1]{\$\,\(\numwcom{#1}\)}
+%\newcommand*{\dollar}[1]{\$\,\(#1\)}
+
+% Number with reading-aid commas: strip thinspace after comma.
+\newcommand{\dollar}[1]{%
+  % Remove thinspace after "," in math mode!
+  \def\numsep{,\!}%
+  \def\scan{\afterassignment\nextoken\let\next=}%
+  \def\nextoken{%
+    % Define terminator.
+    \ifx\next;%
+      \let\next\relax%
+    \else%
+      \ifx\next,%
+        \numsep%
+      \else%
+        \next%
+      \fi%
+      \let\next=\scan%
+    \fi%
+    \next}%
+  \$\,\(\scan#1;\)}
+
+\newcommand{\pound}[1]{%
+  % Remove thinspace after "," in math mode!
+  \def\numsep{,\!}%
+  \def\scan{\afterassignment\nextoken\let\next=}%
+  \def\nextoken{%
+    % Define terminator.
+    \ifx\next;%
+      \let\next\relax%
+    \else%
+      \ifx\next,%
+        \numsep%
+      \else%
+        \next%
+      \fi%
+      \let\next=\scan%
+    \fi%
+    \next}%
+  \pounds\,\(\scan#1;\)}

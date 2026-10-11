@@ -1,0 +1,120 @@
+\documentclass[12pt]{niuthesis}
+% \documentclass[12pt,singlespacing]{niuthesis}
+
+% some packages are loaded here
+\usepackage{latexsym}		% to get LASY symbols
+\usepackage{graphicx}		% to insert PostScript figures
+\usepackage{rotating}           % defines sidways table and figure env.
+\usepackage{hyperref}		% to insert hyperrefs
+\hypersetup{
+  bookmarksnumbered,%
+  bookmarksopen,%
+  bookmarksopenlevel=1,%
+  colorlinks=false,%
+  pdfborder={0 0 0},%
+  plainpages=true,%
+  pdfencoding=auto,%
+  psdextra,%
+  linktoc=all,%
+  pdfauthor={},%
+  pdftitle={},%
+  pdfsubject={},%
+  pdfkeywords={your topics}%
+}
+\makeatletter
+\AtBeginDocument{%
+  \let\thMakeUppercase\uppercase%
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some LaTeX macros
+
+\newcommand{\twochoices}[2]{\left\{ \begin{array}{lcc}
+        \displaystyle #1 \\ \vspace{-10pt} \\
+        \displaystyle #2 \end{array} \right. } %}
+
+\newcommand{\twovec}[2]{\left(\begin{array}{c} #1 \\ #2 \end{array}\right)}
+
+\newcommand{\twomatrix}[4]{\left(\begin{array}{cc} #1 & #2 \\ 
+     #3 & #4 \end{array}\right)}
+
+% Uncomment the following line for a List of Symbols
+% \newcommand{\listofXXX}{\input{symbols}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Choose the chapter(s) / files you want to work with
+
+%%% use this to compile all chapters
+\def\files{ch1,ch2,refs,app1,app2}
+
+%%% use this to work with only one chapter
+% \def\files{ch2}
+
+\includeonly{\files}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\title{Five-Dimensional Flow in Solid\\ Fuel Rocket Engines\\
+       -- Fun with \LaTeX}
+
+\author{I.~B. Scriptor}
+
+\major{Rocket Science}
+\degree{Dissertation}{Ph.D.}{Doctor of Philosophy}
+\degreedate{May}{2010}
+\department{Department of Rocket Science}
+\director{Wernher von Braun}
+
+\begin{abstract}
+  Solid fuel rocket engines are one of the most reliable and
+  efficient propulsion systems used to lift payloads into orbit, in
+  terms of $\lambda=(\Box+\Diamond)\psi$. Used throughout the
+  astrodynamics community, the theory of the flow within the motor
+  chamber is in fact a black art which defies all attempts at
+  analysis.
+	
+  The present work (no exception to the statement above) contains a
+  theoretical and numerical approach to the flow of the gases within
+  the motor chamber. The shape of the chamber and original fuel
+  configuration, and the patterns of combustion and flow/expulsion
+  of gases, are modelled by a system of thirty fourth-degree
+  differential equations.
+  \begin{displaymath}
+    f_i^{(34)}(x,y,z,t) = 
+    \sum_{j=0}^{33} a_{ij} f_i^{(\mathrm{j})}(x,y,z,t)
+  \end{displaymath}
+  Acceptable numerical solutions would require one thousand pentium
+  processors working day and night for $10^{11.2}$ years.
+\end{abstract}
+
+\begin{acknowledgments}
+  Here's where you acknowledge folks who helped.
+  Here's where you acknowledge folks who helped.
+  Here's where you acknowledge folks who helped.
+\end{acknowledgments}
+
+\begin{dedication}
+  To all of the fluffy kitties.
+  To all of the fluffy kitties.
+  To all of the fluffy kitties.
+  To all of the fluffy kitties.
+\end{dedication}
+
+% comment this to suppress prologue
+\MakeThesisPrologue % includes table of contents
+% \tableofcontents
+
+\include{ch1}		% file with Chapter 1 contents
+\include{ch2}		% file with Chapter 2 contents
+\include{refs}		% file with references
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Appendices
+
+\appendix
+\include{app1}			% file with Appendix A contents
+\include{app2}			% file with Appendix B contents
+
+\end{document}

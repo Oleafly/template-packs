@@ -1,0 +1,151 @@
+\documentclass[letterpaper,12pt]{report}
+
+%%%% IMPORTANT %%%%
+% Set page's format followed the guideline
+\usepackage[left=1.5in,right=1in,top=1in,bottom=1.25in,head=0.5in]{geometry}
+% This is to use with \doublespacing for text in the dissertation
+\usepackage{setspace}
+%%%% END IMPORTANT %%%%
+\input{cmd.tex}
+
+% Define the chapter style: titlesec manual
+\titleformat{\chapter}[display]{\normalfont\bfseries\LARGE\filright}
+{\LARGE{\chaptertitlename} \thechapter}{1pc}{}
+
+% == Customizations ====================================================
+\DeclareRobustCommand{\harpoon}{\accentset{\rightharpoonup}}
+\allowdisplaybreaks
+
+% \usepackage{lmodern}
+% \usepackage{tgschola}
+% == Page Style ========================================================
+\pagestyle{fancyplain}
+\renewcommand{\headrulewidth}{0.0pt} % gets rid of lines on header
+\fancyhead{}						 % clears all header and footer fields
+\fancyfoot{}
+\fancyhead[R]{\thepage}              % inserts page number in top right
+
+\begin{document}
+% \fontfamily{cmss}\selectfont 
+
+% == Use fake numbering until abstract =================================
+\pagenumbering{Alph}
+
+% == Title Page +=======================================================
+\newpage
+\thispagestyle{empty}
+\singlespacing
+
+\begin{center}
+
+\null
+
+\vspace{1.5in}
+
+University of Nevada, Reno \\
+
+\vspace{1.5in}
+
+\textbf{Title of Your Dissertation}
+
+\vspace{1.5in}
+% Uncomment the below for either Master or PhD
+% For dissertation
+A dissertation submitted in partial fulfillment of the \\
+requirements for the degree of Doctor of Philosophy in\\
+Computer Science \& Engineering\\
+% For thesis
+% A thesis submitted in partial fulfillment of the \\
+% requirements for the degree of Master of Science in \\
+% Computer Science \& Engineering \\
+\vspace{1in}
+
+by
+
+\vspace{0.25in}
+John Doe
+\vspace{0.5in}
+
+Prof. Dr. Jane Doe - Dissertation Advisor \\
+August 2020 \\
+
+\end{center}
+
+% == Copyright =================================================
+\newpage
+\thispagestyle{empty}
+\hbox{\hfil}\vspace{4in}\begin{center}
+\textbf{Copyright by John Doe 2020\\
+All Rights Reserved}
+\end{center}
+
+% == Committee Approval =================================================
+% \thispagestyle{empty}
+\includepdf[pages={1}]{CommitteeApprovalForm.pdf}
+
+% == Set page numbering style ============================================
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% == Abstract ===========================================================
+
+
+\newpage
+\onehalfspace
+\section*{Abstract}
+\input{abstract.tex}
+
+% == Set page number ====================================================
+% \setcounter{page}{3}
+\doublespacing
+
+% == Dedication ==========================================================
+\newpage
+\begin{center}
+\section*{Dedication}
+Dedicated to my parents.
+\end{center}
+
+% == Acknowledgments ====================================================
+\newpage
+% \begin{center}
+\section*{Acknowledgments}
+\input{acknowledgments.tex}
+% \end{center}
+
+% == Table of contents ===================================================
+\newpage
+\renewcommand*\contentsname{Table of Contents}
+\tableofcontents
+
+\newpage
+\listoftables
+
+\newpage
+\listoffigures
+
+% == Set new page number style ===========================================
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\linespread{2}
+
+% == Begin thesis content ================================================
+\chapter{ Overall Guideline }\label{chap:intro}
+\input{chapter1_intro.tex}
+
+\chapter{ Formatting your dissertation or thesis }\label{chap:related_work}
+\input{chapter2_format.tex}
+
+\chapter{ Others }\label{chap:prob_def}
+\input{chapter3_others.tex}
+
+\chapter{Alternative formatting for thesis or dissertation}\label{chap:gbplanner}
+\input{chapter4_alt.tex}
+
+\bibliographystyle{IEEEtran}
+\renewcommand{\bibname}{ References }
+\bibliography{BIB/references}
+
+\end{document}

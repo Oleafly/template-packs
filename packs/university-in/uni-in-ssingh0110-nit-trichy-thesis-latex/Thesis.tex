@@ -1,0 +1,154 @@
+% Revised by Shashank Singh in May 2019.
+% He was M.S.(by Research) student of EEE department.
+% This Tex document in intended for NITT MS/PhD Thesis.
+% This document could also be used by B.Tech./M.Tech. students.
+% Modification/suggestions are welcome.
+% Email: shashanksingh0110@gmail.com.
+% LinkedIn: https://www.linkedin.com/in/ss0110/
+% GitHub: https://github.com/ssingh0110
+% Suggestions and revisions are always welcome
+%-------------------------------------------------------------------------------------------
+\documentclass[12pt,a4paper,twoside]{report}
+% The generated pdf will have mirrored margin.
+% Remove twoside from document class if required single side printing. 
+\usepackage[labelfont=bf,textfont=bf,labelsep=space,figurename=Fig.,justification=centering]{caption}
+\usepackage[round,authoryear]{natbib}
+\usepackage[subfigure]{tocloft}
+\usepackage[centertags]{amsmath}
+\usepackage{amsfonts,amsmath,latexsym,amssymb,amsthm,mathrsfs}
+\usepackage{enumerate,tabularx,longtable,multirow,array}
+\usepackage{varioref,amscd,verbatim,calc}
+\usepackage{algcompatible}
+\usepackage{algpseudocode}
+\usepackage[chapter]{algorithm} %Resets the algorithm counter in each chapter
+\usepackage{subfig}
+\usepackage{pdfpages,mathptmx,anysize}
+\usepackage{newlfont,setspace,titlesec}
+\usepackage[usenames,dvipsnames]{pstricks}
+\usepackage{pstricks,graphicx,epsfig}
+\usepackage{epstopdf}
+\usepackage{pst-grad}
+\usepackage{pst-plot}
+\usepackage[shortlabels]{enumitem}
+\usepackage{mathptmx}
+\usepackage[nonumberlist,style=super,nogroupskip,acronym,section,nopostdot]{glossaries}
+\makeglossaries
+\loadglsentries{nomenclature}
+\loadglsentries{glossary}
+\renewcommand{\glsnamefont}[1]{\textbf{#1}}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\usepackage{ifthen}
+\usepackage{hyperref}
+\usepackage{indentfirst}
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{tfrupee}
+\usepackage{textcomp}
+\usepackage{bm}
+%-------------------------------------------------------------------------------------------
+\raggedbottom
+\titleformat{\chapter}[display]
+{\centering\large\bfseries}
+	{\MakeUppercase{\chaptertitlename}\ \thechapter}{14pt}
+	{\large}% change according to your needs
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+	
+\titleformat{\section}
+  {\normalfont\fontsize{12}{15}\bfseries}{\thesection}{1em}{}
+
+%\usepackage[showframe]{geometry} %For checking margins
+\usepackage{geometry}
+\geometry{a4paper, top=25mm,left=38mm, right=25mm, bottom=25mm}
+\renewcommand{\cftsecleader}{\bfseries\cftdotfill{\cftdotsep}}
+\makeatletter
+\renewcommand*{\l@part}[2]{%
+\par\addvspace{\topsep}
+\setlength\@tempdima{2.3em}%
+\noindent\hspace*{1.5em}\textbf{#1}\par}
+\makeatother
+
+\renewcommand*\cftchappresnum{\normalsize\textbf{CHAPTER}~}
+\settowidth{\cftchapnumwidth}{\cftchappresnum}
+
+\renewcommand{\thesection}{\noindent \normalsize\noindent\arabic{chapter}.\normalsize\arabic{section}\normalsize}
+\renewcommand{\thesubsection}{\noindent \normalsize\noindent\arabic{chapter}.\normalsize\arabic{section}.\arabic{subsection}\normalsize}
+
+\renewcommand{\contentsname}{}    
+\renewcommand{\listtablename}{}   
+\renewcommand{\listfigurename}{}  
+\renewcommand{\listalgorithmname}{}
+
+\newtheorem{example}{Example}[section]
+\newtheorem{theorem}{Theorem}[section]
+
+\renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}} 
+\newcounter{bibcount}
+\makeatletter
+\patchcmd{\@lbibitem}{\item[}{\item[\hfil\stepcounter{bibcount}{\thebibcount.}}{}{}
+\setlength{\bibhang}{2\parindent}
+\renewcommand\NAT@bibsetup%
+   [1]{\setlength{\leftmargin}{\bibhang}\setlength{\itemindent}{-\parindent}%
+       \setlength{\itemsep}{\bibsep}\setlength{\parsep}{\z@}}
+\makeatother
+
+\setlength{\parindent}{3em}
+\setlength{\parskip}{1em}
+
+\titlespacing*{\section}{-5pt}{0\baselineskip}{0\baselineskip}
+
+\titlespacing*{\subsection}{-5pt}{0\baselineskip}{0\baselineskip}
+
+\titlespacing*{\subsubsection}{-5pt}{0\baselineskip}{0\baselineskip}
+%-------------------------------------------------------------------------------------------
+\begin{document}
+\addtocontents{toc}{\hspace{0pt}\textbf{Title}~\hfill\textbf{Page No.}\par}
+\setboolean{@twoside}{false}
+\pagenumbering{alpha}
+\input{Annex_Initial/Title_Page}
+\pagenumbering{Roman}
+\input{Annex_Initial/Dedication} % This is optional page. Remove if not needed.
+\newpage
+\spacing{1.3}
+\input{Annex_Initial/Certificate}
+\pagestyle{plain}
+\pagenumbering{roman}
+\setcounter{page}{1}
+\input{Annex_Initial/Abstract}
+\input{Annex_Initial/Acknowledgements}
+\setcounter{tocdepth}{2}
+\input{Miscellaneous/ToC}
+\input{Miscellaneous/List_Tables}
+\input{Miscellaneous/List_Figures}
+\input{Miscellaneous/List_Algo_Main}
+\glsaddall
+\input{Miscellaneous/List_Nomenclatures}
+\input{Miscellaneous/List_Abbreviations}
+%-------------------------------------------------------------------------------------------
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\setcounter{secnumdepth}{5}
+\onehalfspacing
+\setboolean{@twoside}{true}
+% Create new chapters in chapters folder and specifiy their path below.
+\input{Chapters/Chapter1/Chapter1} % Path of Chapter 1
+\input{Chapters/Chapter2/Chapter2} % Path of Chapter 2
+% In two side printing, we make sure that the new chapter starts on right side page.
+% If previous chapter ends on right side, then one blank side must be added.
+% The 3 line command below does the same
+\newpage
+\thispagestyle{plain} 
+\mbox{}
+\input{Chapters/Chapter3/Chapter3} % Path of Chapter 3
+%-------------------------------------------------------------------------------------------
+\input{Miscellaneous/References} % Path of References page
+%-------------------------------------------------------------------------------------------
+\setboolean{@twoside}{false}	
+\input{Annex_Final/Publications} % Path of Publications page
+\newpage
+\input{Annex_Final/CV} % Path of CV page
+\newpage
+\input{Annex_Final/GTC} % Path of GTC/DC committee page
+%-------------------------------------------------------------------------------------------
+\end{document}
+%-------------------------------------------------------------------------------------------

@@ -1,0 +1,149 @@
+%
+% fitthesis v1.0
+% By Shahab Arabshahi <sarabshahi2009@fit.edu>
+% Version 1.0 released 9/9/2015
+%%---------------------define command in the title page--------------------
+\newcommand{\mytablesize}{\scriptsize}
+\newtheorem{definition}{Definition}
+\newcommand{\N}{\mbox{{\rm I\hspace{-0.05cm}N}}}
+\newcommand{\Z}{\mbox{{\rm Z\hspace{-0.15cm}Z}}}
+\newcommand{\Q}{\mbox{{\rm I\hspace{-0.20cm}Q}}}
+
+\renewcommand{\title}[1]{\newcommand{\lastitle}{#1}}
+\newcommand{\thesistitle}[1]{\newcommand{\lasthesistitle}{#1}}
+\newcommand{\student}[1]{\newcommand{\lasstudent}{#1}}
+\newcommand{\thesisstyle}[1]{\newcommand{\lasthesisstyle}{#1}}
+\newcommand{\degree}[1]{\newcommand{\lasdegree}{#1}}
+\newcommand{\discipline}[1]{\newcommand{\lasdiscipline}{#1}}
+\newcommand{\collegename}[1]{\newcommand{\lascollegename}{#1}}
+\newcommand{\studentpredegreefirst}[1]{\newcommand{\lasstudentpredegreefirst}{#1}}
+\newcommand{\studentpredegreesecond}[1]{\newcommand{\lasstudentpredegreesecond}{#1}}
+\newcommand{\advisorname}[1]{\newcommand{\lasadvisorname}{#1}}
+\newcommand{\advisortitle}[1]{\newcommand{\lasadvisortitle}{#1}}
+\newcommand{\coadvisorname}[1]{\newcommand{\lascoadvisorname}{#1}}
+\newcommand{\coadvisortitle}[1]{\newcommand{\lascoadvisortitle}{#1}}
+\newcommand{\committeeinternalfirst}[1]{\newcommand{\lascommitteeintfirst}{#1}}
+\newcommand{\committeeinternaltitlefirst}[1]{\newcommand{\lascommitteeinttitlefirst}{#1}}
+\newcommand{\committeeinternalsecond}[1]{\newcommand{\lascommitteeintsecond}{#1}}
+\newcommand{\committeeinternaltitlesecond}[1]{\newcommand{\lascommitteeinttitlesecond}{#1}}
+\newcommand{\committeeexternal}[1]{\newcommand{\lascommitteeext}{#1}}
+\newcommand{\committeeexternaltitle}[1]{\newcommand{\lascommitteeexttitle}{#1}}
+\newcommand{\chair}[1]{\newcommand{\laschair}{#1}}
+\newcommand{\chairtitle}[1]{\newcommand{\laschairtitle}{#1}}
+\def\tableline{\noalign{\vskip2pt
+\hrule \@height \arrayrulewidth 
+\vskip2pt}}
+%% page setup-----------------------------------------
+\textwidth 5.6in
+\textheight 8.3in
+\evensidemargin 0.7in
+\oddsidemargin 0.7in
+\topmargin -0.2in
+\footskip 0.3in
+%
+% Thesis Title Page
+\renewcommand{\titlepage}{
+\edef\today{%Changing the date format on the title page
+%\number\day\space
+\ifcase\month\or January\or February\or March\or April\or May\or June\or July\or August\or September\or October\or November\or December\fi{}
+%,
+\number\year}
+\thispagestyle{empty}
+\vspace*{0.5in}
+\begin{center}
+\textbf{
+{\Large
+\lastitle\\
+}}
+\vspace{2\baselineskip}
+by\\[1\baselineskip]
+\lasstudent\\[1\baselineskip]
+\lasstudentpredegreefirst\\[1\baselineskip]
+\lasstudentpredegreesecond\\[2\baselineskip]
+A \lasthesisstyle\\
+submitted to the \lascollegename\ at\\
+Florida Institute of Technology\\
+in partial fulfillment of the requirements\\
+for the degree of\\[3\baselineskip]
+\lasdegree\\
+in\\
+\lasdiscipline\\
+\vspace{\fill}
+Melbourne, Florida\\
+\today
+\end{center}
+}
+%
+% Permission to Copy Statement/Copyright Page
+\newcommand{\permissionpage}{
+\newpage
+\pagenumbering{roman}
+\thispagestyle{empty}
+\begin{center}
+\vspace*{2.5in}
+\copyright~Copyright \number\year{} \lasstudent\\
+All Rights Reserved\\
+\vspace{\fill}
+The author grants permission to make single copies \hrulefill\\
+\end{center}
+}
+%
+% Signature Page
+\newcommand{\committeepage}{
+\newpage
+\thispagestyle{empty}
+\vspace*{0.5in}
+\begin{center}
+\noindent We the undersigned committee hereby recommend\\
+that the attached document be accepted as fulfilling in\\
+part the requirements for the degree of\\
+\lasdegree\ in \lasdiscipline.\\[1\baselineskip]
+``\lasthesistitle",\\
+a \lasthesisstyle\ by \lasstudent\\[3\baselineskip]
+\end{center}
+\begin{table}[!h]
+\centering
+\begin{tabular}{l @{\hspace{5em}}}
+%\hline
+\rule{0.4\textwidth}{0.4pt}\\
+\lasadvisorname\\%[2\baselineskip]
+\lasadvisortitle\\
+Dissertation Advisor\\
+\\
+\\
+\rule{0.4\textwidth}{0.4pt}\\
+\lascoadvisorname\\%[2\baselineskip]
+\lascoadvisortitle\\
+Dissertation Co-Advisor\\
+\\
+\\
+\rule{0.4\textwidth}{0.4pt}\\%\hline
+\lascommitteeintfirst\\%[2\baselineskip]
+\lascommitteeinttitlefirst\\
+\\
+\\
+\rule{0.4\textwidth}{0.4pt}\\%\hline
+\lascommitteeintsecond\\%[2\baselineskip]
+\lascommitteeinttitlesecond\\
+\\
+\\
+\rule{0.4\textwidth}{0.4pt}\\%\hline
+\lascommitteeext\\%[2\baselineskip]
+\lascommitteeexttitle\\
+\end{tabular}
+\end{table}
+}
+
+%
+% Abstract
+\renewcommand{\abstract}{
+\begin{table}[!h]
+\doublespacing
+\begin{tabular}{p{0.26\textwidth} p{0.69\textwidth} @{\hspace{\fill}}}
+TITLE: & \lasthesistitle \\
+AUTHOR: & \lasstudent \\
+MAJOR ADVISOR: & \lasadvisorname \\
+\end{tabular}
+\end{table}
+\onehalfspacing
+}

@@ -1,0 +1,581 @@
+%
+% This is the 2007 TU thesis/dissertation style page. 
+%
+%                    Written by
+% 
+%                 Richard A. Redner
+%             Associate Dean of Research
+%               and Graduate Studies
+%
+%              The University of Tulsa
+%
+%                     July 2004 
+% 
+% The style page was created mostly from scratch, but its
+% construction would not have been possible without extensive 
+% use of the Stanford Ph.D./Thesis style document.
+%
+% Modified August 31, 2004 to change chapters numbers to arabic.
+%
+% Modified November 2004
+%
+%  Summary of changes
+%      1.  section, subsection and subsubsection replaced with
+%          TUsection, TUsubsection and TUsubsubsection to correct
+%          the Table of Contents.  This will add bold face and
+%          italics to the appropriate places in the Table of Contents.
+%      2.  Spacing added between first few items in Table of Contents.
+%
+%  Modified October 2006 by Jesus Gonzalez and implemented in June 2007 
+%   1. Long titles, which occupy two lines in the table of content,  
+%      are now flush to the same vertical point.  
+%
+%   2. The table of content (toc) now shows the correct page number 
+%          for the toc, list of figures and list of tables.
+%
+
+\RequirePackage{setspace}
+\RequirePackage{ifpdf}
+\RequirePackage[noframe]{showframe}
+
+%
+% Turn on doublespace and set the paragraph indentation
+%
+\doublespace
+\parindent=.5truein
+
+%
+% Margin dimensions.  They may look wrong, but there are 
+% other parameters that affect the margins.  These values 
+% should be correct.  If not, these may be adjusted.
+% 
+% We need to use one value for the margins if we are using PDFTeX 
+% and a different set of values if we want to generate a dvi file
+% and then convert it to PDF.  Use 
+%
+% 17-Nov-2011 - I don't know where all those wacky numbers came from; probably
+% to try to adjust for the fact that TeX's default positioning for the 
+% variables that were not set here is in points. I've set everything that
+% should affect the positioning of the margins to the proper numbers in the
+% PDF block. The DVI block is as it came to me. NOTE: THIS MAY BREAK SPACING
+% FOR ANYTHING THAT IS SET IN THE MARGIN NOTES REGION. Eliminating that
+% area was easier as I don't use it in my thesis. -GL
+% 
+
+\ifpdf
+   \def\amhere{The template is currently set to generate PDF directly.}
+   \marginparwidth 0.0truein \marginparsep 0.0truein
+   \oddsidemargin 0.5truein \evensidemargin 0.5truein
+   \textheight 9.0truein \textwidth 6truein
+   \topmargin 0.0truein \headheight 0.0truein \headsep 0.0truein
+   \footskip 0.5truein
+\else
+   \def\amhere{The template is currently set for you to generate PDF from Postscript.}
+   \oddsidemargin 0.4truein \evensidemargin -0.225truein
+   \textheight 9.70truein \textwidth 6.3truein
+   \topmargin 0.10truein \headsep .0truein
+\fi
+
+% Adjustment for table of contents top-level front matter entries to
+%  de-indent them:
+\def\contentsadj{\hspace{-\parindent}}
+
+%
+% Redefine the table of contents command to make it use single spacing.
+%
+\renewcommand\tableofcontents{%
+    \chapter*{\contentsname}
+    \singlespace
+    \@starttoc{toc}%
+    \doublespace
+    }
+
+%
+% Definitions for the title page, the signature page
+% and the abstract
+%
+\def\dept#1{\gdef\@dept{#1}}
+\def\submityear#1{\gdef\@submityear{#1}}
+\def\titleoneline#1{\gdef\@titleoneline{#1}}
+\def\advisor#1{\gdef\@advisor{#1}}
+\def\degreename#1{\gdef\@degreename{#1}}
+\def\secondmember#1{\gdef\@secondmember{#1}}
+\def\thirdmember#1{\gdef\@thirdmember{#1}}
+\def\fourthmember#1{\gdef\@fourthmember{#1}}
+\def\fifthmember#1{\gdef\@fifthmember{#1}}
+\def\sixthmember#1{\gdef\@sixthmember{#1}}
+\def\numofpages#1{\gdef\@numofpages{#1}}
+\def\numofabstractwords#1{\gdef\@numofabstractwords{#1}}
+\newcount\numofchapters
+\def\thesisordiss#1{\gdef\@thesisordiss{#1}}
+\newif\ifthesis
+\def\thds{
+    \ifthesis thesis
+    \else dissertation  
+    \fi
+}
+\def\ThDs{
+    \ifthesis Thesis
+    \else Dissertation
+    \fi
+}
+
+% To debug chapter spacing, give this hrule a width:
+\def\makechapterpagespace{\null\vspace{.5truein}\null\hrule width 0pt\nobreak}
+\def\makechapterparspace{\null\vspace{0.4375truein}}
+
+%
+% Note that the use of renewcommand implies that the command
+% was originally defined elsewhere.  In this document, most if not
+% all of these were defined in the report.cls document.
+%
+\renewcommand\contentsname{\centerline{\rm TABLE OF CONTENTS}}
+\renewcommand\listfigurename{\centerline{\rm LIST OF FIGURES}}
+\renewcommand\listtablename{\centerline{\rm LIST OF TABLES}}
+\renewcommand\bibname{\centerline{BIBLIOGRAPHY}}
+\renewcommand \thechapter {\@arabic\c@chapter}
+\renewcommand\chaptername{CHAPTER}
+\renewcommand\appendixname{\rm APPENDIX}
+\renewcommand \thepart {\@arabic\c@part}
+
+
+
+% 
+% Define new "if" constructs for the copyright, table and figures pages.
+%
+\newif\ifcopyright \newif\iftablespage \newif\iffigurespage
+
+%
+% These counters can be changed to adjust the depth of reporting on the contents page.  
+% For example if you change tocdepth to 4 and change the secnumdepth to 1 you will get
+% chapters, sections, subsections and subsub sections, but only the chapters and sections 
+% will be numbered.
+%
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{2}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Test box for margins
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\testboxex{
+        \noindent\begin{boxedminipage}[t]{3.7truecm} 
+        Upper Left Corner       
+        \end{boxedminipage}
+        \hfill
+        \begin{boxedminipage}[t]{3.8truecm} 
+        Upper Right Corner       
+        \end{boxedminipage}
+        \vfill
+        \amhere
+        \vfill
+        \noindent\begin{boxedminipage}[t]{3.7truecm} 
+        Lower Left Corner       
+        \end{boxedminipage}        
+        \hfill
+        \begin{boxedminipage}[t]{3.8truecm} 
+        Lower Right Corner       
+        \end{boxedminipage}
+        \newpage
+}
+
+%%%%%%%%%%%%%%%%%
+% Title page def
+%%%%%%%%%%%%%%%%%
+
+
+
+\def\titlep{%
+        \thispagestyle{empty}%
+        \makechapterpagespace 
+        \centerline{T H E\ \ \ U N I V E R S I T Y\ \ \ O F\ \ \ T U L S A}
+        \centerline{THE GRADUATE SCHOOL}
+        \vfill
+        \centerline{\uppercase\expandafter{\@title}}
+        \vfill
+        \singlespace
+        \centerline{by}
+        \centerline{\expandafter{\@author}}
+        \doublespace
+        \vspace{.2truein}
+        \vfill
+        \centerline{A\thds submitted in partial fulfillment of}
+        \centerline{the requirements for the degree of \@degreename}
+        \centerline{in the Discipline of \expandafter{\@dept}}
+        \vspace{.5truein}
+        \centerline{The Graduate School}
+        \centerline{The University of Tulsa}
+        \vspace{.1truein}
+        \centerline{
+                \@submityear
+        }\vskip1in
+        \newpage}
+
+%%%%%%%%%%%%%%%%%%%%%
+% Signature page def
+%%%%%%%%%%%%%%%%%%%%%
+
+\pagenumbering{roman}
+
+%
+% Initial definitions for the sagnature page
+%
+\newcount\committeesize
+\newif\ifcoadvisor
+\def\sigline{\ \hbox to 2.85truein{\hrulefill}}
+\def\sigadjust{\ifnum\committeesize=3\vspace{-.50truein}
+               \else \ifnum\committeesize=4\vspace{-.50truein}
+                     \else \ifnum\committeesize=5\vspace{-.50truein}
+                        \else \ifnum\committeesize>5\vspace{-.45truein}
+              \fi\fi\fi\fi}
+\def\coadvisorline{
+        \begin{center}
+            \ \hspace{.87truein}\sigline, Co-advisor
+        \end{center}}
+\def\chairpersonline{
+        \begin{center}
+            \ \hspace{.97truein}\sigline, Chairperson
+        \end{center}}
+
+%
+% The construction uses the logical variable \ifcoadvisor
+% and the counter \committeesize to set up the page.
+%
+\def\signaturep{%
+        \doublespace
+        \makechapterparspace
+        
+        \begin{center}
+            T H E\ \ \ U N I V E R S I T Y\ \ \ O F\ \ \ T U L S A \\
+            THE GRADUATE SCHOOL
+        \end{center}
+        \vfill\vfill
+        \begin{center}
+                \uppercase\expandafter{\@title}
+        \end{center}
+        \singlespace
+        \centerline{by}
+        \centerline{\expandafter{\@author}}
+        \doublespace
+        \begin{center}
+                A\uppercase\expandafter{\thds}\\
+                APPROVED FOR THE DISCIPLINE OF\\
+                \uppercase\expandafter{\@dept}
+        \end{center}
+        \vfill\vfill
+        \begin{center}
+            By\ThDs Committee\\
+        \end{center}
+        %\vspace{-.25truein}
+        \ifcoadvisor \coadvisorline
+            \else \chairpersonline
+        \fi
+        \sigadjust
+        \begin{center}
+            \ \hbox to 2.5truein{\@advisor\hfill}
+        \end{center}
+        \ifcoadvisor 
+            \coadvisorline
+        \else
+            \begin{center}
+                \sigline
+            \end{center}
+        \fi  
+        \sigadjust       
+        \begin{center}
+            \ \hbox to 2.5truein{\expandafter{\@secondmember\hfill}}
+        \end{center}
+        \begin{center}
+            \sigline
+        \end{center}
+        \sigadjust
+        \begin{center}
+            \ \hbox to 2.5truein{\@thirdmember\hfill}
+        \end{center}
+        \ifnum\committeesize>3
+            \begin{center}
+                \sigline
+            \end{center}
+        \sigadjust
+            \begin{center}
+                \ \hbox to 2.5truein{\@fourthmember\hfill}
+            \end{center}
+        \fi        
+        \ifnum\committeesize>4
+            \begin{center}
+                \sigline
+            \end{center}
+            \sigadjust
+            \begin{center}
+                \ \hbox to 2.5truein{\@fifthmember\hfill}
+            \end{center}
+        \fi        
+        \ifnum\committeesize>5
+            \begin{center}
+                \sigline
+            \end{center}
+        \sigadjust
+            \begin{center}
+                \ \hbox to 2.5truein{\@sixthmember\hfill}
+        \end{center}
+        \fi
+        \vspace{.05truein}
+        \newpage}
+ 
+        
+%%%%%%%%%%%%%%%%%%%%%
+% Copyright page def
+%%%%%%%%%%%%%%%%%%%%%
+        
+\def\copyrightp{%                
+    \chapter*{COPYRIGHT STATEMENT}
+    \addcontentsline{toc}{section}{\contentsadj COPYRIGHT}
+    \addtocontents{toc}{\protect{\hfill \ }}
+    \doublespace
+    \begin{center}
+        \noindent Copyright \copyright\ \@submityear \  by \@author
+    \end{center} \par\par
+       All rights reserved.  No part of this publication may
+       be reproduced, stored in a retrieval system, or transmitted, in
+       any form or by any means, electronic, mechanical, photocopying,
+       recording, or otherwise, without the prior written permission of
+       the author.
+    \vfill
+    \newpage
+}
+
+%%%%%%%%%%%%%%%%%%%%
+% Abstract page def
+%%%%%%%%%%%%%%%%%%%%
+
+\def\abstractp{%
+    \chapter*{ABSTRACT}
+    \addcontentsline{toc}{section}{\contentsadj ABSTRACT}
+    \addtocontents{toc}{\protect{\hfill \ }}
+    \noindent \expandafter{\@author}\ \ (\expandafter{\@degreename} in \expandafter{\@dept})\\
+    \expandafter{\@titleoneline}\\
+    Directed by \ifcoadvisor \expandafter{\@advisor} and \expandafter{\@secondmember}
+                \else
+                \expandafter{\@advisor}
+                \fi
+                \\
+    \@numofpages\ pp., Chapter \uppercase\expandafter{\@arabic\numofchapters}: Conclusions\\
+    \vspace{-.4truein}
+    \begin{center}
+        (\@numofabstractwords\ words)
+    \end{center}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Acknowledgements page def
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\acknowledgementsp{% 
+    \chapter*{ACKNOWLEDGEMENTS}
+    \addcontentsline{toc}{section}{\contentsadj ACKNOWLEDGEMENTS}
+    \addtocontents{toc}{\protect{\hfill \ }}
+    \par\par
+}
+
+% 
+% This is the end of the description of the various 
+% pages at the front end of the thesis or dissertation 
+% Now we collect those page that come before the abstract
+% and collect those pages that come after the acknowledgements.
+%
+\def\beforeabstract{
+        \titlep
+        \signaturep
+        \addtocontents{toc}{\protect{\hfill Page \\}}
+        %\addtocontents{toc}{\protect{\hfill \ }}
+        \ifcopyright\copyrightp\fi
+        \cleardoublepage
+}
+        
+\def\afteracknowledgementsp{
+    \tableofcontents
+    \addcontentsline{toc}{section}{\contentsadj TABLE OF CONTENTS}
+    \iftablespage
+        \listoftables
+        \addtocontents{toc}{\protect{\hfill \ }}
+        \addtocontents{lot}{\protect{\hfill Page}}
+        \addcontentsline{toc}{section}{\contentsadj LIST OF TABLES}
+    \fi
+    \iffigurespage
+        \listoffigures
+        \addtocontents{toc}{\protect{\hfill \ }}
+        \addtocontents{lof}{\protect{\hfill Page}}
+        \addcontentsline{toc}{section}{\contentsadj LIST OF FIGURES}
+    \fi
+    \clearpage
+    \pagenumbering{arabic}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography page def
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\bibliographyp{
+   \newpage
+   \addtocontents{toc}{\protect\addvspace{10pt}}
+   \addcontentsline{toc}{section}{\contentsadj BIBLIOGRAPHY}
+   \addtocontents{toc}{\protect{\hfill \ }} %This will generate a blank line after BIBLIOGRAPHY
+                                            %in the TABLE OF CONTENTS. It should be removed if there 
+                                            %are no APPENDICES and the blank line is on a new page.
+}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Appendices
+%%%%%%%%%%%%%%%%%%%%%%
+%
+% Define and initialize an appendix counter
+% and convert that counter to Alpha
+% Latex will think that each Appendix is a chapter
+% so redefine \thechapter number to be \theappendix
+% number.
+%
+\def\appendixpages{
+     \newcounter{appendixno}
+     \newcommand\theappendix{\Alph{appendixno}}
+     \renewcommand\thechapter{\theappendix}
+}
+
+%
+% Make the heading for the Appendix and
+% add the Appendix to the table of contents
+%
+\renewcommand\appendix[1]{\par
+    \setcounter{section}{0}
+    \setcounter{figure}{0}
+    \setcounter{table}{0}
+    \newpage
+    \null\vspace{.7truein}
+    \refstepcounter{appendixno}
+    \centerline{APPENDIX \theappendix}
+    \centerline{\bf \uppercase\expandafter{#1}}
+    \vspace{\baselineskip}
+    \addcontentsline{toc}{section}{\contentsadj APPENDIX \theappendix:\ \ 
+    {\bf \uppercase\expandafter{#1}}
+    }
+}
+
+\def\TUchapter#1{\chapter{{\bf \uppercase\expandafter{#1}}}}
+\def\TUsection#1{\section{\bf #1}}
+\def\TUsubsection#1{\subsection{\it #1}}
+\def\TUsubsubsection#1{\subsubsection{#1\colonspace}}
+\def\TUappendix#1{\appendix{#1}}
+
+%\par
+%  \setcounter{chapter}{0}%
+%  \setcounter{section}{0}%
+%  \gdef\@chapapp{\appendixname}%
+%  \gdef\thechapter{\@Alph\c@chapter}
+
+%
+% OK, now it starts to get a little bit strange.  
+% Each of these expressions come from the report.cls 
+% document and have been modified for the TU thesis/
+% dissertation template
+%
+% As the names suggest, this code is used to make headings
+% for the chapters, sections etc. and list of figures and tables, etc.
+%
+ \def\@makechapterhead#1{%
+  \makechapterpagespace
+  {\parindent \z@ \centering \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+        \@chapapp\space \thechapter
+        \par\nobreak
+        \vskip .20\p@
+    \fi
+    \interlinepenalty\@M
+    \uppercase{#1}\par\nobreak
+    \vskip 10\p@
+  }}
+  
+ \def\@makeschapterhead#1{%
+  \makechapterpagespace
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \centerline {#1}\par\nobreak
+    \vskip 10\p@
+  }}
+
+
+
+ \def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+ \refstepcounter{chapter}
+ \typeout{\@chapapp\space\arabic{chapter}.}
+ %\addcontentsline{toc}{chapter}{CHAPTER \protect
+ %\numberline{\arabic{chapter}:}#1}\else
+  \addcontentsline{toc}{chapter}{\protect
+  \numberline{CHAPTER \arabic{chapter}: }#1}\else%%%%%%%%%%%%%%%%%
+ \addcontentsline{toc}{chapter}{#1}\fi
+ \chaptermark{#1}
+\if@twocolumn
+\@topnewpage[\@makechapterhead{#2}] 
+ \else \@makechapterhead{#2}
+ \@afterheading \fi} % End \def\@chapter[#1]#2
+
+\def\@schapter#1{\@makeschapterhead{#1} 
+ \@afterheading} % End \def\@schapter#1
+  
+  \renewcommand*\l@chapter[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@ %\vskip 1.0em \@plus\p@ 
+    \setlength\@tempdima{7.0em}%1.5
+   % \addtolength\@numwidth{1.5em}
+    \begingroup
+      %\parindent \z@ \rightskip \@pnumwidth{1}
+      %\parfillskip -\@pnumwidth
+       \parindent \z@
+       \rightskip \if@compatibility\@pnumwidth\else\@tocrmarg\fi
+       \parfillskip -\rightskip%%%%%%%%%%%
+      \leavevmode %\bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+      \penalty\@highpenalty
+    \endgroup
+  \fi
+  }
+%
+% These commands control the spacing around 
+% the different types of headings
+%
+\newcommand\colonspace{:\ \ }
+\def\chapterlike{\@startsection {chapterlike}{1}{\z@}{-3.5ex plus -1ex minus 
+ -.2ex}{2.3ex plus .2ex}{\normalsize\center}}
+\def\section{\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus 
+ -.2ex}{0.1ex plus .2ex}{\normalsize\center\bf}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{-3.25ex plus -1ex minus 
+ -.2ex}{0.1ex plus .2ex}{\normalsize\it}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\parindent}{-3.25ex plus -1ex minus 
+ -.2ex}{-0.1ex plus .2ex}{\normalsize\rm}}
+\def\paragraph{\@startsection{paragraph}{4}{\z@}{3.25ex plus 1ex minus .2ex}{-1em}{\normalsize\bf}}
+\def\subparagraph{\@startsection
+ {subparagraph}{4}{\parindent}{3.25ex plus 1ex minus 
+ .2ex}{-1em}{\normalsize\bf}}
+ 
+%
+% The \@afterheading definition has been changed
+% from the normal latex version so that the first
+% paragraph after each section will be indented.
+%
+\def\@afterheading{%
+  \@nobreakfalse
+  \everypar{%
+    \if@nobreak
+      \@nobreakfalse
+      \clubpenalty \@M
+      \if@afterindent \else
+        {\setbox\z@\lastbox}%
+      \fi
+    \else
+      \clubpenalty \@clubpenalty
+      \everypar{}%
+    \fi}}
+    
+% Testing code

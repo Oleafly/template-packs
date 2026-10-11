@@ -1,0 +1,134 @@
+% this is the main tex document that compiles the text from each section file into one doc
+
+% import packages to use in this template - DO NOT CHANGE ANYTHING BELOW THIS LINE
+\documentclass[12pt, oneside]{book}
+\usepackage[letterpaper, left=1.2in, right=1.2in, top=1.2in, bottom=1.2in]{geometry}
+\usepackage{fancyhdr}
+\pagestyle{plain}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{#1}}{}}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{lipsum}
+\titleformat{\chapter}[display] 
+{\normalfont\huge\bfseries\raggedright}{\chaptertitlename~\thechapter}{30pt}{\Huge}   
+\usepackage{enumitem}
+\usepackage{makecell}
+\usepackage{float}
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{booktabs, multirow} % for borders and merged ranges
+\usepackage{tocloft}
+\usepackage{tocbibind}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[bookmarks=true, hidelinks]{hyperref}
+\usepackage{natbib}
+
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{5}
+\usepackage{titlesec}
+\titlespacing*{\chapter}{0pt}{-30pt}{30pt}
+
+\usepackage{graphics}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{bm}
+\usepackage{lipsum}  
+
+% some commands
+\renewcommand{\cftchapfont}{\bfseries}
+\renewcommand{\cftchappagefont}{\bfseries}
+\renewcommand{\cftchapnumwidth}{1em}
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+\renewcommand\cftchappagefont{\mdseries}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftchapdotsep}}
+\renewcommand{\bibname}{Reference List}
+
+\let\svthefootnote\thefootnote
+\newcommand\freefootnote[1]{%
+  \let\thefootnote\relax%
+  \footnotetext{#1}%
+  \let\thefootnote\svthefootnote%
+}
+
+\doublespacing
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the sections below are what makes the final document -- see README
+
+% title page and subsequent intro pages - EDIT VARIABLES AT THE TOP OF THIS DOCUMENT
+\input{ContentFiles/0_title_pages}
+
+% Acknowledgements - PAGE NUMBERING STARTS HERE (IN ROMAN NUMERALS)
+\pagenumbering{roman}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+\setcounter{page}{4} 
+\input{ContentFiles/1_acknowledgments}
+\clearpage
+
+% Table of Contents
+\renewcommand\contentsname{Table of Contents}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+\begin{singlespace}
+    \setlength\cftbeforetabskip{\baselineskip}
+    \tableofcontents
+\end{singlespace}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+\clearpage
+
+% List of figures and tables
+\begin{singlespace}
+    \setlength\cftbeforetabskip{\baselineskip}
+    \listoftables
+\end{singlespace}
+\clearpage
+
+\begin{singlespace}
+    \setlength\cftbeforefigskip{\baselineskip}
+    \listoffigures
+\end{singlespace}
+\clearpage
+
+% Abstract
+\input{ContentFiles/2_abstract}
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% resume page numbering for rest of document
+\pagenumbering{arabic}
+\setcounter{page}{1} % set the page number appropriately
+
+% Chapter 1
+\input{ContentFiles/3_intro}
+
+% Chapter 2
+\input{ContentFiles/4_data_methods}
+
+% Chapter 3
+\input{ContentFiles/5_results}
+
+% Chapter 4
+\input{ContentFiles/6_discussion}
+
+% % Chapter 5 - uncomment out as needed
+% \input{ContentFiles/7_other}
+% \clearpage
+
+% % Appendices - uncomment out as needed
+% \input{ContentFiles/8_appendix}
+
+% bibliography
+%========================================
+\begin{singlespace}
+    \setlength\bibsep{\baselineskip} % formatting for bibliography
+    \bibliographystyle{ametsocV6} % uses the ametsoc formatting (can be changed to root name of other bst file [if provided])
+    \bibliography{Reference} % calls the file with your bibtex citations (root name only)
+\end{singlespace}
+
+% end doc
+\end{document}

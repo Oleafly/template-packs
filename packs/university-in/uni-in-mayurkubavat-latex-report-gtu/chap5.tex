@@ -1,0 +1,165 @@
+\chapter{SHA-3 Verification Plan}
+
+Verification plan gives us idea about two things mainly. Two questions are generally asked; what to verify? How to verify it?  It is a blueprint of plan we have established. The plan includes architecture of the DUT, specification extraction, creating test scenarios and testcases based on test scenarios. Verification environment has been created based on the DUT architecture. This verification environment includes VCs such as test module, environment module, agent and score board etc. \par
+
+Detailed verification plan also specifies DUT specifications, pin tables, VCs and their interconnection based on verification methodology used and coverage plan. Originally verification plan consist of verification environment, methodology used and communication methods between VCs. \par
+
+Another term is test plan, includes specific test to be applied and coverage planning. Test plan is very specific to DUT. It also includes development of function model which is integrated in scoreboard. Function model can be developed by personnel other than verification engineer. Model in C language can be connected by DPI-C functionality of SystemVerilog language. Detailed test plan is described in figure below,
+
+
+
+
+Specification for SHA-3 core is taken from Keccak SHA-3 documentation from OpenCores.org. These specifications include signal details, timing and usage of the core. \par
+
+
+Specification for Keccak SHA-3 core is given below,
+
+\begin{enumerate}
+\item Core has two different versions, high throughput core with 64-bit input and low throughput core with 32-bit input.
+\item Detailed working of SHA-3 algorithm is implemented as explained in section 3.
+\item In high throughput core two rounds are done per clock cycle. It finishes permutation in 12 clock cycles.
+\item Low throughput core perform one round per clock cycle. It finishes permutation in 24 clock cycles.
+\item Input signals are sampled at rising edge of clock.
+\item Output signals are registered and not connected directly to combination logic inside.
+\item Reset core before calculating hash for new input value.
+
+\end{enumerate}
+
+Pin signals of design is given in table below,
+
+
+\begingroup
+\fontsize{10pt}{12pt}\selectfont
+\begin{table}[ht]
+	\centering
+	
+\begin{tabulary}{1.0\textwidth}{|C||C|C|L|}
+\hline
+ Port Name & Width & Direction & Description  \\ \hline
+ clk & 1 & in & Clock applied  \\ \hline
+ reset & 1 & in & Synchronous reset aligned with posedge of clk  \\ \hline
+ in & 64 & in & input  \\ \hline
+ byte\_num & 3 & in & Byte length of input \\ \hline
+ in\_ready & 1 & in & Input valid or not  \\ \hline
+ is\_last & 1 & in & Current input last or not  \\ \hline
+ buffer\_full & 1 & out & Buffer full(ready) or not  \\ \hline
+ out & 512 & out & output hash result  \\ \hline
+ out\_ready & 1 & out & output ready or not  \\ \hline
+\end{tabulary}
+\caption{Pin details of high throughput SHA-3 core}
+\label{table:3}
+\end{table}
+\endgroup
+
+
+%Bring Table to top of the page
+\makeatletter% Set distance from top of page to first float
+\setlength{\@fptop}{5pt}
+\makeatother
+
+\begingroup
+\fontsize{10pt}{12pt}\selectfont
+
+\begin{table}[ht]
+	\centering
+\begin{tabulary}{1.0\textwidth}{|C||C|C|L|} 
+\hline
+ Port Name & Width & Direction & Description  \\ \hline
+ clk & 1 & in & Clock applied  \\ \hline
+ reset & 1 & in & Synchronous reset aligned with posedge of clk  \\ \hline
+ in & 32 & in & input  \\ \hline
+ byte\_num & 2 & in & Byte length of input \\ \hline
+ in\_ready & 1 & in & Input valid or not  \\ \hline
+ is\_last & 1 & in & Current input last or not  \\ \hline
+ buffer\_full & 1 & out & Buffer full(ready) or not  \\ \hline
+ out & 512 & out & output hash result  \\ \hline
+ out\_ready & 1 & out & output ready or not  \\ \hline
+\end{tabulary}
+\caption{Pin details of low throughput SHA-3 core}
+\label{table:4}
+\end{table}
+\endgroup
+
+\section{Test Scenarios and Test Cases}
+
+Test scenarios and testcases based on that are given in table \ref{table:5} below,
+\begingroup
+\fontsize{10pt}{12pt}\selectfont
+
+\begin{table}[ht]
+	\centering
+\begin{tabulary}{1.0\textwidth}{|L|L|L|L|} 
+\hline
+ TR & Test Scenario & STR & Test Cases  \\ \hline
+ TR1 & Test for Reset alignment & TR1.1 & Apply reset for single clock cycle  \\ \hline
+ 	& 	& TR1.2 & Apply reset for more than one clock cycle \\ \hline
+ 	& 	& TR1.3 & Align positive edge of both clock and reset  \\ \hline
+ 	& 	& TR1.4 & Apply slight change in alignments \\ \hline
+ TR2 & Vary input string size & TR2.1 & Try passing empty message  \\ \hline
+	& 	& TR2.2 & Input message size less than 32-bits  \\ \hline
+	& 	& TR2.3 & Input message size equal to 32-bits \\ \hline
+	& 	& TR2.4 & Input message size more than 32-bits but less than 64-bits  \\ \hline
+	& 	& TR2.5 & Input message size equal to 64-bits  \\ \hline
+	& 	& TR2.6 & Input message size greater than 64-bits  \\ \hline
+	& 	& TR2.7 & Apply very large input message           \\ \hline
+	TR3 & Check for is\_last	& TR3.1 & Enable and disable is\_last and check for byte\_num  \\ \hline
+	TR4	& Apply Input at slower rate	& TR4.1 & Make in\_ready zero for varying time duration  \\ \hline
+	& 	& TR4.2 & Toggle in\_ready  \\ \hline
+	TR5	& Check for buffer\_full	& TR5.1 & Check for buffer\_full is 1 and in\_ready is zero.   \\ \hline
+	TR6 & Check for out\_ready	& TR6.1 & After output is ready. Observe output for arbitrary amount of time when out\_ready is 1. \\ \hline
+\end{tabulary}
+\caption{Test Cases}
+\label{table:5}
+\end{table}
+\endgroup
+
+
+\section{Coverage Plan}
+
+“To minimize wasted effort, coverage is used as a guide for directing verification resources by identifying tested and untested portions of the design.” - IEEE Standard for System Verilog (IEEE Std. 1800-2009)
+
+\subsection{Code Coverage}
+
+Code coverage can be of number of different types. Some of these types are listed and explained in brief as given below, \par
+
+Line Coverage/ Statement Coverage: It is required to get 100\% line coverage in any verification project. Line coverage includes every line of DUT code, it covers only executable code portion and lines which are not executable such as module, endmodule and timescale are not considered as part of line/ statement coverage. \par
+
+Block Coverage: It is nearly same as statement coverage but only includes blocks line if/else, wait, case statement etc. Block coverage is used to identify dead code inside our design. \par
+
+Conditional Coverage: It is also known as expression coverage. If Boolean conditions are given, then it will check for covered expression. It is ratio of expression covered to the total number of expressions. \par
+
+Branch Coverage: It covers all conditions of branches. Branch such as if/else, case statement and ternary operator are evaluated for all true/false conditions and possible cases. \par
+
+Path Coverage: This coverage is considered more complete than branch coverage because number of path created by statements like if/else represents particular sequence from which we can enter into simulation. Path coverage is relatively difficult to perform. \par
+
+Toggle Coverage: It measures number of times net or signal line toggles from 0 --$>$ 1 and 1 --$>$ 0. It gives information of the signal that did not change the state. It is useful for gate level simulation. \par
+
+FSM Coverage: It can be most complex coverage to achieve in design verification. It gives information related to sates visited and transitions. State coverage gives information about states covered. All state in State Machine should be covered. Transition coverage will count number of transitions happened in our design. FSM coverage can also inform about stuck transitions if error conditions are applied. \par
+
+Goal of any verification project is to cover all coverage as much as possible. Time to market and cost of bugs will also be considered. We can say that the design is completely verified and has no bugs. But we can reduce possibility of having bugs in certain stages by performing code coverage.
+
+\subsection{Functional Coverage}
+
+Functional coverage is better than code coverage and tells what features has been tested by particular testcase applied. Function coverage is manually added to our test environment. By performing functional coverage we can qualify our testbench. It also gives details about testcases that are redundant. Functional coverage can be performed by item coverage with cover groups, cross cover groups and transition points.
+
+\section{Verification Environment}
+
+Verification environment includes detailed testbench architecture with various components and connection between them. We choose testbench architecture from the verification methodology specified inside the test plan. Verification methodology followed here is UVM. So we will discuss UVM verification components with respect to SHA-3 core integration.
+
+\vspace{1cm}
+%Image
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=13cm,height=8cm]{images/env}
+	\caption{Developed Verification Environment \label{env}}
+\end{figure}
+
+
+To develop verification environment for SHA-3 core we need to create various verification blocks, for which file system is as specified,
+
+Scoreboard functionality is to compare all inputs to the relative outputs. And for that scoreboard will be connected to SHA-3 functional model. Here, this functional model can be in any foreign language like C, C++, Python etc or it can be created in SystemVerilog. To connect SHA-3 functional model to scoreboard we require DPI-C if the model is in C language.
+
+\section{Conclusion}
+
+This chapter represents standard verification flow to be followed with the detailed test plan. Detailed test plan consists of DUT specifications, understanding of the pin signals and test scenarios and testcases are developed to test SHA-3 Core thoroughly for normal operation, corner cases and error conditions. Also detailed test plan requires developing verification environment which is also specified above. Another important aspect of developing verification environment is to check for error free working environment, it can be justified by performing sanity check. It then follows connecting DUT to the environment and adding DUT specific changes in UVM components.
+

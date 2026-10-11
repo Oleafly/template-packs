@@ -1,0 +1,122 @@
+% This file is copied from the work of Jim Fox and edited a bit
+% http://staff.washington.edu/fox/tex/
+
+\def\Title#1{\gdef\@Title{#1}}
+\def\Author#1{\gdef\@Author{#1}}
+\def\Year#1{\gdef\@Year{#1}}  \Year{\year}
+\def\Degree#1{\gdef\@Degree{#1}} \Degree{Doctor of Philosophy}
+\def\Program#1{\gdef\@Program{#1}} \Program{your program here}
+%
+\def\School#1{\gdef\@School{#1}} \School{University of Washington}
+\def\GSchool#1{\gdef\@GSchool{#1}} \GSchool{Graduate School}
+\def\Degreetext#1{\gdef\@Degreetext{#1}} 
+  \Degreetext{A dissertation\\ submitted in partial fulfillment of the\\requirements for the degree of}
+\def\Programtext#1{\gdef\@Programtext{#1}}  
+       \Programtext{Program Authorized to Offer Degree: }
+
+\def\textofCommittee#1{\gdef\@textofCommittee{#1}}  
+       \textofCommittee{Reading Committee: }
+\def\textofDate#1{\gdef\@textofDate{#1}}  \textofDate{Date}
+
+\def\textofChair#1{\gdef\@textofChair{#1}}
+       \textofChair{Chair of the Supervisory Committee: }
+
+\newcount\@Chair \@Chair0
+\def\Chair#1#2#3{
+  \global\@namedef{C:\expandafter\the\@Chair}{#1}
+  \global\@namedef{T:\expandafter\the\@Chair}{#2}
+  \global\@namedef{D:\expandafter\the\@Chair}{#3}
+  \ifnum\@Chair>0\textofChair{Co-Chairs of the Supervisory Committee:}\fi
+  \global\advance\@Chair by1}
+
+
+\newcount\@Sign\@Sign0
+\def\Signature#1{
+  \global\@namedef{S:\expandafter\the\@Sign}{#1}
+  \global\advance\@Sign by1}
+
+ 
+\def\copyrightpage{                   % Prints the copyright page
+    \vspace{7pc}
+    \begin{center}
+      \par\vskip\z@ plus4fill\relax
+      \copyright Copyright \@Year
+      \par
+      \@Author
+      \par\vskip\z@ plus2fill\relax
+    \end{center}
+  \let\copyrightpage\relax\relax}
+ 
+\def\titlepage{                   % Prints the title page
+    \vspace{7pc}
+    \begin{center}
+      {\def\baselinestretch{1.0}\normalfont\Large
+      \lineskip 3ex
+      \textbf{\@Title}\par}
+      \par\vskip\z@ plus2fill\relax
+      {\Large \@Author}
+      \par\vskip\z@ plus4fill\relax
+      {\def\baselinestretch{1.0}\normalfont
+      \@Degreetext\par}
+      \par\vskip\z@ plus2fill\relax
+      \@Degree
+      \par\vskip\z@ plus2fill\relax
+      \@School
+      \par\vskip\z@ plus1fill\relax
+      \@Year
+      \par\vskip\z@ plus4fill\relax
+
+      % signers
+      \@textofCommittee \par 
+      \count1=0
+      \@whilenum \count1<\@Chair \do
+       {\vskip12\p@ \baselineskip12pt
+        \csname C:\the\count1\endcsname, Chair
+        \advance\count1 by1}
+      \count1=0
+      \@whilenum \count1<\@Sign \do
+       {\vskip12\p@ \baselineskip12pt
+        \csname S:\the\count1\endcsname
+        \advance\count1 by1}
+
+      \par\vskip\z@ plus4fill\relax
+       {\def\baselinestretch{1.0}\normalfont
+      \@Programtext \par \@Program\par}
+      \par\vskip\z@ plus1fill\relax
+    \end{center}
+     \vspace{2pc}\relax
+  \let\titlepage\relax}
+ 
+
+%
+%   Abstract
+%
+%  normal parameters
+\def\textofAbstract#1{\gdef\@textofAbstract{#1}}  \textofAbstract{Abstract}
+
+\newsavebox\abs@savebox% (\abs@savebox compliments of blerner@cs.washington.edu)
+\long\def\abstract#1{
+   \begin{center}
+      \@School
+      \par\vskip1pc
+      {\bf\@textofAbstract}%
+      \par\vskip1pc
+      {\def\baselinestretch{1.0}\normalfont \@Title \par}
+      \par\vskip1pc
+      \@Author
+      \par\vskip1pc
+       {\def\baselinestretch{1.0}\normalfont
+      \@textofChair
+      \par 
+      \count1=0
+      \@whilenum \count1<\@Chair \do
+       {% \vskip12\p@ \baselineskip12pt
+        \csname T:\the\count1\endcsname\ \csname C:\the\count1\endcsname
+        \par \csname D:\the\count1\endcsname\par\vskip6\p@
+        \advance\count1 by1}
+       \par}
+      \par\vskip1pc
+   \end{center}
+   #1
+   \vfill
+   \let\abstract\relax}

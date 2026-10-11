@@ -1,0 +1,198 @@
+% \ProvidesPackage{uwthesis}
+
+\usepackage[paper=letterpaper,margin=1in,pdftex,headsep=0.5cm]{geometry}
+\usepackage{styles/uw_colours}
+
+%-------		PACKAGES		-------	
+
+\RequirePackage{yfonts}
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\RequirePackage{tkz-tab}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric, arrows}
+\RequirePackage{varwidth}
+\RequirePackage[most]{tcolorbox}
+\tcbuselibrary{listings}
+\usetikzlibrary{shadows,shadows.blur,shapes.misc, positioning}
+\RequirePackage{setspace}
+\RequirePackage{epigraph}
+\RequirePackage{fontawesome5}
+\RequirePackage{multirow}
+\RequirePackage{rotating}
+
+\RequirePackage{physics}
+
+%--------------------------------------------------------------------------
+% 		WRITING PACKAGES & COMMANDS 
+%--------------------------------------------------------------------------
+
+%-------		PACKAGES		-------	
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\RequirePackage{lipsum}
+\RequirePackage{csquotes}
+\RequirePackage{enumerate}
+\RequirePackage[shortlabels,inline]{enumitem}
+\RequirePackage{subfiles}
+
+%--------------------------------------------------------------------------
+% 		MATH PACKAGES & COMMANDS 
+%--------------------------------------------------------------------------
+
+
+%-------		PACKAGES		-------	
+\RequirePackage{amsmath, amsthm, amssymb, amsfonts}
+\RequirePackage{thmtools}
+\tcbuselibrary{theorems,skins,breakable}
+
+\RequirePackage{mathtools}
+\RequirePackage{dsfont}
+
+% Functions 
+\newcommand{\expo}[1]{\exp{\left\{#1\right\}}}
+\newcommand{\lno}[1]{\ln{\left\{#1\right\}}}
+
+%--------------------------------------------------------------------------
+% 		COLORS & LINKS
+%--------------------------------------------------------------------------
+\RequirePackage[dvipsnames]{xcolor}
+
+\RequirePackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=huskypurple,
+  filecolor=huskypurple,
+  urlcolor=huskypurple,
+  citecolor=citepurple,
+  linktoc=all
+}
+
+%--------------------------------------------------------------------------
+% 		HEADER & FOOTER 
+%--------------------------------------------------------------------------
+% ----- Header and footer -----
+\RequirePackage{fancyhdr}
+
+\newcommand*\circled[1]{\tikz[baseline=(char)]{\node[shape=circle,fill=huskygold, text=huskypurple, inner sep=2pt] (char) {#1};}}
+\def\hrulefillfour{\leavevmode\leaders\hrule height 2pt\hfill\kern\z@}
+
+\fancypagestyle{regular}{
+    \fancyhead[RO,LE]{}
+    \fancyhead[RE,LO]{\nouppercase{\leftmark}} % chapter name and number on the right for even pages and left for odd pages in the header
+    \renewcommand{\headrulewidth}{2pt} % sets thickness of header line
+    \let\oldheadrule\headrule
+    \renewcommand{\headrule}{\color{huskypurple}\oldheadrule}% Add colour to \headrule
+    % \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+    \fancyfoot{} % removes page number on bottom of page
+    \fancyfoot[RE,LO]{{\color{huskypurple} \hrulefillfour}\protect\circled{\thepage}{\color{huskypurple} \hrulefillfour}}
+}
+
+% %--------------------------------------------------------------------------
+% % 		Chapters and sections 
+% %--------------------------------------------------------------------------
+\setcounter{secnumdepth}{3}
+\renewcommand\thesubsubsection{\thesection.\arabic{subsection}.\arabic{subsubsection}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+\renewcommand\thesection{\arabic{section}}
+
+\makeatletter
+\@addtoreset{chapter}{part} % for numberring
+\makeatother  
+
+\RequirePackage[titles]{tocloft}
+
+\RequirePackage{titletoc}
+% Define a new command to create per-chapter mini-TOCs
+\newcommand{\chaptertoc}{%
+    \startcontents[chapters]
+    \printcontents[chapters]{}{1}{\setcounter{tocdepth}{2}}
+    \clearpage
+}
+
+\newcommand{\chaptertocNoNewPage}{%
+    \startcontents[chapters]
+    \printcontents[chapters]{}{1}{\setcounter{tocdepth}{2}}
+}
+
+\RequirePackage[explicit]{titlesec}
+\RequirePackage{titlesec}
+
+\titleformat{\chapter}[display]
+{\centering\normalfont\Huge}
+{{\color{huskypurple}\titlerule[5pt]\vspace{3pt}\titlerule[2pt]\vspace{3pt}}\textbf{\MakeUppercase{\chaptername} \thechapter}}
+{0pt}
+{{\color{huskypurple}\titlerule[2pt]}\vspace{1pc}\Huge\MakeUppercase{#1}}
+
+% Sam needs this
+\titleformat{name=\chapter,numberless}[display]
+{  \centering\normalfont\Huge}
+{{\color{huskypurple}\titlerule[2pt]}\vspace{-60pt}}
+{0pt}
+{\Huge\MakeUppercase{\textbf{#1}} \addcontentsline{toc}{chapter}{#1} }
+% change the -60pt to -100pt for double spacing
+
+
+% %--------------------------------------------------------------------------
+% %         Tables et figures 
+% %--------------------------------------------------------------------------
+\RequirePackage{subcaption} 
+\RequirePackage{chngcntr} % needed for correct table numbering
+\renewcommand{\thefigure}{\thepart.\thechapter.\thesection.\arabic{figure}}
+\counterwithin{table}{chapter} % numbering of tables 
+\counterwithin{figure}{chapter} % numbering of figures
+\numberwithin{equation}{chapter} % numbering of equations
+
+\RequirePackage{array}
+
+\RequirePackage[leftcaption]{sidecap}
+\sidecaptionvpos{figure}{c}
+\sidecaptionvpos{figure}{c}
+
+\RequirePackage{wrapfig}
+\RequirePackage{float}
+\RequirePackage[labelfont=bf]{caption} % bold text for captions
+% \RequirePackage[para]{threeparttable} % fancy  tables, check these before you use them
+\RequirePackage{makecell}
+\RequirePackage{hhline}
+
+\newtcbtheorem[number within=section]{myaside}{Aside}
+{
+    enhanced,
+    frame hidden,
+    titlerule=0mm,
+    toptitle=1mm,
+    bottomtitle=1mm,
+    fonttitle=\bfseries\large,
+    coltitle=black,
+    colbacktitle=huskypurple!40!white,
+    colback=huskypurple!20!white,
+}{aside}
+
+\NewDocumentCommand{\aside}{m+m}{
+    \begin{myaside}{#1}{}
+        #2
+    \end{myaside}
+}
+
+\NewDocumentCommand{\asider}{mm+m}{
+    \begin{myaside}{#1}{#2}
+        #3
+    \end{myaside}
+}
+
+\makeatletter
+\newenvironment{chapquote}[2][2em]
+  {\setlength{\@tempdima}{#1}%
+   \singlespacing
+   \def\chapquote@author{#2}%
+   \parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+   \itshape}
+  {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
+\makeatother
+
+
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{\normalfont{\textit{#1}\,---\,}}}
+
+\titlespacing{\paragraph}{0pt}{5pt}{0em}[]

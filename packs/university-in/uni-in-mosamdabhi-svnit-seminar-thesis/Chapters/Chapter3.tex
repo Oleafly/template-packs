@@ -1,0 +1,35 @@
+\chapter{Conclusion}
+
+We studied a new method for optimal trajectory planning around obstacles which ensures that the entire path is collision-free, rather than enforcing obstacle avoidance only at a set of sample points. This method is formulated
+as a mixed-integer convex program and can be directly used with the mixed-integer obstacle avoidance approach which is already common in the field. Performance of our approach can be significantly improved by pre-computing convex regions of safe space with IRIS, a tool for greedy convex
+segmentation, which can allow us to solve for trajectories even in very cluttered environments.
+
+\section{Limitations}
+
+By requiring that each polynomial trajectory piece lie entirely within one convex safe region, we disallow trajectories which may not intersect the obstacles but which pass through several safe regions. Our claims of global optimality are also limited to trajectories which obey this restriction.
+This problem can be alleviated by increasing the number of trajectory segments so that each segment can be assigned to a single safe region, but doing so increases the complexity of the mixed-integer program. Successful trajectory generation is also dependent on the particular set of convex regions which are generated. In some environments, automatically finding regions at points far from the obstacles was sufficient, but as the
+environment becomes more complex, we may require a more intelligent method of selecting the seed points at which the IRIS algorithm begins. Input from a human operator can be extremely helpful, a human operator indicated the interiors of the window and doorway as salient points at which to
+generate convex regions, which allowed a feasible trajectory to be found with less time spent blindly searching for good
+region locations.
+
+
+Finally, in order to ensure a smooth control input, we may
+wish to constrain the derivatives of the snap of the trajectory,
+which will require polynomials of degree $5$ or higher. This
+will require a more careful approach to ensure the numerical
+stability of the mixed-integer semidefinite program. We are
+not yet able to reliably solve these high-order problems
+using Mosek without encountering numerical difficulties. The choice of basis functions $\Phi$ in Eq.~\ref{eq:Pjt_eq3_deits} is
+likely to be a significant factor in the numerical stability
+of the solver~\cite{mellinger2012mixed}. 
+
+\section{Future Work}
+
+In the future, intention to explore additional constraints
+and objectives, such as waypoints in space which must be
+visited en route from the start to the goal. Plans to study
+investigate more effective heuristics for choosing the seed
+points for the convex safe regions, including seeding regions
+based on the results of a sample-based motion planner like 
+RRT. Finally, we plan to study these trajectories into the real
+world with their stabilization and execution on hardware.

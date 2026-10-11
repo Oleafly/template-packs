@@ -1,0 +1,359 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% UCONNTHESIS.STY
+% University of Connecticut doctoral dissertation style (Statistics).
+%
+% Based in part on Marc Corluy's uconnthesis.cls (Summer 2007), available at:
+% https://math.uconn.edu/wp-content/uploads/sites/3655/2019/01/CorluyClass.zip
+% Corluy's header credits Marijan Kostrun's earlier class (2001),
+% Keith Gillow's ociamthesis.cls (1997, 2006), and The LaTeX Companion,
+% second edition, by Frank Mittelbach, Michel Goossens et al. (2004).
+%
+% Change history
+% 2011-03: Marcos O. Prates created this adapted Statistics version (0.1).
+% 2017-05: Gregory Vaughn contributed improvements to the template.
+% 2026-09-27: Jun Yan revised and improved the template, with Codex assistance:
+%   - Updated page geometry, spacing, and preliminary-page numbering.
+%   - Improved abstract, title, copyright, and approval-page layouts.
+%   - Added optional signature lines and support for two co-major advisors.
+%   - Improved theorem styles, contents, and lists of tables and figures.
+%   - Supported PDF navigation without duplicate abstract page destinations.
+%   - Replaced PDE and group-theory examples with statistical inference.
+%   - Added bootstrap pseudocode, punctuated cases, and sentence-case sections.
+%   - Linked figure and table guidance to Statistical Writing.
+%   - Added independent Rnw examples, default knitr rendering, and R figures.
+%   - Kept figure captions and labels explicit in LaTeX.
+%   - Documented float placement settings and added subtle blue hyperlinks.
+%   - Generalized Rnw builds and deep cleaning of generated files.
+%   - Tracked figure dependencies and prevented reuse of failed knit outputs.
+%   - Added build regression checks and CI checks for missing outputs/logs.
+% See REVIEW.md for validation and remaining submission-compliance gaps.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{uconnthesis}[2026/09/27 UConn thesis style]
+\RequirePackage{setspace}
+\RequirePackage{ifthen}
+\makeatletter
+% UConn minimum margins: one inch on every side of US Letter paper.
+% Leave room for descenders and math subscripts at the bottom text boundary.
+\RequirePackage[letterpaper,margin=1in,bottom=1.15in,footskip=.65in]{geometry}
+\brokenpenalty=10000
+\AtBeginDocument{\doublespacing}
+
+% Chapter headings begin near the top of the text area.
+% The plain page style places page numbers at the bottom center.
+
+%    ****************************************
+%    *        CHAPTERS AND SECTIONS         *
+%    ****************************************
+%
+
+% \@makechapterhead {TEXT} : Makes the heading for the \chapter command.
+%
+
+\def\@makechapterhead#1{             % Heading for \chapter command
+  %\vspace*{50pt}                     % Space at top of text page.
+  { \parindent 0pt \raggedright
+    \ifnum \c@secnumdepth >\m@ne     % IF secnumdepth > -1 THEN
+      \huge\bf {\@chapapp{} \thechapter} % Print 'Chapter' and number.
+      \par
+      \vskip 20pt \fi                  % Space between number and title.
+    \Huge \bf {#1}\par                % Title.
+    \nobreak                         % TeX penalty to prevent page break.
+    \vskip 40pt                      % Space between title and text.
+  } }
+
+% \@makeschapterhead {TEXT} : Makes the heading for the \chapter* command.
+%
+
+\def\@makeschapterhead#1{             % Heading for \chapter* command
+  %\vspace*{50pt}                     % Space at top of page.
+  { \parindent 0pt \raggedright
+    \Huge \bf {#1} \par              % Title.
+    \nobreak                         % TeX penalty to prevent page break.
+    \vskip 40pt                      % Space between title and text.
+  } }
+
+\def\chapter{\clearpage      % Starts new page.
+   %\thispagestyle{plain}    % Default Page style of chapter page is 'plain'
+   \thispagestyle{plain}  % Bottom-centered page number
+			     % Don't use headings here to avoid running head	
+   \global\@topnum\z@        % Prevents figures from going at top of page.
+   \@afterindentfalse        % Suppresses indent in first paragraph.  Change
+   \secdef\@chapter\@schapter}   % to \@afterindenttrue to have indent.
+%% End of CHAPTER modifications
+
+\def\cl@chapter{\@elt{section}\@elt{footnote}}
+\def\thefigure{\@arabic\c@figure}
+\def\thetable{\@arabic\c@table}
+% Equations are numbered within chapters as chapter.equation.
+\@addtoreset{equation}{chapter}
+\def\theequation{\thechapter.\arabic{equation}}
+
+%  Single counter for theorems and theorem-like environments:
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{assertion}[theorem]{Assertion}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{plain}
+\newtheorem{figger}[theorem]{Figure}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Proposition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\theoremstyle{plain}
+
+
+% \def\@xfloat#1[#2]{\ifhmode \@bsphack\@floatpenalty -\@Mii\else
+%    \@floatpenalty-\@Miii\fi\def\@captype{#1}\ifinner
+%       \@parmoderr\@floatpenalty\z@
+%     \else\@next\@currbox\@freelist{\@tempcnta\csname ftype@#1\endcsname
+%        \multiply\@tempcnta\@xxxii\advance\@tempcnta\sixt@@n
+%        \@tfor \@tempa :=#2\do
+%                         {\if\@tempa h\advance\@tempcnta \@ne\fi
+%                          \if\@tempa t\advance\@tempcnta \tw@\fi
+%                          \if\@tempa b\advance\@tempcnta 4\relax\fi
+%                          \if\@tempa p\advance\@tempcnta 8\relax\fi
+%          }\global\count\@currbox\@tempcnta}\@fltovf\fi
+%     \global\setbox\@currbox\vbox\bgroup
+%     \def\baselinestretch{1}\@normalsize
+%     \boxmaxdepth\z@
+%     \hsize\columnwidth \@parboxrestore}
+% \long\def\@footnotetext#1{\insert\footins{\def\baselinestretch{1}\footnotesize
+%     \interlinepenalty\interfootnotelinepenalty
+%     \splittopskip\footnotesep
+%     \splitmaxdepth \dp\strutbox \floatingpenalty \@MM
+%     \hsize\columnwidth \@parboxrestore
+%    \edef\@currentlabel{\csname p@footnote\endcsname\@thefnmark}\@makefntext
+%     {\rule{\z@}{\footnotesep}\ignorespaces
+%       #1\strut}}}
+
+%
+%% GLOBAL VARIABLES :: USER INPUT
+%%
+
+\def\myNewDegreeShort#1{\gdef\@myNewDegreeShort{#1}}
+\def\myNewDegreeLong#1{\gdef\@myNewDegreeLong{#1}}
+\def\myPreviousDegreeShort#1{\gdef\@myPreviousDegreeShort{#1}}
+\def\myPreviousDegreeLong#1{\gdef\@myPreviousDegreeLong{#1}}
+\def\myMajorAdvisor#1{\gdef\@myMajorAdvisor{#1}}
+\def\myCoAdvisorA#1{\gdef\@myCoAdvisorA{#1}}
+\def\myCoAdvisorB#1{\gdef\@myCoAdvisorB{#1}}
+\def\myAssociateAdvisorA#1{\gdef\@myAssociateAdvisorA{#1}}
+\def\myAssociateAdvisorB#1{\gdef\@myAssociateAdvisorB{#1}}
+\def\myAssociateAdvisorC#1{\gdef\@myAssociateAdvisorC{#1}}
+\def\myAssociateAdvisorD#1{\gdef\@myAssociateAdvisorD{#1}}
+
+
+\def\name#1{\gdef\@name{#1}\gdef\thesisauthor{#1}}
+
+\def\dept#1{\gdef\@dept{#1}}
+\def\degree#1{\gdef\@degree{#1}}
+\def\thesistype#1{\gdef\@thesistype{#1}}
+\def\submitdate#1{\gdef\@submitdate{#1}}
+\def\copyrightyear#1{\gdef\@copyrightyear{#1}} % \author, \title in report
+\def\@title{}\def\@author{}\def\@dept{}\def\@degree{}\def\@thesistype{}
+\def\@submitdate{\ifcase\the\month\or
+  January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or December\fi
+  \space \number\the\year}
+%\ifnum\month=12
+%    \@tempcnta=\year \advance\@tempcnta by 1
+%    \edef\@copyrightyear{\number\the\@tempcnta}
+%\else
+    \def\@copyrightyear{\number\the\year}
+%\fi
+\newif\ifcopyright \newif\iffigurespage \newif\iftablespage
+% Uncomment these lines if you want to include these pages
+%\copyrighttrue
+%\figurespagetrue
+%\tablespagetrue
+
+% Abstract pages are unnumbered, including continuation pages.
+\def\ps@uconnabstract{%
+  \def\@oddhead{\hfil\@name\ -- University of Connecticut, \@copyrightyear\hfil}%
+  \let\@evenhead\@oddhead
+  \def\@oddfoot{}\def\@evenfoot{}}
+\def\abstractpage{%
+  \pagestyle{uconnabstract}\thispagestyle{empty}
+  \begin{center}
+    \begin{minipage}{.82\textwidth}
+      \centering\singlespacing
+      {\LARGE\bfseries \@title\par}
+    \end{minipage}\par
+    \vspace{12mm}
+    \singlespacing
+    \@name, \@myNewDegreeShort\par
+    University of Connecticut, \@copyrightyear\par
+    \vspace{12mm}
+    {\large\bfseries ABSTRACT\par}
+  \end{center}
+  \vspace{4mm}
+  \doublespacing
+}
+
+% A centered title block with deliberate spacing between related groups.
+\def\titlepage{%
+  \setcounter{page}{1}
+  \thispagestyle{empty}
+  \vspace*{12mm}
+  \begin{center}
+    \begin{minipage}{.82\textwidth}
+      \centering\singlespacing
+      {\LARGE\bfseries \@title\par}
+    \end{minipage}\par
+    \vspace{20mm}
+    {\bfseries \@name\par}
+    \vspace{8mm}
+    \singlespacing
+    \@myPreviousDegreeLong\par
+  \end{center}
+  \vfill
+  \begin{center}
+    \singlespacing
+    A \@thesistype\par
+    Submitted in Partial Fulfillment of the\par
+    Requirements for the Degree of\par
+    \@degree\par
+    at the\par
+    University of Connecticut\par
+    \vspace{5mm}
+    \@copyrightyear\par
+  \end{center}
+  \clearpage
+}
+
+\def\copyrightpage{%
+  \begingroup
+  \vspace*{\fill}
+  \begin{center}
+    Copyright \copyright\ \@copyrightyear\ by \@name\par
+    All rights reserved.\par
+  \end{center}
+  \vspace*{\fill}
+  \clearpage
+  \endgroup
+}
+
+% Enable ruled signature spaces for a printed committee copy when needed.
+% The default advisory committee page lists names, as in the Registrar sample.
+\newif\ifsignaturelines
+\signaturelinesfalse
+\def\uconnadvisor#1#2{%
+  \ifx#2\@undefined
+  \else
+    \ifsignaturelines
+      #1 & \rule{\linewidth}{.4pt} \\
+         & #2 \\[3mm]
+    \else
+      #1 & #2 \\[6mm]
+    \fi
+  \fi}
+\def\signature{%
+  \begingroup
+  \begin{center}
+    {\large\bfseries APPROVAL PAGE\par}
+    \vspace{5mm}
+    \@degree\ \@thesistype\par
+    \vspace{5mm}
+    {\Large\bfseries \@title\par}
+    \vspace{8mm}
+    \singlespacing
+    Presented by\par
+    \@name, \@myPreviousDegreeShort\par
+  \end{center}
+  \vfill
+  \begin{center}
+    \singlespacing
+    Approved by\par
+    \vspace{8mm}
+    \begin{tabular}{@{}r@{\hspace{6mm}}p{77mm}@{}}
+      \uconnadvisor{Major Advisor}{\@myMajorAdvisor}
+      \uconnadvisor{Co-Major Advisor}{\@myCoAdvisorA}
+      \uconnadvisor{Co-Major Advisor}{\@myCoAdvisorB}
+      \uconnadvisor{Associate Advisor}{\@myAssociateAdvisorA}
+      \uconnadvisor{Associate Advisor}{\@myAssociateAdvisorB}
+      \uconnadvisor{Associate Advisor}{\@myAssociateAdvisorC}
+      \uconnadvisor{Associate Advisor}{\@myAssociateAdvisorD}
+    \end{tabular}
+  \end{center}
+  \vfill
+  \begin{center}
+    \singlespacing
+    University of Connecticut\par
+    \@copyrightyear\par
+  \end{center}
+  \clearpage
+  \endgroup
+}
+
+\def\firstpage{
+    % Reserve space inside the margins for abstract continuation headers.
+    \newgeometry{margin=1in,bottom=1.15in,includehead,headheight=15pt,
+      headsep=12pt,footskip=.65in}
+    \@ifpackageloaded{hyperref}{\hypersetup{pageanchor=false}}{}
+	\pagenumbering{roman}
+    \abstractpage
+	}
+
+\def\beforepreface{
+    \restoregeometry
+    \@ifpackageloaded{hyperref}{\hypersetup{pageanchor=true}}{}
+	\pagenumbering{roman}
+    %\abstractpage
+	\pagestyle{plain}
+	\begingroup\titlepage\endgroup
+	\ifcopyright\copyrightpage\fi
+    \signature
+	}
+
+\def\prefacesection#1{%
+	\chapter*{#1}
+	\addcontentsline{toc}{chapter}{#1}}
+
+\def\afterpreface{\newpage
+	\renewcommand{\contentsname}{Table of Contents}
+	\begingroup\singlespacing
+	\tableofcontents
+	\newpage
+	\iftablespage
+		{\addvspace{10pt}
+		\let\saveaddvspace=\addvspace
+		\def\addvspace##1{}
+		\listoftables
+		\let\addvspace=\saveaddvspace}
+		\newpage
+	\fi
+	\iffigurespage
+		{\addvspace{10pt}
+		\let\saveaddvspace=\addvspace
+		\def\addvspace##1{}
+		\listoffigures
+		\let\addvspace=\saveaddvspace}
+		\newpage
+	\fi
+
+	\endgroup
+	\doublespacing
+	\pagenumbering{arabic}
+	\pagestyle{plain}}
+
+
+\def\thebibliography#1{\chapter*{References\@mkboth
+ {REFERENCES}{REFERENCES}}
+	 \addcontentsline{toc}{chapter}{References}
+	 \list
+	 {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+	 \advance\leftmargin\labelsep
+	 \usecounter{enumi}}
+	 \def\newblock{\hskip .11em plus .33em minus .07em}
+	 \sloppy\clubpenalty4000\widowpenalty4000
+	 \sfcode`\.=1000\relax}
+	\let\endthebibliography=\endlist
+
+% Use bottom-centered page numbers when front matter is omitted.
+\pagestyle{plain}
+\makeatother

@@ -1,0 +1,143 @@
+% SPDX-FileCopyrightText: 2022 Alexandru Fikl <alexfikl at gmail.com>
+% SPDX-License-Identifier:  CC0-1.0
+
+\ProvidesFile{thesisstyle}
+
+% {{{ packages
+
+\usepackage{iftex}
+\usepackage{xparse}
+
+% localization
+\usepackage[english]{babel}
+\ifpdftex
+    \usepackage[T1]{fontenc}
+
+    % avoid issues with ligatures in some pdf viewers
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+\else
+    \usepackage{fontspec}
+\fi
+
+\usepackage{blindtext}
+
+% math
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{stmaryrd}
+\usepackage{cases}
+
+% pretty links
+\usepackage{xparse}
+\usepackage[hypertexnames=false,breaklinks=true]{hyperref}
+\usepackage[nameinlink, noabbrev]{cleveref}
+
+% better environments
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% graphics
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+% better typography
+\usepackage[defaultlines=3,all]{nowidow}
+\usepackage[activate={true,nocompatibility}, % activate protrusion and font expansion
+            final,              % enable microtype, use draft to disable
+            tracking=true,
+            factor=1100,        % more protrusion
+            stretch=10,         % smaller values (default 20, 20) to avoid blurring
+            shrink=10]{microtype}
+\SetTracking{encoding={*}, shape=sc}{40}
+
+% }}}
+
+% {{{ formatting
+
+% set font
+% NOTE: we want Palatino, but mathpazo is old and only works on PDFLaTeX
+\ifpdftex
+    \usepackage[sc]{mathpazo}
+\else
+    % NOTE: use mathpazo to set math fonts and Tex Gyre for other text
+    \usepackage{mathpazo}
+    \setmainfont{TeX Gyre Pagella}
+\fi
+
+% link format
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue,
+    citecolor=black,
+    linkcolor=black
+}
+
+% caption format
+% NOTE: set format=plain to remove caption indentation
+\captionsetup{
+    format=hang
+}
+
+% allow subsubsections in the TOC, if there are any
+% enable section numbering only for the first three header levels
+\setcounter{secnumdepth}{2}
+
+% NOTE: if you got to subsubsections, you probably have too many!
+\setcounter{tocdepth}{\subsubsectiontocdepth}
+\setcounter{secnumdepth}{\subsubsectionnumdepth}
+
+% NOTE: if there are many levels of indentation int the TOC, making it flat
+% might be a good option with the following options
+% \KOMAoption{toc}{indenttextentries,flat}
+
+% }}}
+
+% {{{ commands
+
+% a nicely aligned := symbol from mathtools
+\NewDocumentCommand \coloneq {o} {\mathrel{\mathop:}\mathrel{\mkern-1.2mu}=}
+
+\NewDocumentCommand \dx { O{x} } {\,\mathrm{d} #1}
+\NewDocumentCommand \vect { m } { \mathbold{#1} }
+\NewDocumentCommand \matr {m} {\mathbold{#1}}
+\NewDocumentCommand \od { m m } { \dfrac{\mathrm{d} #1}{\mathrm{d} #2} }
+\NewDocumentCommand \pd { m m } { \dfrac{\partial #1}{\partial #2} }
+
+% jump notation
+\NewDocumentCommand \jump { sm } {
+    \IfBooleanTF#1
+    {\left\llbracket #2 \right\rrbracket}
+    {\llbracket #2 \rrbracket}
+}
+% average notation
+\NewDocumentCommand \avg { sm } {
+    \IfBooleanTF#1
+    {\left\langle #2 \right\rangle}
+    {\langle #2 \rangle}
+}
+% inner product
+\NewDocumentCommand \ip { m } { \avg{ #1 } }
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\argmin}{\operatorname{arg}\,\operatorname{min}}
+
+% }}}
+
+% {{{ environments
+
+\NewDocumentCommand \newtheoremin { m m m } {
+    \newtheorem{#1}{#2}
+    \numberwithin{#1}{#3}
+}
+\newtheoremin{example}{Example}{section}
+\newtheoremin{remark}{Remark}{section}
+\newtheoremin{definition}{Definition}{section}
+\newtheoremin{proposition}{Proposition}{section}
+\newtheoremin{lemma}{Lemma}{section}
+\newtheoremin{theorem}{Theorem}{section}
+
+% }}}

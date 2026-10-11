@@ -1,0 +1,44 @@
+\label{sec:vae_framework}
+
+Variational Autoencoders (VAE) learns model a complex data distribution $p(\mathbf{x})$ by assuming it is governed by unobserved, low-dimensional latent variables $\mathbf{z}$. 
+
+\subsection{The Probabilistic Generative Process}
+Once we have a trained (learned) VAE model images $\mathbf{x}$ can be generated from a latent representation $\mathbf{z}$ drawn from a prior distribution. Which is defined as :
+\begin{equation} 
+p_\theta(\mathbf{x}, \mathbf{z}) = p_\theta(\mathbf{x} \mid \mathbf{z}) p(\mathbf{z}) 
+\end{equation} 
+where $p(\mathbf{z}) \sim \mathcal{N}(0, I)$ acts as our starting point—i.e we sample from a gaussian (Normal) distribution. The decoder $p_\theta(\mathbf{x} \mid \mathbf{z})$ then decodes these samples into the high-dimensional image space.
+
+\subsection{Variational Approximation}
+In practice, identifying which latent code $\mathbf{z}$ produced a specific image $\mathbf{x}$ is computationally impossible because the true posterior $p_\theta(\mathbf{z} \mid \mathbf{x})$ is intractable. To resolve this, we introduce a secondary network—the encoder—to approximate this relationship:
+\begin{equation} 
+q_\phi(\mathbf{z} \mid \mathbf{x}) \approx p_\theta(\mathbf{z} \mid \mathbf{x}) 
+\end{equation}
+This allows us to treat the generation problem as a task of optimization rather than direct integration.
+
+\subsection{Evidence Lower Bound : ELBO}
+To train both the encoder and decoder simultaneously, we derive the Evidence Lower Bound (ELBO). This objective ensures that the model remains faithful to the original data while respecting the geometry of our latent space:
+\begin{equation} 
+\mathcal{L}(\theta, \phi; \mathbf{x}) = \underbrace{\mathbb{E}_{q_\phi(\mathbf{z} \mid \mathbf{x})} [\log p_\theta(\mathbf{x} \mid \mathbf{z})]}_{\text{Reconstruction Fidelity}} - \underbrace{D_{KL}(q_\phi(\mathbf{z} \mid \mathbf{x}) \| p(\mathbf{z}))}_{\text{Latent Regularization}} 
+\end{equation}
+
+
+
+% \subsection{Limitations of VAEs}
+
+% While VAEs enable generative modeling, they exhibit several limitations:
+
+% \begin{enumerate}
+%     \item \textbf{Over-Regularized Latent Space:}  
+%     The KL term forces latent encodings toward a unimodal Gaussian prior, which may suppress meaningful clustering structure in complex datasets such as chest X-rays.
+
+%     \item \textbf{Blurry Reconstructions:}  
+%     When using Gaussian likelihood assumptions, the decoder optimizes pixel-wise reconstruction loss, often leading to blurry outputs.
+
+%     \item \textbf{Posterior Collapse:}  
+%     The encoder may ignore the latent variable if the decoder is sufficiently powerful.
+
+%     \item \textbf{Poor Class Separability:}  
+%     In medical datasets with subtle pathology variations, enforcing a global Gaussian structure can mix pathological and non-pathological samples in latent space.
+% \end{enumerate}
+

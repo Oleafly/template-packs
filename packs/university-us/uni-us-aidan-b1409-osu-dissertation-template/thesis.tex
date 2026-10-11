@@ -1,0 +1,92 @@
+%\title{beavtex}
+\documentclass[onehalf,12pt]{beavtex}
+\usepackage{graphicx}
+% Comment out this package for book binding margins
+\usepackage[nomarginpar]{geometry}
+\usepackage{rotating} %Package added to allow the rotation of figures and chart on a page, {sidewaysfigure} command
+\usepackage{tablefootnote} %Packaged added to allow footnotes in the tabular environment, use \tablefootnote command
+\usepackage{titlesec}
+
+
+% Adapted from https://tex.stackexchange.com/a/63393 to adjust vertical spacing before chapter header.
+
+\makeatletter
+\def\@makechapterhead#1{%
+  %%%%\vspace*{50\p@}% %%% removed!
+  {\parindent \z@ \center \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+        \large \@chapapp\space \thechapter
+        \par\nobreak
+        \vskip 20\p@
+    \fi
+    \interlinepenalty\@M
+    \large #1\par\nobreak
+    \vskip 40\p@
+  }}
+\def\@makeschapterhead#1{%
+  %%%%%\vspace*{50\p@}% %%% removed!
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \large  #1\par\nobreak
+    \vskip 40\p@
+  }}
+\makeatother
+
+
+
+% \geometry{showframe}
+
+
+
+
+\title{A Compelling Thesis}
+\author{Joe Student}
+\degree{Master of Science}
+\doctype{Thesis}
+\department{School of Electrical Engineering and Computer Science}
+\depttype{School}
+% This will be different for M.S. A.I. or Ph.D. A.I. students. Dr. Eduardo Cotilla-Sanchez is the Head of EECS as of 2022, Dr. Prasad Tadepalli is Director of A.I.
+\depthead{Head}
+\major{Computer Science}
+\advisor{First M. Last}
+\submitdate{May 1st, 2024}
+\commencementyear{2024}
+
+
+
+\abstract{Abstract text...}
+
+
+\acknowledgements{Acknowledgement text...}
+
+
+\begin{document}
+\setlength{\topmargin}{0pt}
+
+
+
+
+\maketitle
+\mainmatter
+
+
+\input{ch1_introduction.tex}
+\pagebreak
+\input{ch2_related_works.tex}
+\pagebreak
+\input{ch3_methods.tex}
+\pagebreak
+\input{ch4_results.tex}
+\pagebreak
+\input{ch5_discussion.tex}
+\pagebreak
+\input{ch6_conclusion.tex}
+\pagebreak
+\bibliography{thesis}
+\bibliographystyle{plain}
+\pagebreak
+\appendix
+\input{appendix_a.tex}
+
+\end{document}

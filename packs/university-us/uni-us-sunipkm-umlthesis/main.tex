@@ -1,0 +1,178 @@
+\documentclass[12pt, letterpaper]{article}
+
+%%%%%%%%%%% Packages %%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage{newtxtext} % requires XeLaTeX
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{relsize}
+\usepackage{exscale}
+\numberwithin{equation}{section}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{setspace}
+\usepackage{sectsty}
+\usepackage{tocloft}
+\usepackage{fancyhdr}
+
+%%%%%%%%% Citation style %%%%%%%%%
+\usepackage{natbib} % for author-year citations
+% \usepackage[square,numbers]{natbib} % for numbered citations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{notoccite}
+\usepackage{indentfirst}
+\usepackage{newtxtext}
+\usepackage{tabularx, booktabs}
+\usepackage{multirow}
+\usepackage[author={Sunip M}]{pdfcomment}
+\usepackage{xfrac}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\sectionfont{\Large}
+\subsectionfont{\normalsize}
+\subsubsectionfont{\normalsize}
+
+\usepackage[rgb]{xcolor}
+\setlength {\marginparwidth }{2cm}
+\usepackage{todonotes}
+
+\usepackage{verbatim}
+\newenvironment{metaverbatim}{\verbatim}{\endverbatim}
+
+%%%%%%%%%%%% Source Code Inclusion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Uncomment the following to include source code with native markup
+% \usepackage{lmodern}
+% \usepackage{minted} % requires Pygments (pip install pygments), and also requires a valid Python Environment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{rotating}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{nicefrac}
+
+\usepackage[margin=1in]{geometry}
+\geometry{
+	letterpaper,
+	left=1.5in,
+	right=1.0in,
+	top=1.0in,
+	bottom=1.0in
+}
+
+\usepackage{pdflscape}
+\usepackage{wrapfig}
+\usepackage{afterpage}
+
+\usepackage[scale=0.94]{tgbonum}
+\usepackage[mode=text]{siunitx}
+
+\usepackage{etoolbox}
+
+\makeatletter
+	\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\makeatother
+
+\makeatletter
+\DeclareTextCompositeCommand{\r}{OT1}{A}{%
+  \leavevmode\vbox{%
+	\offinterlineskip
+	\ialign{\hfil##\hfil\cr\char23\cr\noalign{\kern-1.15ex}A\cr}%
+  }%
+}
+\makeatother
+
+\newcommand{\MONTH}{%
+  \ifcase\the\month
+  \or January% 1
+  \or February% 2
+  \or March% 3
+  \or April% 4
+  \or May% 5
+  \or June% 6
+  \or July% 7
+  \or August% 8
+  \or September% 9
+  \or October% 10
+  \or November% 11
+  \or December% 12
+  \fi}
+
+%%%%%%%%%%%%%%%%%%% Fancy arrays %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{array, makecell}
+\renewcommand\theadfont{\normalsize\bfseries}
+\newcolumntype{C}{>{\raggedright\arraybackslash}X}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%% Hyperlink Formatting %%%%%%%%%%%%%%%%%%%%%%%%%
+\hypersetup{
+    colorlinks,
+    linkcolor={red!70!black},
+    citecolor={blue!75!black},
+    urlcolor={blue!85!black}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%% Depth of ToC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{tocdepth}{5} % table of contents depth
+\setcounter{secnumdepth}{5} % section numbering depth
+
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\} % chapter depth 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%% Figure and table numbering %%%%%%%%%%%%%%%%%%%
+\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{section}.\arabic{table}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%% Author Info %%%%%%%%%%
+\newcommand{\thesistitle}{Dissertation Title}
+\newcommand{\thesisauthor}{Author Name}
+\newcommand{\thesisyear}{\the\year{}} % replace \the\year{} with the year of submission
+\newcommand{\thesismonth}{\MONTH{}} % replace \MONTH{} with the month of submission
+\newcommand{\thesissup}{Supervisor Name}
+\newcommand{\thesisdept}{Physics and Applied Physics}
+\newcommand{\thesisdegree}{Doctor of Philosophy}
+\newcommand{\thesisdegreeprogram}{Physics Program} % leave empty if not applicable
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%% Custom Settings %%%%%%%%%%
+% add custom settings here. Such as, a custom graphics path.
+% \graphicspath{{./figures/}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\include{coverpage} % cover page (do not edit)
+\include{copyright} % copyright page (do not edit)
+\include{sigpage} % signature page (edit to add more committee members)
+\include{abstitle} % abstract title page (do not edit)
+
+\include{abs} % abstract
+\include{ack} % acknowledgements (optional)
+
+\input{toc} % table of contents (do not edit)
+\include{lot} % list of tables (do not edit)
+\include{lof} % list of figures (do not edit)
+
+\include{1_intro} % introduction
+\include{2_method} % methodology
+\include{3_results} % results
+\include{4_disc} % discussion
+\include{5_conc} % conclusions
+
+\input{ref} % references (do not edit)
+\bibliography{bibfile} % bibliography file
+ 
+\bibliographystyle{astroads}
+
+%%%%%%%%%%%%%%%% Optional Appendix Section %%%%%%%%%%%%%%%%%%%
+
+\appendix
+\renewcommand{\thefigure}{\Alph{section}.\arabic{figure}}
+\renewcommand{\thetable}{\Alph{section}.\arabic{table}}
+\include{appendix}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

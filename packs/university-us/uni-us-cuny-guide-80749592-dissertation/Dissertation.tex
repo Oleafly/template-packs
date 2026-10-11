@@ -1,0 +1,159 @@
+
+
+\documentclass[letterpaper, 12pt, oneside]{book}
+% \documentclass[letterpaper, 12pt]{book}
+
+
+% 1" margins, page numbers >= 3/4" from edge
+\usepackage[margin = 1in, includehead, footskip=0.25in]{geometry}
+\usepackage{graphicx}
+\usepackage[toc]{appendix}
+% double-spaced (except bibliography)
+\usepackage{setspace}
+\doublespacing
+\usepackage{soul}
+% all text should be 12pt % she relaxed this constraint
+% these may not be necessary for all students/disciplines
+% \let\oldfootnotesize\footnotesize
+% \renewcommand{\footnotesize}{\normalsize}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{subfig}                     % What for?
+%\usepackage[subfigure]{tocloft}         
+%\usepackage[skip=0.333\baselineskip]{caption}
+% include references in table of contents
+% http://tex.stackexchange.com/questions/71129/bibliography-in-table-of-contents
+% \usepackage[nottoc, notlot, notlof]{tocbibind}
+\usepackage{tocbibind}
+\usepackage{color,soul}
+% remaining packages
+% these may not be necessary for all students/disciplines
+\usepackage{url}
+\usepackage{makecell}
+\usepackage{amsmath}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{graphicx}
+\usepackage{import} % -import- facilitates relative file references within each file
+\usepackage[round]{natbib}
+\setlength\bibhang{0.5in}
+%\usepackage{natbib}
+\usepackage{tikz}
+\tikzset{every picture/.style={line width=0.75pt}} %set default 
+% for eps to pdf conversion
+% these may not be necessary for all students/disciplines
+\usepackage{epstopdf}
+\epstopdfsetup{update} 
+
+% pdf metadata
+\usepackage[pdfauthor={Your name},
+    pdftitle={thesis title},
+    hidelinks
+]{hyperref}
+
+% dissertation
+\begin{document}
+
+% front matter
+\frontmatter
+
+% dissertation guide requires that title page is part of page count, but has no page number
+% http://tex.stackexchange.com/questions/66562/how-to-set-page-counter-by-skipping-first-page
+\include{Title_page}
+\setcounter{page}{2}
+
+% front matter
+\include{Copyright_page}
+\include{Approval_page}
+\include{Abstract}
+\include{Acknowledgments}
+
+% tables of contents
+\begingroup
+\renewcommand{\addcontentsline}[3]{} % prevent adding TOC itself to TOC
+\tableofcontents
+\endgroup
+
+\clearpage
+\newpage
+\listoftables
+\newpage
+\listoffigures
+
+% content
+\mainmatter
+
+% chapter one
+\chapter{chapter name} \label{intro}
+\chaptermark{} % short title in page header
+\input{Introduction}
+%\input{../../Research/One/Paper/Macros}
+%\input{../../Research/One/Paper/Content}
+%\clearpage
+%\import{../../Research/One/Paper/}{Tables}
+
+% chapter two
+\chapter{Chapter name}\label{label}
+\chaptermark{mark}
+\input{Chapter2}
+\input{Tables/Chapter2}
+
+%chanpter 3
+\chapter{name}\label{label}
+\chaptermark{short}
+
+\input{Chapter3}
+\input{Tables/Chapter3}
+%\input{../../Research/Two/Paper/Macros}
+%\input{../../Research/Two/Paper/Content}
+%\clearpage
+%\import{../../Research/Two/Paper/}{Tables}
+
+
+
+
+\newpage
+\clearpage
+
+\chapter{Conclusions}
+\chaptermark{Conclusions}
+
+\input{Conclusions}
+
+
+\clearpage
+\newpage
+
+
+\appendix
+\begin{appendices}
+\include{Appendix1}
+\include{Appendix2}
+\end{appendices}
+\clearpage
+
+%\input{../../Research/Three/Paper/Macros}
+%\input{../../Research/Three/Paper/Content}
+%\clearpage
+%\import{../../Research/Three/Paper/}{Tables}
+
+% chapter four
+
+%\input{../../Research/Four/Paper/Macros}
+%\input{../../Research/Four/Paper/Content}
+%\clearpage
+%\import{../../Research/Four/Paper/}{Tables}
+%\clearpage
+%\import{../../Research/Four/Paper/}{Tables_appendix}
+%\clearpage
+%\import{../../Research/Four/Paper/}{Figures}
+
+% end matter
+\singlespacing
+\bibliographystyle{apalike}
+\bibliography{name}
+
+\end{document}

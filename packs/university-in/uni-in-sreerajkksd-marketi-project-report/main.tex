@@ -1,0 +1,104 @@
+\documentclass[12pt]{report}
+\usepackage[pdftex]{graphicx}     
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{sectsty}  
+
+\usepackage{times}
+\usepackage{mathptmx}
+\usepackage{lscape}
+\usepackage{float}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{etoolbox}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+
+\usepackage{listings}
+\usepackage{color}
+
+
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+\lstdefinelanguage{JavaScript}{
+	keywords={break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with},
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]',
+	morestring=[b]",
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	keywordstyle=\color{blue}\bfseries,
+	ndkeywordstyle=\color{darkgray}\bfseries,
+	identifierstyle=\color{black},
+	commentstyle=\color{purple}\ttfamily,
+	stringstyle=\color{red}\ttfamily,
+	sensitive=true
+}
+
+\lstset{
+	language=JavaScript,
+	backgroundcolor=\color{lightgray},
+	extendedchars=true,
+	basicstyle=\footnotesize\ttfamily,
+	showstringspaces=false,
+	showspaces=false,
+	numbers=left,
+	numberstyle=\footnotesize,
+	numbersep=9pt,
+	tabsize=2,
+	breaklines=true,
+	showtabs=false,
+	captionpos=b
+}
+\chapterfont{\centering}
+\sectionfont{\fontsize{12}{15}}
+\graphicspath{ {images/} }
+\setcounter{secnumdepth}{5}
+
+\pagestyle{fancy}
+\fancyhf{} 
+\lhead{\footnotesize Project Report 2016}
+\chead{}
+\rhead{\tiny Market Intelligence System}	%type your topic here
+\lfoot{Department of CSE}
+\cfoot{\thepage}
+\rfoot{College of Engineering Trivandrum}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\linespread{1.5} 
+
+
+\begin{document}
+
+\begin{abstract}
+This project is aiming at providing information about the trending technologies and market watch to the common man. Data sources which are possible to contain information regarding the Technology updates are RSS Feeds and social media. Data is extracted from these sources. Collected articles from the websites are tagged according the contexts and taxonomies. Triplet relations are extracted from these articles using NLP. Stanford Core NLP, Alchemy are the tools used for processing the articles. Triplets obtained will be put in a graph database. A triplet represents the entity – entity – relationship model. Entities can be a Company, a Product, a Technology or an industry. Neo4j is the graph database used for this purpose. Finally by using the predefined graph traversals and querying intelligence such as Competitors of a product, company, technology and useful information such as location based searching for different companies can be easily obtained. A web console will be provided for manual searching using the D3.js library. We have also provided a webpage displaying technology and market trends, i.e., the data we are having in our database .Languages used will be Java and Python for data extraction, relation extraction, tagging etc. Node JS will be server side backend. Java Script for the web front end. Neo4j  PostgreSQL will be databases.
+\end{abstract}
+
+\pagenumbering{roman}
+\clearpage
+\addcontentsline{toc}{chapter}{\listfigurename}
+\tableofcontents		
+\listoffigures
+\chapter{INTRODUCTION}
+\input{chapters/introduction.tex}
+
+\chapter{REQUIREMENTS ANALYSIS}
+\input{chapters/requirements.tex}
+
+\chapter{PROJECT DESIGN}
+\input{chapters/design}
+
+\chapter{IMPLEMENTATION}
+\input{chapters/implementation}
+
+\chapter{TESTING AND RESULTS}
+\input{chapters/testing}
+
+\chapter{CONCLUSION AND FUTURE SCOPE}
+\input{chapters/conclution}
+\addcontentsline{toc}{chapter}{Bibliography}
+\input{chapters/references}
+
+\end{document}	
+
