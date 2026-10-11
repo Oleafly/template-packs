@@ -20,6 +20,8 @@ const UNIVERSE_KINDS = {
   office: "letter",
 };
 const HOSTS = { "github.com": "github", "gitlab.com": "gitlab", "codeberg.org": "codeberg" };
+const PACKS_RAW = "https://raw.githubusercontent.com/Oleafly/template-packs/main";
+const PACKS_TREE = "https://github.com/Oleafly/template-packs/tree/main";
 
 function readJsonl(file) {
   if (!existsSync(file)) return [];
@@ -119,28 +121,9 @@ export function universeEntry(result, packs) {
     categories: result.categories ?? [],
     disciplines: result.disciplines ?? [],
     license: license(result.license),
-    repository: result.repository ?? null,
-    page_url: `https://typst.app/universe/package/${name}`,
-    init_spec: `@preview/${name}:${version}`,
-    thumbnail_url: `https://packages.typst.org/preview/thumbnails/${name}-${version}-small.webp`,
+    credit_url: `https://typst.app/universe/package/${name}`,
     ...fontsAndPacks(result.font_warnings, packs),
   };
-}
-
-export function sourceLinks(repo, commit, mainFile) {
-  const url = repo.replace(/\/+$/, "");
-  const host = new URL(url).hostname;
-  const name = url.split("/").pop();
-  if (host === "gitlab.com") {
-    return {
-      source_url: `${url}/-/blob/${commit}/${mainFile}`,
-      zip_url: `${url}/-/archive/${commit}/${name}-${commit}.zip`,
-    };
-  }
-  if (host === "codeberg.org") {
-    return { source_url: `${url}/src/commit/${commit}/${mainFile}`, zip_url: `${url}/archive/${commit}.zip` };
-  }
-  return { source_url: `${url}/blob/${commit}/${mainFile}`, zip_url: `${url}/archive/${commit}.zip` };
 }
 
 export function repositoryEntry(record, result, meta, packs) {
@@ -159,10 +142,8 @@ export function repositoryEntry(record, result, meta, packs) {
     license: license(record.license_spdx),
     stars: meta?.stars ?? record.stars ?? 0,
     updated: record.last_commit ?? null,
-    page_url: url,
-    main_file: record.main_file,
+    credit_url: url,
     commit: result.commit,
-    ...sourceLinks(url, result.commit, record.main_file),
     ...fontsAndPacks(result.font_warnings, packs),
   };
 }
@@ -172,25 +153,45 @@ function listable(record) {
   return Boolean(key && HOSTS[key.split("/")[0]]) && !EXCLUDED_WORDS.some((word) => key.includes(word));
 }
 
-export function buildIndex({ universe, github = [], inventory = [], descriptions = {}, fontPacks, checked }) {
+function encodePath(path) {
+  return path.split("/").map((part) => encodeURIComponent(part)).join("/");
+}
+
+export function hostedEntry(entry, place, hasPreview) {
+  const folder = `packs/${place.pack}/${place.template}`;
+  const hosted = { ...entry, pack: place.pack, template: place.template, folder_url: `${PACKS_TREE}/${encodePath(folder)}` };
+  if (hasPreview(place.pack, place.template)) {
+    const previews = `${PACKS_RAW}/previews/${encodePath(place.pack)}/${encodePath(place.template)}`;
+    hosted.thumb_url = `${previews}/thumb.webp`;
+    hosted.preview_url = `${previews}/page-1.webp`;
+  }
+  return hosted;
+}
+
+export function buildIndex({ universe, github = [], inventory = [], descriptions = {}, fontPacks, checked, hosted = null, hasPreview = () => false }) {
   const packs = familyToPack(fontPacks);
   const universeEntries = universe
     .filter((result) => result.ok && typeof result.name === "string" && typeof result.version === "string")
     .map((result) => universeEntry(result, packs));
-  const universeRepos = new Set(universeEntries.map((entry) => repoKey(entry.repository)).filter(Boolean));
+  const universeRepos = new Set(
+    universe.filter((result) => result.ok).map((result) => repoKey(result.repository)).filter(Boolean),
+  );
   const results = new Map(github.map((result) => [result.repo, result]));
   const candidates = inventory.filter(listable).filter((record) => !universeRepos.has(repoKey(record.repo)));
   const repositoryEntries = candidates
     .map((record) => [record, results.get(record.repo)])
     .filter(([, result]) => result?.ok && typeof result.commit === "string")
     .map(([record, result]) => repositoryEntry(record, result, descriptions[record.repo], packs));
-  const entries = [...universeEntries, ...repositoryEntries].sort((a, b) => a.id.localeCompare(b.id));
+  const compiled = [...universeEntries, ...repositoryEntries];
+  const entries = (hosted ? compiled.filter((entry) => hosted[entry.id]).map((entry) => hostedEntry(entry, hosted[entry.id], hasPreview)) : compiled)
+    .sort((a, b) => a.id.localeCompare(b.id));
   const checkedRepos = candidates.filter((record) => results.has(record.repo)).length;
   return {
     version: 1,
     checked,
     checked_compiler: "0.15.1",
     templates: entries.length,
+    hosted: Boolean(hosted),
     sources: {
       universe: { listed: universeEntries.length, failing: universe.filter((result) => !result.ok).length },
       repositories: { listed: repositoryEntries.length, failing: checkedRepos - repositoryEntries.length },
@@ -207,6 +208,8 @@ function main() {
     descriptions: readJson(path.join(dataDir, "inventory", "descriptions.json"), {}),
     fontPacks: readJson(path.join(dataDir, "font-packs.json"), []),
     checked: process.argv[2] || new Date().toISOString().slice(0, 10),
+    hosted: readJson(path.join(dataDir, "hosted.json"), null),
+    hasPreview: (pack, template) => existsSync(path.join(repoRoot, "previews", pack, template, "thumb.webp")),
   });
   writeFileSync(path.join(dataDir, "index.json"), `${JSON.stringify(index, null, 1)}\n`);
   const { universe, repositories } = index.sources;

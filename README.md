@@ -265,3 +265,9 @@ license that replaces those individual terms.
 External packages and fonts have their own licenses. A template named after
 a venue, institution, or established design is not an endorsement. Check the
 current official requirements before a final submission.
+
+Some imported templates came with no license at all. Their manifests say
+"Unlicensed (no license stated)" and `SOURCE.json` links back to where the
+template came from. If one of them is yours and you want it taken down,
+[open an issue](https://github.com/Oleafly/template-packs/issues) with the
+folder name and we'll remove it, no questions asked.

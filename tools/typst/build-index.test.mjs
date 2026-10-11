@@ -6,7 +6,6 @@ import {
   familyToPack,
   guessLanguages,
   repoKey,
-  sourceLinks,
   universeKind,
 } from "./build-index.mjs";
 
@@ -54,21 +53,6 @@ test("repository URLs compare without case, slashes or .git", () => {
   assert.equal(repoKey(null), null);
 });
 
-test("source and download links pin the checked commit on each host", () => {
-  assert.deepEqual(sourceLinks("https://github.com/a/b", "c0ffee", "src/main.typ"), {
-    source_url: "https://github.com/a/b/blob/c0ffee/src/main.typ",
-    zip_url: "https://github.com/a/b/archive/c0ffee.zip",
-  });
-  assert.deepEqual(sourceLinks("https://gitlab.com/a/b/", "c0ffee", "main.typ"), {
-    source_url: "https://gitlab.com/a/b/-/blob/c0ffee/main.typ",
-    zip_url: "https://gitlab.com/a/b/-/archive/c0ffee/b-c0ffee.zip",
-  });
-  assert.deepEqual(sourceLinks("https://codeberg.org/a/b", "c0ffee", "main.typ"), {
-    source_url: "https://codeberg.org/a/b/src/commit/c0ffee/main.typ",
-    zip_url: "https://codeberg.org/a/b/archive/c0ffee.zip",
-  });
-});
-
 test("only compiling templates are listed, with links, init spec and font packs", () => {
   const index = buildIndex({
     universe: [
@@ -93,12 +77,8 @@ test("only compiling templates are listed, with links, init spec and font packs"
   const [cv, thesis] = index.entries;
   assert.equal(cv.license, null);
   assert.equal(cv.kind, "cv");
-  assert.equal(thesis.init_spec, "@preview/zeta-thesis:1.2.0");
-  assert.equal(thesis.page_url, "https://typst.app/universe/package/zeta-thesis");
-  assert.equal(
-    thesis.thumbnail_url,
-    "https://packages.typst.org/preview/thumbnails/zeta-thesis-1.2.0-small.webp",
-  );
+  assert.equal(thesis.credit_url, "https://typst.app/universe/package/zeta-thesis");
+  assert.equal(thesis.pack, undefined);
   assert.deepEqual(thesis.missing_fonts, ["liberation sans", "noto serif cjk sc", "simsun"]);
   assert.deepEqual(thesis.font_packs, ["typst-cjk", "typst-text"]);
   assert.deepEqual(cv.missing_fonts, []);
@@ -151,11 +131,34 @@ test("repository templates join when they compile, and never twice", () => {
   assert.equal(thesis.description, "TU thesis");
   assert.equal(thesis.stars, 40);
   assert.equal(thesis.institution, "TU Example");
-  assert.equal(thesis.source_url, "https://github.com/a/thesis/blob/abc/main.typ");
+  assert.equal(thesis.credit_url, "https://github.com/a/thesis");
+  assert.equal(thesis.commit, "abc");
   assert.deepEqual(thesis.missing_fonts, ["SimSun"]);
   const slides = index.entries[1];
   assert.equal(slides.kind, "other");
   assert.equal(slides.license, null);
   assert.equal(slides.description, null);
   assert.equal(slides.stars, 3);
+});
+
+test("once templates are hosted, only hosted ones are listed and they point at template-packs", () => {
+  const index = buildIndex({
+    universe: [
+      { name: "kept", version: "1.0.0", ok: true, categories: ["thesis"] },
+      { name: "not-hosted", version: "1.0.0", ok: true, categories: ["cv"] },
+    ],
+    fontPacks,
+    checked: "2026-10-10",
+    hosted: { "universe:kept": { pack: "typst-thesis", template: "tu-kept", main_doc: "main.typ" } },
+    hasPreview: (pack, template) => pack === "typst-thesis" && template === "tu-kept",
+  });
+  assert.equal(index.hosted, true);
+  assert.deepEqual(index.entries.map((entry) => entry.id), ["universe:kept"]);
+  const [kept] = index.entries;
+  assert.equal(kept.pack, "typst-thesis");
+  assert.equal(kept.template, "tu-kept");
+  assert.equal(kept.folder_url, "https://github.com/Oleafly/template-packs/tree/main/packs/typst-thesis/tu-kept");
+  assert.equal(kept.thumb_url, "https://raw.githubusercontent.com/Oleafly/template-packs/main/previews/typst-thesis/tu-kept/thumb.webp");
+  assert.equal(kept.preview_url, "https://raw.githubusercontent.com/Oleafly/template-packs/main/previews/typst-thesis/tu-kept/page-1.webp");
+  assert.equal(kept.credit_url, "https://typst.app/universe/package/kept");
 });
