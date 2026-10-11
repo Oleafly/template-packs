@@ -29,12 +29,12 @@ Example data and correspondence are labeled so you can replace them with your ow
 
 ## Template index
 
-This collection contains **3,992 templates**. Choose an engine for the full index, or open a starter table below.
+This collection contains **3,991 templates**. Choose an engine for the full index, or open a starter table below.
 
 | Engine | Templates | With previews |
 | --- | ---: | ---: |
 | [LaTeX](docs/templates-latex.md) | 807 | 807 |
-| [Typst](docs/templates-typst.md) | 3,182 | 3,182 |
+| [Typst](docs/templates-typst.md) | 3,181 | 3,181 |
 | [Markdown](docs/templates-markdown.md) | 3 | 3 |
 
 Template names open the main source file. **All files** opens the complete folder, including any supporting files. **Website** links go to published gallery pages. Community imports and newly added templates may not be listed there yet.
@@ -165,7 +165,7 @@ Template names open the main source file. **All files** opens the complete folde
 | [Typst Modern CV](packs/resume-plus/typst-modern-cv/main.typ) | [Files](packs/resume-plus/typst-modern-cv/) | [Preview](packs/resume-plus/typst-modern-cv/preview.png) | [View](https://oleafly.com/templates/typst-modern-cv/) |
 | [Typst Research Poster](packs/slides-posters/typst-research-poster/main.typ) | [Files](packs/slides-posters/typst-research-poster/) | [Preview](packs/slides-posters/typst-research-poster/preview.png) | Not listed |
 
-[Browse all 3,182 Typst templates](docs/templates-typst.md).
+[Browse all 3,181 Typst templates](docs/templates-typst.md).
 
 </details>
 
