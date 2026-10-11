@@ -1,0 +1,87 @@
+\chapter{Example chapter}
+% Give your sections labels so you can refer to them from other spots (this works across .tex files in the "sections" folder too!).
+\label{ch:example}
+
+% Include a statement of originality describing your contributions at the start of the chapter
+\begin{originality}
+	For the work presented in this chapter I have contributed <X>.
+	Most figures in this section, as well as parts of the relevant discussion, are adapted from the following publication, plotting for which has been done by me, and a couple of other people:
+
+	J.~Dranczewski,\footnotemark[1] W.~K.~Ng,\footnotemark[1] A.~Fischer,\footnotemark[1] T.~V.~Raziman, D.~Saxena, T.~Farchy, K.~Stenning, J.~Peters, H.~Schmid, W.~R.~Branford, M.~Barahona, K.~Moselund, R.~Sapienza, J.~C.~Gartside, ``\href{https://doi.org/10.48550/arXiv.2407.15558}{Retinomorphic Machine Vision in a Network Laser},'' \textit{arXiv}, Aug. 2024. \textit{[manuscript in review]}
+\end{originality}
+
+%\footnotetext[1]{Authors contributed equally.}
+% Use a custom text instead of the default footnote, which would go to the bottom of the page.
+\vspace{-1.5em}
+{\footnotesize*Authors contributed equally.}
+
+\section*{Abstract}
+% Include a brief chapter abstract if desired.
+The header images are optional, and described in more detail in `thesis\_style.sty'. Basically, put a .pdf file matching the chapter number/letter in `figures/\_headers`, and you'll get a chapter header image. If there's no file for a chapter, it defaults to `default.pdf`. Remove that file -- no headers!
+
+\lipsum[1]
+
+\section{Example section}
+\label{sec:example_section}
+\begin{outline}
+	\item You can write notes to yourself in ``outline'' environments. They act like LaTeX's ``itemize'', but are coloured blue, and you can easily hide them from the final document once you're done with a specific outline by changing the environment name to ``outlineDone''.
+	\item I also provide a number of potentially useful icons that can be used to annotate these outlines:
+	\begin{itemize}
+		\item Checkmarks, for points you've covered \checkmark
+		\item Hourglass for things that are in progress \progress
+		\item Paper, for things to be adapted from papers \paper
+		\item Globe, for things that need to be referenced or researched from external sources \globe
+		\item Notion, as that's where I was tracking figure progress \notion
+	\end{itemize}
+	\item You can use these anywhere in the text just by using the commands listed in the source above: \checkmark\paper
+\end{outline}
+
+\begin{outlineDone}
+	\item This outline will not appear in the compiled document, but you can keep it in the source for reference.
+\end{outlineDone}
+
+Example citation\cite{dranczewskiPlasmaEtchingFabrication2023} -- citations appear in the upper right by default, if you need to reference a citation in the main text you can use Ref.~\citein{dranczewskiPlasmaEtchingFabrication2023}. Note the \goodtilde~symbol -- it forms a non-breaking space between ``Ref.'' and the citation number, meaning that they will always appear on the same line. You can similarly reference chapters and sections, for example Chapter~\ref{ch:example}.
+
+Here's an example figure: Fig.~\ref{fig:z_example_a_name}
+
+\begin{figure}[h]
+	\centering
+	% You'll note that I'm not including a figure width here - in my opinion you should prepare the figures
+	% to be the correct width from the start, which avoids any rescaling issues or font size discrepancies.
+	% For this document, the figure width should be 6.3 inches
+	\includegraphics{z_example_a_name/z_example_a_name.pdf}
+	\caption[
+		Wide example figure % This short description will appear in the figure list
+	]{
+		% This long description will appear in the text.
+		Example figure description.
+		\textbf{a}~This describes part \textit{a} of the figure.
+		\textbf{b}~This describes part \textit{b} of the figure.
+	}
+	% Provide an ID for the figure so it can be referenced elsewhere in the text.
+	% Mine follow a scheme of [sequential chapter letter]_[short chapter name]_[sequential figure letter]_[short figure name]
+	% This allows easy alphabetical sorting of the figure folders, and general consistency.
+	\label{fig:z_example_a_name}
+\end{figure}
+
+Here's an example of a narrow figure with the caption to the side: Fig.~\ref{fig:a_example_b_narrow}. You can use `figures/placeholder.pdf' as temporary content while you work on the real figures.
+
+% Here we make the figure narrower, add some horizontal fill, and then add the caption to the right in a "minipage"
+\begin{figure}[h]
+	% If you do need to specify a figure width, this is how.
+	\includegraphics[width=2.2in, valign=c]{placeholder.pdf}
+	\hfill
+	\begin{minipage}{\dimexpr \textwidth-\columnsep-2.2in}
+		\captionsetup{skip=0pt}
+		\caption[
+			Narrow example figure
+		]{
+			Narrow figure caption.
+		}
+		\label{fig:a_example_b_narrow}
+	\end{minipage}
+\end{figure}
+
+Examples of acronym usage: first instance -- \ac{CPU}, second instance -- \ac{CPU}. Forced full: \acf{CPU}.
+Examples of `siunitx' usage: \qty{1.23}{\meter\squared}, \qty{45.6}{\fluence} (custom unit defined in `thesis\_style.tex').
+Chemical formula: \ch{Al2(SO4)3}

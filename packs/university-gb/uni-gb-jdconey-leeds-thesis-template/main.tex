@@ -1,0 +1,277 @@
+\documentclass[11pt,a4paper,twoside]{book}
+
+%when compiling offline, run bibtex main then pdflatex main
+\usepackage[a4paper,twoside,top=2.5cm,bottom=2.5cm,left=4cm,right=3cm]{geometry}
+\raggedbottom
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{csquotes}
+\usepackage{multirow}
+\usepackage{appendix}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{verbatim}
+\usepackage[printonlyused]{acronym}
+\usepackage[nottoc]{tocbibind}   %contents setup
+
+%SI units etc
+\usepackage{siunitx}
+\makeatletter
+\patchcmd{\verbatim@input}{\@verbatim}{\scriptsize\@verbatim}{}{}
+
+\newcommand{\vel}[1]{\qty{#1}{\meter\per\second}} 
+\DeclareSIUnit{\foot}{ft}
+%siunitx package v. useful for nicely typset units
+
+\newcommand{\ic}[1]{\enquote*{#1}} %making quotations appear proper.
+
+
+%font styles
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}  %make titles sans-serif but body serif, nice innit
+%\usepackage{cfr-lm} %includes 'oldstyle' digits but mucks up \texttt
+\usepackage{textgreek}  %proper typesetting of greek letters in text
+\usepackage{lmodern}  %latin modern, like computer modern but unicode or something
+
+%figures and subfigures
+\usepackage{caption}
+\usepackage{subcaption}
+
+%english
+\usepackage[UKenglish]{babel}
+\usepackage[level]{datetime}
+
+%paragraph styles
+\setlength{\parindent}{0em}
+\setlength{\parskip}{1em}
+
+%page headings
+\usepackage{fancyhdr}
+
+%section numbering
+\setcounter{secnumdepth}{3}
+
+%References
+\usepackage{fancyref}
+\usepackage{hyperref}%pass the option 'hidelinks' if you want to suppress the outlines around links.
+\hypersetup{
+pdflang={en-UK},
+pdftitle={Thesis Title},
+pdfauthor={A. Dent},
+pdfsubject={PhD Thesis},
+}
+%\usepackage{natbib}
+\usepackage[capitalise]{cleveref}
+\usepackage{xpatch}
+\usepackage[natbib,
+backend=bibtex,
+style=authoryear,
+sorting=nyvt, 
+isbn=false,
+doi=true,
+arxiv=abs,
+dashed=false,
+eprint=true,
+giveninits=true,
+maxcitenames=2,
+uniquename=false,
+uniquelist=false,
+maxbibnames=99,
+date=year,
+useprefix=true,
+]{biblatex}   %an approximation of "Leeds Harvard" using biblatex.
+\addbibresource{references.bib}
+\DeclareNameAlias{sortname}{family-given}
+
+\xpatchbibmacro{date+extradate}{%
+  \printtext[parens]%
+}{%
+  \setunit*{\addperiod\space}%
+  \printtext%
+}{}{} 
+
+\xpatchbibmacro{volume+number+eid}{%
+  \setunit*{\adddot}%
+}{%
+}{}{}
+
+\renewbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  \setunit*{\addperiod\space}%
+  \iffieldundef{series}
+    {}
+    {\newunit
+     \printfield{series}%
+     \setunit{\addspace}}%
+  \usebibmacro{volume+number+eid}%
+  \setunit{\addspace}%
+  \usebibmacro{issue+date}%
+  \setunit{\addcolon\space}%
+  \usebibmacro{issue}%pre
+  \newunit}
+
+\DeclareSourcemap{
+  \maps{
+    \map{
+      \step[fieldsource=doi,
+        match=\regexp{\{\\_\}},
+        replace=\regexp{_}]
+    }
+  }
+}
+
+
+%%%separated bib here
+\setlength\bibitemsep{0.5\baselineskip}
+
+\renewcommand*{\nameyeardelim}{\addcomma\space}
+\DeclareFieldFormat[article]{title}{#1}
+\DeclareFieldFormat[article]{volume}{\mkbibbold{#1}}
+\DeclareFieldFormat[article]{number}{\mkbibparens{#1}}
+\renewbibmacro{in:}{}
+
+\DeclareFieldFormat[dataset]{title}{#1}
+\DeclareFieldFormat[dataset]{publisher}{\textit{#1}}
+\DeclareFieldFormat[unpublished]{title}{#1 [Preprint]}
+\DeclareFieldFormat[unpublished]{title}{#1 [Preprint]}
+\DeclareFieldFormat[misc]{title}{\textit{#1}}  
+\DeclareFieldFormat[misc]{booktitle}{[Online]. #1}  % show title in quotes
+
+\DeclareBibliographyDriver{misc}{%
+    \printnames{author}%
+    \newunit%
+    \printfield{year}%
+    \printfield{extradate}
+    \newunit%
+    \printfield{title}%
+    \newunit%
+    \printfield{booktitle}%  display booktitle or last-accessed for websites
+    \newunit%
+    \printfield{url}%
+    \newunit%
+    \printfield{issn}%
+    \newunit%
+    \printfield{doi}%
+    \finentry
+}
+
+\setcounter{biburlnumpenalty}{9000}
+
+\DeclareCiteCommand{\fullcite}
+  {\usebibmacro{prenote}}
+  {\usedriver
+     {}
+     {\thefield{entrytype}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+
+%%%%%%%%%%%%%%%%%%here endeth the references style setup%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\frontmatter
+
+
+\begin{titlepage}
+    \begin{center}
+            
+        \Huge
+        \textbf{Thesis Title}
+    
+        \vspace{2cm}
+        
+        \LARGE
+        
+        \includegraphics[width=.52\textwidth]{University_of_Leeds_crest-fixed.pdf}
+
+        \vfill
+            
+        \textbf{Arthur Philip Dent}
+
+        %\vspace{1cm}
+            
+        Submitted in accordance with the requirements for the degree of Doctor of Philosophy
+            
+        \vspace{0.8cm}
+                        
+        \Large
+        The University of Maximegalon\\
+        School of Beverages not quite entirely unlike tea\\
+
+        \vspace{0.8cm}
+        
+        \today
+            
+    \end{center}
+\end{titlepage}
+
+\chapter*{Intellectual property and Publication statements}
+
+\newpage 
+
+\chapter*{Acknowledgements}
+\input{acknowledgements}
+
+\newpage
+\cleardoublepage
+\chapter*{Abstract}
+\input{abstract}
+
+\spacing{1}
+\newpage
+\tableofcontents
+\clearpage
+\markboth{}{}
+
+
+\chapter*{Inclusion of copyrighted material}
+\addcontentsline{toc}{chapter}{Inclusion of copyrighted material}
+
+
+\cleardoublepage
+\chapter*{List of Abbreviations}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+
+
+\begin{acronym}[BR]\itemsep4pt  %how you want spacing to be laid out, i.e. the longest abbreviation plus a bit
+
+\acro{BR}{British Rail\acroextra{, the state-owned operator of railways in Britain during the second half of the 20th century}}
+
+\end{acronym}
+
+
+\listoffigures
+
+\listoftables
+
+\mainmatter
+
+\spacing{1.5}  
+%\setstretch{1.5}
+%%these seem to do the same thing?!
+
+\setcounter{chapter}{0}
+
+\include{chapters/1introduction/main}
+
+\include{chapters/4results_1/main}
+
+%you can swap out \include for \includeonly to keep refs. in place, but just speed up compile time for certain chapters etc.
+
+\newpage
+
+\printbibliography[heading=bibintoc]
+
+\appendix
+
+\cleardoublepage
+
+\chapter{Appendix 1}
+
+Something extra, maybe you don't even need it.
+
+
+\end{document}

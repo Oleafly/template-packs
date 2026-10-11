@@ -1,0 +1,206 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{Xtugraph}[2026/04/26 XTU graph style]
+
+\RequirePackage{graphicx}
+\RequirePackage{xparse}
+\RequirePackage{etoolbox}
+\RequirePackage{expl3}
+
+% 图题字体: 中文小五黑, 英文与数字 Times New Roman 加粗, 固定 14pt 行距
+\newcommand\XtuGraphLatin{%
+  \ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi
+}
+\newcommand\XtuGraphCaptionCNFont{%
+  \fontsize{9}{14}\selectfont
+  \ifx\tem@HeiCJK\relax\heiti\else\tem@HeiCJK\fi
+  \XtuGraphLatin
+  \bfseries
+}
+\newcommand\XtuGraphCaptionENFont{%
+  \fontsize{9}{14}\selectfont
+  \XtuGraphLatin
+  \bfseries
+}
+\newcommand\XtuGraphSubCaptionFont{%
+  \fontsize{9}{14}\selectfont
+  \XtuGraphLatin
+}
+
+% 自动识别图片路径: 优先用户给定路径, 否则回退 imgs/
+\newcommand\XtuIncludeAuto[2][]{%
+  \IfFileExists{#2}{%
+    \includegraphics[#1]{#2}%
+  }{%
+    \includegraphics[#1]{imgs/#2}%
+  }%
+}
+
+\newcommand\XtuSubCaptionText[1]{%
+  \ifstrempty{#1}{}{\par\vspace{2pt}{\centering\XtuGraphSubCaptionFont #1\par}}%
+}
+
+% 图题(自动编号, 与表/公式独立)
+% #1 label(可空) #2 中文题 #3 英文题
+\newcommand\XtuGraphCaptionRef[3]{%
+  \refstepcounter{figure}%
+  \ifstrempty{#1}{}{\label{#1}}%
+  {\centering\XtuGraphCaptionCNFont 图\thefigure\quad #2\par}%
+  {\centering\XtuGraphCaptionENFont Fig.\thefigure\quad #3\par}%
+  \vspace{3pt}% 英文图题段后空 3pt
+}
+
+\ExplSyntaxOn
+\msg_new:nnn {xtugraph} {single-subcaption}
+  { Multiple~figures~need~either~zero~or~at~least~two~subcaptions. }
+
+\cs_new_protected:Npn \xtu_check_subcaps:n #1
+  {
+    \int_zero:N \l_tmpa_int
+    \clist_map_inline:nn {#1}
+      {
+        \tl_if_blank:nF {##1} { \int_incr:N \l_tmpa_int }
+      }
+    \int_compare:nNnT {\l_tmpa_int} = {1}
+      { \msg_error:nn {xtugraph} {single-subcaption} }
+  }
+\cs_new:Npn \xtu_subcap_item:nn #1#2
+  { \clist_item:nn {#1} {#2} }
+\cs_new_eq:NN \xtuCheckSubcaps \xtu_check_subcaps:n
+\cs_new_eq:NN \xtuSubCapItem \xtu_subcap_item:nn
+\ExplSyntaxOff
+
+% 1 图: 居中
+% 用法: \Onegraph[fig:demo]{a.png}{中文图题}{English caption}
+\NewDocumentCommand{\Onegraph}{ O{} m m m }{%
+  \begin{figure}[htbp]
+    \centering
+    \XtuIncludeAuto[width=0.82\linewidth,height=0.32\textheight,keepaspectratio]{#2}
+    \par\vspace{4pt}
+    \XtuGraphCaptionRef{#1}{#3}{#4}
+  \end{figure}
+}
+
+% 2 图: 横排
+% 用法: \Twograph[fig:demo]{a.png}{b.png}{中文图题}{English caption}[(a) xx,(b) yy]
+\NewDocumentCommand{\Twograph}{ O{} m m m m O{} }{%
+  \xtuCheckSubcaps{#6}%
+  \begin{figure}[htbp]
+    \centering
+    \begin{minipage}[t]{0.485\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.24\textheight,keepaspectratio]{#2}
+      \XtuSubCaptionText{\xtuSubCapItem{#6}{1}}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.485\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.24\textheight,keepaspectratio]{#3}
+      \XtuSubCaptionText{\xtuSubCapItem{#6}{2}}
+    \end{minipage}
+    \par\vspace{4pt}
+    \XtuGraphCaptionRef{#1}{#4}{#5}
+  \end{figure}
+}
+
+% 3 图: 倒品字(下图略大)
+\NewDocumentCommand{\Threegraph}{ O{} m m m m m O{} }{%
+  \xtuCheckSubcaps{#7}%
+  \begin{figure}[htbp]
+    \centering
+    \begin{minipage}[t]{0.36\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.20\textheight,keepaspectratio]{#2}
+      \XtuSubCaptionText{\xtuSubCapItem{#7}{1}}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.36\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.20\textheight,keepaspectratio]{#3}
+      \XtuSubCaptionText{\xtuSubCapItem{#7}{2}}
+    \end{minipage}
+
+    \par\vspace{4pt}
+
+    \begin{minipage}[t]{0.56\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.24\textheight,keepaspectratio]{#4}
+      \XtuSubCaptionText{\xtuSubCapItem{#7}{3}}
+    \end{minipage}
+
+    \par\vspace{4pt}
+    \XtuGraphCaptionRef{#1}{#5}{#6}
+  \end{figure}
+}
+
+% 4 图: 田字
+\NewDocumentCommand{\Fourgraph}{ O{} m m m m m m O{} }{%
+  \xtuCheckSubcaps{#8}%
+  \begin{figure}[htbp]
+    \centering
+    \begin{minipage}[t]{0.485\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.20\textheight,keepaspectratio]{#2}
+      \XtuSubCaptionText{\xtuSubCapItem{#8}{1}}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.485\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.20\textheight,keepaspectratio]{#3}
+      \XtuSubCaptionText{\xtuSubCapItem{#8}{2}}
+    \end{minipage}
+
+    \par\vspace{4pt}
+
+    \begin{minipage}[t]{0.485\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.20\textheight,keepaspectratio]{#4}
+      \XtuSubCaptionText{\xtuSubCapItem{#8}{3}}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.485\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.20\textheight,keepaspectratio]{#5}
+      \XtuSubCaptionText{\xtuSubCapItem{#8}{4}}
+    \end{minipage}
+
+    \par\vspace{4pt}
+    \XtuGraphCaptionRef{#1}{#6}{#7}
+  \end{figure}
+}
+
+% 5 图: 类奥运五环(下两图略大)
+\NewDocumentCommand{\Fivegraph}{ O{} m m m m m m m O{} }{%
+  \xtuCheckSubcaps{#9}%
+  \begin{figure}[htbp]
+    \centering
+    \begin{minipage}[t]{0.31\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.16\textheight,keepaspectratio]{#2}
+      \XtuSubCaptionText{\xtuSubCapItem{#9}{1}}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.31\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.16\textheight,keepaspectratio]{#3}
+      \XtuSubCaptionText{\xtuSubCapItem{#9}{2}}
+    \end{minipage}\hfill
+    \begin{minipage}[t]{0.31\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.16\textheight,keepaspectratio]{#4}
+      \XtuSubCaptionText{\xtuSubCapItem{#9}{3}}
+    \end{minipage}
+
+    \par\vspace{4pt}
+
+    \begin{minipage}[t]{0.40\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.20\textheight,keepaspectratio]{#5}
+      \XtuSubCaptionText{\xtuSubCapItem{#9}{4}}
+    \end{minipage}\hspace{0.08\linewidth}
+    \begin{minipage}[t]{0.40\linewidth}
+      \centering
+      \XtuIncludeAuto[width=\linewidth,height=0.20\textheight,keepaspectratio]{#6}
+      \XtuSubCaptionText{\xtuSubCapItem{#9}{5}}
+    \end{minipage}
+
+    \par\vspace{4pt}
+    \XtuGraphCaptionRef{#1}{#7}{#8}
+  \end{figure}
+}
+
+\endinput

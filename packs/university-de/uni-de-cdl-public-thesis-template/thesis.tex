@@ -1,0 +1,75 @@
+\documentclass[
+    a4paper,                % seems like a good size
+    fontsize=12,            % a readable font size
+    twoside=true,           % treat left and right pages differently
+    titlepage=firstiscover, % use title margins for frontpage
+    toc=listof,             % Add entry for lists of figs and tables into toc
+    toc=bibliography,       % Add entry for bibliography into toc
+    headings=appendixprefix,% Add prefix in front of appendix title
+    BCOR=2mm                % Binding correction to make up for space used by binding
+]{scrbook}
+
+\newif\ifdraft
+\drafttrue
+% \draftfalse % uncomment for final version!
+
+% TODO fill in details for pdf metadata and titlepage
+\newcommand{\mypdfauthor}{Lorem Ipsum}
+\newcommand{\mypdftitle}{Dolor Sit Amet}
+\newcommand{\mypdfsubject}{consectetur adipiscing elit}
+\newcommand{\mypdfkeywords}{sed;do;eiusmod;tempor;incididunt}
+\newcommand{\mythesistype}{Bachelor's Thesis}
+\newcommand{\myformattedtitle}{Dolor Sit\\Amet}
+\newcommand{\myextreviewer}{Prof.\ Dr.\ X Y}
+\newcommand{\myadvisor}{Some One M.Sc.}
+\newcommand{\mysubdate}{November 30, 2015}
+
+\usepackage{mythesis}
+
+\input{tex/title_info}
+
+\begin{document}
+\bibliographystyle{apalike}
+
+\ifdraft
+\AddToHook{shipout/foreground}{
+       \begin{tikzpicture}[overlay, remember picture]
+            \node[fill=yellow, draw, text=red, rotate=45, scale=5,anchor=east] at (current page) {DRAFT};
+        \end{tikzpicture}    
+    }
+\fi
+
+\frontmatter
+
+\maketitle
+
+\cleardoublepage
+\includepdf[pages=1-1]{img/statement.pdf}
+
+\include{tex/abstract}
+
+\include{tex/acknowledgments}
+
+\tableofcontents
+
+\listoffigures
+
+% \listoftables
+
+\mainmatter
+
+\include{tex/introduction}
+
+\include{tex/contribution}
+% TODO add content chapters
+
+\include{tex/conclusion}
+
+\backmatter
+\appendix
+
+\include{tex/appendix}
+
+\bibliography{resources}
+
+\end{document}

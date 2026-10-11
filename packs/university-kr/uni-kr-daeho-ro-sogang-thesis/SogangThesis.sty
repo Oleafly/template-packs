@@ -1,0 +1,316 @@
+% !TEX encoding = UTF-8
+% SogangThesis.sty
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{SogangThesis}[2018/07/01]
+
+\RequirePackage{amsmath}						% 수학 기호 및 수식 모양 관련 패키지 
+\RequirePackage{amsfonts}
+\RequirePackage{amssymb}
+\RequirePackage{graphicx}						% 그림 삽입을 위한 패키지 
+\RequirePackage{subfigure}						% 하나의 Figure에 여러 그림을 위한 패키지 
+\RequirePackage{kotex}							% 한국어 텍을 위한 패키지
+\RequirePackage{setspace}						% 문서의 줄간격 조정을 위한 패키지
+\RequirePackage{array}							% 테이블 옵션 추가
+\RequirePackage[utf8]{inputenc}					% 폰트
+\RequirePackage[subfigure]{tocloft}				% Thesis 앞의 목차, 그림 및 테이블 목록
+\RequirePackage[
+	colorlinks = true,
+	urlcolor  = blue,
+	linkcolor = blue,
+	citecolor = red
+]{hyperref}										% \ref 링크 
+\RequirePackage[
+	left=3.5cm,
+	right=3.5cm,
+	top=5.3cm,
+	bottom=5.3cm
+]{geometry} 									% 문서 마진 설정 
+\footskip=1.1cm									% 페이지 번호 위치 설정
+
+% 그림 위치 설정 
+\graphicspath{{./figures/}}						% TeX 파일 위치를 ./ 기준으로 폴더 설정
+
+% Thesis 기본 설정
+\numberwithin{equation}{section}				% 수식 형태
+\renewcommand{\baselinestretch}{2.0} 			% 기본 줄간격 설정
+\setcounter{tocdepth}{4}						% 목차 깊이 설정 4단계
+\setcounter{secnumdepth}{4}						% 섹션 번호 깊이 설정 4단계 
+\renewcommand\thefigure{\arabic{figure}}		% Figure 번호 설정 
+
+% 목차에서 단계 형식 설정
+\renewcommand\thesection{\Roman{section}}				% \Roman	I, II, III, ...
+\renewcommand\thesubsection{\Alph{subsection}}			% \Alph		A, B, C, ...
+\renewcommand\thesubsubsection{\alph{subsubsection}}	% \alph		a, b, c, ...
+\renewcommand\theparagraph{\arabic{paragraph}}			% \arabic	1, 2, 3, ...
+
+% 목차에서 제목 마진 설정
+\setlength{\cftsecnumwidth}{25pt}				
+\setlength{\cftsubsecnumwidth}{25pt}
+\setlength{\cftsubsubsecnumwidth}{25pt}
+\setlength{\cftparanumwidth}{25pt}
+
+% 본문에서 제목 크기 설정
+%\RequirePackage{sectsty}
+%\sectionfont{\LARGE}							% 기본 \Large
+%\subsectionfont{\Large}						% 기본 \large
+%\subsubsectionfont{\large}						% 기본 \normalsize
+%\paragraphfont{\large}							% 기본 \normalsize
+
+\def\@name{\@empty}
+\def\@cname{\@empty}
+\def\@supervisor{\@empty}
+\def\@category{\@empty}
+\def\@degree{\@empty}
+\def\@department{\@empty}
+\def\@ayear{\@empty}
+\def\@adate{\@empty}
+\def\@refone{\@empty}
+\def\@reftwo{\@empty}
+\def\@refthr{\@empty}
+\def\@reffou{\@empty}
+\def\@reffiv{\@empty}
+\def\@acktitle{\@empty}
+\def\@pubtitle{\@empty}
+\def\@abetitle{\@empty}
+\def\@abktitle{\@empty}
+\def\@acknowledgement{\@empty}
+\def\@engabstract{\@empty}
+\def\@engkeywords{\@empty}
+\def\@korabstract{\@empty}
+\def\@korkeywords{\@empty}
+
+\newcommand{\name}[1]{\gdef\@name{#1}}
+\newcommand{\cname}[1]{\gdef\@cname{#1}}
+\newcommand{\supervisor}[1]{\gdef\@supervisor{#1}}
+\newcommand{\category}[1]{\gdef\@category{#1}}
+\newcommand{\degree}[1]{\gdef\@degree{#1}}
+\newcommand{\department}[1]{\gdef\@department{#1}}
+\newcommand{\ayear}[1]{\gdef\@ayear{#1}}
+\newcommand{\adate}[1]{\gdef\@adate{#1}}
+\newcommand{\refone}[1]{\gdef\@refone{#1}}
+\newcommand{\reftwo}[1]{\gdef\@reftwo{#1}}
+\newcommand{\refthr}[1]{\gdef\@refthr{#1}}
+\newcommand{\reffou}[1]{\gdef\@reffou{#1}}
+\newcommand{\reffiv}[1]{\gdef\@reffiv{#1}}
+\newcommand{\acktitle}[1]{\gdef\@acktitle{#1}}
+\newcommand{\pubtitle}[1]{\gdef\@pubtitle{#1}}
+\newcommand{\abetitle}[1]{\gdef\@abetitle{#1}}
+\newcommand{\abktitle}[1]{\gdef\@abktitle{#1}}
+\newcommand{\acknowledgement}[1]{\gdef\@acknowledgement{#1}}
+\newcommand{\publist}[1]{\gdef\@publist{#1}}
+\newcommand{\engabstract}[1]{\gdef\@engabstract{#1}}
+\newcommand{\engkeywords}[1]{\gdef\@engkeywords{#1}}
+\newcommand{\korabstract}[1]{\gdef\@korabstract{#1}}
+\newcommand{\korkeywords}[1]{\gdef\@korkeywords{#1}}
+
+\newif\ifack\acktrue
+\newif\ifpub\pubfalse
+\newif\ifabe\abetrue
+\newif\ifabk\abktrue
+\newif\ifabekey\abekeytrue
+\newif\ifabkkey\abkkeytrue
+\newif\iflof\loftrue
+\newif\iflot\lottrue
+\newif\ifphd\phdtrue
+
+\newdimen\orifontdim
+\orifontdim=15pt
+\cname{\fontdimen2\font=0pt\@name\fontdimen2\font=\orifontdim}
+
+\renewcommand\maketitle{
+\pagestyle{empty}								% 페이지 번호 제거
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			논문 겉표지  							%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+	\setlength{\spaceskip}{14pt}
+	\vspace*{0.54cm}
+	
+	\setstretch{1.2}
+	\begin{minipage}[c][2cm][c]{\textwidth}
+		\centering
+		\Huge
+		\@title
+	\end{minipage}
+	
+	\vspace{9.45cm}
+	\LARGE
+	\@ayear
+
+	\vspace{2.5cm}
+	\huge 서강대학교 대학원
+
+	\@department\ 과
+
+	\@name
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			논문 속표지  							%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\begin{center}
+	\setlength{\spaceskip}{14pt}
+	\vspace*{0.54cm}
+	
+	\setstretch{1.2}
+	\begin{minipage}[c][2cm][c]{\textwidth}
+		\centering
+		\Huge
+		\@title
+	\end{minipage}
+
+	\vspace{4.7cm}
+	\LARGE
+	지도교수
+	\@supervisor
+	\hfill\\
+
+	\setstretch{1.0}
+	\vspace{3.7cm}
+	이 논문을 \@category\ifphd 박사\else 석사\fi\ 학위논문으로 제출함
+
+	\vspace{1cm}
+	\@adate
+
+	\vspace{1cm}
+	\setstretch{1.2}
+	\huge
+	서강대학교 대학원
+
+	\@department\ 과
+
+	\@name
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			논문 인준서  							%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\begin{center}
+	\huge
+	\fontdimen2\font=20pt
+	\underline{논 문 인 준 서}\\
+	
+	\vspace{50pt}
+	\LARGE
+	\@cname 의 \@category\ifphd 박사\else 석사\fi\ 학위논문을  인준함\\
+	
+	\vspace{35pt}
+	\LARGE
+	\@adate
+\end{center}
+\vspace{45pt}
+\begin{flushright}
+	\LARGE
+	\renewcommand{\arraystretch}{1.1}
+	\begin{tabular}{m{1.6cm} c m{0.85cm} m{0.9cm}}
+		\ifphd
+			주심 & \@refone & \large (인) & \ \\
+			부심 & \@reftwo & \large (인) & \ \\
+			부심 & \@refthr & \large (인) & \ \\
+			부심 & \@reffou & \large (인) & \ \\
+			부심 & \@reffiv & \large (인) & \ \\
+		\else
+			\ & \ & \ & \ \\
+			\ & \ & \ & \ \\
+			주심 & \@refone & \large (인) & \ \\
+			부심 & \@reftwo & \large (인) & \ \\
+			부심 & \@refthr & \large (인) & \ \\
+		\fi
+	\end{tabular}
+\end{flushright}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			감사의 글 							%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifack
+	\newpage
+	{
+		\centering
+		\section*{\if!\@acktitle!감사의 글\else\@acktitle\fi}
+	}
+	\@acknowledgement
+\else
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			논문 출판 목록						%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifpub
+	\newpage
+	\section*{\if!\@pubtitle!List of Publications\else\@pubtitle\fi}
+	\setstretch{1.5}
+	\@publist
+\else
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			TOCLOFT 							%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\pagestyle{plain}
+\pagenumbering{roman}
+\tableofcontents								% 목차			page i
+\iflof\newpage\listoffigures\else\fi			% 그림 목록		page ii
+\iflot\newpage\listoftables\else\fi				% 테이블 목록		page iii
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			영문 초록 							%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	page iv
+\ifabe
+	\newpage
+	{
+		\centering
+		\section*{\if!\@abetitle!Abstract\else\@abetitle\fi}
+	}
+	\@engabstract
+	\vskip 1cm
+	
+	\ifabekey
+		\noindent
+		\textbf{Keywords}: 
+		\@engkeywords
+	\else
+	\fi
+\else
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			국문 초록 							%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	page v
+\ifabk
+	\newpage
+	{
+		\centering
+		\section*{\if!\@abktitle!초 록\else\@abktitle\fi}
+	}
+	\@korabstract
+	\vskip 1cm
+	
+	\ifabkkey
+		\noindent
+		\textbf{주제어}: 
+		\@korkeywords
+	\else
+	\fi
+\else
+\fi
+}												% Maketitle 종료
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%			레퍼런스	 							%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\let\oldthebibliography=\thebibliography
+\let\endoldthebibliography=\endthebibliography
+\renewenvironment{thebibliography}[1]
+	{
+		\begin{oldthebibliography}{#1}
+			\setlength{\itemsep}{1.1em}
+	}											% bibitem 간격
+	{\end{oldthebibliography}
+}

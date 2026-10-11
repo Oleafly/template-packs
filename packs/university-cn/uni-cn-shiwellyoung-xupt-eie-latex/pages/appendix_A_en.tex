@@ -1,0 +1,31 @@
+\newpage
+% \addcontentsline{toc}{section}{参考文献}
+
+
+\chapter*{\protect\hyperlink{:}{Appendix}}
+\addcontentsline{toc}{chapter}{Appendix}
+\addtocontents{toc}{\protect\hypertarget{:}{}} %用\hypertarget实现反向跳转
+\thispagestyle{fancy} % 强制当前页（第一页）使用 fancy 样式
+% 设置附录 A 页眉标记
+\markboth{Appendix}{Appendix}
+Appendix 1：Fourier Transform Spectrum
+
+clear all;close all;clc;
+% Image Fourier Transform
+
+C=fft2(im2double(I)); 
+
+B=fftshift(C); % Move the DC component to the center of the spectrogram
+
+D=ifft2(B); % Inverse Fourier Transform
+% Display image
+
+subplot(221);imshow(I);title('original image');
+
+subplot(222);imshow(log(abs(C)+1),[]);title('Fourier transform uncentralized spectrogram');
+
+subplot(223);imshow(log(abs(B)+1),[]);title('Fourier transform centralized spectrogram');
+
+subplot(224);imshow(abs(D),[]);title('Inverse Fourier transform');
+% abs modulo value display image
+% log logarithmically drops the data between 0-255

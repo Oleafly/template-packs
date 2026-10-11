@@ -18,12 +18,13 @@ const FONT_PATHS = (process.env.TYPST_FONT_PATHS ?? "").split(":").filter(Boolea
 export const THUMB_WIDTH = 320;
 export const PAGE_WIDTH = 960;
 const QUALITY = "70";
+const TEX_BUNDLE = process.env.PREVIEW_TEX_BUNDLE ?? "https://mirrors.oleafly.com/tex-bundles/tlextras-2022.0r0.tar";
 const LATEXMK_FLAVORS = {
   pdflatex: ["-pdf"],
   xelatex: ["-xelatex"],
-  lualatex: ["-lualatex"],
-  uplatex: ["-pdfdvi", "-latex=uplatex %O %S", "-e", "$dvipdf = q/dvipdfmx %O -o %D %S/"],
-  platex: ["-pdfdvi", "-latex=platex %O %S", "-e", "$dvipdf = q/dvipdfmx %O -o %D %S/"],
+  lualatex: ["-lualatex", "-latexoption=--nosocket"],
+  uplatex: ["-pdfdvi", "-latex=uplatex %O %S", "-e", "$dvipdf = q/dvipdfmx %O -o %D %S/", "-e", "$bibtex = q/upbibtex %O %S/", "-e", "$makeindex = q/upmendex %O -o %D %S/"],
+  platex: ["-pdfdvi", "-latex=platex %O %S", "-e", "$dvipdf = q/dvipdfmx %O -o %D %S/", "-e", "$bibtex = q/pbibtex %O %S/", "-e", "$makeindex = q/mendex %O -o %D %S/"],
 };
 
 export function previewDir(root, pack, template) {
@@ -43,7 +44,7 @@ function latexmkCommand(main, work, flavor) {
   const stem = "oleafly-preview";
   return {
     file: LATEXMK,
-    args: ["-norc", "-interaction=nonstopmode", ...LATEXMK_FLAVORS[flavor], `-jobname=${stem}`, main.split("/").pop()],
+    args: ["-norc", "-f", "-interaction=nonstopmode", ...LATEXMK_FLAVORS[flavor], `-jobname=${stem}`, main.split("/").pop()],
     cwd: dirname(join(work, main)),
     pdf: join(dirname(join(work, main)), `${stem}.pdf`),
   };
@@ -65,7 +66,12 @@ export function compileCommands(manifest, work) {
   }
   const fallback = LATEXMK_FLAVORS[manifest.engine] ? manifest.engine : "pdflatex";
   return [
-    { file: TECTONIC, args: ["-X", "compile", "--outdir", work, main], cwd: work, pdf: join(work, main.replace(/\.tex$/, ".pdf")) },
+    {
+      file: TECTONIC,
+      args: ["-X", "compile", "--bundle", TEX_BUNDLE, "--outdir", work, main.split("/").pop()],
+      cwd: dirname(join(work, main)),
+      pdf: join(work, main.split("/").pop().replace(/\.tex$/, ".pdf")),
+    },
     latexmkCommand(main, work, fallback),
   ];
 }
@@ -137,9 +143,15 @@ function isFresh(entry, outDir) {
 async function main() {
   const args = process.argv.slice(2);
   const force = args.includes("--force");
+  const missingOnly = args.includes("--missing-only");
   const concurrency = Number(args.find((arg) => arg.startsWith("--jobs="))?.slice(7) ?? 6);
   const packs = args.filter((arg) => !arg.startsWith("--"));
-  const todo = templateDirs(ROOT, packs).filter((entry) => force || !isFresh(entry, previewDir(ROOT, entry.pack, entry.template)));
+  const todo = templateDirs(ROOT, packs).filter((entry) => {
+    const outDir = previewDir(ROOT, entry.pack, entry.template);
+    if (force) return true;
+    if (missingOnly) return !existsSync(join(outDir, "thumb.webp")) || !existsSync(join(outDir, "page-1.webp"));
+    return !isFresh(entry, outDir);
+  });
   console.log(`${todo.length} previews to build`);
   const failures = [];
   let next = 0;

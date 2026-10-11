@@ -1,0 +1,72 @@
+% 独自のコマンド
+% ■ 謝辞
+%  \begin{acknowledgment} 〜 \end{acknowledgment}
+
+\documentclass[uplatex,report]{jsbook}
+\newcommand{\acknowledgmentname}{謝辞}
+
+\usepackage{thesis}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{multibbl}
+\usepackage{float}
+\usepackage{ascmac}
+\usepackage{array,booktabs}
+\usepackage[labelsep=colon,hang]{caption}
+
+\newbibliography{biblio}
+\newbibliography{publ}
+
+\setcounter{tocdepth}{2}
+
+% 日本語情報（必要なら）
+\jclass  {修士論文}                             % 論文種別
+\jtitle    {実世界に爆発を重畳させて\\対象物を破壊するディスプレイ
+}    % タイトル。改行する場合は\\を入れる
+\juniv    {早稲田大学理工学術院}                  % 大学名
+\jfaculty  {表現工学科}               % 学部、学科
+\jauthor  {東京 花子}                       % 著者
+\jsyear  {20XX}                                 % 西暦○年度
+\jkeyword  {ディスプレイ、爆発}     % 論文のキーワード
+\jdate{20XX年Y月Z日} % 提出日
+\jadvisor{早稲田 表現 准教授} % 指導教員
+\jnumber{5114E004-3} % 学籍番号
+
+%hyperrefパッケージは影響が大きいのでプリアンブルの最後尾で呼び出し
+\usepackage[dvipdfmx]{hyperref}
+\usepackage{pxjahyper}
+
+\begin{document}
+
+\jmaketitle
+
+\include{00_abstract}  % アブストラクト。要独自コマンド、include先参照のこと
+
+\tableofcontents  % 目次
+\newpage
+\listoffigures    % 図目次
+\newpage
+\listoftables    % 表目次
+\newpage
+
+\pagenumbering{arabic}
+
+\include{01}  % 本文1
+\include{02}  % 本文2
+\include{03}  % 本文3
+\include{04}  % 本文4
+\include{05}  % 本文5
+
+\include{90_acknowledgment}  % 謝辞。要独自コマンド、include先参照のこと
+
+\nocite{biblio}{*}
+\nocite{publ}{*}
+
+\bibliographystyle{biblio}{jplain}
+\bibliography{biblio}{bibDB}{参考文献}
+
+\bibliographystyle{publ}{jplain}
+\bibliography{publ}{pubDB}{発表文献}
+
+\end{document}

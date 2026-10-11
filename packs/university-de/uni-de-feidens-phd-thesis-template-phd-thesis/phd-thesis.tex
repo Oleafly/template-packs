@@ -1,0 +1,171 @@
+% compile any version for a submission (without draft mode, and without \overfullrule) by running
+% latexmk -pdf phd-thesis
+% and bibtex runs on the files given at the end of latexmk execution, e.g.,
+% bibtex phd-thesis1-blx
+% bibtex phd-thesis2-blx
+%
+% Manual
+% - adapt your data in metadata.tex, packages.tex (only hyperref infos)
+% - have fun writing your thesis
+%
+%
+\documentclass[
+	a4paper,
+  	fontsize = 11pt,
+  	BCOR = 15mm,
+	DIV=10, % 10 are std. page margins
+  	twoside,
+  	%titlepage = firstiscover,
+  	toc = bib,
+  	%draft,
+  	headings=standardclasses,
+  	numbers = noenddot,
+  	open = right,
+  	cleardoublepage = empty,
+  	appendixprefix
+]{scrbook}
+
+% shows overfull hboxes etc.
+%\overfullrule=1mm
+
+
+\input{preamble/packages}
+\input{preamble/commands}
+
+\usepackage[%
+backend=bibtex,
+sorting=anyt,%
+style=alphabetic,%draft,%%
+backref=true,%
+sortcites=true,
+%uniquename=false,
+%uniquelist=false,
+labelalpha=true,
+maxnames=5,% master option that sets maxbibnames, maxcitenames, maxsortnames
+maxcitenames=5,%
+mincitenames=1,%
+maxbibnames=20,%
+minbibnames=10,%
+minalphanames=1,%
+maxalphanames=4,%
+url=true,%
+doi=true,%
+eprint=true,%
+]{biblatex}
+
+%% Optional
+%\DefineBibliographyStrings{english}{%
+%	backrefpage = {page},% originally "cited on page"
+%	backrefpages = {pages},% originally "cited on pages"
+%}
+%\DefineBibliographyStrings{english}{%
+%    backrefpage  = {\lowercase{s}ee p.}, % for single page number
+%    backrefpages = {\lowercase{s}ee pp.} % for multiple page numbers
+%}
+
+
+%% Assumes that cryptobib is checked out in references/cryptobib 
+%\addbibresource{references/cryptobib/abbrev1}
+
+% and then copy paste the cryptobib entries that you need in your file and you are good to go
+\addbibresource{references/cites}
+
+%%% environments, acronyms, and metadata has to be loaded here
+\input{preamble/environments}
+\input{preamble/acronyms}
+\input{frontmatter/metadata}
+
+\allowdisplaybreaks[1] % https://cs.brown.edu/about/system/managed/latex/doc/amsldoc.pdf : 1 allow page breaks but avoid them if possible, 2-4 increased permissiveness
+
+\begin{document}
+
+
+
+\frontmatter
+\input{frontmatter/title}
+\clearpage
+
+\begingroup
+	\thispagestyle{empty}
+
+	\input{frontmatter/copyright}
+	\clearpage
+	\thispagestyle{empty}
+	\input{frontmatter/details}
+\endgroup
+
+\cleardoublepage
+
+\pagenumbering{roman}
+\input{preamble/ackno.tex}
+\input{preamble/mycontribution.tex}
+\input{preamble/abstract_en.tex}
+\input{preamble/abstract_de.tex}
+
+%\maketitle
+%\setcounter{tocdepth}{5} % level 5 for overview of all headings
+\tableofcontents
+
+\cleardoublepage
+
+%\addcontentsline{toc}{chapter}{Acronyms}
+\printacronyms[template=longtable,heading=chapter*]
+
+%\cleardoublepage
+%% or
+\cleardoubleoddpage
+% optional if page numberings were altered before
+%\pagenumbering{arabic}
+
+\mainmatter
+
+% optional if page numberings were altered before
+%\pagenumbering{arabic}
+
+\input{introduction}
+
+\input{content/preliminaries}
+
+
+%%%%%%%%%
+%%%%%
+%%%%% Parts
+%%%%%
+%%%%%%%%%
+
+\part{Example Part One}\label{par:one}
+%%%%%%%%%
+%%%%%
+%%%%% PartTitle
+%%%%%
+%\input{content/topicfolder/file.tex}
+
+
+
+\part{Example Part Two}\label{par:two}
+%%%%%%%%%
+%%%%%
+%%%%% PartTitle
+%%%%%
+%\input{content/topicfolder/file.tex}
+
+
+%%%%%%%%%
+%%%%%
+%%%%% Conclusion
+%%%%%
+\input{content/conclusion}
+
+
+
+%%% References
+%	\newpage
+%	\printbibliography
+%\bibliographystyle{alphaurl}
+%\bibliography{references/cryptbib/abbrev1,references/cites}
+\backmatter
+\setlength{\emergencystretch}{3em} % pretends that every line is longer than it is and therefore solves bad boxes in the references, see https://tex.stackexchange.com/questions/241343/what-is-the-meaning-of-fussy-sloppy-emergencystretch-tolerance-hbadness/241355#241355
+\printbibliography
+
+
+\end{document}

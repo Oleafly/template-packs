@@ -1,0 +1,187 @@
+% !TeX program = xelatex
+% ======================================================================
+% 天津中德应用技术大学 软件工程专业 本科毕业设计（论文）
+% 使用说明：先填写下面的论文信息，然后依次撰写各部分。
+% 编译：latexmk（自动调用 xelatex + bibtex），或手动执行
+%   xelatex main && bibtex main && xelatex main && xelatex main
+% ======================================================================
+\documentclass{izdthesis}
+
+% ---------------- 论文信息（封面、页眉使用） ----------------
+\ctitle{基于×××的×××系统的设计与实现}        % 中文题目（宋体三号）
+\etitle{Design and Implementation of ××× System Based on ×××} % 外文题目
+\stuname{张三}                              % 姓名
+\college{软件与通信学院}                     % 学院
+\major{软件工程}                            % 专业
+\advisor{李四}                              % 指导教师
+\advisortitle{副教授}                        % 职称
+\finishdate{2026 年 5 月}                   % 完成时间
+\gradyear{2026}                            % 届别（页眉使用）
+
+\begin{document}
+
+% ---------------- 封面 ----------------
+\makecover
+
+% ---------------- 声明页 ----------------
+\makedeclaration
+
+% ---------------- 中文摘要（600 字左右，至少三段，一页之内，约占 80% 篇幅） ----------------
+\begin{cnabstract}
+  在此撰写中文摘要。摘要应高度凝练本毕业设计的工作、特色与背景，
+  说明系统解决了什么问题、采用了什么技术路线、取得了什么效果。
+  第一段一般介绍研究背景与问题提出。
+
+  第二段一般介绍系统的需求分析、总体设计、关键技术选型与实现过程，
+  说明完成的主要功能模块。
+
+  第三段一般介绍系统测试情况与最终成果，说明系统达到的预期目标。
+
+  \keywords{×××××；×××××；×××××；×××××；×××××}
+\end{cnabstract}
+
+% ---------------- 英文摘要（与中文摘要对应） ----------------
+\begin{enabstract}
+  The English abstract should correspond to the Chinese abstract.
+  It describes the background, the problem to be solved, the technical
+  approach, the main functions of the system, and the final results.
+
+  Write three or more paragraphs here, mirroring the structure of the
+  Chinese abstract.
+
+  \enkeywords{×××××；×××××；×××××；×××××；×××××}
+\end{enabstract}
+
+% ---------------- 目录 ----------------
+\izdtableofcontents
+
+% ---------------- 正文（从此处开始有页眉、页码） ----------------
+\izdmainmatter
+
+\chapter{引言}
+
+\section{研究背景}
+描述本毕业设计的背景领域内容，提出当前领域的困难，说明本毕业设计
+解决了什么问题。文献引用多在此节，引用在正文中按顺序以上标标注，
+例如：随着微服务架构的普及\cite{example2024microservice}，……
+文中出现的任何数据都要有明确出处。
+
+\section{国内外研究现状}
+阐述当前研究领域的现状。
+
+\subsection{国内研究现状}
+国内学者在×××方面开展了大量研究\cite{example2024survey}。
+
+\subsection{国外研究现状}
+国外研究起步较早\cite{example2023foreign}。
+
+\section{本课题的目的及意义}
+阐述当前领域内的问题，以及本毕业设计能够解决什么、提升什么。
+
+\section{本文主要工作}
+介绍本毕业设计完成的主要工作与系统功能内容。
+
+\section{组织结构}
+介绍本论文的章节安排。
+
+\chapter{相关技术}
+本章说明毕业设计用到的技术并做介绍，用自己的语言重新组织复述，
+一般 2 页即可。例如：××系统后端采用 Spring Boot
+框架\cite{example2024springboot}，如图~\ref{fig:arch} 所示。
+
+\begin{figure}[htbp]
+  \centering
+  % \includegraphics[width=0.8\textwidth]{figures/example.png}
+  \fbox{\rule{0pt}{3cm}\rule{6cm}{0pt}} % 占位框，替换为上面的图片
+  \caption{系统整体架构图}
+  \label{fig:arch}
+\end{figure}
+
+\chapter{需求分析}
+本章描述需求阶段的工作，包括功能性需求分析与非功能性需求分析，
+必须有功能的用例分析图，系统功能一般在 10 个左右。
+
+\section{功能性需求分析}
+针对每个功能进行用户需求分析，每个功能至少一段话的描述。
+
+\section{非功能性需求分析}
+从独立性、复杂性、扩展性、容错性等方面分析（注意查重）。
+
+\section{用例分析}
+针对功能性需求画用例图，并对每个用例撰写用例描述，如表~\ref{tab:usecase} 所示。
+
+\begin{table}[htbp]
+  \centering
+  \caption{用户登录用例描述表}
+  \label{tab:usecase}
+  \zihao{5}\songti
+  \begin{tabular}{|l|l|}
+    \hline
+    用例名称 & 用户登录 \\ \hline
+    参与者   & 用户     \\ \hline
+    前置条件 & 用户已注册 \\ \hline
+    基本流程 & 输入账号密码，系统校验并跳转 \\ \hline
+    后置条件 & 登录成功，进入系统首页 \\ \hline
+  \end{tabular}
+\end{table}
+
+\section{活动图}
+针对用例图画出活动图（可选）。
+
+\chapter{系统设计}
+
+\section{系统总体设计}
+用包图体现整体技术架构，辅以类图、构件图描述功能实现的相关类。
+系统负载均衡的加权评分可按公式~\ref{eq:score} 计算。
+
+\begin{equation}
+  S = \alpha \cdot \frac{1}{T} + \beta \cdot C
+  \label{eq:score}
+\end{equation}
+
+\section{系统详细设计}
+分别详细描述每个末级功能，并配有功能时序图（一般 10 个左右）。
+
+\section{数据库设计}
+对整体数据库做 E-R 图并加以描述，列出每张数据库表的表结构
+（10 张表左右，过多可摘选关键表）。
+
+\chapter{系统实现}
+说明项目包结构，上面章节描述的每一个功能都应在本章贴出实现图，
+并可粘贴关键代码（不超过半页），配以文字说明其作用，例如：
+
+\begin{lstlisting}[language=Java]
+@RestController
+@RequestMapping("/api/user")
+public class UserController {
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/login")
+    public Result login(@RequestBody LoginDTO dto) {
+        return userService.login(dto);
+    }
+}
+\end{lstlisting}
+
+\chapter{系统测试}
+进行系统功能测试，撰写测试用例，可按等价类划分法或边界值分析法。
+
+\chapter{总结与展望}
+总结本毕业设计的工作与内容，指出缺陷并提出展望。本章应超过 1 页。
+
+% ---------------- 参考文献（不少于15篇，近5年，外文不少于2篇） ----------------
+\izdbibliography{ref}
+
+% ---------------- 致谢（限 1 页） ----------------
+\begin{acknowledgements}
+  对毕业设计（论文）的指导教师，提过有益建议或给予过帮助的老师、
+  同学以及其他人，在论文结尾书面致谢。
+\end{acknowledgements}
+
+% ---------------- 附录（可选，较长代码放此处，不计入正文字数） ----------------
+% \begin{izdappendix}
+%   在此放置较长的源代码或其他补充材料。
+% \end{izdappendix}
+
+\end{document}

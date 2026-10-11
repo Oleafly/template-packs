@@ -1,0 +1,65 @@
+#import "../utils/datetime-display.typ": datetime-display
+#import "../utils/style.typ": get-fonts
+#import "../utils/page-foreground.typ": mainmatter-foreground
+
+// 致谢页
+#let acknowledgement(
+  // documentclass 传入参数
+  anonymous: false,
+  twoside: false,
+  fontset: "mac",
+  fonts: (:),
+  info: (:),
+  // 文档类型：本科页脚不继承正文首行缩进；研究生保持既有输出（见 AGENTS.md 边界条款）。
+  doctype: "doctor",
+  // 致谢末尾日期，与论文封面 submit-date 一致
+  // 传 datetime 自动格式化；传字符串/内容则原样使用；传 none 不显示
+  date: none,
+  // 日期格式化函数：documentclass 按 doctype 传入（研究生"20XX 年 X 月"、
+  // 本科紧凑式"20XX年X月"），使末尾日期与对应封面写法完全一致（规范一·（九））。
+  date-display: datetime-display,
+  // 其他参数
+  title: [致#h(1em)谢],
+  outlined: true,
+  body,
+) = {
+  if (not anonymous) {
+    // 起始页面样式：先设置页眉页脚（page.foreground）再换页，使双面模式下
+    // to:"odd" 换页自动插入的填充空白页同样显示页眉页脚（偶数页论文题目、
+    // 奇数页章名，页码按双面左右分置）。
+    // 标题（黑体四号加粗居中）与正文（宋体小四、1.25 倍行距）样式继承自外层
+    // mainmatter 作用域（show 规则嵌套，标准顺序下本函数位于其内），此处不重复设置。
+    fonts = get-fonts(fontset) + fonts
+    set page(
+      numbering: "1",
+      footer: none,
+      foreground: mainmatter-foreground(
+        twoside: twoside,
+        info: info,
+        fonts: fonts,
+        doctype: doctype,
+      ),
+    )
+    pagebreak(weak: true, to: if twoside { "odd" })
+    [
+      #heading(
+        level: 1,
+        numbering: none,
+        outlined: outlined,
+        title,
+      ) <no-auto-pagebreak>
+
+      #body
+
+      #if date != none {
+        let date-content = if type(date) == datetime {
+          date-display(date)
+        } else {
+          date
+        }
+        // 末尾右对齐日期
+        align(right, date-content)
+      }
+    ]
+  }
+}

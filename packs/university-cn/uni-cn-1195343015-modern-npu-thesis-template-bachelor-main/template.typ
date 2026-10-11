@@ -1,0 +1,1 @@
+#import "lib/template.typ": *

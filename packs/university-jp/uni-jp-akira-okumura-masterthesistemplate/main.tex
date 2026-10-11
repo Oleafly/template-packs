@@ -1,0 +1,140 @@
+% (u)pLaTeX 非互換なパッケージ使用時に自動でパッチが適用される
+\RequirePackage{plautopatch}
+
+% uplatex オプションを指定し、ユニコード対応に。ただし、uplatex でコンパイルすること。
+% ここで dvipdfmx を指定すれば、graphicx などでは指定しなくて良い。
+\documentclass[twoside,openright,a4paper,papersize,uplatex,dvipdfmx]{jsbook}
+
+% 修論本体と表紙で共通で必要となる設定
+\input{preamble}
+
+% 引用文献の形式を Okumura (2019) から [1] のように変更する場合はコメントを外す
+%\def\bynumber{1}
+
+% citep や citet を有効にする
+\ifdefined\bynumber
+\usepackage[square,numbers]{natbib} % \bynumber が有効の場合は [1] のようにする
+\else
+\usepackage{natbib}
+% (Okumura, 2009) などを (Okumura 2009) とする
+% 日本語文章で全角丸括弧の表示にし、かつ \inhibitglue で役物同士の字間を適切にする。
+% https://okumuralab.org/tex/mod/forum/discuss.php?d=2349
+\setcitestyle{aysep={},notesep={},open={\inhibitglue（},close={）\inhibitglue}}
+\fi
+
+% 画像の取り扱いに必要
+\usepackage{graphicx}
+
+% 表でセルを複数列で結合する
+\usepackage{multicol}
+
+% 数式の機能を拡張
+\usepackage{amsmath}
+
+% 単位の記述を楽にする
+\usepackage{siunitx}
+
+% 化学式の記述を楽にする
+\usepackage[version=4]{mhchem}
+
+% table を横長にして PDF を回転させる
+\usepackage{pdflscape}
+
+% 長い表を自動分割
+\usepackage{longtable}
+
+% bibliography を目次に追加
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+
+% subfigure 環境で、(a)、(b) などの番号を左上に表示する。宇宙系の分野ではこれが一般的なはず。
+\usepackage[nooneline]{subfigure}
+\subfiguretopcaptrue
+
+% 行番号を表示する。添削時のみに使い、事務提出版ではコメントアウトする
+%\usepackage{lineno}
+%\linenumbers
+
+% PDF 内で外部リンクや文書内リンクを生成したい場合に使う（好みによる）
+% 印刷時に色が出るかどうかは、使用する PDF viewer の挙動による。
+% 紙媒体で修論を提出する場合、文字色は黒にするのが適切なので要注意。
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+% 色を個別に変更したい場合の例（あまり勧めない）
+%\hypersetup{
+%    colorlinks=true,
+%    citecolor=red,
+%    linkcolor=blue,
+%    urlcolor=green,
+%}
+
+% こうするだけだと、文字に色をつけないが、リンク機能があると判断しにくい。
+% hidelinks を消すと PDF 中のリンクを枠で囲む。
+%\usepackage[hidelinks]{hyperref}
+
+% PDF 内のしおりの文字化けを防ぐ
+% 先頭に \RequirePackage{plautopatch} を追加すれば 2020 年以降の TeX 環境では不要
+\usepackage{pxjahyper}
+
+% newcommand を使うことで、繰り返し使う長ったらしい入力を簡単にすることができる
+\makeatletter
+\newcommand{\ion}[2]{#1$\;${\small\rmfamily\@Roman{#2}}\relax}%
+\makeatother
+\newcommand{\HI}{\mbox{\ion{H}{1}}} % 中性原子ガス（HI 領域）の例
+\newcommand{\bs}{\symbol{92}} % backslash
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\ured}[1]{\textcolor{red}{\underline{\textcolor{black}{#1}}}}
+\newcommand{\ugreen}[1]{\textcolor{green}{\underline{\textcolor{black}{#1}}}}
+\newcommand{\ublue}[1]{\textcolor{blue}{\underline{\textcolor{black}{#1}}}}
+
+% 氏名などの情報が入っているファイル。各自で編集。
+\input{AuthorInfo}
+
+\begin{document}
+
+\frontmatter
+
+\maketitle
+
+% これを入れることでページ番号が表示されない。
+\thispagestyle{empty}
+
+% abstract 環境は jsbook では「概要」と表示してくれないため、手動で表示させる。
+% 参照 https://okumuralab.org/tex/mod/forum/discuss.php?d=2121
+\begin{center}
+  {\large \sf 概要}
+\end{center}
+
+\input{Abstract}
+
+この文書の\LaTeX {}ファイルは、\url{https://github.com/akira-okumura/MasterThesisTemplate}から入手可能です。
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\mainmatter
+
+% include を使うことで、別ファイルに分割することができます。
+\include{Introduction}
+\include{Review}
+\include{WhatYouDid}
+\include{LaTeX}
+\include{CorrectionAndCheck}
+\include{Plagiarism}
+\include{Color}
+\include{Writing}
+\include{Discussion}
+\include{Conclusion}
+\include{Appendix}
+\include{Acknowledgments}
+
+\renewcommand{\bibname}{引用文献}
+%\bibliographystyle{jecon}
+\ifdefined\bynumber
+\bibliographystyle{jecon6.5.1_by_number}
+\else
+\bibliographystyle{jecon6.5.1_by_name}
+\fi
+\bibliography{thesis}
+\label{page:bib}
+
+\end{document}

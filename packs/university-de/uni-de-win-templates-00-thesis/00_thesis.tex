@@ -1,0 +1,123 @@
+%!TEX TS-program = /usr/texbin/pdflatex
+%!GEDIT texbin = /usr/local/texlive/current/bin/x86_64-linux/pdflatex
+%
+
+
+% 	This template is  MIT licensed. :) ----
+
+% 	Basic file to demonstrate the usage of this LaTeX template.
+% 	You can build your own paper/thesis on top of this file.
+% 	Simply adjust the document class and all metadata and start working.
+%
+\documentclass[
+	language=english, % set to english or german
+	type=master, % set to bachelor, master or seminar
+	citationstyle=misq % set to apa or misq. Please ask your supervisor which style you should use.
+]{isthesis}
+
+% Graphics rendering using TikZ
+% See: https://en.wikibooks.org/wiki/LaTeX/PGF/TikZ
+\usepackage{tikz}
+% Include required TikZ libraries here, some exemplary libraries are pre-included
+\usetikzlibrary{calc}
+\usetikzlibrary{matrix}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+
+% Import acronyms
+\input{acronyms}
+
+% Import symbols
+\input{symbols}
+
+% Document meta information
+\isthesis{
+    title={A \LaTeX \- template for writing theses},
+    author-firstname={Firstname Middlename}, 
+    author-lastname={Lastname},
+    author-email={student@fau.de},
+    author-phone={+49 251 8338100}, % Use international numbers format
+    author-matriculation={123456},
+    author-address={Lange Gasse 20},
+    author-zip={90403},
+    author-city={N\"{u}rnberg},
+    principal-supervisor={Prof. Dr. Martin Matzner}, % This has to be a professor
+    associate-supervisor={Firstname Lastname, M.Sc.}, % This is your main supervisor, i.e., a post doc or PhD student
+    tutor-supervisor={}, % If required, define an additional supervisor resp. tutor here
+    group={Chair of Digital Industrial Information Systems},
+    group-institute={Friedrich-Alexander University of Erlangen-Nuremberg},
+    studies={International Information Systems}, %your field of studies, i.e. Wirtschaftsinformatik or International Information Systems
+    %associate-group={}, % When the thesis is done in cooperation with another chair, add it here
+    %associate-group-institute={}, % add cooperating institute or university here
+    seminar={Scientific Writing for Beginners}, % The title of your seminar
+    submission-date={2017-02-01}, % The date you handed in your document
+    %primary-logo={}, % Uses the WWU logo by default
+    %primary-logo-height={}, % Uses 16mm as default height
+    %secondary-logo={}, % Logo of the secondary institution (cooperating chair/university), USES Faculty logo by default
+    %secondary-logo-height={} % Uses 16mm as default height
+}
+\begin{document}
+    % Title page
+    \maketitle
+
+	% Quote
+    % You can put an optional quote page in front of your content
+   \quotepage[author={Arthur C. Clarke}]{
+   	        Any sufficiently advanced technology is indistinguishable from magic.
+   }
+
+    % Table of contents
+    \tableofcontents
+
+    % List of figures (if you have figures)
+    \listoffigures
+
+    % List of tables (if you have tables)
+    \listoftables
+    
+    % List of listings (if you have listings)
+	\lstlistoflistings
+
+    % List of abbreviations (if you use acronyms)
+    \listofabbreviations
+
+    % List of symbols (if you use symbols)
+    \listofsymbols
+	
+	% Abstract
+	%
+	% Comment out this part, if you don't require an abstract
+	\begin{abstract}
+		\input{abstract}
+	\end{abstract}
+
+    % Content
+    \begin{content}
+		\input{body01}
+		% Add your content files here
+    \end{content}
+
+    % Appendix
+     \begin{appendix}
+         \input{appendix}
+     \end{appendix}
+
+    % References
+    \references{library}
+
+    % Declaration of authorship
+    % \authorshipstatement[pagenumbering=false]
+    \authorshipstatement[pagenumbering=true]
+    % \authorshipstatement[pagenumbering=only]
+    
+    % Consent form for use of plagiarism detection software
+    % \consentform[pagenumbering=false]
+   % \consentform[pagenumbering=true] %TODO: has to be adapted to FAU
+    % \consentform[pagenumbering=only]
+    
+    % Bonus: Wordcount
+    % cd %FOLDER WHERE THE .tex FILES ARE IN %
+    % clear
+    % texcount -total -q -col -sum *.tex
+    
+\end{document}

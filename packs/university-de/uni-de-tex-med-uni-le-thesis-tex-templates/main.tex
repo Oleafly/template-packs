@@ -1,0 +1,64 @@
+\documentclass[a4paper]{book}
+
+
+\usepackage{geometry} % Titelseite braucht eigene Margins.
+
+\usepackage[ngerman]{babel} % Trennungsregeln, Datumsangabe etc. in Deutsch
+
+\usepackage[T1]{fontenc}    % europäischer Zeichensatz (Sonderzeichen, etc.)
+\usepackage[bitstream-charter]{mathdesign} % Moderne, serifenbetonte und sachliche Schriftart
+\usepackage[utf8]{inputenc} % utf8 Eingabezeichensatz
+
+\usepackage{xstring}        % Testen/Vergleichen von (Sub)Strings
+
+\usepackage{totcount}       % Zähle Seitenzahlen, Abbildungen etc.
+
+\usepackage{siunitx}        % SI Einheiten
+\usepackage{natbib}         % Naturwissenschaftliche Zitierungen
+\usepackage[printonlyused]{acronym} % Abkürzung + Abkürzungsverzeichnis
+
+\usepackage{blindtext}      % Seitenfüller zum Testen
+
+\usepackage{pdfpages}       % Einbinden von pdfs
+
+%% Eigene Makros
+\input{config/config}
+\input{macros/InOderAm}
+\input{macros/HideIfZero}
+\input{macros/citenumCounter}
+\input{macros/totalfiguresCounter}
+\input{macros/totalappendixCounter}
+
+%% Dokument
+\begin{document}
+
+%% Titelblatt
+\input{official/titelblatt_pretty}
+
+%% Zeilennummer für die Inhaltsverzeichnis und Co.
+\setcounter{page}{1}
+\pagenumbering{Roman}
+
+%% TOC
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+%% Bibliographische Beschreibung
+\input{content/head/bibliographische_beschreibung}
+\input{content/head/abkuerzungsverzeichnis}
+\newpage
+
+%% Hauptteil
+\input{content/main/main}
+
+%% Schlussteil
+
+%% Zusammenfassung
+\input{content/tail/zusammenfassung}
+%% Literaturverzeichnis
+\input{content/tail/literaturverzeichnis}
+%% Appendix
+\input{content/tail/appendix}
+
+\end{document}

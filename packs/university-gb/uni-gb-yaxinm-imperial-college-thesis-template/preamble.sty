@@ -1,0 +1,152 @@
+% ======== Page, language, font and colours ============
+% Page
+\usepackage[a4paper,top=2.3cm,bottom=2.3cm,left=2.3cm,right=2.3cm]{geometry} % Page and margin size
+\linespread{1.3} % 1.3 linespread=1.3 is one-and-half spacing
+\usepackage{parskip} % space between paragraphs
+
+% Language
+\usepackage[english]{babel} % document is in Engish
+\usepackage{CJKutf8} % Enable support for Chinese, Japanese, and Korean characters
+
+% font
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage{fourier} % this is a font size which also supports math
+\usepackage{libertinus}
+% A complete list of fonts https://tug.org/FontCatalogue/allfonts.html
+\usepackage[dvipsnames]{xcolor} % See a list of available colours https://www.overleaf.com/learn/latex/Using_colors_in_LaTeX
+\definecolor{ImperialBlue}{RGB}{0,0,205} % Imperial blue as the website
+
+% ================ Maths and science =================
+\usepackage{nomencl} % nomenclature
+\usepackage{amsmath}
+\usepackage{empheq} % equations in a large bracket
+\usepackage{siunitx} % SI unites
+\usepackage{amssymb} % additional math symbols
+\usepackage{gensymb} % generic symbols
+\usepackage{chemformula} % enable chemical formula
+\usepackage{cancel} 
+
+
+% ==================== Reference style ================
+%% Use natbib style
+\usepackage[compress, authoryear]{natbib} % (author, year) style
+% \usepackage[sort&compress, square, authoryear]{natbib} % number style
+\bibliographystyle{agsm} % bibliography style
+\renewcommand\harvardyearleft{\unskip, } 
+\renewcommand\harvardyearright[1]{.}
+\renewcommand*{\bibfont}{\footnotesize} % fontsize for bibliography
+\setlength{\bibsep}{1em} % sepratation between entries
+\setlength{\bibhang}{3em} % space 
+
+
+% ================ General ===================
+\usepackage{tikz} % Plot in latex
+\usepackage{csquotes}
+\usepackage{blindtext}
+\usepackage{textcomp}
+\usepackage[compact]{titlesec} % format section titles
+\usepackage{float} % improve control of floats
+\restylefloat{table} % stops latex re positioning tables
+\usepackage{placeins} % provides \FloatBarrier
+\usepackage{import} % allow importing files and graphics
+\usepackage{graphicx} % allow images to be inlcuded
+\usepackage{svg} % allow svg images
+\usepackage{pdfpages} % allow including phf images
+\usepackage{multicol} % enable multicolumn tables
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{caption} 
+\usepackage{subcaption} % allows subfigures and subcaptions
+\usepackage[toc,page]{appendix} % Provides the appendix environment
+\usepackage{booktabs}
+% Define new column styles for tables, Centers, Right and Left-aligned
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{soul} % highlighting and underlining
+\usepackage{pdflscape} % enable landscape pages
+\usepackage{hyperref} % Enable hyperlinks
+% Set the styles of the hyperlinks
+\hypersetup{
+    colorlinks   = true, % Colours links instead of ugly boxes
+    urlcolor     = ImperialBlue, % Colour for external hyperlinks
+    linkcolor    = ImperialBlue, % Colour of internal links
+    citecolor   = black % Colour of citations
+}
+\usetikzlibrary{positioning}
+% Numbers the figures 1.1, 2.1 ... in different chapters
+\numberwithin{figure}{chapter}
+\numberwithin{table}{chapter}
+\numberwithin{equation}{chapter}
+
+
+% =================== Coding ======================
+\usepackage{listings} % Dispy codes
+% Set up default language to be Python, and the default style
+\lstset{
+    language=python,
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{lightgray}, 
+    breakatwhitespace=false,
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    % numbers=left,                    
+    numbersep=5pt,    
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false, 
+    }
+\usepackage{algorithm2e} % provides the algorithm environment
+\RestyleAlgo{ruled}
+\SetCommentSty{normalsize}
+
+
+% ==================== Fancy page headers ===================
+\usepackage{fancyhdr}
+\setlength{\headheight}{14.49998pt}
+\pagestyle{fancy}
+\fancyhf{}
+
+% \leftmark is chapter title, \rightmark is section title
+\fancyhead[L]{\rmfamily{\textit{\nouppercase{\leftmark}}}} % chpater title on every page in the top left-hand corner
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{
+  \color{ImperialBlue}\leaders\hrule height \headrulewidth\hfill
+}}
+\fancyhead[L]{\raisebox{-.5\baselineskip}[0pt][0pt]{\textit{\nouppercase{\leftmark}}}}
+\setlength{\headheight}{24.64995pt}
+
+\rfoot{\thepage}
+
+
+% =========== Customise the title page ===================
+\makeatletter
+\renewcommand{\maketitle}{
+    \clearpage
+    \thispagestyle{empty}
+    \pagenumbering{gobble}
+    \begin{center}
+
+        \pagestyle{empty}
+        \phantom{.}  % Necessary to add space on top before the title
+    \Large{Department of \it{Your Department}} \\ % Writing at the top of the page
+    \Large{Imperial College London}
+    
+    \vspace{5cm}
+    {\Huge \bf \@title\par} % Title
+    \vspace{2.5cm}
+    
+    {\large \@author}\\[1cm] % Author
+
+    {\large\@date} % Date
+    
+    \vfill
+    \parbox{5in}{\centering{\small{Submitted in partial fulfilment of the requirements for the degree of Doctor of Philosophy in the Department of \it{Your Department}.}}} % Writings at the bottom of the page
+    
+    
+\end{center}
+}\makeatother
+% \let\endtitlepage\relax % allows text to follow straight after title section
+

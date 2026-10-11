@@ -1,0 +1,73 @@
+\documentclass[./Main.tex]{subfiles}
+\graphicspath{{./Fig/}}
+\begin{document}
+
+\chapter{解析手法}
+\label{chap:simulation}
+
+\section{解析条件}
+\cref{tab:condition}に条件を示す。
+
+\begin{table}[htbp]
+    \centering
+     \caption{実験条件}
+    \begin{tabular}{cc}
+    \hline
+    項目     & 　内容 \\\hline
+    ケース1     & 乱流 \\
+    ケース2  &  層流 \\\hline
+    \end{tabular}
+       \label{tab:condition}
+\end{table}
+
+\section{はじめに}
+陰解法を用いた場合，行列の反転，すなわち連立一次方程式を解く必要がある．
+連立一次方程式の解法には直接法と反復法がある．直接法では厳密に解が求めら
+れるが，計算量が多い．反復法は反復計算により近似解を求める方法であり，係
+数行列の特性に応じて，高速に解を得られることがある．
+CFDでは反復法が多く用いられる．行列の特性によって収束の速度に違いが出る
+と考えられるので，各手法を適用し，最適なものを選択する．ここでは\cref{eq:linear}で
+表される$n$次元の連立一次方程式を解くことを考える．
+\begin{equation}
+ A\bm{x}=\bm{b}
+\label{eq:linear}
+\end{equation}
+$A$は$n\times n$の係数行列，$x$は$n\times1$の解ベクトル，$b$は
+$n\times1$のベクトルを表す．
+
+\cref{eq:linear}
+
+この章では主に文献\cite{issa1986}を参考にした．
+
+\section{直接法}
+連立1次方程式を行列演算によって直接解く，直接法であるガウスの消去法につ
+いて述べる．
+\subsection{ガウスの消去法}
+ガウスの消去法は．係数行列$A$を一度上三角行列に変形し，それから単位行列
+$I$を求めることで解を得る．
+
+ガウスの消去法による演算量は$O(n^3)$に比例して増大するため，次元の大きな
+連立方程式を解くのは非現実的となる．このためCFDでは反復法が多く用いられ
+る．
+
+\section{反復法}
+反復法では，初期値として適当な値を与え，真の解に収束する近似解を反復計算により求める．ただし，係数行列
+によっては反復計算が収束せず，解を得ることができない場合がある．反復解が
+収束するためには係数行列が対角優位であることが必要である．対角優位とは，
+行列の対角成分が他の成分に比べて，その絶対値が大きいような行列である．
+\begin{equation}
+ |a_{ii}|>\sum_{i\neq j}|a_{ij}|, \;\;(i=1,...,n)
+\end{equation}
+ここで$a_{ij}$は係数行列の要素．
+
+\section{乱流解析}
+文献\cite{Kajishima}
+
+\ifSubfilesClassLoaded{
+\bibliographystyle{cs2srt}
+\bibliography{./mybib.bib}
+}{}
+
+\end{document}
+
+

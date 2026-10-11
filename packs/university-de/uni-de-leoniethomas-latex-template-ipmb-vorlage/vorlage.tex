@@ -1,0 +1,197 @@
+%%%	Vorlage für Bachelor-/Masterarbeit
+%%%
+%%%	Autor: 		Nicolas Peschke
+%%%	Version: 	2.2
+%%%	Datum:		09.07.2018
+%%%
+%%%	Die Vorlage kann unter Studenten der Molekularen Biotechnologie der
+%%%	Universität Heidelberg weitergegeben und verwendet werden.
+%%%
+%%%	Für die Richtigkeit und Konformität des Layouts mit den Richtlinien
+%%%	des IPMBs wird keine Haftung übernommen, BITTE SPRECHT AUF JEDEN
+%%%	FALL DAS LAYOUT EURER ARBEIT MIT EUREN BETREUERN AB!!!
+%%%
+%%%	Um die Titelseite und die zweite Seite richtig zu setzen müsst ihr
+%%%	nur in dieser Datei unter "Definitionen für Titelseite" die auf
+%%%	euch passenden Eintragungen vornehmen.
+%%%	In der Datei declaration.tex muss dann noch die Anschrift der Prüfer
+%%%	richtig angegeben werden.
+%%%
+%%%	Für das Zitieren muss im Befehl
+%%%	\addbibresource{bib/bachelorarbeit.bib} durch den
+%%%	Dateinamen und Dateipfad eurer BibTeX Datei aus Citavi an.
+
+\documentclass[parskip, twoside]{scrreprt}			% Dokumentenklasse scrreprt, für beidseitigen Druck, deutsche Absatzabstände
+
+%%%%%%%%%%%%%%%%%%% Pakete %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Sprache und Eingabecodierung %%%
+\usepackage[greek, ngerman, main=english]{babel}
+% Sprachpaket greek damit griechische Buchstaben (z.B. im Literaturverzeichnis) keine Probleme machen mit main= die standardsprache für das Dokument festlegen, damit werden automatische Überschriften wie Inhaltsverzeichnis/Table of Contents in der richtigen Sprache gesetzt
+
+\usepackage[utf8]{inputenc}							% codierung damit man Umlaute direkt schreiben kann
+\usepackage[T1]{fontenc}							% auch was mit codierung zu tun
+
+%%% Schriftart und Form %%%
+\usepackage{lmodern}								% Schriftart LatinModern Vektorisiert für schöneres PDF
+\usepackage[onehalfspacing]{setspace}				% Korrekter Zeilenabstand nach IPMB Vorgabe
+\usepackage[left=2.50cm, right=2.50cm, top=2.50cm, bottom=2.50cm, bindingoffset=10mm, includehead, includefoot]{geometry}
+% Seitenränder nach Vorgabe von IPMB, mit Bindezugabe von 10mm, Kopf- und Fußzeile im Textfeld anstatt im Rand => 2,5cm zu Kopfzeile anstatt zum Text
+\usepackage[headsepline]{scrlayer-scrpage} 			% schönere Kopfzeile
+\usepackage{url}
+
+%%% Bibliographie mit biber %%%
+\usepackage[backend=biber, style=authoryear, giveninits=true, maxbibnames=99, uniquename=init, maxcitenames=2, hyperref=true, date=year]{biblatex}			% Benutze Biber/BibLaTeX zum Zitieren
+\usepackage{xpatch}
+\usepackage{csquotes}
+\addbibresource{bib/quellen.bib}					% Pfad zur BibTeX Datei aus Citavi
+% HIER EINS VON BEIDEN AUSWÄHLEN
+\usepackage{bib/cellstyle}								% Cell Stil
+%\usepackage{bib/cellstyle_it}							% Cell Stil mit kursivem et. al.
+
+%%% Chemie, Biologie, Mathematik %%%
+\usepackage{dnaseq}									% Für einzelne Sequenzen
+\usepackage{texshade}								% Für alignierte Sequenzen
+%%%%%%%%%%%%%%%%%% !!! ACHTUNG !!! dnaseq vor texshade vor mhchem vor graphicx einbinden !!! ACHTUNG !!! %%%%%%%%%%%%%%%%%%
+
+\usepackage[version=4]{mhchem}						% Chemische Formeln
+\usepackage{siunitx}								% SI Einheiten
+\usepackage{amsmath}								% für schönere Formeln
+\usepackage{listings}								% um Code zu setzen
+
+%%% Tabellen und Abbildungen %%%
+\usepackage{booktabs} 								% für schöne Linien in Tabellen
+\usepackage{longtable}								% Tabelle mit Seitenumbrüchen
+\usepackage{multirow}								% Mehrere Reihen in einer Tabelle zusammenfassen
+\usepackage{rotating}								% für Tabellen im Querformat
+\usepackage{subfigure}								% für mehrere Unterabbildungen in einer Abbildung
+\usepackage{graphicx}								% für Größenänderungen für Grafiken
+\usepackage{float}									% um Floats (z.B. Bilder) an Ort und Stelle mit [H] zu fixieren
+
+
+\usepackage{acronym}								% Abkürzungen
+
+\usepackage{lipsum}									% Blindtext zum Testen
+
+\usepackage[hidelinks]{hyperref}
+% Hyperlinks [hidelinks] um linkboxen zu deaktivieren (möglichst zum Schluss einbinden, da es sich anderen Paketen anpasst)
+
+%%%%%%%%%%%%%%%%%%% KOMA-Script Einstellungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{scrhack}								% Anpassung von anderen Paketen an KOMA-Script zur besseren Kompatibilität. Zuletzt Einbinden!
+
+\emergencystretch=50pt								% Vergrößert Wortzwischenraum notfalls, wenn sonst die Zeile überläuft
+
+\clubpenalty = 10000								% Verhindern von Schusterjungen
+\widowpenalty = 10000								% Hurenkindern
+\displaywidowpenalty = 10000						% und vor Formeln
+
+% Einstellen der Kopfzeile
+\automark[section]{chapter}							% automatisches Setzen von Kollumnentiteln in der Kopfzeile (chapter links, section rechts)
+\renewcommand*{\chaptermarkformat}{} 				% Chapter ohne Nummern
+\renewcommand*{\sectionmarkformat}{}				% Sections ohne Nummern
+
+%%%%%%%%%%%%%%%%%%% Schriftart für Überschriften einstellen %%%%%%%%%%%%%%%
+\setkomafont{title}{\sffamily}						% Festsetzen der Überschriftart auf Sans Serif
+\setkomafont{disposition}{\usekomafont{title}}		% Festsetzen der weiteren Unterüberschriften auf Sans Serif
+\setkomafont{author}{\usekomafont{title}}
+\setkomafont{date}{\usekomafont{title}}
+\setkomafont{caption}{\sffamily\small}				% Festsetzen der Captions auf Sans Serif klein
+\setkomafont{captionlabel}{\usekomafont{caption}\bfseries\small}	% Festsetzen der Captionlabels auf Sans Serif Fett klein
+\setkomafont{pagehead}{\normalfont\scshape}			% Festsetzen der Kopfzeilen auf normale Kapitälchen
+
+%%%%%%%%%%%%%%%%%%% Definitionen für Titelseite %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Hier müssen alle Anpassungen für euch vorgenommen werden,			%%%
+%%% diese werden dann automatisch im Dokument angewendet				%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\workauthor}{NAME}
+\newcommand{\worktitle}{TITEL}
+\newcommand{\worksubtitle}{ZWEITETITELZEILE}		% Für mehrzeilige Titel, leerlassen wenn nicht benötigt
+\newcommand{\worksubsubtitle}{DRITTETITELZEILE}
+\newcommand{\studentid}{MATRIKELNUMMER}
+\newcommand{\birthplace}{GEBURTSORT}
+\newcommand{\workplace}{ARBEITSORT}
+\newcommand{\workstart}{BEGINNARBEIT}
+\newcommand{\workstop}{ENDEARBEIT}
+\newcommand{\submissiondate}{ABGABEMONATJAHR}
+\newcommand{\institute}{INSTITUT}
+\newcommand{\department}{ABTEILUNG}
+\newcommand{\degree}{BACHELOR/MASTER}				% Hier entweder "Bachelor" oder "Master" je nach Art der Arbeit eintragen
+\newcommand{\worktype}{\degree{}arbeit}				% Hier braucht nichts verändert zu werden
+
+%%%%%%%%%%%%%%%%%%% Paketeinstellungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\lstset{							% Einstellungen für listings
+	frame=tb,						% Horizontale Linien oben und unten
+	numbers=left,					% Zeilennummern auf der linken Seite
+	basicstyle=\ttfamily\small,		% Schrift Monospace klein
+%	language=,						% Festlegen der Programmiersprache
+	tabsize=2,						% Tabs sind 2 Leerzeichen breit
+}
+
+\sisetup{							% Einstellungen für SI-Einheiten
+	per-mode=fraction,				% macht Brüche bei Einheiten
+	output-decimal-marker={,},		% gibt "," als Dezimaltrennzeichen aus
+	separate-uncertainty,			% Unsicherheit mit +-
+	table-align-uncertainty = true,	% Ausrichtung am +- in Tabellen
+}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%% Titlepage für Bachelor/Masterarbeit %%%%%%%%%%%%%%%%%%%
+\begin{titlepage}
+	\centering
+	{\Large Ruprecht-Karls-Universität Heidelberg\\
+		Fakultät für Biowissenschaften\\
+		\degree{}studiengang Molekulare Biotechnologie\\}
+
+	{\vspace{\stretch{2}}}
+	{\usekomafont{title}
+
+		{\Huge \worktitle{}}
+
+		{\Huge \worksubtitle{}}
+
+		{\Huge \worksubsubtitle{}}
+
+	}
+
+	\vspace{\stretch{2}}
+	{\Large \worktype{}}
+
+	\vspace{\stretch{2}}
+
+	{\Large
+		\begin{tabular}{rl}
+			Autor &\workauthor{}\\
+			Geburtsort &\birthplace{}\\
+			Abgabetermin &\submissiondate{}\\
+		\end{tabular}
+	}
+
+	\vspace{\stretch{1}}
+
+\end{titlepage}
+%%%%%%%%%%%%%%%%%%% /Titlepage für Bachelor/Masterarbeit %%%%%%%%%%%%%%%%%%
+\pagestyle{plain.scrheadings}		% Text bis zur Einleitung ohne Kopfzeile
+
+\input{chapter/declaration}
+\input{chapter/abstract}
+
+\tableofcontents
+
+\input{chapter/abbreviations}
+
+\input{chapter/introduction}
+\input{chapter/mandm}
+\input{chapter/results}
+\input{chapter/discussion}
+\input{chapter/outlook}
+
+\appendix
+\input{chapter/appendix}
+
+
+\printbibliography
+
+
+\end{document}

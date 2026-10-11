@@ -1,0 +1,111 @@
+\documentclass[a4paper,11pt,oneside,titlepage,openany]{jsbook}
+
+\makeatletter
+  \renewcommand{\maketitle}{%
+    \begin{titlepage}%
+      \let\footnotesize\small
+      \let\footnoterule\relax
+      \let\footnote\thanks
+      \null\vfil
+      \if@slide
+        {\footnotesize \@date}%
+        \begin{center}
+          \mbox{} \\[1zw]
+          \large
+          {\maybeblue\hrule height0pt depth2pt\relax}\par
+          \smallskip
+          \@title
+          \smallskip
+          {\maybeblue\hrule height0pt depth2pt\relax}\par
+          \vfill
+          {\small \@author}%
+        \end{center}
+      \else
+      \vskip 60\p@
+      \begin{center}%
+        {\LARGE \@title \par}%
+        \vskip 1.5em
+        {\large \@date \par}%
+        \vskip -1em%
+        {\large
+          \lineskip .75em
+          \begin{tabular}[t]{c}%
+            \@author
+          \end{tabular}\par}%
+      \end{center}%
+      \fi
+      \par
+      \@thanks\vfil\null
+    \end{titlepage}%
+    \setcounter{footnote}{0}%
+    \global\let\thanks\relax
+    \global\let\maketitle\relax
+    \global\let\@thanks\@empty
+    \global\let\@author\@empty
+    \global\let\@date\@empty
+    \global\let\@title\@empty
+    \global\let\title\relax
+    \global\let\author\relax
+    \global\let\date\relax
+    \global\let\and\relax
+  }%
+\makeatother
+
+\usepackage[dvips]{graphicx}
+
+\setlength{\textwidth}{\fullwidth}
+\setlength{\evensidemargin}{\oddsidemargin}
+
+
+\begin{document}
+
+\begin{titlepage}
+%% title
+\title{{\huge ほげほげふがふがの研究}}
+%% info meta
+\author{\vspace{3truecm}\\{\LARGE 201811528}\vspace{1truecm}\\{\LARGE 春日太郎}\vspace{2truecm}\\{\LARGE 筑波大学情報学群}
+\vspace{0.5truecm}\\{\LARGE 知識情報・図書館学類}}
+\date{\vspace{2truecm}{\LARGE 20xx 年 x月}}
+
+\end{titlepage}
+
+\frontmatter
+\maketitle
+
+\pagenumbering{roman}
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+\newpage{}
+
+
+\mainmatter
+\pagenumbering{arabic}
+
+\mainmatter
+\include{sections/1}
+\newpage{}
+
+\include{sections/2}
+\newpage{}
+
+\include{sections/3}
+\newpage{}
+
+\include{sections/4}
+\newpage{}
+
+\include{sections/5}
+\newpage{}
+
+%TC:ignore
+
+\include{sections/thanks}
+\newpage{}
+
+\include{sections/refers}
+\newpage{}
+
+%TC:endignore
+
+\end{document}

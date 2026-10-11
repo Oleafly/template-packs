@@ -1,0 +1,293 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHAPTER 1
+%
+% This chapter is laid out as a complete empirical study, so it doubles
+% as a skeleton for a paper-style thesis chapter. Delete the sections
+% you do not need; the headings are here to show the architecture, not
+% to prescribe it.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+\newpage
+\onehalfspacing
+\RaggedRight
+\setcounter{chapter}{0}
+\thesischapterstyle
+
+\chapter{Chapter One Title}\label{chap1:short-label}
+
+%======================================================================
+\section{Introduction}\label{sec:ch1-introduction}
+
+\subsection{Background}
+% Open on the phenomenon, with a quantified magnitude and a citation
+% establishing that it is first-order. An event or a date alone is not
+% a hook.
+\lipsum[1]
+
+% Citations: \citep{key} renders as (Author 2020); \citet{key} renders as
+% Author (2020). Both come from references.bib.
+Prior work documents this pattern \citep{placeholder-article}, and
+\citet{placeholder-book} provides the standard treatment.
+
+\subsection{Research Motivation}
+% Why the question is open: what the existing evidence cannot settle.
+\lipsum[2]
+
+\subsection{Research Questions}
+% State them as questions, numbered, each answerable by one exhibit.
+\begin{enumerate}
+    \item Research question 1.
+    \item Research question 2.
+    \item Research question 3.
+\end{enumerate}
+
+\subsection{Main Findings}
+% One paragraph per headline result, each pointing at the table that
+% carries it.
+\lipsum[3]
+
+\subsection{Research Contributions}
+% Name the closest rival studies by author-year with live citations and
+% state the delta. Naming a literature is not naming a rival.
+\lipsum[4]
+
+\subsection{Chapter Structure}
+The remainder of this chapter is organised as follows.
+Section~\ref{sec:ch1-literature} reviews the related literature.
+Section~\ref{sec:ch1-theory} develops the theoretical framework.
+Section~\ref{sec:ch1-hypotheses} sets out the hypotheses.
+Section~\ref{sec:ch1-data} describes the data and empirical model.
+Section~\ref{sec:ch1-results} reports the results.
+Section~\ref{sec:ch1-conclusion} concludes.
+
+%======================================================================
+\section{Literature Review}\label{sec:ch1-literature}
+
+% Density follows function: the closest rivals get paragraphs,
+% background gets a clause. Every cited work should do one of four
+% jobs -- establish a premise, define the gap, supply a method
+% precedent, or be the rival the chapter must beat.
+
+\subsection{First Strand of Literature}
+\lipsum[5]
+
+\subsection{Second Strand of Literature}
+\lipsum[6]
+
+\subsection{Synthesis: Research Gaps}
+\lipsum[7]
+
+%======================================================================
+\section{Theoretical Framework}\label{sec:ch1-theory}
+
+\subsection{Core Framework}
+\lipsum[8]
+
+\subsection{Mechanism Specification}
+\lipsum[9]
+
+\subsection{Conceptual Model}
+
+Figure~\ref{fig:ch1-framework} summarises the conceptual model.
+
+\begin{figure}[p]
+\centering
+\begin{tikzpicture}[
+    >=stealth,
+    node distance = 2.2cm,
+    box/.style = {rectangle, draw=black, thick, rounded corners,
+                  minimum width=3cm, minimum height=1cm,
+                  align=center, font=\small}
+]
+\node[box, fill=gray!12] (x)   {Variable of interest\\$X$};
+\node[box, fill=gray!12, right=of x] (m) {Mechanism\\$M$};
+\node[box, fill=gray!12, right=of m] (y) {Outcome\\$Y$};
+\node[box, below=1.4cm of m] (z) {Moderator\\$Z$};
+
+\draw[->, thick] (x) -- node[above, font=\scriptsize] {H1} (m);
+\draw[->, thick] (m) -- node[above, font=\scriptsize] {H2} (y);
+\draw[->, thick, dashed] (z) -- node[right, font=\scriptsize] {H3} (m);
+\end{tikzpicture}
+\caption{Conceptual framework.}
+\label{fig:ch1-framework}
+\end{figure}
+
+%======================================================================
+\section{Hypothesis Development}\label{sec:ch1-hypotheses}
+
+% Each hypothesis should trace a chain: established finding (cited)
+% -> the step this chapter adds -> the prediction. State the expected
+% sign for each outcome separately, not in general.
+
+\subsection{Main Hypothesis}
+\lipsum[10]
+
+\begin{quote}
+\textbf{Hypothesis 1.} \textit{State the predicted relationship and its
+sign here.}
+\end{quote}
+
+\subsection{Mechanism Hypotheses}
+\lipsum[11]
+
+\begin{quote}
+\textbf{Hypothesis 2.} \textit{State the predicted mechanism here.}
+\end{quote}
+
+%======================================================================
+\section{Data and Model}\label{sec:ch1-data}
+
+\subsection{Data and Sample}
+% Name every source, the coverage period, and the unit of observation.
+\lipsum[12]
+
+\subsection{Variable Construction}
+
+\subsubsection{Dependent Variable}
+% Every filter and threshold should name its precedent, or be labelled
+% explicitly as this chapter's own choice.
+\lipsum[13]
+
+\subsubsection{Variable of Interest}
+\lipsum[14]
+
+\subsubsection{Control Variables}
+\lipsum[15]
+
+\subsection{Research Model}
+
+The baseline specification is estimated as
+
+\begin{equation}\label{eq:ch1-baseline}
+    Y_{i,t} = \beta_0 + \beta_1 X_{i,t}
+              + \sum_{k} \gamma_k \, \text{Control}^{k}_{i,t}
+              + \mu_i + \lambda_t + \varepsilon_{i,t},
+\end{equation}
+
+\noindent where $Y_{i,t}$ is the outcome for unit $i$ in period $t$,
+$X_{i,t}$ is the variable of interest, $\mu_i$ and $\lambda_t$ denote
+unit and period fixed effects, and $\varepsilon_{i,t}$ is the error
+term. Equation~\eqref{eq:ch1-baseline} is estimated by \ac{OLS}, with the
+\ac{SE} clustered at the [LEVEL] level. The
+coefficient of interest is $\beta_1$; Hypothesis~1 predicts
+$\beta_1 > 0$.
+
+%======================================================================
+\section{Empirical Results}\label{sec:ch1-results}
+
+\subsection{Descriptive Statistics}
+
+Table~\ref{tab:ch1-descriptive} reports the descriptive statistics.
+
+% [p] sends the table to a float page rather than squeezing it beside the
+% text -- the empirical finance convention, and what a full-width
+% regression table needs anyway.
+%
+% Note what LaTeX does with it: a float page holds as many floats as fit,
+% so the two demo tables and the framework figure below all land on one
+% page. Real regression tables are large enough that each takes a page of
+% its own, so this does not happen in a finished thesis. If yours do pack
+% together, they are small enough to sit inline -- use [htbp] for those.
+%
+% For a journal submission the convention is the opposite: markers in the
+% text, exhibits at the end. See the float-placement note in main.tex --
+% switch it there rather than moving anything by hand.
+\begin{table}[p]
+    \centering
+    \caption{Descriptive statistics}
+    \label{tab:ch1-descriptive}
+    \begin{tabular}{lccccc}
+        \toprule
+        Variable & N & Mean & SD & Min & Max \\
+        \midrule
+        $Y$          & [N] & [.] & [.] & [.] & [.] \\
+        $X$          & [N] & [.] & [.] & [.] & [.] \\
+        Control 1    & [N] & [.] & [.] & [.] & [.] \\
+        Control 2    & [N] & [.] & [.] & [.] & [.] \\
+        Control 3    & [N] & [.] & [.] & [.] & [.] \\
+        \bottomrule
+    \end{tabular}
+
+    \vspace{1mm}
+    {\footnotesize
+    This table reports summary statistics for the estimation sample over
+    [PERIOD]. All continuous variables are winsorised at the
+    [X]th and [100-X]th percentiles. Variable definitions are given in
+    Appendix~\ref{app:variables}.
+    }
+\end{table}
+
+\subsection{Baseline Results}
+
+Table~\ref{tab:ch1-baseline} reports estimates of
+Equation~\eqref{eq:ch1-baseline}.
+
+\begin{table}[p]
+    \centering
+    \caption{Baseline results}
+    \label{tab:ch1-baseline}
+    \begin{tabular}{lcccc}
+        \toprule
+                     & (1) & (2) & (3) & (4) \\
+                     & $Y$ & $Y$ & $Y$ & $Y$ \\
+        \midrule
+        $X$          & [.]$^{***}$ & [.]$^{***}$ & [.]$^{**}$  & [.]$^{**}$ \\
+                     & ([.])       & ([.])       & ([.])       & ([.])      \\
+        Control 1    &             & [.]         & [.]         & [.]        \\
+                     &             & ([.])       & ([.])       & ([.])      \\
+        Control 2    &             & [.]         & [.]         & [.]        \\
+                     &             & ([.])       & ([.])       & ([.])      \\
+        Constant     & [.]         & [.]         & [.]         & [.]        \\
+                     & ([.])       & ([.])       & ([.])       & ([.])      \\
+        \midrule
+        Controls     & No  & Yes & Yes & Yes \\
+        Unit FE      & No  & No  & Yes & Yes \\
+        Period FE    & No  & No  & No  & Yes \\
+        Observations & [N] & [N] & [N] & [N] \\
+        Adj.\ $R^2$  & [.] & [.] & [.] & [.] \\
+        \bottomrule
+    \end{tabular}
+
+    \vspace{1mm}
+    {\footnotesize
+    This table reports OLS estimates of Equation~\eqref{eq:ch1-baseline}.
+    Standard errors clustered at the [LEVEL] level are in parentheses.\\
+    $^{***}$ $p<0.01$, $^{**}$ $p<0.05$, $^{*}$ $p<0.1$.
+    }
+\end{table}
+
+\subsection{Identification and Endogeneity}
+% Instrumental variables, difference-in-differences, propensity score
+% matching, or whatever the design requires. Mechanism evidence comes
+% after identification, never before.
+\lipsum[16]
+
+\subsection{Mechanism Tests}
+\lipsum[17]
+
+\subsection{Heterogeneity Analysis}
+% Moderators enter as interactions on dichotomised variables in the
+% baseline; saturated high-order interactions belong in robustness.
+\lipsum[18]
+
+\subsection{Robustness Tests}
+\lipsum[19]
+
+%======================================================================
+\section{Conclusion}\label{sec:ch1-conclusion}
+
+\subsection{Summary of Findings}
+\lipsum[20]
+
+\subsection{Theoretical Implications}
+\lipsum[21]
+
+\subsection{Practical Implications}
+\lipsum[22]
+
+\subsection{Limitations and Future Research}
+\lipsum[23]
+
+\end{document}

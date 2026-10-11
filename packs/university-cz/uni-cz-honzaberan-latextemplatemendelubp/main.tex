@@ -1,0 +1,456 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Základní údaje
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtoks\MuzZena \newtoks\NazevBakalarskePrace \newtoks\JmenoStudenta \newtoks\JmenoStudenta \newtoks\JmenoVedoucihoPrace \newtoks\NazevFakulty \newtoks\NazevUstavu \newtoks\Podekovani \newtoks\Rok
+
+\MuzZena={a} % Zadejte 'a' (bez uvozovek) pokud jste žena, pokud ne, nechte složené závorky prázdné.
+\NazevBakalarskePrace={Využití teorie strun při pěstování obilí ke snížení cen chleba pro pracující lid} %Zadejte název bakalářské práce
+\JmenoStudenta={Ničevo Nevěděv} %Zadejte své jméno
+\JmenoVedoucihoPrace={prof. Ing. Mgr. Dmitrij Vševěděv Ph.D.} %Zadejte jméno (i tituly) vedoucího práce
+\NazevFakulty={Agronomická fakulta} %Zadejte název fakulty
+\NazevUstavu={Ústav pro teoretické pěstování obilnin} %Zadejte název ústavu
+\Rok{2020} %Zadejte rok
+
+\Podekovani={Děkuji Ing. Jméno Příjmení Ph.D. za pomoc při vedení bakalářské práce. Mé poděkováni patři též Mgr. Jméno Příjmení za spolupráci při získávání údajů pro výzkumnou část práce.} % Zde napište poděkování
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PREAMBULE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Základní styl dokumentu - [velikost písma, papír,  ]{styl}
+\documentclass[12pt,a4paper,oneside]{article}
+
+% Kódování, čestina, atp. 
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[czech]{babel}
+
+% Kopírování z pdf
+\usepackage{cmap}
+
+% Font - times = Times New Roman
+\usepackage{times} 
+
+% Nastavení řádkování 
+\renewcommand{\baselinestretch}{1.5}
+
+% Barvičky (Nejsou většinou potřeba)
+\usepackage{xcolor}
+
+% Sazba matematiky
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsbsy}
+
+% Sazba řeckých symbolů základním řezem písma
+\usepackage{upgreek}
+
+% Další symboly
+\usepackage{textcomp}
+
+% Plovoucí grafika
+\usepackage{graphicx} 
+
+% Nastavuje okraje stránek
+\usepackage[left=35mm,right=25mm,top=30mm,bottom=25mm]{geometry}
+
+% URL odkazy a klikací formát.
+\usepackage{url}%
+\usepackage{hyperref}%
+
+% Řeší tabylky
+\usepackage{tabularx}%
+\usepackage{caption}
+
+
+\newcommand{\headlinestyle}[1]{\large\textbf{#1}}
+\newcommand{\namestyle}[1]{#1}
+
+
+%%%%%%%%%%%%%%%
+% Nastavuje nadpisy a podnapisy na správně velikosti
+%%%%%%%%%%%%%%%
+\usepackage[explicit]{titlesec}
+\titleformat{\section}%
+  {\normalfont\large\bfseries}{\thesection}{12pt}{\MakeUppercase{#1}} 
+\usepackage{titlesec}
+\titleformat{\subsection}%
+  {\fontsize{14pt}{12pt}\selectfont\bfseries}{\thesubsection}{12pt}{\fontsize{14pt}{12pt}\selectfont\bfseries #1}
+\titleformat{\subsubsection}%
+  {\normalfont\bfseries}{\thesubsubsection}{12pt}{\normalfont\bfseries #1}
+
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries\itshape}{\textup{\theparagraph}}{12pt}{\normalfont\normalsize\bfseries\itshape #1}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\setcounter{secnumdepth}{6}
+\setcounter{tocdepth}{6}
+\newcommand\simpleparagraph[1]{%
+  \stepcounter{paragraph}\paragraph*{\theparagraph\quad{}#1}}
+
+
+
+% Upravuje seznamy
+\usepackage[titles]{tocloft}
+\usepackage[nottoc,notlot,notlof,numbib]{tocbibind}
+\renewcommand{\listoffigures}{\begingroup
+\tocsection
+\tocfile{\listfigurename}{lof}
+\endgroup}
+
+\renewcommand{\listoftables}{\begingroup
+\tocsection
+\tocfile{\listtablename}{lot}
+\endgroup}
+
+
+
+% Použití bibliografického stylu apacite
+\usepackage{apacite}
+\bibliographystyle{apacite}
+% Důlažitý box pro upravení apacite
+\usepackage{etoolbox}
+% Vynechání URL adres z citací
+% \renewenvironment{APACrefURL}[1][]{}{}
+% \AtBeginEnvironment{APACrefURL}{\renewcommand{\url}[1]{}}
+% \renewcommand{\doiprefix}{doi:~\kern-1pt}
+% Opravuje v citacích "and" na "a", ale funguje jenom u "apacite"
+\renewcommand{\BBAA}{a}  
+\renewcommand{\BBAB}{a}
+\renewcommand{\BAnd}{a}  
+% Opravuje v citacích In na V
+% \renewcommand{\BIn}{V}
+% Pakliže se nevyužije citace bez URL, toto změní Retrieved from na Citováno z
+\renewcommand{\BRetrievedFrom}{Dostupné z:\ }%
+
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section}{\section}{}{}
+
+% Opravuje číslování u Použité leteratury
+\usepackage{natbib}
+\renewcommand{\bibsection}{}
+
+
+
+
+% Opravuje URL odkazy tak, aby se zalamovaly
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+\usepackage{stackengine}
+
+% Zalamuje citace
+\usepackage{breakcites}
+
+% Dovoluje jednoduše vkládat pdf stránky mezi texové stránky
+\usepackage{pdfpages}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Začátek dokumentu
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Úvodní stránky
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{empty}
+
+
+\begin{center}
+{\fontsize{18pt}{1.5}\selectfont Mendelova univerzita v~Brně} 
+
+{\fontsize{18pt}{1.5}\selectfont {\the\NazevFakulty}} 
+\end{center}
+
+\vspace{9cm}
+
+\begin{center}
+{\fontsize{22pt}{12pt}\selectfont BAKALÁŘSKÁ PRÁCE}
+\end{center}
+
+\vfill
+
+\begin{flushleft}
+\fontsize{18pt}{12pt}\selectfont Brno {\the\Rok} \hfill {\the\JmenoStudenta}
+\end{flushleft}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newpage
+\begin{center}
+{\fontsize{16pt}{1pt}\selectfont \textbf{Mendelova univerzita v~Brně}} 
+
+{\fontsize{16pt}{1pt}\selectfont \textbf{\the\NazevFakulty}} 
+
+{\fontsize{16pt}{1pt}\selectfont \textbf{\the\NazevUstavu}} 
+\end{center}
+\vspace{-1cm}
+\hrulefill
+
+\vspace{1cm}
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[scale=0.46]{mendelu.jpg}
+\end{figure}
+
+\vspace{2cm}
+
+\begin{center}
+\fontsize{18pt}{12pt}\selectfont \textbf{\the\NazevBakalarskePrace} \\
+
+\fontsize{14pt}{12pt}\selectfont Bakalářská práce
+\end{center}
+
+\vfill
+
+\noindent\begin{tabularx}{\linewidth}{lXl}
+\fontsize{14pt}{12pt}\selectfont  \textit{Vedoucí práce:} & & \fontsize{14pt}{12pt}\selectfont  \textit{Vypracoval{\the\MuzZena}:} \tabularnewline[-1ex]
+\fontsize{14pt}{12pt}\selectfont  {\the\JmenoVedoucihoPrace}    & & \fontsize{14pt}{12pt}\selectfont {\the\JmenoStudenta} \tabularnewline
+\end{tabularx}
+
+
+\noindent %Nastavuje hodnotu odražení prvního řádku na 0cm
+\hrulefill
+\vspace{-0.2cm}
+\begin{center}
+\fontsize{14pt}{1pt}\selectfont Brno {\the\Rok}
+\end{center}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\includepdf[pages={1,2}]{zadani}
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\parindent=0.6cm %Nastavuje hodnotu odražení prvního řádku.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Čestné prohlášení
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\textbf{Čestné prohlášení}
+\end{center}
+
+Prohlašuji, že jsem práci {\uv{\the\NazevBakalarskePrace}} vypracoval{\the\MuzZena} samostatně a~veškeré použité prameny a~informace uvádím v~seznamu použité literatury. Souhlasím, aby moje práce byla zveřejněna v~souladu s~§ 47b zákona č. 111/1998 Sb., o~vysokých školách a~o~změně a~doplnění dalších zákonů (zákon o~vysokých školách), ve znění pozdějších předpisů, a~v~souladu s~platnou Směrnicí o~zveřejňování závěrečných prací. Prohlašuji, že tištěná podoba závěrečné práce a~elektronická podoba závěrečné práce zveřejněná v~aplikaci Závěrečné práce v~Univerzitním informačním systému je identická.
+
+Jsem si vědom{\the\MuzZena}, že se na moji práci vztahuje zákon č. 121/2000 Sb., autorský zákon, a~že Mendelova univerzita v~Brně má právo na uzavření licenční smlouvy a~užití této práce jako školního díla podle § 60 odst. 1 autorského zákona. 
+
+Dále se zavazuji, že před sepsáním licenční smlouvy o~využití díla jinou osobou (subjektem) si vyžádám písemné stanovisko univerzity, že předmětná licenční smlouva není v~rozporu s~oprávněnými zájmy univerzity, a~zavazuji se uhradit případný příspěvek na úhradu nákladů spojených se vznikem díla, a~to až do jejich skutečné výše. 
+
+\vfill
+
+
+
+\begin{tabular}{@{}p{2.5in}p{2.5in}@{}}
+  V~Brně dne: \dotfill 	& \dotfill \\
+   						& \multicolumn{1}{c}{Podpis} \\
+\end{tabular}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\phantom{a}
+
+\vfill
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Poděkování
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Poděkování}
+{\the\Podekovani}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstrakt
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{abstrakt}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Obsah
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\tableofcontents
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Vlastní text
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{vlastni_text}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Přílohy
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Přílohy} % Pokud přílohy nemáte - tak to smažte.
+
+\end{document}

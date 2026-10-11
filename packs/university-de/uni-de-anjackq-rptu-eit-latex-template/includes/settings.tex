@@ -1,0 +1,191 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Global Document Settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Headers & Footers
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% page style for front page
+\fancypagestyle{frontpage}{
+	\fancyhf{}
+	
+	%remove top line
+	\renewcommand{\headrulewidth}{0pt}
+
+	\fancyfoot[L]{
+		\color{black} \footnotesize
+	}
+	\fancyfoot[C]{
+		\color{black} \footnotesize
+	}
+	\fancyfoot[R]{
+		\color{black} \footnotesize
+		\iftoggle{isGerman}{
+  			Seite \thepage
+		}{
+			Page \thepage
+		}
+	}
+}
+
+% page style for all other pages
+\fancypagestyle{otherpages}{
+	
+	\fancyhf{}
+
+	%remove top line
+	%\renewcommand{\headrulewidth}{0pt}
+
+	\fancyhead[L]{\nouppercase{\leftmark}
+		\color{black} \footnotesize
+	}
+	\fancyhead[C]{
+		\color{black} \footnotesize
+	}
+	\fancyhead[R]{
+		\color{black} \footnotesize
+	}
+
+	\fancyfoot[L]{
+		\color{black} \footnotesize
+	}
+	\fancyfoot[C]{
+		\color{black} \footnotesize
+	}
+	\fancyfoot[R]{
+		\color{black} \footnotesize
+		\iftoggle{isGerman}{
+  			Seite \thepage
+		}{
+			Page \thepage
+		}
+	}
+}
+
+\fancypagestyle{firstsection}{%
+	\fancyhf{}%
+	
+	\fancyhead[L]{
+		\color{black} \footnotesize
+	}
+	\fancyhead[C]{
+		\color{black} \footnotesize
+	}
+	\fancyhead[R]{
+		\color{black} \footnotesize
+	}
+	
+	\fancyfoot[L]{
+		\color{black} \footnotesize
+	}
+	\fancyfoot[C]{
+		\color{black} \footnotesize
+	}
+	\fancyfoot[R]{
+		\color{black} \footnotesize
+		\iftoggle{isGerman}{
+			Seite \thepage
+		}{
+			Page \thepage
+		}
+	}
+}
+
+
+% standard page style except for frontpage
+\pagestyle{otherpages}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Glossaries
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{siunitx}
+\usepackage[acronym,symbols,nogroupskip]{glossaries-extra}
+
+%\setlength{\glsdescwidth}{.72\textwidth}
+
+% new keys must be defined before use
+\glsaddstoragekey{unit}{}{\glsentryunit}
+\glsnoexpandfields
+
+% Style für Glossar
+\input{glossar.tex} % Glossareinträge hier einfügen
+
+\newglossarystyle{glossar}{%
+	\setglossarystyle{long3col}% base this style on the list style
+	\renewenvironment{theglossary}{% Change the table type --> 3 columns
+		\begin{longtable}{|p{.17\textwidth}|p{.774\textwidth}|}}%
+		{\end{longtable}}%
+	%
+	\renewcommand*{\glossaryheader}{%  Change the table header
+		\hline \bfseries Begriff & \bfseries Beschreibung  \\\hline
+		\endhead}%
+	\renewcommand*{\glossentry}[2]{%  Change the displayed items
+		\glstarget{##1}{\glossentryname{##1}} %
+		& \glossentrydesc{##1}% Description
+		\tabularnewline \hline
+	}%
+}
+
+% Style für Abkürzungsverzeichnis
+\input{abkuerzungen.tex} % Abkürzungen hier einfügen
+
+\NewEnviron{acronymtable}{%
+    \begin{xltabular}{\textwidth}{|c|X|}%
+        \BODY
+    \end{xltabular}
+}
+\newglossarystyle{acronyms}{%
+	\setglossarystyle{long3col}% base this style on the list style
+	\renewenvironment{theglossary}{% Change the table type --> 3 columns
+    \acronymtable
+    }{
+    \endacronymtable
+    }
+	%
+	\renewcommand*{\glossaryheader}{%  Change the table header
+		\hline \bfseries Abkürzung & \bfseries Bedeutung  \\\hline
+		\endhead}%
+	\renewcommand*{\glossentry}[2]{%  Change the displayed items
+		\glstarget{##1}{\glossentryname{##1}} %
+		& \glossentrydesc{##1}% Description
+		  \tabularnewline \hline
+	}%
+}
+
+% Style für Symbolverzeichnis
+\input{symbole.tex} % Symbole hier einfügen
+
+\NewEnviron{symboltable}{%
+    \begin{xltabular}{\textwidth}{|c|X|c|}%
+        \BODY
+    \end{xltabular}
+}
+\newglossarystyle{symbunitlong}{%
+	\setglossarystyle{long3col}% base this style on the list style
+	\renewenvironment{theglossary}{%
+    \symboltable
+    }{
+    \endsymboltable
+    }
+	\renewcommand*{\glossaryheader}{%  Change the table header
+		\hline \bfseries Variable & \bfseries Bedeutung & \bfseries Basiseinheit\\\hline
+		\endhead}%
+	\renewcommand*{\glossentry}[2]{%  Change the displayed items
+		\glstarget{##1}{\glossentryname{##1}} %
+		& \glossentrydesc{##1}% Description
+		& \glsentryunit{##1}  \tabularnewline \hline
+	}%
+}
+
+%% glossaries package for list of abbreviations and list of symbols
+%\usepackage{datatool} % package needed by glossaries
+%\usepackage[acronym]{glossaries} % *after* hyperref
+%\newglossary[symlog]{symbol}{symi}{symo}{Symbols}
+%\makeglossaries
+%\glstoctrue
+%\input{../../paper.library/abbreviations_symbols/abbreviations}
+%\input{../../paper.library/abbreviations_symbols/symbols_finance}

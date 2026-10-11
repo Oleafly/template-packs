@@ -1,0 +1,81 @@
+% LaTeX Package fuer Deckblatt von Abschlussarbeiten an der Hochschule Augsburg
+%
+% The MIT License (MIT)
+% Copyright (c) 2016 Andreas Dolp
+%
+% By Andreas Dolp <dev[at]andreas-dolp.de>
+% Version: v1.2 - 2016-06-16
+\ProvidesPackage{HSA_Abschlussarbeit_Deckblatt}[2016/06/01 v1.1 Package fuer Deckblatt von Abschlussarbeiten an der Hochschule Augsburg]
+\RequirePackage{geometry}	% Zur Einstellung der Seitenraender
+\RequirePackage{setspace}	% Festlegung des Zeilenabstands
+\RequirePackage{graphicx}	% Einbinden von Grafiken
+\RequirePackage{xcolor}		% Farbiger Text
+%
+\newcommand*{\thesis}[1]{\def\@thesis{#1}}
+\newcommand*{\@thesis}{Bachelorarbeit}
+\newcommand*{\picFacultyLogo}[1]{\def\@picFacultyLogo{#1}}
+\newcommand*{\picFacultySecLogo}[1]{\def\@picFacultySecLogo{#1}}
+\newcommand*{\course}[1]{\def\@course{#1}}
+\newcommand*{\@course}{course not set!}
+\newcommand*{\cooperation}[1]{\def\@cooperation{#1}}
+\newcommand*{\@cooperation}{cooperation not set!}
+\newcommand*{\picFacultyAddress}[1]{\def\@picFacultyAddress{#1}}
+\newcommand*{\authorStreet}[1]{\def\@authorStreet{#1}}
+\newcommand*{\authorCity}[1]{\def\@authorCity{#1}}
+\newcommand*{\authorPhone}[1]{\def\@authorPhone{#1}}
+\newcommand*{\authorMail}[1]{\def\@authorMail{#1}}
+\newcommand*{\supervisor}[1]{\def\@supervisor{#1}}
+\newcommand*{\@supervisor}{supervisor not set!}
+\newcommand*{\secsupervisor}[1]{\def\@secsupervisor{#1}}
+%\newcommand*{\@secsupervisor}{Second supervisor not set!}
+\newcommand*{\receivedDate}[1]{\def\@receivedDate{#1}}
+\newcommand*{\@receivedDate}{receivedDate not set!}
+\newcommand*{\turninDate}[1]{\def\@turninDate{#1}}
+\newcommand*{\@turninDate}{turninDate not set!}
+%
+\renewcommand*{\maketitle}{%
+\definecolor{HSA_orange}{HTML}{ea8409}
+\begin{titlepage}
+\singlespacing
+\newgeometry{left=20mm, right=10mm, top=12mm, bottom=12mm}
+\begin{tabular}{p{11.5cm}p{5cm}}
+	\textbf{\textcolor{HSA_orange}{\Large \@thesis}}
+		&
+	\includegraphics[width=5cm]{\@picFacultyLogo} \\
+	\vspace*{1cm}
+	\Large \@course	\\
+	\\
+	\Large \@cooperation \\
+\ifx \@picFacultySecLogo \undefined
+	\vspace*{2cm} \\
+\else
+	\vspace*{2cm}
+	& \vspace*{-2cm}\includegraphics[width=5cm]{\@picFacultySecLogo} \\
+\fi
+	\textbf{\textcolor{HSA_orange}{\Large \@author}} \\
+	\\
+	\textbf{\textcolor{HSA_orange}{\Large \@title}} \\
+	\vspace*{1cm} \\
+	& \small{Verfasser der \@thesis:} \\
+	& \small{\@author}	\\
+	& \small{\@authorStreet}	\\
+	& \small{\@authorCity}	\\
+	& \small{\@authorPhone}	\\
+	& \small{\@authorMail}	\\
+	\\
+	& \includegraphics[width=5cm]{\@picFacultyAddress} \\
+	\vspace*{\fill} \\
+	\Large{Erstprüfer: \@supervisor}	\\
+	\\
+\ifx \@secsupervisor \undefined
+\else
+	\Large{Zweitprüfer: \@secsupervisor}	\\
+	\\
+\fi
+	\Large{Thema erhalten am: \@receivedDate}	\\
+	\\
+	\Large{Abgabedatum: \@turninDate} \\
+\end{tabular}
+\end{titlepage}
+}
+\endinput

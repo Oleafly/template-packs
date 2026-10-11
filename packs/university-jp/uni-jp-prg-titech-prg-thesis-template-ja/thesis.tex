@@ -1,0 +1,132 @@
+%
+% Thesis Style 用サンプル TeX
+%
+% 注意：目次等を作成するために何度か platex にかけること
+%
+% 両面印刷する時は twoside にする
+%
+% 12pt にするのは最終手段
+%
+\documentclass[11pt,oneside]{jbook}
+\usepackage{csg-thesis}
+\usepackage{graphicx,url}
+\usepackage{xcolor}
+
+
+%%%% macros to add comments
+\newif\ifdraftComments
+\draftCommentsfalse
+\def\mkDraftFn#1#2{%
+  \expandafter\def\csname #1\endcsname##1{\ifdraftComments\textcolor{#2}{[#1: ##1]}\marginpar[$\longrightarrow$]{$\longleftarrow$}\fi}%
+}
+\mkDraftFn{MY}{blue}
+\mkDraftFn{YT}{red}
+\mkDraftFn{YC}{red}
+\mkDraftFn{HM}{red}
+
+\draftCommentstrue
+
+
+
+\begin{document}
+
+% 題目
+% 適当に\\で区切って見やすくする
+\title{%
+かっこいい\\
+タイトル
+}
+
+% 学位(学部と大学院で変更)
+\degree{学士}
+%\degree{修士}
+
+% 名前
+\author{著者名}
+
+% 提出日
+\date{令和y年m月d日}
+
+% 卒業年度
+\schoolyear{令和y年}
+
+% 所属(学部と大学院で変更)
+% \department{東京工業大学 理学部 情報科学科}
+\department{%
+% 学部
+東京科学大学 情報理工学院\\
+数理・計算科学系
+% 修士
+% 東京科学大学 情報理工学院\\
+% 数理・計算科学系 数理・計算科学コース
+}
+
+% 学籍番号
+\stnumber{xx-xxxx-x}
+
+% 指導教員
+\supervisor{増原 英彦 教授}
+% \supervisor{叢 悠悠 助教}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 概要
+\begin{abstract}
+\input{abstract.tex}
+\end{abstract}
+
+% 謝辞
+\begin{acknowledgments}
+\input{ack.tex}
+\end{acknowledgments}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents       %% 目次
+
+%
+% 目次等にはローマ数字を使い、本文開始ページを 1 ページ目にできる
+% この方が見た目がきれいであるが、全体のページ数は減って見える
+% ここでローマ数字に変えた場合は chapter 1 でアラビア数字に戻すこと
+%
+\pagenumbering{roman}  %% ページ番号をローマ数字にする
+
+\listoffigures         %% 図目次(図がない場合は不要)
+\listoftables          %% 表目次(表がない場合は不要)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\cleardoublepage
+\pagenumbering{arabic}  %% ページ番号をローマ数字にする
+%
+% 本文
+%
+% 各章を各ファイルに書く
+%
+\input{chapter1.tex}
+\input{chapter2.tex}
+\input{chapter3.tex}
+\input{chapter4.tex}
+\input{chapter5.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%
+% 参考文献は直接書いてもいいが、bibtex を使うと便利
+%  (1)このサンプルを platex にかける
+%  (2)jbibtex thesis
+%  (3)さらに platex にかける
+%  (4)もう何回か platex にかける
+%
+\bibliographystyle{csg-thesis}
+\bibliography{thesis}  %% thesis.bib というファイルを用意
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 付録が必要ならつける
+\appendix
+\input{appendix.tex}
+
+\end{document}

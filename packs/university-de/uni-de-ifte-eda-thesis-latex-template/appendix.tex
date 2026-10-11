@@ -1,0 +1,57 @@
+% eigene Verzeichnisse für den Anhang
+% Quelle: https://komascript.de/node/2115
+\DeclareNewTOC[%
+  owner=\jobname,
+  listname={Anhang}, % Titel des Verzeichnisses
+]{atoc} % Dateierweiterung (a=appendix, toc=table of contents)
+
+\DeclareNewTOC[%
+  owner=\jobname,
+  listname={Abbildungen im Anhang}, % Titel des Verzeichnisses
+]{alof} % Dateierweiterung (a=appendix, lot=list of figures)
+
+\DeclareNewTOC[%
+  owner=\jobname,
+  listname={Tabellen im Anhang}, % Titel des Verzeichnisses
+]{alot} % Dateierweiterung (a=appendix, lot=list of tables)
+
+% Befehle zum Umschalten der von TOC, LOF, LOT zu verwendenden Dateierweiterungen
+\makeatletter
+\newcommand*{\useappendixtocs}{%
+  \renewcommand*{\ext@toc}{atoc}%
+  \scr@ifundefinedorrelax{hypersetup}{}{% damit es auch ohne hyperref funktioniert
+    \hypersetup{bookmarkstype=atoc}
+  }%
+  % Falls die Abbildungen und Tabellen im Anhang mit im Abbildungs- bzw.
+  % Tabellenverzeichnis des Hauptteils erscheinen sollen, sind die folgenden
+  % zwei Zeilen auszukommentieren!
+  \renewcommand*{\ext@figure}{alof}%
+  \renewcommand*{\ext@table}{alot}%
+}
+\newcommand*{\usestandardtocs}{%
+  \renewcommand*{\ext@toc}{toc}%
+  \scr@ifundefinedorrelax{hypersetup}{}{% damit es auch ohne hyperref funktioniert
+    \hypersetup{bookmarkstype=toc}%
+  }%
+  \renewcommand*{\ext@figure}{lof}%
+  \renewcommand*{\ext@table}{lot}%
+}
+\scr@ifundefinedorrelax{ext@toc}{%
+  \newcommand*{\ext@toc}{toc}
+  \renewcommand{\addtocentrydefault}[3]{%
+    \expandafter\tocbasic@addxcontentsline\expandafter{\ext@toc}{#1}{#2}{#3}%
+  }
+}{}
+\makeatother
+
+% anpassen des appendix-Befehls, so dass Inhaltsverzeichnis des Anhangs an dieser Stelle eingefügt wird
+\usepackage{xpatch}
+\xapptocmd\appendix{%
+  \phantomsection
+  \addcontentsline{toc}{section}{\appendixname}
+  \useappendixtocs
+  \listofatocs % Inhaltsverzeichnis
+  \listofalofs % Verzeichnis der Abbildungen im Anhang
+  \listofalots % Verzeichnis der Tabellen im Anhang
+}{}{}
+

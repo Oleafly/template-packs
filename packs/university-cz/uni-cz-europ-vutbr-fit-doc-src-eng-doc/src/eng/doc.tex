@@ -1,0 +1,111 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[left=2cm,text={17cm,24cm},top=3cm]{geometry}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{url}
+\usepackage{float}
+\usepackage{comment}
+\usepackage{etoolbox}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{tocloft}
+
+\def\UrlBreaks{\do\/\do-\do\&\do=\do\_\do?} % URL breaking characters
+
+\newcommand{\red}[1]{\textcolor{red}{#1}} % \red{text in red}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}} % \blue{text in blue}
+\newcommand{\TODO}{\textbf{\textcolor{red}{TODO}}} % red bold TODO
+\newcommand{\tilda}{\raisebox{0.5ex}{\texttildelow}} % command \tilda for '~' character
+
+\graphicspath{{img/}} % path to images
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{} % do not create section for bibliography
+\hypersetup{
+    linktoc    = all,
+    colorlinks = true,
+    citecolor  = green,
+    linkcolor  = red,
+    urlcolor   = blue,
+}
+
+\begin{document}
+
+\begin{titlepage}
+
+    \begin{center}
+        % FIX: lines must end with '%', if not then it will result in an incorrect centering
+        \vfill {%
+            \Huge{%
+                \textsc{%
+                    Faculty of Information Technology\\[3mm]%
+                    Brno University of Technology%
+                }%
+            }%
+        }%
+
+        \hfill\\[15mm]
+
+        \begin{figure}[!h]
+            \centering
+            \includegraphics[scale=0.3]{vutbr-fit-logo.eps}
+        \end{figure}
+
+        \hfill\\[10mm]
+
+        \Huge{
+            \textbf{
+                ABC
+            }
+        }
+
+        \hfill\\[-10mm]
+
+        \huge{
+            \textbf{
+                Subject Name
+            }
+        }
+
+        \hfill\\[10mm]
+
+        \LARGE{
+            \textbf{
+                Document Title
+            }
+        }
+        \vfill
+
+    \end{center}
+
+        \Large{
+            \noindent Name Surname (xlogin00)\hfill \today
+        }
+
+\end{titlepage}
+
+\setlength{\parskip}{0pt}
+    {
+        \hypersetup{
+            hidelinks=true
+        }
+        \tableofcontents
+    }
+\setlength{\parskip}{0pt}
+
+\newpage
+
+\section{Section title}
+
+Section text\footnote{Text.} with cite~\cite{BOOK}.
+
+\newpage
+
+\section{References}
+\bibliographystyle{englishiso}
+\begin{flushleft}
+    \bibliography{quotation}
+\end{flushleft}
+
+\end{document}

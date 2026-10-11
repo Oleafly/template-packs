@@ -1,0 +1,27 @@
+\NeedsTeXFormat{pLaTeX2e}
+%%
+\newcommand{\circlenum}[1]{{\ooalign{\hfill$\scriptstyle#1$\hfill\crcr$\bigcirc$}}}%
+\newenvironment{newenumerate}
+  {%
+   \renewcommand{\theenumii}{\@arabic\c@enumii}
+   \renewcommand{\labelenumii}{\circlenum{\theenumii}}%
+   \renewcommand{\labelenumi}{(\theenumi)}
+   \ifnum \@enumdepth >\thr@@\@toodeep\else
+   \advance\@enumdepth\@ne
+   \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+   \list{\csname label\@enumctr\endcsname}{%
+      \iftdir
+         \ifnum \@listdepth=\@ne \topsep.5\normalbaselineskip
+           \else\topsep\z@\fi
+         \labelwidth1zw \labelsep.3zw
+         \ifnum \@enumdepth=\@ne \leftmargin1zw\relax
+           \else\leftmargin\leftskip\fi
+      \fi
+         \usecounter{\@enumctr}%
+         \parskip\z@ \itemsep\z@ \parsep\z@
+         \rightmargin\z@
+         \listparindent 10pt%
+         \itemindent\listparindent
+         \def\makelabel##1{\hss\llap{##1}}}%
+   \fi}{\endlist}
+%%

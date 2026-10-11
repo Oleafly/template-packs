@@ -1,0 +1,133 @@
+%%%%%%%%%% NJIT 南京工程学院latex模板 2025v1.0.4 %%%%%%%%%%
+%v1.0.1---按照最新要求调整了封面格式；优化了目录结构，使其更紧凑；增加学版权授权书，优化结构，方便使用
+%v1.0.2---加入字体文件，避免部分编译器不支持模板字体；合并工科/文科模板，便于自由选择封面，因此改为“南京工程学院毕业论文模板”
+%v1.0.3---添加研究生模板，优化排版布局，使其更紧凑
+%v1.0.4---添加研究生胶皮封面
+%%%%%%%%%% Azidiazide azide 3162572053@qq.com %%%%%%%%%%
+%%%%%%%%%% 请使用XeLaTeX进行编译 %%%%%%%%%%
+\documentclass[a4paper]{njit}
+\begin{document}
+
+%%%%%%%%%% 封面，页眉（工科|文科|硕士）选择 %%%%%%%%%%
+%封面见njit.cls 147行
+%页眉见njit.cls 41行
+%注意，硕士学位论文封面位于coverfront.tex，内容可以修改。由于documentclass只能声明一次，因此封面文件需要自行编译为coverfront.pdf
+\includepdf{coverfront.pdf} %插入胶皮封面
+%%%%%%%%%% 封面，页眉（工科|文科|硕士）选择 %%%%%%%%%%
+
+%%%%%%%%%% 封面 %%%%%%%%%%
+\cover
+{\LaTeX}                         % 作者
+{2025520}                        % 学号
+{南京工程学院}                     % 单位
+{化学化工学院}                     % 专业
+{电力系统非线性负载仿真分析}               % 题目
+{及其模拟发生装置研究}                    % 题目
+{NJIT \quad \LaTeX 模板}          % 指导者
+{}                               % 评阅者
+{二〇二五\hspace{0.4em}年\hspace{0.4em}七\hspace{0.4em}月} % 日期
+
+%\input{body/cover} %英文封面（硕士）
+%%%%%%%%%% 封面 %%%%%%%%%%
+
+
+%%%%%%%%%% 学位论文版权使用授权书 %%%%%%%%%%
+\input{body/shouquanye} %本科（二选一注释即可）
+%\input{body/shouquanyeshuoshi} %硕士
+\thesisdeclaration
+{张三}        % #1 作者
+{2025}        % #2 作者年
+{07}          % #3 作者月
+{15}          % #4 作者日
+{李四}        % #5 导师
+{2025}        % #6 导师年
+{07}          % #7 导师月
+{20}          % #8 导师日
+{二〇二五年七月二十五日} % #9 提交日期
+\newpage
+%%%%%%%%%% 学位论文版权使用授权书 %%%%%%%%%%
+
+
+%%%%%%%%%% 封面目录摘要 %%%%%%%%%%
+\pagestyle{plain}
+\pagenumbering{Roman} 
+\input{body/front.tex} %本科
+%\input{body/front2.tex} %研究生
+\pagestyle{fancy}
+%%%%%%%%%% 封面目录摘要 %%%%%%%%%%
+
+%%%%%%%%%% 正文 %%%%%%%%%%
+\input{body/intro.tex}
+\input{body/picture.tex}
+\input{body/table.tex}
+\input{body/section.tex}
+\input{body/other.tex}
+%%%%%%%%%% 正文 %%%%%%%%%%
+
+%%%%%%%%%% 参考文献 %%%%%%%%%%
+\clearpage
+\input{body/bib.tex}
+\clearpage
+%%%%%%%%%% 参考文献 %%%%%%%%%%
+
+%%%%%%%%%% 致谢 %%%%%%%%%%
+\thanking
+{
+  \begin{center}
+    \begin{minipage}{0.8\textwidth}
+        \centering
+        
+        感钟山紫气之氤氲，润我学术根苗；\\
+        谢天印湖波之澄澈，涤我思辨尘埃。\\
+        感匠石运斤之精微，铸我工程筋骨；\\
+        谢杏坛弦歌之绵长，启我智慧枢机。\\[0.5em]
+        
+        谢春风化雨之无声，沐我三载寒窗；\\
+        感星斗列张之有迹，引我万里云程。\\
+        谢同窗砥砺如金石，切磋以成利器；\\
+        感师道巍峨若方山，仰止而见峥嵘。\\[1em]
+        
+       \hfill \textcolor{gray}{——乙巳年季夏于天印湖}
+    \end{minipage}
+\end{center}
+}
+%%%%%%%%%% 致谢 %%%%%%%%%%
+
+%%%%%%%%%% 附录 %%%%%%%%%%
+\append{附录的具体内容（中文采用楷体小四号，英文采用Times New Roman小四，首行缩进2字符，1.5倍行距）}
+
+\begin{table}[H]
+    \centering
+    \caption{宏包罗列}
+    \vspace{-6pt}
+    \begin{tabular}{ccccc}
+        \toprule
+        \multicolumn{5}{c}{模板中已经加载的宏包} \\
+        \midrule
+        amsbsy & amsfonts & {amsgen} & {amsmath} & {amsopn} \\
+        amssymb & amstext & {appendix} & {array} & {atbegshi} \\
+        atveryend & auxhook & {bigdelim} & {bigintcalc} & {bigstrut} \\
+        bitset & bm    & {booktabs} & {calc} & {caption} \\
+        caption3 & CJKfntef & {cprotect} & {ctex} & {ctexhook} \\
+        ctexpatch & enumitem & {etexcmds} & {etoolbox} & {everysel} \\
+        expl3 & fix-cm & {fontenc} & {fontspec} & {fontspec-xetex} \\
+        geometry & gettitlestring & {graphics} & {graphicx} & {hobsub} \\
+        hobsub-generic & hobsub-hyperref & {hopatch} & {hxetex} & {hycolor} \\
+        hyperref & ifluatex & {ifpdf} & {ifthen} & {ifvtex} \\
+        ifxetex & indentfirst & {infwarerr} & {intcalc} & {keyval} \\
+        kvdefinekeys & kvoptions & {kvsetkeys} & {l3keys2e} & {letltxmacro} \\
+        listings & longtable & {lstmisc} & {ltcaption} & {ltxcmds} \\
+        multirow & nameref & {pdfescape} & {pdftexcmds} & {refcount} \\
+        rerunfilecheck & stringenc & {suffix} & {titletoc} & {tocloft} \\
+        trig  & ulem  & {uniquecounter} & {url} & {xcolor} \\
+        xcolor-patch & xeCJK & {xeCJKfntef} & {xeCJK-listings} & {xparse} \\
+        xtemplate & zhnumber &       &       &  \\
+        \bottomrule
+    \end{tabular}%
+    \label{tab:addlabel}%
+\end{table}%
+
+以上宏包都已经加载过了，不要重复加载它们。
+%%%%%%%%%% 附录 %%%%%%%%%%
+
+\end{document}

@@ -1,0 +1,288 @@
+%\ProvidesPackage{jbd17style}
+
+%%%% Load packages %%%%
+
+% For comprehensive documentation on any of the packages listed here,
+% look it up on https://ctan.org/ and select "User manual".
+
+% Enable utf8 encoding and T1 font encoding to support more special characters
+% (especially in different languages)
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ucs}
+\usepackage{textcomp} % Additional symbols
+% Use Latin Modern fonts to display the T1 font nicely
+\usepackage{lmodern}
+
+% Enable a bunch of typographical refinement, see https://www.khirevich.com/latex/microtype/
+\usepackage{microtype}
+
+% More mathematical typesetting features
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bm} % Bold symbols in maths mode
+\usepackage{amssymb}
+
+% Figure enhancements
+\usepackage{graphicx}
+\graphicspath{{figures/}} % Search for figures in the 'figures' folder
+\usepackage[export]{adjustbox} % Additional options for \includegraphics
+\usepackage{wrapfig} % Figures that text can wrap around
+
+% Generate lorem ipsum text
+\usepackage{lipsum}
+
+% Indent the first line of each paragraph
+\usepackage{indentfirst}
+
+% Double horizontal lines in tables situations
+\usepackage{hhline}
+
+% Add the bibliography, table of contents, etc to the table of contents
+\usepackage{tocbibind}
+
+% Typeset source code. See sections/appendices.tex for an example
+\usepackage{listings}
+
+% More control over the layout of enumerate and itemize
+\usepackage{enumitem}
+
+%%%% Useful tools %%%%
+
+%% Set up acronyms
+\usepackage{acronym}
+% Emphasise the acronym in the acronym list, see sections/acronym_list.tex for usage details
+\renewcommand*\acffont{\emph}
+\renewcommand*\acfsfont{\emph}
+
+%% Display chemical formulas with correct formatting,
+% example: \ch{Al2(SO4)3}
+\usepackage{chemformula}
+
+%% SI unit display, see "sections/example.tex" for usage.
+\usepackage{siunitx}
+\sisetup{separate-uncertainty}
+% better tilde character for uncertainty indication
+\newcommand{\goodtilde}{{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}}
+% You can define custom SI units here, for use in \qty calls.
+\DeclareSIUnit\pulse{\text{pulse}}
+\DeclareSIUnit\perpulse{\text{/pulse}}
+\DeclareSIUnit\fluence{\micro\joule\per\centi\meter\squared\per\pulse}
+
+%%%% Useful environments %%%%
+
+%% Outline environment
+% Makes an itemize that's blue, for writing out section outlines
+\newenvironment{outline}{\begin{itemize}\color{blue}}{\end{itemize}}
+% Also define outlineDone, which doesn't render the environment contents to the final document. Useful for keeping the outlines in the source, but not in the thesis.
+\usepackage{scontents}
+\newenvsc{outlineDone}[store-env=forshort,print-env=false]
+% See sections/example.tex for example usage
+
+%% Originality statement environment for the beginning of a chapter, see sections/example.tex
+\newenvironment{originality}{\vspace{-2.7em}\small}{
+	\par
+	\color{dark}
+	\noindent\rule{\textwidth}{0.5pt}
+	\vspace{-.7em}
+}
+
+%%%% Style settings %%%%
+
+% Set line spread. Note that this is not the same as the line spacing in Word.
+% See https://tex.stackexchange.com/questions/65849/confusion-onehalfspacing-vs-spacing-vs-word-vs-the-world
+% I think 1.5 looks good, and it's equivalent to maybe 1.75 in Word units?
+\usepackage{setspace}
+\linespread{1.5}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+%% Set up colours
+% I mostly use a blue colour scheme, adapted from the old Imperial logo's blue. Feel free to change it!
+\usepackage[]{xcolor}
+\definecolor{blue}{RGB}{13,71,161}
+\definecolor{dark}{RGB}{0,60,112}
+\definecolor{darker}{RGB}{0,40,74}
+\definecolor{blackish}{RGB}{50,50,50}
+\colorlet{defaultcolor}{.}
+% Also tested 0 30 55, which was a bit too bright
+
+%% Style section titles to use the colours defined above
+\usepackage{sectsty}
+\sectionfont{\color{darker}}
+\subsectionfont{\color{darker}}
+\subsubsectionfont{\color{darker}}
+
+%% Set up hyperlinks
+% hidelinks doesn't show the coloured boxes around all links, instead we change the link colour below
+\usepackage[hidelinks, pdfa]{hyperref}
+% Change link colours
+\makeatletter % This command lets us use LaTeX commands that contain "@"s, which is normally disabled as a protection
+\hypersetup{
+	colorlinks=true,
+	linkcolor=dark,
+	citecolor=dark,
+	urlcolor=dark,
+	pdftitle=\@title
+}
+\makeatother
+
+%% Set up caption styles
+% to have nice margins and a slightly different font colour
+\usepackage[margin={0cm,0.4cm}, oneside, indention=.4cm, labelfont={sc,color=darker}, textfont={small,color=blackish}]{caption}
+
+%% Set up citations
+% The default citation should be in the superscript
+\usepackage[superscript, nomove]{cite}
+% I would also like the superscript citations to include square brackets
+\makeatletter
+\renewcommand{\@citess}[1]{\textsuperscript{[#1]}}
+\makeatother
+% Add \citein as a command to quickly get a square-bracketed inline citation
+\newcommand{\citein}[1]{[\citen{#1}]}
+
+%% Make Table numbers sequential with Figure numbers
+% You may want to change this if you have many tables, I only had one so it felt silly to count it separately
+\makeatletter
+\let\c@table\c@figure
+\let\ftype@table\ftype@figure
+\makeatother
+
+%% Set up geometry
+% including even margins all around
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm, includehead, nomarginpar]{geometry}
+
+%% Adjust spacing in the list of figures to account for double-digit figure numbers
+% https://tex.stackexchange.com/a/87027
+% https://latexref.xyz/_005c_0040dottedtocline.html
+\makeatletter
+\renewcommand*\l@figure{\@dottedtocline{1}{1em}{2.9em}}
+\makeatother
+
+%% Set up headers and footers
+\usepackage{fancyhdr}
+
+% Set the default page style to "fancy", and then modify said style below
+\pagestyle{fancy}
+% Clear the default footer
+\fancyfoot{}
+% Add a centred page number with some nice lines
+\cfoot{\color{dark}\rule[3.5pt]{1em}{0.5pt}~~\color{darker}\thepage~~\color{dark}\rule[3.5pt]{1em}{0.5pt}}
+% Clear the default header
+\fancyhead{}
+% Add the chapter and section names to the headers
+% Adjust here if you want to add your name or something like that
+\fancyhead[OR]{\color{darker}\rightmark}
+\fancyhead[EL]{\color{darker}\leftmark}
+% Adjust some parameters for the horizontal header line
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand\headrule{%
+	\nointerlineskip
+	\smash{\color{dark}\rule{\headwidth}{\headrulewidth}}%
+}
+
+% Define a page style without a header
+% Use this with \thispagestyle{plainheadline}
+\fancypagestyle{plainheadline}{%
+	\fancyhf{}%
+	\renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[C]{\color{dark}\rule[3.5pt]{1em}{0.5pt}~~\color{darker}\thepage~~\color{dark}\rule[3.5pt]{1em}{0.5pt}}
+}
+
+%% Chapter title format
+% You can include a pdf in `figures/_headers/` with a name matching the chapter number/letter (eg. 1.pdf or A.pdf) to use it as a small header image. `default.pdf` gets used by default if present.
+\usepackage{titlesec}
+\titleformat
+{\chapter} % command to modify
+[display] % shape
+{\centering\LARGE\color{darker}\bfseries\linespread{1}} % format of the heading
+{
+	\vspace{-6.05em}
+	\rule{\textwidth}{0.pt}
+	\IfFileExists{figures/_headers/\thechapter.pdf}%test for header image
+	{% true
+		\vspace{-0.6em}
+		\includegraphics[width=1.5in]{_headers/\thechapter.pdf}\\
+	}
+	{% false
+		\IfFileExists{figures/_headers/default.pdf}
+		{
+			\vspace{-0.6em}
+			\includegraphics[width=1.5in]{_headers/default.pdf}\\
+		}
+		{}
+	}
+	\chaptername~\thechapter
+} % chapter label
+{0.5ex} % sep
+{
+	\Huge
+} % before label
+[
+	\vspace{-0.2em}
+	\color{dark}
+	\rule{\textwidth}{0.5pt}
+] % after label
+
+%% Epigraph styling, for the quote in the Acknowledgments
+\usepackage{epigraph}
+% Change the width of the epigrah here
+\setlength{\epigraphwidth}{0.8\textwidth}
+\renewcommand{\textflush}{flushepinormal}
+\setlength{\beforeepigraphskip}{-\baselineskip}
+\setlength{\afterepigraphskip}{2\baselineskip}
+\setlength{\epigraphrule}{0.5pt}
+% Modify the horizontal epigraph line to match the header one
+\makeatletter
+\renewcommand{\@epirule}{\color{dark}\rule[1ex]{\epigraphwidth}{\epigraphrule}}
+\makeatother
+
+%%%% Decorations %%%%
+% Little decorations that can be used in the text
+% (primarily for marking outline items as done, see "sections/example.tex")
+
+\usepackage{tikz}
+% Define command name, in this case \checkmark
+\def\checkmark{
+	% tikz commands to draw the image
+	\tikz\fill[scale=0.5](0,.55) -- (.25,0.2) -- (1,.9) -- (.25,.35) -- cycle;
+}
+\def\notion{
+	\def \globalscale {.17}
+	% I've used https://github.com/xyz2tex/svg2tikz to generate these from .svg drawings
+	\begin{tikzpicture}[yscale=\globalscale,xscale=\globalscale, every node/.append style={scale=\globalscale}, inner sep=0pt, outer sep=0pt, baseline=0.9pt]
+		\path[fill,even odd rule] (1.6232, 2.6398) -- (0.1592, 2.5317).. controls (0.0411, 2.5215) and (0.0, 2.4443) .. (0.0, 2.3518) -- (0.0, 0.7468).. controls (0.0, 0.6748) and (0.0256, 0.6131) .. (0.0873, 0.5308) -- (0.4315, 0.0833).. controls (0.488, 0.0112) and (0.5394, -0.0042) .. (0.6474, 0.0009) -- (2.3475, 0.1038).. controls (2.4912, 0.1141) and (2.5324, 0.181) .. (2.5324, 0.2941) -- (2.5324, 2.0997).. controls (2.5324, 2.1582) and (2.5093, 2.1751) .. (2.4413, 2.225) -- (1.9623, 2.5627).. controls (1.8493, 2.6449) and (1.8031, 2.6553) .. (1.6232, 2.6399) -- cycle(0.6858, 2.1293).. controls (0.547, 2.1199) and (0.5155, 2.1178) .. (0.4366, 2.1819) -- (0.2362, 2.3414).. controls (0.2158, 2.362) and (0.2261, 2.3878) .. (0.2774, 2.3929) -- (1.6848, 2.4957).. controls (1.803, 2.5061) and (1.8645, 2.4649) .. (1.9107, 2.4289) -- (2.1521, 2.254).. controls (2.1624, 2.2488) and (2.1881, 2.218) .. (2.1572, 2.218) -- (0.7038, 2.1305) -- (0.6858, 2.1293) -- cycle(0.524, 0.3096) -- (0.524, 1.8424).. controls (0.524, 1.9093) and (0.5445, 1.9402) .. (0.6061, 1.9454) -- (2.2754, 2.0431).. controls (2.332, 2.0482) and (2.3576, 2.0122) .. (2.3576, 1.9454) -- (2.3576, 0.4228).. controls (2.3576, 0.3559) and (2.3473, 0.2992) .. (2.2549, 0.2941) -- (0.6574, 0.2015).. controls (0.565, 0.1964) and (0.524, 0.2272) .. (0.524, 0.3096) -- cycle;
+		\path[fill,even odd rule] (2.1009, 1.7602).. controls (2.1111, 1.7139) and (2.1009, 1.6676) .. (2.0546, 1.6623) -- (1.9776, 1.647) -- (1.9776, 0.5153).. controls (1.9107, 0.4793) and (1.8492, 0.4588) .. (1.7977, 0.4588).. controls (1.7155, 0.4588) and (1.695, 0.4845) .. (1.6334, 0.5616) -- (1.1299, 1.3538) -- (1.1299, 0.5874) -- (1.2892, 0.5513).. controls (1.2892, 0.5513) and (1.2892, 0.4587) .. (1.1607, 0.4587) -- (0.8064, 0.4381).. controls (0.7961, 0.4588) and (0.8064, 0.5102) .. (0.8423, 0.5204) -- (0.9349, 0.5461) -- (0.9349, 1.5595) -- (0.8065, 1.5699).. controls (0.7961, 1.6162) and (0.8218, 1.683) .. (0.8938, 1.6882) -- (1.2739, 1.7138) -- (1.7978, 0.9114) -- (1.7978, 1.6213) -- (1.6642, 1.6366).. controls (1.6539, 1.6933) and (1.695, 1.7345) .. (1.7463, 1.7395) -- (2.1009, 1.7602) -- cycle;
+	\end{tikzpicture}
+}
+\def\paper{
+	\def \globalscale {.17}
+	\begin{tikzpicture}[yscale=\globalscale,xscale=\globalscale, every node/.append style={scale=\globalscale}, inner sep=0pt, outer sep=0pt, baseline=0.9pt]
+		\path[draw,line cap=round,line join=round,line width=0.043cm] (0.4291, 2.5743) -- (1.5339, 2.5743) -- (2.2168, 1.8914) -- (2.2168, 0.0715) -- (0.4291, 0.0715) -- cycle;
+		\path[draw,line cap=round,line join=round,line width=0.043cm] (1.5339, 2.5743) -- (1.5339, 1.8914) -- (2.2168, 1.8914);
+	\end{tikzpicture}
+}
+\def\globe{
+	\def \globalscale {.17}
+	\begin{tikzpicture}[yscale=\globalscale,xscale=\globalscale, every node/.append style={scale=\globalscale}, inner sep=0pt, outer sep=0pt, baseline=0.9pt]
+		\path[draw,line cap=round,line join=round,line width=0.023cm] (0.0768, 1.3229) -- (2.569, 1.3229);
+		\path[draw,line join=round,line width=0.023cm] (2.569, 1.3229)arc(0.0:90.0:1.2461 and -1.2461)arc(90.0:180.0:1.2461 and -1.2461)arc(180.0:270.0:1.2461 and -1.2461)arc(-90.0:0.0:1.2461 and -1.2461) -- cycle;
+		\path[draw,line cap=round,line join=round,line width=0.023cm] (1.3229, 2.569) -- (1.3229, 0.0768);
+		\path[draw,line cap=round,line join=round,line width=0.023cm] (1.3229, 2.569).. controls (2.3544, 2.022) and (2.2875, 0.534) .. (1.3229, 0.0768);
+		\path[draw,line cap=round,line join=round,line width=0.023cm] (1.3229, 2.569).. controls (0.2914, 2.022) and (0.3583, 0.534) .. (1.3229, 0.0768);
+		\path[draw,line join=round,line width=0.023cm] (0.4058, 2.1665).. controls (1.0172, 1.9285) and (1.6286, 1.9285) .. (2.24, 2.1665);
+		\path[draw,line join=round,line width=0.023cm] (0.4058, 0.4793).. controls (1.0172, 0.7173) and (1.6286, 0.7173) .. (2.24, 0.4793);
+	\end{tikzpicture}
+}
+\def\progress{
+	\def \globalscale {.17}
+	\begin{tikzpicture}[yscale=\globalscale,xscale=\globalscale, every node/.append style={scale=\globalscale}, inner sep=0pt, outer sep=0pt, baseline=0.9pt]
+		\path[draw,line join=round,line width=0.0524cm] (2.2318, 2.5475).. controls (2.2318, 1.9291) and (1.8249, 1.4277) .. (1.3229, 1.4277).. controls (0.821, 1.4277) and (0.414, 1.9291) .. (0.414, 2.5475) -- cycle;
+		\path[draw,line join=round,line width=0.0524cm] (2.2318, 0.0768).. controls (2.2318, 0.6953) and (1.8249, 1.1966) .. (1.3229, 1.1966).. controls (0.821, 1.1966) and (0.414, 0.6953) .. (0.414, 0.0768) -- cycle;
+		\path[fill,line join=round,line width=0.043cm] (1.1061, 1.4689) rectangle (1.5397, 1.1724);
+		\path[fill,line join=round,line width=0.0768cm] (0.2803, 2.6458) rectangle (2.3656, 2.4492);
+		\path[fill,line join=round,line width=0.0768cm] (0.2803, 0.1967) rectangle (2.3656, -0.0);
+		\path[fill,line join=round,line width=0.0524cm] (2.1604, 2.1116).. controls (2.1144, 1.9777) and (2.0478, 1.857) .. (1.9656, 1.7557).. controls (1.8011, 1.5531) and (1.5739, 1.4277) .. (1.3229, 1.4277).. controls (1.0719, 1.4277) and (0.8447, 1.5531) .. (0.6802, 1.7557).. controls (0.598, 1.857) and (0.5315, 1.9777) .. (0.4855, 2.1116).. controls (0.4395, 2.2456) and (2.2064, 2.2456) .. (2.1604, 2.1116) -- cycle;
+		\path[draw,line join=round,line width=0.043cm] (1.3229, 1.3229) -- (1.3229, 0.1967);
+	\end{tikzpicture}
+}

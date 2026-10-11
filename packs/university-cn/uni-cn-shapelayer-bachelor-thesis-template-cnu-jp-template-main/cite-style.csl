@@ -1,0 +1,196 @@
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="ko-KR">
+  <info>
+    <title>Citation Style used in Bachelor's Thesis at Department of Japanese Language and Literature</title>
+    <id>cnu-japanese-literature-thesis</id>
+    <author>
+      <name>Jonghyeon Park</name>
+    </author>
+    <category citation-format="author-date"/>
+    <updated>2026-06-18T00:00:00+00:00</updated>
+  </info>
+  
+  <locale xml:lang="ko">
+    <terms>
+      <term name="page" form="short">:</term>
+    </terms>
+  </locale>
+
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" and="text" delimiter=", "/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text variable="title" form="short"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="issued-year">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="page-label">
+    <choose>
+      <if variable="page">
+        <choose>
+          <if position="first">
+            <text value="p."/>
+          </if>
+        </choose>
+      </if>
+    </choose>
+  </macro>
+
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-year-suffix="true">
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <choose>
+        <if type="book">
+          <group delimiter=" ">
+            <text macro="author-short"/>
+            <text macro="issued-year"/>
+            <choose>
+              <if variable="locator">
+                <group>
+                  <label variable="locator" form="short" suffix=" "/>
+                  <text variable="locator"/>
+                </group>
+              </if>
+              <else-if variable="page">
+                <group>
+                  <label variable="page" form="short" suffix=" "/>
+                  <text variable="page"/>
+                </group>
+              </else-if>
+            </choose>
+          </group>
+        </if>
+        <else-if type="article-journal article-newspaper article-magazine">
+          <group delimiter=" ">
+            <text macro="author-short"/>
+            <text macro="issued-year"/>
+          </group>
+        </else-if>
+        <else>
+          <group delimiter=" ">
+            <text macro="author-short"/>
+            <text macro="issued-year"/>
+            <group>
+              <label variable="locator" form="short" suffix=" "/>
+              <text variable="locator"/>
+            </group>
+          </group>
+        </else>
+      </choose>
+    </layout>
+  </citation>
+
+  <bibliography et-al-min="3" et-al-use-first="1">
+    <layout>
+      <choose>
+        <if type="article-journal">
+          <group suffix=".">
+            <names variable="author">
+              <name and="text" delimiter=", " name-as-sort-order="first"/>
+              <substitute>
+                <names variable="editor"/>
+                <names variable="translator"/>
+              </substitute>
+            </names>
+            <text value="(" prefix=""/>
+            <date variable="issued">
+              <date-part name="year"/>
+            </date>
+            <text value=") 「"/>
+            <text variable="title"/>
+            <text value="」, 『"/>
+            <text variable="container-title"/>
+            <text value="』, "/>
+            <text variable="volume"/>
+            <text value=", "/>
+            <text variable="publisher"/>
+            <text value=", "/>
+            <choose>
+              <if variable="page">
+                <choose>
+                  <if is-numeric="page">
+                    <choose>
+                      <if variable="page">
+                        <text value="p."/>
+                      </if>
+                    </choose>
+                  </if>
+                </choose>
+                <text variable="page"/>
+              </if>
+            </choose>
+          </group>
+        </if>
+        <else-if type="book">
+          <group suffix=".">
+            <names variable="author">
+              <name and="text" delimiter=", " name-as-sort-order="first"/>
+              <substitute>
+                <names variable="editor"/>
+                <names variable="translator"/>
+              </substitute>
+            </names>
+            <text value="(" prefix=""/>
+            <date variable="issued">
+              <date-part name="year"/>
+            </date>
+            <text value=") 『"/>
+            <text variable="title"/>
+            <text value="』"/>
+            <choose>
+              <if variable="translator">
+                <text value=", "/>
+                <names variable="translator">
+                  <name and="text" delimiter=", " name-as-sort-order="first"/>
+                </names>
+                <text value=" 역"/>
+                <text value="("/>
+                <date variable="issued">
+                  <date-part name="year"/>
+                </date>
+                <text value=")"/>
+              </if>
+            </choose>
+            <text value=", "/>
+            <text variable="publisher"/>
+            <text value=", "/>
+            <choose>
+              <if variable="page">
+                <text value="pp."/>
+                <text variable="page"/>
+              </if>
+            </choose>
+          </group>
+        </else-if>
+        <else>
+          <group delimiter=". " suffix=".">
+            <names variable="author">
+              <name and="text" delimiter=", " name-as-sort-order="first"/>
+              <label form="short" prefix=" (" suffix=")"/>
+              <substitute>
+                <names variable="editor"/>
+                <names variable="translator"/>
+              </substitute>
+            </names>
+            <text variable="title"/>
+            <text variable="container-title"/>
+            <group delimiter=", ">
+              <text variable="publisher"/>
+              <date variable="issued">
+                <date-part name="year"/>
+              </date>
+              <text variable="page"/>
+            </group>
+          </group>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>

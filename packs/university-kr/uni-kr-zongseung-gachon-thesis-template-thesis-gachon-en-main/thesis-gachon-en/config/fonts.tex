@@ -1,0 +1,84 @@
+% ==========================================================
+% Font configuration
+% ==========================================================
+%
+% The English guideline requires Times New Roman for headings
+% and body text. This file now prefers the required font first
+% and only falls back when the font is unavailable locally.
+
+\defaultfontfeatures{Ligatures=TeX}
+
+% ----------------------------------------------------------
+% English main font — prefer Times New Roman
+% ----------------------------------------------------------
+% Priority:
+%   1) Uploaded Times New Roman files in ./fonts/
+%   2) System-installed Times New Roman
+%   3) TeX Gyre Termes as the last-resort fallback
+\IfFileExists{./fonts/times.ttf}{%
+  \setmainfont{Times New Roman}[
+    Path=./fonts/,
+    Extension=.ttf,
+    UprightFont=times,
+    BoldFont=timesbd,
+    ItalicFont=timesi,
+    BoldItalicFont=timesbi
+  ]%
+}{%
+  \IfFontExistsTF{Times New Roman}{%
+    \setmainfont{Times New Roman}%
+  }{%
+    \setmainfont{TeX Gyre Termes}%
+    \PackageWarningNoLine{gachon-thesis-en}{Times New Roman was not found. Falling back to TeX Gyre Termes. Install Times New Roman or upload times.ttf/timesbd.ttf/timesi.ttf/timesbi.ttf for guideline compliance}%
+  }%
+}
+
+% ----------------------------------------------------------
+% Korean abstract font — prefer Myeongjo-style fonts
+% ----------------------------------------------------------
+% Priority:
+%   1) Uploaded HCR Batang files in ./fonts/
+%   2) System-installed Myeongjo fonts
+%   3) kotex default font as the last resort
+\newcommand{\GachonENSetHangulFontFallback}{%
+  \IfFontExistsTF{HY신명조}{%
+    \setmainhangulfont{HY신명조}%
+  }{%
+    \IfFontExistsTF{HYSMyeongJo}{%
+      \setmainhangulfont{HYSMyeongJo}%
+    }{%
+      \IfFontExistsTF{HYShinMyeongJo-Medium}{%
+        \setmainhangulfont{HYShinMyeongJo-Medium}%
+      }{%
+        \IfFontExistsTF{AppleMyungjo}{%
+          \setmainhangulfont{AppleMyungjo}%
+        }{%
+          \IfFontExistsTF{Batang}{%
+            \setmainhangulfont{Batang}%
+          }{%
+            \IfFontExistsTF{HCR Batang}{%
+              \setmainhangulfont{HCR Batang}%
+            }{%
+              \IfFontExistsTF{NanumMyeongjo}{%
+                \setmainhangulfont{NanumMyeongjo}[BoldFont={NanumMyeongjo ExtraBold}]%
+              }{%
+                \PackageWarningNoLine{gachon-thesis-en}{No Myeongjo-style Hangul font was found for the Korean abstract. kotex default font will be used. Upload HANBatang.ttf/HANBatangB.ttf or install a Myeongjo font for submission}%
+              }%
+            }%
+          }%
+        }%
+      }%
+    }%
+  }%
+}
+
+\IfFileExists{./fonts/HANBatang.ttf}{%
+  \setmainhangulfont{HCR Batang}[
+    Path=./fonts/,
+    Extension=.ttf,
+    UprightFont=HANBatang,
+    BoldFont=HANBatangB
+  ]%
+}{%
+  \GachonENSetHangulFontFallback
+}

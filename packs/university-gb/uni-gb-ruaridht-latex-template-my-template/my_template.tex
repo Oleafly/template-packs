@@ -1,0 +1,107 @@
+%%%%%%%%%%%%%%%
+% Latex template for report writing
+% 	author: Ruaridh Thomson
+% 	source: github.com/ruaridht/latex_template
+%
+% Largely influenced from:
+%   author: Alex Shearn
+%   source: github.com/shearn89/latex_template
+%
+% NOTES:
+% >>>> Compile with XeLaTex and Bibtex <<<<
+% 
+% This was written on a Mac using Texpad.
+%%%%%%%%%%%%%%%
+
+% Setting up the document
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{appendix}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{fontspec}
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\usepackage{setspace} % For the line spacing
+\usepackage[margin=10pt,small,bf]{caption}
+\usepackage[top=1.5in, bottom=1.5in, left=1in, right=1in]{geometry}
+
+\sloppy         % better line breaks
+
+%% VARIABLES
+%% Change these for your report
+\def\thepretitle{Example Course}
+\def\themaintitle{Practical Title}
+\def\thesubtitle{Example Course Practical 01}
+\def\firstname{Student Number}
+\def\lastname{Should be anonymous}
+
+% end of settable variables. HEAD ON DOWN TO LINE 84 where the stuff starts.
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % required for title page.
+
+%
+% DOCUMENT STARTS
+%
+\begin{document}
+
+% TITLE PAGE
+\begin{titlepage}
+\begin{center}
+% Upper part of the page
+\includegraphics[width=0.3\textwidth]{styles/sta-logo.png}\\[2cm]
+\textsc{\LARGE \thepretitle}\\[1.5cm]
+
+% Title
+\HRule \\[0.4cm]
+{ \huge \bfseries \themaintitle}\\[0.5cm]
+{ \large \bfseries \thesubtitle}\\
+\HRule \\[1.5cm]
+
+\emph{Author:}\\ % start of team list, 2 minipages for placement
+
+\firstname\textsc{ \lastname}\\
+
+\vfill
+
+% Bottom of the page
+{\large \today}
+
+\end{center}
+\end{titlepage}
+% END TITLE PAGE
+
+\columnsep 10truemm
+
+% Choose column layout
+%\twocolumn
+\onecolumn
+\singlespacing %\onehalfspacing
+
+% Preamble
+\tableofcontents
+\pagebreak
+
+% Sections - Write your sections in a separate file and
+%            include it here.
+% We use '\input' here to avoid a new page. If you want a
+% new page for each section, use '\include'.
+\input{sections/introduction}
+\input{sections/cool_story}
+\input{sections/conclusion}
+
+% Appendices
+\onecolumn
+\newpage
+\addcontentsline{toc}{section}{Appendices}
+\appendix
+\appendixpage
+
+% Bibliography
+\newpage
+%\bibliographystyle{apalike}
+\bibliographystyle{plain}
+\addcontentsline{toc}{section}{References} 
+\bibliography{refs/bibliography}
+
+\end{document}

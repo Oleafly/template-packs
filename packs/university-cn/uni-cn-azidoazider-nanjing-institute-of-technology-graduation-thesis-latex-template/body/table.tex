@@ -1,0 +1,155 @@
+\section{绘制普通三线表格}
+
+表格应具有三线表格式，因此常用 booktabs宏包，其标准格式如\cref{tab:001}~所示。
+
+\begin{table}[H]
+    \caption{标准三线表格}\label{tab:001} \centering
+    \vspace{-6pt}
+    \begin{tabular}{ccccc}
+        \toprule[1.5pt]
+        $D$(in) & $P_u$(lbs) & $u_u$(in) & $\beta$ & $G_f$(psi.in)\\
+        \midrule[1pt]
+        5 & 269.8 & 0.000674 & 1.79 & 0.04089\\
+        10 & 421.0 & 0.001035 & 3.59 & 0.04089\\
+        20 & 640.2 & 0.001565 & 7.18 & 0.04089\\
+        \bottomrule[1.5pt]
+    \end{tabular}
+\end{table}
+
+其绘制表格的代码及其说明如下。
+\begin{tcode}
+    \begin{table}[!htbp]
+        \caption[标签名]{中文标题}
+        \begin{tabular}{cc...c}
+            \toprule[1.5pt]
+            表头第1个格   & 表头第2个格   & ... & 表头第n个格  \\
+            \midrule[1pt]
+            表中数据(1,1) & 表中数据(1,2) & ... & 表中数据(1,n)\\
+            表中数据(2,1) & 表中数据(2,2) & ... & 表中数据(2,n)\\
+            ...................................................\\
+            表中数据(m,1) & 表中数据(m,2) & ... & 表中数据(m,n)\\
+            \bottomrule[1.5pt]
+        \end{tabular}
+    \end{table}
+\end{tcode}
+
+\bigskip
+
+table环境是一个将表格嵌入文本的浮动环境。tabular环境的必选参数由每列对应一个格式字符所组成：c表示居中，l表示左对齐，r表示右对齐，其总个数应与表的列数相同。此外，\verb|@{文本}|可以出现在任意两个上述的列格式之间，其中的文本将被插入每一行的同一位置。表格的各行以\verb|\\|分隔，同一行的各列则以\&分隔。 \verb|\toprule| 、\verb|\midrule| 和 \verb|\bottomrule| 三个命令是由booktabs宏包提供的，其中 \verb|\toprule| 和 \verb|\bottomrule| 分别用来绘制表格的第一条（表格最顶部）和第三条（表格最底部）水平线， \verb|\midrule| 用来绘制第二条（表头之下）水平线，且第一条和第三条水平线的线宽为 1.5pt ，第二条水平线的线宽为 1pt 。引用方法与图片的相同。
+
+这里笔者给出常见用法，以供参考。
+
+\begin{table}[H]
+    \caption{符号说明}
+    \vspace{-6pt}
+    \centering
+    \begin{tabularx}{0.9\textwidth}{c| >{\raggedright\arraybackslash}X}
+        \toprule[1.5pt]
+        \textbf{符号} & \textbf{内容说明} \\
+        \midrule[1pt]
+      
+        $\epsilon_\mathrm{tol}$ & 算法误差容限 \\
+        $\mathbf{a}_\odot^\mathrm{tidal}$ & 太阳引潮力项，按二阶梯度展开计算 \\
+        $E$ & 偏近点角，通过牛顿迭代法求解开普勒方程 \\
+        $\mathbf{\hat{P}},\mathbf{\hat{Q}}$ & 轨道面正交基向量，由$(\Omega,\omega,i)$计算 \\
+        $\mathbf{k}_1,\mathbf{k}_2,...\mathbf{k}_{13}$ & 算法中间系数，对应13次函数估值 \\
+        $B_{\mathrm{eff}}$ & 有效摄动阶数 \\
+        \bottomrule[1.5pt]
+    \end{tabularx}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\caption{2028 Olympic Medal Predictions (Top 14 Countries by Total Score)}
+\vspace{-6pt} 
+\label{tab:top14_medals}
+\begin{tabular}{l|ccc|c} % 修正：5列（1左对齐 + 4居中对齐）
+\toprule
+\textbf{Country} & \textbf{Gold} & \textbf{Silver} & \textbf{Bronze} & \textbf{Total Score} \\
+\midrule
+United States         & 40.0 (38.0--46.3) & 40.4 (38.4--44.0) & 33.9 (32.2--42.0) & 112.0  \\
+China                 & 36.7 (34.9--40.0) & 27.0 (25.6--30.4) & 24.0 (22.8--31.5) & 90.8    \\
+Great Britain         & 17.1 (16.2--30.7) & 22.8 (21.7--28.5) & 26.6 (25.3--30.5) & 67.3     \\
+Russia                & 14.3 (13.6--23.6) & 18.1 (17.2--20.9) & 20.9 (19.9--20.1) & 55.7    \\
+France                & 12.1 (11.5--25.3) & 13.3 (12.6--26.0) & 21.2 (20.1--22.0) & 47.0    \\
+Australia             & 12.1 (11.5--22.6) & 14.4 (13.7--19.4) & 16.2 (15.4--16.5) & 46.7    \\
+Japan                 & 13.1 (12.4--20.5) & 14.9 (14.2--19.0) & 15.3 (14.5--17.0) & 45.0     \\
+Italy                 & 12.1 (11.5--16.4) & 13.0 (12.3--13.6) & 17.4 (16.5--20.8) & 40.2     \\
+Germany               & 12.1 (11.5--19.8) & 12.8 (12.2--18.7) & 13.4 (12.7--16.4) & 33.2     \\
+Netherlands           & 7.1 (6.7--15.0)   & 8.0 (7.6--11.4)   & 12.8 (12.2--16.3) & 30.8     \\
+South Korea           & 7.7 (7.3--13.0)   & 7.9 (7.5--9.5)    & 9.8 (9.3--10.9)   & 29.0    \\
+New Zealand           & 4.5 (4.3--10.0)   & 5.9 (5.6--9.7)    & 5.8 (5.5--10.3)   & 20.1     \\
+Brazil                & 4.8 (4.6--11.1)   & 6.1 (5.8--9.1)    & 7.4 (7.0--11.3)   & 20.0     \\
+Canada                & 5.4 (5.1--10.2)   & 5.6 (5.3--7.3)    & 8.2 (7.8--11.0)   & 19.2    \\
+\bottomrule
+\end{tabular}
+\smallskip
+\vspace{2pt}
+\footnotesize \textit{Note: Values are formatted as "median (confidence interval)". Countries are ranked by total score median.}
+\end{table}
+
+
+\begin{algorithm}[H]
+\caption{预测误差与观测时间算法}
+\label{alg:propagation}
+\begin{algorithmic}[1]
+\Require 
+\Statex 初始轨道参数 $\mathbf{X}_0 \in \mathbb{R}^6$ (含误差协方差$\mathbf{P}_0$)
+\Statex 摄动力模型 $\mathcal{M}$ (含J2至J6项、日月摄动、太阳光压等)
+\Ensure
+\Statex 位置误差统计量 $\mu_{\epsilon},\sigma_{\epsilon} \in \mathbb{R}^3$
+
+\Procedure{误差传播分析}{$\mathbf{X}_0, \mathbf{P}_0, T_{max}$}
+\State \textbf{步骤1：建立参考轨道}
+\State 生成精密星历轨迹：
+\quad $\mathbf{X}_{ref}(t) \gets \text{SPICE\_ephem}(t), t\in[0,T_{max}]$
+\State 构造变分方程：
+\quad $\frac{d}{dt}\Phi(t,0) = \mathbf{A}(t)\Phi(t,0)$
+
+\State \textbf{步骤2：参数扰动采样}
+\State 分解协方差矩阵：$\mathbf{P}_0 = \mathbf{L}\mathbf{L}^\top$ 
+\For{$k=1$ \textbf{to} $N_{MC}$}
+    \State 生成随机扰动：$\delta\mathbf{X}_k \gets \mathbf{L}\mathbf{z}_k,\ \mathbf{z}_k \sim \mathcal{N}(0,1)$
+    \State 样本轨道参数：$\mathbf{X}_k^{(0)} \gets \mathbf{X}_0 + \delta\mathbf{X}_k$
+\EndFor
+
+\State \textbf{步骤3：轨道传播计算}
+\For{$k=1$ \textbf{to} $N_{MC}$ \textbf{并行执行}}
+    \State 数值积分轨道：
+    \quad $\mathbf{X}_k(t) \gets \text{RK78}(\mathbf{X}_k^{(0)}, \mathcal{M}, T_{max})$
+    \State 记录位置偏差：
+    \quad $\Delta\mathbf{r}_k(t) \gets \mathbf{r}_k(t) - \mathbf{r}_{ref}(t)$
+\EndFor
+
+\State \textbf{步骤4：统计误差分布}
+\State 计算时刻$t_j$的统计量：
+\begin{align*}
+\mu_{\epsilon}(t_j) &= \frac{1}{N_{MC}}\sum_{k=1}^{N_{MC}} \Delta\mathbf{r}_k(t_j) \\
+\sigma_{\epsilon}^2(t_j) &= \frac{1}{N_{MC}-1}\sum_{k=1}^{N_{MC}} \|\Delta\mathbf{r}_k(t_j) - \mu_{\epsilon}\|^2
+\end{align*}
+\State \Return $\{\mu_{\epsilon}(t_j), \sigma_{\epsilon}(t_j)\}_{j=1}^M$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{table}[H]
+\centering
+\caption{Non-awarded Country}
+\vspace{-6pt} 
+\label{tab2}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline
+BIZ & MAL & OMA & PLE & ESA & UNK & CAM & RWA \\ \hline
+VNM & KIR & SOL & SWZ & MAW & HON & GEQ & BOL \\ \hline
+STP & CGO & LBN & MDV & GAM & TUV & NRU & ANG \\ \hline
+MHL & LES & YEM & SLE & VIN & LAO & CAF & MAD \\ \hline
+MLI & SAA & BEN & ARU & GBS & AND & NBO & CRT \\ \hline
+COK & FSM & LBR & GUI & SAM & VAN & MLT & LBA \\ \hline
+SOM & NFL & ASA & SKN & LIE & BRU & COD & CAY \\ \hline
+ROT & COM & NEP & SSD & CHA & MYA & GUM & TLS \\ \hline
+BHU & BIH & IVB & YMD & PLW & YAR & BAN & SEY \\ \hline
+MTN & ANT & PNG & NCA & RHO &   &   &   \\ \hline
+\end{tabular}
+\end{table}

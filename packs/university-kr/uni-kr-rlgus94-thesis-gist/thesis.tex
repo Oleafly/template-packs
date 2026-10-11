@@ -1,0 +1,119 @@
+% -*- coding: utf-8 -*-
+\documentclass[bibieee, standard]{gist} % dense, standard
+
+% Place floats(figures and tables) on a separate page.
+\makeatletter % float 전용 페이지의 배치 규칙 설정
+\@fpsep\textheight
+\makeatother
+
+\makeindex
+
+\input epsf %temporarily inserted for printing figures
+\def\putepsf#1{\centering \parbox{12cm}{\epsfxsize = 12cm \epsfbox{#1}}}
+%temporarily inserted for printing figures
+%-----------------------------------------------------------------------
+% ---- Field: Department, Degree ----
+\code{{D/}MRE} % {D/}: doctoral, {M/}: master's, {B/}: bachelor's | {DeptCode}: department code
+\degreeabbr{PhD} % Printed as <DegreeAbbr>/<DeptCode>, e.g., PhD/MRE
+\college{College of Engineering} % YOUR COLLEGE
+\kcollege{공과대학} % YOUR COLLEGE NAME
+\makeatletter % 학과명 메타데이터 정의, 그래서 표지/제출서/초록 앞부분 페이지에 직접 반영
+\def\@edept{Department of Mechanical and Robotics Engineering} % Department full name (EN)
+\def\@kdept{기계로봇공학과} % Department full name (KR)
+\def\@kdeptn{기 계 로 봇 공 학 과} % Department full name with space (KR)
+\makeatother
+
+%-----------------------------------------------------------------------
+% ---- Field: Thesis title (EN, KR) ----
+% Insert \titlebreak where lines are to be separated.  Do not use the LaTeX command '\\'.
+\etitle{ENGLISH THESIS TITLE HERE}
+\ktitle{한 글 논 문 제 목 입 력}
+
+
+%-----------------------------------------------------------------------
+% ---- Field: Advisor, Co-advisor ----
+\advisor{John Smith} % Advisor's name in English without a position such as 'Prof.'.
+\kadvisor{홍길동} % Advisor's name in Korean without a position such as 'Prof.'.
+%\coadvisor{} % Co-advisor's name in English without a position such as 'Prof.'.
+% ---- Field: Author, Referees ----
+\ename{Richard Roe} % Name of the author in English
+\kname{{김}{철}{수}} % Name of the author in Korean separated with '{}'.
+% ---- Field: Referees ----
+\studentid{000000} % 6-digit Student ID of the author
+\coveryear{2026}  % The year of graduation, YYYY
+\advisorsigndate{June}{1}{2026}% The date signed by the advisor, MM/DD/YYYY
+\refereesigndate{June}{1}{2026} % The date signed by the referees, MM/DD/YYYY
+%-----------------------------------------------------------------------
+
+%-----------------------------------------------------------------------
+% Names of the referees in English
+\refereeA{Prof. John Smith} % Advisor
+\refereeB{Prof. John Doe}   % Committee member
+\refereeC{Prof. Jane Doe}   % Committee member
+% \refereeD{Prof. }  % Committee member
+% \refereeE{Prof. } % Committee member
+
+%-----------------------------------------------------------------------
+\dedication{Dedicated to my family.} % beginning of thesis.
+\hypersetup{pageanchor=false} % avoid duplicate PDF page destinations across frontmatter/mainmatter resets
+\begin{document}
+
+%-----------------------------------------------------------------------
+% Abstract
+\begin{eabstract} \input{tex/0_abstract_en.tex} \end{eabstract} % in english
+\begin{kabstract} \input{tex/0_abstract_kr.tex} \end{kabstract} % in korean
+% \begin{acknowledgements} \input{tex/1_ack.tex} \end{acknowledgements} % Acknowledgements
+
+%-----------------------------------------------------------------------
+\makecontents % Table of contents
+\listtables % List of tables (comment out if there is no table)
+\listfigures % List of figures (comment out if there is no figure)
+
+%-----------------------------------------------------------------------
+% Main body of the thesis.  Insert \chapter{Chapter Title} to start a new chapter.
+\hypersetup{pageanchor=true}
+\pagenumbering{arabic} % generate page number in arabic numerals (1, 2, 3, ...)
+\setcounter{page}{1} % start page number from 1
+
+% ---- Thesis Body ---- %
+\input{tex/2_intro.tex}
+\input{tex/3_ch1.tex}
+\input{tex/4_ch2.tex}
+% ---- Thesis Body ---- %
+
+
+\summary{tex/5_summary.tex} % dissertation summarization, conclusion.
+
+% \chapter{PLRC and ADE implementations of Drude-critical point model for the FDTD method}
+% \label{ch:dcp}
+% \input tex/content/dcp.tex
+
+% \chapter{Examples of GMES}
+% \label{ch:example}
+% \input tex/content/example.tex
+
+% \chapter{Summary}
+% \label{ch:summary}
+% \input tex/5_summary.tex
+
+% \appendix
+% \chapter{How to get GMES}
+% \label{ch:get_gmes}
+% \input tex/content/get_gmes.tex
+
+%-----------------------------------------------------------------------
+% This is the end of the main thesis body.
+
+%-----------------------------------------------------------------------
+% bibliography file here.
+\gistbibliography{thesis}
+
+\printindex
+
+%-----------------------------------------------------------------------
+\input{tex/6_curriculum vitae.tex}
+
+%-----------------------------------------------------------------------
+% This is the end of the thesis.
+%
+\end{document}

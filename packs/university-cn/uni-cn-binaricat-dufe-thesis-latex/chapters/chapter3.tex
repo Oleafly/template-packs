@@ -1,0 +1,43 @@
+\chapter{研究设计与测度方法}
+\label{chap:method}
+
+\section{指标体系构建}
+
+本文从多个维度构建数字经济发展水平综合评价体系，下文先说明维度划分，再说明指标选取与标准化处理。
+
+\subsection{维度划分}
+
+综合评价体系包含数字基础设施、数字产业化、产业数字化与数字治理四个一级维度，分别刻画数字经济发展的支撑条件、产业形态与治理环境。
+
+\subsection{指标选取与标准化}
+
+各一级维度下进一步选取若干可量化的基础指标，并经极差法标准化后进入综合测度，标准化方法见附录~\ref{chap:appendix}。
+
+\section{基于熵值法的综合测度}
+
+为客观确定权重，本文采用熵值法：信息熵越小的指标，离散程度越大、所提供的信息越多，应赋予越大的权重。综合测度的主要步骤如算法~\ref{alg:entropy} 所示。
+
+\begin{breakablealgorithm}
+\algcaption{基于熵值法的综合测度}
+\label{alg:entropy}
+\noindent\textbf{输入}：标准化指标矩阵 $X=(x_{ij})_{m\times n}$（$m$ 个地区、$n$ 项指标）\\
+\textbf{输出}：各地区综合得分 $\{S_i\}$
+\begin{enumerate}[label=\arabic*., itemsep=1.6pt, topsep=2pt, parsep=0pt, leftmargin=2.0em]
+    \item 计算指标 $j$ 下地区 $i$ 的比重 $p_{ij}=x_{ij}/\sum_{i} x_{ij}$。
+    \item 计算指标 $j$ 的信息熵 $e_j=-k\sum_{i} p_{ij}\ln p_{ij}$，其中 $k=1/\ln m$。
+    \item 计算差异系数 $g_j=1-e_j$，归一化得到权重 $w_j=g_j/\sum_j g_j$。
+    \item 加权求和得到综合得分 $S_i=\sum_j w_j x_{ij}$。
+    \item \textbf{return} $\{S_i\}$。
+\end{enumerate}
+\end{breakablealgorithm}
+
+\section{技术路线}
+
+本文整体研究流程如图~\ref{fig:roadmap} 所示：从指标选取与数据标准化出发，经熵值法测度得到综合得分，再进行区域差异分解与聚类比较，最终形成结论与建议。
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/demo.png}
+    \caption{本文研究技术路线图}
+    \label{fig:roadmap}
+\end{figure}

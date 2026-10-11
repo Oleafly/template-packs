@@ -1,0 +1,252 @@
+% UCL Thesis LaTeX Template
+%  (c) Nicole Mantl, 2022
+
+\documentclass[12pt, english]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper, lmargin=4cm, rmargin=2cm, tmargin=1in, bmargin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{gensymb}
+\usepackage{indentfirst}
+\usepackage{appendix}
+\usepackage{helvet}
+\usepackage{pifont}
+\usepackage{wrapfig}
+\usepackage{dirtytalk}
+\usepackage{longtable}
+\usepackage{fontenc, anyfontsize}
+\usepackage{ragged2e}
+\usepackage{titletoc}
+\usepackage{tocloft}
+
+\linespread{1.40}
+\setlength{\parindent}{.5cm}
+
+\usepackage{caption}
+\captionsetup{font=footnotesize}
+
+\usepackage{subcaption}
+\usepackage{array,booktabs,multirow}
+\newcolumntype{L}{>{\centering\arraybackslash}m{2.1cm}}
+\usepackage{pdflscape}
+
+\usepackage{titlesec}
+\titleformat{\chapter}[display]{\normalfont\huge\centering}   {\textbf{\textasteriskcentered{}\ \chaptertitlename\ \thechapter\ \textasteriskcentered{}}}{15pt}{\fontsize{22pt}{20pt}\selectfont}
+\titlespacing{\chapter}{0pt}{-32pt}{2cm}
+\titleformat{\section}{\scshape\LARGE}{\thesection}{0.3em}{}
+\titlespacing{\section}{0pt}{32pt}{.5cm}
+\titleformat{\subsection}{\normalfont\Large}{\themysubsection}{0.5em}{}
+\titlespacing{\subsection}{0pt}{32pt}{.4cm}
+\titleformat{\subsubsection}{\fontsize{16pt}{14pt}\selectfont}{\themysubsubsection}{0.5em}{}
+\titlespacing{\subsubsection}{0pt}{32pt}{.3cm}
+\titleformat{\paragraph}[hang]{\fontsize{14.5pt}{12pt}\selectfont}{\theparagraph}{0.5em}{}
+\titlespacing{\paragraph}{0pt}{32pt}{.2cm}
+\titleformat{\subparagraph}[drop]{\itshape\fontsize{13pt}{12pt}\selectfont}{\thesubparagraph}{0.5em}{}
+\titlespacing*{\subparagraph}{3cm}{20pt}{.3cm}
+
+
+\setcounter{secnumdepth}{5}
+
+\usepackage{natbib}
+\bibliographystyle{bib.bst}
+\renewcommand{\bibname}{\textbf{\huge{References}}}
+\setcitestyle{aysep={}} 
+
+\usepackage{tikz,pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.15}
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=4cm, minimum height=1cm, text centered, text width=3.5cm,  trapezium stretches=true, draw=black]
+\tikzstyle{process} = [rectangle, minimum width=4cm, minimum height=1cm, text centered, text width=4cm, draw=black]
+\tikzstyle{decision} = [diamond, aspect=3, minimum width=3cm, text centered, text width=3.0cm, draw=black]
+\tikzstyle{arrow} = [thick, ->, >=stealth]
+\usetikzlibrary{positioning, arrows}
+
+\usepackage{abstract}
+\renewcommand{\abstractnamefont}{}
+\usepackage{etoolbox}
+\patchcmd{\abstract}{\null\vfill}{}{}{}
+
+\setcounter{tocdepth}{5}
+
+\renewcommand{\cftchapfont}{\bfseries}
+\renewcommand{\cftchappagefont}{\bfseries}
+\renewcommand{\cftchappresnum}{Chapter }
+\renewcommand{\cftchapnumwidth}{6em}
+\renewcommand{\cftsecnumwidth}{1.5em}
+\renewcommand{\cftsubsecnumwidth}{2.2em}
+\renewcommand{\cftsubsubsecnumwidth}{2.9em}
+\renewcommand{\cftparanumwidth}{1.5em}
+\renewcommand{\cftsubparanumwidth}{1.5em}
+\renewcommand{\cftsubsecindent}{3em}
+\renewcommand{\cftsubsubsecindent}{5.2em}
+\renewcommand{\cftparaindent}{8.1em}
+\renewcommand{\cftsubparaindent}{9.7em}
+\renewcommand{\cftfignumwidth}{3em}
+\renewcommand{\cfttabnumwidth}{3em}
+
+\cftsetpnumwidth{0cm}
+\cftsetrmarg{0.4cm}
+
+\makeatletter
+\newcommand*\updatechaptername{%
+	\addtocontents{toc}{\protect\renewcommand*\protect\cftchappresnum{\@chapapp\ }}
+}
+\makeatother
+
+\cftpagenumbersoff{chapter} 
+\usepackage{epigraph}
+
+\usepackage{chngcntr}
+\counterwithout{equation}{chapter}
+\renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand{\thesection}{\arabic{section})}
+\renewcommand{\thesubsection}{\themysubsection}
+\renewcommand{\thesubsubsection}{\themysubsubsection}
+\renewcommand{\theparagraph}{\alph{paragraph}.}
+\renewcommand{\thesubparagraph}{--}
+\renewcommand{\thefigure}{\Roman{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\Roman{chapter}.\arabic{table}}
+
+\newcommand{\themysubsection}{\arabic{section}.\arabic{subsection}}
+\newcommand{\themysubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+
+\usepackage{url}
+
+%% Define a new 'leo' style for the package that will use a smaller font.
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\footnotesize\sffamily}}}
+\makeatother
+%% Now actually use the newly defined style.
+\urlstyle{leo}
+
+\newcommand\mysection[2]{\section[#1]{#1\hrulefill}}
+
+\newcommand\Section[2]{\section[#1: {#2}]{#1\hrulefill\\[-2ex]\normalsize\itshape#2}}
+
+\newcommand\Chapter[2]{\chapter[\textsl{#1: {#2}}]{\textsl{#1}\\[1ex]\Large{#2}}}
+
+\begin{document}
+%TC:ignore
+\begin{titlepage}
+
+   \begin{center}
+       \vspace*{3cm}
+       {TITLE}
+ 
+       \vspace{4cm}
+ 
+       {Your name}\\
+       
+       \vspace*{10cm}
+      
+       
+      UCL\\
+      
+      Ph.D. [Your degree]\\
+      
+      202x
+      
+ 
+   \end{center}
+\end{titlepage}
+
+\setcounter{page}{2}
+\noindent
+\LARGE{Declaration}\\
+
+\vspace{.5cm}
+
+\normalsize{I, [your name] confirm that the work presented in this thesis is my own. Where information has been derived from other sources, I confirm that this has been indicated in the thesis.}\\
+
+\vspace{1cm}
+
+Signed \hspace{2cm}    ...................................\\
+
+\vspace{1cm}
+
+Date   \hspace{2.4cm}    ...................................\\
+
+\clearpage
+
+\clearpage
+
+\chapter*{\huge{\textbf{Abstract}}}
+%\input{}
+
+\clearpage
+\updatechaptername
+\chapter*{\huge{\textbf{Acknowledgements}}}
+%\input{}
+
+
+\setlength{\cftbeforetoctitleskip}{-22pt}
+\setlength{\cftaftertoctitleskip}{-22pt}
+\renewcommand{\contentsname}{\huge\textbf{Table of Contents}}
+\renewcommand{\cfttoctitlefont}{\chapter*}
+
+\tableofcontents
+
+\clearpage
+
+\setlength{\cftbeforeloftitleskip}{-22pt}
+\renewcommand{\cftloftitlefont}{\hfill\huge\bfseries}
+\renewcommand{\cftafterloftitle}{\hfill}
+\listoffigures
+
+\clearpage
+
+\setlength{\cftbeforelottitleskip}{-22pt}
+\renewcommand{\cftlottitlefont}{\hfill\huge\bfseries}
+\renewcommand{\cftafterlottitle}{\hfill}
+\listoftables
+
+
+%TC:endignore
+\cleardoublepage
+
+\chapter{\textsl{Introduction}}
+
+%\input{}
+
+\chapter{\textsl{Literature/Systematic Review}}
+
+%\input{}
+
+\chapter{\textsl{Empirical chapter}}
+
+%\input{}
+
+
+\chapter{\textsl{Discussion}}
+
+%\input{}
+
+\chapter{\textsl{Conclusion}}
+
+%\input{}
+
+%%TC:ignore
+\newpage
+
+\addtocontents{toc}{\cftpagenumberson{chapter}}
+\addcontentsline{toc}{chapter}{\textbf{References}}
+\bibliography{References}
+
+\clearpage
+
+\appendix
+\updatechaptername
+\titleformat{\chapter}[display]{\normalfont\LARGE}   {\textbf{\chaptertitlename\ \thechapter:}}{0cm}{\large} \titlespacing{\chapter}{0cm}{-40pt}{.7cm}
+
+\renewcommand{\thefigure}{\Alph{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\Alph{chapter}.\arabic{table}}
+
+\updatechaptername
+\chapter{\textsl{Appendix}}
+%\input{}
+
+\end{document}

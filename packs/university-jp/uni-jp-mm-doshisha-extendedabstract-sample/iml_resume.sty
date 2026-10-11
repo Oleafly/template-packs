@@ -1,0 +1,209 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% iml.sty
+%%% LaTeX .sty file for generating resumes for the Intelligent Mechanism Labratory (IML).
+
+%%% Author(s):
+%%%    - 澤田知也 (sawada[AT]mm.doshisha.ac.jp,stomoya0110[AT]gmail.com)
+%%%    -
+
+%%% first created: 2032/11/21
+%%% last updated : 2023/12/15
+
+%%% Change log:
+%%%   - 2023/12/15 - Add english option.
+%%%                - Make cleverref usage an option.
+
+%%% Notes:
+%%%   - "uplatex" and "dvipdfmx" option is not needed.
+%%%     Please refer to: https://qiita.com/wtsnjp/items/76557b1598445a1fc9da
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Switch to english.
+\newif\if@isenglish
+\newif\if@issmartref
+\DeclareOption{english}{\@isenglishtrue}
+\DeclareOption{smartref}{\@issmartreftrue}
+\ExecuteOptions{}
+\ProcessOptions\relax
+
+%%%% file encoding
+\usepackage[utf8]{inputenc} % utf-8
+
+%%%% margin
+\usepackage[
+  top=25truemm,
+  bottom=20truemm,
+  left=15truemm,
+  right=15truemm
+]{geometry}
+\setlength{\columnsep}{4truemm}
+
+%%%% figures
+\usepackage[
+  hiresbb % accurate bounding box
+]{graphicx}
+\setlength{\floatsep}{1truemm}          % space between figures
+\setlength{\textfloatsep}{1truemm}      % space between text and figure on top or bottom
+\setlength{\intextsep}{1truemm}         % space between text and inline figure
+\setlength{\abovecaptionskip}{1truemm}  % space between caption and figure
+\setlength{\belowcaptionskip}{2truemm}  % space between caption and text
+
+%%%% colors
+\usepackage[
+  dvipsnames % more color names
+]{xcolor}
+
+%%%% table
+\usepackage{booktabs} % add \toprule \midrule \cmidrule \bottomrule
+\usepackage{multirow} % add \multirow
+
+%%%% sub{figures,tables}
+% This package raises the following warning, but it can be ignored.
+%     Package caption Warning: Unknown document class (or package), standard defaults will be used.
+%     See the caption package documentation for explanation.
+% subcaption does not officially support many documentclass types and it raises this
+% warning whenever we use a non-supported type.
+\usepackage{subcaption}
+
+%%%% easy SI unit printing
+\usepackage{siunitx}
+
+%%%% line spacing
+\usepackage{leading}
+\leading{11pt}
+
+%%%% more math symbols
+\usepackage{amsmath, amssymb}
+\allowdisplaybreaks[4] % always allow page break in align environment
+
+%%%% fonts
+\usepackage[full]{textcomp} % more symbols
+\usepackage[
+  LGR, % Greek fonts
+  T2A, % Cyrillic fonts
+  T1   % glyphs
+]{fontenc}
+\usepackage{newtxtext, newtxmath}   % Change fonts to Times. This is tighter.
+
+\if@isenglish % nothing to do here
+\else
+    \usepackage[deluxe,jis2004]{otf}    % This package solves many problems when using
+                                        % Japanese fonts. (JPN only)
+    \usepackage[prefernoncjk]{pxcjkcat} % treat letters as European language if not
+                                        % Chinese, Japanese, or Korean. (JPN only)
+\fi
+
+%%%% algorithms
+\usepackage{algorithm, algpseudocode}
+
+%%%% hyperlinks
+\if@isenglish
+    \usepackage[
+      bookmarks=true,         % create bookmarks in pdf
+      bookmarksnumbered=true, % use numbered bookmarks
+      colorlinks=false,       % disable colors
+      pdfborder={0 0 0},      % no border
+      pdfpagemode=UseNone,    % no thumbnails
+    ]{hyperref}
+\else
+    \usepackage[
+      bookmarks=true,         % create bookmarks in pdf
+      bookmarksnumbered=true, % use numbered bookmarks
+      colorlinks=false,       % disable colors
+      pdfborder={0 0 0},      % no border
+      pdfpagemode=UseNone,    % no thumbnails
+      unicode=false           % disable unicode. (JPN only)
+    ]{hyperref}
+    \usepackage{pxjahyper} % for (u)pLaTeX + dvipdfmx + hyperref. (JPN only)
+\fi
+
+%%%% clever cross reference
+\if@issmartref
+    \usepackage[
+      nameinlink, % whole text as hyperlink
+      capitalize  % section -> Section, table -> Table
+    ]{cleveref}
+
+    \if@isenglish
+        %%%% Uncomment this command to use Equation or Equations for equation references.
+        % \crefname{equation}{Equation}{Equations}
+    \else
+        \crefformat{section}{#2#1#3章} % (JPN only)
+        \crefname{figure}{図}{図}      % (JPN only)
+        \crefname{table}{表}{表}       % (JPN only)
+        \crefname{equation}{式}{式}    % (JPN only)
+        \crefname{appendix}{付録}{付録} % (JPN only)
+    \fi
+
+    \newcommand{\crefpairconjunction}{,~}  % "and" to ", "
+    \newcommand{\crefrangeconjunction}{--} % "to" to "-"
+
+    \usepackage{letltxmacro} % replace existing commands safely
+    \AtBeginDocument{
+        % replace \ref to \cref
+        \LetLtxMacro{\oldref}{\ref}
+        \renewcommand{\ref}{\cref}
+    }
+\fi
+
+%%%% citation
+\usepackage[
+  numbers,      % citations as numbers
+  sort&compress % sort and compress. [3,1,2] -> [1-3]
+]{natbib}
+
+%%%% achievements
+\usepackage[
+  resetlabels % reset numbers per bibliography
+]{multibib}   % create multiple bibliography for Achievements section.
+% title of achievements
+\if@isenglish
+    \newcites{achieve}{Achievements}
+\else
+    \newcites{achieve}{研究業績}
+\fi
+
+%%%% header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+% define variables for header
+\def\@LeftHeader{YYYY年度 卒業論文発表会（YYYY年MM月DD日）}
+
+% define macro for header
+\def\LeftHeader#1{\gdef\@LeftHeader{#1}}
+
+% define command that creates header. Should be called after \LeftHeader macro.
+\newcommand{\makeheader}{
+  \lhead{\small\textbf{\@LeftHeader}}
+  \rhead{\small\textbf{知的機構研究室}}
+  \cfoot{}
+}
+
+%%%% title design
+\renewcommand{\maketitle}{%
+    \twocolumn[
+    \null \vspace{-1.5em}%
+    \begin{center}%
+        \let\footnote\thanks
+        {\LARGE \@title \par}%
+        \vskip .5em%
+        {\large
+        \lineskip .5em%
+        \begin{tabular}[t]{c}%
+            \@author
+        \end{tabular}\par}%
+    \end{center}%
+    \par\vskip 0em
+    ]
+}
+
+\makeatletter
+\g@addto@macro\normalsize{%
+  \setlength{\abovedisplayskip}{-1truemm} % 式の上の余白
+  \setlength{\belowdisplayskip}{-1truemm} % 式の下の余白
+}
+\makeatother
+
+%%%% footnote design
+\renewcommand{\thefootnote}{\arabic{footnote}}

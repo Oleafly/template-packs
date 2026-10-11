@@ -1,0 +1,99 @@
+\chapter{Appendix}
+\label{chap:Appendix}
+\captionsetup[figure]{list=no}
+\captionsetup[table]{list=no}
+
+% Note: figures and tables in this appendix are intentionally excluded from the
+% List of Figures and List of Tables in the front matter.
+
+
+% -----------------------------------------------------------------------
+\section*{Ethics Confirmation}
+% Place your signed ethics confirmation document here, e.g. using \includepdf{}
+% or paste the relevant text.
+Ethics information and ethics forms can be found at \url{https://www.port.ac.uk/research/our-research-and-innovation-culture/research-integrity-governance-and-ethics/research-ethics}.
+
+
+% -----------------------------------------------------------------------
+\section*{UPR16 Form}
+% Insert the completed UPR16 form here.
+Information on the UPR16 form can be found at \url{https://myport.port.ac.uk/my-course/research-degrees/research-degree-guidance/postgraduate-research-examinations-viva-voce/for-students}.
+
+
+% -----------------------------------------------------------------------
+\section*{Example Table}
+
+Table~\ref{tab:example_appendix} demonstrates a simple three-column table using the \texttt{booktabs} package. The \texttt{toprule}, \texttt{midrule}, and \texttt{bottomrule} commands produce clean horizontal rules without vertical lines, which is the preferred style for academic tables.
+
+\begin{table}[ht]
+    \centering
+    \caption{An example table showing placeholder data.}
+    \label{tab:example_appendix}
+    \begin{tabular}{llr}
+        \toprule
+        \textbf{Category} & \textbf{Description} & \textbf{Value} \\
+        \midrule
+        A & First item  & 42  \\
+        B & Second item & 87  \\
+        C & Third item  & 135 \\
+        \midrule
+        \multicolumn{2}{l}{\textit{Total}} & 264 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+% -----------------------------------------------------------------------
+\section*{Example Figure}
+
+Figure~\ref{fig:example_appendix} shows how to include an external image using \verb|\includegraphics{}|. Store your figures in the appropriate \texttt{figures/chapter\_X/} subdirectory and reference them by relative path. The \texttt{width} parameter is set relative to \verb|\textwidth| so the image scales correctly regardless of page layout.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figures/chapter_0/University_of_Portsmouth_coat_of_arms.png}
+    \caption{An example figure --- University of Portsmouth coat of arms.}
+    \label{fig:example_appendix}
+\end{figure}
+
+
+% -----------------------------------------------------------------------
+\section*{Example TikZ Diagram}
+
+Figure~\ref{fig:tikz_appendix} demonstrates a Ti\textit{k}Z diagram built with the \texttt{pgfplots} and \texttt{tikzlibrary} packages already loaded in \texttt{main.tex}. This example shows a simple flowchart using nodes and arrows; the same approach can be used for architecture diagrams, process flows, and data pipelines.
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[
+        node distance=1.6cm and 2.4cm,
+        box/.style={rectangle, draw, rounded corners=4pt,
+                    minimum width=3.2cm, minimum height=0.9cm,
+                    text centered, font=\small},
+        decision/.style={diamond, draw, aspect=2,
+                         minimum width=3.2cm, minimum height=0.9cm,
+                         text centered, font=\small},
+        arrow/.style={-{Stealth}, thick}
+    ]
+        \node[box]      (start)   {Start};
+        \node[box,      below=of start]   (data)    {Load Data};
+        \node[box,      below=of data]    (preproc) {Pre-processing};
+        \node[decision, below=of preproc] (check)   {Valid?};
+        \node[box,      below=of check]   (model)   {Train Model};
+        \node[box,      below=of model]   (eval)    {Evaluate};
+        \node[box,      below=of eval]    (end)     {End};
+        \node[box,      right=of check]   (fix)     {Fix Errors};
+
+        \draw[arrow] (start)   -- (data);
+        \draw[arrow] (data)    -- (preproc);
+        \draw[arrow] (preproc) -- (check);
+        \draw[arrow] (check)   -- node[left]{\small Yes} (model);
+        \draw[arrow] (check)   -- node[above]{\small No}  (fix);
+        \draw[arrow] (fix)     |- (preproc);
+        \draw[arrow] (model)   -- (eval);
+        \draw[arrow] (eval)    -- (end);
+    \end{tikzpicture}
+    \caption{An example Ti\textit{k}Z flowchart illustrating a generic machine learning pipeline.}
+    \label{fig:tikz_appendix}
+\end{figure}
+
+
+\let\cleardoublepage\clearpage

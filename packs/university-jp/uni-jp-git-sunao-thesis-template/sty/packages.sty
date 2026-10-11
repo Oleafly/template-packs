@@ -1,0 +1,95 @@
+\usepackage[utf8]{inputenc}
+\usepackage[title, titletoc]{appendix}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{pdftitle=Thesis, pdfauthor={First Last}, pdfstartview=FitH, pdfkeywords=essay, pdfpagemode=FullScreen, colorlinks=true, anchorcolor=red, citecolor=blue, urlcolor=blue, filecolor=green, linkcolor=blue, plainpages=false}
+% for book binding.
+\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm,inner=30truemm]{geometry}
+% for electric version.
+%\usepackage[top=30truemm,bottom=30truemm,left=25truemm,right=25truemm]{geometry}
+\usepackage{color}
+\usepackage{xspace}
+\usepackage{lipsum}
+\usepackage{latexsym}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{makeidx}
+\usepackage{multirow}
+\usepackage{here}
+\usepackage{eso-pic}
+\usepackage{pdfpages}
+\usepackage{bm}
+\usepackage{sty/aas_macros}
+\usepackage[square]{sty/natbib}
+\providecommand{\keywords}[1]{\\\textbf{\textit{Keywords---}} #1}
+\usepackage{minitoc}
+\usepackage{CJKutf8}
+\usepackage{fancyhdr}
+\usepackage{url}
+\usepackage{derivative}
+\usepackage{booktabs}
+\usepackage[compact, newlinetospace, clearempty]{titlesec}
+\usepackage{lscape}
+\usepackage{seqsplit}
+
+%%%%%%%% minitoc setting
+\dominitoc
+\setcounter{minitocdepth}{2}
+
+%%%%%%%% Show section number down to the subsubsection.
+\setcounter{secnumdepth}{5}
+
+%%%%%%%% fancy header
+\renewcommand{\footrulewidth}{0.4pt}
+\pagestyle{fancy}
+\fancyhf{}
+%\fancyhead[RO]{\textsc{\nouppercase{\newlinetospace{{\leftmark}}}}}
+\fancyhead[RO]{\textsc{\nouppercase{{\leftmark}}}}
+\fancyhead[LE]{\bfseries{\nouppercase{\rightmark}}\chaptermark}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+
+
+%%%%%%% LOGO
+\makeindex
+\makeatletter
+\let\strippt\strip@pt
+\makeatother
+\newcommand\BackgroundPicturea[3]{
+	\setlength{\unitlength}{1pt}
+	\put(0,\strippt\paperheight){
+		\parbox[t]{\paperwidth}{
+			\vspace{#2}\hspace{#3}
+			\mbox{\includegraphics[scale=0.5]{#1}}
+}}}
+\newcommand\BackgroundPictureb[3]{
+	\setlength{\unitlength}{1pt}
+	\put(0,\strippt\paperheight){
+		\parbox[t]{\paperwidth}{
+			\vspace{#2}\hspace{#3}
+			\mbox{\includegraphics[scale=0.8]{#1}}
+}}}
+
+%%%% title
+\makeatletter
+\def\id#1{\def\@id{#1}}
+\def\grade#1{\def\@grade{#1}}
+\def\department#1{\def\@department{#1}}
+ 
+\def\@maketitle{
+\begin{center}
+{\huge Doctoral Dissertation \par} % Doctoral Dissertation
+\vspace{10mm}
+{\LARGE\bf \@title \par}% Title
+\vspace{10mm}
+{\Large submission date　\@date\par} % submittion date
+\vspace{20mm}
+{\Large \@department \par} % affiliation
+\vspace{10mm}
+{\Large \@grade \par} % grade
+\vspace{10mm}
+{\Large \@author}% name
+\end{center}
+%\par\vskip 1.5em
+}
+\makeatother

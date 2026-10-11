@@ -1,0 +1,96 @@
+\documentclass[a4paper,oneside,onecolumn,openright,12pt]{book} % DO NOT CHANGE THIS
+\usepackage{cardiff_unofficial_thesis_template}  % DO NOT CHANGE THIS
+
+% Packages for template
+\usepackage{graphicx} % Graphics
+\usepackage{acronym} % Acronyms
+\usepackage[square,numbers]{natbib} % References
+\bibliographystyle{abbrvnat}
+
+% useful packages
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{xcolor} % Colour text
+\usepackage[hyphens]{url} % Write urls
+\usepackage{adjustbox} % adjust boxed content (resize, rotate, etc.)
+\usepackage{array} % extention to the array and tabular environments
+% Fonts, encoding, etc.
+\usepackage[british]{babel} % Culturally-determined typographical
+\usepackage[T1]{fontenc} % Font encodings
+\usepackage{hyperref} % In document hyperlinks
+% Footer and header
+\usepackage{fancyhdr}
+% Math symbols, fonts, etc.
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+% Extra packages - Add yours here
+
+% Set the depth of section numbers
+% Set to 3 for numbers upto subsection e.g. x.x.x subsection text
+% Set to 4 for numbers upto subsubsection e.g. x.x.x.x subsubsection text
+\setcounter{secnumdepth}{3}
+
+\begin{document}
+
+\frontmatter
+
+\begin{titlepage}
+
+\begin{center}
+\vspace*{3ex}
+\textbf{\Huge Title With Each Word Capitalised}\\
+\vfill
+\LARGE Your full name as recorded on the student record\\
+\vfill
+\LARGE A thesis submitted for the degree of Doctor of Philosophy\\
+\vfill
+\LARGE Cardiff University\\
+\LARGE September 2025\\
+\end{center}
+
+\end{titlepage}
+
+\cleardoublepage
+
+\input{preliminary_pages/abstract}
+
+\def\baselinestretch{1.5}\normalfont
+
+\tableofcontents
+
+\listoffigures
+\listoftables
+\listofalgorithms
+\input{preliminary_pages/acronyms}
+\input{preliminary_pages/listofpublications}
+\cleardoublepage
+\input{preliminary_pages/acknowledgements}
+\cleardoublepage
+\input{preliminary_pages/dedication}
+\cleardoublepage
+
+\mainmatter
+%begin each chapter chapter1.tex by \Chapter{chapter1}, for example, then the sections and so on...
+\input{chapters/chapter1}
+
+
+\backmatter
+
+\def\baselinestretch{1}\normalfont
+\def\baselinestretch{1.24}\normalfont
+
+\bibliography{bibliography}
+
+% appendix increments with numbers. These are also appended to the start of figures and tables
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\renewcommand\thefigure{\thesection\arabic{figure}}
+\renewcommand\thetable{\thesection\arabic{table}}
+
+\input{chapters/appendix}
+
+\end{document}

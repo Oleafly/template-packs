@@ -1,0 +1,105 @@
+% Template preamble
+% NOTE: This is copied from the original project preamble.tex.
+% Next cleanup step (optional): remove duplicate package loads and keep only template-wide defaults.
+
+% ******************************************************************************
+%\newif\ifsetCustomMargin
+% \usepackage[a-2b]{pdfx}
+\usepackage{mathptmx} % Times Roman font with math support (pre-load to avoid in-
+\usepackage[a4paper]{geometry} % Required for custom margin settings with custommargin class option
+% Set {innerside margin / outerside margin / topmargin / bottom margin}  and
+% other page dimensions
+% SHU margins: left(binding)=40mm, all others=20mm (Thesis Guidelines 2024-25 p.3)
+% Override page layout with raw setlength calls after class has loaded
+    \setlength{\oddsidemargin}{14.6mm}%  40mm - 1in(25.4mm) = 14.6mm
+  \setlength{\evensidemargin}{-5.4mm}%  20mm - 1in(25.4mm)
+  \setlength{\topmargin}{-5.4mm}%       20mm - 1in(25.4mm)
+  \setlength{\headheight}{5mm}%
+  \setlength{\headsep}{5mm}%
+  \setlength{\textheight}{247mm}%        297mm - 20mm top - 20mm bottom - headheight - headsep
+    \setlength{\textwidth}{150mm}%       210mm - 40mm left - 20mm right = 150mm
+  \setlength{\marginparwidth}{0mm}%
+  \setlength{\footskip}{10mm}%
+    % ---- SHU page numbering: centred at bottom, no running headers ----
+  % SHU Thesis Guidelines 2024-25 p.3: page numbers centred at bottom, 20mm above edge
+  \pagestyle{fancy}%
+  \fancyhf{}%                          % clear all header and footer fields
+  \fancyfoot[C]{\thepage}%             % page number centred in footer
+  \renewcommand{\headrulewidth}{0pt}%  % no header rule
+  \renewcommand{\footrulewidth}{0pt}%  % no footer rule
+  % Chapter opening pages use 'plain' style -- override that too
+  \fancypagestyle{plain}{%
+    \fancyhf{}%
+    \fancyfoot[C]{\thepage}%
+    \renewcommand{\headrulewidth}{0pt}%
+    \renewcommand{\footrulewidth}{0pt}%
+  }%
+
+% Ragged bottom avoids extra whitespaces between paragraphs
+\raggedbottom
+
+\usepackage{algpseudocode}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{makecell}
+% \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{algorithm}      % Floating environment
+\usepackage{amsmath}
+\usepackage{soul}
+
+% *****************************************************************************
+% ******************* Fonts (like different typewriter fonts etc.)*************
+% Add `customfont' in the document class option to use this section
+\ifsetCustomFont
+  %\RequirePackage{helvet}
+\fi
+
+% ********************Captions and Hyperreferencing / URL **********************
+\usepackage[small,bf,labelsep=colon,tableposition=top]{caption}
+\renewcommand{\figurename}{Figure} %to support older versions of captions.sty
+
+% *************************** Graphics and figures *****************************
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+
+% ********************************** Tables ************************************
+\usepackage{booktabs} % For professional looking tables
+\usepackage{multirow}
+\usepackage[utf8]{inputenc}
+\captionsetup[table]{skip=10pt}
+
+% *********************************** SI Units *********************************
+\usepackage{siunitx}
+
+% ******************************* Line Spacing *********************************
+% \doublespacing
+% \onehalfspacing
+% \singlespacing
+\setstretch{1.5}
+
+% *************************** Bibliography  and References ********************
+\ifuseCustomBib
+   \RequirePackage[square, sort, numbers, authoryear]{natbib}
+\fi
+
+% changes the default name `Bibliography` -> `References'
+\renewcommand{\bibname}{References}
+
+% ********************** TOC depth and numbering depth *************************
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+
+% ******************************* Nomenclature *********************************
+%\renewcommand{\nomname}{Symbols}
+
+% *********************** Configure Draft Mode **********************************
+%\setkeys{Gin}{draft=true}
+
+
+% ======================== Suppress TeX Live 2025 microtype showhyphens warning
+\usepackage{silence}
+\WarningFilter{LaTeX}{Command \showhyphens}

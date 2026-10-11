@@ -1,0 +1,271 @@
+\documentclass[UTF8,AutoFakeBold]{szu-master}
+\renewcommand{\titleCN}{基于XXX研究}	% 替换此处为学位论文中文标题
+\renewcommand{\titleEN}{The Research Base on XXXX} % 替换此处为学位论文英文标题
+
+% 文本
+\usepackage{ctex}
+\usepackage{fancyhdr}
+%可跨页表格引入
+\usepackage{longtable}
+\usepackage{lastpage}
+% dgq package
+\usepackage{makecell}
+
+\usepackage{fontspec}
+%圆
+%\usepackage{xeCJK}
+
+%%adding package 边距设置
+\usepackage[left=31.7mm,right=31.7mm,top=25.4mm,bottom=25.4mm]{geometry}
+
+\usepackage{titlesec}
+\usepackage{setspace} %使用调整行距的包
+\usepackage{subfigure,floatrow}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{caption,cite,amsbsy,amsmath,amsfonts,multirow,color,array,booktabs,colortbl}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{pdfpages}
+\usepackage{changepage}
+
+\usepackage{titlesec}
+
+% \usepackage{algorithmicx,algorithm}
+\usepackage{epsfig,bm}
+\usepackage{slashbox}
+\usepackage{enumitem}
+\usepackage{amssymb,amsthm,amssymb}
+\usepackage{graphicx,subfigure}
+\usepackage{graphicx}
+\usepackage{ulem}
+\usepackage{floatrow}
+\usepackage{arydshln} % 加载arydshln宏包
+\usepackage{tabularx}
+\usepackage{chngcntr}
+\floatsetup[table]{capposition=top}
+\floatsetup[figure]{capposition=bottom}
+\newfloatcommand{capbtabboxTable}{table}[][\FBwidth]
+\newfloatcommand{capbtabboxFigure}{figure}[][\FBwidth]
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+
+% 脚注样式 ①②③
+% 自动检测并选择圈号覆盖更全的符号字体（按优先级回退）
+\IfFontExistsTF{Noto Sans Symbols 2}
+  {\newfontfamily\circnumfont{Noto Sans Symbols 2}}
+  {\IfFontExistsTF{Segoe UI Symbol}
+    {\newfontfamily\circnumfont{Segoe UI Symbol}}
+    {\IfFontExistsTF{Symbola}
+      {\newfontfamily\circnumfont{Symbola}}
+      {\IfFontExistsTF{Arial Unicode MS}
+        {\newfontfamily\circnumfont{Arial Unicode MS}}
+        {\newfontfamily\circnumfont{DejaVu Sans}}
+      }%
+    }%
+  }
+  
+\newcommand{\circledfootnotenum}[1]{%
+  {\circnumfont
+    \ifcase#1
+      \or ①\or ②\or ③\or ④\or ⑤\or ⑥\or ⑦\or ⑧\or ⑨\or ⑩%
+      \or ⑪\or ⑫\or ⑬\or ⑭\or ⑮\or ⑯\or ⑰\or ⑱\or ⑲\or ⑳%
+      \or ㉑\or ㉒\or ㉓\or ㉔\or ㉕\or ㉖\or ㉗\or ㉘\or ㉙\or ㉚%
+      \or ㉛\or ㉜\or ㉝\or ㉞\or ㉟\or ㊱\or ㊲\or ㊳\or ㊴\or ㊵%
+      \or ㊶\or ㊷\or ㊸\or ㊹\or ㊺\or ㊻\or ㊼\or ㊽\or ㊾\or ㊿%
+    \else
+      #1%
+    \fi
+  }%
+}
+\renewcommand{\thefootnote}{\circledfootnotenum{\value{footnote}}}
+
+\newtheorem{definition}{定义}[] % 跟随三级标题排序
+\newtheorem{theorem}{定理}[]  %跟随二级标题排序
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\newtheorem{proposition}{命题}[]
+\renewcommand{\proofname}{证明}
+
+
+% 重新调整参考文献项目之间的行距
+\usepackage{bibspacing}
+\setlength{\bibspacing}{1\baselineskip}
+
+%给目录和参考文献加上超链接
+%\usepackage[hidelinks]{hyperref}
+
+%引用
+\newcommand{\upcite}[1]{{\textsuperscript{\cite{#1}}}}
+
+%defines the height of the header
+% \setlength{\headheight}{15pt}
+\setlength{\headheight}{23pt}
+\setlength{\headsep}{7.25mm}
+
+
+\hypersetup{
+	pdfborder = {0 0 0} 
+}
+
+%\titleformat{\section}{\center\zihao{3}\heiti\bfseries\sectionef}{第\,\zhnumber{\thesection}\,章}{1em}{}
+
+% 在导言区定义新字体族
+% \newfontfamily\sectionef{Arial}
+
+\ctexset{
+		section={
+				format+ = \heiti\bfseries\zihao{3}\sectionef,
+				name = {第,章},
+				number = \chinese{section}
+	}
+}	
+
+
+\titleformat{\subsection}{\zihao{-3}\heiti\bfseries\sectionef}{\thesubsection}{1em}{}
+
+\titleformat{\subsubsection}{\zihao{4}\bfseries\sectionef}{\thesubsubsection}{1em}{}
+
+
+% 定义目录标题样式
+\titlecontents{section}[0em]
+{\zihao{-4}\bfseries\CJKfamily{zhsong}\fontspec{Times New Roman}}
+{\contentspush{\thecontentslabel\hspace{1em}}}{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}%
+
+%\titlecontents{section}[0em]{\bfseries\zihao{-4}}{\contentspush{\thecontentslabel\hspace{1em}}}{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}%
+
+\titlecontents{subsection}[1em]
+{\zihao{-4}\CJKfamily{zhsong}\fontspec{Times New Roman}}
+{{\thecontentslabel}\hspace{1em}}
+{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}
+
+\titlecontents{subsubsection}[1.8em]
+{\zihao{-4}\CJKfamily{zhsong}\fontspec{Times New Roman}}
+{\thecontentslabel\hspace{1em}}
+{}{\titlerule*[0.4pc]{.}\contentspage\vspace{1.6pt}}
+
+
+
+
+%document begin
+\begin{document}
+	
+%封面 自行配置生成pdf文件导入即可
+\includepdf[pages={1,2}]{chapter/masterPage.pdf}
+	
+% 全局页眉页脚：确保摘要等多页内容的后续页保持 fancy 样式
+% 解决 issue: https://github.com/Ftine/SZU_Latex_Master_Template/issues/19
+\pagestyle{fancy}
+\fancyhead[C]{\songti\zihao{5}{\titleCN}}
+\fancyhead[C]{\songti\zihao{5}{\titleEN}}
+	
+%中英文摘要
+\input{chapter/abstract.tex} 
+	
+\setlength{\baselineskip}{23pt} %设置行距23磅
+	
+\vspace*{-1\baselineskip}
+\tableofcontents	%目录
+
+%缩略语
+\input{chapter/sign_and_ABC.tex}
+
+%此处为原cls文件中有关后续正文页面的页眉页脚设置
+\newpage
+\pagenumbering{arabic}
+\pagestyle{fancy} % 页眉横线样式
+\fancyhead{}
+
+\fancyhead[C]{\songti\zihao{5}{\titleCN}}
+% 全局页眉 设置为章节标题
+\fancyhead[C]{\songti\zihao{5}\nouppercase\leftmark}
+%全局页号设置
+\fancyfoot[C]{\songti\zihao{5}{\thepage}}
+\setcounter{page}{1}
+
+%%%%%%%%% 图索引和表索引
+% \renewcommand\listfigurename{\songti\zihao{2}{\textbf{图~~目~~录}}}
+% \renewcommand\listtablename{\songti\zihao{2}{\textbf{表~~目~~录}}}
+	
+% \renewcommand{\figurename}{图}
+% \renewcommand{\tablename}{表}
+	
+\makeatletter %
+\@addtoreset{equation}{section}
+\makeatother  %
+% 公式更改为3-2样式
+\renewcommand\theequation{{\thesection}-{\arabic{equation}}}
+	
+%%%%%%%%%% 表每节重新标号
+\makeatletter %
+\@addtoreset{table}{section}
+\makeatother  %
+\renewcommand{\thetable}{\thesection-\arabic{table}}
+\captionsetup[table]{labelsep=space, labelfont=bf}
+%%%%%%%% 图每节重新标号
+\makeatletter %
+\@addtoreset{figure}{section}
+\makeatother  %
+\renewcommand{\thefigure}{\thesection-\arabic{figure}}
+\captionsetup[figure]{labelsep=space, labelfont=bf}
+%labelfont=normalfont}
+% subfigure重新编号\ref
+\makeatletter
+\renewcommand{\p@subfigure}{\thefigure}
+\makeatother
+
+
+%adding chapters 1-5 从1开始计数
+\setcounter{page}{1}
+
+\input{chapter/cp1.tex}
+\input{chapter/cp2.tex}
+\input{chapter/cp3.tex}
+\input{chapter/cp4.tex}
+\input{chapter/cp5.tex}
+
+
+\clearpage
+%参考文献
+\fancyhead{}
+\fancyhead[C]{\songti\zihao{5}{参考文献}}
+\fancyfoot[C]{\songti\zihao{5}{\thepage}}
+
+% \begin{spacing}{1.8}
+% 	\bibliographystyle{gbt7714-2005} 
+% 	\bibliography{ref_paper}
+% \end{spacing}
+\begin{spacing}{1.8}
+    \sloppy
+    \interlinepenalty=10000 %禁止在参考文献内的两行之间分页
+	\bibliographystyle{gbt7714-2005}
+    \vspace*{-1\baselineskip}
+	\bibliography{ref_paper}
+\end{spacing}
+
+\clearpage
+\fancyhead{}
+\fancyhead[C]{\songti\zihao{5}{致谢}}
+\fancyfoot[C]{\songti\zihao{5}{\thepage}}
+\input{chapter/thanks.tex}
+
+\clearpage
+\fancyhead{}
+\fancyhead[C]{\songti\zihao{5}{攻读硕士学位期间的学术成果}}
+\fancyfoot[C]{\songti\zihao{5}{\thepage}}
+\input{chapter/myPapers.tex}
+
+% 添加学术评语目录条目
+%\addtocontents{toc}{\protect\vspace{1.6pt}}
+%\addtocontents{toc}{\noindent\protect\fontspec{songti-Bold.otf}\protect\zihao{-4}\protect\normalfont 附：指导教师对研究生学位论文的学术评语\par}
+% 添加答辩决议书目录条目
+%\addtocontents{toc}{\protect\vspace{1.6pt}}
+%\addtocontents{toc}{\noindent\protect\fontspec{songti-Bold.otf}\protect\zihao{-4}\protect\normalfont ~~~~~~~~答辩委员会决议书\par}
+% 添加学术评语页面
+%\clearpage
+%\includepdf[pages={1}]{chapter/comment.pdf}
+% 添加答辩决议书页面
+%\clearpage
+%\includepdf[pages={1,2}]{chapter/decision.pdf}
+
+\end{document}

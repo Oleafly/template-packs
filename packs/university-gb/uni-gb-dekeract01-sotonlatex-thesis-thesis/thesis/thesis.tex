@@ -1,0 +1,238 @@
+%% ----------------------------------------------------------------
+%% Thesis.tex
+%% ---------------------------------------------------------------- 
+\documentclass[sotoncolour]{uosthesis}      % Use the Thesis Style with custom link colour
+\usepackage{lmodern}
+\usepackage{physics}
+\usepackage{cleveref}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{svg}
+
+\usepackage{nomencl,etoolbox,ragged2e}
+\graphicspath{{resources/}}   % Location of your graphics files
+\usepackage[round]{natbib}            % Use Natbib style for the refs.
+\usepackage{bibentry}          % Use bibentry for prepublished works
+\nobibliography*               % Use bibentry for prepublished works
+\usepackage{attrib}            % Use the attrib package for quotations
+\hypersetup{colorlinks=true}   % Set to false for black/white printing
+\usepackage[version=4]{mhchem}
+
+% -----------------------------------------------------------------
+% Custom legend line markers for figure captions (examples, edit or remove)
+
+\newcommand{\solidgreenline}{\raisebox{2pt}{\tikz{\draw[-,black!20!green,solid,line width = 2.0pt](0,0) -- (5mm,0);}}}
+
+\newcommand{\solidblueline}{\raisebox{2pt}{\tikz{\draw[-,black!5!blue,solid,line width = 2.0pt](0,0) -- (5mm,0);}}}
+
+\newcommand{\solidredline}{\raisebox{2pt}{\tikz{\draw[-,black!5!red,solid,line width = 2.0pt](0,0) -- (5mm,0);}}}
+
+\newcommand{\dottedredline}{\raisebox{2pt}{\tikz{\draw[-,black!5!red,dotted,line width = 2.0pt](0,0) -- (5mm,0);}}}
+
+\newcommand{\dashedredcircleline}{\raisebox{2pt}{\tikz{\draw[black!100!red, dashed, line width=0.5pt] (0,0) -- (5mm,0); \node[draw, circle, inner sep=1pt, fill=black!100!red] at (2.5mm, 0) {};}}}
+
+\newcommand{\dashedredopencircleline}{\raisebox{2pt}{\tikz{\draw[black!100!red, dashed, line width=0.5pt] (0,0) -- (5mm,0); \node[draw, circle, inner sep=1pt, fill=white!100!red] at (2.5mm, 0) {};}}}
+
+\newcommand{\dashedblueplusline}{\raisebox{-0.5ex}{\tikz{\draw[dashed, black!100!blue, line width=0.5pt] (0,0) -- (5mm,0) node[midway] {\texttt{+}};}}}
+
+\newcommand{\dashedbluestarline}{\raisebox{-0.5ex}{\tikz{\draw[dashed, black!100!blue, line width=0.5pt] (0,0) -- (5mm,0) node[midway] {\textasteriskcentered};}}}
+
+
+\input{definitions}            % Include your abbreviations
+%% ----------------------------------------------------------------
+%% --------------------THESIS/DOC INFORMATION ---------------------
+\department  {[School Name]}
+\DEPARTMENT  {\MakeUppercase{\deptname}}
+\group       {[Research Group Name]}
+\GROUP       {\MakeUppercase{\groupname}}
+\faculty     {[Faculty Name]}
+\FACULTY     {\MakeUppercase{\facname}}
+\title      {[Thesis Title]}
+%% TODO: Replace with your name removing []
+\authors    {[Author Name]} % Use of Soton Email unadvised, use ORCiD instead.
+\addresses  {\groupname\\\deptname\\\univname}
+\date       {\today}
+%% Optional Fields TODO: Replace these fields with your own data
+
+% \qualifications{[Insert Previous Qualifications, for example MEng]}
+\orcidid{0000-0000-0000-0000}
+\doi{10.0000/00000000.xxx}
+\volume{i}{i} %Optional Volume Numbering Volume n of m
+\subject    {}
+\keywords   {}
+
+%% ------------------------------ glossary addition
+\usepackage{longtable,floatrow,booktabs}
+% \usepackage{hyperref}
+\usepackage{siunitx}
+
+\usepackage[nogroupskip,toc,indexonlyfirst]{glossaries-extra}
+\usepackage{ifthen}
+
+\newboolean{printglossaryflag}
+\setboolean{printglossaryflag}{true} % Set the flag to true to print the glossary
+
+%=============================================================================
+%   G L O S S A R Y   S E T U P
+%=============================================================================
+
+
+\glsaddkey
+{unit}          % new key
+{\relax}        % default value if "unit" isn't used in \newglossaryentry
+{\glsentryunit} % analogous to \glsentrytext
+{\Glsentryunit} % analogous to \Glsentrytext
+{\glsunit}      % analogous to \glstext
+{\Glsunit}      % analogous to \Glstext
+{\GLSunit}      % analogous to \GLStext
+
+\glsaddkey
+{def}       % new key
+{\relax}            % default value if "def" isn't used in \newglossaryentry
+{\glsentrydef}      % analogous to \glsentrytext
+{\Glsentrydef}      % analogous to \Glsentrytext
+{\glsdef}           % analogous to \glstext
+{\Glsdef}           % analogous to \Glstext
+{\GLSdef}           % analogous to \GLStext
+
+\newglossary[alg]{acronym}{acr}{acn}{List of Acronyms}
+\newglossary[nlgG]{notationGreek}{notG}{ntnG}{Greek Symbols}
+\newglossary[nlgR]{notationRoman}{notR}{ntnR}{Roman Symbols}
+\newglossary[dnlg]{dimensionlessNumber}{dnt}{dntn}{Dimensionless Numbers}
+\newglossary[sslg]{superscript}{sst}{sstn}{Superscripts}
+\newglossary[sblg]{subscript}{sbt}{sbtn}{Subscripts}
+
+% If compiling manually (rather than via latexmk or Overleaf), each glossary
+% needs its own makeindex call, e.g.:
+% makeindex -s main.ist -t main.glg  -o main.gls  main.glo
+% makeindex -s main.ist -t main.alg  -o main.acr  main.acn
+% makeindex -s main.ist -t main.nlgG -o main.notG main.ntnG
+% makeindex -s main.ist -t main.nlgR -o main.notR main.ntnR
+% makeindex -s main.ist -t main.dnlg -o main.dnt  main.dntn
+% makeindex -s main.ist -t main.sslg -o main.sst  main.sstn
+
+% Useful references for the glossaries setup:
+% http://tex.stackexchange.com/questions/78016
+% http://tex.stackexchange.com/questions/71549
+% http://tex.stackexchange.com/questions/8946
+% http://tex.stackexchange.com/questions/26563
+% http://tex.stackexchange.com/questions/126323
+
+% Ensure table captions stay at the top
+\floatsetup[table]{capposition=top, objectset=raggedright,
+    margins=raggedright, midcode=captionskip, captionskip=10pt}
+
+\newglossarystyle{customacronyms}
+{
+    \setglossarystyle{long4colheader}%
+    \renewcommand*{\glossaryheader}{%
+        \textbf{Symbol} & \textbf{Description}
+        \tabularnewline
+        \endhead
+        \endfoot
+    }%
+    \setlength\glsdescwidth{.4\textwidth}%
+    \setlength\glspagelistwidth{.95\textwidth}%
+    \setlength{\extrarowheight}{3pt}%
+    \renewcommand{\glossentry}[2]{\bfseries\glsentryitem{##1}\glstarget{##1}{\glossentryname{##1}} & \glossentrydesc{##1}
+        \tabularnewline
+    }%
+}
+
+\newglossarystyle{customsymbols}
+{
+    \setglossarystyle{long3colheader}%
+    \renewcommand*{\glossaryheader}{%
+        \textbf{Symbol} & \textbf{Description} & \textbf{Units}
+        \tabularnewline
+        \endhead
+        \endfoot
+    }%
+    \setlength\glsdescwidth{.65\textwidth}%
+    \setlength\glspagelistwidth{.95\textwidth}%
+    \setlength{\extrarowheight}{3pt}%
+    \renewcommand{\glossentry}[2]{\glsentryitem{##1}\glstarget{##1}{\glossentryname{##1}} & \glossentrydesc{##1} & \glsentryunit{##1}
+        \tabularnewline
+    }%
+}
+
+\newglossarystyle{customdimlessnum}
+{
+    \setglossarystyle{long3colheader}%
+    \renewcommand*{\glossaryheader}{%
+        \textbf{Symbol} & \textbf{Description} & \textbf{Definition}
+        \tabularnewline
+        \endhead
+        \endfoot
+    }%
+    \setlength\glsdescwidth{.5\textwidth}%
+    \setlength\glspagelistwidth{25\textwidth}%
+    \setlength{\extrarowheight}{20pt}%
+    \renewcommand{\glossentry}[2]{\glsentryitem{##1}\glstarget{##1}{\glossentryname{##1}} & \glossentrydesc{##1} & \glsentrydef{##1}
+        \tabularnewline
+    }%
+}
+
+\makeglossaries
+
+\begin{document}
+%% ------------------ FRONT MATTER ORGANISATION -------------------
+\pagenumbering{gobble} % removes page number
+\copyrightDeclaration{} % !!! Comment this line when printing the hardcopy !!!
+% \raggedright                  %% Left justification; remove for full justification
+                              %% Must be done after copyrightDeclaration
+\frontmatter
+\maketitle
+\begin{abstract}
+
+% Abstract text goes here.
+
+\end{abstract}
+\tableofcontents
+\listoffigures
+\listoftables
+
+%% ---------- AUTHORSHIP DECLARATION / ACKNOW. / DEDICATORY ----------
+%% Either include citations like below (as many as required, spaced with commas or 'and').
+%% \bibentry command must be used here with prepublished papers
+% \authorshipdeclaration{\bibentry{key1}\newline\bibentry{key2}}
+%% Or state no citations:
+% \authorshipdeclaration{}
+%% -----------------------
+\acknowledgements{
+% Acknowledgements text goes here.
+}
+\dedicatory{[Dedication]}
+
+%% ------------------ GLOSSARIES --------------------
+\include{source/1.frontmatter/glossary}
+
+\chapter*{Definitions and abbreviations}
+\addcontentsline{toc}{chapter}{Definitions and Abbreviations}
+
+\glsaddall
+\printglossary[type=acronym,style=customacronyms]
+\printglossary[type=notationGreek,style=customsymbols]
+\printglossary[type=notationRoman,style=customsymbols]
+\printglossary[type=superscript,style=customacronyms]
+\printglossary[type=subscript,style=customacronyms]
+\printglossary[type=dimensionlessNumber,style=customdimlessnum]
+
+\mainmatter
+%% ------------------ MAIN MATTER (CONTENT) --------------------
+
+\include{source/2.introduction/introduction}
+% \include{source/3.methods/methods}
+% \include{source/4.results/results}
+\include{source/5.conclusions/conclusions}
+
+% ----------------------------------------------------------------
+% appendix
+\appendix
+\include{source/appendix/a_appendix}
+\backmatter
+
+\bibliographystyle{apalike}
+\bibliography{UOS}
+\end{document}
+%% ----------------------------------------------------------------

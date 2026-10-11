@@ -1,0 +1,632 @@
+%
+%   宮崎大学工学部、宮崎大学大学院工学課程のための論文スタイル
+%
+%
+% miyazaki-u-paper.sty 31-Jan-93 from j-report.sty 10-Feb-89
+% by Hidenori Ohta
+%
+% Tetsuro Katayama version up on 6-Sep-95 for Doctor thesis.
+%
+% Tetsuro Katayama version up on 13-Dec-01 for Miyazaki Univ.
+%
+% Keisuke Mori version up on 30-Dec-16 for Miyazaki Univ.
+%
+% Keisuke Mori version up on 2019-01-25 for Miyazaki Univ.
+%
+% 現在は、α版。
+%
+% 卒論、修論に対応。
+% ルビは使えない。
+%
+%
+
+\typeout{Document Style `Miyazaki-u Paper' <2019-01-25> by mori@earth.cs.miyazaki-u.ac.jp.}
+
+%
+% 卒論/修論用スタイルファイルの使用法
+%
+% まず、
+%
+% \usepackage{miyazaki-u-paper}
+%
+% とする。
+%
+% はじめに、卒論か修論かを決める。
+% 引数がgであれば卒論、そうでなければ修論になる。
+%
+% \degree{g}
+%
+% 次に、論文の表題と自分の名前を書く。
+%
+% \title{卒論/修論のタイトル}
+% \author{片山 徹郎}
+%
+% 年度を記入
+%
+% \nendo{13}
+%
+% 指導教官を記入
+%
+% \advisor{片山 徹郎 准教授}
+%
+% 学科を記入
+%
+% \major{情報システム工学科}
+%
+% なお修論の場合、年度と指導教員は記入しなくて良い。
+%
+%%%%%% 講座名は入れられない
+%
+% 続いて講座名
+%
+% \cource{産業情報システム講座}
+%
+% を書き、
+%
+%%%%%%
+%
+%
+% \begin{document}
+% \maketitle
+%
+% \preface{概要}
+% 概要 (修士のみ)
+%
+% 本文
+%
+% \end{document}
+%
+% 本文では以下の項目が使える。
+%
+% \part{卒論/修論}			% ○ 第 I 部などとなる。
+% \chapter{はじめに}			% ○ 章
+% \section{目的}			% ○ セクション
+% \subsection{スタイルファイル}		% ○ サブセクション
+% \subsubsection{}			%    サブサブセクション
+% \paragraph{}				%    パラグラフ
+% \subparagraph{}			%    サブパラグラフ
+% \acknowledgment			% ○ 謝辞
+% \begin{thebibliography}		% ○ 参考文献
+%  \bibitem
+% \end{thebibliography}
+% \appendix				% 付録
+%  \chapter{付録の章}			% ○ \chapter を続ける
+%
+% ○のついている項目は目次に現れる。
+%
+% おまけ
+%
+% \commentout{コメント}
+%
+% とすればコメントアウトできる。
+%
+% \ruby{かんじ}{漢字}
+%
+% とすればルビがふれる。
+%
+% 以上
+%			片山 徹郎 (kat@cs.miyazaki-u.ac.jp)
+%
+% 2016-12-30
+% 改変しました。 森 敬介 (mori@earch.cs.miyazaki-u.ac.jp)
+%
+% 2019-01-25
+% 改変しました。 森 敬介 (mori@earch.cs.miyazaki-u.ac.jp)
+%
+% 2025-12-12
+% 改変しました。 木村 優哉 (kimura@earth.cs.miyazaki-u.ac.jp)
+%
+
+\def\@ptsize{2} \@namedef{ds@10pt}{\def\@ptsize{0}}
+\@namedef{ds@11pt}{\def\@ptsize{1}}
+\def\ds@twoside{\@twosidetrue \@mparswitchtrue}
+\def\ds@draft{\overfullrule 5pt}
+\@options
+\input packages/j-rep12.sty\relax
+
+
+\def\degree{\def\@degree}  % ここに卒論か修論か判断するための文字を入れる。そのうち博士論文も判断できるかも？
+\def\figurenumbering{\def\@figurenumbering}
+\def\tablenumbering{\def\@tablenumbering}
+\def\major{\def\@major}
+\def\nendo{\def\@nendo}
+\def\advisor{\def\@advisor}
+%\def\cource{\def\@cource}
+\def\department{\def\@department}
+
+% 令和年度を自動計算
+\newcount\reiwaYear
+\newcount\currentYear
+\currentYear=\year
+\ifnum\month<4 % 1-3月の場合は前年度
+  \advance\currentYear by -1
+\fi
+\reiwaYear=\currentYear
+\advance\reiwaYear by -2018 % 2019年度 = 令和元年度
+
+\degree{} % 卒論の場合はg、修論の場合はm を paper.tex で指定しているはず
+\figurenumbering{f} % 図の目次をつける場合はt
+\tablenumbering{f} % 表の目次をつける場合はt
+\title{論文のタイトル}
+\author{名前}
+% \majorを動的に評価されるマクロとして定義
+\def\@major{%
+\if \@degree g 工学科 情報通信工学プログラム % 卒論の場合
+\else 工学専攻 先端情報コース % 修論の場合
+\fi}
+\nendo{\the\reiwaYear} % 令和年度を自動計算
+\advisor{指導教官の名前}
+%\cource{講座名}
+% \departmentを動的に評価されるマクロとして定義
+\def\@department{%
+\if \@degree g 宮崎大学 工学部 \@major % 卒論の場合
+\else 宮崎大学大学院 工学研究科 \@major % 修論の場合
+\fi}
+\def\@acknowledgmentname{謝辞}
+\def\@appendixname{付録}
+\def\@listoffigures{図目次}
+\def\@listoftables{表目次}
+
+
+
+
+\def\baselinestretch{1.192}
+
+\textwidth 470pt
+\textheight 698pt
+\headsep 26pt
+\topskip 20pt
+\oddsidemargin 0pt
+\topmargin -22pt
+\footskip 18pt
+
+%\parsep 1pt plus 2.5pt minus 1pt
+%\itemsep 1pt plus 2.5pt minus 1pt
+%\topsep 1pt plus 2.5pt minus 1pt
+\partopsep 2pt plus 2pt minus 2pt
+
+%
+%\jintercharskip 0pt plus 5pt minus 0.2pt
+%
+
+
+\def\JTeX{\leavevmode\lower.5ex\hbox{J}\kern-.18em\TeX}
+\def\JLaTeX{\leavevmode\lower.5ex\hbox{\textrm{J}}\kern-.1em\LaTeX}
+
+\def\commentout{\def\@comment}
+
+%\delayedfont\rubyhira=dmjhira5
+%\delayedfont\rubykata=dmjkata5
+%\def\ruby#1#2{\leavevmode\vbox{\baselineskip\z@skip \lineskip.25ex
+% \ialign{##\crcr \let\jhira=\rubyhira \let\jkata=\rubykata
+%  \hfill#1\hfill\crcr\hfill#2\hfill\crcr}}}
+%
+% ルビは現在使えない
+%
+
+
+
+\def\head@chapapp{\@chapapp{\thechapter}}
+\def\baselinechange#1{\def\baselinestretch{#1}\@normalsize}
+\def\chapterfont#1{\gdef\font@c{#1}}
+\chapterfont{\huge\textbf{}}
+%\sectionfont{\Large\textbf{}}{\large\textbf{}}{\large\textbf{}}
+%
+% sectionfont で何故かエラーがでる？？？
+%
+
+
+
+%
+% タイトルページ
+%
+
+\def\maketitle{\newpage
+\if \@degree g { % 卒論の場合
+\null
+\vfil
+ \typeout{表紙}
+\thispagestyle{empty}
+\begin{center}
+{\LARGE 令和 \@nendo 年度 卒業論文 \par}\vskip 2em minus 1em
+{\huge\textbf{\@title}\par}\vskip 20em minus 4em
+{\Large 指導教員 \hskip 1em \@advisor\par}\vskip 3em minus 2em
+%
+%
+%{\Large 宮崎大学 工学部 \par}\vskip 0.5em minus 0.5em
+%{\Large \@major \hskip 1em \@cource \par}\vskip 0.5em minus 0.5em
+%
+{\Large 宮崎大学 工学部 \@major \par}\vskip 0.5em minus 0.5em
+{\LARGE\textbf{\@author}\par}\vskip 6em minus 2em
+{\Large\textbf{\@date}}\vskip 4em minus 1em
+%{\Large\textbf{\@major}\par}\vskip 2em minus 1em
+%{\Large\textbf{\@department}\par}
+\end{center}
+\vfil
+
+}\else{ % 修論の場合
+\null
+\vfil
+ \typeout{表紙}
+\thispagestyle{empty}
+\begin{center}
+{\LARGE 宮崎大学大学院 \\ 修士学位論文 \par}\vskip 2em minus 1em
+{\huge\textbf{\@title}\par}\vskip 10em minus 4em
+{\Large\textbf{\@date}}\vskip 10em minus 1em
+{\Large 宮崎大学大学院 工学研究科 修士課程 \\ \@major \par}\vskip 0.5em minus 0.5em
+{\LARGE\textbf{\@author}\par}\vskip 6em minus 2em
+%{\Large\textbf{\@major}\par}\vskip 2em minus 1em
+%{\Large\textbf{\@department}\par}
+\end{center}
+\vfil
+}\fi
+
+\newpage
+{\pagenumbering{roman}
+ \baselinechange{1}
+ \typeout{\contentsname}
+ \tableofcontents
+ \if \@figurenumbering t {\listoffigures} \fi
+ \if \@tablenumbering t {\listoftables} \fi
+}
+
+\newpage
+\pagenumbering{arabic}
+\pagestyle{myheadings}
+\gdef\chaptermark##1{\@chaptermark{\head@chapapp\ \ {##1}}}
+%\gdef\chaptermark##1{\gdef\@thehead{\vbox{\hbox to \textwidth{
+%  \bf\ \head@chapapp\ \ {##1}\hfil\thepage\ }
+%  \hbox{\rule[-2pt]{\textwidth}{1pt}}}}}
+\gdef\@chaptermark##1{\gdef\@thehead{\vbox{\hbox to \textwidth{
+  \textbf{{##1}\hfil\thepage} }
+  \hbox{\rule[-2pt]{\textwidth}{1pt}}}}}
+\gdef\@thefoot{\vbox{
+ \hrule width\textwidth height0.25pt\vskip3pt
+ \hbox to\textwidth{\hfill{\footnotesize\@department}\hspace{30pt}}}}
+\setcounter{page}{1}
+}
+
+\def\@makechapterhead#1{ \vspace*{50pt} { \parindent 0pt \raggedright
+ \ifnum \c@secnumdepth >\m@ne \font@c \@chapapp{\thechapter} \par
+ \vskip 20pt plus 10pt minus 10pt \fi \font@c \textbf{#1}\par
+ \nobreak \vskip 40pt plus 10pt minus 10pt }
+}
+
+\def\@makeschapterhead#1{ \vspace*{50pt} { \parindent 0pt \raggedright
+ \font@c \textbf{#1}\par
+ \nobreak \vskip 40pt plus 10pt minus 10pt } }
+
+\def\preface#1{\clearpage\typeout{#1}
+ \thispagestyle{plain}
+ \global\@topnum\z@ \@afterindenttrue
+ \addcontentsline{toc}{chapter}{#1}
+ \@chaptermark{\textbf{#1}}
+ \@makeschapterhead{\textbf{#1}}
+ \@afterheading}
+
+% 前書きを入れた方が良いのかな？
+
+
+\def\chapter{\clearpage \thispagestyle{plain} \global\@topnum\z@
+\@afterindenttrue \secdef\@chapter\@schapter}
+
+\def\acknowledgment{\chapter*{\@acknowledgmentname}
+\typeout{\@acknowledgmentname}\addcontentsline{toc}{chapter}{\@acknowledgmentname}
+ \@chaptermark{\@acknowledgmentname}
+ \@afterheading}
+
+\def\appendix{\par
+ \setcounter{chapter}{0}
+ \setcounter{section}{0}
+ \def\@chapapp{\@appendixname\ \Alph{chapter}}
+ \def\head@chapapp{\@appendixname\ \Alph{chapter}}
+ \def\thechapter{}
+ \def\thesection {\Alph{chapter}.\arabic{section}}
+\def\thefigure{\Alph{chapter}.\@arabic\c@figure}
+ \def\thetable{\Alph{chapter}.\@arabic\c@table}
+ \gdef\@chapter[##1]##2{
+  \refstepcounter{chapter}
+  \typeout{\@appendixname\space\Alph{chapter}}
+  \addcontentsline{toc}{chapter}{\@appendixname\ \Alph{chapter} ##1}
+  \chaptermark{##1}
+  \addtocontents{lof}{\protect\addvspace{10pt}}
+  \addtocontents{lot}{\protect\addvspace{10pt}} \if@twocolumn
+  \@topnewpage[\@makechapterhead{##2}]
+  \else \@makechapterhead{##2}
+  \@afterheading \fi}
+}
+
+
+%
+% 箇条書
+%
+
+\def\labelenumi{\theenumi.}
+\def\theenumi{\arabic{enumi}}
+\def\labelenumii{\theenumii}
+\def\theenumii{(\alph{enumii})}
+\def\p@enumii{\theenumi}
+\def\labelenumiii{\theenumiii.}
+\def\theenumiii{\roman{enumiii}}
+\def\p@enumiii{\theenumi\theenumii}
+\def\labelenumiv{\theenumiv.}
+\def\theenumiv{\Alph{enumiv}}
+\def\p@enumiv{\p@enumiii\theenumiii}
+
+\def\labelitemi{$\bullet$}
+\def\labelitemii{\textbf{--}}
+\def\labelitemiii{$\ast$}
+\def\labelitemiv{$\cdot$}
+
+\def\verse{\let\\=\@centercr
+ \list{}{\itemsep\z@ \itemindent -1.5em\listparindent \itemindent
+ \rightmargin\leftmargin\advance\leftmargin 1.5em}\item[]}
+\let\endverse\endlist
+\def\quotation{\list{}{\listparindent 1.5em
+ \itemindent\listparindent
+ \rightmargin\leftmargin\parsep 0pt plus 1pt}\item[]} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\let\endquotation=\endlist
+\def\quote{\list{}{\rightmargin\leftmargin}\item[]}
+\let\endquote=\endlist
+
+\def\descriptionlabel#1{\hspace\labelsep \textbf{#1}}
+\def\description{\list{}{\labelwidth\z@ \itemindent-\leftmargin
+ \let\makelabel\descriptionlabel}}
+\let\enddescription\endlist
+\newdimen\descriptionmargin
+\descriptionmargin=3em
+
+
+\def\titlepage{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+ \else \newpage \fi \thispagestyle{empty}\c@page\z@}
+\def\endtitlepage{\if@restonecol\twocolumn \else \newpage \fi}
+
+\arraycolsep 5pt \tabcolsep 6pt \arrayrulewidth .4pt \doublerulesep 2pt
+\tabbingsep \labelsep
+\skip\@mpfootins = \skip\footins
+\fboxsep = 3pt \fboxrule = .4pt
+
+\newcounter {countPart}
+\newcounter {countChapter}
+\newcounter {countSection}[countChapter]
+\newcounter {countSubsection}[countSection]
+\newcounter {countSubsubsection}[countSubsection]
+\newcounter {countParagraph}[countSubsubsection]
+\newcounter {countSubparagraph}[countParagraph]
+
+\def\thepart {\Roman{part}}
+\def\thechapter {\arabic{chapter}}
+\def\thesection {\thechapter.\arabic{section}}
+\def\thesubsection {\thesection.\arabic{subsection}}
+\def\thesubsubsection {\thesubsection .\arabic{subsubsection}}
+\def\theparagraph {\thesubsubsection.\arabic{paragraph}}
+\def\thesubparagraph {\theparagraph.\arabic{subparagraph}}
+
+\def\part{\cleardoublepage \thispagestyle{plain} \if@twocolumn \onecolumn
+\@tempswatrue \else \@tempswafalse \fi \hbox{}\vfil \secdef\@part\@spart}
+
+\def\@part[#1]#2{\ifnum \c@secnumdepth >-2\relax \refstepcounter{part}
+\addcontentsline{toc}{part}{\thepart \hspace{1em}#1}\else
+\addcontentsline{toc}{part}{#1}\fi \markboth{}{}
+\@chaptermark{\@partapp{\thepart}\ #1}
+ {\centering \ifnum \c@secnumdepth >-2\relax \LARGE\textbf{\@partapp{\thepart}} \par
+\vskip 20pt \fi \LARGE \textbf{#1}\par}\@endpart}
+\def\@endpart{\vfil\newpage \if@twoside \hbox{} \thispagestyle{empty}
+ \newpage
+ \fi \if@tempswa \twocolumn \fi}
+\def\@spart#1{{\centering \LARGE \textbf{#1}\par}\@endpart}
+
+\def\@pnumwidth{1.55em}
+\def\@tocrmarg {2.55em}
+\def\@dotsep{4.5}
+\setcounter{tocdepth}{2}
+
+
+\def\tableofcontents{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+ \fi\chapter*{\contentsname\@mkboth{\contentsname}{\contentsname}}
+ \@starttoc{toc}\if@restonecol\twocolumn\fi}
+\def\l@part#1#2{\addpenalty{-\@highpenalty}
+ \addvspace{2.25em plus 1pt} \begingroup
+ \@tempdima 3em \parindent \z@ \rightskip \@pnumwidth \parfillskip
+-\@pnumwidth
+ {\large \textbf{\leavevmode #1\hfil \hbox to\@pnumwidth{\hss #2}}}\par
+ \nobreak \endgroup}
+
+\def\l@countChapter#1#2{\pagebreak[3]
+ \vskip 1.0em plus 1pt \@tempdima 0em \begingroup
+ \parindent \z@ \rightskip \@pnumwidth
+ \parfillskip -\@pnumwidth
+ {\leavevmode \advance\leftskip\@tempdima \hskip -\leftskip \textbf{#1}\nobreak\hfil
+ \nobreak\hbox to\@pnumwidth{\hss \ttfamily #2}}\par % \ttfamilyは正確なフォントじゃないことに注意
+\endgroup}
+\def\l@section{\@dottedtocline{1}{2.5em}{2.3em}} % 以下2つめの引数を全て +1 している
+\def\l@subsection{\@dottedtocline{2}{4.8em}{3.2em}}
+\def\l@subsubsection{\@dottedtocline{3}{8.0em}{4.1em}}
+\def\l@paragraph{\@dottedtocline{4}{11em}{5em}}
+\def\l@subparagraph{\@dottedtocline{5}{13em}{6em}}
+\def\listoffigures{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+ \fi\chapter*{\listfigurename\@mkboth
+ {\listfigurename}{\listfigurename}}\@starttoc{lof}\if@restonecol
+ \twocolumn\fi}
+\def\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
+\def\listoftables{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+ \fi\chapter*{\listtablename\@mkboth
+ {\listtablename}{\listtablename}}\@starttoc{lot}\if@restonecol
+ \twocolumn\fi}
+\let\l@table\l@figure
+
+
+\def\thebibliography#1{\chapter*{\refname\@mkboth
+ {\refname}{\refname}}
+ \typeout{\refname}\addcontentsline{toc}{chapter}{\refname}
+ \@chaptermark{\refname}
+ \list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+ \def\newblock{\hskip .11em plus .33em minus .07em}
+ \sloppy\clubpenalty4000\widowpenalty4000
+ \sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist
+
+\newif\if@restonecol
+\def\theindex{\@restonecoltrue\if@twocolumn\@restonecolfalse\fi
+\columnseprule \z@
+\columnsep 35pt\twocolumn[\@makeschapterhead{\indexname}]
+ \@mkboth{\indexname}{\indexname}\thispagestyle{plain}\parindent\z@
+ \parskip\z@ plus .3pt\relax\let\item\@idxitem}
+\def\@idxitem{\par\hangindent 40pt}
+\def\subitem{\par\hangindent 40pt \hspace*{20pt}}
+\def\subsubitem{\par\hangindent 40pt \hspace*{30pt}}
+\def\endtheindex{\if@restonecol\onecolumn\else\clearpage\fi}
+\def\indexspace{\par \vskip 10pt plus 5pt minus 3pt\relax}
+
+\def\footnoterule{\kern-3\p@
+ \hrule width .4\columnwidth
+ \kern 2.6\p@}
+\@addtoreset{footnote}{chapter}
+\long\def\@makefntext#1{\parindent 1em\noindent
+ \hbox to 1.8em{\hss$^{\@thefnmark}$}#1}
+
+
+\setcounter{topnumber}{2}
+\def\topfraction{.7}
+\setcounter{bottomnumber}{1}
+\def\bottomfraction{.3}
+\setcounter{totalnumber}{3}
+\def\textfraction{.2}
+\def\floatpagefraction{.5}
+\setcounter{dbltopnumber}{2}
+\def\dbltopfraction{.7}
+\def\dblfloatpagefraction{.5}
+
+\def\@tabletype{table}
+\long\def\@makecaption#1#2{
+ \ifx\@captype\@tabletype
+   % 表の場合：キャプションの後にスペース
+   \setbox\@tempboxa\hbox{#1: #2}
+   \ifdim \wd\@tempboxa >\hsize #1: #2\par \else \hbox to\hsize{\hfil\box\@tempboxa\hfil} \fi
+   \vskip 10pt
+ \else
+   % 図の場合：キャプションの前にスペース
+   \vskip 10pt
+   \setbox\@tempboxa\hbox{#1: #2}
+   \ifdim \wd\@tempboxa >\hsize #1: #2\par \else \hbox to\hsize{\hfil\box\@tempboxa\hfil} \fi
+ \fi}
+
+
+\newcounter{countFigure}[countChapter]
+\def\thefigure{\thechapter.\@arabic\c@figure}
+\def\fps@figure{tbp}
+\def\ftype@figure{1}
+\def\ext@figure{lof}
+\def\fnum@figure{\figurename \thefigure}
+\def\figure{\@float{figure}}
+\let\endfigure\end@float
+\@namedef{figure*}{\@dblfloat{figure}}
+\@namedef{endfigure*}{\end@dblfloat}
+\newcounter{countTable}[countChapter]
+\def\thetable{\thechapter.\@arabic\c@table}
+\def\fps@table{tbp}
+\def\ftype@table{2}
+\def\ext@table{lot}
+\def\fnum@table{\tablename \thetable}
+\def\table{\@float{table}}
+\let\endtable\end@float
+\@namedef{table*}{\@dblfloat{table}}
+\@namedef{endtable*}{\end@dblfloat}
+
+\mark{{}{}}
+
+\if@twoside \def\ps@headings{\let\@mkboth\markboth
+\def\@oddfoot{}\def\@evenfoot{}\def\@evenhead{\textrm{\thepage\hfil
+\leftmark}}\def\@oddhead{\hbox{} \rightmark \hfil
+\textrm{\thepage}}\def\chaptermark##1{\markboth {{\ifnum \c@secnumdepth
+>\m@ne
+ \@chapapp{\thechapter} \ \fi ##1}}{}}\def\sectionmark##1{\markright
+{{\ifnum \c@secnumdepth >\z@
+ \thesection. \ \fi ##1}}}}
+\else \def\ps@headings{\let\@mkboth\markboth
+\def\@oddfoot{}\def\@evenfoot{}\def\@oddhead{\hbox {} \rightmark \hfil
+\textrm{\thepage}}\def\chaptermark##1{\markright {{\ifnum \c@secnumdepth
+>\m@ne
+ \@chapapp{\thechapter} \ \fi ##1}}}}
+\fi
+\def\ps@myheadings{\let\@mkboth\@gobbletwo
+\def\@oddhead{\hbox{}\rightmark \hfil
+\textrm{\thepage}}\def\@oddfoot{}\def\@evenhead{\textrm{\thepage\hfil\leftmark\hbox
+{}}}\def\@evenfoot{}\def\chaptermark##1{}%
+\def\sectionmark##1{}\def\subsectionmark##1{}}
+
+
+\@addtoreset{equation}{chapter}
+\def\theequation{\thechapter.\arabic{equation}}
+
+
+\ps@plain \pagenumbering{arabic} \onecolumn \if@twoside\else\raggedbottom\fi
+
+\flushbottom
+
+\def\abstractname{要 旨}
+\def\tablename{表 }
+\def\figurename{図 }
+\def\indexname{さくいん}
+\def\refname{参考文献}
+\def\contentsname{目次}
+\def\@chapapp#1{\textbf{第 #1 章}}
+\def\@partapp#1{第 #1 部}
+
+\def\today{\the\year 年 \the\month 月}
+
+\def\sloppy{\tolerance 5000 \hfuzz .5\p@ \vfuzz .5\p@}
+
+
+
+
+
+
+
+
+\newenvironment{itemize2}%
+{%
+   \begin{list}{$\bullet$\ \ }% 見出し記号／直後の空白を調節
+   {%
+      \setlength{\itemindent}{0pt}
+      \setlength{\leftmargin}{3zw}%  左のインデント
+      \setlength{\rightmargin}{0zw}% 右のインデント
+      \setlength{\labelsep}{0zw}%    黒丸と説明文の間
+      \setlength{\labelwidth}{3zw}%  ラベルの幅
+      \setlength{\itemsep}{0em}%     項目ごとの改行幅
+      \setlength{\parsep}{0em}%      段落での改行幅
+      \setlength{\listparindent}{0zw}% 段落での一字下り
+   }
+}{%
+   \end{list}%
+}
+
+\newcounter{enum2}
+\newenvironment{enumerate2}{%
+   \begin{list}%
+   {%
+      \arabic{enum2}.\ \,%  見出し記号／直後の空白を調節
+   }%
+   {%
+      \usecounter{enum2}
+      \setlength{\itemindent}{0zw}%  ここは 0 に固定
+      \setlength{\leftmargin}{3zw}%  左のインデント
+      \setlength{\rightmargin}{0zw}% 右のインデント
+      \setlength{\labelsep}{0zw}%    黒丸と説明文の間
+      \setlength{\labelwidth}{3zw}%  ラベルの幅
+      \setlength{\itemsep}{0em}%     項目ごとの改行幅
+      \setlength{\parsep}{0em}%      段落での改行幅
+      \setlength{\listparindent}{0zw}% 段落での一字下り
+   }
+}{%
+   \end{list}%
+}
+
+
+
+
+\setlength{\parskip}{0cm} % 段落間の高さ
+\setlength{\itemsep}{0cm} % 項目間の高さ

@@ -1,0 +1,161 @@
+% 第二章 模板使用说明
+\chapter{模板使用说明}
+
+本章以“够用、好抄、容易改”为目标，集中说明这套昆明理工大学论文模板的常见写法。
+建议先通读一遍，再按需复制示例到自己的章节中。正文示例尽量使用本模板中已经实现并编译通过的命令，
+这样修改时不容易破坏整体版式。
+
+\section{章节与正文的基本组织}
+
+一篇完整论文通常由封面、声明、中英文摘要、目录、正文、参考文献和附录等部分组成。
+本模板已经在 \verb|main.tex| 中完成总体组织，用户日常只需维护 \verb|contents/| 目录下的章节文件，
+以及 \verb|setup.tex| 中的封面信息即可。
+
+\subsection{如何添加新的正文内容}
+
+如果只是在现有章节中补文字，直接在对应的 \verb|contents/*.tex| 文件里续写即可。
+如果需要新开一章，可以仿照现有写法增加一个新的章节文件，并在 \verb|main.tex| 中用 \verb|\input| 引入。
+例如：
+
+\begin{verbatim}
+\input{contents/chapter2}
+\input{contents/chapter3}
+\end{verbatim}
+
+正文中的一级标题、二级标题、三级标题和四级标题已经分别对应 \verb|\chapter|、
+\verb|\section|、\verb|\subsection| 和 \verb|\subsubsection|。因此，用户只需关注内容本身，
+标题字号、行距、段前段后和页眉样式都会由模板自动控制。
+
+\section{表格的写法与正文引用}
+
+昆工论文中最常见的是三线表。为了避免表格过窄，本模板提供了 \verb|kusttabular| 环境，
+它会把表格按正文宽度均匀展开；表题使用 \verb|\bicaption|，正文中再通过 \verb|\label| 和
+\verb|\ref| 实现交叉引用。
+
+\subsection{三线表的基本示例}
+
+表~\ref{tab:instruments} 给出了一个最小可用的三线表示例。实际使用时，只需要改表头、数据和中英文表名。
+
+\begin{table}[htbp]
+    \centering
+    \bicaption{实验主要仪器}{Main experimental instruments}
+    \label{tab:instruments}
+    \begin{kusttabular}{lll}
+        \toprule
+        设备名称 & 厂家 & 型号 \\
+        \midrule
+        恒温培养箱 & Thermo Scientific & 51030690 \\
+        倒置显微镜 & Olympus & IX73 \\
+        低温离心机 & Eppendorf & 5810R \\
+        超净工作台 & Heal Force & HFsafe-1200LC \\
+        酶标仪 & BioTek & Synergy H1 \\
+        \bottomrule
+    \end{kusttabular}
+    \fignote{注：如有需要可对表格进行注释说明。\par 数据来源：如需对数据来源进行说明，请参照此格式，不需要请删除。}
+\end{table}
+
+对应的最小代码结构如下：
+
+\begin{verbatim}
+\begin{table}[htbp]
+    \centering
+    \bicaption{中文表名}{English table title}
+    \label{tab:example}
+    \begin{kusttabular}{lll}
+        \toprule
+        表头1 & 表头2 & 表头3 \\
+        \midrule
+        数据1 & 数据2 & 数据3 \\
+        \bottomrule
+    \end{kusttabular}
+\end{table}
+\end{verbatim}
+
+如果希望在正文里引用它，可以直接写成“如表~\ref{tab:instruments} 所示”。
+其中 \verb|tab:instruments| 只是标签名，用户可以按自己的习惯改成更容易记忆的写法。
+
+\subsection{带说明信息的配方表}
+
+对于试剂配方、病例分组、参数设置这类信息比较规整的内容，可以用表~\ref{tab:reagent} 这样的形式：
+
+\begin{table}[htbp]
+    \centering
+    \bicaption{细胞冻存液配制}{Cell cryopreservation solution preparation}
+    \label{tab:reagent}
+    \begin{kusttabular}{llll}
+        \toprule
+        组分 & 用量 & 注意事项 & 保存条件 \\
+        \midrule
+        DMSO & 1 mL & 现配现用，避免反复冻融 & 4℃ \\
+        胎牛血清 & 4 mL & 使用前充分混匀 & -20℃ \\
+        RPMI-1640 & 5 mL & 无菌条件下配制 & 4℃ \\
+        \bottomrule
+    \end{kusttabular}
+\end{table}
+
+这类表格适合在正文里配合解释性语句一起出现，例如：“本实验所用冻存液组成见表~\ref{tab:reagent}，
+配制完成后需尽快分装并低温保存。”
+
+\section{图片、图题与图注的写法}
+
+单图、双图、图注和图片来源说明已经在本模板中封装好了。单图主要关注
+\verb|\includegraphics|、\verb|\bicaption| 和 \verb|\fignote|；双图则额外需要在各自图片下方放置分图名。
+
+\subsection{单图的基本示例}
+
+图~\ref{fig:single-image-example} 展示了单图的标准写法。
+图题位于图片下方，图注和图片来源说明继续放在总图题下方，并保持相同样式。
+
+如果需要在正文中引用图片，只需写“如图~\ref{fig:single-image-example} 所示”即可。
+
+\subsection{双图与分图名的写法}
+
+当一个图由两个或两个以上分图组成时，各分图分别以 (a)、(b)、(c) 等作为图序，
+并把分图名直接放在各自图片的正下方；总图名则放在所有分图下方正中。
+本模板在第三章已经给出双图示例，用户可以直接参考图~\ref{fig:two-image-example} 的实现方式。
+
+\section{公式、编号与交叉引用}
+
+本模板已经加载了 \verb|amsmath|，因此常见的行间公式、对齐公式和多行公式都可以直接使用。
+单个公式最常用的是 \verb|equation| 环境，例如：
+
+\begin{equation}
+    E = mc^2
+    \label{eq:einstein}
+\end{equation}
+
+只要给公式加上 \verb|\label|，正文里就可以写成“由式~(\ref{eq:einstein}) 可知”。
+如果一个段落中需要连续引用图、表和公式，也可以直接混合书写，例如：
+“如图~\ref{fig:single-image-example}、表~\ref{tab:instruments} 和式~(\ref{eq:einstein}) 所示，
+不同类型的对象都可以通过标签机制统一管理。”
+
+\section{参考文献的引用方法}
+
+本模板使用 \verb|biblatex| 配合 \verb|biber| 管理参考文献，文献数据库在 \verb|reference.bib| 中，
+输出位置由 \verb|main.tex| 中的 \verb|\printbibliography| 控制。
+
+\subsection{正文中的引用写法}
+
+最常见的引用命令是 \verb|\cite{...}|。例如，下面这句话演示了引用的基本形式：
+近年来，复杂网络和肿瘤治疗相关研究都在持续推进\cite{mayWillLargeComplex1972,beltranNewTherapiesCastrationresistant2011}。
+
+如果引用显示没有更新，通常不是模板出错，而是还需要重新运行一次完整编译流程：
+\verb|xelatex -> biber -> xelatex -> xelatex|。
+
+\subsection{写作时的实用建议}
+
+为了让后续维护更轻松，建议养成以下习惯：
+
+\begin{itemize}
+    \item 每插入一个图、表或公式，就立即补上 \verb|\label|。
+    \item 标签名前缀保持统一，例如图用 \verb|fig:|，表用 \verb|tab:|，公式用 \verb|eq:|。
+    \item 表格优先使用 \verb|kusttabular|，不要直接回退到普通 \verb|tabular|。
+    \item 图题、表题和图注尽量复用模板现成命令，避免在正文里手工调字号和行距。
+    \item 参考文献出现问号时，先检查文献键名，再检查是否运行了 \verb|biber|。
+\end{itemize}
+
+\section{本章小结}
+
+本章的目标不是穷尽所有 \LaTeX{} 技巧，而是提供一组足够稳定、足够常用的模板写法。
+如果只是完成论文排版，通常掌握以下几类操作就已经足够：录入章节正文、插入三线表、插入单图与双图、
+引用图表公式，以及调用参考文献。后续写作时，用户完全可以把本章当作一份就地可查的模板手册来使用。

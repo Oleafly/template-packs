@@ -1,0 +1,66 @@
+% Chapter, section, appendix, and bibliography formatting.
+
+\def\@makechapterhead#1{
+  {\parindent=0pt
+      \ifnum \c@secnumdepth >\m@ne
+        \LARGE\bf
+        \ifx\@korean\@@@@undefined@@@@
+          \@chapapp{} \thechapter
+        \else
+          제 \thechapter 장
+        \fi
+        \vskip0pt
+      \fi
+      \LARGE\bf #1 \vskip50pt
+      \nobreak
+    }
+}
+
+\def\@makeschapterhead#1{
+  {\parindent=0pt\begin{center}
+        \Large\bf #1\par
+        \nobreak\vskip10pt \end{center}
+    }
+}
+
+\def\@chapapp{Chapter}
+\renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+
+\def\section{
+  \@startsection {section}{1}{\z@}
+  {3.5ex plus 1ex minus .2ex}
+  {1.7ex plus.2ex}
+  {\bf}
+ }
+
+\def\subsection{
+  \@startsection{subsection}{2}{\z@}
+  {3.25ex plus 1ex minus .2ex}
+  {1.7ex plus.2ex}
+  {\bf}
+}
+
+\def\appendix{\par\setcounter{chapter}{0}\setcounter{section}{0}
+  \def\@chapapp{Appendix}
+  \def\thechapter{\Alph{chapter}}
+}
+
+\def\thebibliography#1{\chapter*{\bibname\@mkboth
+    {\uppercase{\bibname}}{\uppercase{\bibname}}}
+  \addcontentsline{toc}{chapter}{\bibname}\list
+  {\arabic{enumi}.~}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \usecounter{enumi}}
+  \def\newblock{\hskip .11em plus .33em minus .07em}
+  \sloppy\clubpenalty4000\widowpenalty4000
+  \sfcode`\.=1000\relax\thispagestyle{plain}\pagestyle{plain}\relax
+}
+
+\renewcommand{\endthebibliography}{\label{paperlastpagelabel}
+  \def\@noitemerr{\@warning{Empty `thebibliography' environment}}
+  \thispagestyle{plain}\pagestyle{plain}
+  \endlist
+}

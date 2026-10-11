@@ -1,0 +1,95 @@
+\documentclass[12pt,fleqn,a4paper,oneside]{mybook} %Final!!!
+%\documentclass[11pt,fleqn,a4paper,draft]{mybook} %DRAFT - highlights overflow, leaves out images
+
+%\usepackage{microtype}
+\usepackage[slovak]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage{mathtools}  					
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{enumerate}
+\usepackage{etoolbox}                       %Problematic URL in reference
+\apptocmd{\sloppy}{\hbadness 10000\relax}{}{}%Removes badness warnings
+%This is to remove warnings resulting by otherwise OK URL's
+\usepackage[hyphens]{url}
+\usepackage{notes}
+
+
+%This custom command defines how the literal menus look like.
+\newcommand{\gui}[1]{{\emph{#1}}} %Gui commands, icon names, buttons
+ % All code, functions, variables are typed like this
+\newcommand{\code}[1]{{\lstinline[columns=fixed]{#1}}}
+
+\newcommand{\angl}[1]{{\footnote{\emph{angl.}\ {#1}}}} %Shorthand english equivalent
+
+
+\usepackage[left=25mm,right=25mm,top=25mm,bottom=25mm,paperwidth=210mm,paperheight=297mm,includehead]{geometry}
+
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]{\normalfont\huge\bfseries}{\thechapter}{1em}{}
+
+
+\DeclarePairedDelimiter{\diagpars}{(}{)}
+\newcommand{\diag}{\operatorname{diag}\diagpars}
+
+\let\oldhat\hat
+\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+%\renewcommand{\hat}[1]{\oldhat{\boldsymbol{\mathbf{#1}}}}
+
+
+\usepackage{amsthm}
+\usepackage{etoolbox}% http://ctan.org/pkg/etoolbo
+\theoremstyle{definition}
+\newtheorem{exmp}{Pr\'{i}klad}[chapter]
+\AtEndEnvironment{exmp}{\null\hfill\qedsymbol}
+
+\usepackage{listings,color} 			    %To list Matlab code
+\definecolor{mygrey}{gray}{0.5}	        %Define a gray color
+\lstset{
+basicstyle=\ttfamily,
+numbers=none,
+commentstyle=\color{mygrey},
+breaklines=true,
+}
+%extended Matlab language
+\lstdefinelanguage{exMatlab}[]{Matlab}      %Defining expanded Matlab
+{morekeywords={rng,pyulear,plot,hold,randn,filter,length,abs,periodogram,fft,sin,randn,xcorr,fminsearch,dlqr,predmodelqp,dlyap,ones,linprog,quadprog,optimset,qpOASES,qpOASES_sequence,sysStruct,probStruct,mpt_control,volume,hull,extreme,mpt_exportc,mpt_getInput,sdpvar,blkdiag,sdpsettings,solvesdp,geomean,double},
+sensitive=true,
+alsoletter={_}
+}
+
+
+
+\pagestyle{empty}
+
+\begin{document}
+%%%%%%% Zaciaatok %%%%%%%%
+\input{Obalka}
+\input{Titul}
+\input{Zadanie}
+\input{Prehlasenie}
+\input{Podakovanie}
+\input{Abstrakt}
+\input{Predhovor}
+\tableofcontents
+\thispagestyle{empty}
+\cleardoublepage
+
+%%%%%% Jednotlive kapitoly %%%%%%%%%
+\pagestyle{plain}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\include{Uvod}
+\include{Kapitola1}
+\include{Kapitola2}
+%[...]
+\include{Zaver}
+
+%%%%%%% Koniec %%%%%%%%
+\bibliographystyle{abbrv}
+\addcontentsline{toc}{chapter}{Literat\'{u}ra}
+\bibliography{bibliog}
+\end{document}

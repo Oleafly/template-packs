@@ -1,0 +1,268 @@
+%
+%%%%%%%%%%%%%%%%%%%%%%%% Environments
+%
+% use them with 
+% \begin{...}
+% \end{...}
+
+
+
+
+
+%%% Theorem environment definitions
+\declaretheoremstyle[%
+					spaceabove = \baselineskip,%
+					spacebelow = \baselineskip,%
+					bodyfont = \normalfont,%
+					headfont = \normalfont\bfseries,% 
+					postheadspace = \newline,%
+					notebraces = {(}{)},%
+					notefont = \normalfont,%
+					headpunct = {},
+					headformat = \NAME\ \NUMBER \NOTE,
+					]{mytheoremstyle}
+\declaretheorem[%
+				name = Definition,% 
+				parent = section,% 
+				style = mytheoremstyle,% 
+				qed = {$\diamond$},%
+				]{definition}
+\declaretheorem[%
+				name = Construction,% 
+				parent = section,% 
+				style = mytheoremstyle,% 
+				qed = {},%
+				]{construction}
+
+\declaretheoremstyle[%
+					spaceabove = \baselineskip,%
+					spacebelow = \baselineskip,%
+					bodyfont = \normalfont,%
+					headfont = \normalfont\bfseries,% 
+					postheadspace = { },%
+					notebraces = {}{},%
+					notefont = \normalfont,%
+					headpunct = {},%
+					headformat = \NAME\ \NUMBER:,%\NOTE,
+					]{myremarkstyle}
+\declaretheorem[%
+				name = Remark,%
+				parent = section,%
+				style = myremarkstyle,% 
+				qed = {},%
+				]{remark}
+\declaretheorem[%
+				name = Example,%
+				parent = section,%
+				style = myremarkstyle,% 
+				qed = {},%
+				]{example}
+							
+				
+
+%\newtheoremstyle{definition}% name
+%{\baselineskip}% Space above
+%{\baselineskip}% Space below
+%{\normalfont}% Body font
+%{}% Indent amount
+%{\normalfont\bfseries}% Theorem head font
+%{}% Punctuation after theorem head
+%{\newline}% Space after theorem head
+%{}% Theorem head spec (can be left empty, meaning normal)
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}[section]
+%\newtheorem{construction}{Construction}[section]
+%\newtheorem{example}{Example}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{corollary}{Corollary}[section]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% === Experiment env ===
+\DeclareFloatingEnvironment[fileext=lop,placement={tbh!},name=Experiment,within=chapter]{experiment}
+\captionsetup[experiment]{labelfont={},name={Experiment},labelsep=colon}
+
+\makeatletter
+\let\c@experiment\c@figure
+\makeatother
+
+
+
+\newenvironment{keywords}%
+{%
+	\begin{trivlist}%
+		\item[]{\bfseries Keywords:}%
+	}%
+	{%
+	\end{trivlist}%
+}%
+
+
+%%%%% old ABS environments
+
+%
+%\newenvironment{experiment}[1][]{%
+%		\begin{list}{}{%
+%			\leftmargin=1em%
+%			\parsep=0pt%
+%			\itemsep=3pt%
+%			}%
+%			\ifx&#1&%
+%				% #1 is empty
+%			\else%
+%				\vspace{0.15em}
+%				\item[#1]~
+%				
+%			\fi%				 	
+%		
+%		}{%
+%		\end{list}%
+%}%
+
+
+%\newenvironment{experimentcentered}[2][0.5]{%
+%	\begin{center}
+%	\begin{varwidth}{\textwidth}
+%		\begin{list}{}{%
+%			\leftmargin=1em%
+%			\parsep=1pt%
+%			\itemsep=3pt%
+%			}%
+%				%\vspace{100.15em}
+%				\item[\underline{
+%						\makebox[#1\textwidth][l]{#2}}]~		 	
+%		}{%
+%		\end{list}%
+%		~
+%		\bigskip
+%	\end{varwidth}	
+%	\end{center}
+%}%
+
+
+
+%%%%% Experiments in cryptocode
+
+%\createpseudocodeblock{pcb}{center , boxed}{}{}{}
+%\createprocedureblock{expproc}{center , boxed}{}{$\mathrm{Experiment}$\xspace}{ linenumbering}
+% this is what I used:
+\createprocedureblock{experimentcentered}{}{}{}{ linenumbering, codesize = \normalsize }
+
+
+
+
+%%%% Style %%%%%
+
+% local table of content
+\newcommand{\localtoc}[1]{
+  %\rule{\linewidth}{1pt}
+  \textbf{Summary.}
+  #1 % this is the argument for the summary
+  \etocsettocstyle{
+  		{\color{myorange}\bigskip\hrule\kern0pt\hrule\medskip\smallskip}
+  	}
+  		{\noindent{\color{myorange}\hrule\kern0pt\hrule}\bigskip\par\noindent}
+  \localtableofcontents
+}
+
+% style of chapter pages
+\usepackage{scrlayer-scrpage}
+\KOMAoptions{%
+	headwidth=(\textwidth+.5\marginparwidth):0mm,% width of header
+	chapterprefix=false,
+}
+
+\pagestyle{scrheadings}% activate the style
+\clearpairofpagestyles
+%\ohead[]{\thepage}% pagenumber in outer margin
+%\ofoot{\pagemark}
+\ofoot[\pagemark]{\pagemark} 
+%\cfoot[\pagemark]{\pagemark} 
+\lohead[]{\rightmark}% section name in odd pages
+\rehead[]{\leftmark}% chapter name in even pages
+%\setkomafont{pageheadfoot}{\bfseries}% all headers and footer in bold font
+
+
+% Part style
+
+\renewcommand{\partheadmidvskip}{%
+  \par\nobreak\vspace*{.5\baselineskip}%
+  {
+  \color{myorange}
+	    	\kern 10pt \hrule width \hsize height 1pt \kern 7pt 
+  }
+  \par\nobreak\vspace*{.5\baselineskip}%
+}
+\renewcommand{\partpagestyle}{empty}
+
+%\newlength{\currenttitlewidth}%
+%\newlength{\currentnumberwidth}%
+%\renewcommand{\chapterlinesformat}[3]{
+%	\begin{tikzpicture}[remember picture,overlay]
+%	\coordinate (meet) at ($(current page marginpar area.north east) +
+%	(-\dimexpr0.3\marginparsep+\marginparwidth\relax, -3\baselineskip)$);
+%	\ifx#2\empty %nothing to do
+%	\else
+%	\node[anchor = south west] (num) at (meet) {\resizebox{!}{2\baselineskip}{\textcolor{gray}{\thechapter}}};
+%	\fi
+%	\node [anchor = south east, align=right] (title) at (meet)
+%	{\begin{varwidth}{\textwidth}\raggedleft #3\end{varwidth}};
+%	\draw (title.south west) -- ($(title.south east -|current page marginpar area.east) - (1.5ex,0)$);%
+%	\end{tikzpicture}
+%}
+%\renewcommand{\chapterlinesformat}[3]{%
+%%\parbox[b]{\dimexpr\textwidth-2em\relax}{\raggedchapter #2 #3}
+%	\makebox[0.99\textwidth][b]{% dont know why but 1.0\textwidth causes badboxes
+%				\ifx#2\empty%
+%			% nothing to do when no chapter number is set
+%		\else%
+%			\settowidth{\currentnumberwidth}{% compute width of number
+%				\resizebox{!}{1.8\baselineskip}{\thechapter}%
+%			}%
+%				\resizebox{!}{1.8\baselineskip}{\thechapter}% set the number
+%		\fi%
+%		%
+%		\hspace*{\dimexpr+8pt\relax}
+%		\parbox[b]{\textwidth}{% set the title
+%			
+%			\raggedright #3%
+%		}%
+%	}%
+%	% draw the line
+%	\vskip-.2\baselineskip% small vertical skip
+%	\settowidth{\currenttitlewidth}{% compute length of line
+%		\begin{varwidth}{\textwidth}%
+%			\raggedleft#3%
+%		\end{varwidth}%
+%	}%
+%	\ifdim\textwidth<\currenttitlewidth%
+%		\setlength{\currenttitlewidth}{\textwidth}%
+%	\fi%
+%	\hspace*{\dimexpr-\marginparwidth+17pt\relax}%
+%	\makebox[0pt][l]{%
+%		\color{myorange}\rule{\dimexpr\currenttitlewidth+\marginparwidth-17pt\relax}{1pt}%
+%	
+%	}%
+%}
+
+
+
+\renewcommand*\chapterformat{%
+    \quad
+    \textcolor{myorange}{\fontsize{80pt}{80pt}\selectfont\thechapter}%
+}
+
+\renewcommand*\chapterlinesformat[3]{%
+    \parbox[b]{\dimexpr\textwidth-2em\relax}{\raggedchapter #3}%
+    \hfill
+    \makebox[0pt][l]{#2}%
+    %\bigskip
+    \newline
+    \makebox[0pt][l]{%
+		\color{myorange}\rule{\dimexpr\textwidth+\marginparwidth\relax}{1pt}%
+	}
+}
+

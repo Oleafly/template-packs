@@ -1,0 +1,74 @@
+% pdf内のハイパーリンクの設定
+% コンパイル時間が倍増するため, 基本はコメントアウト推奨
+\AtEndOfPackage{
+  \usepackage[dvipdfmx,
+    bookmarks=true,% ブックマークを作成
+    bookmarksnumbered=true,% しおりのレベル
+    colorlinks=false,% false: boxed links; true: colored links
+    setpagesize=false,
+    hyperfootnotes=false,
+	pdfborder={0 0 0},
+    pdftitle={The Title of Your Master Thesis},% text for PDF Title field
+    pdfauthor={Your Name},% text for PDF Author field
+    pdfcreator={Your Name},% text for PDF Creator field
+    pdfproducer={Your Name},% text for PDF Producer field
+    pdfsubject={修士論文},   % text for PDF Subject field
+    ]{hyperref}%
+  \usepackage{pxjahyper}%
+}
+
+% 目次の深さ
+\setcounter{tocdepth}{2}
+
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table}
+
+% 参照を楽にするコマンド
+\def \figref #1{\figurename\ref{#1}}
+\def \tbref #1{\tablename\ref{#1}}
+\def \equref #1{式(\ref{#1})}
+\def \chapref #1{第\ref{#1}章}
+\def \appendixref #1{付録\ref{#1}}
+\def \secref  #1{\ref{#1}節}
+\def \subsecref  #1{\ref{#1}小節}
+
+\def\thesis #1{\gdef\@thesis{#1}}
+\def\teacher #1{\gdef\@teacher{#1}}
+\def\organization #1{\gdef\@organization{#1}}
+\def\labname #1{\gdef\@labname{#1}}
+\def\idnumber #1{\gdef\@idnumber{#1}}
+
+\renewcommand{\maketitle}{
+    \thispagestyle{empty}
+    \begin{center}
+        \vspace*{2cm}
+        \LARGE \@thesis 
+        \hspace*{\fill}\leavevmode\\
+        \vspace{2cm}
+        \LARGE{\bf \@title}
+        \hspace*{\fill}\leavevmode\\
+        \label{font_title}
+        \Large
+        \vspace{2cm}
+        \@date \hspace*{0.5zw}提出 
+        \hspace*{\fill}\leavevmode\\
+        \vspace{1cm}
+        指導教員 \@teacher 
+        \hspace*{\fill}\leavevmode\\
+        \Large
+        \@organization
+        \hspace*{\fill}\leavevmode\\
+        \@labname
+        \hspace*{\fill}\leavevmode\\
+        \LARGE
+        \@author \\
+        \Large
+        学籍番号 : \@idnumber
+        \hspace*{\fill}\leavevmode\\
+        \normalsize
+    \end{center}
+    %\clearpage
+    %\mbox{}
+    %\thispagestyle{empty}
+    %\clearpage
+}

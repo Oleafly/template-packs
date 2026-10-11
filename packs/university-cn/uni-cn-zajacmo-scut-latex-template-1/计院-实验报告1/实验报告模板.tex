@@ -1,0 +1,212 @@
+\documentclass[UTF8,a4paper,12pt]{ctexart}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{fancybox}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{subcaption}
+\usepackage[most]{tcolorbox}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc}
+\geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+\setstretch{1.3}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\titleformat{\section}{\zihao{-3}\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\zihao{4}\bfseries}{\thesubsection}{1em}{}
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny\color{orange!80!red},
+  keywordstyle=\color{cyan!80!blue}\bfseries,
+  commentstyle=\color{gray!70!black}\ttfamily,
+  stringstyle=\color{green!60!black}\ttfamily,
+  xleftmargin=2em,
+  framexleftmargin=1.5em,
+  numbersep=8pt,
+  rulecolor=\color{gray!40},
+  backgroundcolor=\color{gray!3},
+  aboveskip=10pt,
+  belowskip=10pt,
+  captionpos=b
+}
+\lstdefinelanguage{JavaScript}{
+  keywords={const, let, var, function, return, if, else, for, while, do, switch, case, break, continue, new, this, typeof, instanceof, void, delete, in, of, try, catch, throw, finally, class, extends, super, import, export, default, async, await, static, get, set},
+  keywordstyle=\color{cyan!80!blue}\bfseries,
+  ndkeywords={true, false, null, undefined, NaN, Infinity},
+  ndkeywordstyle=\color{violet}\bfseries,
+  emph={console, document, window, Math, Date, Array, Object, String, Number, JSON, Promise, Map, Set, Error, RegExp, fetch, setTimeout, setInterval, parseInt, parseFloat, isNaN, addEventListener, querySelector, getElementById, createElement, appendChild, push, pop, map, filter, reduce, forEach, sort, join, split, replace, trim, then, resolve, reject, all, call, apply, bind, toString, length, prototype},
+  emphstyle=\color{orange!90!red}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=true,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{gray!70!black}\ttfamily,
+  stringstyle=\color{green!60!black}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstdefinelanguage{CSS}{
+  keywords={color,background,border,margin,padding,display,position,width,height,top,left,right,bottom,font,size,family,weight,style,align,items,justify,content,flex,direction,grid,template,columns,rows,gap,transition,transform,hover,media,content,absolute,relative,overflow,box,shadow,text,decoration,line,height,radius,opacity,z-index,vertical,horizontal,overflow,white,space,none,hidden,visible,auto,cover,contain},
+  keywordstyle=\color{cyan!80!blue}\bfseries,
+  emph={px,em,rem,fr,solid,dashed,none,center,flex,grid,block,inline,row,column,auto,cover,contain,ease,linear,absolute,relative,fixed,hidden,visible,before,after},
+  emphstyle=\color{violet}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=true,
+  comment=[l]{/*},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{gray!70!black}\ttfamily,
+  stringstyle=\color{green!60!black}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\tcbset{
+  mybox/.style={
+    colback=white, colframe=black, boxrule=1pt,
+    arc=0mm, outer arc=0mm,
+    top=5pt, bottom=5pt, left=5pt, right=5pt,
+    before skip=0pt, after skip=0pt,
+    breakable,
+    colbacktitle=white, coltitle=black,
+    toptitle=5pt, bottomtitle=5pt,
+    before upper={\setlength{\parindent}{2em}\setlength{\parskip}{8pt}},
+  }
+}
+
+\newcolumntype{|}{!{\vline}}
+
+\newcommand{\coursename}{机器学习与模式识别}
+\newcommand{\experimenttitle}{XXXXXX}
+\newcommand{\studentname}{XXX}
+\newcommand{\studentid}{XXXXXXXXXXX}
+\newcommand{\classname}{XXXX}
+\newcommand{\teacher}{XXX}
+
+\tcbset{
+  mybox/.style={
+    colback=white, colframe=black, boxrule=1pt,
+    arc=0mm, outer arc=0mm,
+    top=5pt, bottom=5pt, left=5pt, right=5pt,
+    before skip=0pt, after skip=0pt,
+    breakable,
+    colbacktitle=white, coltitle=black,
+    toptitle=5pt, bottomtitle=5pt,
+    before upper={\setlength{\parindent}{2em}\setlength{\parskip}{8pt}},
+  }
+}
+
+\begin{document}
+
+\begin{center}
+{\zihao{-2}华南理工大学\par}
+\vspace{0.1cm}
+{\zihao{-2}《\coursename》课程实验报告\par}
+\end{center}
+
+\noindent
+\begin{tabular}{@{}l l l l l l@{}}
+  实验题目： & \multicolumn{5}{l}{\underline{\makebox[7cm][c]{\experimenttitle}}} \\
+\end{tabular}\\[0.2cm]
+\begin{tabular}{@{}l l l l l l@{}}
+  姓名： & \underline{\makebox[2.5cm][c]{\studentname}} & 学号： & \underline{\makebox[4cm][c]{\studentid}} & 班级： & \underline{\makebox[4.5cm][c]{\classname}} \\
+\end{tabular}\\[0.2cm]
+\begin{tabular}{@{}l l l l l l@{}}
+指导教师： & \multicolumn{5}{l}{\underline{\makebox[3cm][c]{\teacher}}} \\
+\end{tabular}
+
+
+\begin{tcolorbox}[mybox, before skip=5pt,
+  title={\zihao{-3}\bfseries 实验概述}]
+\noindent{\bfseries 【实验目的及要求】}\par
+\vspace{0.1cm}
+
+
+\noindent{\bfseries 实验目的：}\par
+\vspace{0.1cm}
+
+
+\vspace{1cm}
+\noindent{\bfseries 实验要求：}\par
+\vspace{0.1cm}
+
+
+\vspace{0.3cm}
+
+\noindent{\bfseries 【实验环境】}\par
+
+\vspace{0.2cm}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[mybox,
+  title={\zihao{-3}\bfseries 实验内容}]
+\noindent{\bfseries 【实验过程】}\par
+
+\section{数据集与代码说明}
+\subsection{数据集介绍}
+\subsubsection{数据集介绍}
+
+本研究使用的四个数据集基本信息如下。样本数在 768 到 1030 之间，特征数在 8 到 18 之间，均符合实验设计要求。
+
+\vspace{0.3cm}
+{\centering
+\captionof{table}{数据集基本信息}
+\begin{tabular}{lcccc}
+\toprule
+数据集名称 & 任务类型 & 样本数 & 特征数 & 类别/目标 \\
+\midrule
+Pima Indians Diabetes & 二分类 & 768 & 8 & 2类 \\
+Vehicle Silhouettes & 多分类 & 846 & 18 & 4类 \\
+Concrete Compressive Strength & 回归 & 1030 & 8 & 连续值(MPa) \\
+Energy Efficiency & 回归 & 768 & 8 & 连续值(kWh) \\
+\bottomrule
+\end{tabular}\par}
+\vspace{0.3cm}
+
+Diabetes 数据集用于预测患者是否患有糖尿病，特征是怀孕次数、血糖浓度、血压等生理指标。Vehicle Silhouettes 数据集基于车辆轮廓的边缘和区域特征，识别四类车辆（bus、opel、saab、van）。Concrete 数据集预测混凝土抗压强度，特征为水泥用量、炉渣用量等配合比参数。Energy Efficiency 数据集预测建筑物供暖负荷，特征包括遮阳系数和玻璃窗面积等建筑参数。
+
+从 EDA 结果看，Energy 数据集的特征之间存在较强的线性相关性，这可能是岭回归在该数据集上表现异常好的原因之一。Diabetes 数据集的相关性热图则显示部分特征之间存在中等程度的相关性，这对朴素贝叶斯的特征独立性假设是一个潜在风险。从特征分布图看，各数据集的特征形态各异：部分特征近似正态分布，部分呈偏态分布；部分特征存在明显的双峰或多峰分布，这增加了建模的复杂度。
+
+\section{附录：}
+
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[mybox,
+  title={\zihao{-3}\bfseries 小结}]
+\vspace{1cm}
+（本次实验中出现的问题、解决的办法、取得的收获、自认为的亮点等）
+\vspace{1cm}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[mybox,
+  title={\zihao{-3}\bfseries 指导教师评语及成绩}]
+
+评语：
+
+\vspace{3cm}
+
+\begin{tabular}{p{6cm}p{2cm}p{4cm}p{4cm}}
+\hfill & \hfill 成绩：& \hfill 指导教师签名：& \hfill \\
+\hfill & \hfill 批阅日期：& \hfill & \hfill \\
+\end{tabular}
+\end{tcolorbox}
+
+
+\end{document}

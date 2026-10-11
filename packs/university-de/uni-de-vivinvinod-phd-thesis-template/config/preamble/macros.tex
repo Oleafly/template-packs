@@ -1,0 +1,150 @@
+%=====================
+% Footnote
+%=====================
+\newcommand\utsnfootnotenumberless[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+
+\newcommand{\utsrefwithprefix}[2]{
+    \hyperref[#2]{#1\ref{#2}}   
+}
+
+
+%=====================================================================================
+% Abbreviations
+%=====================================================================================
+\newcommand{\utsacrfull}[1]{\glsxtrfull{#1}}
+
+\newcommand{\utsacrshort}[1]{\glsxtrshort{#1}}
+
+\newcommand{\utsacrlong}[1]{\glsxtrlong{#1}}
+
+
+
+
+%=====================================================================================
+% Quotes and emphasis
+%=====================================================================================
+%=====================
+% Quote - As a block of text
+%=====================
+\newcommand{\utsquote}[1]{
+  \begin{quote}
+    \input{partials/quotes/#1}   
+  \end{quote}
+}
+
+
+%=====================
+% Quote inline - Within a block of text
+%=====================
+\newcommand{\utsquoteinline}[1]{
+  \input{partials/quotes/#1}
+  \hspace*{-\parindent/2 + \parindent/10} % this is a hack to remove trailing white space
+}
+
+
+%=====================
+% Definition - As a block of text
+%=====================
+\newcommand{\utsdefinition}[1]{
+  \begin{quote}
+    \input{partials/definitions/#1}   
+  \end{quote}
+}
+
+
+
+
+%=====================
+% Emphasise as a big text
+%=====================
+\newcommand{\utsemphbig}[1]{%
+  \begin{center}
+    {\fontsize{18}{22}\selectfont #1}
+  \end{center}
+}
+
+%=====================
+% Emphasise as a box
+%=====================
+\newmdenv[linecolor=gray,frametitle=,roundcorner=8pt]{utsinfobox}
+\newcommand{\utsemphbox}[1]{
+    \begin{utsinfobox}[backgroundcolor=gray!10]
+        \emph{#1}
+    \end{utsinfobox}
+}
+
+
+%=====================
+% Emphasise as a box with title
+%=====================
+\newmdenv[linecolor=gray,
+    shadow=true,
+    shadowsize=1pt,
+%    linewidth=1pt,
+    frametitlerule=true,    
+    roundcorner=10pt,
+    backgroundcolor=gray!10]
+    {utsshadowbox}    
+\newcommand{\utsemphboxtitled}[2]{    
+    \begin{utsshadowbox}[frametitle={#1}]
+        \emph{#2}
+    \end{utsshadowbox}
+}
+
+
+
+%===================== 
+% Emphasis as horizontal lines above and below text
+%=====================
+\newcommand{\utsemphlines}[1]{
+    \begin{center}
+    \begin{itshape}
+        \begin{tabular}{>{\centering\arraybackslash}p{0.8\textwidth}}  
+            \toprule[1.25pt]\midrule[0.25pt]
+            \rule{0pt}{18pt}
+                #1 \\[10pt]
+            \midrule[0.25pt]\bottomrule[1.25pt]
+        \end{tabular}    
+    \end{itshape}
+    \end{center}
+}
+
+
+
+
+
+
+
+%=====================================================================================
+% Macros for Drafting - Add highlighting to unfinished sections
+%=====================================================================================
+%=====================
+% Highlight with any color. e.g cyan!50
+%=====================
+\newcommand{\utshl}[2][pink]{{
+    \colorlet{foo}{#1}
+    \sethlcolor{foo}\hl{#2}}
+}
+
+
+%=====================
+% Requires Citation - Bring attention to areas that require references.
+%=====================
+\newcommand{\utstodocite}{\utshl[red!40]{TODO: REQUIRES CITATION} }
+
+%=====================
+% Requires More Elaboration - Bring attention to areas that require more details
+%=====================
+\newcommand{\utstodo}[1]{\utshl[orange!50]{TODO: \MakeUppercase{#1} }}
+
+\newcommand{\utstodomore}{\utshl[yellow]{TODO: REQUIRES MORE ELABORATION} }
+
+\newcommand{\utstodoquestion}[1]{\utshl[cyan!30]{QUESTION: \MakeUppercase{#1} }}
+
+

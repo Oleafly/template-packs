@@ -1,0 +1,164 @@
+\documentclass[10pt, twoside, a4paper]{report}
+
+%page format
+\usepackage[utf8]{inputenc}
+\usepackage{titlesec} %set section formatting
+\usepackage[left=2.54cm, right=2.54cm, top=2.54cm, bottom=2.54cm]{geometry} %set margin
+\linespread{1.3} %1.5 line spacing
+\setcounter{tocdepth}{3} %include until subsubsection depth
+
+%additional package
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{pdflscape}
+\usepackage{nomencl} % must precede caption: nomencl loads tocbasic, and caption
+                     % v3.6o only patches tocbasic correctly if tocbasic is
+                     % already loaded (otherwise: "Unknown message
+                     % 'caption-code-by-class-deactivated'")
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{textcomp}
+\usepackage{gensymb}
+\usepackage{pdfpages}
+\usepackage{multicol}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{esvect}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{acronym}
+\usepackage{comment}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{cancel}
+\usepackage{fancyhdr}
+\usepackage{lipsum} % placeholder text for the template -- remove once you write real content
+
+\makenomenclature
+
+\usepackage[numbers]{natbib} % change numbers to square for apalike type
+\usepackage[english]{babel}
+
+% Figure root. ../local_paths.tex (git-ignored, per machine) wins when present;
+% otherwise fall back to the Figures/ folder shipped with the repository.
+\InputIfFileExists{../local_paths.tex}{}{\graphicspath{{../Figures/}}}
+
+% Chapter, Section, ... formatting
+\titleformat{\chapter}[hang]
+    {\normalfont\Large\bfseries}{\chaptertitlename\ \thechapter}{0.5em}{}
+\titlespacing*{\chapter}{0pt}{0pt}{1.5em}
+\addto\captionsenglish{\renewcommand\chaptername{Chapter}}
+% section formatting
+\titleformat*{\section}{\normalfont\large\bfseries} % section font size
+\titlespacing*{\section} % section spacing
+{0pt}{2.0em}{0.0em}
+\titleformat*{\subsection}{\normalfont\large\bfseries}
+\titlespacing*{\subsection}
+{1.5em}{0.5em}{0.0em}
+\titleformat*{\subsubsection}{\normalfont\large}
+\titlespacing*{\subsubsection}
+{1.5em}{0.5em}{0.0em}
+\titlelabel{\thetitle.\quad} %add dot after section numbering
+
+% paragraph setting
+\usepackage{indentfirst} % indent from very first paragraph in section system
+\captionsetup{font=small}
+% remove horizontal line heading "fancy"...
+\renewcommand{\headrulewidth}{0pt}
+
+\DeclareUnicodeCharacter{202F}{\,} % remove error: LaTeX Error: Unicode character (U+202F)
+\setlength{\headheight}{21.85004pt}
+
+\renewcommand{\nomname}{List of Symbols}
+\renewcommand{\nompreamble}{The next list describes several symbols that will be later used within the body of the document}
+\renewcommand*{\nompreamble}{\begin{multicols}{2}}
+\renewcommand*{\nompostamble}{\end{multicols}}
+\setlength{\columnsep}{3em}
+
+\begin{document}
+% Set the page style to "fancy"...
+\pagestyle{fancy}
+\fancyhf{} % sets both header and footer to nothing
+\fancyfoot[R]{\thepage}
+\fancyfoot[L]{Imperial College London, Department of Aeronautics}
+\fancyhead[LE]{{\small Dissertation Report}}
+\fancyhead[RO]{{\small Thesis Title Goes Here: \\
+A Descriptive Subtitle on the Second Line}}
+
+
+\begin{titlepage}
+    \begin{center}
+        \vspace*{4em}
+
+        {\Large\bfseries
+            Thesis Title Goes Here: \\[0.4em]
+            A Descriptive Subtitle on the Second Line
+        }
+
+        \vspace{4em}
+
+        {\normalsize
+            A Dissertation Submitted to the Department of Aeronautics \\[0.3em]
+            of Imperial College London \\[0.3em]
+            in Partial Fulfilment of the Requirements \\[0.3em]
+            for the Degree of \\[0.3em]
+            Doctor of Philosophy
+        }
+
+        \vspace*{\fill}
+
+        Author Name \\[0.3em]
+        Month Year
+
+    \end{center}
+\end{titlepage}
+
+% --- Frontmatter ---
+\input{Frontmatter/Abstract}
+\newpage
+\input{Frontmatter/Declarations}
+\newpage
+\input{Frontmatter/Acknowledgements}
+\newpage
+
+\tableofcontents
+\newpage
+
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+\newpage
+
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+\newpage
+
+\input{Frontmatter/Acronyms}
+\newpage
+
+\addcontentsline{toc}{chapter}{List of Symbols}
+\printnomenclature
+\newpage
+
+% --- Chapters ---
+% One file per chapter; each chapter file \input{}s its sections from Sections/ChN/.
+\input{Chapters/Ch-1}
+\input{Chapters/Ch-2}
+\input{Chapters/Ch-3}
+
+% --- Bibliography ---
+\clearpage
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{ieeetr}
+\bibliography{Thesis}
+
+% --- Appendices ---
+% Imperial's thesis submission guidance places appendices AFTER the bibliography.
+\input{Chapters/Appendix}
+
+\end{document}

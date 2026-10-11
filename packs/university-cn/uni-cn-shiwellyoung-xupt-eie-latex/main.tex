@@ -1,0 +1,65 @@
+\documentclass[11pt,oneside,UTF8,a4paper]{ctexbook}
+
+%\usepackage{showframe} % 显示页面框架
+%\usepackage{layouts}   % 显示布局参数
+
+\input{settings/packages.tex}   % 导入宏包配置（参考知识库）
+\input{settings/format.tex}     % 导入格式配置
+\input{settings/abstract_env_en}         % 英文摘要环境定义
+\input{settings/table_of_contents}
+\input{settings/cover_settings}
+\input{settings/table_of_figure}
+\input{settings/table_of_table}
+% ===== 页码设置 =====
+\pagenumbering{Roman} % 全文档罗马数字页码
+
+
+\begin{document}
+
+	\input{cover/cover}
+	% ------ 导入pdf.
+	%\includepdf[pages=-]{other.pdf}
+	
+	% ===== 摘要页 =====
+	\setcounter{page}{1} % 目录从II开始
+	\input{pages/abstract_en}
+
+	% ===== 目录页 =====
+	\clearpage
+	\tableofcontents	% 生成目录
+	\thispagestyle{tocstyle}
+	\clearpage
+	
+	% ===== 目录后空白页 =====
+	\thispagestyle{tocstyle}
+	\mbox{}
+	\clearpage
+	
+	% ===== 插图索引 =====
+    \listoffigures
+    \thispagestyle{lofstyle}
+    \clearpage
+
+	% ===== 目录后空白页 =====
+	\thispagestyle{lofstyle}
+	\mbox{}
+	\clearpage
+    
+    % ===== 表格索引（可选）=====
+    \listoftables
+    \thispagestyle{lotstyle}
+    \clearpage
+
+	% ===== 目录后空白页 =====%可以灵活取舍
+	\thispagestyle{lotstyle}
+	\mbox{}
+	\clearpage
+	\pagestyle{fancy}
+	\input{chapter/e1}
+	\input{chapter/e2}
+	\input{chapter/conclusion}
+	\input{pages/refences_en}
+	\input{pages/acknowledgement_en}
+	\input{pages/appendix_A_en}
+	
+\end{document}

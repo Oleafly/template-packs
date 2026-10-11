@@ -1,0 +1,105 @@
+%% ----------------------------------------------------------------
+%% thesis.tex
+%% ---------------------------------------------------------------- 
+\documentclass[a4paper]{phdthesis}
+
+\usepackage[round]{natbib}            % Use Natbib style for the refs.
+\usepackage{booktabs}
+
+\hypersetup{colorlinks=true}   % Set to false for black/white printing
+\graphicspath{{.}}    % Location of your graphics files
+
+\renewcommand{\bibname}{References}
+
+\input{lstdefinitions}
+
+%% ----------------------------------------------------------------
+\begin{document}
+\frontmatter
+\title      {Thesis Title}
+\date       {November 2016}
+\author     {Author Names}
+\supervisor {Prof. XYZ}
+\university {University of Southampton}
+\department {Computational Engineering and Design}
+\group      {Computational Engineering and Design Group}
+\faculty    {Faculty of Engineering and the Environment}
+
+\maketitle
+
+\begin{abstract}
+Abstract goes here.
+\end{abstract}
+
+\tableofcontents
+\listoffigures
+\listoftables
+\lstlistoflistings
+\listofsymbols{llc}{
+$a$ & description & unit\\
+$b$ & description & unit\\
+$c$ & description & unit}
+\listofacronyms{ll}{
+ACR & acronym\\
+ACR & acronym\\
+ACR & acronym}
+\declaration{Author et al. 2017}
+\acknowledgements{Thanks to no one.}
+\mainmatter
+%% ----------------------------------------------------------------
+\chapter{A Chapter}
+The text for a chapter goes here.
+
+\begin{figure}
+  \center
+  \includegraphics[width=\linewidth]{figure.png}
+  \caption{A figure caption.\label{fig:1}}
+\end{figure}
+
+It references \fref{fig:1}.
+
+\begin{table}
+  \center
+  \caption{A table caption.\label{tab:1}}
+  \begin{tabular}{cc}
+    \toprule
+    Column 1 & Column 2\\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+It also references \tref{tab:1}.
+
+\chapter{Another Chapter}
+The text for another chapter goes here.
+
+\begin{figure}
+  \begin{algorithm}[caption={An algorithm caption.}, label=alg:1]
+    i = 0
+    while True:
+      i += 1
+  \end{algorithm}
+\end{figure}
+
+It references \aref{alg:1}.
+
+You can also write inline code using
+
+\begin{python}
+i = 0
+while True:
+  i += 1
+\end{python}
+
+We should also cite a couple of publications \cite{Diem2017a,Diem2017b}.
+
+\appendix
+\chapter{Appendix}
+The text for an appendix goes here.
+
+%% ----------------------------------------------------------------
+\backmatter
+\bibliographystyle{plainnat}
+\bibliography{thesis}
+\end{document}
+%% ----------------------------------------------------------------

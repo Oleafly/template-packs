@@ -1,0 +1,198 @@
+%加载并设置宏包
+%广西大学物理学院2021级硕士王信哲制作
+%-----------------------全局设置-----------------------
+\ctexset{
+	bibname = 参考文献,
+	contentsname=\heiti\zihao{3} 目\ 录,
+	section={
+		name={第,章},number=\chinese{section},
+		format=\heiti\bfseries\centering\zihao{3}\linespread{1.25},
+		beforeskip=20pt,%18ex plus 0.2ex minus .2ex,
+		afterskip=20pt%18ex plus 0.2ex minus .2ex
+	},
+	subsection={
+		format=\heiti\bfseries\raggedright\zihao{4}\linespread{1.25},
+		beforeskip=8.75pt,%18ex plus 0.1ex minus .1ex,
+		afterskip=8.75pt%18ex plus 0.1ex minus .1ex
+	},
+	subsubsection={
+		format=\heiti\bfseries\raggedright\zihao{-4}\linespread{1.25},
+		beforeskip=0pt,
+		afterskip=0pt
+	},
+	appendix/name=附录
+}
+%\usepackage{ctex}%設置中文
+
+%-----------------------标题设置-----------------------
+\usepackage{tocloft}
+\renewcommand{\cfttoctitlefont}{\hfill} % 将目录标题设置为三号字、黑体
+\renewcommand{\cftaftertoctitle}{\hfill} % 将目录标题居中
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}%让一级标题的章节和页面之间也有点线连接
+\renewcommand{\cftsecfont}{\normalfont}%取消section字体在目录中加粗
+\renewcommand{\cftsecpagefont}{\normalfont}%取消section在目录中对应的页码加粗
+\setlength{\cftbeforesecskip}{0pt}
+\renewcommand{\cftdotsep}{1}
+
+%-----------------------字体设置-----------------------
+\usepackage{fontspec}
+% --- 1. 定义报错宏 ---
+\newcommand{\FontMissingError}[2]{
+  \GenericError{(Font Error)}{^^J
+    ============================================================^^J
+    错误: 找不到字体 "#1" !^^J
+    该字体是论文格式必需的。请采取以下措施之一：^^J
+    1. 在系统中安装该字体 (Windows 系统自带宋体/黑体等);^^J
+    2. 将字体文件 "#2" 放入项目根目录下的 [字体] 文件夹中。^^J
+    ============================================================}{}{}%
+}
+% --- 2. 版辅助宏 ---
+% 参数：[#1: 索引/可选参数], #2: 内部族名, #3: 系统字体名, #4: 本地文件名
+\newcommand{\DeployCJKFont}[4][]{
+    \IfFontExistsTF{#3}{
+        % 情况1：系统存在该字体（如 Windows 环境）
+        \setCJKfamilyfont{#2}{#3}
+    }{
+        \IfFileExists{./字体/#4}{
+            % 情况2：系统不存在，使用本地文件
+            % #1 用于传递 FontIndex=0 等参数
+            \setCJKfamilyfont{#2}{#4}[Path=./字体/, #1]
+        }{
+            % 情况3：均不存在，报错
+            \FontMissingError{#3}{#4}
+        }
+    }
+}
+% --- 3. 设置中文字体 ---
+% 「宋体」特别处理：使用 SIMSUN.TTC 的第 0 号索引
+\DeployCJKFont[FontIndex=0]{zhsong}{宋体}{SIMSUN.TTC}
+% 设置文档主字体 (CJKmainfont)
+\IfFontExistsTF{宋体}{
+    \setCJKmainfont{宋体}
+}{
+    \IfFileExists{./字体/SIMSUN.TTC}{
+        \setCJKmainfont{SIMSUN.TTC}[
+            Path=./字体/,
+            FontIndex=0,
+            % 注意：宋体没有原生粗体，论文通常通过伪粗体或黑体代换
+            % 如果不需要伪粗体，请注释下行：
+            BoldFeatures={FakeBold=2.5}
+        ]
+    }{
+        \FontMissingError{宋体}{SIMSUN.TTC}
+    }
+}
+% 「其他字体」按常规处理
+\DeployCJKFont{zhhei}{黑体}{SIMHEI.TTF}
+\DeployCJKFont{zhfs}{仿宋}{FS.TTF}
+\DeployCJKFont{zhli}{隶书}{SIMLI.TTF}
+% \DeployCJKFont{zhkai}{楷体}{SIMKAI.TTF} %默认不需要楷体，但楷体通常用于替代斜体的宋体，因此保留代码。如果需要字体，需要自行从Windows中导出SIMKAI.TTF文件。
+
+% --- 4. 设置英文字体 (Times New Roman) ---
+\IfFontExistsTF{Times New Roman}{
+    \setmainfont{Times New Roman}
+}{
+    \IfFileExists{./字体/TIMES.TTF}{
+        \setmainfont{TIMES.TTF}[
+            Path=./字体/,
+            BoldFont=TIMESBD.TTF,
+            ItalicFont=TIMESI.TTF,
+            BoldItalicFont=TIMESBI.TTF
+        ]
+    }{
+        \FontMissingError{Times New Roman}{TIMES.TTF}
+    }
+}
+% --- 5. 重新定义标准切换命令 ---
+\DeclareRobustCommand*{\songti}{\CJKfamily{zhsong}}
+\DeclareRobustCommand*{\heiti}{\CJKfamily{zhhei}}
+\DeclareRobustCommand*{\fangsong}{\CJKfamily{zhfs}}
+\DeclareRobustCommand*{\lishu}{\CJKfamily{zhli}}
+% \DeclareRobustCommand*{\kaishu}{\CJKfamily{zhkai}}
+
+%-----------------------数学环境-----------------------
+\usepackage{amsmath,amssymb,amsthm}
+\let\hbaroriginal\hbar
+\AtBeginDocument{\let\hbar\hbaroriginal}
+%\usepackage{unicode-math}
+%\setmathfont{Latin Modern Math}
+
+%-----------------------其他设置-----------------------
+\usepackage{geometry}
+\geometry{papersize={21cm,29.7cm}}
+\geometry{left=2.8cm,right=2.5cm,top=2.8cm,bottom=2.2cm}
+\usepackage{mathrsfs}
+\usepackage{wasysym}
+\usepackage{braket}
+\usepackage{indentfirst}
+\usepackage{cases}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{longtable,booktabs}
+\usepackage{color}
+\usepackage[colorlinks,linkcolor=blue,anchorcolor=blue,citecolor=blue]{hyperref}%#006eb2
+%\hypersetup{
+	%	colorlinks=true,
+	%	linkcolor=[rgb]{0,0.43,0.70},
+	%	citecolor=[rgb]{0,0.43,0.70},
+	%	filecolor=[rgb]{0,0.43,0.70},
+	%	urlcolor=[rgb]{0,0.43,0.70}
+	%}
+\usepackage{cleveref}   %可以调用 \Cref{fig:xxx}或者 \ref{fig:xxx}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{fancyhdr}%設置頁眉
+
+\usepackage{setspace}%设置行间距
+\setstretch{1.25}
+
+\usepackage[nottoc]{tocbibind}%[nottoc,numbib]
+%\usepackage{gbt7714}
+\usepackage{gbt7714-gxu}
+\bibliographystyle{gxu}
+\usepackage{natbib}
+\setlength{\bibsep}{0pt}
+%\bibliographystyle{gbt7714-numerical}
+
+\usepackage{appendix}
+
+
+\usepackage{booktabs}
+\usepackage{lipsum} % 用于生成随机文本
+\graphicspath{{图/}{./}}
+\usepackage[justification=centering]{caption}
+\usepackage{bicaption}
+\captionsetup[figure][bi]{labelfont=bf, textfont=bf}
+\captionsetup[figure][bi-second]{name=Figure,labelfont=bf,textfont=bf}
+\captionsetup[table][bi]{labelfont=bf, textfont=bf}
+\captionsetup[table][bi-second]{name=Table,labelfont=bf,textfont=bf}
+
+%设置图表编号格式为{章节号}-{章节内序号}
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+\renewcommand{\thefigure}{\thesection-\arabic{figure}}
+\renewcommand{\thetable}{\thesection-\arabic{table}}
+
+\usepackage{pdfpages}
+
+% 定义中文摘要环境
+\newenvironment{cnabstract}{
+	\par\small
+	\noindent\mbox{}\hfill{\bfseries \cnabstractname}\hfill\mbox{}
+	\par\vskip 2.5ex
+}{\par\vskip 2.5ex}
+
+% 定义英文摘要环境
+\newenvironment{enabstract}{
+	\par\small
+	\noindent\mbox{}\hfill{\bfseries \enabstractname}\hfill\mbox{}
+	\par\vskip 2.5ex
+}{\par\vskip 2.5ex}
+
+\newcommand{\cnabstractname}{\heiti \fontsize{16pt}{20pt}\textbf{摘\ 要}} % 中文摘要标题
+\newcommand{\enabstractname}{\fontsize{16pt}{20pt}\textbf{ABSTRACT}} % 英文摘要标题
+
+

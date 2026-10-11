@@ -1,0 +1,131 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{preambles}[2013/01/13 Preambles Package]
+
+\DeclareOption{print}{
+  \def\docformat{print}
+}
+\DeclareOption{online}{
+  \def\docformat{online}
+}
+\ExecuteOptions{online}
+\ProcessOptions\relax
+
+\usepackage{setspace} % package for specifying spacing
+\usepackage{geometry}
+\usepackage{ifthen}
+
+% Set margins depending on the input (print or online)
+\ifthenelse{\equal{\docformat}{print}}{
+  % \newgeometry{
+  %       top=0.75in,
+  %       bottom=1.in,
+  %       inner=1.5in,
+  %       outer=0.75in,
+  %   }
+  \newgeometry{
+        top=0.75in,
+        bottom=1.in,
+        inner=1.25in,
+        outer=1.in,
+    }
+}{
+  \newgeometry{
+        top=0.75in,
+        bottom=1.in,
+        inner=1.125in,
+        outer=1.125in,
+    }
+}
+
+\usepackage[numbers,sort&compress]{natbib}
+\def\biblio{\bibliographystyle{unsrtnat}\bibliography{references}}
+\renewcommand{\bibname}{References}
+
+\usepackage{filecontents}
+\usepackage{bibentry}
+\nobibliography*
+
+\newcommand\nomarkerfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+
+\usepackage{mathtools,tikz-cd}
+\usepackage{adjustbox}
+\usepackage{bbold}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage[hidelinks]{hyperref}       % hyperlinks
+\hypersetup{ % hide box around clockable text
+  colorlinks=false,
+  linkbordercolor={1 1 1}
+}
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{stmaryrd}
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+
+\usepackage{xcolor}         % colors
+\usepackage[color=yellow]{todonotes}
+\newcommand{\highlight}[2][red!50]{\mathpalette{\highlightwithstyle[#1]}{#2}}
+\newcommand{\highlightwithstyle}[3][red!50]{
+  \begingroup                         %% <- limit scope of \box0 and \fboxsep assignment
+    \sbox0{$\mathsurround 0pt #2#3$}% %% <- typeset content in box 0
+    \setlength{\fboxsep}{.5pt}        %% <- set (smaller) framebox margins
+    \sbox2{\hspace{-.5pt}%            %% <- create box 2, undo margin
+      \colorbox{#1}{\usebox0}%        %% <- print the contents of box 0 in a \colorbox
+    }%
+    \dp2=\dp0 \ht2=\ht0 \wd2=\wd0     %% <- set dimensions of box 2 to match box 0
+    \box2                             %% <- print box 2
+  \endgroup                           %% <- revert old definitions of the boxes and \fboxsep
+}
+
+\usepackage{lipsum}
+\usepackage{graphicx, wrapfig}
+\graphicspath{{figures/}}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{soul}
+\usepackage{cancel}
+\usepackage[labelsep=colon]{caption}
+\usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\newlength\myindent
+\setlength\myindent{2em}
+\newcommand\bindent{%
+  \begingroup
+  \setlength{\itemindent}{\myindent}
+  \addtolength{\algorithmicindent}{\myindent}
+}
+\newcommand\eindent{\endgroup}
+
+% edit the chapter title format
+\usepackage{titlesec}
+\titleformat{\chapter}[hang] 
+{\normalfont\fontsize{20pt}{20pt}\bfseries}{\thechapter}{0.5em}{} 
+\setlength{\parindent}{0pt} % no indentation at the beginning of the paragraph
+
+\usepackage[nottoc]{tocbibind} % Add bibliography to the toc without number
+\usepackage{pdfpages} % to include pdf file in the latex file
+\usepackage{tocloft}
+\usepackage{subfiles} % Best loaded last in the preamble
+
+\usepackage{tabto}
+
+% \setstretch{1.5} % change line spacing
+\setlength{\parskip}{7pt} % paragraph spacing
+\setlength\cftparskip{1pt} % toc line spacing
+
+\usepackage{tikz}
+\usetikzlibrary{tikzmark}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand*\wildcard[2][5cm]{\vspace*{2cm}\parbox{#1}{\hrulefill\par#2}}
+
+\usepackage{afterpage}

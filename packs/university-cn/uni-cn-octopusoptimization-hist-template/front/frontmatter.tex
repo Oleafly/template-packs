@@ -1,0 +1,56 @@
+
+%====================== 前置部分（无页眉页脚） ======================%
+\pagestyle{empty}
+
+% \input{front/cover-blind}
+
+
+% 中文封面
+\input{front/cover-hist}\blankpage
+
+% 英文扉页
+\input{front/title-en-hist}\blankpage
+
+
+% 声明页
+\input{front/statement}\blankpage
+
+
+% 摘要部分：无页眉，阿拉伯数字页码
+\cleardoublepage
+\pagestyle{frontstyle}
+\pagenumbering{Roman}
+\setcounter{page}{1}
+
+\input{front/abstract-cn}
+\input{front/abstract-en}
+
+% 目录及其后前置内容：无页眉无页码
+\cleardoublepage
+\pagenumbering{gobble}
+\pagestyle{empty}
+\markboth{}{}
+\tableofcontents
+\cleardoublepage
+
+
+% 插图清单（可选）
+\ifShowListOfFigures
+  \cleardoublepage
+  \listoffigures
+  \thispagestyle{empty}
+\fi
+
+% 表格清单（可选）
+\ifShowListOfTables
+  \cleardoublepage
+  \listoftables
+  \thispagestyle{empty}
+\fi
+
+% 符号说明（可选）
+\ifShowSymbols
+  \cleardoublepage
+  \input{front/symbols}
+  \thispagestyle{empty}
+\fi

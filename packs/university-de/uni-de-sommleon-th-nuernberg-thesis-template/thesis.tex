@@ -1,0 +1,375 @@
+\documentclass[
+    11pt, % font size
+    a4paper,
+    sfdefaults=false,
+    toc=chapterentrywithdots,
+    twoside,openright,
+    titlepage,
+    parskip=half,
+    headings=small,
+    listof=totoc,
+    bibliography=totoc,
+    index=totoc,
+    captions=tableheading,
+    chapterprefix,
+    listof=flat,
+    final
+]{scrbook}
+
+% ============================================================================
+% THESIS METADATA - CUSTOMIZE THESE VALUES FOR YOUR THESIS
+% ============================================================================
+% This section contains all the information that appears on your cover page,
+% in the PDF metadata, and in the document headers.
+% Replace the placeholder values with your own information.
+% ============================================================================
+
+\newcommand{\titel}{Prototypischer Entwurf einer LaTeX-Vorlage für Abschlussarbeiten}  % Your thesis title
+\newcommand{\artderarbeit}{Masterarbeit}  % Type: Bachelorarbeit or Masterarbeit
+\newcommand{\autor}{Max Mustermann}  % Your full name
+\newcommand{\studiengang}{Wirtschaftsinformatik}  % Your study program (e.g., Informatik, Wirtschaftsinformatik, Medieninformatik)
+\newcommand{\matrikelnr}{12345678}  % Your matriculation number (8 digits)
+\newcommand{\bearbeitungsbeginn}{12.34.5678}  % Start date (DD.MM.YYYY format)
+\newcommand{\bearbeitungsende}{12.34.5678}  % End date (DD.MM.YYYY format)
+\newcommand{\erstgutachter}{Prof.\,Dr.~Max Mustermann}  % First examiner (primary supervisor)
+\newcommand{\zweitgutachter}{Prof.\,Dr.~Max Mustermann}  % Second examiner (secondary supervisor)
+\newcommand{\betreuer}{Max Mustermann}  % Advisor/Tutor from company (if thesis is company-based, otherwise remove this line)
+\newcommand{\unternehmen}{Muster GmbH}  % Company name (if thesis is company-based, otherwise remove this line)
+\newcommand{\logo}{official_documents/Ohm_Logo.png}  % Path to university logo image file
+\newcommand{\keywords}{Schlagwort 1, Schlagwort 2, Schlagwort 3, Schlagwort 4, Schlagwort 5}  % 5-7 keywords separated by commas
+
+% ============================================================================
+% HEADER AND FOOTER CONFIGURATION
+% ============================================================================
+% Customize page headers and footers. Currently shows page numbers at the bottom.
+% Uncomment lines below to add headers with chapter names or modify the appearance.
+% ============================================================================
+
+\usepackage[automark]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\chead{}
+\ofoot{\pagemark}
+
+\renewcommand*\chaptermarkformat{\chapappifchapterprefix{\ }%
+  \thechapter.\enskip}
+
+\RedeclareSectionCommand[tocindent=0pt]{section}
+\RedeclareSectionCommand[tocindent=0pt]{subsection}
+
+\usepackage{scrhack}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,relsize,textcomp,csquotes}
+\usepackage{amsmath,amsfonts}
+\usepackage[english, ngerman]{babel} % flip first entry for main document language
+\usepackage[final]{graphicx}
+\usepackage[section]{placeins}
+\usepackage{float}
+\usepackage{setspace,geometry,xcolor}
+\usepackage{makeidx}
+\usepackage{paralist,ifthen,todonotes}
+\usepackage{url}
+\usepackage[toc]{glossaries}
+\usepackage{pdfpages}
+\usepackage{soul}
+\usepackage{chngcntr}
+\usepackage{placeins}
+
+% ============================================================================
+% CODE LISTING AND SYNTAX HIGHLIGHTING CONFIGURATION
+% ============================================================================
+% Configures how code blocks and listings appear in your thesis.
+% Supported languages: Python, Java, C, C++, JSON, Go/Golang
+% Add more language styles by creating new .sty files in listingstyles/
+% ============================================================================
+
+% Custom listingstyles
+\usepackage{listings}
+
+\lstset{
+	tabsize=4,
+	frame=single,
+	showstringspaces=false,
+	numbers=left,
+	numberstyle=\ttfamily\small,
+	breakautoindent=true,
+  escapeinside={(*@}{@*)}
+}
+
+\usepackage{listingstyles/listings-golang}
+\usepackage{listingstyles/listings-json}
+\usepackage{listingstyles/listings-command}
+
+% ============================================================================
+% FIGURE AND TABLE NUMBERING AND FORMATTING
+% ============================================================================
+% Numbers figures and tables globally (not per chapter)
+% Customizes the appearance of the list of figures and list of tables
+% ============================================================================
+
+%figure and table list format
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+\usepackage{tocloft}
+\renewcommand{\cfttabpresnum}{Tab. }
+\renewcommand{\cftfigpresnum}{Abb. }
+\renewcommand{\cftfigaftersnum}{:}
+\renewcommand{\cfttabaftersnum}{:}
+\settowidth{\cfttabnumwidth}{Tab. 10\quad}
+\settowidth{\cftfignumwidth}{Abb. 10\quad}
+
+% ============================================================================
+% GLOSSARY AND ABBREVIATIONS CONFIGURATION
+% ============================================================================
+% Manages acronyms and abbreviations.
+% Define your acronyms in abbreviations.tex file
+% Use \gls{acronym_key} in your text to insert acronyms
+% First use will expand to full form, subsequent uses show abbreviation only
+% ============================================================================
+
+%abbreviation list format
+%\usepackage[nopostdot,nonumberlist,acronym]{glossaries}
+%\usepackage[number=none]{glossaries}
+%\usepackage[nonumberlist]{glossaries}
+\makenoidxglossaries
+\loadglsentries{abbreviations}
+
+% ============================================================================
+% TABLE FORMATTING AND CUSTOMIZATION
+% ============================================================================
+% Provides advanced table features:
+% - longtable: Tables that span multiple pages
+% - tabularx: Fixed-width tables
+% - tabularray: Modern table formatting with enhanced styling
+% Custom column types L and Y for left-aligned and flexible columns
+% ============================================================================
+
+% table setup
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{lscape}
+\usepackage{tabularx}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}m{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}m{\dimexpr\linewidth-5cm-2\tabcolsep-2\arrayrulewidth}}
+\usepackage{color}
+\usepackage{tabularray}
+
+
+% ============================================================================
+% PDF METADATA AND HYPERLINK CONFIGURATION
+% ============================================================================
+% Configures PDF document properties (title, author, keywords)
+% and hyperlink appearance (colors, bookmarks).
+% PDF metadata is populated from the THESIS METADATA section above.
+% Hyperlinks are currently set to black (change colors if needed).
+% ============================================================================
+
+% pdf hyperref
+\usepackage[
+    bookmarks=true,
+    bookmarksopen=true,
+    bookmarksnumbered=true,
+    bookmarksopenlevel=1,
+    pdftitle={\titel},
+    pdfauthor={\autor},
+    pdfcreator={\autor},
+    pdfsubject={\titel},
+    pdfkeywords={\keywords},
+    pdfpagelabels=true,
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    anchorcolor=black,
+    citecolor=black,
+    filecolor=black,
+    menucolor=black,
+    plainpages=false,
+    hypertexnames=true,
+    linktocpage=false,
+]{hyperref}
+
+% ============================================================================
+% PAGE LAYOUT AND SPACING CONFIGURATION
+% ============================================================================
+% Defines page size, margins, line spacing, and text alignment.
+% Current settings:
+% - Paper: A4 (210mm x 297mm)
+% - Left margin: 2.5cm (binding offset)
+% - Top margin: 3.0cm
+% - Line spacing: 1.4 (adjust \setstretch{1.4} for different spacing)
+% Modify \geometry{} values below to change margins
+% ============================================================================
+
+% page setup
+% \setlength{\topskip}{\ht\strutbox}
+\geometry{
+  paper=a4paper,
+  left=2.5cm,
+  top=3.0cm,
+  bindingoffset=.8cm,
+}
+%\onehalfspacing % line spacing default 1.5
+\setstretch{1.4} % custom line spacing making lines narrower
+\frenchspacing
+\clubpenalty = 10000
+\widowpenalty = 10000
+\displaywidowpenalty = 10000
+
+% ============================================================================
+% CUSTOM COMMANDS FOR COMMON GERMAN ABBREVIATIONS
+% ============================================================================
+% Predefined shortcuts for frequently used German abbreviations:
+% \ua = u.a. (und andere / and others)
+% \zB = z.B. (zum Beispiel / for example)
+% \dahe = d.h. (das heißt / that is)
+% \bzw = bzw. (beziehungsweise / respectively)
+% Usage: "This feature \zB allows..." -> "This feature z.B. allows..."
+% ============================================================================
+
+% some commands
+\newcommand{\ua}{\mbox{u.\,a.\ }}
+\newcommand{\zB}{\mbox{z.\,B.\ }}
+\newcommand{\dahe}{\mbox{d.\,h.,\ }}
+\newcommand{\bzw}{\mbox{bzw.\ }}
+\newcommand{\bzgl}{\mbox{bzgl.\ }}
+\newcommand{\eg}{\mbox{e.\,g.\ }}
+\newcommand{\ie}{\mbox{i.\,e.\ }}
+\newcommand{\wrt}{\mbox{w.\,r.\,t.\ }}
+\newcommand{\etal}{\mbox{\emph{et.\,al.\ }}}
+
+\begin{document}
+
+% ============================================================================
+% DOCUMENT STRUCTURE CONFIGURATION
+% ============================================================================
+% secnumdepth: How deep to number sections (3 = subsections get numbers)
+% tocdepth: How deep to include in table of contents (2 = up to subsections)
+% Adjust these values if you want different numbering/TOC structure
+% ============================================================================
+
+% headline number depth for sections and table of contents
+\setcounter{secnumdepth}{3}  % numerate subsections
+\setcounter{tocdepth}{2}  % ...but don't include them in toc
+
+\frontmatter
+
+% ============================================================================
+% FRONT MATTER (FRONT PAGES: i, ii, iii, ...)
+% Includes cover page, declarations, abstract, acknowledgements, TOC, etc.
+% Uses roman numerals for page numbers
+% ============================================================================
+
+\include{cover}\cleardoublepage  % Title/Cover page
+
+% ============================================================================
+% LEGAL DECLARATION (Prüfungsrechtliche Erklärung)
+% ============================================================================
+% CHOOSE ONE OF TWO OPTIONS BELOW:
+%
+% OPTION 1 - PRINT VERSION (for printing your thesis and signing by hand):
+%   1. Download the PDF from the URL below
+%   5. Save as: official_documents/Digital_Pruefungsrechtliche_Erklaerung_und_Erklaerung_zur_Veroeffentlichung_der_Abschlussarbeit.pdf
+%   6. Uncomment the line below for print version
+%
+% OPTION 2 - DIGITAL VERSION (for digital submission with scanned signature):
+%   1. Download the PDF from the URL below
+%   2. Print it out on paper
+%   3. Sign it by hand
+%   4. Scan the signed document
+%   5. Save as: official_documents/Digital_Pruefungsrechtliche_Erklaerung_und_Erklaerung_zur_Veroeffentlichung_der_Abschlussarbeit.pdf
+%   6. Uncomment the line for digital version
+%
+% Download form: 
+% https://www.th-nuernberg.de/fileadmin/global/Public_Docs/SB/SB_0009_FO_Pruefungsrechtliche_Erklaerung_und_Erklaerung_zur_Veroeffentlichung_der_Abschlussarbeit_public.pdf
+%
+% To switch between versions, comment one line out and uncomment the other:
+% ============================================================================
+
+% UNCOMMENT THIS LINE FOR PRINT VERSION (unsigned, to be printed and signed):
+\includepdf{official_documents/Print_Pruefungsrechtliche_Erklaerung_und_Erklaerung_zur_Veroeffentlichung_der_Abschlussarbeit.pdf}\cleardoublepage
+
+% UNCOMMENT THIS LINE FOR DIGITAL VERSION (scanned with original signature):
+%\includepdf{official_documents/Digital_Pruefungsrechtliche_Erklaerung_und_Erklaerung_zur_Veroeffentlichung_der_Abschlussarbeit.pdf}\cleardoublepage
+
+% paragraph setup
+% identation
+\setlength{\parindent}{0.5cm}
+% spacing between paragraphs
+\setlength{\parskip}{0pt}
+
+\include{content/0A_abstract}\cleardoublepage  % Abstract
+
+\include{content/0B_acknowledgements}\cleardoublepage  % Acknowledgements
+
+\tableofcontents  % Auto-generated table of contents
+
+% ============================================================================
+% BACK MATTER (SUPPLEMENTARY PAGES: LISTS AND APPENDICES)
+% ============================================================================
+% Includes list of figures, tables, code listings, glossary, bibliography
+% Pages are numbered but not included in the main content flow
+% ============================================================================
+
+\backmatter
+
+\addcontentsline{toc}{chapter}{\listfigurename}  % Add to TOC
+\listoffigures\cleardoublepage  % Auto-generated list of all figures
+
+\addcontentsline{toc}{chapter}{\listtablename}  % Add to TOC
+\listoftables\cleardoublepage  % Auto-generated list of all tables
+
+\renewcommand{\lstlistlistingname}{Listingverzeichnis}
+\lstlistoflistings\cleardoublepage  % Auto-generated list of code listings
+
+\renewcommand{\glossaryname}{Abkürzungsverzeichnis}
+\printnoidxglossaries\cleardoublepage  % Auto-generated glossary of abbreviations
+
+% ============================================================================
+% MAIN MATTER (MAIN CONTENT: 1, 2, 3, ...)
+% ============================================================================
+% The actual thesis chapters. These use standard numbering (1, 2, 3...).
+% Edit the .tex files in content/ folder to add your content.
+% Add or remove chapters by adding/removing \include{} lines below.
+% ============================================================================
+
+\mainmatter
+
+\include{content/1_introduction}  % Chapter 1: Introduction
+
+\include{content/2_related_work}  % Chapter 2: Related Work
+
+\include{content/3_theoretical_background}  % Chapter 3: Theoretical Background
+
+\include{content/4_methodology}  % Chapter 4: Methodology
+
+\include{content/5_results}  % Chapter 5: Results
+
+\include{content/6_contributions}  % Chapter 6: Contributions
+
+\include{content/7_discussion}  % Chapter 7: Discussion
+
+\include{content/8_conclusion}  % Chapter 8: Conclusion
+
+% ============================================================================
+% BIBLIOGRAPHY AND APPENDICES
+% ============================================================================
+% Bibliography: Generated from refs.bib using the specified style (wmaainf)
+% Appendices: Optional additional chapters/content
+% ============================================================================
+
+\bibliographystyle{wmaainf}  % Bibliography style
+\bibliography{refs}\cleardoublepage  % Load bibliography from refs.bib
+
+\appendix  % Start appendix section (uses letters: A, B, C instead of 1, 2, 3)
+\include{content/9_appendix}  % Appendix content
+
+% ============================================================================
+% END OF DOCUMENT
+% ============================================================================
+% Document compilation ends here.
+% When compiled with pdflatex/latexmk, you'll get thesis.pdf
+% ============================================================================
+
+\end{document}

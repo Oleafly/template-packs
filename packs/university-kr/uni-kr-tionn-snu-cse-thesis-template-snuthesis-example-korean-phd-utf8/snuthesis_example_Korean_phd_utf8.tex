@@ -1,0 +1,218 @@
+\RequirePackage{fix-cm}
+% oneside : 단면 인쇄용
+% twoside : 양면 인쇄용
+% ko : 국문 논문 작성
+% master : 석사
+% phd : 박사
+% openright : 챕터가 홀수쪽에서 시작
+\documentclass[oneside,ko,phd]{snuthesis_utf8}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 목차 양식을 변경하는 코드
+%% subfigure (subfig) package 사용 여부에 따라
+%% tocloft의 옵션을 다르게 지정해야 한다.
+%\usepackage[titles,subfigure]{tocloft} % when you use subfigure package
+\usepackage[titles]{tocloft} % when you don't use subfigure package
+\makeatletter % don't delete me
+\if@snu@ko
+	\renewcommand\cftchappresnum{제~}
+	\renewcommand\cftchapaftersnum{~장}
+	\renewcommand\cftfigpresnum{그림~}
+	\renewcommand\cfttabpresnum{표~}
+\else
+	\renewcommand\cftchappresnum{Chapter~}
+	\renewcommand\cftfigpresnum{Figure~}
+	\renewcommand\cfttabpresnum{Table~}
+\fi
+\makeatother % don't delete me
+\newlength{\mytmplen}
+\settowidth{\mytmplen}{\bfseries\cftchappresnum\cftchapaftersnum}
+\addtolength{\cftchapnumwidth}{\mytmplen}
+\settowidth{\mytmplen}{\bfseries\cftfigpresnum\cftfigaftersnum}
+\addtolength{\cftfignumwidth}{\mytmplen}
+\settowidth{\mytmplen}{\bfseries\cfttabpresnum\cfttabaftersnum}
+\addtolength{\cfttabnumwidth}{\mytmplen}
+%% 목차 양식을 변경하는 코드 끝
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 다른 패키지 로드
+%% http://faq.ktug.or.kr/faq/pdflatex%B0%FAlatex%B5%BF%BD%C3%BB%E7%BF%EB
+%% 필요에 따라 직접 수정 필요
+\ifpdf
+	%\input glyphtounicode\pdfgentounicode=1 %type 1 font사용시
+	%\usepackage[pdftex,unicode]{hyperref} % delete me
+	%\usepackage[pdftex]{graphicx}
+	%\usepackage[pdftex,svgnames]{xcolor}
+\else
+	%\usepackage[dvipdfmx,unicode]{hyperref} % delete me
+	%\usepackage[dvipdfmx]{graphicx}
+	%\usepackage[dvipdfmx,svgnames]{xcolor}
+\fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% \title : 22pt로 나오는 큰 제목
+%% \title* : 16pt로 나오는 작은 제목
+\title{논문 제목}
+\title*{TITLE OF THE THESIS}
+
+%% 저자 이름 Author's(Your) name
+\author{홍길동}
+\author*{홍~길~동} % Insert space for Hangul name.
+%\author{Gildong Hong}
+%\author*{Gildong Hong} % Same as \author.
+
+%% 학번 Student number
+\studentnumber{2000-00000}
+
+%% 지도교수님 성함 Advisor's name
+\advisor{홍길동}
+\advisor*{홍~길~동} % Insert space for Hangul name.
+%\advisor{Gildong Hong}
+%\advisor*{Gildong Hong}
+
+%% 학위 수여일 Graduation date
+%% 표지에 적히는 날짜.
+%% 학위 수여일이 아니라 논문 발간년도를 적어야 할 수도 있음.
+\graddate{2013~년~2~월}
+%\graddate{FEBRUARY 2010}
+
+%% 논문 제출일 Submission date
+\submissiondate{2012~년~11~월}
+
+%% 논문 인준일 Approval date
+\approvaldate{2012~년~12~월}
+
+%% 참고: 인준지의 교수님 성함은
+%% 컴퓨터로 출력하지 않고, 교수님께서
+%% 자필로 쓰시기도 합니다.
+%% 위원장, 부위원장, 위원
+\committeemembers%
+{교수님 1}%
+{교수님 2}%
+{교수님 3}%
+{교수님 4}%
+{교수님 5}
+%% 밑줄 길이
+%\setlength{\committeenameunderlinelength}{7cm}
+
+\begin{document}
+\pagenumbering{Roman}
+\makefrontcover
+\makefrontcover
+\makeapproval
+
+\cleardoublepage
+\pagenumbering{roman}
+
+\keyword{서울대학교, 컴퓨터 공학부, 졸업논문}
+\begin{abstract}
+요약 내용이 여기 들어갑니다.
+\end{abstract}
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{\contentsname}
+\tableofcontents
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+\chapter{서론}
+서론.
+
+\section{section 제목}
+1.1 내용이 여기에 들어갑니다.
+
+\subsection{하위 section 제목}
+1.1.1 내용이 여기에 들어갑니다.
+
+\begin{table}[!hbp]
+\caption{표 제목이 여기에 들어갑니다.}
+\end{table}
+
+\subsection{하위 section 제목}
+1.1.2 내용이 여기에 들어갑니다.
+
+\begin{figure}[!hbp]
+\caption{그림 제목이 여기에 들어갑니다.}
+\end{figure}
+
+\chapter{본론}
+2장 본론 내용이 여기에 들어갑니다.
+
+\chapter{결론}
+3장 결론 내용이 여기에 들어갑니다.
+
+\begin{thebibliography}{00}
+\addcontentsline{toc}{chapter}{\bibname}
+
+% 영문저널의 경우
+    \bibitem{ref1} B. Jeon and J. Jeong, ``Blocking artifacts
+    reduction in image compression with block boundary discontiunity
+    criterion,'' {\em IEEE Transactions on Circuits and Systems for
+    Video Tech.}, vol. 8, no.3, pp. 345-357, June 1998.
+
+% 영문학술대회의 경우
+    \bibitem{ref2} W. G. Jeon and Y. S. Cho, ``An equalization
+    technique for OFDM and MC-CDMA in a multipath fading channels,''
+    in {\em Proceedings of IEEE Conference on Acoustics, Speech and
+    Signal Processing}, Munich, Germany, May 1997. pp. 2529-2532.
+
+% 국내학술대회의 경우
+    \bibitem{ref3} 윤남국, 김수종, ``무선 센서 네트워크에서의 에너지
+    효율적인 그라디언트 기반 라우팅 기법,'' {\em 한국정보과학회
+    2006년 추계학술대회}, 제12권, 제2호, 2006년 10월. pp.
+    1372-1374.
+
+% 단행본의 경우
+    \bibitem{ref4} C. Mead and L. Conway, {\em Introduction to VLSI
+    Systems}, Addison-Wesley, Boston, 1994.
+
+% URL
+    \bibitem{ref5} The SolarMESH Network,
+    http://owl.mcmater.ca/solarmesh
+
+% Technical Report의 경우
+    \bibitem{ref6} K. E. Elliott and C. M. Greene, ``A local adaptive
+    protocol,'' Argonne National Laboratory, Argonne, France,
+    Technical Report 916-1010-BB, 1997.
+
+% 학위논문의 경우
+    \bibitem{ref7} T. Kim, ``Scheduling and Allocation Problems in
+    High-level Synthesis,'' Ph. D. Dissertation, ECE Department,
+    Univ. of Illinois at U-C, 1993.
+
+% 특허의 경우
+    \bibitem{ref8} Sunghyun Choi, ``Wireless MAC protocol based on a
+    hybrid combination of slot allocation, token passing, and
+    polling for isochronous traffic,'' U.S. Patent No. 6,795,418,
+    September 21, 2004.
+
+% 표준
+    \bibitem{ref9} IEEE Std. 802.11-1999, Part 11: Wireless LAN
+    Medium Access Control (MAC) and Physical Layer (PHY)
+    specifications, Reference number ISO/IEC 8802-11:1999(E), IEEE
+    Std. 802.11, 1999 edition, 1999.
+
+\end{thebibliography}
+
+\keywordalt{SNU, computer science engineering, thesis}
+\begin{abstractalt}
+\abstracttitle{Title of The Thesis}
+\abstractauthor{Gildong Hong}
+Abstract
+\end{abstractalt}
+
+\acknowledgement
+감사의 글이 여기 들어갑니다.
+
+\end{document}
+

@@ -1,0 +1,197 @@
+\documentclass[autodetect-engine,dvi=dvipdfmx,ja=standard,twocolumn,jbase=13.35Q]{bxjsarticle} % 日本語, LaTeXエンジン自動判定, 欧文9.5pt=和文13.35Q
+%\documentclass[twocolumn,dvipdfmx]{jsarticle} % (古いので廃止) pLaTeX+dvipdfmxユーザ用
+%\documentclass[a4paper,twocolumn]{article} % for English only manuscript
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% <local definitions here>
+
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{amssymb,amsmath}
+\usepackage{url} % for the \url command.
+\usepackage{bxtexlogo}\bxtexlogoimport{*} % for the \LuaLaTeX, \pdfLaTeX, \XeLeTeX commands.
+%% 本文と数式のフォントをTimes(注:New Romanではない)互換フォントにする。
+%% AMS(数学)関係のパッケージのusepackageよりも後に置くこと。(前に置くと、
+%% AMS関係のパッケージをusepackageしたところでエラーになるので注意)
+\usepackage{newtxtext}
+\usepackage[varg]{newtxmath}
+%% PDFのメタデータにTitleとAuthorを入れる。
+% \usepackage[pdfusetitle]{hyperref}
+%% 行間を詰める。
+\renewcommand{\baselinestretch}{0.9}
+%% itemize, enumerate, descriptionに追加される行間をなくす。
+% \usepackage{enumitem}
+% \setlist{topsep=0pt,parsep=0pt,partopsep=0pt,itemsep=0pt}
+
+%% </local definitions here>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%--------卒業研究予稿集用スタイルファイルのパラメタ ここから--------
+\usepackage{jcourse-proceeding}
+\jcpnumber{A-2-1} % 発表番号
+\title{卒業研究報告予稿集用の{\LaTeX}スタイルファイル} % 卒業研究の題目
+%\jcpsubtitle{(タイトルの下に付加情報を付けられます。太字。中央配置。サブタイトルなど。例→) 良かったら卒業研究以外にも使ってください}
+\author{岩手　太郎} % 発表者氏名
+\jcplaboratory{（岩手研究室）} % 研究室名
+%\jcpunderauthor{(著者の下に付加情報を付けられます。普通字。左寄せ。タイトル領域で特に言及したい文献情報など。例→) T. Iwate, H. Morioka, and G. Ueda, ``This is a sample title of an article in some journal or conference,'' \emph{International Journal of Something}, Vol.3, No.11, pp.110--118, Jan. 2020. }
+
+\jcpabstract{
+本稿（sample.tex）は、卒業研究報告予稿集原稿のフォーマットおよび
+{\LaTeX}用の卒業研究報告用スタイルファイル（jcource-proceeding.sty）の
+使用法を簡単に述べたものであり、同時に原稿例、およびスタイルファイルの
+使用例である。なお、スタイルファイルのこの部分は「概要」を記述するため
+に用意されているが、概要は予稿集原稿の必須項目とはしないので、使用しな
+い場合は削除してかまわない。
+}
+%--------卒業研究予稿集用スタイルファイルのパラメタ ここまで--------
+
+\begin{document}
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{予稿集原稿のフォーマット}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+本稿のフォーマットが、基本的に卒業研究報告予稿集原稿のフォーマットになっ
+ているので、参考にすること。下記に必須の条件を示す。
+\begin{itemize}
+\item 原稿はA4サイズのPDFとする。ページ数は2ページ以上とする。
+\item 指導教員から指示される発表番号を1ページ目の左肩に書くこと。発表
+番号は「会場名-セッション番号-セッション内の発表番号」の形式（例：本
+稿は{\thejcpnumber}）とする。
+\end{itemize}
+
+以下は必須ではなく、参考程度である。
+\begin{itemize}
+\item タイトルとして1ページ目の上部に、「発表題目」、「発表者氏名（研
+究室名）」を書く。
+\item ページ番号は「発表番号-予稿ごとのページ番号」の形式（例：このペー
+ジは{\thepage}）とし、各ページの下部に付けることを推奨する。
+\item ページ余白は、上下20mm、左右15mmを目安とする。発表番号やページ番
+号は余白領域に記載して構わない。
+\item 本文の文字のサイズは9.5ポイント以上を目安とする。本文以外（例え
+ば、図表中の文字）についてはこの限りでない。
+\item 上記以外のフォーマットは特には指定しない。したがって、段組も本稿
+は二段組だが一段組でも問題ないし、本稿のようなレイアウトでの「概要」は
+必ずしも必要ではない。
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{予稿集原稿用スタイルファイル}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+本スタイルファイルは、{\pLaTeX}以外の{\LaTeX}エンジン（{\pdfLaTeX},
+{\XeLaTeX}, {\LuaLaTeX}等の）ユーザを対象に設計したものである。
+サポート外(obsolete)であるが、{\pLaTeX}でも一応動作する。
+推奨エンジンは{\LuaLaTeX}とする。
+
+\subsection{documentclassのオプション}
+本稿ソースsample.texの冒頭の\verb+\documentclass+で指定しているオプショ
+ンについて解説する。本スタイルファイルは、日本語用に注意深く作られた
+bxjsarticleクラスを使用することを想定している。下記のオプションは、
+bxjsarticleクラスのオプションである。
+
+\begin{description}
+\item[autodetect-engine] これを設定しておくと、{\LaTeX}エンジンが自動
+判定され、{\LaTeX}エンジンごとに異なる設定がある程度自動化される。
+\item[dvi=dvipdfmx] {\pLaTeX}用の設定。{\pLaTeX}を使わないのであれば、
+削除して構わない。
+\item[ja=standard] 日本語に関して、標準的な設定にする。
+\item[twocolumn] 二段組にする。
+\item[jbase=13.35Q] 和文フォントのサイズを13.35級（約9.5ポイント）に設
+定する。
+\end{description}
+
+\subsection{タイトル}
+\label{sec:title}
+\verb+\maketitle+コマンドにより生成される領域を便宜上タイトルと呼ぶ。
+\verb+\title+で発表題目を、\verb+\author+で発表者氏名を設定する。
+本スタイルファイルでは、
+\verb+\maketitle+の定義を変更して、タイトル要素に以下の項目を追加して
+ある。これらをプリアンブルで設定し\verb+\maketitle+すれば、本稿のよう
+なタイトルが作成される。
+\begin{description}
+\item[jcpnumber] 発表番号を設定する。\TeX では「\verb+-+」（-）と
+「\verb+--+」（--）は区別するので注意すること。本スタイルファイルは
+「\verb+-+」を使うことを前提に作られている。
+\item[jcplaboratory] 発表者の研究室名を設定する。
+\item[jcpabstract] 概要を設定する。本稿のように、題目や著者に続いて
+「概要」が中央上部に表示される。なお、概要が不要な場合は設定しないこと
+でタイトルから削除できる。
+\end{description}
+
+おまけ機能として、下記も追加した。卒業研究報告予稿集以外の場面に応用で
+きるかもしれない。
+\begin{description}
+\item[jcpsubtitle] 題目の下に付加情報を追加できる。太字。中央配置。
+\item[jcpunderauthor] 著者の下に付加情報を追加できる。普通字。左寄
+せ。
+\end{description}
+  
+\subsection{ページ番号}
+ページ番号に、\verb+jcpnumber+（\ref{sec:title}節参照）で設定した発表
+番号が付加される。
+
+\subsection{ページ余白}
+本スタイルファイルでは、ページ余白は、上下20mm、左右15mmに設定してある。
+変更したいときは、Bxjsclsで用意されている\verb+\setpagelayout+コマンド
+を使用するとよい。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{{\LaTeX}のちょっとしたコツ}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{\LaTeX}の基本的な使い方は、巷の本\cite{OkuKuro}や情報サイト
+\cite{texwiki}を参照せよ。本稿では、{\LaTeX}の基本的な使い方は割愛する。
+
+{\topsep=0pt
+予稿の題目と著者を、生成されるPDFのメタデータのTitle、Authorに入れるに
+は、
+\begin{verbatim}
+\usepackage[pdfusetitle]{hyperref}
+\end{verbatim}
+をプリアンブルに入れる。
+
+行間を詰めたいときは、
+\begin{verbatim}
+\renewcommand{\baselinestretch}{0.9}
+\end{verbatim}
+をプリアンブルに入れる。値を0に近づけるほど行間が詰まる。見苦しくなる
+ので、詰めすぎ注意。
+
+本文と数式のフォントをTimes互換フォントにしたいときは、
+\begin{verbatim}
+\usepackage{newtxtext}
+\usepackage[varg]{newtxmath}
+\end{verbatim}
+をプリアンブルに入れる。
+オプションの「\texttt{varg}」は、数式のgのフォントを数学で伝統的な$g$にする。
+\textit{g}との違いに注意。
+なお、これらのusepackageの宣言は、AMS(数学)関係のパッケージのusepackageよりも後に置くこと。
+前に置くと、AMS関係のパッケージをusepackageしたところでエラーになるので注意。
+
+itemize, enumerate, description環境に追加される行間をなくすには、
+\begin{verbatim}
+\usepackage{enumitem}
+\setlist{topsep=0pt,parsep=0pt,partopsep=0pt,
+itemsep=0pt}
+\end{verbatim}
+をプリアンブルに入れる。
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{むすび}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+本稿では卒業研究報告予稿集原稿のフォーマット、および予稿集原稿用{\LaTeX}スタイルファイル（jcource-proceeding.sty）の使用法を簡単に述べた。なお、予稿集原稿はフォーマットさえ守られていれば、どのワープロソフト（Microsoft Word、LibreOffice Writer等）を用いて作成してもかまわない。また、{\LaTeX}で作成する場合でも、必ずしも本スタイルファイルを利用する必要はない（が、本スタイルファイルを利用するのが手軽である）。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% References
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{thebibliography}{9}% more than 9 --> 99 / less than 10 --> 9
+\bibitem{OkuKuro}
+奥村晴彦, 黒木裕介, {\LaTeX}美文書作成入門, 技術評論社, （数年に一度改定される）
+\bibitem{texwiki}
+日本語{\TeX}開発コミュニティ, {\TeX} Wiki, \url{https://texwiki.texjp.org/}
+\end{thebibliography}
+
+\end{document}

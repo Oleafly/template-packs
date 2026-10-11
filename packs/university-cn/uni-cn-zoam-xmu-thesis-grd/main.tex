@@ -1,0 +1,123 @@
+%%=============================================================================
+%% demo.tex for Xiamen University Graduate Thesis
+%% modified by Maozhong Fu
+%% Version: 1.0
+%% Last update: 2020/09/30
+%% Based on BIT-thesis at https://github.com/BIT-thesis/LaTeX-template
+%%==============================================================================
+
+% 默认单面打印 oneside 、硕士论文模板 master
+
+\documentclass[twoside, pdf]{xmu-thesis-grd}
+\makeglossaries
+% 模板选项使用说明
+% 硕士论文：master
+% 博士论文：doctor
+% 直接使用学校 doc 文档转换的 pdf 页面：pdf
+% 日常编辑（单面打印模式）：oneside;
+% 查重去除空白页（单面打印模式）：oneside
+% 形式审查和打印稿（双面打印模式）：twoside
+
+% 编译说明：对于中文排版，请使用 XeLaTeX 编译器；
+
+% 导入缩写词表
+\input{chapters/acronym_list}
+
+% 导入符号表
+% \input{chapters/symbol_list}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 封面及其他固定内容的页面
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 中文封面内容，如果使用了pdf选项则这些不需要设置
+% \title{资产重组：一个资不抵债国有企业的最佳选择}
+% \author{某某某}
+% \advisor{某某某教授}
+% \major{信息与信号处理}
+% \submitdate{2021年6月}
+% \defenddate{2021年6月}
+% \grantdate{2021年6月}
+% \printdate{2021年6月}
+%\studentnumber{**********}
+
+% 封面
+\makecover
+
+% 学位论文原创性声明
+% 如果需要修改这部分的内容，请调整 xmu-thesis-grd.cls L43-L46
+% 如果需要使用指定的 pdf，请调整 xmu-thesis-grd.cls L194-L217
+% 注释掉 if-else 语句，只保留 \includepdf[pages=-]{pdf_files/originality_statement.pdf}
+\makeoriginalitystatement
+
+% 学位论文著作权使用声明
+% 如果需要修改这部分的内容，请调整 xmu-thesis-grd.cls L48-L56
+% 如果需要使用指定的 pdf，请调整 xmu-thesis-grd.cls L217-L238
+% 注释掉 if-else 语句，只保留 \includepdf[pages=-]{pdf_files/copyright_statement.pdf}
+\makecopyrightstatement
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 前置部分
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frontmatter
+
+% 中英文摘要
+\input{chapters/abstract}
+
+% 中英文目录
+\tableofcontents
+\entableofcontents
+
+% 缩略词表
+\makeacronymlist
+
+% 符号表
+\makesymbollist
+
+% 图索引
+\makefigurelist
+
+% 表索引
+\maketablelist
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 正文主体部分
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
+
+\input{chapters/chapter1}
+%\include{chapters/chapter2}
+%\include{chapters/chapter3}
+
+% \adjustafterskip %调整章节与正文的间距。临时解决方案。总结、参考文献、附录、致谢和发表的论文都会受到影响。
+\input{chapters/conclusion}
+
+% 参考文献
+\bibliography{reference/chapter1}
+
+% 附录（章节编号重新计算，使用字母进行编号）
+\appendix
+\setappendixnumberformat
+
+\input{chapters/appendix1}
+\input{chapters/appendix2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 后置部分
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+
+% 学位论文答辩委员会名单
+% 如果需要调节这部分的内容，请修改chapters/name_list
+\makenamelist
+
+% 致谢
+\input{chapters/acknowledgements}
+
+% 发表文章目录
+\input{chapters/publications}
+\cleardoublepage
+
+\end{document}

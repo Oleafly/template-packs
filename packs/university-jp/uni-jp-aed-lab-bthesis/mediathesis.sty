@@ -1,0 +1,314 @@
+% 
+% "東京工科大学における卒業論文のためのスタイルファイル"
+% 
+%
+% ver 1.00  : 1999/02/08 : 暫定完成版 (by N.A)
+% ver 2.00  : 1999/02/22 : 新ドキュメント版 (by N.A)
+% ver 2.01  : 1999/03/20 : epsfig.styを不要とし，PDF化へ対応。(by N.A)
+% ver 3.00  : 2001/11/12 : メディア学部仕様案へ変更。(by N.A)
+% ver 3.10  : 2003/11/13 : メディア学部仕様へ変更。(by N.A)
+% 
+% ver E-4.00	: 2003/12/20 : 内部改良 (by T.Watanabe)
+% ver E-4.01	: 2003/12/24 : 概要の体裁修正 (by T.Watanabe)
+% ver E-4.02	: 2004/01/19 : 目次出力の修正 (by T.Watanabe)
+% ver E-5.00	: 2004/11/26 : 2004 年度版初期バージョン (by T.Watanabe)
+%
+% ver 6.00	: 2013/11/12 : 目次出力の追加．(by T.Kojima)
+%
+% ver 7.00	: 2015/10/24 : 最近の LaTeX のスタイルに合わせて全面的に改訂 (by T.Watanabe)
+% ver 7.01	: 2017/11/06 : 表紙スタイルを若干修正 (by T.Watanabe)
+% ver 7.02	: 2018/11/06 : LaTeXで寸法の扱い方が変わったのでそれに合わせて変更
+% ver 8.00	: 2019/10/28 : 画像形式を EPS 以外を利用できるように修正
+% ver 9.00	: 2021/05/25 : upLaTeX 対応
+% ver 10.00	: 2023/10/23 : config.tex 新設。
+% ver 10.01	: 2023/12/03 : hyperref関連の警告出力に対応
+% ver 10.02	: 2023/12/26 : 概要ページ中の multirow 仕様変更に対応
+% ver 10.03	: 2024/07/08 : 2024年度対応
+% ver 10.04	: 2025/11/03 : 2025年度対応
+
+\typeout{Thesis style for Under Graduate School of Media Science,}
+\typeout{ Ver 10.04 by Taichi Watanabe. (earth@gamescience.jp) }
+
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx, color}
+\usepackage{hyperref}
+\usepackage{pxjahyper}
+\usepackage{float}
+\usepackage{ascmac}
+\usepackage{url}
+\usepackage{lineno}
+\usepackage{multirow}
+\usepackage{pxbase}
+\usepackage{comment}
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\def\@capfigure{図}
+\def\@captable{表}
+% \def\@capfigure{Fig}
+% \def\@captable{Table}
+
+\def\thebibliography#1{\chapter{参考文献\@mkboth
+ {関 連 書 籍}{関 連 書 籍}}\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+ \def\newblock{\hskip .11em plus .33em minus .07em}
+ \sloppy
+ \sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist
+
+% 章番号。
+
+\def\@chapapp{第}
+
+\def\thechapter {\arabic{chapter}}
+
+% 付録の判定。Appendixを付録にする。
+\newcount\@flagappendix
+\@flagappendix=0
+
+\def\appendix{\par
+ \setcounter{chapter}{0}
+ \setcounter{section}{0}
+ \@flagappendix=1
+ \def\@chapapp{付録}
+ \def\thechapter{\Alph{chapter}}}
+
+% 章番号無しの判定。
+\newcount\@nochapnumber
+\@nochapnumber=0
+
+\def\delchapnumber{\par
+ \@nochapnumber=1
+}
+\def\undochapnumber{\par
+ \@nochapnumber=0
+}
+
+\def\@makechapterhead#1{
+% \vspace*{5.0truept}
+ { \parindent 0truept \raggedright 
+ \ifnum \c@secnumdepth >\m@ne \huge\bfseries \begin{center}
+ \ifnum \@flagappendix>0
+ 	\@chapapp{} \thechapter\space \par 
+ \else
+	\ifnum \@nochapnumber=0
+		\@chapapp{} \thechapter\space 章 \par 
+	\else
+		\addtocounter{chapter}{-1}
+	\fi
+ \fi
+ \vskip 20truept \fi \Huge \bfseries #1\par 
+ \end{center}
+ \nobreak \vskip 40truept } }
+
+\def\chapter{
+\clearpage \thispagestyle{plain} \global\@topnum\z@
+\@afterindenttrue \secdef\@chapter\@schapter} 
+
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+ \refstepcounter{chapter}
+ \ifnum \@flagappendix>0
+ 	\typeout{\@chapapp\space\thechapter\space.}
+ \else
+ 	\ifnum \@nochapnumber=1
+		\typeout{.}
+ 	\else
+ 		\typeout{\@chapapp\space\thechapter\space 章.}
+ 	\fi
+ \fi
+ \ifnum \@nochapnumber=1
+ 	\addcontentsline{toc}{chapter}{\protect
+ 	\numberline{ }#1}
+ \else
+ 	\addcontentsline{toc}{chapter}{\protect
+	\numberline{\hspace*{-3.4truemm}\@chapapp\thechapter 章}\hspace{1em}#1}
+ \fi
+ \else
+ \addcontentsline{toc}{chapter}{#1}\fi
+ \chaptermark{#1}
+ \addtocontents{lof}{\protect\addvspace{10truept}}
+\addtocontents{lot}{\protect\addvspace{10truept}} \if@twocolumn
+\@topnewpage[\@makechapterhead{#2}] 
+ \else \@makechapterhead{#2}
+ \@afterheading \fi} 
+\def\@schapter#1{\if@twocolumn \@topnewpage[\@makeschapterhead{#1}]
+ \else \@makeschapterhead{#1} 
+ \@afterheading\fi}
+
+% 目次をセンターに持っていく。
+
+\renewcommand{\contentsname}{
+	\makebox[\linewidth]{\hfill 目\hspace{1zw}次\hfill}
+}
+
+\renewcommand{\listfigurename}{
+	\makebox[\linewidth]{\hfill 図~目~次\hfill}
+}
+
+\renewcommand{\listtablename}{
+	\makebox[\linewidth]{\hfill 表~目~次\hfill}
+}
+
+%\def\tableofcontents{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+% \fi\chapter*{ \begin{center} \vspace{-30truemm} 目 次\@mkboth{目 次}{目 次} \end{center}}
+% \@starttoc{toc}\if@restonecol\twocolumn\fi}
+%\def\l@part#1#2{\addpenalty{-\@highpenalty}
+% \addvspace{2.25em plus 1truept} \begingroup
+% \@tempdima 3em \parindent \z@ \rightskip \@pnumwidth \parfillskip
+%-\@pnumwidth 
+% {\large \bfseries \leavevmode #1\hfil \hbox to\@pnumwidth{\hss #2}}\par
+% \nobreak \endgroup}
+%
+%\def\listoffigures{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+% \fi\chapter*{\begin{center} \vspace{-30truemm} 図 目 次\@mkboth
+% {図 目 次}{図 目 次} \end{center}}\@starttoc{lof}\if@restonecol\twocolumn
+% \fi}
+%\def\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
+%\def\listoftables{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+% \fi\chapter*{\begin{center} \vspace{-30truemm} 表 目 次\@mkboth
+% {表 目 次}{表 目 次} \end{center}}\@starttoc{lot}\if@restonecol
+% \twocolumn\fi}
+%\let\l@table\l@figure
+
+\def\YearH#1{\gdef\@YearH{#1}}
+\def\@YearH{}
+\def\BringYear#1{\gdef\@BringYear{#1}}
+\def\@BringYear{}
+\def\BringMonth#1{\gdef\@BringMonth{#1}}
+\def\@BringMonth{}
+\def\PaperTitle#1{\gdef\@PaperTitle{#1}}
+\def\@PaperTitle{}
+\def\PaperTitleII#1{\gdef\@PaperTitleII{#1}}
+\def\@PaperTitleII{}
+\def\AuthorName#1{\gdef\@AuthorName{#1}}
+\def\@AuthorName{}
+\def\AuthorNumber#1{\gdef\@AuthorNumber{#1}}
+\def\@AuthorNumber{}
+\def\TeacherName#1{\gdef\@TeacherName{#1}}
+\def\@TeacherName{}
+\def\TitleFig#1{\gdef\@TitleFig{#1}}
+\def\@TitleFig{}
+
+\def\ProjectName#1{\gdef\@ProjectName{#1}}
+\def\@ProjectName{}
+\def\KeyWordsI#1{\gdef\@KeyWordsI{#1}}
+\def\@KeyWordsI{}
+\def\KeyWordsII#1{\gdef\@KeyWordsII{#1}}
+\def\@KeyWordsII{}
+\def\Abstract#1{\gdef\@Abstract{#1}}
+\def\@Abstract{}
+
+\newcommand{\MediaThesisTitle}{%
+% \YearH		% 年度（半角）
+% \BringYear		% 提出：年
+% \BringMonth		% 提出：月
+% \PaperTitle		% 論文タイトル
+% \PaperTitleII		% 論文タイトル（短い場合は空欄もしくは宣言しない）
+% \AuthorName		% 著者名
+% \AuthorNumber		% 学籍番号
+% \TeacherName		% 教員名
+% \Abstract		% 概要
+
+\begin{titlepage}
+
+%%%%%%%%%%%%%%%%%
+% First page.
+%
+%\clearpage
+\thispagestyle{empty}
+\begin{minipage}[t]{36truemm}
+~ \\
+\includegraphics[width=36truemm]{\@TitleFig}
+\end{minipage}
+\hspace{-36truemm}
+\begin{minipage}[t]{160truemm}
+\vspace*{10truemm}
+\begin{center}
+\begin{tabular}{c}
+	\@YearH 年度 ~~ 卒 ~~ 業 ~~ 論 ~~ 文
+\end{tabular}
+\end{center}
+\vspace{30truemm}
+\begin{center}
+\begin{LARGE}
+\begin{tabular}{c}
+	\@PaperTitle \\
+	\@PaperTitleII \\
+\end{tabular}
+\end{LARGE}
+\end{center}
+\vspace{40truemm}
+\begin{center}
+\begin{large}
+\begin{tabular}{c}
+	{\normalsize 指導教員：\@TeacherName}
+\end{tabular}
+\end{large}
+\end{center}
+\vspace{40truemm}
+\begin{center}
+\begin{large}
+\begin{tabular}{c}
+	 メディア学部 \@ProjectName \\
+	 学籍番号　\@AuthorNumber \\
+	 \@AuthorName \\
+	 \\
+	 \@BringYear 年\@BringMonth 月 \\
+\end{tabular}
+\end{large}
+\end{center}
+\end{minipage}
+
+%%%%%%%%%%%%%%%%%
+% Abst page.
+%
+
+\clearpage
+\thispagestyle{empty}
+\vspace*{-10truemm}
+%\hspace{-7truemm}
+\begin{tabular}{|p{20truemm}|p{41truemm}|p{7truemm}|p{30truemm}|p{12truemm}|p{40truemm}|}
+\hline
+\multicolumn{6}{|c|}
+	{\textbf{\@YearH 年度 ~~~~~ 卒 ~ 業 ~ 論 ~ 文 ~ 概 ~ 要}} \\ \hline
+\multicolumn{6}{|l|}
+	{{\small \textbf{論文題目}}} \\
+\multicolumn{6}{|c|}
+	{{\large \@PaperTitle}} \\
+\multicolumn{6}{|c|}
+	{{\large \@PaperTitleII}} \\
+\multicolumn{6}{|c|}
+	~ \\ \hline
+\multicolumn{2}{|l|}
+	{\smash{\raisebox{-3truemm}{\textbf{メディア学部}}}} &
+	\multicolumn{1}{|c|}{\smash{\raisebox{-3truemm}{\textbf{氏}}}} & &
+	\multicolumn{1}{|c|}{\smash{\raisebox{-3truemm}{\textbf{指導}}}} &
+	\\
+\multicolumn{2}{|l|}
+	{\smash{\raisebox{-3truemm}{\textbf{学籍番号 : \@AuthorNumber}}}} &
+	\multicolumn{1}{|c|}{\smash{\raisebox{-3truemm}{\textbf{名}}}} &
+	\multicolumn{1}{|c|}{\@AuthorName} &
+	\multicolumn{1}{|c|}{\smash{\raisebox{-3truemm}{\textbf{教員}}}} &
+	\multicolumn{1}{|c|}{\@TeacherName} \\
+\multicolumn{2}{|c|}{} & & & & \\ \hline
+\multirow{2}{*}{\textbf{キーワード}} &
+	\multicolumn{5}{|l|}{\@KeyWordsI} \\
+& \multicolumn{5}{|l|}{\@KeyWordsII} \\ \hline
+\multicolumn{6}{|p{150truemm}|}{
+	\begin{minipage}[t]{0truemm}
+		\rule[-145truemm]{0truemm}{0truemm}
+	\end{minipage}
+	\begin{minipage}[t]{147truemm}
+		\parindent 1em
+		\@Abstract
+	\end{minipage}
+	}\\ \hline
+\end{tabular}
+\end{titlepage}
+}
+
+\newcount\@FigureType
+\@FigureType=0

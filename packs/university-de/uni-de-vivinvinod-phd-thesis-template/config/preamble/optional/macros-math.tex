@@ -1,0 +1,63 @@
+\usepackage{amsthm}  
+\usepackage{amsmath}
+
+\newcommand{\keywords}[1]{\par\noindent{\small{\bf Keywords:} #1}} %Defines keywords small section
+\newcommand{\parcial}[2]{\frac{\partial#1}{\partial#2}}                             %Defines a partial operator
+\newcommand{\vectorr}[1]{\mathbf{#1}}                                                        %Defines a bold vector
+\newcommand{\vecol}[2]{\left(                                                                         %Defines a column vector
+	\begin{array}{c} 
+		\displaystyle#1 \\
+		\displaystyle#2
+	\end{array}\right)}
+\newcommand{\mados}[4]{\left(                                                                       %Defines a 2x2 matrix
+	\begin{array}{cc}
+		\displaystyle#1 &\displaystyle #2 \\
+		\displaystyle#3 & \displaystyle#4
+	\end{array}\right)}
+\newcommand{\pgftextcircled}[1]{                                                                    %Defines encircled text
+    \setbox0=\hbox{#1}%
+    \dimen0\wd0%
+    \divide\dimen0 by 2%
+    \begin{tikzpicture}[baseline=(a.base)]%
+        \useasboundingbox (-\the\dimen0,0pt) rectangle (\the\dimen0,1pt);
+        \node[circle,draw,outer sep=0pt,inner sep=0.1ex] (a) {#1};
+    \end{tikzpicture}
+}
+\newcommand{\range}[1]{\textnormal{range }#1}                                             %Defines range operator
+\newcommand{\innerp}[2]{\left\langle#1,#2\right\rangle}                                 %Defines inner product
+\newcommand{\prom}[1]{\left\langle#1\right\rangle}                                         %Defines average operator
+\newcommand{\tra}[1]{\textnormal{tra} \: #1}                                                       %Defines trace operator
+\newcommand{\sign}[1]{\textnormal{sign\,}#1}                                                   %Defines sign operator
+\newcommand{\sech}[1]{\textnormal{sech} #1}                                                  %Defines sech
+\newcommand{\diag}[1]{\textnormal{diag} #1}                                                    %Defines diag operator
+\newcommand{\arcsech}[1]{\textnormal{arcsech} #1}                                       %Defines arcsech
+\newcommand{\arctanh}[1]{\textnormal{arctanh} #1}                                         %Defines arctanh
+%Change tombstone symbol
+\newcommand{\blackged}{\hfill$\blacksquare$}
+\newcommand{\whiteged}{\hfill$\square$}
+\newcounter{proofcount}
+\renewenvironment{proof}[1][\proofname.]{\par
+ \ifnum \theproofcount>0 \pushQED{\whiteged} \else \pushQED{\blackged} \fi%
+ \refstepcounter{proofcount}
+ \normalfont 
+ \trivlist
+ \item[\hskip\labelsep
+       \itshape
+   {\bf\em #1}]\ignorespaces
+}{%
+ \addtocounter{proofcount}{-1}
+ \popQED\endtrivlist
+}
+%
+%
+% New definition of square root:
+% it renames \sqrt as \oldsqrt
+\let\oldsqrt\sqrt
+% it defines the new \sqrt in terms of the old one
+\def\sqrt{\mathpalette\DHLhksqrt}
+\def\DHLhksqrt#1#2{%
+\setbox0=\hbox{$#1\oldsqrt{#2\,}$}\dimen0=\ht0
+\advance\dimen0-0.2\ht0
+\setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
+{\box0\lower0.4pt\box2}}
+

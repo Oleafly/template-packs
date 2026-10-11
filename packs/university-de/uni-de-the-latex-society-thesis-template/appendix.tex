@@ -1,0 +1,47 @@
+%----------------------------------------------------------
+% General appendix settings
+%----------------------------------------------------------
+
+% Remove page number from appendix divider page
+\makeatletter
+\patchcmd{\@chap@pppage}{\thispagestyle{plain}}{\thispagestyle{empty}}{}{}
+\makeatother
+
+% Reset counters and add letters to counters on every include
+\pretocmd{\include}{\appendixnum}{}{}
+
+% Change pagestyle of appendix to include appendix name in header
+\pagestyle{fancyappendix}
+
+% Reformat chapter and section numbering
+\appendixchap
+\appendixsec
+
+%----------------------------------------------------------
+% Appendix divider page (OPTIONAL)
+%----------------------------------------------------------
+
+\cleardoublepage
+\addappheadtotoc % Add appendix divider page to table of contents
+\appendixpage    % Add appendix divider page to document
+
+%----------------------------------------------------------
+% Prevent sections and subsections from being added to table of contents (OPTIONAL)
+%----------------------------------------------------------
+
+\appendixnotocdepth
+
+%----------------------------------------------------------
+% Remove figures, tables and listings from list of figures / tables / listings (OPTIONAL)
+%----------------------------------------------------------
+
+%\appendixnolists
+
+%----------------------------------------------------------
+% Appendix chapters
+%----------------------------------------------------------
+
+\begin{appendices}
+	\include{appendix/1_Beispiel}
+	\include{appendix/2_Beispiel}
+\end{appendices}

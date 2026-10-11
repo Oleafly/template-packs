@@ -1,0 +1,456 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% LaTeX Style for Thesis or Dissertation written in Japanese
+%% Last Update: 2020.01.13 Yamaoka-Kitaguchi Lab.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{geometry.sty}
+
+\makeatletter
+
+\newcommand{\MyTitleA}[1]{\newcommand{\@MyTitleA}{#1}}
+\newcommand{\MyTitleB}[1]{\newcommand{\@MyTitleB}{#1}}
+\newcommand{\MyTitleC}[1]{\newcommand{\@MyTitleC}{#1}}
+\newcommand{\MyName}[1]{\newcommand{\@MyName}{#1}}
+\newcommand{\MySupervisor}[1]{\newcommand{\@MySupervisor}{#1}}
+\newcommand{\MyDegreeType}[1]{\newcommand{\@MyDegreeType}{#1}}
+\newcommand{\MonthYear}[1]{\newcommand{\@MonthYear}{#1}}
+
+\newcommand{\@Degree}{
+\if \@MyDegreeType D 博士（工学） \fi
+\if \@MyDegreeType M 修士（工学） \fi
+\if \@MyDegreeType B 学士（工学） \fi
+}
+
+\newcommand{\LeftBinding}[1]{\newcommand{\@LeftBinding}{#1}}
+
+\newcommand{\@LMargin}{
+\if \@LeftBinding Y 38mm \fi
+\if \@LeftBinding N 30mm \fi
+}
+
+\newcommand{\@RMargin}{
+\if \@LeftBinding Y 22mm \fi
+\if \@LeftBinding N 30mm \fi
+}
+
+\newcommand{\makepagestyle}{
+\newgeometry{top=35mm,right=\@RMargin,bottom=35mm,left=\@LMargin}
+}
+
+\renewcommand{\maketitle}{
+\begin{titlepage}
+\setcounter{page}{-1}
+\pagestyle{empty}
+\newgeometry{top=35mm,right=\@RMargin,bottom=30mm,left=\@LMargin}
+\begin{center}
+
+\begin{figure}[h]
+\center
+\includegraphics[height=20mm]{./titech.jpg}
+\end{figure}
+\fontsize{16pt}{0mm}\selectfont
+{\rm 東京工業大学 学位論文}
+\vspace{13mm}
+
+\fontsize{22pt}{0mm}\selectfont
+\hrule height 1pt\hfill \\
+\vspace{9mm}
+\ifx \@MyTitleB \undefined
+\vspace{12mm}
+{\bf \@MyTitleA}
+\vspace{12mm}
+\else{
+\ifx \@MyTitleC \undefined
+\vspace{5mm}
+{\bf \@MyTitleA} \\
+\vspace{5mm}
+{\bf \@MyTitleB}
+\vspace{5mm}
+\else
+{\bf \@MyTitleA} \\
+\vspace{5mm}
+{\bf \@MyTitleB} \\
+\vspace{5mm}
+{\bf \@MyTitleC}
+\fi
+}\fi
+\vspace{9mm}
+\hrule height 1pt\hfill \\
+\vspace{13mm}
+\fontsize{13pt}{0mm}\selectfont
+{\rm 提出者} \\
+\vspace{3mm}
+\fontsize{18pt}{0mm}\selectfont
+{\bf \@MyName} \\
+\vspace{4mm}
+\fontsize{13pt}{0mm}\selectfont
+{\rm 指導教員} \\
+\vspace{3mm}
+\fontsize{18pt}{0mm}\selectfont
+{\bf \@MySupervisor} \\
+\vspace{13mm}
+\fontsize{12pt}{0mm}\selectfont
+{\rm 所属} \\
+\vspace{3mm}
+\fontsize{16pt}{0mm}\selectfont
+{\rm 工学院情報通信系 情報通信コース} \\
+\vspace{3mm}
+{\rm 山岡研究室} \\
+\vspace{6mm}
+\fontsize{12pt}{0mm}\selectfont
+{\rm 学位} \\
+\vspace{3mm}
+\fontsize{16pt}{0mm}\selectfont
+\hspace{1mm}{\rm \@Degree} \\
+\vspace{13mm}
+\fontsize{15pt}{0mm}\selectfont
+{\rm \@MonthYear}
+
+\end{center}
+\restoregeometry
+\end{titlepage}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Override with Traditional Style **for Backward Compatibility**
+%% (Following lines are C&P from sotsuron2.sty)
+%%
+%% Last Update: 2020.01.13 Yamaoka-Kitaguchi Lab.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\topmargin=0mm
+\oddsidemargin=3mm \evensidemargin=3mm	%すこしだけ右寄せ
+\kanjiskip=0.7pt plus 1.4pt minus 0.7pt	%ちょいと字間を空ける
+%\def\baselinestretch{1.2}		%よいしょと行間を広げる
+\def\baselinestretch{1.18}		%よいしょと行間を広げる
+%\def\baselinestretch{0}		%よいしょと行間を広げる
+
+%
+% 各章のタイトル再定義
+%
+
+\def\chapter{\clearpage		% \thispagestyle{plain}  この部分を除去
+\global\@topnum\z@
+\@afterindenttrue \secdef\@chapter\@schapter}
+
+\def\@chapter[#1]#2{
+ \ifnum \c@secnumdepth > \m@ne
+  \refstepcounter{chapter}
+  \typeout{\@chapapp\thechapter\@chapfol\space #1}		%経過表示を詳細に
+  \addcontentsline{toc}{chapter}{				%目次出力を「第n章」に変更
+   \protect\numberline{\rlap{\@chapapp\thechapter\@chapfol}}	%無理やり押込む
+   \kern 2.0em #1}						%章タイトルを section のそれに揃える
+ \else
+  \addcontentsline{toc}{chapter}{#1}%
+ \fi
+ \chaptermark{#1}
+ \addtocontents{lof}{\protect\addvspace{10pt}}
+ \addtocontents{lot}{\protect\addvspace{10pt}}
+ \if@twocolumn \@topnewpage[\@makechapterhead{#2}]
+ \else \@makechapterhead{#2} \@afterheading
+ \fi
+}
+
+\def\@makechapterhead#1{ \vspace*{50pt} { \parindent 0pt \raggedright
+ \ifnum \c@secnumdepth >\m@ne \huge\bf \@chapapp\thechapter\@chapfol\par
+ \vskip 20pt \fi \Huge \bf #1\par
+ \nobreak \vskip 40pt } }
+
+%
+% 章名表示の再定義
+%
+\def\@chapapp{第}
+\def\@chapfol{章}		%←このマクロは勝手に作った!!
+
+%
+% \appendix 再定義
+%
+\def\appendix{\par
+ \setcounter{chapter}{0}
+ \setcounter{section}{0}
+ \def\@chapapp{付録}		%この２行を変更／追加
+ \def\@chapfol{}
+ \def\thechapter{\Alph{chapter}}}
+
+%
+% 参考文献の再定義
+%
+\def\thebibliography#1{\chapter*{参考文献\@mkboth
+ {参‾考‾文‾献}{参‾考‾文‾献}}\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+ \addcontentsline{toc}{chapter}{参‾考‾文‾献}%
+ \def\newblock{\hskip .11em plus .33em minus .07em}
+ \sloppy
+ \sfcode`\.=1000\relax
+ \markright{参考文献} 		%%% かなり重要 %%%
+}
+\let\endthebibliography=\endlist
+
+%
+% \pagestyle{headings} 再定義
+%
+
+\def\@EvenHead{			%新規定義 (0.4pt 下線付きヘッダ)
+ \hbox to 0pt{\vrule width \textwidth height -4pt depth 4.4pt \hss}%
+ \hbox{‾\tt \thepage}\hfil\hbox{\footnotesize\bf\leftmark‾}}
+\def\@OddHead{			%新規定義
+ \hbox to 0pt{\vrule width \textwidth height -4pt depth 4.4pt \hss}%
+ \hbox{‾\footnotesize\bf\rightmark}\hfil\hbox{\tt\thepage‾}}
+
+%       ↑下線が不要なら、「\hbox to 0pt{\vrule …」の行をコメントアウトしてね
+
+\if@twoside
+ \def\ps@headings{
+  \let\@mkboth\markboth
+  \def\@oddfoot{}
+  \def\@evenfoot{}
+  \def\@evenhead{\@EvenHead}
+  \def\@oddhead{\@OddHead}
+  \def\chaptermark##1{
+   \markboth{
+    \uppercase{\ifnum \c@secnumdepth > \m@ne
+     \@chapapp\thechapter\@chapfol\ \ \ \fi ##1}
+   }{}
+  }
+  \def\sectionmark##1{
+   \markright{\uppercase{\ifnum \c@secnumdepth >\z@ \thesection. \ \fi ##1}}
+  }
+ }
+\else
+ \def\ps@headings{
+  \let\@mkboth\markboth
+  \def\@oddfoot{}
+  \def\@evenfoot{}
+  \def\@oddhead{\@OddHead}
+  \def\chaptermark##1{
+   \markright {
+    \ifnum \c@secnumdepth>\m@ne \@chapapp\thechapter\@chapfol\ \ \ \fi ##1}
+  }
+  \def\sectionmark##1{
+   \markright{
+    \ifnum \c@secnumdepth>\z@ \thesection\ \ \ \fi ##1}
+  }
+ }
+\fi
+\def\ps@myheadings{\let\@mkboth\@gobbletwo
+ \def\@oddhead{\hbox{}\sl\rightmark \hfil\rm\thepage}
+ \def\@oddfoot{}
+ \def\@evenhead{\rm \thepage\hfil\sl\leftmark\hbox{}}
+ \def\@evenfoot{}\def\chaptermark##1{}
+ \def\sectionmark##1{}\def\subsectionmark##1{}
+}
+
+\ps@headings		%デフォルトで \pagestyle{headings} に設定
+
+%
+% figure/table キャプションの出力法の再定義
+%
+\def\fnum@table{表 \thetable}				%なぜか jreport だけ
+\def\fnum@figure{図 \thefigure}				%"Table" / "Figure" なんだよね
+\long\def\@makecaption#1#2{
+ \vskip 10pt
+ \setbox\@tempboxa\hbox{{\bf #1}\quad#2}		%":" を省いて \bf をつけた
+ \ifdim \wd\@tempboxa > \hsize \unhbox\@tempboxa\par
+ \else \hbox to \hsize{\hfil\box\@tempboxa\hfil}
+ \fi
+}
+
+\def\shaji{
+\chapter*{謝辞\@mkboth{謝辞}{謝辞}}
+\addcontentsline{toc}{chapter}{謝辞}
+\markright{謝辞}					%%% かなり重要 %%%
+}
+
+\def\bunken{
+\markright{参考文献}					%%% かなり重要 %%%
+}
+
+%%
+%%      字と字の間
+%%
+
+%%\kanjiskip 4.2857mm plus .2zw
+%%\advance \kanjiskip by -1zw
+%%\xkanjiskip 2pt plus 2pt minus .5pt
+%%\def\baselinestretch{1}
+%%\def\arraystretch{1}
+
+%%
+%%      行ピッチ
+%%
+\newdimen \lineheight
+%\lineheight 7.9mm
+\lineheight 6.8mm
+
+%%
+%%      改行幅の変更
+%%
+\def\@normalsize{\@setsize\normalsize{\lineheight}\xiipt\@xiipt
+ \abovedisplayskip 10pt plus2pt minus5pt
+ \belowdisplayskip \abovedisplayskip
+ \abovedisplayshortskip \z@ plus3pt
+ \belowdisplayshortskip 6pt plus3pt minus3pt
+ \let\@listi\@listI
+}
+\def\small{\@setsize\small{5.29mm}\xipt\@xipt
+ \abovedisplayskip 8.5pt plus3pt minus4pt
+ \belowdisplayskip \abovedisplayskip
+ \abovedisplayshortskip \z@ plus2pt
+ \belowdisplayshortskip 4pt plus2pt minus2pt
+ \def\@listi{\leftmargin\leftmargini \parsep \z@
+  \itemsep 2pt plus 1pt minus 1pt
+  \topsep 4pt plus 2pt minus 2pt}
+}
+\def\scriptsize{\@setsize\scriptsize{3.9mm}\viiipt\@viiipt}
+\@normalsize
+
+%%
+%%      空白行の定義
+%%
+\newdimen \blankline
+\blankline 2\lineheight
+\advance \blankline by -12pt
+\def\bline{\vskip\blankline}
+
+%%
+%%      原稿用紙の寸法
+%%
+\setlength{\baselineskip}{\lineheight}
+\setlength{\topskip}{\baselineskip}
+
+\setlength{\topmargin}{-1in}
+
+%       以下の３行が合わせて３０ｍｍになるようにします。
+\addtolength{\topmargin}{10mm}
+\setlength{\headheight}{10mm}
+\setlength{\headsep}{10mm}
+
+\setlength{\oddsidemargin}{-1in}
+\addtolength{\oddsidemargin}{30mm}
+
+\setlength{\evensidemargin}{-1in}
+\addtolength{\evensidemargin}{30mm}
+
+\setlength{\textheight}{230mm}
+\setlength{\textwidth}{150mm}
+\setlength{\footskip}{15mm}
+
+% \setlength{\footheight}{\lineheight}			%platex2e では \footheight はサポートされていないので削除
+
+\setlength{\parindent}{1zw}
+\addtolength{\parindent}{\kanjiskip}
+
+%\setlength{\parskip}{\lineheight}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Override with Traditional Style **for Backward Compatibility**
+%% (Following lines are C&P from jtitle.sty)
+%%
+%% Last Update: 2020.01.13 Yamaoka-Kitaguchi Lab.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%このスタイルは、章、図、表などといった項目を日本語化し、論文としての
+%体裁を整えるものです。
+%
+%使用方法：
+%他のスタイルとともに
+%\documenntstyle[hoge,kore,are,jtitle]{jreport}
+%のように使って下さい。一番最後にjtitleを持ってくると確実に動作します。
+%
+%もし、目次のページのみをローマ数字でページふりしたい場合は、
+%\tableofcontentsコマンドの前に\pagenumbering{roman}の１行を書き加え、
+%最初の\chapterコマンドの直後に\pagenumbering{arabic}と書き加えて下さ
+%い。（この部分はどうしてもスタイルファイルでは直し切れなかった）1
+%
+%	93.1.27
+%
+%        YAMAOKA Katsunori
+%        yamaoka@cs.titech.ac.jp
+
+%fancyheading.styが必要
+\input{fancyheadings.sty}
+
+%chapterを第？章という形式にする
+\renewcommand{\@makechapterhead}[1]{  % \chapter コマンド用 heading.
+  \vspace*{50pt}                      % テキスト・ページの上のスペース
+  { \parindent 0pt \raggedright
+    \ifnum \c@secnumdepth >\m@ne      % IF secnumdepth > -1 THEN
+      \Huge\bf \@chapappa{} \thechapter \@chapappb{} \par % 番号をプリント.
+    \vskip 20pt \fi                   % 番号とタイトルの間のスペース
+    \Huge \bf                         % タイトル.
+    #1 \par
+    \nobreak                          % 改ページの禁止
+    \vskip 40pt                       % タイトルとテキストの間のスペース.
+  } }
+\def\@chapappa{第}
+\def\@chapappb{章}
+
+%図、表の日本語化
+\def\fnum@figure{図\thefigure}
+\def\fnum@table{表\thetable}
+
+%Bibliographyを参考文献と表示し、目次にも加える
+\def\thebibliography#1{\chapter*{参考文献\@mkboth
+  {参 考 文 献}{参 考 文 献}}
+ \addcontentsline{toc}{chapter}{参考文献}
+\list
+  {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \usecounter{enumi}}
+    \def\newblock{\hskip .11em plus .33em minus .07em}
+    \sloppy
+    \sfcode`\.=1000\relax}
+
+%Appendixを付録、と表示する
+\def\appendix{\par
+  \setcounter{chapter}{0}
+  \setcounter{section}{0}
+  \def\@chapappa{付録}
+  \def\@chapappb{}
+  \def\thechapter{\Alph{chapter}}}
+
+% %ヘッダーをラインつきにする
+\addtolength{\headheight}{\marginparsep}
+% \addtolength{\headwidth}{\marginparwidth}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{#1}} % remember chapter title
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+                                                 % section number and title
+\lhead[\fancyplain{}{\bf\thepage}]{\fancyplain{}{\bf\rightmark}}
+\rhead[\fancyplain{}{\bf\leftmark}]{\fancyplain{}{\bf\thepage}}
+\cfoot{}
+\pagestyle{fancy}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Override with Traditional Style **for Backward Compatibility**
+%% (Following lines are C&P from jtitleline.sty)
+%%
+%% Last Update: 2020.01.13 Yamaoka-Kitaguchi Lab.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\@makechapterhead}[1]{ % \chapter コマンド用 heading.
+%  \vspace*{10pt}                     % テキスト・ページの上のスペース
+  { \parindent 0pt \raggedright
+    \ifnum \c@secnumdepth >\m@ne     % IF secnumdepth > -1 THEN
+      \huge\bf \@chapappa{} \thechapter \@chapappb{} \par    % 番号をプリント.
+    \vskip 20pt \fi                  % 番号とタイトルの間のスペース
+    \huge \bf                        % タイトル.
+    #1 \par
+    \vskip 5pt                       % タイトルと区切り線の間のスペース
+    \hrule \par                      % 区切りの線
+    \vskip 60pt                      % 区切りの線とテキストの間のスペース
+    \nobreak                         % 改ページの禁止
+%   \vskip 40pt                      % タイトルとテキストの間のスペース.
+  } }

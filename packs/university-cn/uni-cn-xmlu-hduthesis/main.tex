@@ -1,0 +1,118 @@
+% !TEX program = xelatex
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_US
+% !BIB program = bibtex
+
+\documentclass[fontset=fandol,twoside]{hduthesis}
+% 如果不需要双面打印时插入的空白页，可以将twoside选项改成oneside （盲审版需要改为 oneside）
+% 传入 legacy 切换到老版本封面, 老版封面只支持学术硕士
+% 传入 doctor 切换到博士学位论文 (只有副标题和页眉区别, 博士论文格式未经检验, 请仔细核对格式要求)
+% 传入 applied 切换到专业学位 (专业学位论文格式未经检验, 请仔细核对格式要求)
+% 传入 times 切换到 Times New Roman 字体, 公式字体不变
+% 传入 blind 开启盲审模式（完整匿名化）：
+%   1) 去掉页眉；
+%   2) 封面/扉页中的作者、导师、第二导师、学院、学号自动匿名；
+%   3) PDF 元数据中的 author 匿名、keywords 清空；
+%   4) 盲审模式下密级行不显示。
+% 使用方式：送审稿保留 blind；最终稿提交前删除 blind。
+
+% fontset 参数同 CTeX 的定义. 但如果是 windows, 则会自动启用 fakebold 来实现加粗 (该功能由本模版提供)
+% 注意: 模版使用 fandol 字体集以保证跨平台一致性, 但 fandol 并不齐全, 如果发现出现缺字, 请删掉 fontset=fandol 或者设置其他字体集.
+
+
+% ======= 根据自己需要加载相应宏包 ==========
+\usepackage{physics,mathrsfs} % 物理常用符号；提供mathscr: 花体
+\usepackage{threeparttable}   % 表格加脚注
+\usepackage{booktabs}         % 表格，横的粗线；\specialrule{1pt}{0pt}{0pt}
+\usepackage{longtable}        % 支持跨页的表格。
+\usepackage{blindtext}        % 产生测试用的文字，实际使用中可删除
+\usepackage{tabularx}         % 表格相关宏包，没有表格可以删除
+\usepackage{enumitem}         % 列表相关宏包，同样可以删除
+% =================================
+
+% =================================
+% 定义所有的图片文件在 figures 子目录下
+% 如果图片放在主目录，则可以注释下面的命令
+\graphicspath{{figures/}}
+% =================================
+
+% =================================
+% 论文封面需要的基本信息配置
+% 注意：
+%   1. '\hdusetup'配置里面不要出现空行 （很重要，不然会编译出错！）
+%   2. 后面带*的是相应的英文参数。比如author是中文名，author*是英文名
+%   3. 开启 blind 后，身份相关字段会自动匿名，这里仍建议保留真实信息，便于一键切回最终稿
+% =================================
+\hdusetup{
+    % ===== 标题相关 =====
+    % 中文标题在封面上分为两行显示，分别为titleA和titleB。如果一行放得下，titleB留空白即可。
+    titleA  = {杭州电子科技大学学位论文},
+    titleB  = {\LaTeX{} 模板使用示例文档 v\version},
+    title*  = {An Introduction to \LaTeX{} Thesis Template of Hangzhou Dianzi
+              University v\version},
+    % ===== 标题相关 =====
+    % 作者姓名
+    author  = {张三},
+    author* = {San Zhang},
+    % 指导教师，中文姓名和职称之间空格分开，下同
+    supervisor  = {李四\ 教授},
+    supervisor* = {Professor Si Li},
+    % ===== 学术信息 =====
+    % 专业名称 (学术学位)
+    discipline  = {物理学},
+    discipline* = {Physics},
+    % 完成时间，如果不指定则默认显示编译当月
+    % date = {2022年4月},
+    % date* = {April, 2022},
+    % 
+    % ======== 以下为 2025 封面新增 ========
+    % 学院
+    school = {理学院},
+    % 学号
+    studentID = {}, % 默认留空
+    % 第二导师
+    supervisorB = {}, % 默认无此条目
+    % 密级
+    secretLevel = {}, % 默认无此条目
+    % 专业学位类别 (专业学位)
+    degreeCategory = {}, % 默认留空
+    % 专业领域 (专业学位)
+    field = {}, % 默认留空
+    % ======== 盲审封面需要的研究方向 ========
+    researchFields = {量子精密测量},
+}
+% =================================
+
+\begin{document}
+
+\maketitle
+
+\frontmatter
+% 摘要
+% \input{data/abstract}
+\IfFileExists{data/abstract.tex}{
+    \input{data/abstract}
+}{
+    \PackageError{hduthesis}{File data/abstract.tex not found!}{Please check the file path.}
+}
+
+% 中文目录
+\tableofcontents 
+
+% 正文部分
+\mainmatter
+
+% 包含章节
+\input{data/chap01.tex}
+\input{data/font_test.tex}
+\chapter{test chapter}
+\blinddocument % 产生测试文本
+
+\clearpage
+
+\phantomsection
+\addcontentsline{toc}{chapter}{参考文献}
+\bibliographystyle{gbt7714-2005-numerical}
+\bibliography{ref}
+
+\end{document}

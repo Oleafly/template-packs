@@ -1,0 +1,98 @@
+\documentclass[12pt]{CardMathsThesis}  % Class for thesis template setup
+
+%%%%%%%%%%%%%%%%%% MY PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%
+
+% your packages and custom functions here
+
+
+
+
+%%%%%%%%%%%%%%%% END OF MY PACKAGES %%%%%%%%%%%%%%%%%%%%%%%
+
+
+%array geometries for binding adjustments
+\usepackage[left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm,   twoside ,bindingoffset=1.5cm ]{geometry}
+%Keep text within the margin bounds
+\tolerance=3000
+
+
+% your packages here
+\usepackage[toc,page]{appendix}
+\usepackage[ddmmyyyy]{datetime}
+\usepackage{lipsum}
+
+\usepackage{hyperref}
+\usepackage[square,sort&compress,numbers]{natbib} %update for your ref style
+
+%hyperlinks in the document
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+%Add month to the front cover
+\newdateformat{monthyeardate}{\monthname[\THEMONTH] \THEYEAR}
+
+
+
+% Front page info %
+\title{A title}   
+
+\author{A name}            
+\college{School of Mathematics}  
+
+
+\degree{Doctor of Philosophy}     %the degree
+\degreedate{ \monthyeardate\today }         %the degree date
+
+%end the preamble and start the document
+\begin{document}
+
+%this baselineskip gives sufficient line spacing for an examiner to easily
+%markup the thesis with comments
+\baselineskip=18pt plus1pt
+
+%set the number of sectioning levels that get number and appear in the contents
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+
+\maketitle   
+\vspace{-4em}
+               % create a title page from the preamble info
+%\include{Frontmatter/declarationStatements}        % include a dedication.tex file
+%\include{Frontmatter/dedication}        % include a dedication.tex file (optional)
+%\include{Frontmatter/acknowledgements}  % include an acknowledgements.tex file
+%\include{Frontmatter/abstract}          % include the abstract
+%\include{Frontmatter/ListOfPublications} % list of published work within the thesis (optional)
+
+
+
+\begin{romanpages}          % start roman page numbering
+\tableofcontents            
+\listoffigures              
+\listoftables
+\end{romanpages}            % end roman page numbering
+
+\pagenumbering{arabic}
+
+
+%Chapters
+\include{chapter_1/Example_chap_1}
+
+
+%Appendices
+\appendix
+\include{Appendices/Example_append}
+
+
+%next line adds the Bibliography to the contents page
+\addcontentsline{toc}{chapter}{Bibliography}
+\renewcommand{\bibname}{References}
+\bibliography{Thesis_bib}        %use a bibtex bibliography file refs.bib
+\bibliographystyle{plain}  %use the plain bibliography style
+
+\end{document}

@@ -1,0 +1,196 @@
+\documentclass[12pt]{book}
+
+% \usepackage[backend=bibtex, sorting=none, style=authoryear-ibid, citestyle=authoryear]{biblatex}
+% \addbibresource{BibTexCollection.bib}
+
+\usepackage{blindtext}% Just used so we can generate some example text
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xfrac}
+\usepackage{algorithmic}
+
+% Place style file after other packages.
+\usepackage{cranfieldthesis}
+
+% Title Page Set Up
+\title{Thesis Title}
+\author{First Name \ Surname}
+\date{January 2020}
+\school{Defence and Security}
+\centre{Centre for Electronic Warfare, Information and Cyber}
+\qualification{Doctor of Philosophy}
+\academicyear{2020}
+\supervisor{Supervisor}
+\copyrightyear{2020}
+\fulfilment{}
+
+% \romanFont
+\arialFont
+% \monoFont
+
+\begin{document}
+
+% Form Title Pages
+\maketitlepages
+
+% Sets page numbering to roman for all pages before main body.
+\pagenumbering{Roman}
+
+% Abstract and Keywords
+\begin{abstract}
+    \blindtext
+    \section*{Keywords}
+    Keyword 1; keyword 2; keyword 3.
+\end{abstract}
+
+% Table of Contents
+\sstableofcontents
+
+% List of Figures
+\sslistoffigures
+
+% List of Tables
+\sslistoftables
+
+% List of Algorithms
+\sslistofalgorithms
+
+% List of Code
+\sslistofcode
+
+% The list of abbreviations can't be automatically generated so you need to populate it yourself
+\begin{listofabbreviations}
+    \abbrev{EWIC}{Centre for Electronic Warfare, Information and Cyber}
+\end{listofabbreviations}
+
+\begin{listofsymbols}
+	\symb{$A$}{$m$}{Antenna, cartesian coordinate (transceiver).}
+\end{listofsymbols}
+
+\begin{listofpublications}
+  \pubhead{Conferences}
+  \pub{Authors, \textbf{"Title"}, \textit{Conference Proceedings}, Vol.~ii, No.~ii, pp.~ii-ii, Year}
+  
+  \pubhead{Journals}
+  \pub{Authors, \textbf{"Title"}, \textit{Journal} Vol.~ii, No~ii, pp.~ii-ii, Year}
+
+  \pubhead{To Be Published}
+  \pub{Authors, \textbf{"Title"}, 2019}
+\end{listofpublications}
+
+% Dont forget to set spacing - If not implemented spacing will be double.
+\setstretch{1.25}
+
+\chapter{First Chapter}\label{chap:one}
+
+% Sets page numbering to standard arabic for all pages in main body.
+\pagenumbering{arabic}
+
+\section{First Section}
+\blindtext
+
+\subsection{First Sub Section}
+\blindtext
+
+\subsubsection{First Sub Sub Section}
+\Blindtext
+
+\chapter{Examples}\label{chap:one}
+\section{Cleveref, Figures and Equations}
+
+Use the cleveref package for referencing; e.g. reference chapter: \Cref{chap:one}
+
+\begin{figure}[h!]
+  \centering
+  \rule{20pt}{20pt}
+  \caption{My figure. Left algined text is set in the style file, so you can write lots of text and still have the figure caption look professional.}
+  \label{fig:myfig1}
+\end{figure}
+
+\noindent Reference lowercase figure: \cref{fig:myfig1}
+
+\noindent Reference uppercase figure: \Cref{fig:myfig1}
+
+\begin{equation} 
+  x = \sqrt{\frac{1}{M N}\sum_{i=0}^{N-1}\sum_{j=0}^{M - 1}(I_{ij} - \bar{I})^2} \label{eq:myEq}
+\end{equation}
+
+\noindent Reference lowercase equation: \cref{eq:myEq}
+
+\noindent Reference uppercase equation: \Cref{eq:myEq}
+
+\noindent Aligned equations:
+\begin{align}
+  y&=a_1x+b_1\label{eq:1}\\
+  y&=a_2x+b_2\label{eq:2}\\
+  y&=a_3x+b_3\label{eq:3}\\
+  y&=a_4x+b_4\label{eq:4}
+\end{align}
+
+\noindent Cref range example of aligned equations: \crefrange{eq:1}{eq:4}
+ 
+\noindent Mixed cref references example: \cref{eq:1,eq:3,eq:4,fig:myfig1}
+
+\newpage
+\section{Table Example}
+
+\noindent Table example reference is shown here: \cref{tab:mytable}.
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ccc}
+  \hline
+  \textbf{Col 1} & \textbf{Col 2} & \textbf{Col 3} \\ \hline
+  1              & 4              & 7              \\ \hline
+  2              & 5              & 8              \\ \hline
+  3              & 6              & 9              \\ \hline
+  \end{tabular}
+  \caption{Here is my first table.}
+  \label{tab:mytable}
+\end{table}
+
+\newpage
+\section{Algorithm Example}
+
+\noindent Algorithm example reference is shown here: - \cref{alg:algorithm1}. 
+
+\begin{algorithm} % enter the algorithm environment
+  \caption{Calculate $y = x^n$} % give the algorithm a caption
+  \label{alg:algorithm1} % and a label for \ref{} commands later in the document
+  \begin{algorithmic} % enter the algorithmic environment
+      \REQUIRE $n \geq 0 \vee x \neq 0$
+      \ENSURE $y = x^n$
+      \STATE $y \Leftarrow 1$
+      \IF{$n < 0$}
+          \STATE $X \Leftarrow 1 / x$
+          \STATE $N \Leftarrow -n$
+      \ELSE
+          \STATE $X \Leftarrow x$
+          \STATE $N \Leftarrow n$
+      \ENDIF
+      \WHILE{$N \neq 0$}
+          \IF{$N$ is even}
+              \STATE $X \Leftarrow X \times X$
+              \STATE $N \Leftarrow N / 2$
+          \ELSE[$N$ is odd]
+              \STATE $y \Leftarrow y \times X$
+              \STATE $N \Leftarrow N - 1$
+          \ENDIF
+      \ENDWHILE
+  \end{algorithmic}
+\end{algorithm}
+
+\chapter{New Chapter}
+
+\section{Section}
+\subsection{Sub Section}
+
+% \printbibliography[heading=bibintoc,title=\uppercase{references}]
+
+\appendix
+
+\chapter{Appendix Chapter}
+
+\section{Section}
+
+\end{document}

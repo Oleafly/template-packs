@@ -1,0 +1,234 @@
+% Main Thesis File: This is the main file and it connects all the different parts of the thesis and compiles it into a single outcome file.
+
+\documentclass[onecolumn, 12pt, a4paper]{article}
+\renewcommand{\baselinestretch}{1.5} % baseline stretch
+
+% Packages
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[cmex10]{amsmath}
+\usepackage{adjustbox} 
+\usepackage{arabtex} 
+\usepackage{academicons}
+\usepackage[german]{babel}
+\usepackage{breakcites} 
+\usepackage{color}
+\usepackage{epsfig}
+\usepackage{etoolbox}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{fancyhdr}
+\usepackage{fontspec}
+ 
+
+\usepackage{graphicx}
+\usepackage{graphics}
+%\usepackage{hyperref} % if you want to highlight the links
+\usepackage[hidelinks]{hyperref}
+\usepackage{latexsym,amsfonts}
+\usepackage{longtable}
+\usepackage{listings}
+\usepackage{lscape} 
+\usepackage{lipsum}
+\usepackage{multirow}             
+\usepackage{pdfpages}
+\usepackage[figuresright]{rotating} 
+\usepackage{sectsty}
+\usepackage{setspace}
+\usepackage{subfigure}
+\usepackage{textcomp}
+\usepackage[subfigure]{tocloft}
+\usepackage{utf8} 
+\usepackage{url} 
+\usepackage{wrapfig} 
+\usepackage{wasysym} 
+\usepackage{xcolor}
+
+% parameters
+\def\thesistype {Diplomarbeit}
+\title{Titel}
+\def\subtitle {Untertitel (optional)}
+\author{Vorname Zuname}
+\date{01.01.0001}
+\def\place {Graz}
+\def\degree {Doktor(in) der gesamten Heilkunde\\(Dr. med. univ.) }
+\def\institut {Institut / Klinik für ...}
+\def\supervisor {Supervisor}
+\def\uni {Medizinische Universität Graz}
+
+% here you can define your own acronymes
+
+% Changing chapters' headings and subheadings to size 14
+\setmainfont{Arial}
+\sectionfont{\fontsize{16}{18}\selectfont}
+\subsectionfont{\fontsize{14}{15}\selectfont}
+\subsubsectionfont{\fontsize{14}{15}\selectfont}
+
+       
+\pagestyle{fancy} % adds a line at the top of every page, except title-page
+\renewcommand{\headrulewidth}{0pt}
+\fancyhf{} % Start with clearing everything in the header and footer
+\fancyfoot[R]{\thepage}
+
+
+%The following code changes the empty vertical space above a new chapter title. It sets it from 50pt to 20pt
+\makeatletter
+\patchcmd{\@makechapterhead}{50\p@}{20pt}{}{}
+\patchcmd{\@makeschapterhead}{50\p@}{20pt}{}{}
+\makeatother
+%end of modification
+
+
+
+% The following code redefines the plain pagestyle with the objective of moving the page number from the bottom to the top of the page. This only affects new chapter pages.
+\fancypagestyle{plain}{
+\fancyhf{} %clear all header and footer fields
+\fancyfoot[R]{\thepage} %puts number on top center of the page
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}}
+%ending of plain pagestyle modification.
+
+
+
+
+% ### Nomenclature, List of Abbreviations and List of Symbols 
+   \usepackage{ifthen,xkeyval,xfor,amsgen}
+   \usepackage[acronym,toc, nogroupskip]{glossaries}
+   \newglossary[slg]{symbols}{syi}{sbl}{List of Symbols}
+ 
+   \makeglossaries
+   
+   \include{0_Abkuerzungen}
+   % Run the following three lines in the command line to get the lists
+%makeindex -s Thesis.ist -t Thesis.alg -o Thesis.acr Thesis.acn
+%makeindex -s Thesis.ist -t Thesis.slg -o Thesis.syi Thesis.sbl
+%makeindex -s Thesis.ist -t Thesis.glg -o Thesis.gls Thesis.glo
+
+% ### End of addition
+
+
+
+
+% Modified commands
+\newcommand{\Tab}{\hspace{2ex}}
+\usepackage[lmargin=30mm, rmargin=25mm, vmargin=25mm, headsep=2.5mm]{geometry}
+\newcommand{\mathsym}[1]{{}}
+\newcommand{\unicode}[1]{{}}
+%\newcommand{\orcid}[1]{\href{https://orcid.org/#1}{\textcolor[HTML]{A6CE39}{\aiOrcid}}}
+\newcommand{\orcid}{\includegraphics[width=8pt]{ORCID}} % ORCID ID
+
+
+\begin{document}
+% $$$$$$$$$$$$$$$$$  Start of Thesis Front matter   $$$$$$$$$$$$$$
+
+%\vspace{10mm}  % vertical space
+\thispagestyle{empty}
+\addvspace{5mm}  % vertical space until length
+
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+% make the title page
+\begin{titlepage}
+    \makeatletter
+    \thispagestyle{empty}
+    \doublespacing
+    \begin{center}
+        {\textbf\thesistype} \\
+        \vspace{1cm}
+        {\LARGE\textbf\textsc{\@title}} \\
+        {\Large\textbf\subtitle} \\
+        \vspace{2cm}
+        eingereicht von\\
+        {\large\textbf \@author} \\
+        \vspace{2cm}
+        zur Erlangung des akademischen Grades \\
+        \vspace{0.2cm}
+        {\large\textbf\degree} \\
+        an der \\
+        \vspace{2cm}
+        {\large\textbf{\uni}} \\
+        \vspace{0.3cm}
+        ausgeführt am \\
+        {\large\textbf\institut} \\
+        \vspace{0.3cm}
+        unter der Anleitung von Betreuer/innen \\
+        {\large\textbf\supervisor{}} \\
+    \end{center}
+    \vfill
+    \place, \@date
+    \makeatother
+\end{titlepage}
+
+\section*{Eidesstattliche Erklärung}
+
+\begin{itshape}
+Ich erkläre ehrenwörtlich, dass ich die vorliegende Arbeit selbstständig und ohne
+fremde Hilfe verfasst habe, andere als die angegebenen Quellen nicht verwendet
+habe und die den benutzten Quellen wörtlich oder inhaltlich entnommenen Stellen
+als solche kenntlich gemacht habe.
+
+\vspace{2cm}
+\makeatletter
+\noindent \place, \@date \hfill \@author
+\makeatother
+\end{itshape}
+
+\pagenumbering{Roman}
+
+\include{0_Vorwort} % optional
+\include{0_Danksagungen} % optional
+
+%Table of content
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+
+%\begin{onehalfspacing}
+\cleardoublepage
+\renewcommand{\contentsname}{Inhaltsverzeichnis}
+\tableofcontents
+\cleardoublepage
+%\end{onehalfspacing}
+
+
+\printglossary[type=\acronymtype,style=long3col, title=Abkürzungsverzeichnis, toctitle=Abkürzungsverzeichnis, nonumberlist=true] 
+
+% adding list of figures
+\cleardoublepage
+\renewcommand{\listfigurename}{Abbildungsverzeichnis}
+\addcontentsline{toc}{section}{\listfigurename} 
+\listoffigures
+
+
+% adding list of tables
+\cleardoublepage
+\renewcommand{\listtablename}{Tabellenverzeichnis}
+\addcontentsline{toc}{section}{\listtablename}
+\listoftables
+
+\include{9_Conclusion}
+\include{9_Abstract}
+\include{9_Papers}
+
+
+% $$$$$$$$$$$$$$$$$  include your separate chapters   $$$$$$$$$$$$$$
+\cleardoublepage
+\pagenumbering{arabic}
+\include{1_Einleitung}
+\include{2_Methoden}
+\include{3_Ergebnisse}
+\include{4_Diskussion}
+
+% $$$$$$$$$$$$$$$$$  Reference style  Starts $$$$$$$$$$$$$$
+\bibliographystyle{vancouver}
+\renewcommand\refname{Literaturverzeichnis}
+\addcontentsline{toc}{section}{Literaturverzeichnis}
+\bibliography{References}
+% $$$$$$$$$$$$$$$$$  Reference style Ends  $$$$$$$$$$$$$$
+
+
+% $$$$$$$$$$$$$$$$$  include Appendices   $$$$$$$$$$$$$$
+\appendix
+\include{9_Appendix}
+% $$$$$$$$$$$$$$$$$  Appendix ends  $$$$$$$$$$$$$$
+
+\end{document}

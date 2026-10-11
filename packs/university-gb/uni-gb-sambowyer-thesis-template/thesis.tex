@@ -1,0 +1,531 @@
+%\title{University of Bristol Thesis Template}
+\RequirePackage[l2tabu]{nag}		% Warns for incorrect (obsolete) LaTeX usage
+%
+%
+% File: memoirthesis.tex
+% Author: Noah Cheesman 
+% Description: Contains the thesis template using memoir class,
+% which is mainly based on book class but permits better control of 
+% chapter styles for example. This template is an adaptation and 
+% modification of Victor Brena's which was a modification of Oscar Benjamin's.
+% 
+% Memoir is a flexible class for typesetting poetry, fiction, 
+% non-fiction and mathematical works as books, reports, articles or
+% manuscripts. CTAN repository is found at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/memoir/
+%
+%
+% UoB guidelines for thesis presentation were found at:
+% http://www.bristol.ac.uk/academic-quality/pg/pgrcode/annex4/
+%
+% UoB guidelines:
+%
+% The hard copies of the dissertation required for the examination process must be printed on A4 white paper. Paper up to A3 may be used for maps, plans, diagrams and illustrative material. Pages (apart from the preliminary pages) should normally be double-sided.
+%
+% Memoir class loads useful packages by default (see manual).
+% \documentclass[a4paper,11pt,leqno,openbib]{memoir} %add 'draft' to turn draft option on (see below)
+\documentclass[a4paper,11pt,leqno,openbib,oldfontcommands]{memoir} %add 'draft' to turn draft option on (see below)
+%
+% Adding metadata:
+\let\ordinal\relax %to avoid warning with datetime and memoir
+\usepackage{datetime}
+\usepackage{ifpdf}
+\ifpdf
+\pdfinfo{
+   /Author (.........)
+   /Title (Bristol PhD Thesis Template)
+   /Keywords (Bristol PhD Thesis Template)
+   /CreationDate (D:\pdfdate)
+}
+\fi
+% When draft option is on. 
+\ifdraftdoc 
+	\usepackage{draftwatermark}				%Sets watermarks up.
+	\SetWatermarkScale{0.3}
+	\SetWatermarkText{\textbf Draft: \today}
+\fi
+%
+%
+% Better page layout for A4 paper, see memoir manual.
+\settrimmedsize{297mm}{210mm}{*}
+\setlength{\trimtop}{0pt} 
+\setlength{\trimedge}{\stockwidth} 
+\addtolength{\trimedge}{-\paperwidth} 
+\settypeblocksize{634pt}{448.13pt}{*} 
+\setulmargins{4cm}{*}{*} 
+\setlrmargins{*}{2cm}{1.5} 
+\setmarginnotes{17pt}{51pt}{\onelineskip} 
+\setheadfoot{\onelineskip}{2\onelineskip} 
+\setheaderspaces{*}{2\onelineskip}{*} 
+\checkandfixthelayout
+%
+\frenchspacing
+%
+% UoB guidelines:
+%
+% Text should be in double or 1.5 line spacing, and font size should be
+% chosen to ensure clarity and legibility for the main text and for any
+% quotations and footnotes. Margins should allow for eventual hard binding.
+%
+% Note: This is automatically set by memoir class. Nevertheless \OnehalfSpacing 
+% enables double spacing but leaves single spaced for captions for instance. 
+\OnehalfSpacing 
+% \DoubleSpacing
+%
+% With 1.5 line spacing, memoir's default \flushbottom forces every page to the
+% exact \textheight; the stretchable inter-line glue often cannot fill a page
+% that breaks at an awkward spot, producing many harmless "Underfull \vbox ...
+% while \output is active" warnings. \raggedbottom lets pages run slightly short
+% instead, which is the recommended setting for 1.5/double-spaced theses.
+\raggedbottom
+% Sets numbering division level
+\setsecnumdepth{subsection} 
+\maxsecnumdepth{subsubsection}
+%
+%
+% UoB guidelines:
+%
+% The pages should be numbered consecutively at the bottom centre of the
+% page.
+\makepagestyle{myvf} 
+\makeoddfoot{myvf}{}{\thepage}{} 
+\makeevenfoot{myvf}{}{\thepage}{} 
+\makeheadrule{myvf}{\textwidth}{\normalrulethickness} 
+\makeevenhead{myvf}{\small\textsc{\leftmark}}{}{} 
+\makeoddhead{myvf}{}{}{\small\textsc{\rightmark}}
+\pagestyle{myvf}
+%
+% Oscar's command (it works):
+% Fills blank pages until next odd-numbered page. Used to emulate single-sided
+% frontmatter. This will work for title, abstract and declaration. Though the
+% contents sections will each start on an odd-numbered page they will
+% spill over onto the even-numbered pages if extending beyond one page
+% (hopefully, this is ok).
+\newcommand{\clearemptydoublepage}{\newpage{\thispagestyle{empty}\cleardoublepage}}
+%
+%
+% Creates index for Table of Contents, List of Figures, List of Tables and Index
+\makeindex
+% \printglossaries below creates a list of abbreviations. \gls and related
+% commands are then used throughout the text, so that latex can automatically
+% keep track of which abbreviations have already been defined in the text.
+%
+% The import command enables each chapter tex file to use relative paths when
+% accessing supplementary files. For example, to include
+% chapters/brewing/images/figure1.png from chapters/brewing/brewing.tex we can
+% use
+% \includegraphics{images/figure1}
+% instead of
+% \includegraphics{chapters/brewing/images/figure1}
+\usepackage{import}
+
+\newcount\ThesisSavedTracingLostChars
+\usepackage{etoolbox}
+\AtBeginEnvironment{tikzpicture}{%
+  \global\ThesisSavedTracingLostChars=\tracinglostchars
+  \tracinglostchars=0\relax
+}
+\AtEndEnvironment{tikzpicture}{%
+  \global\tracinglostchars=\ThesisSavedTracingLostChars
+}
+
+% Add other packages needed for chapters here. For example:
+\usepackage{amsfonts} 					%Calls Amer. Math. Soc. (AMS) fonts
+\usepackage{amsmath}			%Writes maths centred down
+% \usepackage{stmaryrd}					%New AMS symbols
+\usepackage{amssymb}					%Calls AMS symbols
+\usepackage{amsthm}					%Calls AMS theorem environment
+% \usepackage{newlfont}					%Helpful package for fonts and symbols
+% \usepackage{layouts}					%Layout diagrams
+\usepackage{graphicx}					%Calls figure environment
+\usepackage[utf8]{inputenc}			%Needed to encode non-english characters 
+									%directly for mac
+\usepackage{float}						%Helps to place figures, tables, etc. 
+\usepackage[authoryear,square,sort&compress]{natbib}		%Calls bibliography commands 
+		
+\usepackage{url}						%Supports url commands
+\usepackage[english]{babel}		%For languages characters and hyphenation
+
+\usepackage[colorlinks=true, allcolors=UniversityRed]{hyperref} %Creates hyperlinks in cross references
+% \usepackage{hyperref} %Creates hyperlinks in cross references
+\usepackage{memhfixc}					%Must be used on memoir document 
+									%class after hyperref
+\usepackage{enumerate}					%For enumeration counter
+\usepackage{enumitem}					%Customisable list environments
+\usepackage{footnote}					%For footnotes
+\usepackage{microtype}					%Makes pdf look better.
+\usepackage[version=0.96]{pgf}			%PGF/TikZ is a tandem of languages for producing vector graphics from a 
+\usepackage{placeins}
+\usepackage{pifont}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{xfrac}
+\usepackage{nicefrac}
+\usepackage{lettrine}
+\usepackage{mathtools} % amsmath with fixes and additions
+% \usepackage{siunitx} % for proper typesetting of numbers and units
+\usepackage{booktabs} % commands to create good-looking tables
+\usepackage{makecell}
+\usepackage{tikz} % nice language for creating drawings and diagrams
+
+\usetikzlibrary{bayesnet}
+\usetikzlibrary{arrows}% nice language for creating drawings and diagrams
+
+\usepackage{wrapfig}
+\usepackage{graphicx}          
+\usepackage{subcaption}
+% if you use cleveref..
+\usepackage[capitalize,noabbrev,sort&compress]{cleveref}
+% Customize Section references to use the section symbol
+\crefname{section}{§}{§§}
+\Crefname{section}{§}{§§}
+% Customize Figure references
+\crefname{figure}{Fig.}{Figs.}
+\Crefname{figure}{Fig.}{Figs.}
+% Customize Equation references
+% 1. Define the name for single and multiple references
+\crefname{equation}{Eq.}{Eqs.}
+\Crefname{equation}{Eq.}{Eqs.}
+% 2. Define the format for the number itself (adds parentheses)
+\crefformat{equation}{Eq.~(#2#1#3)}
+\crefrangeformat{equation}{Eqs.~(#3#1#4) to~(#5#2#6)}
+\crefmultiformat{equation}{Eqs.~(#2#1#3)}{ and~(#2#1#3)}{, (#2#1#3)}{ and~(#2#1#3)}
+
+
+%% Provided macros
+% \smaller: Because the class footnote size is essentially LaTeX's \small,
+%           redefining \footnotesize, we provide the original \footnotesize
+%           using this macro.
+%           (Use only sparingly, e.g., in drawings, as it is quite small.)
+ 
+\usepackage{algorithm}
+% \usepackage{algpseudocode}
+\usepackage{algorithmic}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+% \usepackage[ruled,vlined]{algorithm2e}
+
+\usepackage{tabularx} % Required for professional wrapping
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+%Reduce widows  (the last line of a paragraph at the start of a page) and orphans 
+% (the first line of paragraph at the end of a page)
+\widowpenalty=1000
+\clubpenalty=1000
+%
+% New command definitions for my thesis
+%
+\newcommand{\keywords}[1]{\par\noindent{\small{\textbf Keywords:} #1}} %Defines keywords small section
+%
+%
+%
+%
+\usepackage{xcolor}
+%Creates coloured text and background
+\definecolor{UniversityRed}{RGB}{171,31,45}
+%Defines user-defined colour (Univeristy of Bristol Red here)
+%
+% Theorem styles used in my thesis
+%
+% \theoremstyle{plain}
+% \newtheorem{theorem}{Theorem}[chapter]
+% \theoremstyle{plain}
+% \newtheorem{prop}{Proposition}[chapter]
+% \theoremstyle{plain}
+% \theoremstyle{definition}
+% \newtheorem{dfn}{Definition}[chapter]
+% \theoremstyle{plain}
+% \newtheorem{lema}{Lemma}[chapter]
+% \theoremstyle{plain}
+% \newtheorem{cor}{Corollary}[chapter]
+% \theoremstyle{plain}
+% \newtheorem{resu}{Result}[chapter]
+\theoremstyle{plain}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{remark}{Remark}
+%
+%
+% Chapter style (taken and slightly modified from Lars Madsen Memoir Chapter 
+% Styles document
+% \usepackage{calc,soul,fourier}
+\usepackage{calc,soul}
+\makeatletter 
+\newlength\dlf@normtxtw 
+\setlength\dlf@normtxtw{\textwidth} 
+\newsavebox{\feline@chapter} 
+\newcommand\feline@chapter@marker[1][4cm]{%
+	\sbox\feline@chapter{% 
+		\resizebox{!}{#1}{\fboxsep=1pt%
+			\colorbox{UniversityRed}{\color{white}\thechapter}% 
+		}}%
+		\rotatebox{90}{% 
+			\resizebox{%
+				\heightof{\usebox{\feline@chapter}}+\depthof{\usebox{\feline@chapter}}}% 
+			{!}{\scshape\so\@chapapp}}\quad%
+		\raisebox{\depthof{\usebox{\feline@chapter}}}{\usebox{\feline@chapter}}%
+} 
+\newcommand\feline@chm[1][4cm]{%
+	\sbox\feline@chapter{\feline@chapter@marker[#1]}% 
+	\makebox[0pt][c]{% aka \rlap
+		\makebox[1cm][r]{\usebox\feline@chapter}%
+	}}
+\makechapterstyle{daleifmodif}{
+	\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so} 
+	\renewcommand\chaptitlefont{\normalfont\huge\bfseries\scshape} 
+	\renewcommand\chapternamenum{} \renewcommand\printchaptername{} 
+	\renewcommand\printchapternum{\null\hfill\feline@chm[2.5cm]\par} 
+	\renewcommand\afterchapternum{\par\vskip\midchapskip} 
+	\renewcommand\printchaptertitle[1]{\color{UniversityRed}\chaptitlefont\raggedleft ##1\par}
+} 
+\makeatother 
+\chapterstyle{daleifmodif}
+%
+% Part style mirroring the chapter style: rotated "PART" label and a red
+% box containing the (Roman) part number, plus an optional epigraph that
+% can be set with \partepigraph{<text>}{<source>} immediately before the
+% corresponding \part{...} command.
+\makeatletter
+\newsavebox{\feline@part}
+\newcommand\feline@part@marker[1][4cm]{%
+	\sbox\feline@part{%
+		\resizebox{!}{#1}{\fboxsep=1pt%
+			\colorbox{UniversityRed}{\color{white}\thepart}%
+		}}%
+		\rotatebox{90}{%
+			\resizebox{%
+				\heightof{\usebox{\feline@part}}+\depthof{\usebox{\feline@part}}}%
+			{!}{\scshape\so\partname}}\quad%
+		\raisebox{\depthof{\usebox{\feline@part}}}{\usebox{\feline@part}}%
+}
+\newcommand\feline@pm[1][4cm]{%
+	\sbox\feline@part{\feline@part@marker[#1]}%
+	\makebox[0pt][c]{% aka \rlap
+		\makebox[1cm][r]{\usebox\feline@part}%
+	}}
+% Storage for an optional per-part epigraph.
+\newcommand*\@thesispartepi{}
+\newcommand*\@thesispartepisrc{}
+\newcommand{\partepigraph}[2]{%
+	\gdef\@thesispartepi{#1}%
+	\gdef\@thesispartepisrc{#2}%
+}
+\renewcommand\partnamefont{\normalfont\Large\scshape\raggedleft\so}
+\renewcommand\parttitlefont{\normalfont\Huge\bfseries\scshape}
+\renewcommand\partnamenum{}
+\renewcommand\printpartname{}
+\renewcommand\printpartnum{\raggedleft\feline@pm[3cm]\par}
+\renewcommand\printparttitle[1]{%
+	{\color{UniversityRed}\raggedleft\parttitlefont #1\par}%
+	\ifx\@thesispartepi\@empty\else
+		\par\vspace*{4\onelineskip}%
+		\begingroup
+			\normalfont\color{black}%
+			\setlength{\epigraphwidth}{0.5\textwidth}%
+			\epigraph{\Large\itshape\@thesispartepi}{\textsc{\large\@thesispartepisrc}}%
+		\endgroup
+		\gdef\@thesispartepi{}%
+		\gdef\@thesispartepisrc{}%
+	\fi
+} 
+\makeatother
+%
+
+
+%%% FOR CODE
+% \usepackage[outputdir=.,cache=false]{minted} % use for normal overleaf editing/viewing
+% \usepackage[cache=false]{minted} % use for normal overleaf editing/viewing
+\usepackage[cache=true]{minted} % use for normal overleaf editing/viewing
+% \usepackage[finalizecache, cachedir=.]{minted} % use before arxiv submission, save the *.pyg* log files and upload them to arxiv along with the rest of the project files
+% \usepackage[frozencache, cachedir=.]{minted} % use for generating arxiv submission
+% \usemintedstyle{borland} % friendly or emacs or vs or borland or colorful
+% \definecolor{LightGray}{gray}{0.97}
+\setminted[python]{
+    linenos,
+    % bgcolor=LightGray,
+    % breaklines,
+    fontsize=\scriptsize,
+    % xleftmargin=1.1em,
+    numbersep=4pt
+}
+
+\usepackage{tcolorbox}
+
+\newtcolorbox[auto counter]{pbox}[2][]{
+  colback=white,
+  title=Snippet~\thetcbcounter: #2,
+  #1,
+  fonttitle= \small, %\sffamily,
+  % fontupper=\sffamily,
+  boxrule=0.5pt, 
+  arc=2pt,
+  top=1pt,
+  bottom=1pt,
+  before skip=2pt, 
+  after skip=2pt 
+  % colframe=..,
+  % coltitle=..,
+  % colbacktitle=..,
+  % toptitle=0.05cm,
+  % bottomtitle=0.125cm
+}
+
+
+\usepackage{hyperref}
+\usepackage{longtable}
+% Allow long URLs/DOIs in the bibliography to break at any character. The plain
+% url package only breaks at a few symbols (/, ., -), so unbreakable URLs leave
+% over-stretched lines, causing "Underfull \hbox (badness 10000)" warnings in
+% thesis.bbl. xurl (loaded after hyperref) makes them break anywhere.
+\usepackage{xurl}
+%
+
+% --- Fonts: Times text with Computer Modern math symbols. ---
+% This reproduces the NeurIPS/ICML/UAI defaults. Those styles set the text
+% font to Times (NeurIPS: \rmdefault=ptm; ICML/UAI: the `times' package) but
+% deliberately leave the math fonts as Computer Modern. The result is an
+% upright Times \mathrm (e.g. $\mathrm{Q}_\mathrm{MP}$) alongside the classic
+% Computer Modern \sum, \prod and math italics. We set the font defaults
+% explicitly rather than loading the obsolete `times' package so that the
+% l2tabu (nag) check stays quiet.
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\renewcommand{\rmdefault}{ptm} % Times Roman text
+\renewcommand{\sfdefault}{phv} % Helvetica sans serif
+\renewcommand{\ttdefault}{pcr} % Courier typewriter
+
+% memoir's oldfontcommands option provides a \bf that misbehaves; restore a
+% safe definition that works in both text and math mode.
+\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+
+% import some macros
+\input{chapters/03_other_chapter/_math.tex}
+
+% -------------------------------------
+\begin{document}
+
+% UoB guidlines:
+%
+% Preliminary pages
+% 
+% The five preliminary pages must be the Title Page, Abstract, Dedication
+% and Acknowledgements, Author's Declaration and Table of Contents.
+% These should be single-sided.
+% 
+% Table of contents, list of tables and illustrative material
+% 
+% The table of contents must list, with page numbers, all chapters,
+ % sections and subsections, the list of references, bibliography, list of
+% abbreviations and appendices. The list of tables and illustrations
+% should follow the table of contents, listing with page numbers the
+% tables, photographs, diagrams, etc., in the order in which they appear
+% in the text.
+% 
+\frontmatter
+\pagenumbering{roman}
+%
+\input{frontmatter/title}
+\clearemptydoublepage
+%
+\input{frontmatter/abstract}
+% \clearemptydoublepage
+\newpage
+%
+\input{frontmatter/acknowledgements}
+% \clearemptydoublepage
+%
+\newpage
+\input{frontmatter/dedication}
+% \clearemptydoublepage
+\newpage
+%
+\input{frontmatter/inclusion}
+% \clearemptydoublepage
+\newpage
+%
+\input{frontmatter/declaration}
+% \clearemptydoublepage
+\newpage
+%
+% Make contents, tables and figures black links
+\hypersetup{linkcolor=black}
+%
+\renewcommand{\contentsname}{Table of Contents} 
+\maxtocdepth{subsection}
+\tableofcontents*
+\addtocontents{toc}{\par\nobreak \mbox{}\hfill{\textbf Page}\par\nobreak}
+% \clearemptydoublepage
+\newpage
+%
+\listoftables
+\addtocontents{lot}{\par\nobreak\textbf{{\scshape Table} \hfill Page}\par\nobreak}
+% \clearemptydoublepage
+\newpage
+%
+\listoffigures
+\addtocontents{lof}{\par\nobreak\textbf{{\scshape Figure} \hfill Page}\par\nobreak}
+% \clearemptydoublepage
+\newpage
+%
+% Make links in the main text UniversityRed
+\hypersetup{linkcolor=UniversityRed}
+%
+% The bulk of the document is delegated to these chapter files in
+% subdirectories.
+\mainmatter
+%
+%
+\phantomsection % Anchors the PDF link correctly
+\addcontentsline{toc}{part}{Introduction} % Manually adds to ToC
+\partepigraph{
+	To be is to do -- Socrates \newline
+	To do is to be -- Sartre \newline
+	Do Be Do Be Do -- Sinatra
+}{Kurt Vonnegut}
+\part*{Introduction} % Starred to remove roman numerals
+%
+\import{chapters/01_introduction/}{intro.tex}
+\clearemptydoublepage
+%
+%
+\part{background part}\label{part:mp}
+%
+\import{chapters/02_background/}{background.tex}
+\clearemptydoublepage
+%
+\part{another part}\label{part:another}
+%
+%
+\import{chapters/03_other_chapter/}{clt.tex}
+\clearemptydoublepage
+%
+\import{chapters/04_conclusion/}{conclusion.tex}
+\clearemptydoublepage
+%
+%
+% And the appendix goes here
+\phantomsection % Anchors the PDF link correctly
+\addcontentsline{toc}{part}{Appendices} % Manually adds to ToC
+\part*{Appendices}
+\label{app:appendices}
+\appendix
+%
+\import{chapters/03_other_chapter/}{clt_app.tex}
+\clearemptydoublepage
+%
+% Apparently the guidelines don't say anything about citations or
+% bibliography styles so I guess we can use anything.
+\backmatter
+% \bibliographystyle{siam}
+\bibliographystyle{unsrtnat}
+% \bibliographystyle{plainnat}
+\refstepcounter{chapter}
+\bibliography{thesisbiblio}
+\clearemptydoublepage
+%
+% Add index
+% \printindex
+%   
+\end{document}

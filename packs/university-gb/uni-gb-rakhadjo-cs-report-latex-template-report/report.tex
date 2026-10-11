@@ -1,0 +1,117 @@
+\documentclass[12pt]{third-rep}
+
+%% Any characters from a % to the end of line are comments.
+
+%% The third-rep class and this starter kit were written by 
+%% Graham Gough <graham@cs.man.ac.uk>
+%% If you have any comments or questions regarding this document,
+%% please post them to the local newsgroup man.cs.tex.
+
+%% This skeleton report is organised as a master file called
+%% report.tex which then includes files for individual parts including
+%% abstract.tex, chapter1.tex, chapter2.tex, chapter3.tex and
+%% appendix1.tex.  
+
+%% The third-rep style is a locally created style based on the
+%% standard LaTeX report style. If you really want to have a look at
+%% it, its source can be found in
+%% /usr/local/share/texmf/tex/latex/mancs/third-rep.cls
+%%
+%% More information about LaTeX in general and the local setup in
+%% particular can be found on the web at 
+%% http://csis.cs.manchester.ac.uk/software/contrib/latex
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% This is an example of how you load extra packages.
+%% Some packages are already loaded in the third-rep class
+
+\usepackage{url} % typeset URL's sensibly
+
+\usepackage{pslatex} % Use Postscript fonts
+
+%% The best way to latex just one chapter is to uncomment lines such as
+%% the next:
+%\includeonly{chapter1}
+
+%% This defines the title (the \\ forces a line break)
+\title{My Wonderful Creation\\
+  and other Gismos}
+%% and author
+\author{A. Student}
+%% and supervisor
+\supervisor{Dr. A. Lecturer}
+%% and the year of the report
+\coursetitle{The University of Manchester (something)}
+\reportyear{2012}
+
+%% this defines the file that contains the text of the abstract, there
+%% must be one of these by the time you submit your report.
+\abstractfile{abstract.tex}
+
+%% this defines the file that contains the acknowledgements (it can be
+%% omitted if you don't feel like thanking anyone
+\thanksfile{merci.tex}
+
+%% Uncomment the following lines if you want to include the date as a
+%% header in draft versions. See the documentation for fancyhdr for
+%% more ways of modifying headers (texdoc fancyhdr will show you the
+%% docs) 
+
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+%\lhead{}  % left head
+%\chead{Draft: \today} % centre head
+%\lfoot{}
+%\cfoot{\thepage}
+%\rfoot{}
+
+%% The following line sets up the use of PostScript fonts rather
+%% than the standard bitmapped fonts.
+\usepackage{pslatex}
+
+%% Uncomment the following line if you want to change the name of the
+%% Bibliography to References
+%\renewcommand{\bibname}{References}
+
+\usepackage{listings}
+
+% package & option to set default graphics path
+\usepackage{graphicx}
+\graphicspath{{media}}
+
+% ... set set default chapters path
+
+%% End of preamble, the actual document starts here
+%%
+
+\begin{document}
+
+%% This actually creates the title and abstract pages
+\dotitleandabstract
+
+%% Generate contents etc
+\tableofcontents
+\listoffigures
+\listoftables
+
+%% These include the actual text
+\include{chapters/chapter1}
+\include{chapters/chapter2}
+\include{chapters/chapter3}
+
+\bibliography{refs}             % this causes the references to be
+                                % listed
+
+\bibliographystyle{alpha}       % this determines the style in which
+                                % the references are printed, other
+                                % possible values are plain and abbrv
+%% Appendices start here
+\appendix
+
+% sets default path for appendix docs
+\makeatletter
+\def\input@path{{appendix}}
+\makeatother
+\include{appendix1}
+\end{document}

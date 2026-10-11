@@ -1,0 +1,112 @@
+%% File: wzuthesis-example.tex
+%% Derived from: thuthesis-example.tex (Tsinghua University Thesis Template)
+%%
+%% Major Changes:
+%%   - Updated chapter settings for Wenzhou University
+
+% !TeX encoding = UTF-8
+% !TeX program = xelatex
+% !TeX spellcheck = en_US
+
+\documentclass[degree=master,fontset=windows]{wzuthesis}
+  % 学位 degree:
+  %   doctor | master | bachelor | postdoc
+  % 学位类型 degree-type:
+  %   academic（默认）| professional
+  % 语言 language
+  %   chinese（默认）| english
+  % 字体库 fontset
+  %   windows | mac | fandol | ubuntu
+  % 建议终版使用 Windows 平台的字体编译
+
+
+% 论文基本配置，加载宏包等全局配置
+\input{wzusetup}
+
+
+\begin{document}
+
+% 封面
+\maketitle
+
+% 学位论文指导小组、公开评阅人和答辩委员会名单
+% 本科生不需要
+% \input{chapters/committee}
+
+% 使用授权的说明
+% 本科生开题报告不需要
+% \copyrightpage
+% 将签字扫描后授权文件 scan-copyright.pdf 替换原始页面
+% \copyrightpage[file=scan-copyright.pdf]
+
+\frontmatter
+\pagestyle{frontstyle}	% 正文之前不使用页眉
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}} % 正文之前不记入目录
+\input{chapters/abstract}
+
+
+% 目录
+\frontmatter
+\pagestyle{empty}
+\tableofcontents
+%\pagestyle{empty}
+
+% 插图和附表清单
+\listoffigures           % 插图清单
+\listoftables            % 附表清单
+% \listoffiguresandtables  % 插图和附表清单
+
+% 符号对照表
+\input{chapters/denotation}
+
+% 正文部分
+\mainmatter
+\pagestyle{mainstyle}	% 正文使用页眉
+\addtocontents{toc}{\protect\setcounter{tocdepth}{3}}
+\input{chapters/chap01}
+\input{chapters/chap02}
+\input{chapters/chap03}
+\input{chapters/chap04}
+
+% 参考文献
+\bibliography{ref/refs}  % 参考文献使用 BibTeX 编译
+% \printbibliography       % 参考文献使用 BibLaTeX 编译
+
+%\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}} % 后面有appendix这里不起作用
+
+\appendix
+%% \input{chapters/appendix-survey}       % 本科生：外文资料的调研阅读报告
+%% \input{chapters/appendix-translation}  % 本科生：外文资料的书面翻译
+\input{chapters/appendix}
+
+% 其他部分
+\backmatter
+\pagestyle{empty}	% 正文使用页眉
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}} % 正文之后不需要目录
+% 致谢
+\input{chapters/acknowledgements}
+
+% 声明
+% 各类开题报告通常不需要
+\statement[page-style=empty]  % 编译生成的声明页默认不含页眉页脚，以避免页码变化带来问题
+% 在提交终稿时，插入签字后的扫描件 scan-statement.pdf，并添加页眉页脚
+% \statement[page-style=plain, file=scan-statement.pdf]
+% 如确实需要在电子版中直接页眉页脚，则使用
+% \statement[page-style=plain]
+
+% 个人简历、在学期间完成的相关学术成果
+% 本科生可以附个人简历，也可以不附个人简历
+\input{chapters/resume}
+
+% 指导教师/指导小组评语
+% 本科生不需要
+\input{chapters/comments}
+
+% 答辩委员会决议书
+% 本科生不需要
+\input{chapters/resolution}
+
+% 本科生的综合论文训练记录表（扫描版）
+% \record{file=scan-record.pdf}
+
+\end{document}

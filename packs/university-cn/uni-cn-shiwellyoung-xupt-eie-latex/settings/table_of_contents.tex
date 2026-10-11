@@ -1,0 +1,50 @@
+% ===== 目录设置 =====
+% \setcounter{page}{3} % 目录从II开始
+% ===== 设置目录标题格式 =====
+\renewcommand\contentsname{%
+    \vspace*{0pt}% 段前绝对间距
+    \raggedright % 强制左对齐
+    \fontspec{Arial}\fontsize{12pt}{12pt}\selectfont\bfseries % Arial 加粗 14pt
+    Contents\par
+    \vspace{10pt}% 段后间距
+}
+
+% 设置目录深度：显示到 subsection 级别（0=chapter, 1=section, 2=subsection）
+\setcounter{tocdepth}{1}
+
+% 一级标题（chapter）- 加粗 Arial，使用阿拉伯数字编号
+\titlecontents{chapter}[0mm] % 左间距
+{\fontspec{Arial}\fontsize{11pt}{12.65pt}\selectfont\bfseries} % 标题格式：Arial 加粗
+{\thecontentslabel\quad}% 标题标志
+{\bfseries} % 无序号标题
+{\titlerule*[4pt]{.}\contentspage} % 指引线与页码
+[\vspace{10pt}] % 段后间距10磅
+
+% 二级标题（section）- 常规 Arial
+\titlecontents{section}[0em] % 左间距（缩进）
+{\fontspec{Arial}\fontsize{11pt}{12.65pt}\selectfont} % 标题格式：Arial 常规
+{\thecontentslabel\quad}% 标题标志
+{} % 无序号标题
+{\titlerule*[4pt]{.}\contentspage} % 指引线与页码
+[\vspace{10pt}] % 段后间距10磅
+
+% 三级标题（subsection）- 常规 Arial
+\titlecontents{subsection}[0em] % 左间距
+{\fontspec{Arial}\fontsize{12pt}{20pt}\selectfont} % 标题格式：Arial 常规
+{\thecontentslabel\quad}% 标题标志
+{} % 无序号标题
+{\titlerule*[4pt]{.}\contentspage} % 指引线与页码
+{} % 下间距
+
+% 四级标题（subsubsection）- 常规 Arial
+\titlecontents{subsubsection}[0em] % 左间距
+{\fontspec{Arial}\fontsize{12pt}{20pt}\selectfont} % 标题格式：Arial 常规
+{\thecontentslabel\quad}% 标题标志
+{} % 无序号标题
+{\titlerule*[4pt]{.}\contentspage} % 指引线与页码
+{} % 下间距
+% 设置行间距为20pt
+%\setlength{\parskip}{0.3\baselineskip}
+\makeatletter
+\def\@cite#1#2{\textsuperscript{[{#1\if@tempswa , #2\fi}]}}
+\makeatother

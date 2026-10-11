@@ -1,0 +1,185 @@
+\RequirePackage{fix-cm}
+% ============= Dokumentclass =============
+\documentclass[
+fontsize=11.5 pt,
+toc=bib,chapterentrywithoutdots, 
+listof,
+parskip=half-,
+%twoside,
+oneside,
+open=right,
+captions=figureheading,
+DIV=11,
+BCOR=6 mm,
+headsepline=true,
+%headinclude=true,
+%footinclude=false,
+%overfullrule=true,
+]{scrbook}
+
+% ============= Line Spacing =============
+
+\usepackage{setspace}
+\setstretch{1.1}
+\sloppy
+
+% ============= Packages =============
+
+% Document information
+\usepackage[
+	pdftitle={PhD template},
+	pdfsubject={PhD thesis template for the University of Portsmouth},
+	pdfauthor={Anna Rösner},
+	pdfcreator={Anna Rösner},
+	pdfproducer={PhD thesis template by Anna Rösner},
+	pdfkeywords={PhD, thesis, template, University of Portsmouth, LaTeX},
+	hidelinks 
+]{hyperref}
+
+
+% Standard packages
+\usepackage[utf8]{inputenc}
+\usepackage[UKenglish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+
+\usepackage{fancyhdr}
+\usepackage{lmodern}
+\usepackage{type1cm}
+\usepackage{color}
+\usepackage{units}
+
+
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage{pdflscape}
+\usepackage{mdframed}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{decorations.pathreplacing,shapes.geometric,positioning,arrows.meta,fit}
+\usepackage{comment}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{float}
+\usepackage{fdsymbol} % symbols
+\usepackage{pdfpages}
+\usepackage{subcaption}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{placeins}
+\usepackage{colortbl}
+
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+%=========== Acronyms on Hover ===========
+\usepackage{pdfcomment}
+\usepackage[nohyperlinks,printonlyused]{acronym}
+\NewCommandCopy\originalacs\acs
+\renewcommand\acs[1]{\pdftooltip{\originalacs{#1}}{\acl{#1}}}
+\NewCommandCopy\originalacsp\acsp
+\renewcommand\acsp[1]{\pdftooltip{\originalacsp{#1}}{\aclp{#1}}}
+
+\newcommand\MyBox[2]{
+  \fbox{\lower0.75cm
+    \vbox to 1.7cm{\vfil
+      \hbox to 1.7cm{\hfil\parbox{1.4cm}{#1\\#2}\hfil}
+      \vfil}%
+  }%
+}
+%=======================================
+\captionsetup{
+	font=normalsize,
+	labelfont=bf,
+	indent=1em
+}
+
+% Prevent orphans and widows
+\usepackage[all]{nowidow}
+% penalizes orphans
+\clubpenalty=10000
+% penalizes widows
+\widowpenalty=10000
+% penalizes widows that are immediately followed by a formula \[ ... \]
+\displaywidowpenalty=10000
+
+
+% No paragraph indentation
+%\setlength{\parindent}{0pt}
+
+% Avoid excessive spacing between floats
+\raggedbottom
+
+
+%========= Chapter heading spacing =========
+\renewcommand*{\chapterheadstartvskip}{\vspace*{.5\baselineskip}}% adjust spacing
+
+%% Font sizes ============
+\addtokomafont{sectioning}{\rmfamily} % serif headings
+
+% ============= Package Settings & Miscellaneous =============
+
+
+%========== Miscellaneous ===========
+
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+\definecolor{atomictangerine}{rgb}{1.0, 0.6, 0.4}
+%=========== Citation style ===========
+
+\usepackage{natbib}
+\renewcommand{\bibname}{References}
+
+% ============= Document begin =============
+
+\begin{document}
+\include{0.1_Titelpage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Front Matter%
+\frontmatter
+\pagenumbering{Roman}
+
+\include{0.2_Abstract}
+\let\cleardoublepage\clearpage
+\include{0.3_Declaration}
+\include{0.4_Acknowledgments}
+\include{0.5_AI_Acknowledgments}
+\include{0.6_Publications}
+\let\cleardoublepage\clearpage
+\begin{singlespacing}
+\tableofcontents
+\end{singlespacing}
+\include{0.7_Definitions}
+\listoftables
+\listoffigures
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Chapters%
+
+\mainmatter
+%\setstretch{2}
+
+\include{1_Introduction}
+\include{2_Literature_review}
+\include{3_Methodology}
+\include{4_Main_Chapter}
+\include{5_Main_Chapter}
+\include{6_Main_Chapter}
+\include{7_Main_Chapter}
+\include{8_Conclusion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\setstretch{1}
+
+%Literature % 
+\bibliography{references}
+\bibliographystyle{apalike}
+
+\backmatter
+\include{9_Appendix}
+
+\end{document}

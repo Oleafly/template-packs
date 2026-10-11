@@ -1,0 +1,290 @@
+% CDL thesis style file 2016/01/07
+%  based on wuse_thesis.tex
+%  
+%  2016/01/07 和歌山大学システム工学部デザイン情報学科のスタイルをベース
+%  に作成
+%
+%
+\documentclass[11pt]{ujreport}
+\usepackage{cdl_thesis}
+\usepackage{indentfirst}
+% dvipdfmx ドライバを明示（日本語埋め込みや図の取り込みを安定化）
+\usepackage[dvipdfmx]{graphicx}  % ←EPS等を取り込む場合にも有効
+			% 他のパッケージ・スタイルを使う場合には適宜追加
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
+%% 主に表紙を作成するための情報
+%%
+
+%%  タイトル(修論の場合は英語表記も指定)
+\title{卒業・修士論文用スタイルファイルを用いた\\
+       \TeX による卒業・修士論文の作成}
+\etitle{Test\\Test}
+
+%%  著者名(修論の場合は英語表記も指定)
+\author{天満 亮太}
+\eauthor{Ryota Tamura}
+
+%% 卒業論文・修士論文(以下のどちらかを選択)
+%\bachelar	% 卒業論文(4年生用)
+\master  	% 修士論文(M2用)
+
+%%  コース・学科
+\department{先端社会デザイン}
+\edepartment{Course of Computer Science}
+
+%% 卒研3クラス
+\class{CE}
+
+%% 回生
+\grade{4}
+
+%%  学生番号
+\studentid{0000000000-0}
+
+%%  卒業年度（学期）
+\gyear{2020}		% 提出年が2016年なら，2015年度
+
+%% 学期
+\semester{秋学期}
+
+%%  論文提出日
+\date{2020年2月1日}	% 修士の場合は月(2016年2月)までとし，英語表記も指定
+%\edate{February 2016}	% 修士の場合，こちら(英語表記)も有効化
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\maketitle
+
+%%
+%%  概要
+%%
+\begin{abstract}
+ 本稿では，「立命館大学コラボレーションデザイン研究室卒業論文/修士論文用
+ スタイルファイル」を用いて卒業論文/修士論文を作成する方法を解説する．
+本稿自身，「立命館大学コラボレーションデザイン研究室卒業論文/修士論文用
+ スタイルファイル」を用いて記述されており，例によってその使い方を示して
+ いる．
+
+ 「立命館大学コラボレーションデザイン研究室卒業論文/修士論文用
+ スタイルファイル」では，タイトルページ，概要，目次，参考文献などの書式
+ を設定している．
+
+  「立命館大学コラボレーションデザイン研究室卒業論文/修士論文用
+ スタイルファイル」
+は，
+\begin{quote}
+  \begin{description}
+    \item[\tt cdl\_thesis.sty:] 卒業/修士論文用スタイルファイル
+    \item[\tt thesis\_sample.tex:] スタイルファイル利用例
+  \end{description}
+\end{quote}
+からなる．
+
+\end{abstract}
+
+%%  目次
+\tableofcontents
+
+%%  図目次 (図目次をいれたければ以下のコメントをはずす)
+%\listoffigures
+%%  表目次 (表目次をいれたければ以下のコメントをはずす)
+%\listoftables
+
+\newpage
+\pagenumbering{arabic}	% 以降のページ番号を算用数字に
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
+%%  本文はここから
+%%
+
+\chapter{タイトルページ，概要，目次}
+
+{\bf 「立命館大学コラボレーションデザイン研究室卒業論文/修士論文用スタイ
+ルファイル」}では，専用のタイトルページを出力する．
+記述すべき項目は，
+\begin{itemize}
+  \item タイトル
+  \item 著者名
+  \item 学士(4年)/修士(M2)の設定
+  \item 学科名/研究科名
+  \item 学生番号
+  \item 卒業年度
+  \item 論文提出日
+\end{itemize}
+である．
+これらのデータは，\verb|\maketitle|によってタイトルページに出力される．
+また，概要の部分において，論文の内容をまとめる．その内容は論文の2ペー
+ジ目(タイトルページの次)に出力される．
+このソースでは，目次(\verb|\tableofcontents|)を出力している．
+他に，図目次(\verb|\listoffigures|)，表目次(\verb|\listoftables|)を
+出力することもできるので，必要ならばそれぞれのコメントをはずす．
+図目次，表目次については，第\ref{chap:fig-tab-exp}章において説明する．
+
+\section{タイトル}
+\subsection{title}
+論文のタイトルを記述する．
+
+\section{著者}
+\subsection{author}
+著者名を記述する．
+
+\subsection{bachelar/master}
+卒業論文の場合には，\verb|\master|をコメントアウトし，
+\verb|\bachelar|を設定する．
+修士論文の場合には，\verb|\bachelar|をコメントアウトし，
+\verb|\master|を設定する．
+
+\subsection{department}
+所属学科を記述する．
+当研究室は情報コミュニケーション学科所属なので，``情報コミュニケーショ
+ン''とあらかじめ記述している．
+
+\subsection{studentid}
+学生番号を記述する．
+
+\subsection{gyear}
+卒業年度を記述する．
+
+\section{提出日}
+\subsection{date}
+論文提出日を記述する．
+
+
+\chapter{図，表，数式}\label{chap:fig-tab-exp}
+論文では，図，表，数式などを効果的に使用する．
+
+\section{図}
+{\tt figure}環境を利用することによって図にキャプション
+(\verb|\caption|)を付けることができる．図に付けられたキャプションは
+\verb|\listoffigures|によって図目次として出力される．図には章ごとに通
+し番号が付けられ，キャプションに\verb|\label|を設定しておくと，
+``図\ref{fig:sample}''のように\verb|\ref|によって図を番号で参照するこ
+とができる．図\ref{fig:sample}に{\tt figure}環境を用いた記述例を示す．
+
+\begin{figure}
+  \begin{center}
+    ここで図を取り込む．
+    % 試しに，tiger.psが自分のマシンのどこに格納されているかを調べて
+    % 以下の命令を有効にしてみて下さい．
+    % ただし，同時に\begin{document}より前にある\usepackage{graphicx}
+    % も有効にする必要があります．
+    % 以下の例ではついでに四角で囲っています．
+    %\framebox{\includegraphics[width=5cm,clip]{/usr/local/share/ghostscript/7.07/examples/tiger.ps}}
+  \end{center}
+  \caption{図の例}
+  \label{fig:sample}
+\end{figure}
+
+また，{\tt graphicx.sty}などのスタイルファイルを利用することによって
+EPS形式の図を文章の中に取り込むことができる．
+この場合，\verb|\begin{document}|の前に\verb|\usepackage{graphicx}|を
+追加する．
+
+\section{表}
+{\tt table}環境を利用することによって図と同じように，キャプションをつ
+けたり，ラベルにより参照したりすることができる．また
+\verb|\listoftables|によって表目次として出力される．
+表\ref{tab:sample}に{\tt table}環境で作成した表を示す．
+
+\begin{table}
+  \caption{表の例}
+  \label{tab:sample}
+  \begin{center}
+    \begin{tabular}{|c|c|c|}
+      \hline
+      8 & 3 & 4\\
+      \hline
+      1 & 5 & 9 \\
+      \hline
+      6 & 7 & 2 \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+
+\section{数式}
+\TeX では数式のための機能が豊富である．
+{\tt equation}環境などを利用することによって数式に番号を付けることがで
+きる．図や表と同じくラベルを付けておけば，``式\ref{exp:sample}''のよう
+に数式を番号で参照することができる．
+
+\begin{equation}
+  y = ax^2 + bx + c \label{exp:sample}
+\end{equation}
+
+\chapter{参考文献}
+
+文献を参照する場合には，論文の最後に参考文献として列挙するとともに，
+\verb|\cite|を使って，例えば，
+\begin{quote}
+  文献\cite{latex}によれば…
+\end{quote}
+や，
+\begin{quote}
+  …である\cite{latex2e}．
+\end{quote}
+のように参照する．
+
+文献の列挙には，{\tt thebibliography}環境などを用いる\footnote{使い方
+は，この資料のソースを参照．}．
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% 謝辞
+
+\begin{acknowledgements}
+ 天のお恵みに感謝いたします．
+\end{acknowledgements}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
+%% 参考文献
+%%
+\begin{thebibliography}{99}
+\bibitem{latex}
+    奥村晴彦 著，\LaTeX 入門---美文書作成のポイント---，技術評論社，1993．
+\bibitem{latex2e}
+    奥村晴彦 著，[改定第3版] \LaTeXe~美文書作成入門，技術評論社，2004．
+\bibitem{texbasic}
+    OfficeMASA，神代英俊，長島秀行 著，\TeX の基礎，
+    ソフトバンクパブリッシング，2002．
+\bibitem{latexcomp}
+    M. Goossens, F. Mittelbach, A. Samarin 共著，
+    アスキー書籍編集部 監訳，The \LaTeX コンパニオン，アスキー出版局，1998．
+\end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%
+%% 付録
+%%
+\appendix
+
+\chapter{サンプルプログラム}
+プログラムリストや実行結果など，本論を補足する上で必要と思われるものがあ
+れば付録として付ける．
+
+{
+\footnotesize
+\begin{verbatim}
+#include <stdio.h>
+int main(void)
+{
+    printf("Hello, World!\n");
+    return 0;
+}
+\end{verbatim}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

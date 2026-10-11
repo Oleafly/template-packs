@@ -1,0 +1,124 @@
+% 変数定義
+\makeatletter
+
+% 変数読み込み
+\def\jclass#1{\gdef\@jclass{#1}}
+\def\jtitle#1{\gdef\@jtitle{#1}}
+\def\juniv#1{\gdef\@juniv{#1}}
+\def\jfaculty#1{\gdef\@jfaculty{#1}}
+\def\jauthor#1{\gdef\@jauthor{#1}}
+\def\jadvisor#1#2{\gdef\@jadvisor{#1}\gdef\@jposition{#2}}
+\def\jsyear#1{\gdef\@jsyear{#1}}
+\def\jkeyword#1{\gdef\@jkeyword{#1}}
+\def\jdate#1{\gdef\@jdate{#1}}
+\def\jadvisor#1{\gdef\@jadvisor{#1}}
+\def\jnumber#1{\gdef\@jnumber{#1}}
+
+%行間設定
+\renewcommand{\baselinestretch}{1.1}
+\setlength{\parskip}{.2\baselineskip}
+
+% 余白設定（左右対称）
+\setlength{\textwidth}{15.92cm}
+\setlength{\oddsidemargin}{0mm}
+\setlength{\evensidemargin}{0mm}
+\setlength{\topmargin}{-1cm}
+\setlength{\textheight}{23.5cm}
+\setlength{\footskip}{18mm}
+
+% 表紙用行間広め定義
+\newenvironment{lineskiptitle}{%
+  \baselineskip = 1.5cm
+}
+
+% 表紙の定義（日本語）
+\def\jmaketitle{\par
+  \begingroup
+  \@jmaketitle
+  \endgroup
+}
+\def\@jmaketitle{%
+  \thispagestyle{empty}
+  \begin{center}
+    {\Large \@jsyear 年度\ \ \ \ \@jclass}
+    \vfill
+    \begin{lineskiptitle}    
+    {\huge\bf \@jtitle}
+    \end{lineskiptitle}
+    \vfill
+    {\Large 提出日：\@jdate}
+    \vspace{2cm}\par
+    {\Large 指導教員：\@jadvisor}
+    \vspace{2cm}\par
+    {\Large \@juniv\ \@jfaculty}
+    \vspace{1cm}\par
+    {\Large 学籍番号：\@jnumber}
+    \vspace{1cm}\par
+    {\LARGE \@jauthor}
+  \end{center}
+  %\newpage
+  \cleardoublepage
+  \pagenumbering{roman}
+}
+
+% アブストラクト用行間広め設定
+\newenvironment{lineskipabst}{%
+  \baselineskip = 1cm
+}
+
+% アブストラクトの定義（日本語）
+\newenvironment{jabstract}{%
+  \begin{center}
+    {\Large\bf \@jsyear 年度\ \@jclass}
+    \vspace{0.5cm}\par
+    \begin{lineskipabst}
+    {\LARGE\bf \@jtitle}\vspace{1cm}
+    \end{lineskipabst}
+  \end{center}
+  \parindent=1zw
+  \section*{論文要旨}
+}{
+  \section*{キーワード}
+  \@jkeyword \par
+  \vspace{1cm}\par
+  \begin{flushright}
+    {\@juniv} {\@jfaculty}
+    
+    {\@jauthor}
+  \end{flushright} 
+
+  \cleardoublepage
+  \parindent=1zw
+  \renewcommand{\baselinestretch}{1.0}\selectfont
+}
+
+% 謝辞環境の作成
+\newenvironment{acknowledgment}{%
+  \addcontentsline{toc}{chapter}{\acknowledgmentname}
+  \chapter*{\acknowledgmentname}
+}{}
+
+% subsubsection 環境の設定変更
+\setcounter{secnumdepth}{3}
+\renewcommand\thesubsubsection{(\arabic{subsubsection})}
+
+% 箇条書きの行間設定
+\renewenvironment{itemize}{%
+   \begin{list}{\parbox{1zw}{$\bullet$}}{%
+      \setlength{\itemsep}{0em}
+      \setlength{\parsep}{0em}
+   }}{%
+   \end{list}
+}
+
+% センタリングされた図のマクロ （デフォルトで横幅8cm）
+\newcommand*{\easyfig}[5][width=8cm]{
+    \begin{figure}[#5]
+        \centering
+        \includegraphics[#1]{#2}
+        \caption{#3}
+        \label{#4}
+    \end{figure}
+}
+
+\makeatother

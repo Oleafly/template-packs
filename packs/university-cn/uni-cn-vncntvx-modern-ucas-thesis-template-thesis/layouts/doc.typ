@@ -1,0 +1,111 @@
+#import "@preview/cuti:0.4.0": show-cn-fakebold
+#import "../utils/style.typ": get-fonts, 字号
+#import "../utils/custom-numbering.typ": circled-footnote-numbering
+
+// 文稿设置，可以进行一些像页面边距这类的全局设置
+//
+// doctype 用于区分本科（bachelor）与研究生（master/doctor）的样式差异；
+// 默认 "doctor" 保持研究生既有输出不变——研究生样式已定稿，**不得**因本科
+// 规范适配而改变（详见 AGENTS.md 边界条款）。当前按 doctype 分流的项：
+// - 脚注编号：本科按规范二·（七）·2·（1）每页单独用圈码 ①②③；
+// - 上标尺寸：本科显式 0.7em（宋体族 sups 自带上标把圈码压成约 0.1em 微字形，
+//   见 utils/custom-numbering.typ 与 docs/CUSTOMIZE.md）。
+#let doc(
+  // documentclass 传入参数
+  info: (:),
+  fontset: "mac",
+  fonts: (:),
+  doctype: "doctor", // "bachelor" | "master" | "doctor"
+  // 其他参数
+  fallback: false, // 字体缺失时使用 fallback，不显示豆腐块
+  lang: "zh",
+  // 页面边距设置，上、下2.54cm，左、右3.17cm，
+  margin: (top: 2.54cm, bottom: 2.54cm, left: 3.17cm, right: 3.17cm),
+  // 页眉、页脚距页边界 1.5cm
+  // 不使用 page 的 header-ascent/footer-descent：它们的语义是"页眉/页脚侵入正文 margin 的量"，
+  // 会挤压正文区高度，且与"距边界 1.5cm"非等价。改由 preface/mainmatter 的 page.foreground +
+  // place(top+center, dy:1.5cm) / place(bottom+center, dy:-1.5cm) 绝对定位精确实现，
+  // 既保证距边界 1.5cm，又完全不侵入正文 margin。
+  it,
+) = {
+  // 1.  默认参数
+  fonts = get-fonts(fontset) + fonts
+  info = (
+    (
+      title: ("基于 Typst 的", "中国科学院大学学位论文"),
+      author: "张三",
+    )
+      + info
+  )
+
+  // 2.  对参数进行处理
+  // 2.1 如果是字符串，则使用换行符将标题分隔为列表
+  if type(info.title) == str {
+    info.title = info.title.split("\n")
+  }
+
+  // 3. 基本的样式设置
+  set text(fallback: fallback, lang: lang)
+  set page(
+    paper: "a4",
+    margin: margin,
+  )
+
+  // 3.1 数学公式内的中文字体（Typst 0.14+ 官方 show-set 机制，见 math > Math fonts
+  // 与 text.font 的 covers 说明）：
+  // 1. New Computer Modern Math（covers: "latin-in-cjk"）优先负责数学符号、拉丁
+  //    字母与数字；中西共用标点（全角（）等）不在该覆盖集内，交给下一项中文字体；
+  // 2. 中文字体（covers: regex(".")）负责公式内中文及中西共用标点。取 fonts.宋体
+  //    去掉首位的 Times Latin 字体（字体组约定首位为 Latin 字体，见 style.typ）；
+  //    用户 fonts 覆盖只给单一字体时视为中文字体、整表保留；
+  // 3. 末位裸字体 "New Computer Modern Math"：Typst 取首个无 covers 字体作为数学
+  //    基准字体（提供 OpenType MATH 排版数据），保证 cases 的 { 等可正确拉伸。
+  //    不可省略：否则公式内中文标点回落字体链中缺数学基准字体。
+  show math.equation: set text(font: (
+    (name: "New Computer Modern Math", covers: "latin-in-cjk"),
+    ..fonts
+      .宋体
+      .slice(calc.min(1, fonts.宋体.len() - 1))
+      .map(font => (name: font, covers: regex("."))),
+    "New Computer Modern Math",
+  ))
+
+  // 4.  PDF 元信息
+  set document(
+    title: (("",) + info.title).sum(),
+    author: info.author,
+  )
+
+  // 5.  本科专属样式与中文伪加粗（针对没有粗体的字体）
+  // 根据fontset参数判断是否需要启用中文伪加粗
+  // - Fandol系字体自带粗体，因此不需要伪加粗
+  // - Windows、Mac和Adobe等字体组通常需要伪加粗以获得更好的显示效果
+  // 注意：Typst 的 set 规则只作用于同一块内的后续内容（实测），故本科的 set
+  // 必须与本函数返回的 it 同块书写，不能单独放在 if 分支里（那样不生效）。
+  if doctype == "bachelor" {
+    // 脚注编号：规范二·（七）·2·（1）"每页单独用①②③等编码"。
+    // 圈码 ①–⑩ 为各字体族共有字形，第 11 条起回落阿拉伯数字（见 custom-numbering）；
+    // 每页重置计数由 preface/mainmatter 的 foreground 负责（reset-footnote）。
+    set footnote(numbering: circled-footnote-numbering)
+    // 上标尺寸显式取 0.7em，强制走 Typst 合成上标：macOS 宋体/楷体/仿宋的
+    // sups（字体自带上标）字形表中圈码仅约 0.1em，用字体自带上标时脚注标记
+    // 会缩成不可见的点（实测 12pt 正文下标记墨迹高约 1pt）；显式给定尺寸后
+    // 圈码与阿拉伯数字、各字体族下的上标尺寸一致（实测标记墨迹高 7.8pt）。
+    set super(size: 0.7em)
+    if fontset != "fandol" {
+      {
+        show: show-cn-fakebold
+        it
+      }
+    } else {
+      it
+    }
+  } else if fontset != "fandol" {
+    {
+      show: show-cn-fakebold
+      it
+    }
+  } else {
+    it
+  }
+}

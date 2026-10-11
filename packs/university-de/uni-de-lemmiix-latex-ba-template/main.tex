@@ -1,0 +1,140 @@
+% Dokumenteinstellungen und Anpassungen
+\input{resources/settings/settings}
+\input{resources/settings/macros}
+\input{resources/styles/adjustments}
+
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{eso-pic}
+\newcommand\BackgroundPic{%
+\put(0,0){%
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering
+\includegraphics[width=\paperwidth,height=\paperheight,%
+keepaspectratio]{resources/images/deckblatt.png}%
+\vfill
+}}}
+
+
+\include{titles/graduation}
+% Variablen für das Deckblatt
+\gradeType{Bachelor of Science (B.Sc.)}
+\germanTitle{Deutscher Titel}
+\englishTitle{English Title}
+\authorFirstname{Max}
+\authorLastname{Mustermann}
+\authorBirthplace{Musterstadt}
+\discipline{Informatik und Kommunikation}
+\courseOfStudies{Informatik}
+\matrikelnr{112}
+\submitDate{01.01.2042}
+\firstExaminer{Prof. Dr. Musterprof}
+\secondExaminer{Prof. Dr. Musterprof}
+
+
+\include{titles/eidesstatt}
+\place{Gelsenkirchen}
+
+
+\lstset{literate=%
+  {Ö}{{\"O}}1
+  {Ä}{{\"A}}1
+  {Ü}{{\"U}}1
+  {ß}{{\ss}}1
+  {ü}{{\"u}}1
+  {ä}{{\"a}}1
+  {ö}{{\"o}}1
+}
+
+% Javascript als Sprache für die lstings
+\lstdefinelanguage{Java}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, while, do, else, case, break, this, const},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{gray}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+\lstset{
+    language=Java,
+    numbers=left,
+    frame=leftline,
+    tabsize=2,
+    rulesepcolor=\color{gray},
+    rulecolor=\color{black},
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+}
+
+% Neuer Befehl um Subsubsubkapitel schreiben zu können
+\newcommand{\subsubsubsection}[1]{\paragraph{#1}\mbox{}\\}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+\begin{document}
+
+% Deckblatt ohne sichtbare Seitenzahl, aber als erste Seite mitgezählt
+\AddToShipoutPicture{\BackgroundPic}
+
+% Titelblatt erzeugen
+\maketitle
+\thispagestyle{empty}
+
+% Eidesstattliche Erklärung
+\makeeidesstatt
+\ClearShipoutPicture
+
+%die ersten Seiten vor dem tatsächlichen Text werden römisch nummeriert
+\pagenumbering{Roman}
+
+% Abstract und Verzeichnisse
+\input{chapter/0_Kurzfassung.tex}
+\newpage
+\input{chapter/0_Abstract.tex}
+\newpage
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\input{chapter/KI_Verzeichnis.tex}
+\newpage
+
+% Kapitel ab hier arabisch nummerieren
+\pagenumbering{arabic}
+
+%TODO WICHTIG entferne die folgenden Zeilen wenn du ready für den Druck bist...
+\listoftodos
+\todo{entfernen sobald fertig für Druck}
+\newpage
+%... denn es wäre peinlich deine Todos im fertigen Druck zu sehen
+
+\input{chapter/1_Einleitung.tex}
+\newpage
+\input{chapter/2_Theorie.tex}
+\newpage
+\input{chapter/3_Analyse.tex}
+\newpage
+\input{chapter/4_Konzeption.tex}
+\newpage
+\input{chapter/5_Entwicklung.tex}
+\newpage
+\input{chapter/6_Diskussion.tex}
+\newpage
+\input{chapter/7_Fazit.tex}
+\newpage
+
+% Bibliografie im .bib Format einfügen
+\bibliography{bachelorarbeit}
+
+\end{document}

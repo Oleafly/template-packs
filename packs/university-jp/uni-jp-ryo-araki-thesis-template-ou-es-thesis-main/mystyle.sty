@@ -1,0 +1,232 @@
+% +++++++++++++++++++++++++++++++++++++++++++
+% 独自コマンドによるLaTeX設定の構築
+% LaTeX，英語
+% +++++++++++++++++++++++++++++++++++++++++++
+%
+% ===========================================
+% 言語の設定　日本語　English
+% ===========================================
+\newcommand*{\lang}{J} % 言語設定　J: Japanese, E: English
+\usepackage{ifthen}
+\ifthenelse{\equal{\lang}{J}}{
+  \newcommand*{\tocname}{目次}
+  \newcommand*{\tosname}{記号表}
+  \newcommand*{\reftitle}{参考文献}
+  \newcommand*{\appendixtitle}{付録}
+  \newcommand*{\acknowledgement}{謝辞}
+}{
+  \newcommand*{\tocname}{Table of Contents}
+  \newcommand*{\tosname}{Table of Symbols}
+  \newcommand*{\reftitle}{References}
+  \newcommand*{\appendixtitle}{Appendix}
+  \newcommand*{\acknowledgement}{Acknowledgements}
+}
+%
+% ===========================================
+% フォント設定
+% ===========================================
+\usepackage{hyperref}  % 図・表・参考文献へのリンク
+\usepackage{indentfirst}
+\usepackage{times} % Use the times font
+% \usepackage{palatino} % Uncomment to use the Palatino font
+\usepackage{url}
+%
+% ===========================================
+% 図・表関係
+% ===========================================
+%%% Unknown document class (or package), (caption)のWarningの回避
+\setlength\abovecaptionskip{\f@size\p@}
+\setlength\belowcaptionskip{0\p@}
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{#1: #2}%
+  \ifdim \wd\@tempboxa >\hsize
+    #1: #2\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+%%%
+\usepackage{here}
+\usepackage{xcolor} % Specify colors by their 'svgnames', for a full list of all colors available see here: http://www.latextemplates.com/svgnames-colors
+\usepackage{booktabs} % 表の横罫線
+\usepackage{lscape}  % 表などを90度回転させる
+\usepackage{longtable} % ページをまたぐ表の作成
+\usepackage{subfig}
+\usepackage{tcolorbox}
+%
+% ===========================================
+% 数学記号
+% ===========================================
+\usepackage{bm, amsfonts, amsmath, amsthm, amssymb, ascmac}  % mathabx
+\usepackage{siunitx}  %SI単位系を上手くやってくれる:\SI{数値}{単位}，\si{単位}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{empheq}
+% https://tex.stackexchange.com/a/147461
+\def\onedot{$\mathsurround0pt\ldotp$}
+\def\cddot{% two dots stacked vertically
+  \mathbin{\vcenter{\baselineskip.67ex
+    \hbox{\onedot}\hbox{\onedot}}%
+  }}%
+% mathematical environment
+\usepackage{amsthm}
+% \theoremstyle{assumption}
+\theoremstyle{plain} % Unknown theoremstyle `assumption'.のWarningの回避
+\newtheorem*{assumption}{Assumption}
+%
+% ===========================================
+% 参考文献のスタイルを独自定義
+% ===========================================
+\renewbibmacro{in:}{} % in: Some journal の "in:" を取る
+\DeclareFieldFormat[article, online]{title}{#1}  % 論文タイトルにダブルクォートをつけない/online文献のフォントを他と揃える
+\DeclareFieldFormat[inbook, book]{title}{\mkbibitalic{#1}}  % 書籍のタイトルを斜体
+\DeclareSourcemap{%
+  \maps[datatype=bibtex,overwrite=true]{
+    % 雑誌名の短縮形．自分でリストを作る必要がある
+    \map{
+      \step[
+        fieldsource=journal,
+        match={Journal of Fluid Mechanics},
+        replace={J. Fluid Mech.}]%
+      \step[
+        fieldsource=journal,
+        match={Physical Review E},
+        replace={Phys. Rev. E}]%
+      \step[
+        fieldsource=journal,
+        match={Physical Review X},
+        replace={Phys. Rev. X}]%
+      \step[
+        fieldsource=journal,
+        match={Physical Review Letters},
+        replace={Phys. Rev. Lett.}]%
+      \step[
+        fieldsource=journal,
+        match={Physical Review Fluids},
+        replace={Phys. Rev. Fluids}]%
+      \step[
+        fieldsource=journal,
+        match={Physical Review Research},
+        replace={Phys. Rev. Res.}]%
+      \step[
+        fieldsource=journal,
+        match={Annual Review of Fluid Mechanics},
+        replace={Annu. Rev. Fluid Mech.}]%
+      \step[
+        fieldsource=journal,
+        match={Nature Communications},
+        replace={Nat. Comm.}]%
+      \step[
+        fieldsource=journal,
+        match={Fluid Dynamics Research},
+        replace={Fluid Dyn. Res.}]%
+      \step[
+        fieldsource=journal,
+        match={Journal of Computational Physics},
+        replace={J. Comput. Phys.}]%
+      \step[
+        fieldsource=journal,
+        match={Computer Physics Communications},
+        replace={Comput. Phys. Commun.}]%
+      \step[
+        fieldsource=journal,
+        match={Proceedings of the National Academy of Sciences},
+        replace={Proc. Natl. Acad. Sci. USA}]%
+      \step[
+        fieldsource=journal,
+        match={New Journal of Physics},
+        replace={New J. Phys.}]%
+      \step[
+        fieldsource=journal,
+        match={Theoretical and Applied Mechanics Letters},
+        replace={Theor. App. Mech. Lett.}]%
+      \step[
+        fieldsource=journal,
+        match={Physics of Fluids},
+        replace={Phys. Fluids}]%
+      \step[
+        fieldsource=journal,
+        match={Journal of Statistical Physics},
+        replace={J. Stat. Phys.}]%
+      \step[
+        fieldsource=journal,
+        match={Journal of Turbulence},
+        replace={J. Turbul.}]%
+      \step[
+        fieldsource=journal,
+        match={Physics Reports},
+        replace={Phys. Rep.}]%
+      \step[
+        fieldsource=journal,
+        match={European Physical Letters},
+        replace={EPL}]%
+      \step[
+        fieldsource=journal,
+        match={Journal of the Atmospheric Sciences},
+        replace={J. Atmos. Sci.}]%
+      \step[
+        fieldsource=journal,
+        match={Scientific Reports},
+        replace={Sci. Rep.}]%
+      \step[
+        fieldsource=journal,
+        match={Physica D: Nonlinear Phenomena},
+        replace={Physica D}]%
+    }
+  }
+}
+%
+% ===========================================
+% itemize/enumerateの行間調整
+% ===========================================
+%
+\let\oldenumerate\enumerate
+\let\olditemize\itemize
+\renewcommand{\itemize}{
+  \olditemize
+  \setlength{\itemsep}{2pt}    % 項目間
+  \setlength{\parskip}{2pt}    % 段落間
+  \setlength{\parsep}{0pt}
+}
+\renewcommand{\enumerate}{
+  \oldenumerate
+  \setlength{\itemsep}{2pt}    % 項目間
+  \setlength{\parskip}{2pt}    % 段落間
+  \setlength{\parsep}{0pt}
+}
+%
+%
+% +++++++++++++++++++++++++++++++++++++++++++
+% 日本語環境の設定
+% +++++++++++++++++++++++++++++++++++++++++++
+%
+\usepackage{otf}  % otfフォント
+\usepackage{pxjahyper}  % しおりの文字化けを防止
+%
+% ===========================================
+% biblatexのlangidによる日本語文献の識別子を定義
+% cf. biblatex で日本語文献をサポート https://gist.github.com/idiotWu/4879a88a3e34618cc8215a43ba2e9fbd
+% ===========================================
+\AtEveryBibitem{
+  % langid={Japanese} で識別
+  \iffieldequalstr{langid}{Japanese} {
+    % コンマで区切り
+    \DeclareDelimFormat{finalnamedelim}{%
+      \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+      \addspace\multinamedelim
+    }
+    % 名前を「姓 名」の順に
+    \DeclareNameFormat{default}{%
+      \usebibmacro{name:delim}{\namepartfamily\namepartgiven}%
+      \usebibmacro{name:hook}{\namepartfamily\namepartgiven}%
+      \namepartfamily\bibnamedelimc\namepartgiven%
+      \usebibmacro{name:andothers}
+    }
+    % URLの参照日付を年/月/日で表示
+    \DeclareFieldFormat{urldate}{%
+      （\thefield{urlyear}/\thefield{urlmonth}/\thefield{urlday}~に参照\isdot）
+    }
+  }{}
+}

@@ -1,0 +1,172 @@
+% !TeX root = ./shcmthesis-example.tex
+
+% 论文基本信息配置
+
+\thusetup{
+  %******************************
+  % 注意：
+  %   1. 配置里面不要出现空行
+  %   2. 不需要的配置信息可以删除
+  %   3. 建议先阅读文档中所有关于选项的说明
+  %******************************
+  %
+  % 输出格式
+  %   选择打印版（print）或用于提交的电子版（electronic），前者会插入空白页以便直接双面打印
+  %
+  output = electronic,
+  %
+  %
+  % 封面格式
+  %	  选择用于预审（preliminary）或用于最终提交的终版（final）
+  %
+  cover = final,
+  %
+  %
+  % 学位类型
+  %   选择本科（bachelor）、硕士（master）、博士（doctor）或者用于普通论文不申请学位（none）
+  %
+  degree = doctor,
+  %
+  %
+  % 论文标题（如果不需要某行则置{}即可）
+  %   -1和-2分别对应标题的第一行和第二行，加*的为英文标题
+  %   如需更多行，可添加 title-3、title-4 等（中文）和 title-3*、title-4* 等（英文）
+  %
+  title-1  = {上海音乐学院学位论文},
+  title-2  = {\LaTeX{} 模板 v\version},
+  title-3  = {},
+  title-4  = {},
+  title-1* = {\LaTeX{} v\version~Thesis Template},
+  title-2* = {Shanghai Conservatory of Music},
+  title-3* = {},
+  title-4* = {},
+  %  
+  %  
+  % 论文编号（如果不需要此行则置{}即可）
+  %
+  thesis-id = {001},
+  % 
+  % 
+  % 学校代码（如果不需要此行则置{}即可）
+  % 
+  school-id = {10278},
+  %
+  %
+  % 学科专业（如果不需要此行则置{}即可）
+  %
+  discipline  = {XXXXXX},
+  %
+  % 研究方向（如果不需要此行则置{}即可）
+  %
+  professional-field  = {XXXXXX},
+  %
+  % 作者姓名（如果不需要此行则置{}即可）
+  %
+  author = {XX},
+  %
+  % 作者学号（如果不需要此行则置{}即可）
+  %
+  student-id = {XXXXXX},
+  %
+  % 指导教师（如果不需要此行则置{}即可）
+  %   中文姓名和职称之间以\quad分开
+  %
+  supervisor = {XXX\quad 教授},
+  %
+  % 完成日期（如果不需要此行则置{}即可）
+  %
+  date = {XXXX年XX月},
+  %
+  % 是否在中文封面后的空白页生成书脊（默认 false）
+  %
+  include-spine = false,
+  %
+}
+
+% 载入所需的宏包
+
+% 定理类环境宏包
+\usepackage{amsthm}
+% 也可以使用 ntheorem
+% \usepackage[amsmath,thmmarks,hyperref]{ntheorem}
+
+\thusetup{
+  %
+  % 数学字体
+  % math-style = GB,  % GB | ISO | TeX
+  math-font  = xits,  % stix | xits | libertinus
+}
+
+% 可以使用 nomencl 生成符号和缩略语说明
+% \usepackage{nomencl}
+% \makenomenclature
+
+% 表格加脚注
+\usepackage{threeparttable}
+
+% 表格中支持跨行
+\usepackage{multirow}
+
+% 固定宽度的表格。
+% \usepackage{tabularx}
+
+% 跨页表格
+\usepackage{longtable}
+
+% 算法
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% 代码块
+%\usepackage{pythonhighlight}
+\usepackage{listings}
+\lstnewenvironment{python}{\lstset{
+  language=[LaTeX]TeX,
+  basicstyle=\ttfamily,
+  breaklines=true,
+  frame=single,
+  tabsize=4,
+  showspaces=false,
+  showtabs=false,
+  tab={ }{4}
+}}{}
+\lstnewenvironment{latex}{\lstset{
+  language=[LaTeX]TeX,
+  basicstyle=\ttfamily,
+  breaklines=true,
+  frame=single,
+  tabsize=4,
+  showspaces=false,
+  showtabs=false,
+  tab={ }{4}}
+}{}
+
+% 量和单位
+\usepackage{siunitx}
+
+% 参考文献使用 BibTeX + natbib 宏包
+% 顺序编码制
+% \usepackage[sort]{natbib}
+
+% 参考文献使用 BibLaTeX 宏包
+% \usepackage[style=gb7714-2015]{biblatex}
+% 声明 BibLaTeX 的数据库
+% \addbibresource{ref/refs.bib}
+
+% 定义所有的图片文件在 figures 子目录下
+\graphicspath{{figures/}}
+
+% 数学命令
+\makeatletter
+\newcommand\dif{%  % 微分符号
+  \mathop{}\!%
+  \ifthu@math@style@TeX
+    d%
+  \else
+    \mathrm{d}%
+  \fi
+}
+\makeatother
+
+% hyperref 宏包在最后调用
+\usepackage{hyperref}

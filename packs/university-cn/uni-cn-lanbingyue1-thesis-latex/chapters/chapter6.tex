@@ -1,0 +1,379 @@
+% !Mode:: "TeX:UTF-8"
+
+\chapter{系统测试}\label{ch:6}
+
+\section{系统测试目的}
+
+系统测试的目的在于检验系统在实际运行环境中的功能正确性、数据一致性、权限控制有效性和关键业务流程的完整性，验证管理端、教师端、学生端和 AI 模块能否按设计要求协同工作。测试以答辩演示的核心业务链路为主线，覆盖三类用户在各自权限范围内的主要操作，以及错误登录、越权访问、导入文件异常、证据不足问答和模型服务异常等场景。
+
+测试采用黑盒测试方法，结合正向测试、反向测试和异常场景验证，通过页面表现、功能反馈与数据库数据进行综合比对。
+
+\section{测试用例}
+
+各测试用例采用输入条件、预期输出和实际输出的方式记录，以系统运行结果与数据库核验结果作为判断依据。
+
+% TC01 登录认证功能
+\begin{table}[H]
+  \centering
+  \caption{登录认证功能测试用例}
+  \label{tab:tc-login}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\textwidth}{|L{2.4cm}|X|}
+    \hline
+    测试名称 & 登录认证功能 \\
+    \hline
+    用例目的 & 验证管理员、教师和学生在不同条件下的登录认证结果 \\
+    \hline
+    前提条件 & 系统已启动，数据库中存在管理员账号、启用和禁用的教师账号、学生账号 \\
+    \hline
+    \makecell[l]{输入条件} &
+      1) 输入正确的管理员账号与密码\newline
+      2) 输入正确的用户名和错误的密码\newline
+      3) 学生使用默认密码首次登录\newline
+      4) 使用已被禁用的教师账号登录 \\
+    \hline
+    \makecell[l]{预期输出} &
+      1) 登录成功，进入管理端主页\newline
+      2) 系统拒绝登录，提示用户名或密码错误\newline
+      3) 跳转到修改密码页面，要求先修改默认密码\newline
+      4) 系统拒绝登录，提示账号已被禁用 \\
+    \hline
+    实际输出 & 与预期一致 \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+% TC02 用户与角色管理
+\begin{table}[H]
+  \centering
+  \caption{用户与角色管理功能测试用例}
+  \label{tab:tc-user-role}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\textwidth}{|L{2.4cm}|X|}
+    \hline
+    测试名称 & 用户与角色管理功能 \\
+    \hline
+    用例目的 & 验证管理员新增教师账号、修改角色权限和重置密码功能 \\
+    \hline
+    前提条件 & 管理员已登录，系统中存在角色和教师账号 \\
+    \hline
+    \makecell[l]{输入条件} &
+      1) 管理员填写教师信息并提交新增\newline
+      2) 修改某角色的菜单权限并保存\newline
+      3) 选择一名教师并执行重置密码操作 \\
+    \hline
+    \makecell[l]{预期输出} &
+      1) 系统创建教师账号，用户列表中可查到新记录\newline
+      2) 权限修改成功，对应用户登录后菜单范围更新\newline
+      3) 密码重置成功，教师可使用新密码登录 \\
+    \hline
+    实际输出 & 与预期一致 \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+% TC03 课程管理
+\begin{table}[H]
+  \centering
+  \caption{课程管理功能测试用例}
+  \label{tab:tc-course}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\textwidth}{|L{2.4cm}|X|}
+    \hline
+    测试名称 & 课程管理功能 \\
+    \hline
+    用例目的 & 验证课程创建、教师分配和课程状态控制功能 \\
+    \hline
+    前提条件 & 管理员已登录，系统中存在教师账号 \\
+    \hline
+    \makecell[l]{输入条件} &
+      1) 管理员创建新课程并为课程分配教师\newline
+      2) 教师登录后查看本人课程列表\newline
+      3) 教师尝试访问非本人负责的课程数据\newline
+      4) 管理员将已结束课程恢复为可录入状态 \\
+    \hline
+    \makecell[l]{预期输出} &
+      1) 课程创建成功，教师端可查看该课程\newline
+      2) 仅显示该教师被分配的课程\newline
+      3) 系统拒绝访问或不返回该课程数据\newline
+      4) 课程恢复为可录入状态，教师可继续补录数据 \\
+    \hline
+    实际输出 & 与预期一致 \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+% TC04 体测数据录入
+\begin{table}[H]
+  \centering
+  \caption{体测数据录入功能测试用例}
+  \label{tab:tc-fitness-entry}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\textwidth}{|L{2.4cm}|X|}
+    \hline
+    测试名称 & 体测数据录入功能 \\
+    \hline
+    用例目的 & 验证逐项录入时的性别互斥校验、课程状态保护、教师权限控制、备注修改和恢复默认值功能 \\
+    \hline
+    前提条件 & 教师已登录并进入课程体测录入页面，课程处于进行中状态 \\
+    \hline
+    \makecell[l]{输入条件} &
+      1) 教师为男生录入身高、体重、肺活量等公共项目\newline
+      2) 教师为男生录入引体向上成绩\newline
+      3) 教师为女生录入引体向上成绩\newline
+      4) 教师为女生录入800米跑和仰卧起坐成绩\newline
+      5) 教师尝试录入非本人负责课程的体测数据\newline
+      6) 将学生备注从“正常”修改为“兵役”\newline
+      7) 对已录入的身高字段点击恢复默认 \\
+    \hline
+    \makecell[l]{预期输出} &
+      1) 公共项目录入成功\newline
+      2) 录入成功，系统更新该生引体向上字段\newline
+      3) 系统拒绝录入，提示该项目仅限男生\newline
+      4) 录入成功，系统分别更新800米和仰卧起坐字段\newline
+      5) 系统拒绝操作，提示仅可操作已分配给本人的课程\newline
+      6) 备注修改成功，体测记录备注字段更新为“兵役”\newline
+      7) 该字段被清空为null，恢复为未录入状态 \\
+    \hline
+    实际输出 & 与预期一致 \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+% TC05 体测数据批量导入
+\begin{table}[H]
+  \centering
+  \caption{体测数据批量导入功能测试用例}
+  \label{tab:tc-fitness-import}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\textwidth}{|L{2.4cm}|X|}
+    \hline
+    测试名称 & 体测数据批量导入功能 \\
+    \hline
+    用例目的 & 验证批量导入时的必填字段校验、数据格式校验和异常文件处理 \\
+    \hline
+    前提条件 & 教师已登录，已从课程导出体测模板并填写数据 \\
+    \hline
+    \makecell[l]{输入条件} &
+      1) 上传填写完整的体测数据 Excel 文件\newline
+      2) 上传缺少身高、体重等必填字段的模板\newline
+      3) 上传800米跑成绩格式错误（秒数超过59）的模板\newline
+      4) 上传包含重复体测记录ID的模板\newline
+      5) 上传非 Excel 格式的文件 \\
+    \hline
+    \makecell[l]{预期输出} &
+      1) 导入成功，系统批量更新体测记录\newline
+      2) 系统提示校验失败，返回具体缺失字段信息\newline
+      3) 系统提示800米跑成绩格式错误\newline
+      4) 系统提示存在重复记录并拒绝导入\newline
+      5) 系统提示读取导入文件失败 \\
+    \hline
+    实际输出 & 与预期一致 \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+% TC06 课程结束与成绩计算
+\begin{table}[H]
+  \centering
+  \caption{课程结束与成绩计算功能测试用例}
+  \label{tab:tc-score}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\textwidth}{|L{2.4cm}|X|}
+    \hline
+    测试名称 & 课程结束与成绩计算功能 \\
+    \hline
+    用例目的 & 验证课程结束后系统自动计算总分、等级，以及已结束课程的录入保护 \\
+    \hline
+    前提条件 & 教师已为课程下学生录入全部体测项目数据 \\
+    \hline
+    \makecell[l]{输入条件} &
+      1) 教师点击结束课程\newline
+      2) 课程结束后教师尝试修改某学生的体测数据\newline
+      3) 课程结束后教师尝试修改某学生的备注\newline
+      4) 管理员查看该课程学生的体测成绩总表 \\
+    \hline
+    \makecell[l]{预期输出} &
+      1) 课程状态更新为已结束，系统自动计算所有学生的总分与等级\newline
+      2) 系统拒绝修改，提示课程已结束\newline
+      3) 系统拒绝修改，提示课程已结束\newline
+      4) 成绩总表显示各项目分数、标准分、附加分、总分和等级 \\
+    \hline
+    实际输出 & 与预期一致 \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+% TC07 请假审批
+\begin{table}[H]
+  \centering
+  \caption{请假审批功能测试用例}
+  \label{tab:tc-leave}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\textwidth}{|L{2.4cm}|X|}
+    \hline
+    测试名称 & 请假审批功能 \\
+    \hline
+    用例目的 & 验证学生请假提交、教师权限内审批、越权审批拦截和特殊标签写回功能 \\
+    \hline
+    前提条件 & 学生已选课，教师已被分配到对应课程 \\
+    \hline
+    \makecell[l]{输入条件} &
+      1) 学生选择课程并提交请假申请\newline
+      2) 教师审批本人课程中的学生请假单\newline
+      3) 教师尝试审批非本人课程的请假单\newline
+      4) 教师审批通过一条带有“兵役”特殊标签的申请 \\
+    \hline
+    \makecell[l]{预期输出} &
+      1) 请假申请提交成功，状态为待审批\newline
+      2) 审批状态更新为已通过或已驳回，审批记录留痕\newline
+      3) 系统拒绝审批或不返回该请假记录\newline
+      4) “兵役”标签自动写入该学生相关体测记录的备注字段 \\
+    \hline
+    实际输出 & 与预期一致 \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+% TC08 AI分析与问答
+\begin{table}[H]
+  \centering
+  \caption{AI 分析与问答功能测试用例}
+  \label{tab:tc-ai}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\textwidth}{|L{2.4cm}|X|}
+    \hline
+    测试名称 & AI 分析与问答功能 \\
+    \hline
+    用例目的 & 验证 AI 统计分析、智能问答、多轮上下文、证据列表和模型异常降级功能 \\
+    \hline
+    前提条件 & 管理端已登录，系统中存在课程统计数据和学生体测历史 \\
+    \hline
+    \makecell[l]{输入条件} &
+      1) 对指定课程的统计数据发起 AI 分析\newline
+      2) 提问某学生的历史体测成绩变化情况\newline
+      3) 连续追问该学生参加课程或某项指标排名\newline
+      4) 提问一个不存在的学生学号的体测记录\newline
+      5) 模拟模型服务不可用后发起 AI 问答或 AI 分析 \\
+    \hline
+    \makecell[l]{预期输出} &
+      1) 返回包含总体结论和主要问题的分析文本，并保存分析日志\newline
+      2) 系统根据问题提取该学生历次体测数据，回答附带证据来源\newline
+      3) 系统能够结合最近对话上下文继续查询课程、排行或统计数据\newline
+      4) 系统提示证据不足，不编造不存在的数据\newline
+      5) 系统切换至规则化回退结果或异常提示，并保留处理痕迹 \\
+    \hline
+    实际输出 & 与预期一致 \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+% TC09 日志追溯
+\begin{table}[H]
+  \centering
+  \caption{日志追溯功能测试用例}
+  \label{tab:tc-log}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\textwidth}{|L{2.4cm}|X|}
+    \hline
+    测试名称 & 日志追溯功能 \\
+    \hline
+    用例目的 & 验证系统操作日志记录和查询功能 \\
+    \hline
+    前提条件 & 系统中已产生导入、审批和课程状态变更等操作记录 \\
+    \hline
+    \makecell[l]{输入条件} &
+      1) 按时间范围查询近一周的操作日志\newline
+      2) 按操作人员筛选某教师的审批记录\newline
+      3) 查看一次体测数据导入操作的详细日志 \\
+    \hline
+    \makecell[l]{预期输出} &
+      1) 返回指定时间范围内的操作记录列表\newline
+      2) 筛选出该教师名下的审批操作记录\newline
+      3) 可查看导入时间、操作人、导入课程和执行结果等详细信息 \\
+    \hline
+    实际输出 & 与预期一致 \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+\section{系统测试结果}
+
+从测试结果看，各功能的实际输出与预期结果一致，系统的主要业务模块能够正常运行。管理端、教师端和学生端的核心功能可按既定流程完成，权限控制、数据导入导出、成绩计算和请假审批等业务环节运行稳定。
+
+具体而言，登录认证能区分管理员、教师和学生入口。教师课程权限、学生个人数据权限和请假审批权限均能按设计边界生效。导入环节能识别缺失字段和格式错误，课程结束后成绩计算结果能写入并展示。学生端能完成历史查询、课程查看和请假申请。特殊请假标签审批通过后能形成体测备注。
+
+AI 分析和 AI 问答在数据充分时能生成可读结果并将输出写入分析日志。当模型服务不可用或查询依据不足时，系统能返回规则化结果或证据不足提示，没有出现无依据生成结论的情况。日志追溯功能能覆盖导入、审批、课程状态变更和 AI 分析等关键操作。
+
+本次测试覆盖了答辩展示中最核心的业务链路和主要异常场景，系统已达到设计与实现目标，具备基本可用性和一定稳定性。
+
+\section{性能测试}
+
+为验证系统在常规数据规模下的运行表现，本节对关键业务接口进行响应时间测试，对批量导入功能进行耗时测试。测试环境为：Windows 11 专业版、AMD Ryzen 7 8845H、28GB RAM、OpenJDK 21.0.8，后端运行于本地 9001 端口，数据库为本地 MySQL 8.0.40。
+
+\subsection{接口响应时间}
+
+选取登录认证、教师课程列表、体测历史查询、成绩总表查询和 AI 班级分析等典型接口，分别对每个接口执行 20 次请求并记录平均响应时间，测试结果如表 \ref{tab:perf-api} 所示。
+
+\begin{table}[H]
+  \centering
+  \caption{关键接口响应时间测试结果}
+  \label{tab:perf-api}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\textwidth}{|L{3.5cm}|C{2.0cm}|C{2.5cm}|X|}
+    \hline
+    测试接口 & 平均响应时间 & 最大响应时间 & 说明 \\
+    \hline
+    登录认证 & 98ms & 108ms & 含BCrypt密码校验与JWT令牌生成 \\
+    \hline
+    教师课程列表 & 25ms & 36ms & 含教师权限过滤 \\
+    \hline
+    体测历史查询 & 87ms & 92ms & 单个学生历史体测记录 \\
+    \hline
+    成绩总表查询 & 81ms & 90ms & 单课程成绩表，含分项评分与总分 \\
+    \hline
+    AI班级分析 & 15.6s & 19.1s & 含统计汇总、提示构造和模型调用 \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+从测试结果看，常规 CRUD 接口的平均响应时间均在 100ms 以内，页面交互流畅。AI 分析接口因涉及远端模型调用和统计汇总，平均响应时间约 15.6 秒，适合以异步或后台任务方式使用，前端通过加载状态提示保证用户体验。
+
+\subsection{批量导入耗时}
+
+体测数据批量导入是本校集体体测组织方式下的关键性能指标之一。本节以不同记录数量的 Excel 文件为输入，测试导入接口的耗时情况。每次测试包含文件解析、字段校验和数据库写入三个阶段的完整耗时，测试结果如表 \ref{tab:perf-import} 所示。
+
+\begin{table}[H]
+  \centering
+  \caption{体测数据批量导入耗时测试结果}
+  \label{tab:perf-import}
+  \footnotesize
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\textwidth}{|L{3.0cm}|C{2.5cm}|C{2.5cm}|C{2.5cm}|X|}
+    \hline
+    导入记录数 & 文件解析耗时 & 字段校验耗时 & 数据库写入耗时 & 总耗时 \\
+    \hline
+    10条 & 19ms & 1ms & 16ms & 36ms \\
+    \hline
+    50条 & 25ms & 3ms & 84ms & 112ms \\
+    \hline
+    100条 & 30ms & 1ms & 116ms & 147ms \\
+    \hline
+    200条 & 36ms & 1ms & 202ms & 239ms \\
+    \hline
+  \end{tabularx}
+\end{table}
+
+测试结果表明，批量导入耗时与记录数量基本呈线性关系。在 200 条记录（约 4 个班级）的规模下，总耗时约 240ms，导入效率较高，能够满足本校集体体测场景下的集中回填需求，并可与普通体测中的逐步录入方式形成互补。
+
+测试重点放在功能验证和常规数据规模上，后续可结合真实教学周期补充高并发压力测试、长周期运行测试以及 AI 输出质量的量化评估。

@@ -1,0 +1,285 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%                               OXFORD THESIS TEMPLATE                            %%%
+%
+% Use this template to produce a standard thesis that meets the Oxford University
+% requirements for DPhil submission
+%
+% Originally by Keith A. Gillow (gillow@maths.ox.ac.uk), 1997
+% Modified by Sam Evans (sam@samuelevansresearch.org), 2007
+% Modified by John McManigle (john@oxfordechoes.com), 2015
+% Modified by Mónica Sagastuy-Breña (m.sgstyb@gmail.com), 2025
+%
+% This version Copyright (c) 2025 Mónica Sagastuy-Breña
+%
+% Broad permissions are granted to use, modify, and distribute this software
+% as specified in the MIT License included in this distribution's LICENSE file.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%% CHOOSE PAGE LAYOUT
+% This one will format for two-sided binding (ie left and right pages have mirror margins; blank pages inserted where needed):
+%\documentclass[a4paper,twoside]{ociamthesis}
+
+% This one will format for PDF output (ie equal margins, no extra blank pages):
+\documentclass[a4paper,nobind,twoside]{ociamthesis} 
+
+
+%%%%% SELECT YOUR DRAFT OPTIONS
+% Three options going on here; use in any combination.  But remember to turn the first two off before generating a PDF to send to the printer!
+
+% This adds a "DRAFT" footer to every normal page.  (The first page of each chapter is not a "normal" page.)
+%\fancyfoot[C]{\emph{DRAFT}}  
+
+% This highlights (in blue) corrections marked with (for words) \mccorrect{blah} or (for whole
+% paragraphs) \begin{mccorrection} . . . \end{mccorrection}.  This can be useful for sending a PDF of
+% your corrected thesis to your examiners for review.  Turn it off, and the blue disappears.
+%\correctionstrue
+
+
+%%%%% BIBLIOGRAPHY SETUP
+% Note that your bibliography will require some tweaking depending on your department, preferred format, etc.
+% The options included below are just very basic "sciencey" and "humanitiesey" options to get started.
+% If you've not used LaTeX before, I recommend reading a little about biblatex/biber and getting started with it.
+% If you're already a LaTeX pro and are used to natbib or something, modify as necessary.
+% Either way, you'll have to choose and configure an appropriate bibliography format...
+
+% The science-type option: numerical in-text citation with references in order of appearance.
+%\usepackage[style=ieee, sorting=none, backend=biber, doi=false, isbn=false]{biblatex}
+\usepackage{natbib}
+\AtBeginDocument{\renewcommand{\bibname}{References}}
+
+% Please add the following required packages to your document preamble:
+\usepackage[justification=centering, labelfont=bf]{caption}
+\usepackage{multirow}
+\usepackage{svg}
+% Define the paths for svg files to be saved in so it searches accordingly when compiling locally
+% Insert any path where the figures might be. When calling includesvg[width=\linewidth]{svgfilename}
+% Just use the filename without a path, and without the .svg filetype
+\svgpath{{figures/ch3/}{figures/ch4/}{figures/ch5/}{figures/litreview/}{figures/appendix/}}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{etoolbox}
+\usepackage{acro}
+\usepackage[bottom]{footmisc}
+\usepackage{fancyhdr}
+%\usepackage{siunitx}
+\usepackage{textgreek}
+\usepackage{pgf-pie}
+\usepackage{chemist}
+\usepackage{physics}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\usetikzlibrary{shapes,arrows,positioning}
+\usetikzlibrary{positioning}
+\usepackage{listings}
+\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,%
+decorations.pathreplacing,decorations.pathmorphing,shapes,%
+matrix,shapes.symbols,plotmarks,decorations.markings,shadows}
+\usepackage{booktabs}
+\usepackage{tabu}
+\usepackage{indentfirst}
+
+
+\usepackage{lipsum}
+
+% MSB: To circumvent warning of \degree already defined in gensymb.sty and redefined in ociamthesis.cls to define unabbreviated degree title for titlepage without having to edit the .sty file
+\let\olddegree\degree  % Store \degree in \olddegree
+\let\degree\relax      % Remove definition of \degree
+\usepackage{gensymb}   % This creates \degree
+\let\degreesymb\degree % Store new \degree in \degreesymb
+\let\degree\olddegree  % Restore \degree to its old definition \olddegree
+%%
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=indigoDye,
+    filecolor=magenta,      
+    urlcolor=teal,
+    citecolor=oxBlue,
+    pdftitle={Oxford-DPhil-Thesis-MSB},
+    }
+
+% Uncomment this if you want equation numbers per section (2.3.12), instead of per chapter (2.18):
+%\numberwithin{equation}{subsection}
+
+
+%%%%% THESIS / TITLE PAGE INFORMATION
+% Everybody needs to complete the following:
+\title{Your DPhil Title}
+\author{Your Name}
+\college{Your College}
+\department{Your Department}
+% Your full degree name.  (But remember that DPhils aren't "in" anything.  They're just DPhils.)
+\degree{Doctor of Philosophy}
+% Term and year of submission, or date if your board requires (eg most masters)
+\degreedate{Trinity 2025}
+
+
+%%%%% YOUR OWN PERSONAL MACROS
+% This is a good place to dump your own LaTeX macros as they come up.
+
+% To make text superscripts shortcuts
+\renewcommand{\th}{\textsuperscript{th}} % ex: I won 4\th place
+\newcommand{\nd}{\textsuperscript{nd}}
+\renewcommand{\st}{\textsuperscript{st}}
+\newcommand{\rd}{\textsuperscript{rd}}
+
+% MSB: Defined colors for hypersetup and the thesis in general
+\definecolor{gray}{RGB}{145, 145, 145}
+\definecolor{pewter}{RGB}{115, 171, 182}
+\definecolor{teal}{RGB}{79, 125, 145}
+\definecolor{indigoDye}{RGB}{40, 79, 108}
+\definecolor{oxBlue}{RGB}{0, 33, 71}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%                    THE ACTUAL DOCUMENT STARTS HERE                     %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%% CHOOSE YOUR LINE SPACING HERE
+% This is the official option.  Use it for your submission copy and library copy:
+\setlength{\textbaselineskip}{22pt plus2pt}
+% This is closer spacing (about 1.5-spaced) that you might prefer for your personal copies:
+%\setlength{\textbaselineskip}{18pt plus2pt minus1pt}
+
+% You can set the spacing here for the roman-numbered pages (acknowledgements, table of contents, etc.)
+\setlength{\frontmatterbaselineskip}{17pt plus1pt minus1pt}
+
+% Leave this line alone; it gets things started for the real document.
+\setlength{\baselineskip}{\textbaselineskip}
+
+% MSB: define vertical separation from header for all pages, fixes large space at top of page in pages after chapter titlepage
+\setlength{\headsep}{5mm}
+
+%%%%% CHOOSE YOUR SECTION NUMBERING DEPTH HERE
+% You have two choices.  First, how far down are sections numbered?  (Below that, they're named but
+% don't get numbers.)  Second, what level of section appears in the table of contents?  These don't have
+% to match: you can have numbered sections that don't show up in the ToC, or unnumbered sections that
+% do.  Throughout, 0 = chapter; 1 = section; 2 = subsection; 3 = subsubsection, 4 = paragraph...
+
+% The level that gets a number:
+\setcounter{secnumdepth}{2}
+% The level that shows up in the ToC:
+\setcounter{tocdepth}{1}
+
+
+%%%%% ABSTRACT SEPARATE
+% This is used to create the separate, one-page abstract that you are required to hand into the Exam
+% Schools.  You can comment it out to generate a PDF for printing or whatnot.
+%\begin{abstractseparate}
+	%\input{text/abstract} % Create an abstract.tex file in the 'text' folder for your abstract.
+%\end{abstractseparate}
+
+
+% JEM: Pages are roman numbered from here, though page numbers are invisible until ToC.  This is in
+% keeping with most typesetting conventions.
+\begin{romanpages}
+
+% Title page is created here
+\maketitle
+
+% Include a tickbox to certify this is your own work unless stated otherwise
+%\originalitytext
+
+
+%%%%% DEDICATION -- If you'd like one, un-comment the following.
+%\begin{dedication}
+%This thesis is dedicated to\\
+%someone\\
+%for some special reason\\
+%\end{dedication}
+
+%%%%% ACKNOWLEDGEMENTS -- Nothing to do here except comment out if you don't want it.
+\begin{acknowledgements}
+ 	\input{text/acknowledgements}
+\end{acknowledgements}
+
+%%%%% ABSTRACT -- Nothing to do here except comment out if you don't want it.
+\begin{abstract}
+	\input{text/abstract}
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     MINI TABLES OF CONTENTS, FIGURES, TABLES       %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This lays the groundwork for per-chapter, mini tables of contents.  Comment the following line
+% (and remove \minitoc from the chapter files) if you don't want this.  Un-comment either of the
+% next two lines if you want a per-chapter list of figures or tables.
+
+\dominitoc % include a mini table of contents
+%\dominilof  % include a mini list of figures
+%\dominilot  % include a mini list of tables
+
+% This aligns the bottom of the text of each page.  It generally makes things look better.
+\flushbottom
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%      MAIN TOC, LIST OF TABLES, LIST OF FIGS        %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Comment any if not required
+\tableofcontents
+\listoffigures
+\mtcaddchapter   % \mtcaddchapter is needed when adding a non-chapter (but chapter-like) entity to avoid confusing minitoc
+
+\listoftables
+\mtcaddchapter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%              LIST OF ABBREVIATIONS                 %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This example includes a list of abbreviations.  Look at text/abbreviations.tex to see how that file is
+% formatted.  The template can handle any kind of list though, so this might be a good place for a
+% glossary, etc.
+\include{text/abbreviations}
+
+% The Roman pages, like the Roman Empire, must come to its inevitable close.
+\end{romanpages}
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                       CHAPTERS                     %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{text/ch1-intro}
+\include{text/ch2-litreview}
+\include{text/ch3-first-core-chapter}
+\include{text/ch4-second-core-chapter}
+\include{text/ch5-third-core-chapter}
+\include{text/ch6-conclusions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                       APPENDICES                   %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Starts lettered appendices, adds a heading in table of contents, and adds a
+% page that just says "Appendices" to signal the end of your main text. Use
+% \include{} command to add appendices from teh text folder
+
+\startappendices
+
+\include{text/appendix-1}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                       REFERENCES                   %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
+%\addcontentsline{toc}{chapter}{References}
+{\footnotesize\setstretch{1.2}
+\bibliography{references}
+\bibliographystyle{IEEEtranN}
+}
+
+\end{document}

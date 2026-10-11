@@ -1,0 +1,238 @@
+\documentclass[twocolumn]{tem}
+\usepackage{zhlipsum}
+\usepackage{Xtutable}
+\usepackage{Xtugraph}
+\usepackage{gbt7714}
+% 页眉示例: 左/中/右三段, 位置由 tem.cls 里的制表位控制
+\temSetHeaderContent{实验报告}{傻逼大学}{第\thepage 页}
+
+% 如果你把字体放到 fonts/ 下, 文件名匹配即可自动生效.
+% 例如: fonts/SimSun.ttf 和 fonts/Times New Roman.ttf
+
+
+\begin{document}
+% \XtuMakeCover[%
+%   subject  = {一个很长很长很长很长很长的示例题目},
+%   course   = {示例课程},
+%   teacher  = {张教授},
+%   score    = {},
+%   date     = {2026年5月},
+%   members  = {%
+%     {{张三}{计科2201}{202212001}{13800001111}{a@xtu.edu.cn}},%
+%     {{李四}{计科2201}{202212002}{13800002222}{b@xtu.edu.cn}},%
+%     {{王五}{计科2201}{202212003}{13800003333}{c@xtu.edu.cn}}%
+%   }%
+% ]
+\XtuTitleAuthorAddress{一个很长很长很长很长很长很长很长的示例标题 A Long Long Long Example Title}
+{张三}
+{(傻逼大学)}
+{Example Title}
+{Zhang San}
+{(Stupid University)}
+
+\Zhabstract{这里是中文摘要内容, 用于测试小五号宋体与 14pt 行距。}
+\Zhkeyword{关键词1; 关键词2; 关键词3}
+\Enabstract{This is an English abstract used to test 9pt Times New Roman with 14pt baseline skip.}
+\Enkeyword{keyword1; keyword2; keyword3}
+
+
+\Mainsection{主标题示例 Main Section}
+这里是一段用于测试Mainsection正文样式的文字, 期望效果为五号, 中文宋体, 英文 Times New Roman, 首行缩进 0.74cm, 单倍行距. 同时测试含有数学公式的换行: 设 $E=mc^2$, 当公式与中文混排时也应能自动断行并尽量避免溢出.
+
+随机公式示例:
+\begin{equation}
+\label{eq:energy-balance}
+P = \frac{W}{t}
+\end{equation}
+后文会再次引用这个公式, 用来确认公式编号与引用都正常.
+
+数字分组示例: \XtuNum{123456789.987654}
+
+第二个随机公式:
+\begin{equation}
+\label{eq:quadratic}
+ax^2 + bx + c = 0
+\end{equation}
+\zhlipsum[1]
+
+\Def{度量空间}
+设集合 $X$ 上的映射 $d: X\times X\to \mathrm{R}$ 满足非负性、对称性与三角不等式，则称 $(X,d)$ 为一个度量空间。
+
+\Proof{}
+略。
+
+\Secondsection{三级标题五号黑体，英文及数字用 Arial,希腊字母保持不变，如$\theta \omega \rho \omega \delta$。换行时悬挂缩进为
+0，段前段后不空}
+
+\zhlipsum[2]
+
+随机表格示例:
+\begin{table}[htbp]
+\centering
+\XtuTableCaptionRef{tab:random-demo}{随机示例表格}{Random demonstration table}
+\XtuTableSetup
+\begin{tabular}{@{}L C C@{}}
+\toprule
+项目 & 数值 A & 数值 B \\
+\midrule
+甲 & 1.20 & 3.40 \\
+乙 & 5.60 & 7.80 \\
+丙 & 9.00 & 1.23 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+第三个随机公式:
+\begin{equation}
+\label{eq:random}
+f(x) = \int_{-\infty}^{\infty} g(t) e
+^{-2\pi i t x} dt
+\end{equation}
+
+\Thirdsection{表格}
+
+
+% 表格内容（严格按规范）
+\begin{table}[htbp]
+\centering
+\XtuTableCaptionRef{tab:perf}{DPMA 与 DFT 算法的性能比较}{Performance comparison between DPMA and DFT algorithm}
+\XtuTableSetup
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}L S S S S@{}}
+\toprule
+算法 & \multicolumn{1}{c}{\XtuUnitHeader{f_{sp}}{\mathrm{Hz}}} & \multicolumn{1}{c}{\XtuUnitHeader{e_{ang}}{(^\circ)}} & \multicolumn{1}{c}{\XtuUnitHeader{e_{mag}}{\%}} & \multicolumn{1}{c}{\XtuUnitHeader{e_{TVE}}{\%}} \\
+\midrule
+\multirow{3}{*}{\centering DFT} & 2 & 0.0997 & 2.1959 & 9.9716 \\
+& 3 & 0.1486 & 3.6945 & 14.8633 \\
+& 4 & 0.1943 & 5.5538 & 19.5214 \\
+\addlinespace
+\multirow{3}{*}{\centering DPMA} & 2 & 0.0073 & 1.2410 & 1.2381 \\
+& 3 & 0.0173 & 2.7717 & 2.7751 \\
+& 4 & 0.0315 & 4.8842 & 4.9065 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% 百分数示例
+表中 \percentvar{B} 表示 B 组分的体积分数。
+
+\Mainsection{测试用第2部分标题}
+文字文字文字文字文字文字文字文字文字文字文字文字文字
+文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字
+words words words words words words words words words words words
+words words words words words words word
+swords words words words words words
+
+\Secondsection{测试用第2部分二级标题}
+\Def{关系}
+设 $A$ 和 $B$ 是集合 $X$ 的子集, 则称 $R\subseteq A\times B$ 是 $A$ 到 $B$ 的一个关系。
+\Thm{单的连续函数一定单调}
+设 $f: \mathrm{R}\to \mathrm{R}$ 是一个单射的连续函数, 则 $f$ 在 $\mathrm{R}$ 上单调。
+
+\Thirdsection{测试用第2部分三级标题}
+\Proof{}
+略。
+
+证明证明证明
+
+\Mainsection{测试用第3部分标题}
+\zhlipsum[3]
+\Def{滤子}
+设 $X$ 是集合 $S$ 的一个子集, 且满足以下条件:
+\begin{itemize}
+\item $X$ 非空;
+\item 若 $A\in X$ 且 $A\subseteq B\subseteq S$, 则 $B\in X$;
+\item 若 $A\in X$ 且 $B\in X$, 则 $A\cap B\in X$.
+\end{itemize}
+则称 $X$ 是集合 $S$ 上的一个滤子。
+\Thm{Stolz 定理}
+设 $\{a_n\}$ 和 $\{b_n\}$ 是两个数列, 且 $\{b_n\}$ 是一个严格单调递增且无界的数列. 若 $\lim_{n\to\infty} \frac{a_{n+1}-a_n}{b_{n+1}-b_n} = L$ 存在, 则 $\lim_{n\to\infty} \frac{a_n}{b_n} = L$.
+
+反过来不行
+\Def{开集}
+设 $X$ 是集合 $S$ 的一个子集, 且对于 $S$ 中的任意点 $x\in X$, 都存在一个 $\varepsilon > 0$, 使得 $B(x,\varepsilon) \subseteq X$, 则称 $X$ 是集合 $S$ 上的一个开集。
+
+引用确认: 公式见式(\ref{eq:energy-balance}) (\ref{eq:quadratic}) (\ref{eq:random}), 表格见表\ref{tab:random-demo} \ref{tab:perf}。
+
+\Secondsection{测试用第3部分二级标题}
+WordsWordsWords
+\Secondsection{测试用第3部分二级标题2}
+\Thirdsection{测试用第3部分三级标题}
+WordsWordsWords
+\Secondsection{测试用第3部分二级标题3}
+WordsWordsWords
+\Thirdsection{测试用第3部分三级标题2}
+WordsWordsWords
+\Thirdsection{测试用第3部分三级标题3}
+\zhlipsum[4]
+
+\Mainsection{测试用第4部分标题}
+\zhlipsum[5]
+
+\Mainsection{图片命令与标题级别验证}
+本文依次验证单图、双图、三图、四图、五图命令, 并验证图引用: 见图\ref{fig:one-demo}、图\ref{fig:two-demo}、图\ref{fig:three-demo}、图\ref{fig:four-demo}、图\ref{fig:five-demo}。
+
+\Onegraph[fig:one-demo]{346016.jpg}{单图排版验证}{Single graph layout validation}
+\zhlipsum[6]
+
+\Twograph[fig:two-demo]{347031.jpg}{365072.jpg}{双图横排验证}{Two-graph horizontal layout}[(a) 样例 A,(b) 样例 B]
+\zhlipsum[7]
+
+\Threegraph[fig:three-demo]{368037.jpg}{372019.jpg}{376086.jpg}{三图倒品字验证}{Three-graph inverted layout}[(a) 上左,(b) 上右,(c) 下方主图]
+\zhlipsum[8]
+
+\Fourgraph[fig:four-demo]{384022.jpg}{384089.jpg}{385022.jpg}{388006.jpg}{四图田字验证}{Four-graph grid layout}[(a) 左上,(b) 右上,(c) 左下,(d) 右下]
+\zhlipsum[9]
+
+\Fivegraph[fig:five-demo]{388018.jpg}{388067.jpg}{393035.jpg}{346016.jpg}{347031.jpg}{五图环形验证}{Five-graph ring layout}[(a) 上左,(b) 上中,(c) 上右,(d) 下左主图,(e) 下右主图]
+\zhlipsum[10]
+
+\Secondsection{格式占位二级标题}
+这一段用于验证二级标题的字号、字重、行距与段落衔接。
+
+\Thirdsection{格式占位三级标题}
+这一段用于验证三级标题的字号、字体与正文过渡。
+
+\paragraph{格式占位四级标题}
+这是四级标题占位内容, 用于检查更细粒度标题在当前模板中的显示与换行表现。
+
+% \Secondsection{代码}
+% \begin{lstlisting}[language=Python]
+% print('hello')
+% \end{lstlisting}
+文字\cite{knuth1984}文字\cite{lamport1986}
+
+\bibliographystyle{gbt7714-numerical}
+\bibliography{reference}
+
+\appendix
+\Mainsection{附录 A: 代码示例}
+\begin{lstlisting}[language=Python]
+print('hello')
+\end{lstlisting}
+
+\Mainsection{附录 B: 算法示例}
+
+% \Secondsection{算法}
+% \begin{algorithm}
+% \caption{示例算法}
+% \end{algorithm}
+
+\begin{algorithm}
+\caption{recursive Fibonacci}
+\label{alg:fibonacci}
+\textbf{Input:} $n \in \mathrm{N}$\\
+\textbf{Output:} $F(n)$
+\begin{enumerate}
+\item If $n=0$, return $0$.
+\item If $n=1$, return $1$.
+\item Otherwise, return $\textit{Fibonacci}(n-1)+\textit{Fibonacci}(n-2)$.
+\end{enumerate}
+\end{algorithm}
+
+\clearpage
+\nocite{*}
+
+
+
+\end{document}

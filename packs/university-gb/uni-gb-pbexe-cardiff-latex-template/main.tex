@@ -1,0 +1,160 @@
+% #######################################
+% ########### FILL THESE IN #############
+% #######################################
+\def\mytitle{Inset Title Here}
+\def\mykeywords{Fill, These, In, So, google, can, find, your, report}
+\def\myauthor{Miles Budden C1769331}
+\def\contact{buddenm@cardiff.ac.uk}
+\def\mymodule{Module Name (CM9999)}
+% #######################################
+% #### YOU DON'T NEED TO TOUCH BELOW ####
+% #######################################
+\documentclass[10pt, a4paper]{article}
+\usepackage[a4paper,outer=1.5cm,inner=1.5cm,top=1.75cm,bottom=1.5cm]{geometry}
+\twocolumn
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+%colour our links, remove weird boxes
+\usepackage[hyphens]{url}
+\usepackage[hidelinks]{hyperref}
+%Stop indentation on new paragraphs
+\usepackage[parfill]{parskip}
+\usepackage{amssymb}
+
+\usepackage{pgfplots}
+
+
+
+
+%Cardiff logo top right
+\usepackage{watermark}
+%Lorem Ipusm dolor please don't leave any in you final report ;)
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{minted}
+\setminted{
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    fontsize=\footnotesize,
+    breaklines
+}
+%give us the Capital H that we all know and love
+\usepackage{float}
+%tone down the line spacing after section titles
+\usepackage{titlesec}
+%Cool maths printing
+\usepackage{amsmath}
+%PseudoCode
+\usepackage{algorithm2e}
+\usepackage{natbib}
+
+\titlespacing{\subsection}{0pt}{\parskip}{-3pt}
+\titlespacing{\subsubsection}{0pt}{\parskip}{-\parskip}
+\titlespacing{\paragraph}{0pt}{\parskip}{\parskip}
+\newcommand{\figuremacro}[5]{
+    \begin{figure}[#1]
+        \centering
+        \includegraphics[width=#5\columnwidth]{#2}
+        \caption[#3]{\textbf{#3}#4}
+        \label{fig:#2}
+    \end{figure}
+}
+
+
+\thiswatermark{\centering \put(400.5,-100.0){\includegraphics[scale=0.2]{logo}} }
+\title{\mytitle}
+\author{\myauthor\hspace{1em}\\\contact\\Cardiff University\hspace{0.5em}-\hspace{0.5em}\mymodule}
+\date{}
+\hypersetup{pdfauthor=\myauthor,pdftitle=\mytitle,pdfkeywords=\mykeywords}
+\sloppy
+% #######################################
+% ########### START FROM HERE ###########
+% #######################################
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Introduction}
+\lipsum[2]
+\begin{algorithm}[h]
+\DontPrintSemicolon
+\KwData{An array, $A$, of length $n$}
+\KwResult{An array, $A$, sorted}
+$limit \leftarrow n - 1$\;
+$done \leftarrow False$\;
+\While{$\neg\,done$}{
+    $done \leftarrow True$\;
+    \For{$j \leftarrow 1$ \KwTo $limit$}{
+        \If{$A[j+1]<A[j]$}{
+            $temp \leftarrow A[j]$\;
+            $A[j] \leftarrow A[j+1]$\;
+            $A[j + 1] \leftarrow temp$\;
+            $done \leftarrow False$\;
+        }
+    }
+    $limit \leftarrow limit - 1$\;
+}
+\label{alg:bubbleimp}
+\caption{Blah blah \citep{Cormen1990}}
+\end{algorithm}
+
+\subsection{Other stuff}
+\lipsum[1]
+\lipsum[3]
+
+
+\section{More stuff}
+\subsection{Yessss}
+\lipsum[1]
+\lipsum[3]
+
+\begin{minted}
+{java}
+/**
+ * Loads a data file and returns a parsed list of unique words longer than 3
+ * characters with no capitals and no punctuation.
+ *
+ * @param path The path to the data file
+ * @param length The number of words that shall be fetched
+ *
+ * @return The parsed list of words
+ *
+ * @throws FileNotFoundException Thrown when the data file cannot be loaded
+ *
+ * @see main
+ */
+public static List<String> parseData(String path, int length) throws FileNotFoundException{
+    // List to store the words in
+    List<String> words = new ArrayList<String>();
+    try {
+        // Open and read the file
+        File fileIn = new File(path);
+        Scanner in = new Scanner(fileIn);
+
+        // Iterate through the lines
+        while (in.hasNext()) {
+            // Get a line of the text file with no punctuation or capital letters
+            String word = in.next().replaceAll("[^a-zA-Z]", "").toLowerCase();
+            // Add the word to the list if it isn't already there and if it is longer than 3 characters
+            if (!words.contains(word) && word.length() > 3) {
+                words.add(word);
+            }
+            // Stop adding words when enough have been found
+            if (words.size() >= length) {
+                break;
+            }
+        }
+        // Finish up
+        in.close();
+        return words;
+    } catch (FileNotFoundException e) {
+        throw e;
+    }
+}
+\end{minted}
+
+\bibliographystyle{cardiff}
+\bibliography{references}
+		
+\end{document}

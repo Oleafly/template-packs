@@ -1,0 +1,407 @@
+%% 論文クラスファイルの使用方法
+
+%% プリアンブル %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\documentclass{knct-paper} 			%% jis フォントを使用する場合
+\documentclass[mingoth]{knct-paper}		%% 通常フォントを使用する場合
+%\documentclass[twoside]{knct-paper}		%% 両面印刷の場合
+
+%\usepackage{graphicx}
+
+%% 表紙 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\Associate				%% 準学士論文の場合
+%\Bachelor				%% 学士学位論文の場合
+%\Master				%% 修士学位論文の場合
+%\Doctorate				%% 博士学位論文の場合
+%\English				%% 英語論文の場合
+%\figurespagefalse		%% 図目次を出力しない場合
+%\tablespagefalse		%% 表目次を出力しない場合
+
+\years{平成26}
+\title{
+高知工業高等専門学校電気情報工学科\\
+論文クラスファイル\\
+\texttt{knct-paper}の使用方法
+}
+\Etitle{
+%A Guide to use ``\texttt{knct-paper}'' Class File
+How to Typeset Your Thesis in {\protect\LaTeX}
+}
+\idnumber{49E}
+\author{中岡 　慎太郎}
+\Eauthor{Hanpeita TAKECHI}
+\advisor{電気情報工学科 各教員}
+\date{2015年1月27日}
+\abstract{
+本稿では高知工業高等専門学校電気情報工学科論文クラスファイル
+\texttt{knct-paper}の使用方法を説明します．本クラスファイルを使用すること
+により，電気情報工学科論文の体裁（表紙，目次，各ページの余白等）で自
+動的に組版することが可能になります．
+
+\texttt{knct-paper}はASCII版日本語\LaTeX（\pLaTeX2$\epsilon$）対応版クラ
+スファイルです．
+
+本クラスファイルは\pLaTeX2$\epsilon$新ドキュメントクラス
+\texttt{jsbook.cls}ファイル\cite{bib:cls}を電気情報工学科論文用に修
+正したものです．本クラスファイルの作成にあたっては，高知工科大学情報システム工学科スタイルファイルと東北大学論文スタイル\cite{bib:sty}を参考にさせて頂きました．\\
+角藤さんの\pTeX（フリーソフトウェア）がインストールされていれば，そのまま使えます．
+}
+\keyword{
+論文体裁，\pLaTeX2$\epsilon$，クラスファイル
+}
+\Eabstract{
+English abstract $\sim$
+This pamphlet is a guide to produce a draft to be submitted to KNCT(Kochi National College of Technology) and the final manuscript of a thesis, using Japanese {\LaTeX} and special style files.  Since the pamphlet itself is produced with the style files, it will help you to refer its source file which is distributed with the style files.
+}
+\Ekeyword{
+Paper style, \pLaTeX2$\epsilon$, Class file
+}
+
+%% 本文 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\maketitle
+
+\chapter{プリアンブル}
+
+ \section{クラスファイルの指定}
+ 最初に \verb|\documentclass{}| でクラスファイル\texttt{knct-paper}を指
+ 定します．
+\begin{verbatim}
+\documentclass{knct-paper}
+\end{verbatim}
+ 
+ \texttt{knct-paper}は標準でjisフォントメトリック\footnote{従来のフォント
+ メトリックの欠点であった``（）．（）''，``ちょっと''などの句読点，拗促
+ 音文字の組み方を``日本語の行組版方法（JIS X 4051）''に修正するフォント
+ メトリック\cite{bib:latex2e}}を使用します．環境においてjisフォントメト
+ リックを使用できない場合は，オプション \verb|mingoth| で従来のフォント
+ メトリックを使用するように指定します．
+\begin{verbatim}
+\documentclass[mingoth]{knct-paper}
+\end{verbatim}
+
+ また両面印刷用に出力したい場合は，\verb|twoside| を指定します．デフォル
+ トでは片面印刷用（\verb|oneside|）で出力されます．
+\begin{verbatim}
+\documentclass[twoside]{knct-paper}
+\end{verbatim}
+
+ \section{スタイルファイルの読み込み}
+ 図を入れるためのスタイルファイル\texttt{graphics}，\texttt{graphicx}や
+ その他のスタイルファイルは必要に応じて読み込んで下さい．
+
+\begin{verbatim}
+\usepackage{graphicx}
+\end{verbatim}
+
+ \section{スタイルファイル（プログラムリストを挿入するとき）の読み込み}
+ プログラムリストを入れるためのスタイルファイル\texttt{misc}を必要に応じて読み込んで下さい．
+
+\begin{verbatim}
+\usepackage{misc}
+\end{verbatim}
+
+なお，プログラムリストを挿入したい箇所で以下のような記述をするとソースファイルを読み込みます．
+
+\begin{verbatim}
+\scriptsize % footnotesize や　tiny なども可
+\verbfile{ソースファイル名} %\verbfile（行番号なし） \listing（行番号あり）
+\normalsize % もとのサイズに戻す
+\end{verbatim}
+
+
+ \section{表紙，要旨，目次の作成}
+ 以下の設定をプリアンブルで行なった後，\verb|\begin{document}| の後
+ で \verb|\maketitle| を記述すれば表紙，要旨，目次を自動的に作成します．
+ \begin{verbatim}
+\begin{document}
+\maketitle
+\end{verbatim}
+ 
+  \subsection{論文種別の指定}
+  博士学位論文，修士学位論文，学士学位論文，準学士論文のいづれかを指定します．なお，準学士論文でも英文タイトル，英文著者名，英文abstract，英文keywordと和文キーワードを記述することになっています．\footnote{H16(2004)年度までの高知高専電気情報工学科の慣例では不要とされていましたが，H16年度から工業英語の授業の一環として練習し，記述することに変更されました．} 
+これらを出力させたくない場合は，クラスファイルを修正する必要があります．
+  勿論全てを英文で書くことも可能です．
+\begin{verbatim}
+\Doctorate
+\end{verbatim}
+  または，
+\begin{verbatim}
+\Master
+\end{verbatim}
+  または，
+  または，
+\begin{verbatim}
+\Bachelor
+\end{verbatim}
+  または，
+\begin{verbatim}
+\Associate
+\end{verbatim}
+  ここでの指定で``所属''が自動で設定されます．省略した場合は準学士論文
+  を指定したことになります．
+
+  \subsection{言語の指定}
+  論文を英語で書く場合はその指定をします．
+\begin{verbatim}
+\English
+\end{verbatim}
+
+  英語論文の指定を行なった場合，表紙，目次，章名などが英語化され，日本語
+  アブストラクトの項は出力されなくなります．
+
+  \subsection{年度}
+  \verb|\years| で指定します．元号も入れて下さい（英語論文の場合はいりま
+  せん）．
+\begin{verbatim}
+\years{平成16}
+\end{verbatim}
+
+  \subsection{論文タイトル}
+  \verb|\title{}| で指定します．タイトルが長く一行に収まらない場合は，途
+  中に \verb|\\| を入れて改行して下さい．このタイトルは要旨のタイトルに
+  もなります．
+\begin{verbatim}
+\title{何々\\何々}
+\end{verbatim}
+
+  \verb|\Etitle{}| で英文タイトルを指定します．このタイトルは英文アブス
+  トラクトのタイトルにもなります．
+\begin{verbatim}
+\Etitle{Hogehoge}
+\end{verbatim}
+
+  \subsection{著者名}
+  \verb|\author{}| で指定します．\verb|~| などを使用してバランスをとって
+  下さい．要旨にも出力されます．
+\begin{verbatim}
+\author{ほげほげ ~ほげ太}
+\end{verbatim}
+
+  \verb|\Eauthor{}| で英文著者名を指定します．これは英文アブストラクトに
+  出力されます．
+\begin{verbatim}
+\Eauthor{Hogeta HOGEHOGE}
+\end{verbatim}
+
+  \subsection{学籍番号}
+  \verb|\idnumber{}| で指定します．汎用的なクラスファイルを作成しているので，学籍番号としてありますが，高知高専電気情報工学科本科の従来手法を使うとなると，学籍番号の代わりに卒業期（例えば，30期Eであれば，30E）と書くとよいでしょう．
+\begin{verbatim}
+\idnumber{30E}とか\idnumber{0123456}
+\end{verbatim}
+
+  \subsection{指導教員}
+  H16度から高知高専の先生方も教員とは呼ばれず，他大学と同じく教員と呼ばれますからこれでOKでしょう．
+  \verb|\advisor{}| で指定します．
+\begin{verbatim}
+\advisor{ほにゃらら}
+\end{verbatim}
+
+  \subsection{日付}
+  \verb|\date{}| で指定します．\verb|\today| は使わず，直接日付を西暦で
+  記述して下さい．
+\begin{verbatim}
+\date{2002年2月5日}
+\end{verbatim}
+
+  \subsection{要旨}
+  \verb|\abstract{}| の中に記述します．
+\begin{verbatim}
+\abstract{
+何々
+}
+\end{verbatim}
+
+  \verb|\Eabstract{}| の中に英文アブストラクトを記述します．
+\begin{verbatim}
+\Eabstract{
+Hogehoge
+}
+\end{verbatim}
+
+  \subsection{キーワード}
+  要旨に出力されるキーワードは \verb|\keyword{}| で記述します．
+\begin{verbatim}
+\keyword{
+これ，あれ
+}
+\end{verbatim}
+
+  \verb|\Ekeyword{}| には英文アブストラクトで出力されるキーワードを記述
+  します．
+\begin{verbatim}
+\Ekeyword{
+Foo1, Foo2
+}
+\end{verbatim}
+  
+  \subsection{図目次，表目次}
+  図目次，表目次を作成しない場合は，それぞれ \verb|figurespagefalse|，
+  \verb|tablespagefalse| を宣言して下さい．
+\begin{verbatim}
+\figurespagefalse
+\tablespagefalse
+\end{verbatim}
+  宣言が無い場合は両方の目次とも出力されます．
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{本文}
+本文については通常の\pLaTeX2$\epsilon$の使い方で書けます．ただし，体裁を
+いじるコマンドはあまり使わないようにして下さい．
+
+ここで表\ref{tab:ex}と図\ref{fig:ex}を書いておきます．
+
+\begin{figure}[h]
+ \begin{center}
+  \vspace{10zh}
+%  \includegraphics[width=.8/linewidth,clip]{figure.eps}
+  \caption{図の例}
+  \label{fig:ex}
+ \end{center}
+\end{figure}
+
+\begin{table}[hbtp]
+ \begin{center}
+  \caption{表の例}
+  \label{tab:ex}
+  \vspace{.5zh}
+  \begin{tabular}{c|c|c} \Hline
+   1	  & 2 & 3 \\ \hline
+   \lw{4} & 5 & 6 \\ \cline{2-3}
+   		  & 8 & 9 \\ \Hline
+  \end{tabular}
+ \end{center}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{追加マクロ}
+\texttt{knct-paper}クラスファイルではいくつかマクロを追加しています．ここ
+ではその使用方法を説明します．
+
+ \section{\texttt{up}}
+ 文字の右肩にマークなどを付けることができます．
+ このようになります\up{$\ast$}．
+\begin{verbatim}
+このようになります\up{$\ast$}．
+\end{verbatim}
+
+ \section{\texttt{Hline}}
+ 表で太い罫線を引く命令です．表\ref{tab:ex}を参照して下さい．
+ \verb|\hline| の代わりに使用します．
+ 
+ \section{\texttt{lw}}
+ 表を作る時に段落間に文字を書くことができます．表\ref{tab:ex}を参照して
+ 下さい．
+\begin{verbatim}
+\begin{tabular}{c|c|c}\Hline
+ 1      & 2 & 3 \\ \hline
+ \lw{4} & 5 & 6 \\ \cline{2-3}
+        & 8 & 9 \\ \Hline
+\end{tabular}
+\end{verbatim}
+
+ \section{\texttt{MARU}}
+ 丸で囲まれた文字（\MARU{1}，\MARU{2}，\MARU{a}）を出力できます．
+\begin{verbatim}
+（\MARU{1}，\MARU{2}，\MARU{a}）
+\end{verbatim}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{環境依存の設定}
+
+ \section{jisフォントメトリックの使用}
+ jisフォントメトリック使用時（デフォルト値），環境によっては``\LaTeX{}の
+ コンパイルができない''，``xdviで表示できない''という場合があります．そ
+ の場合は \verb|documentclass| のオプション \verb|[mingoth]| を指定し，
+ 通常のフォントメトリックを使用するようにして下さい．
+ 
+ \section{出力位置の調整}
+ 環境によっては出力位置がずれることがあります．その場合，クラスファイル
+ 本体1695 $\sim$ 1696行の
+\begin{verbatim}
+\setlength{\hoffset}{0mm}
+\setlength{\voffset}{0mm}
+\end{verbatim}
+ の各値を変更してから使用して下さい．\verb|\hoffset| は水平方向の修正値，
+ \verb|\voffset| は垂直方向の修正値です．ただし \verb|\voffset| に
+ $-3.8$mm以下の値を設定することはできません．両値ともデフォルトは0mmに設
+ 定されています．
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{結論}
+クラスファイル作成は地味な作業だ．
+
+%% 謝辞 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{acknowledgement}
+ \verb|acknowledgement| 環境中に記述した文は，謝辞のタイトルがついた項に
+ 出力されます．
+\begin{verbatim}
+\begin{acknowledgement}
+ほにゃらら教授 …
+\end{acknowledgement}
+\end{verbatim}
+
+ クラスファイルのデバッグを手伝ってくれた素敵に愉快な人々に感謝．
+\end{acknowledgement}
+
+%% 参考文献 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{thebibliography}{99}
+ \bibitem{bib:label} \verb|thebibliography| 環境に参考文献を記述します．
+ 		 ここの \verb|\bibitem| で指定したラベルは
+		 本文中の \verb|\cite| コマンドで参照できます．
+\begin{verbatim}
+\begin{thebibliography}{99}
+ \bibitem{bib:label} 著者，書名等
+\end{thebibliography}
+\end{verbatim}
+                 
+ \bibitem{bib:cls} \verb|http://www.matsusaka-u.ac.jp/~okumura/texfaq/|
+ \bibitem{bib:sty} \verb|http://www.civil.tohoku.ac.jp/~bear/|
+ \bibitem{bib:latex2e} 奥村晴彦，``\LaTeX2$\epsilon$美文書作成入門''，
+		 技術評論社，1999．
+ \bibitem{bib:jnic} \verb|http://ms326.ms.u-tokyo.ac.jp/otobe/|
+\end{thebibliography}
+
+%% 付録 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+\chapter{付録環境}
+\verb|\appendix| コマンドで``付録''を宣言した後では付録の本文を記述しま
+す．\verb|\chapter| で付録A，付録Bなどのタイトルが出力されます．
+\begin{verbatim}
+\appendix
+\chapter{何々}
+何々
+\chapter{なになに}
+なになに
+\end{verbatim}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{ChangeLog}
+
+\begin{description}
+
+ \item[knct version 1.0.0 ]~
+ \begin{description}
+  \item[$\bullet$ KUT version 3.3.3を参考に作成]~
+ \end{description}
+
+ \vspace{1zh}
+ \item[歴史]~
+ \begin{description}
+  \item[2003/11/11] KUT-paper.clsをを参考に作成
+ \end{description}
+ 
+\end{description}
+
+\end{document}

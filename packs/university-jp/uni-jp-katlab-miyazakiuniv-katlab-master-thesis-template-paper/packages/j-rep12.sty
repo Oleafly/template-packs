@@ -1,0 +1,140 @@
+% j-rep12.sty from rep12.sty 19-Jan-88
+% made by Hideki ISOZAKI
+% updated by Yuya KIMURA 2025-12-12
+
+\lineskip 1pt \normallineskip 1pt
+\def\baselinestretch{1}
+
+\def\@normalsize{\@setsize\normalsize{22pt}\xiipt\@xiipt
+\abovedisplayskip 12.5pt plus3.2pt minus7.5pt\belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip \z@ plus3pt\belowdisplayshortskip 6.8pt plus3.8pt
+minus3pt\let\@listi\@listI}
+\def\small{\@setsize\small{20.5pt}\xipt\@xipt
+\abovedisplayskip 11.5pt plus3.2pt minus6.5pt\belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip \z@ plus3pt\belowdisplayshortskip 6.8pt plus3.8pt
+minus3pt
+\def\@listi{\leftmargin\leftmargini \parsep 4.8pt plus 2.2pt minus 1pt
+ \itemsep \parsep
+ \topsep 9.5pt plus 3.2pt minus 5.5pt}}
+\def\footnotesize{\@setsize\footnotesize{18.2pt}\xpt\@xpt
+\abovedisplayskip 10.5pt plus2.2pt minus5.5pt\belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip \z@ plus3pt\belowdisplayshortskip 6.3pt plus3.3pt minus3pt
+\def\@listi{\leftmargin\leftmargini \topsep 6.3pt plus 2.2pt minus 2pt\parsep 3.2pt
+plus 2.2pt minus 1pt
+\itemsep \parsep}}
+\def\scriptsize{\@setsize\scriptsize{14.4pt}\viiipt\@viiipt}
+\def\tiny{\@setsize\tiny{7.6pt}\vipt\@vipt}
+\def\large{\@setsize\large{27.3pt}\xivpt\@xivpt}
+\def\Large{\@setsize\Large{33.4pt}\xviipt\@xviipt}
+\def\LARGE{\@setsize\LARGE{37.9pt}\xxpt\@xxpt}
+\def\huge{\@setsize\huge{45.5pt}\xxvpt\@xxvpt}
+\let\Huge=\huge
+\def\normalsize{\@setsize\normalsize{22pt}\xiipt\@xiipt}
+% \normalize % のみだった
+
+\if@twoside \oddsidemargin 5.5pt \evensidemargin 43.5pt \marginparwidth 85pt
+\else \oddsidemargin 24pt \evensidemargin 24pt
+ \marginparwidth 68pt 
+\fi
+\marginparsep 10pt 
+ \topmargin -25pt \headheight 12pt \headsep 25pt \footskip 30pt 
+
+
+\textheight = 33\baselineskip
+\advance\textheight by \topskip
+\textwidth 421pt \columnsep 10pt \columnseprule 0pt 
+
+\footnotesep 9.1pt
+\skip\footins 11.7pt plus 4pt minus 2pt
+\floatsep 15.2pt plus 2pt minus 4.3pt \textfloatsep 20pt plus 2pt minus 4pt
+%\intextsep 14pt plus 4pt minus 4pt \@maxsep 20pt \dblfloatsep 14pt plus 2pt
+%minus 4pt \dbltextfloatsep 20pt plus 2pt minus 4pt \@dblmaxsep 20pt 
+\@fptop 0pt plus 1fil \@fpsep 10.8pt plus 2fil \@fpbot 0pt plus 1fil 
+\@dblfptop 0pt plus 1fil \@dblfpsep 10.8pt plus 2fil \@dblfpbot 0pt plus 1fil
+\marginparpush 7.6pt 
+
+\parskip 0pt plus 1pt \parindent 11pt \partopsep 3.3pt plus 2.2pt minus 2.2pt 
+\@lowpenalty 51 \@medpenalty 151 \@highpenalty 301 
+\@beginparpenalty -\@lowpenalty \@endparpenalty -\@lowpenalty \@itempenalty
+-\@lowpenalty 
+
+
+\def\@makechapterhead#1{ \vspace*{50pt} { \parindent 0pt \raggedright 
+ \ifnum \c@secnumdepth >\m@ne \LARGE\bf \@chapapp{\thechapter} \par 
+ \vskip 20pt \fi \LARGE \bf #1\par 
+ \nobreak \vskip 40pt } }
+
+\def\@makeschapterhead#1{ \vspace*{50pt} { \parindent 0pt \raggedright 
+ \LARGE \bf #1\par 
+ \nobreak \vskip 40pt } }
+
+\def\chapter{\clearpage \thispagestyle{plain} \global\@topnum\z@
+\@afterindentfalse \secdef\@chapter\@schapter} 
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+ \refstepcounter{chapter}
+ \typeout{\@chapapp{\thechapter}}
+ \addcontentsline{toc}{chapter}{\protect
+ \numberline{\thechapter}#1}\else
+ \addcontentsline{toc}{chapter}{#1}\fi
+ \chaptermark{#1}
+ \addtocontents{lof}{\protect\addvspace{10pt}}
+\addtocontents{lot}{\protect\addvspace{10pt}} \if@twocolumn
+\@topnewpage[\@makechapterhead{#2}] 
+ \else \@makechapterhead{#2}
+ \@afterheading \fi} 
+\def\@schapter#1{\if@twocolumn \@topnewpage[\@makeschapterhead{#1}]
+ \else \@makeschapterhead{#1} 
+ \@afterheading\fi}
+
+\def\section{\@startsection {section}{1}{\z@}{3.5ex plus 1ex minus 
+ .2ex}{2.3ex plus .2ex}{\font@s}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{3.25ex plus 1ex minus 
+ .2ex}{1.5ex plus .2ex}{\font@ss}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{3.25ex plus 
+ 1ex minus .2ex}{1.5ex plus .2ex}{\font@ss}}
+\def\paragraph{\@startsection
+ {paragraph}{4}{\z@}{3.25ex plus 1ex minus .2ex}{-1em}{\normalsize\bf}}
+\def\subparagraph{\@startsection
+ {subparagraph}{4}{\parindent}{3.25ex plus 1ex minus 
+ .2ex}{-1em}{\normalsize\bf}}
+
+\def\chaptermark#1{}
+
+\setcounter{secnumdepth}{2}
+
+\def\appendix{\par
+ \setcounter{chapter}{0}
+ \setcounter{section}{0}
+ \def\@chapapp##1{$@IUO?(J ##1}
+ \def\thechapter{\Alph{chapter}}}
+
+
+\leftmargini 2.5em
+\leftmarginii 2.2em \leftmarginiii 1.87em \leftmarginiv 1.7em \leftmarginv 1em
+\leftmarginvi 1em
+\leftmargin\leftmargini
+\labelsep .5em
+\labelwidth\leftmargini\advance\labelwidth-\labelsep
+\def\@listI{\leftmargin\leftmargini \parsep 5.4pt plus 2.7pt minus 1pt\topsep
+10.8pt plus 4.3pt minus 6.5pt\itemsep 5.4pt plus 2.7pt minus 1pt}
+\let\@listi\@listI
+\@listi
+\def\@listii{\leftmargin\leftmarginii
+ \labelwidth\leftmarginii\advance\labelwidth-\labelsep
+ \topsep 5.4pt plus 2.7pt minus 1pt
+ \parsep 2.7pt plus 1.1pt minus 1pt
+ \itemsep \parsep}
+\def\@listiii{\leftmargin\leftmarginiii
+ \labelwidth\leftmarginiii\advance\labelwidth-\labelsep
+ \topsep 2.7pt plus 1.1pt minus 1pt
+ \parsep \z@ \partopsep 1.1pt plus 0pt minus 1pt
+ \itemsep \topsep}
+\def\@listiv{\leftmargin\leftmarginiv
+ \labelwidth\leftmarginiv\advance\labelwidth-\labelsep}
+\def\@listv{\leftmargin\leftmarginv
+ \labelwidth\leftmarginv\advance\labelwidth-\labelsep}
+\def\@listvi{\leftmargin\leftmarginvi
+ \labelwidth\leftmarginvi\advance\labelwidth-\labelsep}
+
+\def\sectionfont#1#2#3{\gdef\font@s{#1}\gdef\font@ss{#2}\gdef\font@sss{#3}}
+\sectionfont{\large\bf}{\normalsize\bf}{\normalsize\bf}

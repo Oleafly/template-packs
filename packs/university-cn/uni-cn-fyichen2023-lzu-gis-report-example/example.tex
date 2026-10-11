@@ -1,0 +1,283 @@
+\documentclass{lzu-gis-report}
+
+
+% ==================== 文档信息设置 ====================
+\labNumber{01}
+\labTitle{示例实习：GIS空间分析基础}
+\studentName{张三}
+\studentID{320230000000}
+
+\begin{document}
+
+% 生成报告头部
+\makeReportHeader
+
+% ==================== 背景 ====================
+\begin{ReportBox}{背景}
+    这是一个使用 \texttt{lzu-gis-report} 模板的示例文档。本模板专为兰州大学GIS空间分析课程的实习报告设计，旨在提供清晰、规范、易于维护的实习报告格式。
+    
+    该模板的核心特点包括：
+    \begin{itemize}
+        \item 完全模拟Word表格的视觉效果
+        \item 支持跨页显示，不会因内容过长而溢出
+        \item 提供统一的代码高亮样式
+        \item 简洁的接口，易于使用
+    \end{itemize}
+\end{ReportBox}
+
+% ==================== 实习目的 ====================
+\begin{ReportBox}{实习目的}
+    \textbf{1. 掌握基本的GIS操作技能}：学会使用ArcGIS或QGIS等GIS软件进行空间数据的加载、编辑、分析和可视化。
+    
+    \textbf{2. 理解空间分析的基本原理}：通过实际操作，深入理解缓冲区分析、叠加分析、网络分析等常见空间分析方法的原理和应用场景。
+    
+    \textbf{3. 培养空间思维能力}：通过解决实际问题，培养从空间视角思考和分析地理现象的能力。
+\end{ReportBox}
+
+% ==================== 实习内容 ====================
+\begin{ReportBox}{实习内容}
+    本次实习的主要内容包括以下几个部分：
+    
+    \textbf{（1）数据准备}：收集并整理实习所需的空间数据，包括矢量数据和栅格数据。
+    
+    \textbf{（2）数据预处理}：对原始数据进行投影转换、裁剪、格式转换等预处理操作。
+    
+    \textbf{（3）空间分析}：根据实习要求，进行相应的空间分析操作，如缓冲区分析、叠加分析等。
+    
+    \textbf{（4）结果可视化}：将分析结果制作成专题地图，并进行适当的美化和标注。
+\end{ReportBox}
+
+% ==================== 实习数据及数据说明 ====================
+\begin{ReportBox}{实习数据及数据说明（原始数据的坐标系统及主要属性字段）}
+    \textbf{1. 研究区边界（Polygon）}
+    \begin{itemize}
+        \item \textbf{几何类型}：Polygon（多边形）
+        \item \textbf{坐标系统}：WGS 1984 UTM Zone 48N
+        \item \textbf{主要字段}：
+        \begin{itemize}
+            \item \texttt{OBJECTID}：唯一标识符
+            \item \texttt{NAME}：区域名称
+            \item \texttt{AREA}：面积（平方米）
+        \end{itemize}
+    \end{itemize}
+    
+    \textbf{2. 道路网络（Polyline）}
+    \begin{itemize}
+        \item \textbf{几何类型}：Polyline（折线）
+        \item \textbf{坐标系统}：WGS 1984 UTM Zone 48N
+        \item \textbf{主要字段}：
+        \begin{itemize}
+            \item \texttt{ROAD\_TYPE}：道路类型（高速公路/国道/省道等）
+            \item \texttt{LENGTH}：道路长度（米）
+        \end{itemize}
+    \end{itemize}
+\end{ReportBox}
+
+% ==================== 基本原理 ====================
+\begin{ReportBox}{基本原理}
+    \textbf{1. 缓冲区分析原理}
+    
+    缓冲区分析是一种基于距离的空间分析方法。给定一个空间对象（点、线或面），在其周围建立一定宽度的影响区域，称为缓冲区。缓冲区可以是固定宽度的，也可以是变宽度的。
+    
+    数学表达式为：
+    \begin{equation}
+        B(x) = \{y \in \mathbb{R}^2 \mid d(x, y) \leq r\}
+    \end{equation}
+    
+    其中，$B(x)$ 为以 $x$ 为中心、半径为 $r$ 的缓冲区，$d(x, y)$ 为 $x$ 和 $y$ 之间的距离。
+    
+    \textbf{2. 叠加分析原理}
+    
+    叠加分析是将两个或多个图层进行空间叠加，提取出满足特定条件的区域。常见的叠加分析包括：
+    \begin{itemize}
+        \item \textbf{交集（Intersect）}：提取两个图层的重叠部分
+        \item \textbf{并集（Union）}：合并两个图层的所有要素
+        \item \textbf{差集（Erase）}：从一个图层中去除另一个图层覆盖的部分
+    \end{itemize}
+\end{ReportBox}
+
+% ==================== 应用到的基本工具 ====================
+\begin{ReportBox}{应用到的基本工具}
+    \textbf{1. Buffer（缓冲区）}
+    \begin{itemize}
+        \item \textbf{所属工具箱}：Analysis Tools > Proximity > Buffer
+        \item \textbf{功能}：创建输入要素周围指定距离的缓冲区多边形
+        \item \textbf{参数说明}：
+        \begin{itemize}
+            \item Input Features：输入要素
+            \item Output Feature Class：输出要素类
+            \item Distance：缓冲距离
+            \item Dissolve Type：融合类型（ALL/NONE/LIST）
+        \end{itemize}
+    \end{itemize}
+    
+    \textbf{2. Intersect（相交）}
+    \begin{itemize}
+        \item \textbf{所属工具箱}：Analysis Tools > Overlay > Intersect
+        \item \textbf{功能}：计算输入要素的几何相交部分
+        \item \textbf{参数说明}：
+        \begin{itemize}
+            \item Input Features：输入要素（可多个）
+            \item Output Feature Class：输出要素类
+            \item Join Attributes：连接属性方式（ALL/NO\_FID/ONLY\_FID）
+        \end{itemize}
+    \end{itemize}
+\end{ReportBox}
+
+% ==================== 操作流程图 ====================
+\begin{ReportBox}{操作流程图（尽量为图解模型）}
+    \begin{figure}[H]
+        \centering
+        % 如果有流程图，可以这样插入：
+        % \includegraphics[width=0.7\textwidth]{figures/workflow.pdf}
+        
+        % 如果没有图片，可以用文字描述：
+        \fbox{\parbox{0.8\textwidth}{
+            \centering
+            \textbf{操作流程图}\\[1em]
+            数据准备 → 数据预处理 → 空间分析 → 结果输出
+        }}
+        \caption{实习操作流程示意图}
+        \label{fig:workflow}
+    \end{figure}
+\end{ReportBox}
+
+% ==================== 操作步骤 ====================
+\begin{ReportBox}{操作步骤（方法）}
+    \textbf{第一步：数据加载}
+    
+    \begin{enumerate}
+        \item 启动ArcMap软件，创建新的地图文档
+        \item 点击"添加数据"按钮，加载实习所需的所有数据图层
+        \item 检查各图层的坐标系统是否一致，如不一致需进行投影转换
+    \end{enumerate}
+    
+    \textbf{第二步：缓冲区分析}
+    
+    \begin{enumerate}
+        \item 打开ArcToolbox，找到 Analysis Tools > Proximity > Buffer
+        \item 设置参数：
+        \begin{itemize}
+            \item Input Features：选择道路图层
+            \item Distance：输入500米
+            \item Dissolve Type：选择ALL
+        \end{itemize}
+        \item 点击OK运行工具
+    \end{enumerate}
+    
+    \textbf{第三步：叠加分析}
+    
+    \begin{enumerate}
+        \item 打开 Analysis Tools > Overlay > Intersect
+        \item 选择缓冲区图层和研究区边界图层作为输入
+        \item 运行工具，得到相交结果
+    \end{enumerate}
+\end{ReportBox}
+
+% ==================== 代码示例 ====================
+\begin{ReportBox}{Python代码示例（可选）}
+    如果实习涉及Python脚本，可以使用以下方式插入代码：
+    
+\begin{lstlisting}[caption={ArcPy缓冲区分析示例}]
+import arcpy
+
+# 设置工作空间
+arcpy.env.workspace = r"C:\GIS\data.gdb"
+
+# 输入参数
+input_features = "roads"
+output_buffer = "roads_buffer"
+buffer_distance = "500 Meters"
+
+# 执行缓冲区分析
+arcpy.Buffer_analysis(input_features, 
+                     output_buffer, 
+                     buffer_distance,
+                     dissolve_option="ALL")
+
+print("缓冲区分析完成！")
+\end{lstlisting}
+\end{ReportBox}
+
+% ==================== 结果与分析 ====================
+\begin{ReportBox}{结果与分析}
+    \textbf{1. 缓冲区分析结果}
+    
+    通过对道路网络进行500米缓冲区分析，得到了道路影响范围图层。统计结果显示：
+    \begin{itemize}
+        \item 缓冲区总面积：125.6 km²
+        \item 占研究区总面积的比例：43.2\%
+        \item 主要道路类型分布：高速公路占35\%，国道占28\%，省道占37\%
+    \end{itemize}
+    
+    \textbf{2. 叠加分析结果}
+    
+    将缓冲区图层与土地利用图层进行叠加分析，发现：
+    \begin{itemize}
+        \item 道路缓冲区内的建设用地占比最高（62\%）
+        \item 农业用地占比次之（25\%）
+        \item 林地和水域占比较小（13\%）
+    \end{itemize}
+    
+    这一结果符合城市发展规律，道路周边往往是开发强度最高的区域。
+\end{ReportBox}
+
+% ==================== 存在问题与解决办法 ====================
+\begin{ReportBox}{存在问题与解决办法}
+    \textbf{问题1：数据坐标系不一致}
+    \begin{itemize}
+        \item \textbf{现象}：加载多个图层后，部分图层无法正确显示
+        \item \textbf{原因}：不同图层使用了不同的坐标系统
+        \item \textbf{解决办法}：使用Project工具将所有图层统一投影到同一坐标系
+    \end{itemize}
+    
+    \textbf{问题2：缓冲区结果不符合预期}
+    \begin{itemize}
+        \item \textbf{现象}：生成的缓冲区形状异常或距离不正确
+        \item \textbf{原因}：使用了地理坐标系而非投影坐标系
+        \item \textbf{解决办法}：确保数据使用适合的投影坐标系（如UTM），避免使用经纬度坐标进行距离计算
+    \end{itemize}
+\end{ReportBox}
+
+% ==================== 总结与个人体会 ====================
+\begin{ReportBox}{总结与个人体会}
+    通过本次实习，我掌握了以下技能：
+    
+    \begin{itemize}
+        \item \textbf{技术层面}：熟练使用ArcGIS进行缓冲区分析和叠加分析，理解了空间分析的基本原理和操作流程
+        \item \textbf{思维层面}：学会从空间视角观察和分析地理现象，培养了空间思维能力
+        \item \textbf{实践层面}：通过解决实际问题，提高了独立分析和解决问题的能力
+    \end{itemize}
+    
+    同时，我也认识到GIS技术在现代社会中的重要应用价值，无论是城市规划、环境保护还是灾害管理，都离不开空间分析技术的支持。
+\end{ReportBox}
+
+% ==================== 其他的解决办法 ====================
+\begin{ReportBox}{其他的解决办法（工具名称，解决思路，甚至其他软件名称及相应工具）}
+    \textbf{方法1：使用QGIS进行分析}
+    
+    QGIS是一款开源免费的GIS软件，提供了与ArcGIS类似的缓冲区和叠加分析功能：
+    \begin{itemize}
+        \item \textbf{缓冲区分析}：Vector > Geoprocessing Tools > Buffer
+        \item \textbf{叠加分析}：Vector > Geoprocessing Tools > Intersection
+    \end{itemize}
+    
+    \textbf{方法2：使用Python GeoPandas库}
+    
+    对于熟悉Python编程的用户，可以使用GeoPandas库进行空间分析：
+    
+\begin{lstlisting}[language=Python]
+import geopandas as gpd
+
+# 读取数据
+roads = gpd.read_file("roads.shp")
+
+# 创建缓冲区
+buffer = roads.buffer(500)
+
+# 保存结果
+buffer.to_file("roads_buffer.shp")
+\end{lstlisting}
+\end{ReportBox}
+
+\end{document}

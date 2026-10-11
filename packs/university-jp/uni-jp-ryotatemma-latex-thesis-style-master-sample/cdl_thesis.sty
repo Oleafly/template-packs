@@ -1,0 +1,261 @@
+% CDL thesis style file 2016/01/07
+%  based on wuse_thesis.sty
+%  
+%  2016/01/07 和歌山大学システム工学部デザイン情報学科のスタイルをベース
+%  に作成
+%
+% 2020/01/29 表紙の仕様変更に対応（卒研３クラス，担当，回生等追加）
+%
+% 2021/01/31 コース制・表紙の公式の仕様に対応
+\typeout{立命館大学情報理工学部情報理工学科先端社会デザインコース コラボレーショ
+ンデザイン研究室 学位論文用スタイルファイル}
+
+\usepackage{ifthen}
+
+%%
+%% ページ・レイアウト
+%%
+\def\baselinestretch{1.1}
+\topmargin=-10mm
+\oddsidemargin=0mm
+\evensidemargin=0mm
+\textheight=240mm	% 40行(11pt)
+\textwidth=160mm	% 43字(11pt)
+
+%%
+%%  段落
+%%
+\parindent=1zw		% 段落の頭の字下げ
+
+%%
+%%  タイトル行数 (2001/01/12 Obsoleted)
+%%
+% \def\@titlelines{0}
+% \def\titlelines#1{\def\@titlelines{#1}}
+% \newlength{\titlelineskip}
+% \titlelineskip=-.9\baselineskip
+
+%%
+%%  英語タイトル
+%%
+\def\@etitle{ETITLE}
+\def\etitle#1{\def\@etitle{#1}}
+
+%%
+%%  英語氏名
+%%
+\def\@eauthor{EAUTHOR}
+\def\eauthor#1{\def\@eauthor{#1}}
+
+%%
+%%  英語日付
+%%
+\def\@edate{MONTH YEAR}
+\def\edate#1{\def\@edate{#1}}
+
+%%
+%%  卒業年度
+%%
+\def\@gyear{FISCAL YEAR}
+\def\gyear#1{\def\@gyear{#1}}
+
+%%
+%%  学期
+%%
+\def\@semester{SEMESTER}
+\def\semester#1{\def\@semester{#1}}
+
+%%
+%% 所属学部
+%%
+\def\faculty#1{\def\@faculty{#1}}
+\def\efaculty#1{\def\@efaculty{#1}}
+
+%%
+%% 所属コース・学科
+%%
+\def\@department{\verb|\department|を指定して下さい}
+\def\department#1{\def\@department{#1}}
+
+%%
+%% 大学院所属コース（英語）
+%%
+\def\@edepartment{\verb|\department|を指定して下さい}
+\def\edepartment#1{\def\@edepartment{#1}}
+
+%%
+%% 卒研３クラス
+%%
+\def\@class{CLASS}
+\def\class#1{\def\@class{#1}}
+
+%%
+%% 回生
+%%
+\def\@studentid{\verb|\grade|を指定して下さい}
+\def\grade#1{\def\@grade{#1}}
+
+%%
+%% 学生番号
+%%
+\def\@studentid{\verb|\studentid|を指定して下さい}
+\def\studentid#1{\def\@studentid{#1}}
+
+\def\@bachelar{%
+  \def\@faculty{情報理工学部}%
+  \def\@efaculty{College of Information Science and Engineering}%
+  \def\@departmentsfx{コース}%
+  \def\@thesis{卒 業 論 文}%
+  \def\@ethesis{Bachelor's Thesis}%
+  \def\course{bachelor}%
+}
+
+\def\@master{%
+  \def\@faculty{情報理工学研究科}%
+  \def\@efaculty{Graduate School of Information Science and Engineering}%
+  \def\@major{情報理工学専攻}%
+  \def\@emajor{MAJOR in Advanced Information Science and Engineering}%
+  \def\@course{計算機科学コース}%
+  \def\@ecoursex{Course of Computer Science}%
+  \def\@thesis{修 士 論 文}%
+  \def\@ethesis{Master's Thesis}%
+  \def\course{master}%
+}
+
+\def\bachelar{\@bachelar}
+\def\master{\@master}
+
+\bachelar
+
+%%
+%%  タイトルページ
+%%
+\renewcommand{\maketitle}{%
+\ifthenelse{\equal{\course}{bachelor}}{%
+  \begin{titlepage}
+  	\hrulefill\par
+    \vspace*{5mm}
+    \begin{center}
+      {\LARGE\@gyear 年度（\@semester）\hspace{3mm}\@thesis\par}
+%%      {\large （卒業研究3（\@class）・担当教員：服部 宏充）\par}. % (2021/01/31 Obsoleted)
+      {\Large （卒業研究3（\@class））\par}  % (2021/01/31 Added)
+      \vspace{30mm}
+      {\huge\bf\@title \par}			% タイトル
+      \vfill
+      \vspace{30mm}
+%%      {\Large\@date\par}			% 提出年月日. % (2021/01/31 Obsoleted)
+      {\Large 指導教員：服部 宏充 \par}			% 指導教員
+      \vspace{30mm}
+      {\Large \@faculty \par}
+      {\Large \@department\@departmentsfx\par}	% 所属コース・学科
+%%     {\Large (\@grade 回生：\@studentid )\par}	% 学生番号 % (2021/01/31 Obsoleted)
+     {\Large (学生証番号：\@studentid )\par}	% 学生番号 % (2021/01/31 Added)
+      \vspace{5mm}
+      {\LARGE\@author\par}			% 氏名
+      \vspace{30mm}
+      {\Large 立命館大学}
+      \vspace{5mm}
+    \end{center}
+    \hrulefill
+  \end{titlepage}}{}%
+\ifthenelse{\equal{\course}{master}}{%
+  \begin{titlepage}
+    \hrulefill\par
+    \vspace*{8mm}
+    \begin{center}
+      {\Large\@gyear 年度\hspace{5mm}\@thesis\par}
+      \vspace{30mm}
+      {\huge\bf\@title\par}			% タイトル
+      \vspace{30mm}
+%%      {\Large \@date\par}			% 提出年月日 % (2021/01/31 Obsoleted)
+      {\Large 指導教員：服部 宏充 \par}			% 提出年月日 (2021/01/31 Added)
+      \vspace{30mm}
+      {\Large \@faculty ~ \@major \par} % (2021/01/31 Modified)
+      {\Large \@course ~ 博士課程前期課程 \par} % (2021/01/31 Modified)
+      {\Large 学生証番号: \@studentid\par}	% 学生番号
+      \vspace{5mm}
+      {\LARGE \@author\par}			% 氏名
+      \vspace{30mm}
+      {\Large 立命館大学大学院}
+      \vspace{5mm}
+    \end{center}
+    \hrulefill
+  \end{titlepage}%
+  \begin{titlepage}
+    \hrulefill\par
+    \vspace*{8mm}
+    \begin{center}
+      {\LARGE\bf Master's Thesis \par}
+      \vspace{30mm}
+      {\huge\bf\@etitle\par}
+      \vspace{15mm}
+      {\Large by \par}
+      {\Large \@eauthor \par}
+      {\Large (Student-ID: \@studentid) \par}
+      \vspace{30mm}
+      {\Large Submitted for the Master's degree \par}
+      {\Large at \par}
+      {\Large \@edepartment \par}
+      {\Large \@emajor \par}
+      {\Large \@efaculty \par}
+      {\Large Ritsumeikan University \par}
+      \vspace{15mm}
+      {\Large Supervisor: Prof. Hiromitsu HATTORI}
+      \vspace*{5mm}
+    \end{center}
+    \hrulefill
+  \end{titlepage}}{}%
+}
+
+%%
+%%  概要
+%%
+\def\abstract{\newpage\pagenumbering{roman}\section*{概 要}}
+\def\endabstract{}
+
+%%
+%%  目次
+%%
+\def\tableofcontents{%
+  \newpage
+  \section*{目 次\@mkboth{目 次}{目 次}}
+  \@starttoc{toc}}
+
+%%
+%%  図目次
+%%
+\def\listoffigures{%
+  \newpage
+  \section*{図 目 次\@mkboth{図 目 次}{図 目 次}}
+  \@starttoc{lof}}
+
+%%
+%%  表目次
+%%
+\def\listoftables{%
+  \newpage
+  \section*{表 目 次\@mkboth{表 目 次}{表 目 次}}
+  \@starttoc{lot}}
+
+%%
+%%  概要
+%%
+\def\acknowledgements{\newpage\section*{謝 辞}}
+\def\endacknowledgements{}
+
+%%
+%% 参考文献
+%%
+\def\thebibliography#1{%
+  \newpage
+  \section*{参 考 文 献\@mkboth{参 考 文 献}{参 考 文 献}}
+  \list{[\arabic{enumi}]}
+    {\settowidth{\labelwidth}{[#1]}
+     \leftmargin=\labelwidth
+     \advance \leftmargin by \labelsep
+     \usecounter{enumi}}
+  \def\newblock{\hskip .11em plus .33em minus .07em}
+  \sloppy
+  \clubpenalty=4000 \widowpenalty=4000
+  \sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist

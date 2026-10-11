@@ -1,0 +1,466 @@
+% Cover pages, abstracts, acknowledgements, and lists.
+
+\AtBeginDocument{\make@covertitle}
+
+\newcommand{\gist@collegeclause}{%
+  \ifx\@college\@@@@undefined@@@@
+  \else
+    \@college. %
+  \fi
+}
+
+\newcommand{\make@covertitle}{
+  \ifx\@korean\@@@@undefined@@@@
+    \def\contentsnamen{List of Contents}
+  \else
+    \def\contentsname{목~~~~~~~~차}
+    \def\contentsnamen{목~~~~~~~~차}
+    \def\listfigurename{그 림 목 차}
+    \def\listtablename{표~~\,\,목~~\,차}
+    \def\refname{참 고 문 헌}
+    \def\bibname{참 고 문 헌}
+    \def\indexname{찾 아 보 기}
+    \def\figurename{그림}
+    \def\tablename{표}
+  \fi
+  \expandafter\split@code\@code\eop
+  \expandafter\split@kname\@kname\eop
+
+  % ----- Degree & Department Parser ----- &
+  % Flag: BS {B/}, MS {M/}, PhD {D/}
+  % Usage: \code{{FLAG}{DeptArg}}
+  \def\gist@codeusage{%
+    Use \string\code\{\{B/\}MRE\}, \string\code\{\{M/\}MRE\}, or \string\code\{\{D/\}MRE\}.%
+  }
+  \ifx\@md\B@char
+  \else
+    \ifx\@md\M@char
+    \else
+      \ifx\@md\D@char
+      \else
+        \ClassError{gist}{Invalid degree code in \string\code\space metadata}{%
+          Degree code must be explicitly provided as B/, M/, or D/.^^J%
+          \gist@codeusage
+        }%
+      \fi
+    \fi
+  \fi
+  \ifx\@edept\@@@@undefined@@@@
+    \ClassError{gist}{Missing English department metadata}{%
+      Define \string\@edept, \string\@kdept, and \string\@kdeptn\space in the thesis preamble.%
+    }%
+  \fi
+  \ifx\@kdept\@@@@undefined@@@@
+    \ClassError{gist}{Missing Korean department metadata}{%
+      Define \string\@edept, \string\@kdept, and \string\@kdeptn\space in the thesis preamble.%
+    }%
+  \fi
+  \ifx\@kdeptn\@@@@undefined@@@@
+    \ClassError{gist}{Missing spaced Korean department metadata}{%
+      Define \string\@edept, \string\@kdept, and \string\@kdeptn\space in the thesis preamble.%
+    }%
+  \fi
+  \ifx\@degreeabbr\@@@@undefined@@@@
+    \ifx \B@char\@md
+      \def\@degreeabbr{BS}%
+    \else
+      \ifx \M@char\@md
+        \def\@degreeabbr{MS}%
+      \else
+        \def\@degreeabbr{PhD}%
+      \fi
+    \fi
+  \fi
+  % Thesis name parser
+  \ifx \B@char\@md
+    \def\@kmd{학\hss 사}\def\@emd{Bachelor of Science}\edef\@abstractdegree{\@degreeabbr/\@dept}%
+    \def\@ethesisname{Thesis for Bachelor's Degree}\def\@kthesisname{학 사 학 위 논 문}%
+  \else
+    \ifx \M@char\@md
+      \def\@kmd{석\hss 사}\def\@emd{Master of Science}\edef\@abstractdegree{\@degreeabbr/\@dept}%
+      \def\@ethesisname{Thesis for Master's Degree}\def\@kthesisname{석 사 학 위 논 문}%
+    \else
+      \ifx \D@char\@md
+        \def\@kmd{박\hss 사}\def\@emd{Doctor of Philosophy}\edef\@abstractdegree{\@degreeabbr/\@dept}%
+        \def\@ethesisname{Dissertation for Doctor of Philosophy}\def\@kthesisname{박 사 학 위 논 문}%
+      \else
+        \ClassError{gist}{Unsupported degree code after parsing \string\code}{%
+          Internal degree parser received an unsupported value.^^J%
+          \gist@codeusage
+        }%
+      \fi
+    \fi
+  \fi
+  % ----- Degree & Department Parser ----- &
+
+  % ----- cover sheet in English ----- &
+  % 참조 1 앞표지 (영문)
+  \ifx\@korean\@@@@undefined@@@@
+    \thispagestyle{empty}
+    \vbox to\textheight{
+      \begin{center}
+        \vspace*{15mm}
+        \fontsize{14}{16pt}\selectfont
+        \@ethesisname\par % Dissertation / Thesis for ...
+        \vspace{30mm}
+        {\maketitlebreakwork % Title
+          \fontsize{22}{18pt}\selectfont \@etitle\par
+          \maketitlebreaknotwork}
+        \vfill
+        \fontsize{14}{16pt}\selectfont \@ename\par % author name
+        \vspace{10mm}
+        \fontsize{14}{15pt}\selectfont \@college\par % College
+        \fontsize{14}{15pt}\selectfont \@edept\par   % Department
+        \vspace{10mm}
+        \fontsize{17}{20pt}\selectfont \gistename\par % GIST
+        \vspace{15mm}
+        \fontsize{14}{16pt}\selectfont \@coveryear\par
+        \vspace{10mm}
+      \end{center}
+    }
+  \fi
+  % ----- cover sheet in English ----- &
+
+
+  % ----- cover sheet in Korean ----- %
+  % 참조 1 앞표지 (국문)
+  \newpage
+  \thispagestyle{empty}
+  \vbox to\textheight{
+    \begin{center}
+      \vspace*{15mm}
+      \fontsize{14}{16pt}\selectfont
+      \@kthesisname\par
+      \vspace{30mm}
+      {\maketitlebreakwork
+        \fontsize{20.74}{28pt}\selectfont \@ktitle\par
+        \maketitlebreaknotwork}
+      \vfill
+      \fontsize{14}{16pt}\selectfont \@korname\par
+      \vspace{10mm}
+      \fontsize{14}{15pt}\selectfont \@kdeptn\par   % Department
+      \fontsize{14}{15pt}\selectfont \@kcollege\par % College
+      \vspace{10mm}
+      \fontsize{17}{20pt}\selectfont \gistknamen\par
+      \vspace{15mm}
+      \fontsize{14}{16pt}\selectfont \@coveryear\par
+      \vspace*{10mm}
+    \end{center}
+  }
+  % ----- cover sheet in Korean ----- %
+
+  % ----- inner title page ----- %
+  % 참조 2 속표지
+  \newpage
+  \thispagestyle{empty}
+  \vbox to\textheight{
+    \begin{center}
+      \vspace*{60mm}
+      {\maketitlebreakwork
+        \fontsize{20.74}{28pt}\selectfont \@etitle\par
+        \maketitlebreaknotwork}
+      \vspace{30mm}
+      {\maketitlebreakwork
+        \fontsize{20.74}{28pt}\selectfont \@ktitle\par
+        \maketitlebreaknotwork}
+      \vfill
+    \end{center}
+  }
+  % ----- inner title page ----- %
+
+  % ----- Submission of thesis ----- &
+  % 참조 3 제출서 - 개정 25. 03. 06
+  \newpage\thispagestyle{empty}
+  \vbox to\textheight{
+    \begin{center}
+      \fontsize{20.74}{12pt}\selectfont{\maketitlebreakwork
+        \@etitle
+        \maketitlebreaknotwork}\\
+      \vspace{6mm}
+      \fontsize{14}{14pt}\selectfont
+      Advisor: \@advisor\\
+      \ifx\@coadvisor\@@@@undefined@@@@ \else Co-Advisor: \@coadvisor\\ \fi
+      \vspace{6mm} by\\\vspace{14mm}\@ename\\[6mm]
+      \ifx\@korean\@@@@undefined@@@@ % 한글: 학과-단과-학교
+        \ifx\@college\@@@@undefined@@@@ \else \@college\\ \fi
+        \@edept\\
+        \gistename
+      \else
+        \@edept\\ % 영문: 단과-학과-학교
+        \ifx\@college\@@@@undefined@@@@ \else \@college\\ \fi
+        \gistename
+      \fi
+    \end{center}
+    \vfill
+    \begin{trivlist}
+      \item[]\fontsize{14}{14pt}\selectfont
+      \hskip 1em A thesis submitted to the faculty of the {\gistename} in partial fulfillment of the requirements for the degree of {\@emd} in the {\@edept}.
+    \end{trivlist}
+    \vfill
+    \begin{flushright}
+      \fontsize{14}{14pt}\selectfont
+      \parbox{7cm}{
+        \raggedright\noindent Gwangju, Republic of Korea\\\@advisorsigndate\\Approved by\\
+        \vskip 10mm\hrule\vskip 8pt
+        \noindent Professor \@advisor \\
+        \noindent Committee Chair \\
+      }
+    \end{flushright}
+  }
+  % ----- Submission of thesis ----- &
+
+  % ----- Acceptance of thesis ----- &
+  % 참조 4 인준서
+  \ifx\@korean\@@@@undefined@@@@
+
+    \newpage\thispagestyle{empty}
+    \vbox to\textheight{
+      \vspace*{5mm}
+      \begin{center}\fontsize{20.74}{14pt}\selectfont{\maketitlebreakwork
+          \@etitle
+          \maketitlebreaknotwork}\\[1cm]
+        \fontsize{17}{20pt}\selectfont
+        \@ename \\
+        \vspace*{10mm}
+        \fontsize{14}{16pt}\selectfont
+        Accepted in partial fulfillment of the requirements for the\\
+        degree of {\@emd}
+      \end{center}
+      \vspace*{10mm}
+      \begin{flushright}\fontsize{14}{10pt}\selectfont
+        \@refereesigndate\\[1cm]
+        \begin{tabular}{rlc@{}}
+          \@reftitlea & \hrulefill \\[1pt] & \@refereeA \\[25pt]
+          \ifx\@refereeB\@@@@undefined@@@@\else
+          \@reftitleb & \hrulefill \\[1pt] & \@refereeB \\[25pt]
+          \fi
+          \ifx\@refereeC\@@@@undefined@@@@\else
+          \@reftitleb & \hrulefill \\[1pt] & \@refereeC \\[25pt]
+          \fi
+          \ifx\@refereeD\@@@@undefined@@@@\else
+          \@reftitleb & \hrulefill \\[1pt] & \@refereeD \\[25pt]
+          \fi
+          \ifx\@refereeE\@@@@undefined@@@@\else
+          \@reftitleb & \hrulefill \\[1pt] & \@refereeE \\[25pt]
+          \fi
+          \ifx\@refereeF\@@@@undefined@@@@\else
+          \@reftitleb & \hrulefill \\[1pt] & \@refereeF \\[25pt]
+          \fi
+          \ifx\@refereeG\@@@@undefined@@@@\else
+          \@reftitleb & \hrulefill \\[1pt] & \@refereeG \\[25pt]
+          \fi
+        \end{tabular}
+      \end{flushright}
+      \vskip-9pt}
+
+  \else
+
+    \newpage\thispagestyle{empty}
+    \vbox to\textheight{
+      \vspace*{5mm}
+      \begin{center}\fontsize{20.74}{14pt}\selectfont{\maketitlebreakwork
+          \@ktitle
+          \maketitlebreaknotwork}\\[1cm]
+        \fontsize{17}{20pt}\selectfont
+        \@korname \\
+        \vspace*{20mm}
+        \fontsize{14}{16pt}\selectfont
+        위 논문을 \gistkname
+        {\@kmd}학위논문으로 인준함.
+      \end{center}
+      \vspace*{10mm}
+      \begin{flushright}\fontsize{14}{10pt}\selectfont
+        \@refereesigndate\\[1cm]
+        \begin{tabular}{rlc@{}}
+          \@reftitlea & \@refereeA & ~~(인) \\[25pt]
+          \ifx\@refereeB\@@@@undefined@@@@\else
+          \@reftitleb & \@refereeB & ~~(인) \\[25pt]
+          \fi
+          \ifx\@refereeC\@@@@undefined@@@@\else
+          \@reftitleb & \@refereeC & ~~(인) \\[25pt]
+          \fi
+          \ifx\@refereeD\@@@@undefined@@@@\else
+          \@reftitleb & \@refereeD & ~~(인) \\[25pt]
+          \fi
+          \ifx\@refereeE\@@@@undefined@@@@\else
+          \@reftitleb & \@refereeE & ~~(인) \\[25pt]
+          \fi
+          \ifx\@refereeF\@@@@undefined@@@@\else
+          \@reftitleb & \@refereeF & ~~(인) \\[25pt]
+          \fi
+          \ifx\@refereeG\@@@@undefined@@@@\else
+          \@reftitleb & \@refereeG & ~~(인) \\[25pt]
+          \fi
+        \end{tabular}
+      \end{flushright}
+      \vskip-9pt}
+
+  \fi
+  % ----- Acceptance of thesis ----- &
+
+  % ----- dedication ----- &
+  \newpage\thispagestyle{empty}
+  \vbox to\textheight{
+    \begin{center}
+      \vfill \@dedication \vfill
+    \end{center}
+  }
+  \newpage
+}
+% ----- dedication ----- &
+
+% ----- Abstract ----- &
+% 참조 5 논문초록
+\def\eabstract{
+  \ifx\@korean\@@@@undefined@@@@
+    \pagenumbering{roman}
+    \setcounter{page}{1}
+  \fi
+  \addcontentsline{toc}{chapter}{\fontsize{12}{1pt}\selectfont
+    \ifx\@korean\@@@@undefined@@@@ Abstract (English) \else 영 문 요 약 \fi}
+  {\fontsize{10}{12pt}\selectfont
+    \hbox{\parbox[t]{2cm}{\strut\@abstractdegree\\\@studentid}\advance\linewidth by-2cm
+      \hspace{1mm}
+      \parbox[t]{132mm}{\@ename\ (\@korname). {\maketitlebreaknotwork \@etitle\ (\@ktitle).}
+        \gist@collegeclause \@edept.
+        \@coveryear. \@npages{p}. Advisor: Prof. \@advisor \ifx\@coadvisor\@@@@undefined@@@@
+        \else, \@coadvisor\fi.}}}
+  \vskip4cm
+  \begin{center}
+    {\fontsize{14}{1pt}\selectfont \bf{Abstract}}
+  \end{center}
+  \vskip0.5cm
+  \fontsize{10}{12pt}\selectfont
+  \hspace{8mm}
+}
+
+\def\endeabstract{
+  \vfill
+  \begin{center}
+    \rm
+    \ \copyright \@coveryear \\
+    \@ename \\
+    ALL RIGHTS RESERVED
+  \end{center}
+  \ifx\@korean\@@@@undefined@@@@
+    \thispagestyle{plain}\pagestyle{plain}
+    \newpage
+  \else
+    \newpage
+    \thispagestyle{empty}\pagestyle{empty}
+    \vbox to\textheight{}
+    \newpage
+    \thispagestyle{plain}\pagestyle{plain}
+  \fi
+}
+
+\def\kabstract{
+\ifx\@korean\@@@@undefined@@@@\else
+  \pagenumbering{roman}
+  \setcounter{page}{1}
+\fi
+\addcontentsline{toc}{chapter}{\fontsize{12}{1pt}\selectfont
+\ifx\@korean\@@@@undefined@@@@ Abstract (Korean) \else 국 문 요 약 \fi}
+{\fontsize{10}{12pt}\selectfont
+\hbox{\parbox[t]{2cm}{\strut\@abstractdegree\\\@studentid}\advance\linewidth by-2cm
+\hspace{1mm}
+\parbox[t]{132mm}{\@kname. {\maketitlebreaknotwork \@ktitle.}
+\@kdept.
+\@coveryear. \@npages{쪽}. 지도교수: \@kadvisor \ifx\@kcoadvisor\@@@@undefined@@@@
+\else, \@kcoadvisor\fi.}}}
+\vskip4cm
+\begin{center}
+  {\fontsize{14}{1pt}\selectfont \bf{국 문 요 약}}
+\end{center}
+\vskip0.5cm
+\fontsize{10}{12pt}\selectfont
+\hspace{8mm}
+}
+
+\def\endkabstract{
+  \vfill
+  \begin{center}
+    \rm
+    \copyright \@coveryear \\
+    \@korname\\
+    ALL RIGHTS RESERVED
+  \end{center}
+  \thispagestyle{plain}\pagestyle{plain}
+  \newpage
+}
+% ----- Abstract ----- &
+
+
+% ----- List of Contents ----- %
+% 참조 6: 목차(Contents)
+\def\listtables{
+  \addcontentsline{toc}{chapter}{\fontsize{12}{1pt}\selectfont \listtablename}
+  {\let\thispagestyle\@gobble \listoftables }
+  \thispagestyle{plain}\pagestyle{plain}
+  \newpage
+}
+
+\def\listfigures{
+  \addcontentsline{toc}{chapter}{\fontsize{12}{1pt}\selectfont \listfigurename}
+  {\let\thispagestyle\@gobble \listoffigures }
+  \thispagestyle{plain}\pagestyle{plain}
+  \newpage
+}
+
+\def\makecontents{
+  \addcontentsline{toc}{chapter}{\fontsize{12}{1pt}\selectfont \contentsnamen}
+  {\let\thispagestyle\@gobble
+    \fontsize{12}{10}\selectfont
+    \tableofcontents
+  }
+  \thispagestyle{plain}\pagestyle{plain}
+  \newpage
+}
+
+\newcommand{\acknowledgements}{\chapter*{\ifx\@korean\@@@@undefined@@@@ Acknowledgement \else 감 사 의 글 \fi}
+  \addcontentsline{toc}{chapter}{\fontsize{12}{1pt}\selectfont
+    \ifx\@korean\@@@@undefined@@@@ Acknowledgement \else 감 사 의 글 \fi }
+}
+
+% ----- List of Contents ----- %
+
+% ----- Macro: Summary ----- %
+% 참조 8 요약문(Summary)
+\newcommand{\summary}[1]{%
+  \clearpage
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\fontsize{12}{1pt}\selectfont Summary}%
+  \thispagestyle{plain}\pagestyle{plain}%
+  \begingroup
+  \setcounter{secnumdepth}{-1}%
+  \setcounter{tocdepth}{-1}%
+  \let\addcontentsline\@gobblethree
+  \fontsize{10}{12pt}\selectfont
+  \begin{center}
+    {\fontsize{14}{16pt}\selectfont \bfseries SUMMARY\par}%
+    \vspace{12mm}%
+    {\maketitlebreakwork
+      \fontsize{14}{16pt}\selectfont \@etitle\par
+      \maketitlebreaknotwork}%
+  \end{center}
+  \vspace{10mm}%
+  \input{#1}%
+  \par
+  \endgroup
+  \thispagestyle{plain}\pagestyle{plain}%
+  \newpage
+}
+
+\def\endacknowledgements{
+  \ifx\@korean\@@@@undefined@@@@
+    \newpage
+    \thispagestyle{empty}
+    \vbox to\textheight{}
+    \newpage
+    \thispagestyle{plain}
+  \else
+    \thispagestyle{plain}\pagestyle{plain}
+    \newpage
+  \fi
+}
+% ----- Macro: Summary ----- %

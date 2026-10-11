@@ -1,0 +1,58 @@
+\documentclass[a4j,11pt,uplatex,oneside,openany,dvipdfmx]{jsbook}
+\usepackage{graphicx}
+% https://qiita.com/KAI_Mutsumi/items/872983c756c0c12dbeed
+% \addtolength{\fullwidth}{-16truemm} %全体の幅(ヘッダ部の幅)を既定値から26mm小さくする
+% \setlength{\textwidth}{\fullwidth}  %本文の幅(textwidth)を全体の幅(=ヘッダ部の幅)にそろえる
+% https://mathlandscape.com/latex-margin/
+\usepackage[top=25truemm,bottom=25truemm,left=25truemm,right=25truemm]{geometry}
+\renewcommand{\baselinestretch}{1.2} %本文全体の行間をX倍にする
+
+
+% template %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{../input/takalastyle}
+\usepackage{../input/jlisting}
+
+% bib file %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \addbibresource{refs.bib} %bibファイル (for overleaf)
+\addbibresource{../input/refs.bib} %bibファイル (for local compile)
+
+
+% your setting %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 追加のパッケージやカスタマイズ内容はここに書く．
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\pgfplotsset{compat=1.16}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\setcounter{masterflag}{1}
+
+% タイトルページ
+\subfile{../000_cover/000_cover}
+
+% 要旨
+\addcontentsline{toc}{chapter}{論文要旨}
+\subfile{../001_abstract/001_abstract}
+% 
+\newpage
+% 目次
+\addcontentsline{toc}{chapter}{目次}
+\tableofcontents
+%
+\subfile{../01_chap/01_chap}
+\subfile{../02_chap/02_chap}
+\subfile{../03_chap/03_chap}
+%
+\subfile{../98_appendix/98_appendix}
+%
+\newpage
+\addcontentsline{toc}{chapter}{参考文献}
+\renewcommand{\bibname}{参考文献}
+\printbibliography
+\newpage
+% 謝辞
+\addcontentsline{toc}{chapter}{謝辞}
+\subfile{../99_thank/99_thank}
+\end{document}

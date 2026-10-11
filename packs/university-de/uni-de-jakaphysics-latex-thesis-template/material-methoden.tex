@@ -1,0 +1,162 @@
+%!TEX root = thesis.tex
+
+\chapter{Material und Methoden}
+\label{chapter:material-methoden}
+
+In diesem Abschnitt sollte konkret und nachvollziehbar beschrieben werden, wie die Untersuchungen durchgeführt wurden. So sollte zusätzlich zu einer Auflistung der verwendeten Materialien (Chemikalien und Geräte inkl. eventueller Messungenauigkeiten und Firmennamen) beschrieben werden, wie beispielsweise Proben hergestellt wurden (z.B. Konzentrationen, Verdünnungsreihen, etc.) und mit welchen Parametern Geräte verwendet wurden (z.B. erforderliche Zeit im Ultraschallbad, Porengröße der Extrudermembran). \textbf{Die durchgeführten  Arbeiten müssen hierbei durch andere reproduzierbar sein.}
+
+Die folgenden Abschnitte dieses Kapitels enthalten Beispiele für die diversen Inhaltselemente einer Arbeit.\todo{Die Abschnitte dieses Kapitels sollten natürlich nicht so in die Arbeit übernommen werden. Für die finale Version können diese Todo-Notes dann komplett ausgeblendet werden}
+
+\todo[inline]{Notizen an einen selbst oder den Betreuer der Arbeit sind während der Arbeit sehr nützlich.}
+
+\section{Quellen}
+
+Quellen sind wichtig für gutes wissenschaftliches Arbeiten. Eine Quelle kann dabei zum Beispiel
+\begin{compactitem}
+  \item ein Beitrag in einer Zeitschrift \cite{MopOverview},
+  \item ein Beitrag in einem Sammlungsband \cite{moore},
+  \item ein Buch \cite{scala},
+  \item ein Beitrag im Berichtsband einer Konferenz \cite{rltl},
+  \item ein technischer Bericht \cite{bitkom},
+  \item eine Dissertation \cite{Leucker02},
+  \item eine Abschlussarbeit \cite{RltlConv},
+  \item ein (noch) nicht veröffentlichter Artikel \cite{ptLTL} oder
+  \item ein Artikel auf einer Website \cite{codecommit} sein.
+\end{compactitem}
+
+Dabei ist zu beachten, dass nicht veröffentlichte Artikel und insbesondere Webseiten nur in Ausnahmefällen gute Quellen sind, da diese nicht durch Fachleute begutachtet wurden.
+
+In den meisten Fällen können Quellenangaben im Bib\TeX-Format direkt in verschiedenen Suchmaschinen\footnote{zum Beispiel Google Scholar (\url{https://scholar.google.com/}) oder PubMed (\url{https://www.ncbi.nlm.nih.gov/pubmed/})} für wissenschaftliche Texte entnommen werden.
+
+\section{Tabellen}
+
+In \vref{tbl:prozessoren} sehen wir ein Beispiel für eine Tabelle. Im Gegensatz zu Abbildungen und Diagrammen ist die Beschriftung einer Tabelle immer oberhalb positioniert. Es empfiehlt sich, die endgültige Positionierung der Grafiken und Tabellen erst ganz zum Schluss vorzunehmen (Feinschliff), da diese sich bei der Bearbeitung von Textstellen möglicherweise wieder verschieben.
+
+\begin{table}
+	% Positionierung der Tabellen und Grafiken
+	% \begin{table}[!htbp] erlaubt mehrere mögliche Positionen für die Tabelle
+	% [!] entfernt mögliche Restriktionen
+	% [h] Erlaubnis für hier im Text
+	% [t] Erlaubnis für top of site
+	% [b] Erlaubnis für bottom of site
+	% [p] Erlaubnis für single page
+	% [h!] erzwingt Position der Grafik/Tabelle an der Stelle, an der sie im Quelltext definiert ist
+	% es empfiehlt sich, zunächst die Option [htbp] zu verwenden 
+  \centering
+  \begin{tabular}{llr}
+    \headerrow Jahr & Prozessor & MHz \\
+    1975 & 6502 (C64) 	& 1 \\
+    1985 & 80386 			& 16 \\
+    2005 & Pentium 4 	& 2\,800 \\
+    2030 & Phoenix 3 	& 7\,320\,000 \\
+    \hiderowcolors
+    2050 & \ldots \\
+    2070 & \ldots
+  \end{tabular}
+  \caption[Rechengeschwindigkeit von Computern]{Rechengeschwindigkeit von Computern. Inhaltlich vollkommen egal, ist dies doch ein sehr schönes Beispiel für eine Tabelle.}
+  \label{tbl:prozessoren}
+\end{table}
+
+\section{Abbildungen und Diagramme}
+
+In \vref{fig:flower} sehen wir ein Beispiel für eine Abbildung, die aus einer externen Grafik geladen wurde. In \vref{fig:buechi} sehen wir ein Beispiel für eine Abbildung, die in mit Hilfe von TiKz in \LaTeX\ generiert wurde. Auf jede Abbildung und Tabelle muss mindestens einmal im Text verwiesen werden. Es sollte von Anfang an die Größe der Graphen und deren Beschriftungen beachtet werden. Dazu wird der Graph am Besten in der gleichen Größe erstellt, in der er auch in die Arbeit eingefügt werden soll. Eine zu geringe Pixeldichte kann Abbildungen fleckig und verschwommen aussehen lassen. Die Größe der Beschriftungen in einem Graph sollte nicht zu groß oder zu klein gewählt werden, und sich möglichst an der Größe der Bildunterschrift orientieren um gut lesbar zu sein.
+
+
+\begin{figure} % optional: \begin{figure}[htbp]
+  \centering
+  \includegraphics[width=.5\textwidth]{images/flower.png}
+  \caption[Kurzfassung der Beschreibung für das Abbildungsverzeichnis]{Lange Version der Beschreibung, die direkt unter der Abbildung gesetzt wird. Es ist wichtig, für jede Abbildung eine umfangreiche Beschreibung anzugeben, da der Leser beim ersten Durchblättern der Arbeit vor allem an den Abbildungen hängen bleibt. Am Besten sollte so die Abbildung mit der dazugehörigen Bildunterschrift ohne weiteren Text verständlich sein und für sich alleine stehen können.}
+  \label{fig:flower}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[
+      node distance=15ex,
+      auto,
+      on grid,
+      shorten >=1pt
+    ]
+    \node [state, initial] (q0) {$q_0$};
+    \node [state, accepting, right=of q0] (q1) {$q_1$};
+    \path[->]
+      (q0) edge node {$a$} (q1);
+  \end{tikzpicture}
+  \caption[Graph des Büchi-Automaten $\hat A$.]{Graph des Büchi-Automaten $\hat A$. Der Zustand $q_1$ hat dabei keine ausgehende Kante. Der Zustand ist trotzdem akzeptierend, da beide enthaltenen Zustände von $\acute A$ akzeptierend sind. Die naive Anwendung des Leerheitstests auf alternierenden Büchi-Automaten liefert in diesem Fall also zu viele akzeptierende Zustände.}
+  \label{fig:buechi}
+\end{figure}
+
+\section{Quelltext}
+
+Quelltext sollte in Abschlussarbeiten nur äußerst sparsam eingesetzt werden. Wichtig ist insbesondere, dass Quelltextauszüge sorgsam ausgewählt und gut erklärt werden.
+
+\begin{lstlisting}[language=Java,gobble=2]
+  public class Main {
+    // Hello Word in Java
+    public static void main(String[] args) {
+      System.out.println("Hello World");
+    }
+  }
+\end{lstlisting}
+
+\subsection{Quelltext mit automatischer Nummerierung}
+
+Manchmal möchte man Quelltext eher als Abbildung und nicht als Fließtext behandeln. In diesem Fall soll der Quelltext eine Bildunterschrift und eine automatische Nummerierung erhalten. Die automatische Nummerierung kann dann natürlich auch in Referenzen verwendet werden: In \vref{lst:java} haben wir Java-Quelltext.
+
+\begin{lstlisting}[language=Java,gobble=2,caption={Ich bin die Bildunterschrift des Quelltextes},label=lst:java]
+  public class AnotherClass {
+    private int number = 0;
+    public void add() {
+      this.number++;
+    }
+  }
+\end{lstlisting}
+
+Wenn man Quelltext mit Bildunterschrift setzt, muss man darauf achten, dass der Quelltext nach wie vor nicht als Fließumgebung behandelt wird. Entsprechend kann es passieren, dass der Quelltext über zwei Seiten hinweg gesetzt wird. Während das normalerweise nicht stört, kann dieser Umstand in Zusammenhang mit einer Bildunterschrift den Leser irritieren.
+
+\section{Zahlen und Einheiten}
+
+Physikalische Größen sind in Formeln und im Fließtext kursiv zu schreiben, z.B. die Temperatur $T$ und Zeit $t$. Der Index einer physikalischen Größe ist hingegen nicht kursiv zu schreiben, wenn es sich bei diesem Index um eine Variable handelt:
+
+\begin{compactitem}
+	\item Index ist Variable: z.B. $T_x$ oder $T_i$
+	\item Index ist keine Variable: z.B $T_{\textrm{1}}$ oder $t_{\textrm{off}}$
+\end{compactitem}
+
+Es empfiehlt sich, das Paket \textit{siunitx}\footnote{\url{http://ctan.mirror.garr.it/mirrors/CTAN/macros/latex/contrib/siunitx/siunitx.pdf}} für die Darstellung von Zahlen und zugehöriger Einheit zu verwenden. Damit lassen sich Zahlen und kompliziertere Einheiten übersichtlich darstellen, beispielsweise \SI{42}{\kilo\gram\metre\per\square\second}. Weiterhin ist zu beachten:
+
+\begin{compactitem}
+	\item einheitenbehaftete Zahlen werden immer mit der dazugehörigen Einheit genannt, geschrieben und nicht voneinander getrennt.
+	\item Einheiten werden nicht kursiv geschrieben
+	\item Einheiten werden bei der Beschriftung von Graphen oder in Tabellen nicht in eckige Klammern gesetzt, sondern besser wie folgt dargestellt: $c$ in nM oder $c /$mM!
+\end{compactitem}
+
+\section{Formeln und Gleichungen}
+
+Formeln und Gleichungen sollten sich nach Möglichkeit in den Lesefluss einfügen und nicht immer nur am Ende des Satzes angehängt werden. Generell sind Gleichungen dabei wie Fließtext zu behandeln, was die Komma- und Punktsetzung betrifft. Außerdem sollten die einzelnen Bestandteile von Formeln und Gleichungen, wie Variablen und Konstanten, immer im Text vor oder nach der entsprechenden Gleichung kurz und knapp erklärt werden. Im Folgenden sind die zuvor genannten Punkte verdeutlicht (entnommen aus \cite{MA_Kappel}):
+
+
+Unter Verwendung der Bernoullischen Druckgleichung
+\begin{equation}
+	\label{eq:bernoulli_pressure}
+	p_{\text{s}} +  \varrho_{\text{s}} g z_{\text{s}} + \frac{1}{2} \varrho_{\text{s}} v^{2}_{\text{s}} = p_{\text{a}} + \varrho_{\text{a}} g z_{\text{a}} + \frac{1}{2} \varrho_{\text{a}} v^{2}_{\text{a}}
+\end{equation}
+kann ein alternativer Ausdruck für $ p_{s} $ gefunden werden. Hier stehen $ p_{\text{s}} $ und $ p_{\text{a}} $ für den Druck innerhalb der Spritze bzw. am Ausgang der Spritze, $ \varrho $ beschreibt die Dichte des Fluids, und $ v_{\text{s}} $ und $ v_{\text{a}} $ für die Geschwindigkeit des Fluids innerhalb der Spritze bzw. am Ausgang. 
+Die Lage, oder auch die geodätische Höhe, der Spritze und des Ausgangs wird hier mit $ z_{\text{a}} $ bzw. $ z_{\text{s}} $ beschrieben, und $ g $ steht für die Fallbeschleunigung im Schwerefeld der Erde.
+Aufgrund der Annahme, dass das verwendete Fluid inkompressibel ist, also $ \varrho_{\text{s}} = \varrho_{\text{a}} = \varrho = const. $ gilt, kann Gleichung \ref{eq:bernoulli_pressure} auch wie folgt geschrieben werden:
+\begin{equation}
+	\label{eq:bernoulli_pressure_rearranged}
+p_{\text{s}} +  \varrho g z_{\text{s}} + \frac{1}{2} \varrho v^{2}_{\text{s}} = p_{\text{a}} + \varrho g z_{\text{a}} + \frac{1}{2} \varrho v^{2}_{\text{a}} \, .
+\end{equation}
+
+\section{Hinweise zu Form und Stil}
+
+Es ist auf einen präzisen Schreibstil zu achten. Umschreiben Sie keine Sachverhalte, die Sie auch konkret benennen können. Beachten Sie beim Verfassen Ihrer Arbeit außerdem diese weiteren Punkte:
+
+\begin{compactitem}
+	\item Drücken Sie sich möglichst im Passiv aus (nicht \frqq\textit{man} tut dies und jenes\flqq{}).
+	\item Vermeiden Sie Sätze im Imperativ, Umgangssprache und unnötige Füllwörter.
+	\item Es sollten \textit{Laborslang }und englische Begriffe vermieden werden, z.B. \frqq Aufbau\flqq{} statt \frqq Setup\flqq{} und \frqq ROXS\flqq{}  statt \frqq Zaubercocktail\flqq.
+	\item Erklären Sie Abkürzungen bei ihrer ersten Verwendung, und nehmen Sie diese in das Abkürzungsverzeichnis auf.
+	\item Lateinische Begriffe sollten immer kursiv dargestellt werden, wie z.B. \textit{in vivo}.
+\end{compactitem}

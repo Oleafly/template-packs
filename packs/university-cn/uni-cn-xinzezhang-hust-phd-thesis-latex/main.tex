@@ -1,0 +1,152 @@
+%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
+
+% 通过使用draftformat或finalformat来控制是否有页眉，通过使用blackred或redhead来调整页眉格式
+\documentclass[draftformat,redhead]{HUSTthesis}
+
+% 所有其它可能用到的包都统一放到这里了，可以根据自己的实际添加或者删除。这样做
+% 主要是为了避免class文件过于臃肿。
+\usepackage{HUSTtils}
+
+%\includeonly{body/chap02}
+% \setcitestyle{authoryear, open={（},close={）}}
+
+\usepackage[stable]{footmisc}
+
+\usepackage{soul}
+
+
+\newcommand*\red[1]{\textcolor{red}{#1}}
+% \setul{0.5ex}{0.3ex}
+\usepackage{xeCJKfntef}
+\newcommand\redline[1]{\CJKunderline[skip=false,format=\color{red}]{#1}}
+
+\usepackage{mathtools}
+
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator{\trans}{{\mathrm{T}}}
+\DeclareMathOperator*{\avg}{Avg}
+\newcommand*\abs[1]{\left \lvert#1 \right \rvert}
+\newcommand*\norm[1]{\left \lVert #1 \right \rVert}
+\newcommand\x{\bm{x}}
+\newcommand\y{\bm{y}}
+\newcommand\e{\bm{e}}
+\newcommand\h{\bm{h}}
+\newcommand\w{\bm{w}}
+\newcommand\g{\bm{g}}
+\newcommand\m{\bm{m}}
+\newcommand\bs{\bm{s}}
+\newcommand\bp{\bm{p}}
+\newcommand\brho{\bm{\rho}}
+\newcommand\bv{\bm{v}}
+\newcommand\bu{\bm{u}}
+\newcommand\mathr{\mathbb{R}}
+\newcommand\mathd{\mathbb{D}}
+
+% \usepackage[e]{esvect}
+% \newcommand{\uv}[2][2mu]{\vec{#2\mkern-#1}\mkern#1}
+
+% *** SPECIALIZED LIST PACKAGES ***
+\usepackage{algorithm, algorithmic}
+% \newcommand{\algorithmautorefname}{Algorithm}
+
+\usepackage{breqn}
+
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+\newcommand{\rfist}{\ding{192}~}
+\newcommand{\rsecond}{\ding{193}~}
+\newcommand{\rthird}{\ding{194}~}
+
+\usepackage{marginnote}
+\usepackage{multirow,makecell}
+\usepackage{tabularx}
+% \usepackage{ltablex} %load to using long tabularx
+% \keepXColumns %solve the problem that tabularx does not fill full textwidth when using ltablex
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+\newcommand\ph{$\phantom{1}$} 
+\newcommand\s{$^\star$}
+
+\newlength{\twosubht}
+\newsavebox{\twosubbox}
+
+% 修改autoref前后间距，解决标签应用后的前后间距问题
+\usepackage{letltxmacro}
+\LetLtxMacro\oldautoref\autoref
+\DeclareRobustCommand{\autoref}[1]{{\let\nobreakspace\space\oldautoref{#1}\space}}
+
+\newcommand*\secref[1]{\ref{#1}节}
+
+\usepackage{cleveref}
+\newcommand{\crefrangeconjunction}{~--~}
+\Crefname{table}{表}{表}
+\Crefname{figure}{图}{图}
+
+% %%  using line number.
+% \usepackage[pagewise]{lineno}
+% \makeatletter
+% \def\makeLineNumberLeft{%
+%   \linenumberfont\llap{\hb@xt@\linenumberwidth{\LineNumber\hss}\hskip\linenumbersep}% left line number
+%   \hskip\columnwidth% skip over column of text
+%   \rlap{\hskip\linenumbersep\hb@xt@\linenumberwidth{\hss\LineNumber}}\hss}% right line number
+% \leftlinenumbers% Re-issue [left] option
+% \makeatother
+
+
+
+
+\begin{document}
+%定义所有的eps文件在 figures 子目录下
+\graphicspath{{figures/}}
+
+% 生成封面，版权页，摘要
+
+\frontmatter
+\input{body/cover}
+\makecover
+
+%目录
+\tableofcontents
+
+% 对照表
+% \include{body/denotation}
+
+\mainmatter
+
+\raggedbottom
+%% using line count
+% \linenumbers
+
+% \nolinenumbers
+%%% 结论
+\input{body/chapter/intro.tex}
+\input{body/chapter/overview.tex}
+\input{body/chapter/cnn.tex}
+% \input{body/chapter/univ.tex}
+
+%%% 致谢
+\include{body/chapter/ack.tex}
+
+
+%%% 参考文献
+%Included for Gather Purpose only:
+%input "ref/refs.bib"
+% 建议使用 language 或 langid 明确文献语言；中文兼容 chinese、zh、zh-cn 和 cn，英文兼容 english、en、en-us 和 en-gb
+\bibliographystyle{gbt7714-2025}
+\bibliography{ref/thesis}
+
+% ---------------------------------------------
+
+%%% 附录
+\begin{appendix}
+  \input{body/appendix/app.tex}
+
+\end{appendix}
+
+\end{document}

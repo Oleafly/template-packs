@@ -1,0 +1,182 @@
+% 存放页边距、行距、页眉等格式设置
+%\xeCJKsetup{EmboldenFactor=1}
+%\setCJKfamilyfont{zhsong}{SimSun}[AutoFakeBold]
+
+\geometry{ 
+	a4paper, 
+	left=3cm, right=2.5cm, 
+	top=2cm, bottom=2cm, 
+}
+
+% 设置粗宋体和粗黑体
+
+\newCJKfontfamily{\cuheiti}[AutoFakeBold={3.17}]{SimHei}
+
+\newcommand{\yihao}{\fontsize{26pt}{26pt}\selectfont}       % 一号, 单倍行距
+\newcommand{\xiaoyi}{\fontsize{24pt}{24pt}\selectfont}      % 小一, 单倍行距
+\newcommand{\erhao}{\fontsize{22pt}{1.25\baselineskip}\selectfont}       % 二号, 1.25倍行距
+\newcommand{\xiaoer}{\fontsize{18pt}{18pt}\selectfont}      % 小二, 单倍行距
+\newcommand{\sanhao}{\fontsize{16pt}{16pt}\selectfont}      % 三号, 单倍行距
+\newcommand{\xiaosan}{\fontsize{15pt}{15pt}\selectfont}     % 小三, 单倍行距
+\newcommand{\sihao}{\fontsize{14pt}{16.1pt}\selectfont}       % 四号, 单倍行距
+\newcommand{\xiaosi}{\fontsize{12pt}{13.8pt}\selectfont}      % 小四, 1.15倍行距
+\newcommand{\xiaoxiaosi}{\fontsize{11pt}{12.65pt}\selectfont}      % 小四, 1.15倍行距
+\newcommand{\wuhao}{\fontsize{10.5pt}{10.5pt}\selectfont}   % 五号, 单倍行距
+\newcommand{\xiaowu}{\fontsize{9pt}{9pt}\selectfont}        % 小五, 单倍行距
+
+\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}} % 上角标引用参考文献
+
+%配置ctex样式
+\ctexset {
+	part/pagestyle = empty,
+	chapter/pagestyle = fancy,
+	chapter = {
+		name={,.},
+		number=\textbf{\arabic{chapter}},
+		format=\xiaosi\fontspec{Arial}\bfseries\raggedright, % 追加跳转
+		beforeskip = {0pt},
+		afterskip={10pt},
+		fixskip=true,
+	},
+	section = {
+		name={,},
+		% number=\textbf{\thechapter.\arabic{section}},
+		number=\arabic{chapter}.\arabic{section},
+		format=\xiaoxiaosi\fontspec{Arial}\bfseries\raggedright, % 追加跳转
+		beforeskip = {0pt},
+		afterskip={10pt},
+		fixskip=true,
+	},
+	subsection = {
+		name={,},
+		number=\textbf{\thesection.\arabic{subsection}},
+		format=\xiaoxiaosi\fontspec{Arial}\bfseries\raggedright, % 追加跳转
+		beforeskip = {0pt},
+		afterskip={10pt},
+		fixskip=true,
+	},
+	subsubsection = {
+		number=\textbf{\alpha{subsubsection}},
+		format=\xiaoxiaosi\fontspec{Arial}\bfseries\raggedright,
+		beforeskip = {0pt},
+		afterskip={10pt},
+		fixskip=true,
+	},
+  	listfigurename=List of Figure,
+	listtablename=List of Table,
+	figurename=Figure,
+	tablename=Table,
+	bibname=Reference,
+	indexname=Index,
+}
+% 摘要页的页眉设置
+\fancypagestyle{toastyle}
+{
+	\fancyhf{} % 清空
+	\fancyhead[C]{
+  		\ifodd\value{page}
+     		\SansC\xiaowu Abstract
+  		\else
+     		\SansC\xiaowu Xi'an University of Posts and Telecommunications Final Year Project (Paper)
+  		\fi
+	}
+	\fancyfoot[C]{\thepage}
+}
+% 目录页的页眉设置
+\fancypagestyle{tocstyle}
+{
+    \fancyhf{} % 清空
+    \fancyhead[C]{
+  		\ifodd\value{page}
+     		\SansC\xiaowu Contents
+  		\else
+     		\SansC\xiaowu Xi'an University of Posts and Telecommunications Final Year Project (Paper)
+  		\fi
+}
+    \fancyfoot[C]{\thepage}
+}
+%图目录页的页眉设置
+\fancypagestyle{lofstyle}
+{
+	\fancyhf{} % 清空
+	\fancyhead[C]{
+  		\ifodd\value{page}
+	 		\SansC\xiaowu List of Figure
+  		\else
+	 		\SansC\xiaowu Xi'an University of Posts and Telecommunications Final Year Project (Paper)
+  		\fi
+	}
+	\fancyfoot[C]{\thepage}
+}
+%表目录页的页眉设置
+\fancypagestyle{lotstyle}
+{
+	\fancyhf{} % 清空
+	\fancyhead[C]{
+  		\ifodd\value{page}
+	 		\SansC\xiaowu List of Table
+  		\else
+	 		\SansC\xiaowu Xi'an University of Posts and Telecommunications Final Year Project (Paper)
+  		\fi
+	}
+	\fancyfoot[C]{\thepage}
+}
+% 正文的页眉设置
+% —— 可回退的英文字体宏（优先用系统字体，找不到就退而求其次）——
+\IfFontExistsTF{Arial}{%
+  \newcommand{\SansA}{\fontspec{Arial}}%
+}{%
+  \IfFontExistsTF{TeX Gyre Heros}{\newcommand{\SansA}{\fontspec{TeX Gyre Heros}}}{\newcommand{\SansA}{\sffamily}}%
+}
+\IfFontExistsTF{Calibri}{%
+  \newcommand{\SansC}{\fontspec{Calibri}}%
+}{%
+  \IfFontExistsTF{Carlito}{\newcommand{\SansC}{\fontspec{Carlito}}}{\newcommand{\SansC}{\SansA}}%
+}
+\renewcommand{\chaptermark}[1]{%
+  \markboth{\chaptername~\thechapter.\ #1}{}%
+}
+% —— 页眉：偶数页固定标题，奇数页章节标题（Calibri 不在则回退）——
+\fancypagestyle{fancy}{
+    \fancyhead[R]{}                % 清空右页眉
+	\fancyhead[L]{}                % 清空左页眉
+	\fancyfoot[l]{} 			   % 清空左页脚
+	\fancyfoot[r]{} 			   % 清空右页脚
+    \fancyhead[C]{
+  	\ifodd\value{page}
+     	{\SansC\xiaowu\nouppercase{\leftmark}}
+  	\else
+     	\SansC\xiaowu Xi'an University of Posts and Telecommunications Final Year Project (Paper)
+  	\fi
+}
+    \fancyfoot[C]{\footnotesize\thepage}
+    \renewcommand{\headrulewidth}{0.75pt}
+}
+% ===== 公式编号格式设置 =====
+\renewcommand{\theequation}{\thechapter-\arabic{equation}}
+
+% ===== 图片编号格式设置 =====
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+
+% ===== 表格编号格式设置 =====
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
+
+% ===== 图表标题格式设置 =====
+\captionsetup[figure]{
+    font={normalsize},           % 标题字号与正文相同（11pt）
+    labelfont={},              % "Fig 2-1" 加粗
+    textfont={},                 % 标题文字常规
+    labelsep=space,              % 编号与标题用空格分隔
+    skip=10pt,                   % 标题与图片间距10pt
+    position=below,              % 标题在图片下方
+    name={Figure}                   % 使用 "Figure" 而非 "图"
+}
+\captionsetup[table]{
+    font={normalsize},
+    labelfont={},
+    textfont={},
+    labelsep=space,
+    skip=10pt,
+    position=above,              % 表格标题在上方
+    name={Table}
+}

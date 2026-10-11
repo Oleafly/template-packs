@@ -1,0 +1,141 @@
+% Curriculum vitae and related backmatter blocks.
+
+\newlength{\cvrowsep}
+\setlength{\cvrowsep}{10pt}
+\newlength{\cvbaselineskip}
+\setlength{\cvbaselineskip}{8pt}
+\newcommand{\cvbaselinestretch}{1}
+\newlength{\cvsectionpreskip}
+\setlength{\cvsectionpreskip}{.5cm}
+\newlength{\cvsectionpostskip}
+\setlength{\cvsectionpostskip}{.1cm}
+\newlength{\cveducationpostskip}
+\setlength{\cveducationpostskip}{.5cm}
+\newlength{\cvactivitypostskip}
+\setlength{\cvactivitypostskip}{.5cm}
+% Education, Awards, Publications, Patents item separation
+\newlength{\cvitemsep}
+\setlength{\cvitemsep}{4pt} % Eduation item separation
+\newlength{\cvparsep}
+\setlength{\cvparsep}{2pt}
+\newlength{\cvtopsep}
+\setlength{\cvtopsep}{0pt}
+
+\newcommand{\cv@applypreset}{%
+  \renewcommand{\baselinestretch}{\cvbaselinestretch}%
+  \fontsize{10}{12pt}\selectfont
+  \baselineskip=12pt\relax
+  \setlength{\parskip}{0pt}}
+\newcommand{\cv@listspacing}{%
+  \setlength{\itemsep}{\cvitemsep}%
+  \setlength{\parsep}{\cvparsep}%
+  \setlength{\topsep}{\cvtopsep}%
+  \setlength{\partopsep}{\cvtopsep}}
+\newcommand{\cv@sectiontitle}[1]{%
+  \begingroup
+  \renewcommand{\baselinestretch}{\cvbaselinestretch}%
+  \selectfont
+  \textbf{\large #1}%
+  \endgroup}
+\newcommand{\cv@sectionheading}[2]{%
+  \vspace{\cvsectionpreskip}%
+  \begin{center}#1\end{center}\vspace{#2}}
+
+\ifx\@korean\@@@@undefined@@@@
+  \def\vitae{\chapter*{Curriculum Vitae}
+    \thispagestyle{empty}\pagestyle{empty}
+    \begingroup
+    \cv@applypreset
+    \vspace{0.3cm}
+    \begin{tabular}{@{}lll}
+      \hbox to 35mm{Name\hss}              & : & \@ename      \\[0.5\cvrowsep]
+      \hbox to 35mm{Birth Date\hss}        & : & \@birthday   \\[0.5\cvrowsep]
+      \hbox to 35mm{Birth Place\hss}       & : & \@birthplace \\[0.5\cvrowsep]
+      \hbox to 35mm{Permanent Address\hss} & : & \@addr       \\
+    \end{tabular}
+    \endgroup}
+  \newlength{\temp@len}
+
+\else
+
+  \def\vitae{\chapter*{이 력 서}
+    \thispagestyle{empty}\pagestyle{empty}
+    \begingroup
+    \cv@applypreset
+    \begin{tabular}{@{}ccl}
+      \hbox to 20mm{성~~~~~~~~~명\hss}: & \@korname    \\[\cvrowsep]
+      \hbox to 20mm{생 년 월 일\hss}:     & \@birthday   \\[\cvrowsep]
+      \hbox to 20mm{출~~~생~~~지\hss}:   & \@birthplace \\[\cvrowsep]
+      \hbox to 20mm{본~~~~~~~~~적\hss}: & \@addr       \\
+    \end{tabular}
+    \endgroup}
+  \newlength{\temp@len}
+\fi
+
+\def\education#1{
+  \cv@sectionheading{\ifx\@korean\@@@@undefined@@@@ \cv@sectiontitle{Education} \else \cv@sectiontitle{학~~~~~~~~력} \fi}{\cveducationpostskip}
+  \begingroup
+  \cv@applypreset
+  \settowidth{\temp@len}{#1}
+  \begin{list}{}{\labelwidth=\temp@len\labelsep=.5cm
+      \advance\temp@len by.5cm\leftmargin=\temp@len
+      \cv@listspacing
+      \def\makelabel##1{##1\hss}}}
+    \def\endeducation{\end{list}\endgroup}
+
+\def\experience#1{
+  \cv@sectionheading{\ifx\@korean\@@@@undefined@@@@ \cv@sectiontitle{Work Experience} \else \cv@sectiontitle{경~~~~~~~~력} \fi}{\cvsectionpostskip}
+  \begingroup
+  \cv@applypreset
+  \settowidth{\temp@len}{#1}
+  \begin{list}{}{\labelwidth=\temp@len\labelsep=.5cm
+      \advance\temp@len by.5cm\leftmargin=\temp@len
+      \cv@listspacing
+      \def\makelabel##1{##1\hss}}}
+    \def\endexperience{\end{list}\endgroup}
+
+\def\publication#1{
+  \cv@sectionheading{\ifx\@korean\@@@@undefined@@@@ \cv@sectiontitle{Publications} \else \cv@sectiontitle{출~~~~~~~~판} \fi}{\cvsectionpostskip}
+  \begingroup
+  \cv@applypreset
+  \settowidth{\temp@len}{#1}
+  \begin{enumerate}{}{\labelwidth=\temp@len\labelsep=.5cm
+      \advance\temp@len by.5cm\leftmargin=\temp@len
+      \cv@listspacing
+      \def\makelabel##1{##1\hss}}}
+    \def\endpublication{\end{enumerate}\endgroup}
+
+\def\activity{
+  \cv@sectionheading{\ifx\@korean\@@@@undefined@@@@ \cv@sectiontitle{Professional Activities} \else \cv@sectiontitle{학 회 활 동} \fi}{\cvactivitypostskip}
+  \begingroup
+  \cv@applypreset}
+
+\def\endactivity{\endgroup}
+
+\newcounter{numaward}
+\newenvironment{award}{
+  \cv@sectionheading{\ifx\@korean\@@@@undefined@@@@ \cv@sectiontitle{Honors and Awards} \else \cv@sectiontitle{수 상 경 력} \fi}{\cvsectionpostskip}
+  \begingroup
+  \cv@applypreset
+  \begin{list}{}{%
+      \usecounter{numaward}
+      \setlength{\labelwidth}{1.5em}
+      \setlength{\leftmargin}{\labelwidth}
+      \addtolength{\leftmargin}{\labelsep}
+      \cv@listspacing
+      \renewcommand{\makelabel}{\textgt{\arabic{numaward}.\ }}}%
+    }{\end{list}\endgroup}
+
+\newcounter{numpatent}
+\newenvironment{cvpatents}{
+  \cv@sectionheading{\ifx\@korean\@@@@undefined@@@@ \cv@sectiontitle{Patents} \else \cv@sectiontitle{특 허} \fi}{\cvsectionpostskip}
+  \begingroup
+  \cv@applypreset
+  \begin{list}{}{%
+      \usecounter{numpatent}
+      \setlength{\labelwidth}{1.5em}
+      \setlength{\leftmargin}{\labelwidth}
+      \addtolength{\leftmargin}{\labelsep}
+      \cv@listspacing
+      \renewcommand{\makelabel}{\arabic{numpatent}.\ }}%
+    }{\end{list}\endgroup}

@@ -1,0 +1,89 @@
+\chapter{绪\hspace{1em}论}
+\label{ch1:intro}
+
+\section{设计意义}
+
+扩散模型近年来在图像生成领域展现了独特的优势。与传统的生成对抗网络（GAN）相比，扩散模型通过"加噪再去噪"的过程，能生成更稳定、更多样化的图像。本设计旨在探索扩散模型在手写数字图像生成中的实际应用能力。
+
+\section{设计目的及内容}
+
+为了探索扩散模型在图像生成中的实际能力，本设计实现了一个手写数字图像生成系统。它支持用户通过Web界面进行交互，具体的设计任务包括以下几点：
+
+\begin{enumerate}
+	\item 需求分析，明确功能需求和性能需求。
+	\item 设计系统架构，包括前端界面、后端服务和模型训练模块。
+	\item 选择合适的技术和工具，包括扩散模型、U-Net网络和变分推断。
+	\item 实现系统，包括前端界面和后端服务。
+\end{enumerate}
+
+训练过程中的损失变化如图~\ref{fig:ch1:loss} 所示。
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.85\textwidth]{fig_epoch_avg_loss}
+	\caption{训练过程中每轮平均损失变化曲线}
+	\label{fig:ch1:loss}
+\end{figure}
+
+\chapter{系统设计与实现}
+\label{ch2:design}
+
+\section{扩散模型原理}
+
+扩散模型的核心思想是定义一个前向过程和一个逆向过程。前向过程逐步向数据添加高斯噪声，逆向过程则学习去除噪声以恢复原始数据。
+
+\subsection{前向过程}
+
+给定原始数据 $x_0$，前向过程在 $T$ 个时间步上逐步添加噪声：
+\begin{equation}
+	\label{equ:forward}
+	q(x_t | x_{t-1}) = \mathcal{N}(x_t; \sqrt{1-\beta_t} x_{t-1}, \beta_t \mathbf{I})
+\end{equation}
+
+其中 $\beta_t$ 为第 $t$ 步的噪声调度参数。
+
+\subsection{逆向过程}
+
+逆向过程通过神经网络 $\epsilon_\theta$ 预测噪声分量：
+\begin{equation}
+	\label{equ:reverse}
+	p_\theta(x_{t-1} | x_t) = \mathcal{N}(x_{t-1}; \mu_\theta(x_t, t), \sigma_t^2 \mathbf{I})
+\end{equation}
+
+\section{训练环境对比}
+
+表~\ref{tab:ch2:hardware} 展示了不同硬件环境下的训练性能对比。
+
+\begin{table}[htbp]
+	\wuhao\centering
+	\caption{不同硬件环境下的训练性能对比}
+	\label{tab:ch2:hardware}
+	\begin{tabular}{m{4cm}<{\centering}m{2.5cm}<{\centering}m{2.5cm}<{\centering}m{2cm}<{\centering}}
+		\toprule[1.5pt]
+		硬件环境 & 显存 & 训练时间 & FID得分 \\
+		\midrule[0.5pt]
+		4$\times$NVIDIA A100 GPU & 40GB/卡 & $\sim$1小时 & 15.2 \\
+		1$\times$NVIDIA RTX 4060Ti & 16GB & $\sim$16小时 & 16.8 \\
+		\bottomrule[1.5pt]
+	\end{tabular}
+\end{table}
+
+\section{DDPM采样算法}
+
+算法~\ref{alg:ddpm:sample} 给出了DDPM的逆向采样过程。
+
+\begin{myAlgorithm}
+	\setstretch{1}
+	\caption{DDPM逆向采样算法}
+	\label{alg:ddpm:sample}
+	\KwIn{训练好的去噪网络 $\epsilon_\theta$，时间步数 $T$，噪声调度 $\{\beta_t\}_{t=1}^T$\;}
+	\KwOut{生成样本 $x_0$\;}
+	$x_T \sim \mathcal{N}(0, \mathbf{I})$\;
+	\For{$t = T, T-1, \ldots, 1$}{
+		$z \sim \mathcal{N}(0, \mathbf{I})$ \textbf{if} $t > 1$, \textbf{else} $z = 0$\;
+		$\alpha_t \gets 1 - \beta_t$\;
+		$\bar{\alpha}_t \gets \prod_{s=1}^{t} \alpha_s$\;
+		$x_{t-1} \gets \frac{1}{\sqrt{\alpha_t}}\left(x_t - \frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}} \epsilon_\theta(x_t, t)\right) + \sqrt{\beta_t} \cdot z$\;
+	}
+	\Return{$x_0$}
+\end{myAlgorithm}

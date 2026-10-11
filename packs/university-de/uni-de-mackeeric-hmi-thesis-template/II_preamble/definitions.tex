@@ -1,0 +1,125 @@
+%This defines a few useful macros
+\def\centered#1#2{\hspace{0pt}\llap{#1}\hspace{1pc}\rlap{#2}}
+
+\def\todo#1{\textcolor{red}{#1}}
+
+\def\nonumsection#1{
+    \phantomsection
+    \addcontentsline{toc}{section}{#1}
+    \section*{#1}
+    }
+
+%This defines the appearence of the "remarks" blocks that can be placed in the beginning of every chapter
+\newenvironment{remarks}
+{%
+    \begin{equation*}
+        \color{black!90}
+        \hspace*{-1cm}
+        \left[
+        \hspace{1mm}
+        \begin{minipage}{\linewidth} \itshape
+}{%
+        \end{minipage}
+        \hspace{1mm}
+        \right]
+        \hspace*{-1cm}
+    \end{equation*}
+}
+
+\def\remark#1{\emph{\color{black!90}[#1]}}
+
+\newenvironment{codecols}[1][\relax]
+{%
+    \begingroup
+        #1
+        \vspace*{-1mm}
+        \begin{multicols}{2}
+}{%
+        \vspace*{-3mm}
+        \end{multicols}
+    \vspace*{-3mm}
+    \endgroup
+    \noindent
+    \ignorespacesafterend
+}
+
+
+% Herbert/user2478 @ https://tex.stackexchange.com/questions/10141/how-to-prevent-lstlisting-from-splitting-code-between-pages
+\lstnewenvironment{nobrlstlisting}[1][]%
+  {\endgraf\noindent\minipage{\linewidth}\lstset{#1}}
+  {\endminipage\endgraf}
+
+% This devines the appearance of many mathematical/physical symbols and operators
+\let\temporary\epsilon
+\let\epsilon\varepsilon
+\let\varepsilon\temporary
+\let\temporary\phi
+\let\phi\varphi
+\let\varphi\temporary
+\let\temporary\Pi
+\let\Pi\varPi
+\let\varPi\temporary
+\let\temporary\Theta
+\let\Theta\varTheta
+\let\varTheta\temporary
+\let\mat\relax
+\let\op\hat
+\let\tilde\widetilde
+\let\vec\bm
+\let\x\times
+\let\X\texttimes
+\let\up\uparrow
+\let\down\downarrow
+\let\pit\pi
+\let\pi\uppi
+\let\Re\relax
+\let\Im\relax
+
+\DeclareMathOperator\Re{Re}
+\DeclareMathOperator\Im{Im}
+\DeclareMathOperator\diag{diag}
+\DeclareMathOperator\erf{erf}
+\DeclareMathOperator\erfc{erfc}
+
+\def\D{\mathrm d}
+\def\E{\mathrm e}
+\def\I{\mathrm i}
+\def\K{\mathrm K}
+\def\M{\mathrm M}
+\def\g{\color{gray}}
+\def\n{\phantom0}
+\def\p{\phantom+}
+
+\def\Vec#1{\underline{\vec{#1}}}
+\def\sub#1{\sb{\textnormal{#1}}}
+\def\super#1{\sp{\textnormal{#1}}}
+\def\from#1{\sb{\mathrlap{#1}}}
+\def\till#1{\sp{\mathrlap{#1}}}
+\def\limit#1{\sp{\mathclap{#1}}}
+\def\bra#1{\langle#1|}
+\def\ket#1{|#1\rangle}
+\def\bracket#1#2{\langle#1|#2\rangle}
+\def\av#1{\langle#1\rangle}
+\def\abs#1{|#1|}
+\def\adj{^\dagger}
+\def\padj{^{\vphantom\dagger}}
+\def\conj{^\ast}
+\def\pconj{^{\vphantom\ast}}
+\def\trans{^{\mathrm T}}
+\def\ptrans{^{\mathrm T}}
+\def\inv{^{-1}}
+\def\pinv{^{\vphantom{-1}}}
+\def\pprime{^{\vphantom\prime}}
+\def\tilded{\tilde{\vphantom{t}\smash[t]{d}}}
+\def\notsubseteq{\expandafter\not\protect\subseteq}
+
+% Insert your own commonly used abbreviations (such as chemical formulae) here!
+\def\NbSeII{NbSe\texorpdfstring{\s2}{\texttwoinferior}}
+\def\QE{\textsc{Quantum ESPRESSO}\,}
+
+\def\placeholder{\mathord{\color{gray}\bullet}}
+
+% Collections of references:
+% EXAMPLE
+\newcommand{\hubbard}{\cite{hubbardElectron1963,hubbardElectron1964,hubbardElectron1964a}}
+

@@ -1,0 +1,82 @@
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_US
+
+\documentclass[a4paper, % DIN  A4
+	DIV=12, % font size
+	BCOR=1cm, % binding offset for printed version
+	twoside, % left and right pages
+	toc=listofnumbered,
+	appendixprefix, % chapters in appendix with prefix line, e.g. "Appendix A"
+	bibliography=totocnumbered,
+	numbers=noenddot]{scrreprt}
+	\usepackage[utf8]{inputenc}
+
+	% German language
+%	\usepackage[ngerman]{babel} % German
+
+	% Import constants.
+	\input{../config.tex}
+
+	% Import own commands.
+	\input{../commands.tex}
+
+	% Set header and footer (starting at page 3).
+	\usepackage{fancyhdr} % headers and footers
+	\newcommand{\fancy}{
+		\fancyhf{}
+		\renewcommand{\headrulewidth}{0.0pt}
+		\fancyfoot[C]{}
+		\fancyfoot[LO,RE]{\scriptsize \Author: \Title}
+		\fancyfoot[LE,RO]{\small \thepage}
+		\renewcommand{\footrulewidth}{0.5pt}
+	}	
+	\pagestyle{fancy}
+	\fancy
+	\fancypagestyle{plain}{\fancy}	
+
+	% hyperlinks and bookmarks settings
+	\usepackage[bookmarksopen,
+				bookmarksopenlevel=0,
+				pdfborder={0 0 0}]{hyperref}
+	\hypersetup{
+		pdftitle = {\Title},
+		pdfsubject = {\ThesisType},
+		pdfauthor = {\Author},
+		pdfkeywords = {\Keywords},
+	}
+
+	% Title Settings
+	\title{\ThesisType: \Title}
+	\author{\Author}
+	\date{\DateOfSubmission}
+
+\begin{document}
+% Pretext: Titlepage, abstract, Table of Contents, Declaration
+	\input{pretext/titlepage}
+	\input{pretext/abstract} % uncomment if there is no abstract	
+
+	\pdfbookmark[1]{Table of Contents}{toc}
+	\tableofcontents
+
+	% Include declaration (thesis only, remove for proposals)
+	\input{pretext/declaration}
+
+% Include Main Part
+	\input{chapters/introduction}
+	%TODO add more chapters
+
+
+% Bibliography
+	\nocite{*} % Include all references - you probably want to remove this for the final version.
+	\bibliography{../literature}
+	\bibliographystyle{alphadin}
+	\label{bibliography}	
+
+% Start appendix
+	\appendix
+
+% Lists (uncomment lists if needed)
+%	\listoffigures
+%	\listoftables
+%	\listofalgorithms
+\end{document}

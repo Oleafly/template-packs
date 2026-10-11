@@ -1,0 +1,76 @@
+%%%% 各種マクロ例 %%%%
+% !TEX root = ../main.tex
+
+\newcommand{\bez}{\mbox{$\mathrm{B \acute{e} zier}$}}
+\newcommand{\dw}[2]{\mbox{$\mathrm{{#1}_{#2}}$}}
+\newcommand{\uw}[2]{\mbox{$\mathrm{{#1}^{#2}}$}}
+
+%%%%%%%%%%%% 余白設定 %%%%%%%%%%%%
+
+\usepackage[
+%%% 余白寸法による設定 %%%
+	top=30truemm, % 上側余白
+	bottom=37truemm, % 下側余白
+	left=20truemm, % 左側余白
+	right=20truemm, % 右側余白
+	%
+%%% 文字数行数による設定 (上記の余白設定をコメントアウトしないと、上記の方が優先されます) %%%
+	%textwidth=46zw, % 「zw」は全角1文字分
+	%lines=40,
+	%
+%%% 以下、各種設定 (コメントアウトしないように)
+	a4paper,
+	dvipdfmx,
+	truedimen
+]{geometry}
+
+\newcommand{\bodylineskip}{8.5truemm} % 本文の行間幅設定
+
+\setlength{\abovecaptionskip}{0.5truemm} % 図キャプションと図との間隔
+\setlength{\belowcaptionskip}{2.5truemm} % 表キャプションと表との間隔
+
+%%%%%%%%%%%% Include path の設定 %%%%%%%%%%%%
+
+% 図ファイルを格納するフォルダ名
+\graphicspath{{fig/}}
+
+% tex ソースファイルを格納するフォルダ名を変更するなら下記の「src/」を変更する
+\makeatletter
+\providecommand*{\input@path}{}
+\g@addto@macro\input@path{{src/}} 
+\makeatother
+
+%%%%%%%%%%%% 参考文献掲載順設定 %%%%%%%%%%%%
+
+\bibliographystyle{junsrt} % 掲載順
+%\bibliographystyle{jplain} % アルファベット順(日本語は辞書順になりません)
+%\bibliographystyle{jname} % 文献番号が[名字 年]の形式になる
+
+%%%%%%%%%%%% PDFしおり各種設定 %%%%%%%%%%%%
+
+\hypersetup{
+% しおりを作成しないなら false,
+	%bookmarks=false,
+% しおりのレベル(章、節、項)を変更するなら数値を指定
+	%bookmarksdepth=2,
+% PDFしおりに節番号を含めるなら true
+        bookmarksnumbered=false,
+% リンクに色や枠をつけない場合はコメントを外す
+	%hidelinks,
+% リンクのテキストに色をつけるなら true, 枠をつけるなら false
+	colorlinks=false,
+% colorlinks=true の場合のリンクカラー色
+ 	linkcolor=red,
+% colorlinks=true の場合の文献番号テキスト色
+	citecolor=green,
+% colorlinks=true の場合のURLテキスト色
+	urlcolor=magenta,
+% colorlinks=false の場合のテクスト枠色
+	linkbordercolor={1 0 0},
+% colorlinks=false の場合の文献番号枠色
+	citebordercolor={0 1 0},
+% colorlinks=false の場合のURL枠色
+	urlbordercolor={0 1 1},
+% 紙サイズ変更オプション, falseを推奨
+        setpagesize=false
+}

@@ -1,0 +1,87 @@
+%------------------------------------------------------------------------------
+\documentclass[master,final]{cimt}
+% オプションについては，マニュアルを参照．
+% \documentclass[master,oneside]{cimt} 
+
+% 必要とするパッケージがあれば，ここで指定する．
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{url}
+
+\usepackage{layout}
+
+% 論文タイトル
+\jtitle{これこれについて}
+% 長い時には自動的に改行されるが，次のように明示的に改行することもできる．
+% \jtitle{長いタイトルを\\このように改行位置を指定して組む}
+
+% 英文タイトル
+\etitle{On blahblah}
+
+% 著者名
+\jauthor{秋葉 創太}
+
+% 英文著者名
+\eauthor{Sota Akiba}
+
+% 指導教員
+\supervisor{本郷 情一 教授}
+
+% 提出月．この例だと，2010年1月．
+\handin{2010}{1}
+
+
+\begin{document}
+
+% 表紙と表紙裏
+\maketitle 
+
+% ここから前文
+\frontmatter
+
+% 概要
+\begin{jabstract}
+\input src/jabst.tex
+\end{jabstract}
+
+% 英文概要
+\begin{eabstract}
+\input src/eabst.tex
+\end{eabstract}
+
+% 目次
+\tableofcontents
+
+% ここから本文
+\mainmatter
+
+\input src/intro.tex
+\input src/body.tex
+\input src/concl.tex
+
+% ここから後付
+\backmatter
+
+% 発表文献
+\pubUseLongName % 指定すると，タイトルが 「発表文献と研究活動」になる．
+\begin{publications}
+\input src/publications.tex
+\end{publications}
+
+% 参考文献: BibTeX を使う場合の例 (styleは適宜選択)
+\bibliographystyle{junsrt}
+\bibliography{main}
+
+% 参考文献: 直接記述する場合の例
+% \input biblio.tex
+
+% 謝辞 (前文においても良い)
+\begin{acknowledgements}
+\input src/ack.tex
+\end{acknowledgements}
+
+%付録 (必要な場合のみ)
+\appendix
+
+\input src/appendix.tex
+
+\end{document}

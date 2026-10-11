@@ -1,0 +1,1431 @@
+%%
+%% File encoding: UTF-8
+%%
+%% 这是 `academic.clo' 选项执行文件
+%% 学术型研究生学位论文相关设置
+%%
+%%
+%% 文件声明
+\ProvidesExplFile
+  {academic} {2025/03/26} {1.1f} {Academic~degree~thesis~settings}
+%%
+%% 导入基础文类和宏包并写死参数
+\LoadClass [
+  a4paper,
+  12pt,
+  oneside,
+  onecolumn,
+  openany,
+  fontset = none,
+  linespread = 1,
+  sub3section
+] {ctexbook}
+%%
+%% 对 (ctex)book 文档类进行一些调整
+%% 重定义字体大小
+\DeclareDocumentCommand \normalsize {} {
+  \@setfontsize\normalsize{12bp}{20bp}
+  \abovedisplayskip      9 bp plus3bp minus4bp
+  \abovedisplayshortskip 0 bp   plus3bp
+  \belowdisplayshortskip 12bp plus3bp minus4bp
+  \belowdisplayskip      13bp plus3bp minus4bp
+}
+\normalsize
+\DeclareDocumentCommand \small {} {
+  \@setfontsize\small{10.5bp}{16bp}
+  \abovedisplayskip      7 bp plus2bp minus3bp
+  \abovedisplayshortskip 0 bp plus2bp
+  \belowdisplayshortskip 10bp plus2bp minus3bp
+  \belowdisplayskip      11bp plus2bp minus3bp
+}
+\DeclareDocumentCommand \footnotesize {} {
+  \@setfontsize\footnotesize{9bp}{15bp}
+  \abovedisplayskip      6bp plus2bp minus2bp
+  \abovedisplayshortskip 0bp plus2bp
+  \belowdisplayshortskip 7bp plus2bp minus2bp
+  \belowdisplayskip      8bp plus2bp minus2bp
+}
+\DeclareDocumentCommand \scriptsize {} {\@setfontsize\scriptsize{8bp}{13.3bp}}
+\DeclareDocumentCommand \tiny  {} {\@setfontsize\tiny{6bp}{10bp}}
+\DeclareDocumentCommand \large {} {\@setfontsize\large{14bp}{23bp}}
+\DeclareDocumentCommand \Large {} {\@setfontsize\Large{16bp}{26bp}}
+\DeclareDocumentCommand \LARGE {} {\@setfontsize\LARGE{18bp}{30bp}}
+\DeclareDocumentCommand \huge  {} {\@setfontsize\huge{24bp}{40bp}}
+\DeclareDocumentCommand \Huge  {} {\@setfontsize\huge{24bp}{40bp}}
+%%
+%% 载入宏包
+\RequirePackage {amsmath}
+\RequirePackage [
+  math-style = TeX,
+  mathrm     = sym,
+  mathit     = sym,
+  mathsf     = sym,
+  mathbf     = sym,
+  mathtt     = sym
+] {unicode-math}
+\RequirePackage {geometry}
+\RequirePackage {graphicx}
+\RequirePackage {fancyhdr}
+\RequirePackage [titles] {tocloft}
+\RequirePackage {enumitem}
+\RequirePackage {caption, subcaption}
+\RequirePackage {tabularx}
+\RequirePackage {footnpag}
+\RequirePackage [nottoc, notlof, notlot] {tocbibind}
+%%
+%% 定义模板需要的命令
+\cs_new:Npn \__symbol:n #1 {\tex_char:D #1 \scan_stop:}
+\cs_new:Npn \__cn_uline:n #1 {
+  \skip_horizontal:N \l__ctex_ccglue_skip
+  \group_begin:
+    \hbox_set:Nn \l_tmpa_box {#1}
+    \skip_set:Nn \l_tmpa_skip {\box_wd:N \l_tmpa_box - \l__ctex_ccglue_skip}
+    \hbox:n {
+      \makebox [0bp] [l] {\rule[-0.15\baselineskip]{\l_tmpa_skip}{0.4bp}}
+      \box_use:N \l_tmpa_box
+    }
+  \group_end:
+  \skip_horizontal:N \l__ctex_ccglue_skip
+}
+\cs_new:Npn \__fixed_uline:nn #1#2 {
+  \hbox:n {
+    \makebox [0bp] [l] {\rule[-0.15\baselineskip]{#1}{0.4bp}}
+    \makebox [#1] [c] {#2}
+  }
+}
+%%
+%% 中文支持, 字体设置, 字符微调及 ctex 设置
+%% ctex 设置
+\keys_set:nn {ctex} {
+  punct          = quanjiao,
+  autoindent     = 2,
+  contentsname   = {目\quad 录},
+  listfigurename = {插图清单},
+  listtablename  = {表格清单},
+  secnumdepth    = 3,
+  tocdepth       = 2
+}
+%%
+\tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_adjusted_tl {
+  \keys_set:nn {ctex} {
+    part = {
+      format    = \heiti\bfseries\LARGE\centering,
+      number    = \Roman{part},
+      aftername = \par\vskip16bp,
+      tocline   = \CTEXifname{\CTEXthepart\hspace{.8em}}{}#2
+    },
+    chapter = {
+      format     = \heiti\bfseries\Large\centering,
+      number     = \arabic{chapter},
+      beforeskip = 8bp plus2bp minus4bp,
+      afterskip  = 18bp plus3bp minus2bp,
+      tocline    = \CTEXifname{\CTEXthechapter\hspace{.8em}}{}#2
+    },
+    section = {
+      format     = \heiti\bfseries\large,
+      beforeskip = 15bp plus2bp minus4bp,
+      afterskip  = 6bp plus2bp minus1bp,
+      tocline    = \CTEXthesection\hspace{.8em}#2
+    },
+    subsection = {
+      format     = \heiti\bfseries,
+      beforeskip = 8bp plus2bp minus1bp,
+      afterskip  = 6bp plus2bp minus1bp,
+      tocline    = \CTEXthesubsection\hspace{.8em}#2
+    },
+    subsubsection = {
+      format     = \heiti\bfseries,
+      beforeskip = 8bp plus2bp minus1bp,
+      afterskip  = 6bp plus2bp minus1bp,
+      tocline    = \CTEXthesubsubsection\hspace{.8em}#2
+    },
+    paragraph = {
+      format     = \heiti\bfseries\indent,
+      beforeskip = 0bp plus2bp,
+      afterskip  = 0bp
+    },
+    subparagraph = {
+      format     = \heiti\bfseries\indent,
+      beforeskip = 0bp plus2bp
+    }
+  }
+}
+\tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_ncu_tl {
+  \keys_set:nn {ctex} {
+    part = {
+      format    = \heiti\bfseries\LARGE\centering,
+      number    = \Roman{part},
+      aftername = \par\vskip16bp,
+      tocline   = \CTEXifname{\CTEXthepart\hspace{1em}}{}#2
+    },
+    chapter = {
+      format     = \heiti\bfseries\Large\centering,
+      number     = \arabic{chapter},
+      fixskip    = true,
+      beforeskip = 24bp plus2bp minus4bp,
+      afterskip  = 26bp plus2bp minus2bp,
+      tocline    = \CTEXifname{\CTEXthechapter\hspace{1em}}{}#2
+    },
+    section = {
+      format     = \heiti\bfseries\large,
+      fixskip    = true,
+      beforeskip = 24bp plus3bp minus3bp,
+      afterskip  = 14bp plus1bp minus2bp,
+      tocline    = \CTEXthesection\hspace{1em}#2
+    },
+    subsection = {
+      format     = \heiti\bfseries\fontsize{13bp}{13bp},
+      fixskip    = true,
+      beforeskip = 16.bp plus2bp minus2bp,
+      afterskip  = 14bp plus1bp minus2bp,
+      tocline    = \CTEXthesubsection\hspace{1em}#2
+    },
+    subsubsection = {
+      format     = \heiti\bfseries,
+      fixskip    = true,
+      beforeskip = 16.8bp plus2bp minus2bp,
+      afterskip  = 10.8bp plus1bp minus1bp,
+      tocline    = \CTEXthesubsubsection\hspace{1em}#2
+    },
+    paragraph = {
+      format     = \heiti\bfseries\indent,
+      beforeskip = 0bp plus2bp,
+      afterskip  = 0bp
+    },
+    subparagraph = {
+      format     = \heiti\bfseries\indent,
+      beforeskip = 0bp plus2bp
+    }
+  }
+}
+%%
+%%
+\tl_new:N \g__ncu_font_tl
+\tl_new:N \g__ncu_cjkfont_tl
+%%
+\cs_new_protected:Nn \ncu__load_font: {
+  \use:c {ncu__load_font_ \g__ncu_font_tl :}
+}
+\cs_new_protected:Nn \ncu__load_cjkfont: {
+  \use:c {ncu__load_cjkfont_ \g__ncu_cjkfont_tl :}
+}
+%%
+\cs_new_protected:Nn \ncu__load_mathfont_XITSMath: {
+  \setmathfont {XITSMath-Regular.otf}
+  \setmathfont {XITSMath-Bold.otf} [range={bfup->up,bfit->it}]
+  \setmathfont {NewCMMath-Book.otf} [
+    range = {
+      "220F-"2211,
+      "222B-"2233,
+      "2A0A-"2A1C
+    }
+  ]
+}
+\cs_new_protected:Nn \ncu__load_mathfont_NCMMath: {
+  \setmathfont {NewCMMath-Book.otf}
+}
+%%
+\cs_new_protected:Nn \ncu__load_font_times: {
+  \setmainfont [
+    Extension        = .otf,
+    UprightFont      = *-Regular,
+    BoldFont         = *-Bold,
+    ItalicFont       = *-Italic,
+    BoldItalicFont   = *-BoldItalic,
+    PunctuationSpace = 4
+  ] {XITS}
+  \setsansfont [
+    Extension        = .otf,
+    UprightFont      = *-Regular,
+    BoldFont         = *-SemiBold,
+    ItalicFont       = *-Italic,
+    BoldItalicFont   = *-SemiBoldItalic,
+    Scale            = 0.9,
+    PunctuationSpace = 4
+  ] {FiraSans}
+  \setmonofont [
+    Extension        = .otf,
+    UprightFont      = *-Regular,
+    BoldFont         = *-Medium,
+    ItalicFont       = *-Oblique,
+    BoldItalicFont   = *-MediumOblique,
+    Scale            = 0.9,
+    PunctuationSpace = 0
+  ] {FiraMono}
+  \ncu__load_mathfont_XITSMath:
+}
+\cs_new_protected:cn {ncu__load_font_times*:} {
+  \setmainfont [
+    PunctuationSpace = 4
+  ] {Times~New~Roman}
+  \setsansfont [
+    Extension        = .otf,
+    UprightFont      = *-Regular,
+    BoldFont         = *-SemiBold,
+    ItalicFont       = *-Italic,
+    BoldItalicFont   = *-SemiBoldItalic,
+    Scale            = 0.9,
+    PunctuationSpace = 4
+  ] {FiraSans}
+  \setmonofont [
+    Extension        = .otf,
+    UprightFont      = *-Regular,
+    BoldFont         = *-Medium,
+    ItalicFont       = *-Oblique,
+    BoldItalicFont   = *-MediumOblique,
+    Scale            = 0.9,
+    PunctuationSpace = 0
+  ] {FiraMono}
+  \ncu__load_mathfont_XITSMath:
+}
+\cs_new_protected:Nn \ncu__load_font_ncm: {
+  \setmainfont [
+    Extension        = .otf,
+    UprightFont      = *-Book,
+    BoldFont         = *-Bold,
+    ItalicFont       = *-BookItalic,
+    BoldItalicFont   = *-BoldItalic,
+    PunctuationSpace = 4
+  ] {NewCM10}
+  \setsansfont [
+    Extension        = .otf,
+    UprightFont      = *-Book,
+    BoldFont         = *-Bold,
+    ItalicFont       = *-BookOblique,
+    BoldItalicFont   = *-BoldOblique,
+    PunctuationSpace = 4
+  ] {NewCMSans10}
+  \setmonofont [
+    Extension        = .otf,
+    UprightFont      = *-Book,
+    BoldFont         = *-Bold,
+    ItalicFont       = *-BookItalic,
+    BoldItalicFont   = *-BoldOblique,
+    PunctuationSpace = 0
+  ] {NewCMMono10}
+  \ncu__load_mathfont_NCMMath:
+}
+%%
+\cs_new_protected:Nn \ncu__load_cjkfont_fandol: {
+  \setCJKmainfont [
+    Extension    = .otf,
+    UprightFont  = *-Regular,
+    AutoFakeBold = 3.4,
+    AutoFakeSlant
+  ] {FandolSong}
+  \setCJKsansfont [
+    Extension    = .otf,
+    UprightFont  = *-Regular,
+    AutoFakeBold = 2.6,
+    AutoFakeSlant
+  ] {FandolHei}
+  \setCJKmonofont [
+    Extension    = .otf,
+    UprightFont  = *-Regular,
+    AutoFakeBold = 3.2,
+    AutoFakeSlant
+  ] {FandolFang}
+  \newCJKfontfamily [kaiti] \kaiti {FandolKai} [
+    Extension    = .otf,
+    UprightFont  = *-Regular,
+    AutoFakeBold = 2.6,
+    AutoFakeSlant
+  ]
+  \newCJKfontfamily [fangsong] \fangsong {FandolFang} [
+    Extension    = .otf,
+    UprightFont  = *-Regular,
+    AutoFakeBold = 3.2,
+    AutoFakeSlant
+  ]
+  \newCJKfontfamily [heiti] \heiti {FandolHei} [
+    Extension    = .otf,
+    UprightFont  = *-Regular,
+    AutoFakeBold = 2.6,
+    AutoFakeSlant
+  ]
+}
+\cs_new_protected:Nn \ncu__load_cjkfont_windows: {
+  \setCJKmainfont [
+    AutoFakeBold = 3.4,
+    AutoFakeSlant
+  ] {SimSun}
+  \setCJKsansfont [
+    AutoFakeBold = 2.6,
+    AutoFakeSlant
+  ] {SimHei}
+  \setCJKmonofont [
+    AutoFakeBold = 3.2,
+    AutoFakeSlant
+  ] {FangSong}
+  \newCJKfontfamily [kaiti] \kaiti {KaiTi} [
+    AutoFakeBold = 2.6,
+    AutoFakeSlant
+  ]
+  \newCJKfontfamily [fangsong] \fangsong {FangSong} [
+    AutoFakeBold = 3.2,
+    AutoFakeSlant
+  ]
+  \newCJKfontfamily [heiti] \heiti {SimHei} [
+    AutoFakeBold = 2.6,
+    AutoFakeSlant
+  ]
+}
+\cs_new_protected:Nn \ncu__load_cjkfont_founder: {
+  \setCJKmainfont [
+    AutoFakeBold = 3.4,
+    AutoFakeSlant
+  ] {FZShuSong-Z01S}
+  \setCJKsansfont [
+    AutoFakeBold = 2.6,
+    AutoFakeSlant
+  ] {FZHei-B01S}
+  \setCJKmonofont [
+    AutoFakeBold = 4,
+    AutoFakeSlant
+  ] {FZFangSong-Z02S}
+  \newCJKfontfamily [kaiti] \kaiti {FZKai-Z03S} [
+    AutoFakeBold = 2.6,
+    AutoFakeSlant
+  ]
+  \newCJKfontfamily [fangsong] \fangsong {FZFangSong-Z02S} [
+    AutoFakeBold = 4,
+    AutoFakeSlant
+  ]
+  \newCJKfontfamily [heiti] \heiti {FZHei-B01S} [
+    AutoFakeBold = 2.6,
+    AutoFakeSlant
+  ]
+}
+%%
+\tl_new:N \g__ncu_cjkfont_scheme_tl
+\sys_if_platform_windows:TF
+  {\tl_gset:Nn \g__ncu_cjkfont_scheme_tl {windows}}
+  {\tl_gset:Nn \g__ncu_cjkfont_scheme_tl {fandol}}
+%%
+\keys_define:nn {ncu/style} {
+  font .choice:,
+  font .value_required:n = true,
+  font .choices:nn =
+    {times, times*, ncm, none}
+    {\tl_gset:NV \g__ncu_font_tl \l_keys_choice_tl},
+  font .initial:n = {times},
+  font/unknown .code:n =
+    {\__ncu_warning:nn {unknown-style-value} {font=times}},
+  cjk-font .choice:,
+  cjk-font .value_required:n = true,
+  cjk-font .choices:nn =
+    {fandol, windows, founder, none}
+    {\tl_gset:NV \g__ncu_cjkfont_tl \l_keys_choice_tl},
+  cjk-font .initial:V = {\g__ncu_cjkfont_scheme_tl},
+  cjk-font/unknown .code:n = {
+    \__ncu_warning:nx
+      {unknown-style-value}
+      {cjk-font=\g__ncu_cjkfont_scheme_tl}
+  }
+}
+%%
+\cs_new:Nn \ncu__punct_spacing: {
+  \sfcode`\.3000
+  \sfcode`\?3000
+  \sfcode`\!3000
+  \sfcode`\;2750
+  \sfcode`\:2500
+  \sfcode`\,2250
+}
+%% 加载字体
+\BeforeBeginEnvironment {document} {
+  \tl_if_eq:NnF \g__ncu_font_tl {none} {
+    \ncu__load_font:
+  }
+  \tl_if_eq:NnTF \g__ncu_cjkfont_tl {none} {
+    \ProvideDocumentCommand {\kaiti}    {} {}
+    \ProvideDocumentCommand {\fangsong} {} {}
+    \ProvideDocumentCommand {\heiti}    {} {}
+  } {
+    \ncu__load_cjkfont:
+  }
+  \tl_if_eq:NnTF \g__ncu_cjkfont_tl {windows} {\ziju{0.04}} {\ziju{0.08}}
+  \ncu__punct_spacing:
+}
+%% 符号调整
+\bool_new:N \g__ncu_rssyms_bool
+\keys_define:nn {ncu/style} {
+  reshapesymbols .choice:,
+  reshapesymbols/true .code:n  = {\bool_gset_true:N  \g__ncu_rssyms_bool},
+  reshapesymbols/false .code:n = {\bool_gset_false:N \g__ncu_rssyms_bool},
+  reshapesymbols .default:n = true,
+  reshapesymbols .initial:n = true,
+  reshapesymbols/unknown .code:n = {
+    \bool_gset_true:N \g__ncu_rssyms_bool
+    \__ncu_warning:nn {unknown-option-value} {reshapesymbols=true}
+  }
+}
+\AtBeginDocument {
+  \bool_if:NT \g__ncu_rssyms_bool {
+    \tl_set_eq:NN \nabla \mbfnabla
+    \tl_set:Nx    \pi    {\symup{\muppi}}
+    \tl_set_eq:NN \leq   \leqslant
+    \tl_set_eq:NN \geq   \geqslant
+    \DeclareDocumentCommand \Re {} {\mathop{\symup{Re}}\nolimits}
+    \DeclareDocumentCommand \Im {} {\mathop{\symup{Im}}\nolimits}
+  }
+}
+%%
+%% 页面布局
+%% 直接通过 geometry 包设置
+\tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_adjusted_tl {
+  \geometry {
+    papersize      = {210mm,297mm},
+    headheight     = 20bp,
+    headsep        = 20bp,
+    footskip       = 32bp,
+    top            = 32mm,
+    bottom         = 38mm,
+    left           = 32mm,
+    right          = 32mm,
+    marginparsep   = 3 mm,
+    marginparwidth = 22mm
+  }
+}
+\tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_ncu_tl {
+  \geometry {
+    papersize      = {210mm,297mm},
+    headheight     = 20bp,
+    headsep        = 20bp, % 规范的距离实在是太小, 没法排版, 这里不作修改
+    footskip       = 32bp,
+    top            = 38mm,
+    bottom         = 38mm,
+    left           = 32mm,
+    right          = 32mm,
+    marginparsep   = 3mm,
+    marginparwidth = 22mm
+  }
+}
+\AtEndOfClass {
+  \flushbottom
+  \allowdisplaybreaks[3]
+}
+%%
+%% 版式设置
+\tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_adjusted_tl {
+  \cs_set:Npn \chaptermark #1 {
+    \markboth {\CTEXifname{\CTEXthechapter\hspace{.8em}}{}#1} {}
+  }
+  \cs_set:Npn \sectionmark #1 {
+    \markright {\CTEXthesection\hspace{.8em}#1}
+  }
+}
+\tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_ncu_tl {
+  \cs_set:Npn \chaptermark #1 {
+    \markboth {\CTEXifname{\CTEXthechapter\hspace{1em}}{}#1} {}
+  }
+  \cs_set:Npn \sectionmark #1 {
+    \markright {\CTEXthesection\hspace{1em}#1}
+  }
+}
+%%
+\tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_adjusted_tl {
+  \fancypagestyle {plain} {
+    \fancyhf {}
+    \chead {\fangsong\small\leftmark}
+    \cfoot {\thepage}
+    \tl_set:Nn \headrulewidth {0.5bp}
+  }
+  \fancypagestyle {fancy} {
+    \fancyhf {}
+    \chead {\fangsong\small\leftmark}
+    \cfoot {\thepage}
+    \tl_set:Nn \headrulewidth {0.5bp}
+  }
+  \fancypagestyle {@ajd@ps} {
+    \fancyhf {}
+    \chead {\fangsong\small\leftmark}
+    \cfoot {\thepage}
+    \tl_set:Nn \headrulewidth {0.5bp}
+  }
+  \pagestyle{@ajd@ps}
+}
+\tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_ncu_tl {
+  \fancypagestyle {plain} {
+    \fancyhf {}
+    \chead {\small\leftmark}
+    \cfoot {\small\thepage}
+    \tl_set:Nn \headrulewidth {0.5bp}
+  }
+  \fancypagestyle {fancy} {
+    \fancyhf {}
+    \chead {\small\leftmark}
+    \cfoot {\small\thepage}
+    \tl_set:Nn \headrulewidth {0.5bp}
+  }
+  \fancypagestyle {@ncu@ps} {
+    \fancyhf {}
+    \chead {\small\leftmark}
+    \cfoot {\small\thepage}
+    \tl_set:Nn \headrulewidth {0.5bp}
+  }
+  \pagestyle{@ncu@ps}
+}
+%%
+%% 目录格式
+\tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_adjusted_tl {
+  \cftsetrmarg     {2.6em}
+  \cftsetpnumwidth {1.6em}
+  \tl_set:Nn \cftdot {$\cdot$}
+  \tl_set:Nn \cftdotsep {4}
+%%
+  \tl_set:Nn   \cftpartfont       {\heiti}
+  \tl_set:Nn   \cftpartpagefont   {\normalfont\normalsize}
+  \skip_set:Nn \cftbeforepartskip {9bp plus4bp minus2bp}
+%%
+  \tl_set:Nn   \cftchapfont       {\heiti}
+  \tl_set:Nn   \cftchappagefont   {\normalfont\normalsize}
+  \skip_set:Nn \cftbeforechapskip {4bp plus2bp minus1bp}
+%%
+  \skip_set:Nn \cftsecnumwidth    {1.5em}
+  \skip_set:Nn \cftbeforesecskip  {1.6bp plus.8bp minus.4bp}
+%%
+  \tl_set:Nn   \cftsubsecfont       {\kaiti}
+  \skip_set:Nn \cftsubsecindent     {3em}
+  \skip_set:Nn \cftsubsecnumwidth   {1.5em}
+  \skip_set:Nn \cftbeforesubsecskip {0bp plus.8bp}
+%%
+  \tl_set:Nn   \cftsubsubsecfont       {\kaiti}
+  \skip_set:Nn \cftsubsubsecindent     {4.5em}
+  \skip_set:Nn \cftsubsubsecnumwidth   {1.5em}
+  \skip_set:Nn \cftbeforesubsubsecskip {0bp}
+%%
+  \tl_set:Nn   \cftparafont       {\kaiti}
+  \skip_set:Nn \cftparaindent     {6em}
+  \skip_set:Nn \cftparanumwidth   {1.5em}
+  \skip_set:Nn \cftbeforeparaskip {0bp}
+%%
+  \tl_set:Nn   \cftsubparafont       {\kaiti}
+  \skip_set:Nn \cftsubparaindent     {7.5em}
+  \skip_set:Nn \cftsubparanumwidth   {1.5em}
+  \skip_set:Nn \cftbeforesubparaskip {0bp}
+%%
+  \tl_set:Nn   \cftfigindent     {0bp}
+  \skip_set:Nn \cftfignumwidth   {1.5em}
+  \skip_set:Nn \cftbeforefigskip {1.6bp plus.8bp}
+%%
+  \tl_set:Nn   \cfttabindent     {0bp}
+  \skip_set:Nn \cfttabnumwidth   {1.5em}
+  \skip_set:Nn \cftbeforetabskip {1.6bp plus.8bp}
+}
+%%
+\tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_ncu_tl {
+  \cftsetrmarg     {2.6em}
+  \cftsetpnumwidth {1.6em}
+  \tl_set:Nn \cftdot {$\cdot$}
+  \tl_set:Nn \cftdotsep {0.5}
+%%
+  \tl_set:Nn   \cftpartfont       {\normalfont\normalsize}
+  \tl_set:Nn   \cftpartleader     {\cftdotfill{\cftdotsep}}
+  \tl_set:Nn   \cftpartpagefont   {\normalfont\normalsize}
+  \skip_set:Nn \cftbeforepartskip {1bp plus1bp minus1bp}
+%%
+  \tl_set:Nn   \cftchapfont       {\normalfont\normalsize}
+  \tl_set:Nn   \cftchapleader     {\cftdotfill{\cftdotsep}}
+  \tl_set:Nn   \cftchappagefont   {\normalfont\normalsize}
+  \skip_set:Nn \cftchapnumwidth   {2em}
+  \skip_set:Nn \cftbeforechapskip {1bp plus1bp minus1bp}
+%%
+  \skip_set:Nn \cftsecindent     {2em}
+  \skip_set:Nn \cftsecnumwidth   {2em}
+  \skip_set:Nn \cftbeforesecskip {1bp plus1bp minus1bp}
+%%
+  \skip_set:Nn \cftsubsecindent     {4em}
+  \skip_set:Nn \cftsubsecnumwidth   {2em}
+  \skip_set:Nn \cftbeforesubsecskip {1bp plus1bp minus1bp}
+%%
+  \skip_set:Nn \cftsubsubsecindent     {6em}
+  \skip_set:Nn \cftsubsubsecnumwidth   {2em}
+  \skip_set:Nn \cftbeforesubsubsecskip {1bp plus1bp minus1bp}
+%%
+  \skip_set:Nn \cftparaindent     {8em}
+  \skip_set:Nn \cftparanumwidth   {2em}
+  \skip_set:Nn \cftbeforeparaskip {1bp plus1bp minus1bp}
+%%
+  \skip_set:Nn \cftsubparaindent     {10em}
+  \skip_set:Nn \cftsubparanumwidth   {2em}
+  \skip_set:Nn \cftbeforesubparaskip {1bp plus1bp minus1bp}
+%%
+  \tl_set:Nn   \cftfigindent     {0bp}
+  \skip_set:Nn \cftfignumwidth   {2em}
+  \skip_set:Nn \cftbeforefigskip {1bp plus1bp minus1bp}
+%%
+  \tl_set:Nn   \cfttabindent     {0bp}
+  \skip_set:Nn \cfttabnumwidth   {2em}
+  \skip_set:Nn \cftbeforetabskip {1bp plus1bp minus1bp}
+}
+%%
+%% 重定义文档结构命令
+\DeclareDocumentCommand \frontmatter {} {
+  \clearpage
+  \@mainmatterfalse
+  \pagenumbering {Roman}
+}
+\DeclareDocumentCommand \mainmatter {} {
+  \clearpage
+  \@mainmattertrue
+  \pagenumbering {arabic}
+}
+\DeclareDocumentCommand \backmatter {} {
+  \clearpage
+  \@mainmatterfalse
+}
+%%
+%% 列表设置
+\setlist {
+  topsep      = 2bp plus1bp minus1bp,
+  parsep      = 1bp,
+  partopsep   = 0bp,
+  itemsep     = 1bp,
+  leftmargin  = 2\ccwd,
+  rightmargin = 0bp
+}
+\setlist [itemize,1]   {label=\textbullet}
+\setlist [itemize,2]   {label=\normalfont\bfseries\textendash}
+\setlist [itemize,3]   {label=\textasteriskcentered}
+\setlist [itemize,4]   {label=\textperiodcentered}
+\setlist [enumerate,1] {label=\arabic*.\kern-.1em}
+\setlist [enumerate,2] {label=(\arabic*)}
+\setlist [enumerate,3] {label=\alph*.\kern-.1em}
+\setlist [enumerate,4] {label=(\alph*)}
+\setlist [description] {font=\normalfont\heiti, labelsep=0.8em}
+%%
+%% 重设图表相关的某些长度和比例以及图表设置
+\skip_set:Nn \lineskiplimit  {0bp}
+\skip_set:Nn \lineskip       {2bp}
+\skip_set:Nn \normallineskip {2bp}
+\tl_set:Nn \topfraction    {.7}
+\tl_set:Nn \bottomfraction {.5}
+\tl_set:Nn \textfraction   {.14}
+\skip_set:Nn \floatsep     {17bp plus3bp minus2bp}
+\skip_set:Nn \textfloatsep {18bp plus5bp minus2bp}
+\skip_set:Nn \intextsep    {14bp plus4bp minus2bp}
+\DeclareCaptionFont {heiti} {\heiti}
+\tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_adjusted_tl {
+  \captionsetup [figure] {
+    labelfont     = {small,heiti},
+    font          = small,
+    justification = centerlast,
+    margin        = 1\ccwd,
+    aboveskip     = 9bp,
+    belowskip     = -4bp
+  }
+  \captionsetup [table] {
+    labelfont     = {small,heiti},
+    font          = small,
+    justification = centerlast,
+    margin        = 1\ccwd,
+    belowskip     = -4.5bp,
+    aboveskip     = 8bp
+  }
+  \captionsetup [sub] {
+    labelformat = simple,
+    font        = small
+  }
+  \captionsetup [subfigure] {
+    labelfont     = heiti,
+    justification = centerlast,
+    margin        = 1\ccwd,
+    aboveskip     = 6.5bp,
+    belowskip     = 4.5bp
+  }
+  \captionsetup [subtable] {
+    labelfont     = heiti,
+    justification = centerlast,
+    margin        = 1\ccwd,
+    belowskip     = 4.5bp,
+    aboveskip     = 6.5bp
+  }
+}
+%%
+\tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_ncu_tl {
+  \captionsetup [figure] {
+    font          = small,
+    labelsep      = quad,
+    justification = centerlast,
+    margin        = 1\ccwd,
+    aboveskip     = 9bp,
+    belowskip     = -4bp
+  }
+  \captionsetup [table] {
+    font          = small,
+    labelsep      = quad,
+    justification = centerlast,
+    margin        = 1\ccwd,
+    belowskip     = -4.5bp,
+    aboveskip     = 8bp
+  }
+  \captionsetup [sub] {
+    labelformat = simple,
+    font        = small
+  }
+  \captionsetup [subfigure] {
+    justification = centerlast,
+    margin        = 1\ccwd,
+    aboveskip     = 6.5bp,
+    belowskip     = 4.5bp
+  }
+  \captionsetup [subtable] {
+    justification = centerlast,
+    margin        = 1\ccwd,
+    belowskip     = 4.5bp,
+    aboveskip     = 6.5bp
+  }
+}
+\tl_set:Nn \thesubfigure {(\alph{subfigure})}
+\tl_set:Nn \thesubtable  {(\alph{subtable})}
+%% 设置浮动体和表内的字体为 \small
+\tl_set:Nn \@floatboxreset {\reset@font \small \@setminipage}
+%%
+%% 脚注设置
+\tl_new:N \g__ncu_font_ncm_tl
+\tl_gset:Nn \g__ncu_font_ncm_tl {ncm}
+\cs_new:Npn \ncu__select_fn_num:n #1 {
+  \tl_if_eq:NNTF \g__ncu_font_tl \g__ncu_font_ncm_tl {
+    \fontspec[Scale=0.9]{FandolSong-Regular.otf}
+    \int_compare:nTF {#1>=21} {
+      \int_compare:nTF {#1>=47}
+        {\__symbol:n {\int_eval:n {"24B6-47+#1}}}
+        {\__symbol:n {\int_eval:n {"24D0-21+#1}}}
+    } {
+      \__symbol:n {\int_eval:n {"2460-1+#1}}
+    }
+  } {
+    \fontspec[Scale=1.1]{XITS-Regular.otf}
+    \int_compare:nTF {#1>=21} {
+      \int_compare:nTF {#1>=47}
+        {\__symbol:n {\int_eval:n {"24B6-47+#1}}}
+        {\__symbol:n {\int_eval:n {"24D0-21+#1}}}
+    } {
+      \__symbol:n {\int_eval:n {"2460-1+#1}}
+    }
+  }
+}
+\cs_new:Npn \ncu__plain_fn_num:n #1 {\int_use:N #1}
+%%
+\keys_define:nn {ncu/style} {
+  footnote-num .code:n = {
+    \str_case_e:nnF {#1} {
+      {circled} {
+        \cs_set_eq:NN \ncu__fn_num:N \ncu__select_fn_num:n
+        \cs_set:Npn \@makefntext ##1 {
+          \noindent
+          \hbox_to_wd:nn {2\ccwd} {
+            \hss\hbox:n {\normalfont\@thefnmark\space}
+          }
+          ##1
+        }
+      }
+      {plain} {
+        \cs_set_eq:NN \ncu__fn_num:N \ncu__plain_fn_num:n
+        \cs_set:Npn \@makefntext ##1 {
+          \noindent
+          \hbox_to_wd:nn {2\ccwd} {
+            \hss\@textsuperscript{\normalfont\@thefnmark}
+          }
+          ##1
+        }
+      }
+    }{
+      \cs_set_eq:NN \ncu__fn_num:N \ncu__select_fn_num:n
+      \cs_set:Npn \@makefntext ##1 {
+        \noindent
+        \hbox_to_wd:nn {2\ccwd} {
+          \hss\hbox:n {\normalfont\@thefnmark\space}
+        }
+        ##1
+      }
+      \__ncu_warning:nn {unknown-style-value} {footnote-num=circled}
+    }
+  }
+}
+\keys_set:nn {ncu/style} {
+  footnote-num = circled
+}
+%%
+\skip_set:Nn \footnotesep {11bp}
+\tl_new:N  \l__ncu_footinsskip_tl
+\tl_set:Nn \l__ncu_footinsskip_tl {\skip\footins}
+\skip_set:Nn \l__ncu_footinsskip_tl {15bp plus3bp minus3bp}
+\tl_set:Nn \footnoterule {
+  \kern-1bp\hrule height.5bp width.25\columnwidth\kern3bp
+}
+\tl_set:Nn \thefootnote {\ncu__fn_num:N \c@footnote}
+%%
+%% 附录
+%% 附录不需要进行设置
+%%
+%% 参考文献
+\tl_if_eq:NNT \g__ncu_bib_tl \g__ncu_bib_bibtex_tl {
+  \RequirePackage [sort&compress] {gbt7714}
+  \bibliographystyle {gbt7714-numerical}
+  \tl_set:Nn \bibfont {\small}
+  \bibsep0bp plus1bp
+}
+\tl_if_eq:NNT \g__ncu_bib_tl \g__ncu_bib_biblatex_tl {
+  \RequirePackage [backend=biber, style=gb7714-2015] {biblatex}
+  \tl_set:Nn \bibfont {\small}
+  \bibitemsep0bp plus1bp
+}
+%%
+%% 索引设置
+%% 注意南昌大学毕业论文并不需要索引
+% \RequirePackage {imakeidx}
+% \indexsetup {
+%   othercode = {\renewcommand\indexspace{}}
+% }
+%%
+%% 对 book 文档类进行另外的调整
+\RenewDocumentEnvironment {verse} {} {
+  \tl_set_eq:NN \\ \@centercr
+  \list {} {
+    \topsep        2bp plus1bp
+    \itemsep       0bp
+    \parsep        2bp plus1bp
+    \itemindent    -2\ccwd
+    \listparindent \itemindent
+    \leftmargin    4\ccwd
+    \rightmargin   2\ccwd
+  }
+  \item\scan_stop:\kaiti
+} {
+  \endlist
+}
+\RenewDocumentEnvironment {quotation} {o} {
+  \list {} {
+    \topsep        2bp plus1bp
+    \itemsep       0bp
+    \parsep        2bp plus1bp
+    \listparindent 2\ccwd
+    \itemindent    \listparindent
+    \leftmargin    2\ccwd
+    \rightmargin   \leftmargin
+  }
+  \item\scan_stop:\kaiti
+} {
+  \IfValueT {#1} {
+    \skip_vertical:n {\parsep}
+    \rightline{——#1}
+  }
+  \endlist
+}
+\RenewDocumentEnvironment {quote} {} {
+  \list {} {
+    \topsep        2bp plus1bp
+    \itemsep       0bp
+    \parsep        2bp plus1bp
+    \listparindent 0bp
+    \itemindent    \listparindent
+    \leftmargin    2\ccwd
+    \rightmargin   \leftmargin
+  }
+  \item\scan_stop:\kaiti
+} {
+  \endlist
+}
+%%
+%% (重) 定义写作规范依赖的环境和命令
+\bool_new:N \l__info_sll_star_bool
+\tl_new:N   \l__info_secretlevel_tl
+\keys_define:nn {ncu/info} {
+  CLC              .tl_set:N = \l__info_CLC_tl,
+  UDC              .tl_set:N = \l__info_UDC_tl,
+  secret-level     .code:n   = {
+    \bool_set_false:N \l__info_sll_star_bool
+    \tl_set:Nn \l__info_secretlevel_tl {#1}
+  },
+  secret-level*    .code:n   = {
+    \bool_set_true:N \l__info_sll_star_bool
+    \tl_set:Nn \l__info_secretlevel_tl {#1}
+  },
+  studentid        .tl_set:N = \l__info_studentid_tl,
+  degree           .tl_set:N = \l__info_degree_tl,
+  title            .tl_set:N = \l__info_cntitle_tl,
+  title*           .tl_set:N = \l__info_entitle_tl,
+  author           .tl_set:N = \l__info_author_tl,
+  department       .tl_set:N = \l__info_department_tl,
+  supervisor       .tl_set:N = \l__info_supervisor_tl,
+  field            .tl_set:N = \l__info_field_tl,
+  major            .tl_set:N = \l__info_major_tl,
+  defence-date     .tl_set:N = \l__info_defensedate_tl,
+  tdc-chairman     .tl_set:N = \l__info_tdcchairman_tl,
+  reviewer      .clist_set:N = \l__info_reviewer_clist,
+  completion-date  .tl_set:N = \l__info_completiondate_tl,
+  email            .tl_set:N = \l__info_email_tl,
+  decautremark     .tl_set:N = \l__info_decautremark_tl
+}
+\keys_set:nn {ncu/info} {
+  CLC              = {},
+  UDC              = {},
+  secret-level     = {},
+  studentid        = \__ncu_warning:nnn {no-info} {studentid} {学号},
+  degree           = \__ncu_warning:nnn {no-info} {degree} {学位},
+  title            = {标题\__ncu_warning:nnn {no-info} {title} {中文标题}},
+  title*           = {Title\__ncu_warning:nnn {no-info} {title*} {英文标题}},
+  author           = {姓名\__ncu_warning:nnn {no-info} {author} {学生姓名}},
+  department       = \__ncu_warning:nnn {no-info} {department} {院、系},
+  supervisor       = \__ncu_warning:nnn {no-info} {supervisor} {指导教师},
+  field            = \__ncu_warning:nnn {no-info} {field} {学科门类},
+  major            = \__ncu_warning:nnn {no-info} {major} {专业},
+  defence-date     = \__ncu_warning:nnn {no-info} {defense-date} {答辩日期},
+  tdc-chairman     = {},
+  reviewer         = {},
+  completion-date  = {年\hspace{1.5em}月\hspace{1.5em}日},
+  email            = {},
+  decautremark     = {}
+}
+%%
+\RenewDocumentCommand \maketitle {} {
+  \tl_new:N   \l__clc_tl
+  \tl_new:N   \l__sll_tl
+  \tl_new:N   \l__udc_tl
+  \tl_new:N   \l__sid_tl
+  \tl_set:Nn  \l__clc_tl {分\hss{}类\hss{}号\makebox[1em][l]{：}}
+  \tl_set:Nn  \l__sll_tl {密\hss{}级\makebox[1em][l]{：}}
+  \tl_set:Nn  \l__udc_tl {U\hss{}D\hss{}C\hskip1bp\makebox[1em][l]{：}}
+  \tl_set:Nn  \l__sid_tl {学\hss{}号\makebox[1em][l]{：}}
+  \tl_new:N   \l__cti_tl
+  \tl_new:N   \l__ctii_tl
+  \tl_set:Nx  \l__cti_tl {南昌大学\l__info_degree_tl 研究生}
+  \tl_set:Nn  \l__ctii_tl {学位论文}
+  \str_new:N  \l__dpt_str
+  \str_new:N  \l__spv_str
+  \str_new:N  \l__fld_str
+  \str_new:N  \l__mjr_str
+  \str_new:N  \l__dfd_str
+  \str_set:Nn \l__dpt_str {培养单位（院、系）：}
+  \str_set:Nn \l__spv_str {指导教师姓名、职称：}
+  \str_set:Nn \l__fld_str {申请学位的学科门类：}
+  \str_set:Nn \l__mjr_str {学科专业名称：}
+  \str_set:Nn \l__dfd_str {论文答辩日期：}
+  \str_new:N  \l__dcc_str
+  \str_new:N  \l__rvr_str
+  \str_set:Nn \l__dcc_str {答辩委员会主席：}
+  \str_set:Nn \l__rvr_str {评阅人：}
+  \tl_new:N   \l__star_tl
+  \tl_set:Nn  \l__star_tl {
+    \space\raisebox{0.6bp}{\fontspec{XITS-Regular.otf}\char"2605}
+  }
+%%
+  \begin{titlepage}
+    \parindent0bp
+    \heiti
+    \group_begin:
+      \tl_set_eq:NN \\ \c_empty_tl
+      \makebox [.38\columnwidth] [l]
+        {\hbox_to_wd:nn {3.9\ccwd} {\l__clc_tl}\l__info_CLC_tl}
+      \hfill
+      \makebox [.38\columnwidth] [l] {
+        \hbox_to_wd:nn {2.9\ccwd} {\l__sll_tl}
+        \bool_if:NTF \l__info_sll_star_bool
+          {\l__info_secretlevel_tl}
+          {保密\l__star_tl\l__info_secretlevel_tl 年}
+      }
+      \par
+      \makebox [.38\columnwidth] [l]
+        {\hbox_to_wd:nn {3.9\ccwd} {\l__udc_tl}\l__info_UDC_tl}
+      \hfill
+      \makebox [.38\columnwidth] [l]
+        {\hbox_to_wd:nn {2.9\ccwd} {\l__sid_tl}\l__info_studentid_tl}
+    \group_end:
+    \skip_vertical:n {41.8bp minus6bp}
+    \begin{center}
+      \group_begin:
+        \int_compare:nNnTF
+          {\tl_count:V \l__info_degree_tl} > {5}
+          {\Large\tl_map_inline:Nn \l__cti_tl {##1\hspace{.3em}}}
+          {\Large\tl_map_inline:Nn \l__cti_tl {##1\hspace{.4em}}}
+      \group_end:
+      \skip_vertical:n {16bp}
+      \group_begin:
+        \huge\tl_map_inline:Nn \l__ctii_tl {##1\hspace{.4em}}
+      \group_end:
+      \skip_vertical:n {41.8bp minus8bp}
+      \group_begin:
+        \bfseries\LARGE
+        \parbox{.8\columnwidth}{\centering\l__info_cntitle_tl}
+      \group_end:
+      \skip_vertical:n {16bp}
+      \group_begin:
+        \bfseries\large
+        \parbox{.8\columnwidth}{\centering\l__info_entitle_tl}
+      \group_end:
+      \skip_vertical:n {32bp minus10bp}
+      \group_begin:
+        \tl_set_eq:NN \\ \c_empty_tl
+        \rmfamily\large\l__info_author_tl
+      \group_end:
+    \end{center}
+    \tl_set_eq:NN \\ \c_empty_tl
+    \skip_vertical:n {32bp minus10bp}
+    \rmfamily
+    \begingroup
+      \str_map_inline:Nn \l__dpt_str {
+        \str_if_eq:nnTF {##1} {（}
+          {\makebox [\ccwd] [r] {##1\makebox[\l__ctex_ccglue_skip]{}}}
+          {\makebox [\ccwd] [l] {##1}}
+      }
+      \hbox:n {\l__info_department_tl}
+      \skip_vertical:n {3bp}
+      \str_map_inline:Nn \l__spv_str {\makebox [\ccwd] [l] {##1}}
+      \hbox:n {\l__info_supervisor_tl}
+      \skip_vertical:n {3bp}
+      \str_map_inline:Nn \l__fld_str {\makebox [\ccwd] [l] {##1}}
+      \hbox:n {\l__info_field_tl}
+      \skip_vertical:n {3bp}
+      \str_map_inline:Nn \l__mjr_str {\makebox [\ccwd] [l] {##1}}
+      \hbox:n {\l__info_major_tl}
+      \skip_vertical:n {3bp}
+      \str_map_inline:Nn \l__dfd_str {\makebox [\ccwd] [l] {##1}}
+      \hbox:n {\l__info_defensedate_tl}
+    \endgroup
+    \skip_vertical:n {27.8bp minus18bp}
+    \begingroup
+      \rightline{
+        \str_map_inline:Nn \l__dcc_str {\makebox [\ccwd] [l] {##1}}
+        \__fixed_uline:nn {7\ccwd} {\l__info_tdcchairman_tl}
+      }
+      \skip_vertical:n {6bp}
+      \rightline{
+        \str_map_inline:Nn \l__rvr_str {\makebox [\ccwd] [l] {##1}}
+        \__fixed_uline:nn {7\ccwd} {\clist_item:Nn \l__info_reviewer_clist {1}}
+      }
+      \skip_vertical:n {6bp}
+      \rightline{
+        \__fixed_uline:nn {7\ccwd} {\clist_item:Nn \l__info_reviewer_clist {2}}
+      }
+    \endgroup
+    \vfill
+    \centering\l__info_completiondate_tl
+  \end{titlepage}
+}
+%%
+%% 声明和授权书
+\bool_new:N \g__ncu_filltable_bool
+\keys_define:nn {ncu/style} {
+  filldecauttable .choice:,
+  filldecauttable/true .code:n  = {\bool_gset_true:N  \g__ncu_filltable_bool},
+  filldecauttable/false .code:n = {\bool_gset_false:N \g__ncu_filltable_bool},
+  filldecauttable .default:n = true,
+  filldecauttable .initial:n = true,
+  filldecauttable/unknown .code:n = {
+    \bool_gset_true:N \g__ncu_filltable_bool
+    \__ncu_warning:nn {unknown-option-value} {filldecauttable=true}
+  }
+}
+\NewDocumentCommand \makedecaut {} {
+  \tl_new:N  \l__dec_tl
+  \tl_new:N  \l__aut_tl
+  \tl_set:Nn \l__dec_tl {
+    本人声明所呈交的学位论文是本人在导师指导下进行的研究工作及取得的研究成果。
+    据我所知，除了文中特别加以标注和致谢的地方外，论文中不包含其他人已经发表或
+    撰写过的研究成果，也不包含为获得\__cn_uline:n{南昌大学}或其他教育机构的学
+    位或证书而使用过的材料。与我一同工作的同志对本研究所做的任何贡献均已在论文
+    中作了明确的说明并表示谢意。
+  }
+  \tl_set:Nn \l__aut_tl {
+    本学位论文作者完全了解南昌大学有关保留、使用学位论文的规定，同意学校有权保
+    留并向国家有关部门或机构送交论文的复印件和电子版，允许论文被查阅和借阅。本
+    人授权南昌大学可以将学位论文的全部或部分内容编入有关数据库进行检索，可以采
+    用影印、缩印或扫描等复制手段保存、汇编本学位论文。同时授权北京万方数据股份
+    有限公司和中国学术期刊（光盘版）电子杂志社将本学位论文收录到《中国学位论文
+    全文数据库》和《中国优秀博硕士学位论文全文数据库》中全文发表，并通过网络向
+    社会公众提供信息服务，同意按“章程”规定享受相关权益。
+  }
+  \tl_new:N  \l__asi_tl
+  \tl_new:N  \l__ssi_tl
+  \tl_new:N  \l__sdt_tl
+  \tl_new:N  \l__square_tl
+  \tl_new:N  \l__square_star_tl
+  \tl_set:Nn \l__square_tl {
+    \hbox:n {
+      \vrule height1.53ex width0.4bp
+      \skip_horizontal:n {-0.4bp}
+      \vbox:n {
+        \hrule height0.4bp width1.53ex
+        \skip_vertical:n {1.53ex-0.8bp}
+        \hrule height0.4bp width1.53ex
+      }
+      \skip_horizontal:n {-0.4bp}
+      \vrule height1.53ex width0.4bp
+    }
+  }
+  \tl_set:Nn \l__square_star_tl {
+    \group_begin:
+      \fontspec {XITS-Regular.otf}
+      \rlap{\char"2713}\l__square_tl
+    \group_end:
+  }
+  \tl_set:Nn \l__asi_tl {学位论文作者签名（手写）：}
+  \tl_set:Nn \l__ssi_tl {导师签名（手写）：}
+  \tl_set:Nn \l__sdt_tl {
+    签字日期：\hbox:n{}\hspace{2em}年\hspace{1.5em}月\hspace{1.5em}日
+  }
+  \tl_set:Nn \l__table_tl {
+    \begin{tabularx}{\textwidth}{|c|X|c|X|c|l|}
+      \hline
+      论文题目 & \multicolumn{5}{l|}{} \\
+      \hline
+      姓名 & & 学号 & & 论文级别 &
+      硕士\l__square_tl\hspace{0.8em}博士\l__square_tl\hspace{0.4em}\hbox{}\\
+      \hline
+      院/系/所 & \multicolumn{2}{l|}{} &
+      \centering{专业} & \multicolumn{2}{l|}{} \\
+      \hline
+      E\c_underscore_str{mail} & \multicolumn{5}{l|}{} \\
+      \hline
+      \multicolumn{6}{|l|}{备注：} \\
+      \hline
+    \end{tabularx}
+  }
+  \tl_set:Nn \l__filled_table_tl {
+    \begin{tabularx}{\textwidth}{|c|X|c|c|c|l|}
+      \hline
+      论文题目 & \multicolumn{5}{m{25\ccwd}!{\hfill}|}{
+        \raggedright\baselineskip0.7\baselineskip
+        \l__info_cntitle_tl
+      } \\
+      \hline
+      姓名 & \centering\l__info_author_tl & 学号 & \l__info_studentid_tl &
+      论文级别 & \tl_if_eq:NnTF \l__info_degree_tl {硕士} {
+        硕士\l__square_star_tl\hspace{0.8em}
+        博士\l__square_tl\hspace{0.4em}\hbox{}
+      } {
+        硕士\l__square_tl\hspace{0.8em}
+        博士\l__square_star_tl\hspace{0.4em}\hbox{}
+      } \\
+      \hline
+      院/系/所 & \multicolumn{2}{!{\hfill}m{7\ccwd}!{\hfill}|}{
+        \centering\baselineskip0.7\baselineskip
+        \l__info_department_tl
+      } & 专业 & \multicolumn{2}{!{\hfill}m{10\ccwd}!{\hfill}|}{
+        \centering\baselineskip0.7\baselineskip
+        \l__info_major_tl
+      } \\
+      \hline
+      E\c_underscore_str{mail} &
+      \multicolumn{5}{l|}{\l__info_email_tl} \\
+      \hline
+      \multicolumn{6}{|p{30\ccwd}|}{
+        \baselineskip0.7\baselineskip
+        备注：\l__info_decautremark_tl
+      } \\
+      \hline
+    \end{tabularx}
+  }
+  \skip_new:N  \l__mbl_skip
+  \skip_set:Nn \l__mbl_skip {.45\columnwidth}
+  \dim_set:Nn  \arrayrulewidth {.5bp}
+%%
+  \clearpage
+  \hrule height 0bp\nobreak
+  \chaptermark{声明和授权书}
+  \begin{center}
+    \fangsong\bfseries\LARGE{一、学位论文独创性声明}
+  \end{center}
+  \par
+  \l__dec_tl\\[12bp]
+  \makebox [\l__mbl_skip] [l] {\l__asi_tl}
+  \hfill
+  \makebox [\l__mbl_skip] [l] {\l__sdt_tl}
+  \skip_vertical:n {30bp minus18bp}
+  \begin{center}
+    \fangsong\bfseries\LARGE{二、学位论文版权使用授权书}
+  \end{center}
+  \par
+  \l__aut_tl\\[12bp]
+  \makebox [\l__mbl_skip] [l] {\l__asi_tl}
+  \hfill
+  \makebox [\l__mbl_skip] [l] {\l__ssi_tl}\\[12bp]
+  \makebox [\l__mbl_skip] [l] {\l__sdt_tl}
+  \hfill
+  \makebox [\l__mbl_skip] [l] {\l__sdt_tl}
+  \skip_vertical:n {24bp minus4bp}
+  \group_begin:
+    \parindent0bp
+    \nointerlineskip
+    \bool_if:NTF \g__ncu_filltable_bool {\l__filled_table_tl} {\l__table_tl}
+    \nopagebreak
+    \skip_vertical:n {8bp minus2bp}
+    \makebox [\textwidth] [l] {
+      \bool_if:NTF \l__info_sll_star_bool
+        {\l__square_star_tl{公开}\hfill\l__square_tl{保密}}
+        {\l__square_tl{公开}\hfill\l__square_star_tl{保密}}
+      （向校学位办申请获批准为“保密”，
+      \__fixed_uline:nn{2.5\ccwd}{}年
+      \__fixed_uline:nn{1.4\ccwd}{}月后公开）
+    }
+  \group_end:
+  \clearpage
+}
+%%
+%% 中英文摘要
+\NewDocumentEnvironment {abstract} {} {
+  \tl_new:N  \l__cnabsname_tl
+  \tl_set:Nn \l__cnabsname_tl {摘要}
+  \str_new:N \l__cnkws_str
+  \seq_new:N \l__cnkws_seq
+  \NewDocumentCommand \keywords {m} {
+    \str_set:Nn \l__cnkws_str {关键词：}
+    \seq_set_split:Nnn \l__cnkws_seq {,} {##1}
+  }
+%%
+  \chapter*{\l__cnabsname_tl}
+  \chaptermark{\l__cnabsname_tl}
+  \addcontentsline{toc}{chapter}{\l__cnabsname_tl}
+} {
+  \str_if_empty:NTF \l__cnkws_str {} {
+    \tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_adjusted_tl {
+      \skip_vertical:n {12bp}
+      \noindent{\heiti\l__cnkws_str}
+    }
+    \tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_ncu_tl {
+      \par
+      \noindent\textbf{\l__cnkws_str}
+    }
+  }
+  \seq_use:Nn \l__cnkws_seq {；}
+  \clearpage
+}
+%%
+\NewDocumentEnvironment {abstract*} {} {
+  \tl_new:N  \l__enabsname_tl
+  \tl_set:Nn \l__enabsname_tl {Abstract}
+  \str_new:N \l__enkws_str
+  \seq_new:N \l__enkws_seq
+  \NewDocumentCommand \keywords {m} {
+    \str_set:Nn \l__enkws_str {Keywords:}
+    \seq_set_split:Nnn \l__enkws_seq {,} {##1}
+  }
+%%
+  \chapter*{\l__enabsname_tl}
+  \chaptermark{\l__enabsname_tl}
+  \addcontentsline{toc}{chapter}{\l__enabsname_tl}
+} {
+  \str_if_empty:NTF \l__enkws_str {} {
+    \tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_adjusted_tl {
+      \skip_vertical:n {12bp}
+      \noindent\textbf{\l__enkws_str}\space
+    }
+    \tl_if_eq:NNT \g__ncu_format_tl \g__ncu_format_ncu_tl {
+      \par
+      \noindent\textbf{\l__enkws_str}\space
+    }
+  }
+  \seq_use:Nn \l__enkws_seq {;\space}
+  \clearpage
+}
+%%
+%% 致谢
+\NewDocumentEnvironment {acknowledgements} {} {
+  \tl_new:N  \l__acks_tl
+  \tl_set:Nn \l__acks_tl {致谢}
+  \NewDocumentCommand \signoff {mm} {
+    \skip_vertical:n {12bp}
+    \rightline{##1}
+    \par
+    \rightline{##2}
+  }
+  \chapter*{\l__acks_tl}
+  \chaptermark{\l__acks_tl}
+  \addcontentsline{toc}{chapter}{\l__acks_tl}
+  \fangsong\baselineskip16bp\scan_stop:
+} {
+  \clearpage
+}
+%%
+%% 攻读学位期间的研究成果
+\NewDocumentEnvironment {researchresults} {} {
+  \tl_new:N  \l__rrs_tl
+  \tl_set:Nn \l__rrs_tl {攻读学位期间的研究成果}
+  \newlist {papers} {enumerate} {2}
+  \setlist [papers] {
+    topsep     = 0bp plus1bp,
+    parsep     = 0bp plus1bp,
+    leftmargin = 1.3em,
+    labelwidth = 1.3em,
+    labelsep   = 0bp,
+    align      = left
+  }
+  \setlist [papers,1] {label=\arabic*.}
+  \setlist [papers,2] {
+    leftmargin = 1.5em,
+    label      = (\arabic*),
+    labelwidth = 1.5em
+  }
+  \NewDocumentEnvironment {published} {} {
+    \parindent0bp\par
+    \textbf{已发表论文：}
+    \begin{papers}
+  } {
+    \end{papers}
+    \addvspace{10.5bp}
+  }
+  \NewDocumentEnvironment {tobepublished} {} {
+    \parindent0bp\par
+    \textbf{待发表论文：}
+    \begin{papers}
+  } {
+    \end{papers}
+    \addvspace{10.5bp}
+  }
+  \NewDocumentEnvironment {reports} {} {
+    \parindent0bp\par
+    \textbf{研究报告：}
+    \begin{papers}
+  } {
+    \end{papers}
+    \addvspace{10.5bp}
+  }
+  \NewDocumentEnvironment {others} {o} {
+    \parindent0bp\par
+    \IfNoValueTF {##1} {} {\textbf{##1：}}
+    \begin{papers}
+  } {
+    \end{papers}
+    \addvspace{10.5bp}
+  }
+%%
+  \chapter*{\l__rrs_tl}
+  \chaptermark{\l__rrs_tl}
+  \addcontentsline{toc}{chapter}{\l__rrs_tl}
+  \small
+} {
+  \clearpage
+}
+%%
+%% 新环境和新命令设置
+\keys_define:nn {ncu/style} {
+  thm-topsep     .skip_gset:N = \g__ncu_thm_topsep_skip,
+  thm-indent       .tl_gset:N = \g__ncu_thm_indent_tl,
+  thm-leftmargin  .dim_gset:N = \g__ncu_thm_leftmargin_dim,
+  thm-rightmargin .dim_gset:N = \g__ncu_thm_rightmargin_dim,
+  thm-headfont     .tl_gset:N = \g__ncu_thm_headfont_tl,
+  thm-leftjoin     .tl_gset:N = \g__ncu_thm_leftjoin_tl,
+  thm-rightjoin    .tl_gset:N = \g__ncu_thm_rightjoin_tl,
+  thm-afterhead    .tl_gset:N = \g__ncu_thm_afterhead_tl,
+  thm-bodyfont     .tl_gset:N = \g__ncu_thm_bodyfont_tl
+}
+\keys_set:nn {ncu/style} {
+  thm-topsep      = 2bp plus1bp,
+  thm-indent      = 2\ccwd,
+  thm-leftmargin  = 0bp,
+  thm-rightmargin = 0bp,
+  thm-headfont    = \heiti,
+  thm-leftjoin    = ：,
+  thm-rightjoin   = {},
+  thm-afterhead   = \quad,
+  thm-bodyfont    = \kaiti
+}
+\bool_if:NT \g__ncu_newenv_bool {\file_input:n {./resources/newenv.def}}
+\bool_if:NT \g__ncu_newcmd_bool {\file_input:n {./resources/newcmd.def}}
+%%
+%%
+\file_input_stop:
+%% `academic.clo' 文件结束
+%%

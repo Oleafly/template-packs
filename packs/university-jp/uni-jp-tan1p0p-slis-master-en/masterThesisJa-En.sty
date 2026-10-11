@@ -1,0 +1,168 @@
+% フォーマット
+% http://www.slis.tsukuba.ac.jp/grad/assets/files/daigakuin-k2/Master%20Degree%20Application%20Guide%20Ja.pdf
+
+% 紙面設定
+\setlength{\textwidth}{\paperwidth}	% 本文領域を紙面幅全体に設定
+\setlength{\oddsidemargin}{4.6mm}	% 奇数ページの左マージン：1in(25.4mm)+4.6mmで30mmに設定
+\setlength{\evensidemargin}{\oddsidemargin}	% 偶数ページにも同じ設定
+\addtolength{\textwidth}{-60mm}	% 本文領域の設定値から左右余白(30mm x2)を削除
+
+\setlength{\textheight}{\paperheight}	% 本文領域を紙面高さ全体に設定
+\setlength{\topmargin}{4.6mm}	% 上マージン：1in(25.4mm)+4.6mmで30mmに設定
+\setlength{\headheight}{0pt}	% ヘッダの高さを0に設定
+\setlength{\headsep}{0pt}	% ヘッダと本文の間隔を0に設定
+\setlength{\footskip}{10mm}	% フッタの高さを0に設定
+\addtolength{\textheight}{-55mm}	% 本文領域の設定値から上下余白(35mm x2)を削除後、下余白を15mm削除
+
+% フォント設定
+\usepackage[T1]{fontenc}	% フォント New PX
+\usepackage{lmodern}	% アンダースコア用
+% \usepackage{tgtermes}	% 本文用
+% \usepackage{tgheros}	% 見出し用
+% \usepackage{inconsolata}	% ソースコード用
+% \usepackage{newtxmath}	% 数式用
+
+% その他設定
+\usepackage{ifthen}	% 条件分岐用
+\pagestyle{empty}	% ページ番号非表示
+
+% 文字列定義
+
+% 題目
+\newcommand{\maintitle}[2]{
+	\newcommand{\Maintitleja}{#1}	% 主題日本語
+	\newcommand{\Maintitleen}{#2}	% 主題英語
+}
+% サブタイトル
+\newcommand{\subtitle}[2]{
+	\newcommand{\Subtitleja}{#1}	% 副題日本語
+	\newcommand{\Subtitleen}{#2}	% 副題英語
+}
+% 発表年月
+\newcommand{\publish}[2]{
+	\newcommand{\Year}{#1}
+	\newcommand{\Month}{#2}
+}
+% 学籍番号・名前
+\newcommand{\student}[2]{
+	\newcommand{\Id}{#1}	% 学籍番号
+	\newcommand{\Nameen}{#2}	% 氏名英語
+}
+% 概要
+\newcommand{\abst}[1]{
+	\newcommand{\Abstract}{#1}
+}
+
+% 指導教官
+\newcommand{\advisors}[2]{
+	\newcommand{\Padvisor}{#1}	% 主指導教員
+	\newcommand{\Sadvisor}{#2}	% 副指導教員
+}
+
+
+\newcommand{\makecover}{
+	{\centering
+
+	% Cover: top
+	\begin{minipage}[t]{\hsize}
+	         	\vspace{20mm}
+	         	{\centering
+	            	\fontsize{20pt}{0pt}\selectfont
+	            	\underline{\textbf{\smash{Master's Thesis in Graduate School of}}}\\[10mm]
+		         	\underline{\textbf{\smash{Library, Information and Media Studies}}}	% DO NOT DELETE THE NEXT LINE
+	
+	         	}
+	\end{minipage}
+
+	
+	% Cover: center
+	\vspace*{\stretch{1}}
+	{\centering
+	        	\vspace{-60mm}
+		\fontsize{20pt}{25pt}\selectfont
+		\ifthenelse{\isundefined{\Subtitleen}}{
+			\textbf{\Maintitleen}
+		}{
+			\textbf{\Maintitleen\Subtitleen}
+	      	} % DO NOT DELETE THE NEXT LINE
+		
+	}
+	\vspace*{\stretch{1}}
+	
+	% Cover: bottom
+	\begin{minipage}[b]{\hsize}
+	        	{\centering
+		        	\fontsize{20pt}{10pt}\selectfont
+		        	\textbf{\underline{\smash{\textbf{\Month\ \Year}}}} \\[20pt]
+		    	\textbf{\underline{\smash{\Id}}} \\[20pt]
+		    	\textbf{\underline{\smash{\Nameen}}}	% DO NOT DELETE THE NEXT LINE
+		
+		}
+		\vspace{40mm}
+	\end{minipage}
+	}
+	
+	\newpage
+
+	% Title page: top
+	{\centering
+		\vspace*{\stretch{1}}
+		\vspace{0mm}
+		\fontsize{20pt}{25pt}\selectfont
+		\ifthenelse{\isundefined{\Subtitleen}}{
+			\textbf{\Maintitleen}
+		}{
+			\textbf{\Maintitleen\Subtitleen}
+	      	} % DO NOT DELETE THE NEXT LINE
+			
+		\vspace*{\stretch{1}}
+	
+		% Title page: bottom
+		\begin{minipage}[b]{\hsize}
+			{\centering
+				\fontsize{20pt}{25pt}\selectfont
+				\textbf{\Nameen} \\[25mm]
+				\textbf{Graduate School of Library,\\Information and Media Studies} \\[10pt]
+				\textbf{University of Tsukuba} \\[15mm]
+				\textbf{\Month\ \Year}	% DO NOT DELETE THE NEXT LINE
+		
+			}
+		\vspace{20mm}
+		\end{minipage}
+	}
+	\newpage
+	        	
+	% Abstract page
+	{\centering
+		\fontsize{14pt}{20pt}\selectfont
+		\ifthenelse{\isundefined{\Subtitleen}}{
+			\Maintitleen \\
+		}{
+			\Maintitleen\Subtitleen \\
+		}
+		
+		\ifthenelse{\isundefined{\Subtitleja}}{
+			\Maintitleja \\
+		}{
+			\Maintitleja \\
+			\Subtitleja \\
+		}
+	}
+	
+	\vspace{10mm}
+	\begin{flushright}
+		\fontsize{10.5pt}{15pt}\selectfont
+		Student No.: \Id \\
+		Name: \Nameen \\
+	\end{flushright}
+
+	\vspace{5mm}
+	\fontsize{10.5pt}{15pt}\selectfont
+	\Abstract
+	
+	\vspace{10mm}
+	\begin{flushright}
+		Academic Advisors: Principal: \Padvisor \\
+		Secondary: \Sadvisor \\
+	\end{flushright}
+}

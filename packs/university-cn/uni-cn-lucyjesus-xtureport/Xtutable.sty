@@ -1,0 +1,95 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{Xtutable}[2026/04/26 XTU table style]
+
+\RequirePackage{booktabs}
+\RequirePackage{etoolbox}
+\RequirePackage{makecell}
+\RequirePackage{array}
+\RequirePackage{multirow}
+\RequirePackage{siunitx}
+
+% 规范线宽: 顶线/底线 0.75pt, 栏目线 0.5pt
+\setlength{\heavyrulewidth}{0.75pt}
+\setlength{\lightrulewidth}{0.5pt}
+\setlength{\cmidrulewidth}{0.5pt}
+
+% 统一字体命令
+\newcommand\XtuTableLatin{%
+  \ifx\tem@TimesLatin\relax\else\tem@TimesLatin\fi
+}
+\newcommand\XtuTableBodyFont{%
+  \fontsize{10}{14}\selectfont
+  \ifx\tem@SongCJK\relax\songti\else\tem@SongCJK\fi
+  \XtuTableLatin
+}
+\newcommand\XtuTableCaptionCNFont{%
+  \fontsize{9}{14}\selectfont
+  \ifx\tem@HeiCJK\relax\heiti\else\tem@HeiCJK\fi
+  \XtuTableLatin
+  \color{black}
+  \bfseries
+}
+\newcommand\XtuTableCaptionENFont{%
+  \fontsize{9}{14}\selectfont
+  \XtuTableLatin
+  \color{black}
+  \bfseries
+}
+
+% 表题内部实现: 统一中英文两行样式, 可选写入 label
+\newcommand\Xtu@TableCaptionCore[3]{%
+  \par\vspace{3pt}%
+  \refstepcounter{table}%
+  \ifstrempty{#1}{}{\label{#1}}%
+  \begingroup
+    \centering
+    {\XtuTableCaptionCNFont 表\thetable\quad #2\par}%
+    {\XtuTableCaptionENFont Tab.\thetable\quad #3\par}%
+  \endgroup
+  \vspace{3pt}%
+}
+
+% 表格列类型: 文本列 + 数值列(制表位对齐)
+\newcolumntype{L}{>{\XtuTableBodyFont}l}
+\newcolumntype{C}{>{\XtuTableBodyFont}c}
+\newcolumntype{R}{>{\XtuTableBodyFont}r}
+
+\sisetup{%
+  mode=text,
+  group-digits=false,
+  table-number-alignment=center,
+  detect-mode=true,
+  detect-weight=true,
+  detect-family=true
+}
+
+% 表格标题: 段前 3pt; 英文表题后 3pt; 固定 14pt 行距
+% 用法: \XtuTableCaption{中文表题}{English caption}
+\newcommand\XtuTableCaption[2]{%
+  \Xtu@TableCaptionCore{}{#1}{#2}%
+}
+
+% 可引用版表格标题: 自动编号并写入 label
+% 用法: \XtuTableCaptionRef{tab:perf}{中文表题}{English caption}
+\newcommand\XtuTableCaptionRef[3]{%
+  \Xtu@TableCaptionCore{#1}{#2}{#3}%
+}
+
+% 物理量/单位分数形式, 折行时分数线位于上一行末尾
+% 用法: \XtuUnitHeader{e_{ang}}{(^\circ)}
+\newcommand\XtuUnitHeader[2]{%
+  $#1/#2$
+}
+
+% 百分数表示: φ_B/%
+\newcommand\XtuPercentVar[1]{\ensuremath{\varphi_{#1}/\%}}
+\newcommand\percentvar[1]{\XtuPercentVar{#1}}
+
+% 表格主体快捷设置
+\newcommand\XtuTableSetup{%
+  \XtuTableBodyFont
+  \setlength{\tabcolsep}{8pt}%
+  \renewcommand{\arraystretch}{1}%
+}
+
+\endinput

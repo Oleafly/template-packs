@@ -1,0 +1,235 @@
+\documentclass[oneside,12pt,a4paper]{scrreprt} % ändern auf twoside für Druck-Abgabe
+\usepackage[includefoot, bottom=1.5cm]{geometry} % Abstand Seitenende und Seitenzahl
+\setlength{\footskip}{30pt} % Abstand Text zu Seitenzahl
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{babelbib}
+%% Alternative, APA 7 Citation Style
+%%   Dann `babelbib` oben auskommentieren
+%%   und weiter unten beim Literaturverzeichnis auch noch ein-/auskommentieren
+%% Bitte beachte, dass mit natbib für die Zitation wie Holz (2025) der Befehl \citep verwendet werden muss, siehe auch https://www.overleaf.com/learn/latex/Natbib_citation_styles
+% \usepackage[
+%  style=apa,
+%  backend=biber,
+%  sortcites=true,
+%  natbib=true,
+%  uniquename=false
+% ]{biblatex}
+% \addbibresource{literatur.bib}  % deine Bib-Datei
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage{graphicx} % Zum Einbinden von Grafiken
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=Black,citecolor=MidnightBlue,urlcolor=MidnightBlue]{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{pgfplots} \pgfplotsset{compat=1.9}
+\usepackage{helvet} % Schönere SansSerif-Schrift
+\usepackage{times}  % Schönere Serif-Schrift
+\usepackage{listings} % für Code-Darstellung
+\usepackage{enumitem}
+\usepackage{blindtext} % sollte am Ende nicht mehr benötigt werden ;)
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\pagestyle{headings}
+
+\graphicspath{ {figures/} } % Pfad-Prefix für einzubindende Grafiken. Es sind auch mehrere Pfade möglich, diese müssen jeweils in eigenen {Klammern} stehen.
+
+\setkomafont{disposition}{\normalcolor\bfseries} % überall Serifen verwenden
+% oder
+%\renewcommand{\familydefault}{\sfdefault} % überall Sans-Serif verwenden
+
+% PDF-Optionen (werden in den Dateieigenschaften angezeigt)
+\hypersetup{
+pdftitle={Titel der Arbeit},
+pdfauthor={Vor- und Nachname},
+pdfsubject={Bachelorarbeit Informatik},
+pdfpagelayout=TwoColumnRight
+}
+
+% Style für Inline Latex Code
+\lstdefinestyle{latexinline}{
+    language=[LaTeX]TeX,        % LaTeX-Syntax
+    basicstyle=\ttfamily,       % Monospace
+    keywordstyle=\color{blue!50!black}, % LaTeX-Befehle blau
+    commentstyle=\color{green!50!black}, % Kommentare grün
+    stringstyle=\color{orange}, % Strings orange
+    breaklines=true,            % Zeilenumbruch bei langen Befehlen
+    breakatwhitespace=false,    % auch mitten in Wörtern umbrechen
+    showstringspaces=false,
+    literate=
+    *{\{}{{\color{blue}\{}}1
+    {\}}{{\color{blue}\}}}1,
+    morekeywords={printbibliography,addbibresource}
+}
+
+%%% Eigene Makros
+\newcommand{\qq}[1]{\glqq #1\grqq} % \qq{Text in Anführungszeichen}
+
+\begin{document}
+
+%%% Titelseite
+\begin{titlepage}
+\begin{center}
+\LARGE Pädagogische Hochschule Ludwigsburg \\
+\large Fakultät II: Kultur- und Naturwissenschaften \\
+Institut für Informatik\\
+[1cm]
+
+\Large Bachelor-/Masterstudiengang ---~\small{(bitte Studiengang angeben)}
+\\
+\Large Bachelor of Arts/Master of Education/Master of Arts
+\\[1cm]
+\huge Bachelor-/Masterarbeit Informatik
+\large\\[0.75cm]
+\rule{0.5\textwidth}{1pt}
+\\[0.75cm]
+%[1.5cm]
+\large
+Genehmigungsdatum
+\\[0.5cm]
+\Large\textbf{Thema/Titel der Arbeit (der geht wohl in den\\ meisten Fällen über mehr als eine Zeile)}
+\\\small\textrm(genauer Wortlaut siehe Genehmigung; Groß- und Kleinschreibung beachten, am Ende kein Punkt)\\
+[0.5cm]
+\large
+Abgabedatum
+\\[1cm]
+\small
+\textbf{Prüfer*in/nen}\\[0.3cm] 
+\large Name Prüfer*in 
+\\\small (mit genauem Titel und Berufsbezeichung, z.B. Jun.-Prof. Dr. Heiko Holz)
+\\[.75cm]
+\rule{0.5\textwidth}{1pt}
+\\[0.75cm]
+\small
+\textbf{Absolvent*in}\\[0.3cm]
+\large Name, Vorname\\
+Matrikelnummer\\
+E-Mail-Adresse \small(NameVorname@stud.ph-ludwigsburg.de)\\\textcolor{red}{Private E-Mail ist nicht zulässig!}
+%\\[1cm]
+\vfill
+\fbox{%
+\begin{minipage}{\textwidth}
+\centering
+\large
+Einverständnis für Freigabe der Arbeit:\\
+$\square$ ja \quad $\square$ nein (da die Arbeit personenbezogene Daten enthält)
+\end{minipage}
+}
+
+\end{center}
+\end{titlepage}
+
+%%% Titelrückseite: Bibliographische Angaben
+\thispagestyle{empty}
+\vspace*{\fill}
+\textbf{Nachname, Vorname:}\\
+\emph{Titel der Arbeit}\\
+Bachelor-/Masterarbeit Informatik\\
+Pädagogische Hochschule Ludwigsburg\\
+Bearbeitungszeitraum: Anfangs- -- Enddatum
+\newpage
+
+%%% Zusammenfassung (Abstract), hier aus externer Datei eingebunden
+\input{chapters/zusammenfassung.tex}
+\newpage
+
+%%% Inhaltsverzeichnis
+\KOMAoption{toc}{listof,bib} % Abbildungs-/Tabellenverzeichnis, Literaturverzeichnis aufnehmen
+\tableofcontents\label{toc}
+\cleardoublepage
+
+%%% Hauptteil (mit \input{dateiname} wird die Datei 'dateiname' eingebunden)
+\input{chapters/einleitung.tex}
+\cleardoublepage
+
+\input{chapters/forschung.tex}
+\cleardoublepage
+
+\input{chapters/herangehensweise.tex}
+\cleardoublepage
+
+\input{chapters/evaluation.tex}
+\cleardoublepage
+
+\input{chapters/diskussion.tex}
+\cleardoublepage
+
+%%% Literaturverzeichnis, lädt die Datei literatur.bib
+\bibliographystyle{babplain} % "babplain" benötigt das Paket babelbib
+\bibliography{literatur}
+%% Alternative, APA 7 Citation Style
+%%   Dann obige beide Zeilen auskommentieren
+%\printbibliography
+
+\cleardoublepage
+
+%%% Selbständigkeitserklärung
+\thispagestyle{empty}
+\section*{Erklärung}
+An dieser Stelle ist die gültige Fassung der \href{https://media.ph-ludwigsburg.de/downloadzentrum/objekte/1410173-Eigenstndigkeitserklrung-fr-schriftliche-Prfungen
+}{Eigenständigkeitserklärung für schriftliche Prüfungen} der Pädagogischen Hochschule Ludwigsburg einzubinden.
+\hrule
+
+\noindent
+
+%\vspace{1cm}
+
+\noindent
+Name, Vorname:
+
+\noindent
+Matrikelnummer: 
+\vspace{0.1cm}
+\hrule
+\vspace{0.5cm}
+
+\noindent
+\begin{itemize}[label=$\square$, leftmargin=*, nosep]
+    \item Bachelorarbeit
+    \item Masterarbeit
+    \item schriftlichen Modulprüfung (Hausarbeit, Portfolio, etc.)
+    \item meinen Anteil der Gruppenarbeit als schriftliche Modulprüfung\\
+    (der persönliche Teil muss gekennzeichnet sein)
+\end{itemize}
+
+\vspace{0.5cm}
+
+\noindent
+Hiermit versichere ich, dass ich die vorliegende Arbeit mit dem Titel:
+
+\vspace{0.5cm}
+
+\noindent
+\hrule
+\noindent
+selbstständig und ohne unzulässige fremde Hilfe oder Hilfsmittel verfasst habe.
+
+\noindent
+Ich habe keine anderen als die angegebenen Quellen und Hilfsmittel benutzt.
+
+\noindent
+Alle verwendeten Quellen und sämtliche Literatur habe ich vollständig im Quellen- bzw. Literaturverzeichnis aufgeführt. Ich habe alle wörtlichen Zitate und sinngemäßen Verweise gekennzeichnet.
+
+\noindent
+Ich habe alle Hilfsmittel aufgeführt, die ich genutzt habe (hierzu zählen auch generative KI oder Dialogsysteme). [Hilfsmittel sind im Anschluss an das Quellen- bzw. Literaturverzeichnis aufzuführen.]
+
+\noindent
+Diese Versicherung gilt für sämtliche Bestandteile meiner Arbeit.
+
+\noindent
+Meine Qualifikationsarbeit hat in gleicher oder ähnlicher Form noch keiner Prüfungsbehörde an dieser oder einer anderen Hochschule vorgelegen. Ebenfalls erkläre ich, dass ich noch keine Abschlussprüfung in einem gleichen oder vergleichbaren Studiengang endgültig nicht bestanden habe und mich nicht in einem laufenden Prüfungsverfahren in einem gleichen oder vergleichbaren Studiengang befinde.
+
+\vspace{2cm}
+
+\noindent
+\begin{tabular}{@{}p{5cm}p{5cm}@{}}
+\hrulefill & \hrulefill \\
+Ort, Datum & Unterschrift
+\end{tabular}
+\vfill
+Bearbeitungsstand 01.04.2024
+
+\end{document}

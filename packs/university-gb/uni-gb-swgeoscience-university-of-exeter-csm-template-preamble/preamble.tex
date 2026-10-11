@@ -1,0 +1,179 @@
+%\documentclass[12pt]{ociamthesis}  % default square logo 
+\documentclass[12pt, twoside, openright]{csmthesis}  % default square logo 
+%\documentclass[12pt,arial]{ociamthesis} % use old belt crest logo
+%\documentclass[12pt,arial]{ociamthesis} % use older shield crest logo
+\renewcommand{\familydefault}{\sfdefault} % Bin this when it comes to printing my document
+\renewcommand{\labelenumii}{\theenumii}
+\renewcommand{\theenumii}{\theenumi.\arabic{enumii}.}
+\setlength{\leftmarginii}{0.2ex}
+
+%load any additional packages
+\usepackage{afterpage} %allows a \afterpage clear page
+\usepackage{array} % allows fancy tables
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}} % important part relating to array package
+\usepackage{amsfonts} % adds new fonts
+\usepackage{amsmath} % adds new math symbols
+\usepackage{amssymb} % adds new font symbols
+%\usepackage{biblatex} % required for bibliography stuff
+\usepackage{booktabs} % for using the Excel2LatTeX macro
+\usepackage{bigstrut} % for using the Excel2LatTeX macro
+\usepackage[font=footnotesize]{caption} % sets caption free (could put on next page for example) also uses \scriptsize
+\usepackage{color, colortbl} % for using the Excel2LatTeX macro
+\usepackage{datetime} % adds live date/month stuff
+\usepackage{enumitem} % changes the enumerate function to allow letters etc
+\usepackage{float} % helps with figures
+\usepackage[stable]{footmisc} % footnotes
+\usepackage{gensymb} % useful for in-line maths and equations
+\usepackage{geometry} % important for layout
+\usepackage[acronym]{glossaries} % for adding a list of acronyms
+\usepackage{graphicx}
+\usepackage[graphicx]{realboxes} % landsacpe tables
+\usepackage{helvet}  % adds new fonts
+\usepackage{hhline} % use in tables
+%\usepackage[none]{hyphenat} % means no hyphenation
+\usepackage{listings}
+\usepackage{lscape} % for landscape pages, esp. with a long table
+\usepackage{longtable}
+\usepackage{lscape} % allows landscape pages using \begin{landscape}
+\usepackage{makecell} % for adding line breaks in cell
+\usepackage{multirow} % fancy tables
+\usepackage{natbib} % referencing
+\usepackage{rotating} %allows sideways figures
+\usepackage{sectsty} % section styling package
+\usepackage{tabularx}
+\usepackage{setspace} % important for spacing
+\usepackage{textgreek} % greek symbols
+\usepackage{tocloft} % helps adjust contents page 
+\usepackage{url} % adds url
+%\usepackage[all]{nowidow} % deals with single lines on pages
+\usepackage[svgnames]{xcolor} % colours for code blocks
+\usepackage{xspace} % helps set the copyright symbol
+\usepackage[hidelinks]{hyperref} % used for linking sections etc - MUST BE LAST PACKAGE
+%
+%
+%%%% input macros (i.e. write your own macros file called mymacros.tex 
+%and uncomment the next line)
+%\include{mymacros}
+\newdateformat{monthyeardate}{%
+	\monthname[\THEMONTH], \THEYEAR}
+\makeatletter
+\newcommand{\thickhline}{%
+	\noalign {\ifnum 0=`}\fi \hrule height 2pt
+	\futurelet \reserved@a \@xhline
+}
+\newcolumntype{"}{@{\hskip\tabcolsep\vrule width 2pt\hskip\tabcolsep}}
+\makeatother
+%% Original Title
+%\title{Advanced Geoscience Modelling of South West England using Tellus high resolution multivariate data}
+%% Alternative Title
+\title{Enhancing the format of PhD theses using LaTeX}
+
+%%%%%% This bit is for my submitted thesis with declaration on front page
+\author{John J. Beringer}             %your name
+\college{Camborne School of Mines \\[1ex] College of Engineering, Mathematics and Physical Sciences}  %your college
+%\degreename{Doctor of Philosophy in Geology}     %the degree
+\degreedate{December 2018}         %the degree date you submit
+%
+%%%%%% This bit if for the statement you need - it may be different so please check it with the relevant sources!
+\renewcommand{\submittedtext}{Submitted by XXXX to the University of Exeter as a thesis for the degree of Doctor of Philosophy in Geology. This thesis is available for Library use on the understanding that it is copyright material and that no quotation from the thesis may be published without proper acknowledgement. \\[1ex] I certify that all material in this thesis which is not my own work has been identified and that no material has previously been submitted and approved for the award of a degree by this or any other University. \\[6ex]
+\vspace*{1.5cm}
+{\dotfill \hspace{6cm}}}
+
+% Set margins, use this when commented out in cls file
+\geometry{
+	a4paper,
+	total={150mm,257mm},
+	left=30mm,
+	right=30mm,
+	top=20mm,
+	bottom=20mm,
+}
+%%%%%% Below should be commented out unless you want to compile specific chapters
+%%%% Use this to compile specific chapters
+%% Just one
+% \includeonly{abstract,dedication,acknowlegements,abbrev,declarationlong,
+% 	chapter1}
+%% Just a few
+%\includeonly{abstract,dedication,acknowlegements,abbrev,declarationlong,chapterSynthesis}%, abstract,dedication,acknowlegements,abbrev,declarationlong,chapterGeologicalReview,chapterData,chapterMLAgranites, chapterLineaments,chapterSynthesis,chapterConclusions}
+%
+%
+%
+%%%% Hyphenation business
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+%%%% Widows and Orphans
+\widowpenalty=10000
+\clubpenalty=10000
+%%%% Adjust list of figures spacing with numbers
+\addtolength{\cftfignumwidth}{10pt}
+%%%% Use this for R code block you can edit it for other languages
+\lstset{language=R,
+	basicstyle=\small\ttfamily,
+	stringstyle=\color{DarkGreen},
+	otherkeywords={0,1,2,3,4,5,6,7,8,9},
+	morekeywords={TRUE,FALSE},
+	deletekeywords={data,frame,length,as,character},
+	keywordstyle=\color{blue},
+	commentstyle=\color{DarkGreen},
+}
+%%%% This governs the font of URLs
+\urlstyle{same}
+%% Juggling frontmatter
+%\AtBeginDocument{%
+%	\addtocontents{toc}{\protect\afterpage\protect\cleardoublepage}%
+%}
+%end the preamble and start the document
+\begin{document}
+%this baselineskip gives sufficient line spacing for an examiner to easily markup the thesis with comments
+%%% I've turned all these off because it was being a d-bag and not working on included chapters, it also messed with the title page
+%\baselineskip=18pt
+% setspace is more simple to use
+%\doublespacing
+% \onehalfspacing
+
+%set the number of sectioning levels that get number and appear in the contents
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+\subsubsectionfont{\itshape}
+
+\newgeometry{
+	total={170mm,257mm},
+	left=20mm,
+	right=20mm,
+}
+\maketitle                  % create a title page from the preamble info
+\restoregeometry
+%\begin{romanpages}          % start roman page numbering
+\include{abstract}          % include the abstract
+\include{dedication}        % include a dedication.tex file
+\include{acknowlegements}  % include an acknowledgements.tex file
+\tableofcontents            % generate and include a table of contents
+\pagebreak
+\listoffigures              % generate and include a list of figures
+\pagebreak
+\listoftables            %generate and inlcude a list of tables
+%%%%% This is where the abbreviations go
+\include{abbrev}
+\include{declarationlong} % Include statment of originality - ONLY FOR PERSONAL THESIS
+%\printglossary[type=\acronymtype]
+%\end{romanpages}            % end roman page numbering
+
+%now include the files of latex for each of the chapters etc
+\include{chapter1} % Chapter 1
+
+
+% %now enable appendix numbering format and include any appendices
+% \appendix
+
+
+%next line adds the Bibliography to the contents page
+\addcontentsline{toc}{chapter}{References}
+%uncomment next line to change bibliography name to references
+\renewcommand{\bibname}{References}
+\singlespacing
+{\footnotesize\bibliography{examplebib.bib}}        %use a bibtex bibliography file refs.bib
+%\bibliographystyle{plain}  %use the plain bibliography style
+\bibliographystyle{elsarticle-harv-noURL7}  %use the havard bibliography style
+\end{document}

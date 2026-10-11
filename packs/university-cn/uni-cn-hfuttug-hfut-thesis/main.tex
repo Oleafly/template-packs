@@ -1,0 +1,58 @@
+% !TeX encoding = UTF-8
+% !TeX program = xelatex
+% !TeX spellcheck = en_US
+
+\documentclass[degree=bachelor]{hfutthesis}
+% degree      = doctor | master | bachelor
+% degree-type = academic | professional
+% language    = chinese | english
+% fontset     = windows | mac | ubuntu | fandol
+
+% 加载宏包、全部的配置
+\input{hfutsetup.tex}
+
+
+\begin{document}
+
+% 研究生论文:
+%   封面，原创性声明和授权使用声明
+%   frontmatter: 致谢，摘要，目录，图、表清单，[符号说明]
+%   mainmatter: 正文章节，参考文献
+%   appendix: 附录
+%   backmatter: 已发表论文列表
+%
+% 本科生论文:
+%   封面，原创性声明和授权使用声明
+%   frontmatter: 摘要，目录，图、表清单，[符号说明]
+%   mainmatter: 正文章节，参考文献
+%   backmatter: [已发表论文列表]，致谢
+%   appendix: 附录
+
+
+\maketitle
+% \input{chapters/expertspage.tex} % 专家清单页，如果是 博士学位论文，请将注释去掉。
+\signaturepage
+\copyrightpage
+
+\frontmatter
+% \input{chapters/acknowledgements.tex} % 致谢页，硕博 请将该行注释去掉。
+\input{chapters/abstract.tex}
+\tableofcontents
+\listoffigures
+\listoftables
+\input{chapters/notation.tex} % [符号说明]
+
+\mainmatter
+\input{chapters/intro.tex}
+\input{chapters/floats.tex}
+\input{chapters/math.tex}
+\input{chapters/citations.tex}
+
+\backmatter
+\bibliography{bib/hfut}  % 参考文献使用 BibTeX 编译
+% \printbibliography       % 参考文献使用 BibLaTeX 编译
+\input{chapters/publications.tex} % 已发表论文列表
+\input{chapters/acknowledgements.tex} % 致谢页，本科生 请将该行注释去掉。
+\appendix % 附录
+\input{chapters/complementary.tex}
+\end{document}

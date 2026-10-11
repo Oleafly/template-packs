@@ -1,0 +1,285 @@
+\chapter{Wie benutze ich diese Vorlage?}
+	\label{chap:wiebenutzeichdiesevorlage}
+	% This is the start file!
+	\pagenumbering{arabic}
+	\input{config/headingconfig}
+	
+	Zur Steuerung und Verwendung dieser \LaTeX Formatvorlage, werden in den folgenden Kapiteln einige Befehle erläutert, mit denen bestimmte Formatierungsrichtlinien eingehalten
+	werden können. Dem Umfang geschuldet, kann in diesem Skript nicht jeder Befehl einzeln geklärt werden, denn dafür gibt es die Dokumentationen der einzelnen 
+	Pakete. Aber es werden einige Codepassagen präsentiert mit denen die geforderte Ausgabe erzielt werden kann.
+	
+	Dennoch sei gesagt, dass dieses Anleitung keinen Ersatz für tiefer gehendes \LaTeX Wissen ist. Notwendige Einstellungen für ein anderes Aussehen müssen vom Nutzer dieser Vorlage selber vorgenommen werden.
+	
+	\section{Grundstruktur}
+		\label{sec:grundstruktur}
+		\index{Grundstruktur verstehen}
+		Grundsätzlich ist diese Vorlage mit weiteren Dateien ausgegliedert um die Übersicht beizubehalten.  Anderenfalls müssten alle Codezeilen in eine Datei komprimiert werden und das macht bei Änderungen dann keinen Spaß mehr!
+		Daher liegt folgende Struktur zu Grunde:
+		\begin{itemize}[noitemsep]
+			\item main.tex - (Startdatei)
+			\begin{itemize}[noitemsep]
+				\item config/meta.tex
+				\item config/packages.tex
+				\item content/additional\_files/cover.tex
+				\item content/additional\_files/statutory\_declaration.tex
+				\item content/additional\_files/abstract.tex
+				\item content/additional\_files/foreword.tex
+				\item Verzeichnisse (Inhalt, Quellcode, Abbildungen, Tabellen, Abkürzungsverzeichnis)
+				\item content/chapters/chapter$\{$0..n$\}$
+				\item Literaturverzeichnis
+				\item Indexverzeichnis
+				\item content/additional\_files/appendix.tex
+			\end{itemize}
+		\end{itemize}
+		Es wird empfohlen diese Struktur nicht zu verändern, um unerwünschte Fehler zu vermeiden. Die einzelnen Kapitel können natürlich einfach weiter eingebunden werden.	
+	
+	\section{Kompilieren}
+		\label{sec:kompilieren}
+		\index{Kompilieren}
+		Um die richtige Output PDF (main.pdf) zu erstellen und damit alle Referenzen z.B. auch die des \enquote{bibtex} Paket (Literaturverzeichnis), zu setzen, muss in folgender Reihenfolge kompiliert werden: [PDFLaTeX, BibTeX, PDFLaTeX, PDFLaTeX] oder alternativ, falls texmaker in den Standardeinstellungen verwendet wird [F1, F11, F1, F1]
+		
+	\section{Bindekorrektur}
+		\label{sec:bindekorrektur}
+		\index{Bindekorrektur}
+		Falls die Abschlussarbeit gebunden wird, muss eine Bindekorrektur mit angegeben werden. Dies wird mit der Option BCOR angegeben. Diese muss in der Präambel in den Einstellungen für dieses KOMA-Script gesetzet werden. Der notwendige Abstand für die Bindekorrektur muss beim Verlag oder dem Binder eingeholt werden.
+		
+\begin{lstlisting}[style=texlisting, caption={Bindekorrektur angeben}, label={lst:bindekorrektur}]
+% KOMA Options
+  \KOMAoptions{
+    fontsize=12pt,
+    ...,
+    BCOR=..cm,
+    ...
+}
+\end{lstlisting}
+	
+	\section{Titelblatt}
+		\label{sec:titelblatt}
+		\index{Titelblatt einstellen}
+		In diesem Abschnitt beschäftigen wir uns mit dem Titelblatt. Grundsätzlich ist es möglich einfache Codepassagen anzupassen um das gewünschte Ergebnis zu erhalten. 
+		Dafür werden in \LaTeX Variablen generiert, die im Deckblatt eingesetzt werden.
+		Diese Variablen heißen folgendermaßen:
+		\begin{itemize}[noitemsep]
+			\item VarTitel
+			\item VarAuthor
+			\item VarFirma
+			\item VarOrt
+			\item VarUniversitaetsname
+			\item VarStudienbereich
+			\item VarFachgebiet
+			\item VarMatrikelnummer
+			\item VarErstgutachter
+			\item VarZweitgutachter
+			\item VarDatum
+		\end{itemize}
+		Es werden nicht alle hier erwähnten Variablen zum Beispiel im Titelblatt verwendet. Die entsprechenden Änderungen müssen in der Datei config/meta.tex und contentadditional\_files/cover.tex getätigt werden.
+
+	\section{Formeln}
+		\label{sec:formeln}
+		\index{Formeln definieren}
+		Für Formeln gibt es das Paket \enquote{amsmath}. Dieses Paket ist dafür verantwortlich, um mathematische Symbole und Gleichungen in die Abschlussarbeit mit einfließen 
+		zu lassen. Mathematische Zeichen können natürlich auch im FLießtext eingebunden werden. Zum Beispiel: Der Pythagoras berechnet sich aus $a^2$, $b^2$ und $c^2$. Das ist allerdings kein Geheimnis. 
+		Deswegen zeigen wir hier die Formel noch einmal.
+		\[  a^2 + b^2 = c^2 \]
+\begin{lstlisting}[style=texlisting, caption={Formel ohne Nummerierung}, label={lst:formelohnenummerierung}]
+  \[  a^2 + b^2 = c^2 \]
+\end{lstlisting}				
+
+		Im Folgenden ein kleines Beispiel wie die align--Umgebung benutzt wird. Die Nummerierung wird hier zusätzlich automatisch gesetzt.
+		\begin{align}
+			a^2 + b^2 &= c^2 \label{ams:pythagoras}
+		\end{align}
+\begin{lstlisting}[style=texlisting, caption={Formel mit Nummerierung}, label={lst:formelmitnummerierung}]
+  \begin{align}
+    a^2 + b^2 &= c^2 \label{ams:pythagoras}
+  \end{align}
+\end{lstlisting}
+
+	\section{Quellcodes darstellen}
+		\label{sec:quellcodesdarstellen}
+		\index{Quellcode darstellen}
+		In diesem Kapitel wollen wir uns anschauen wie Quellcodepassagen eingesetzt werden. Dafür verwenden wir das Paket von \emph{listings}.
+		
+		Die Darstellung des Codeframes lässt sich ändern. Dabei muss aber angemerkt werden, dass die Abstände wie xleftmargin, framexleftmargin oder bspw. auch framexrightmargin nicht angepasst werden sollen.
+		Diese sind hier vom Author vorberechnet und an diese Vorlage eingestellt, da die default Werte eine Verschiebung und eine Inhomogenität im fertigen Dokument darstellen.
+		
+		Grundsätzlich lassen sich aber ein paar Befehle wie Farbe oder Schriftstil im Quellcode in der /config/package.tex Datei anpassen. Dazu müssen die folgenden Codezeilen laut \autoref{lst:quellcodeeinstellungen} aufgerufen werden.
+		
+\begin{lstlisting}[style=texlisting, caption={Quellcodeeinstellungen}, label={lst:quellcodeeinstellungen}]
+  \lstdefinestyle{configs}{%
+    basicstyle=\small\ttfamily,
+    showstringspaces=false,
+    keywordstyle=\bfseries,
+    stringstyle=\sffamily,
+    numbers=left,
+    numberstyle=\small,
+    numbersep=10pt,
+    stepnumber=1,
+    upquote=true,
+    aboveskip=10pt,
+    belowskip=5pt,
+    captionpos=b,
+    backgroundcolor=\color{sourcecodebackground},
+    rulesep=0pt,
+    frame=single,
+    framesep=0pt,
+    framerule=1pt,
+    xleftmargin=25pt,
+    framexleftmargin=24pt,
+    framexrightmargin=-1pt,
+    framextopmargin=5pt,
+    framexbottommargin=5pt,
+    gobble=2,
+    literate={Ö}{{\"O}}1{Ä}{{\"A}}1{Ü}{{\"U}}1{ß}{{\ss}}1{ü}{{\"u}}1{ä}{{\"a}}1{ö}{{\"o}}1,
+  }
+\end{lstlisting}
+		  
+  		Damit auch Umlaute im Quellcode richtig dargestellt werden, wird die literate Option verwendet. 
+  		Um zu Erreichen, dass der Quellcodebereich bspw. von einer Seite auf die nächste Seite wandert und weiterhin 
+  		korrekt dargestellt wird, ist es unabdingbar das Paket \emph{float} in der Präambel mitzuladen. 
+  		Anschließend muss in dem \textbackslash begin Statement der Listingsumgebung der optionale Parameter float oder float=h mitangegeben 
+  		werden. Im nachfolgenden Quellcodeausschnitt wird dies nochmal deutlich:
+  		
+\begin{lstlisting}[style=texlisting, caption={Float Beispiel bei Quellcodebereich}, label={lst:floatbeispiel}]
+  \begin{lstlisting}[style=pythonlisting, float oder float=h, caption={beispiel}, label={lst:beispiel}]
+\end{lstlisting}
+	\newpage
+	
+	\section{Bilder}
+		\label{sec:bilder}
+		\index{Bilder einstellen}
+		Bilder werden mit dem Paket von \emph{graphics} geladen. Die Reihenfolge erfolgt mit \textbackslash includegraphics gefolgt von dem \textbackslash caption und dem \textbackslash label Befehl.
+		Unter folgendem Link ist das Erklärungsvideo zu finden:
+		
+		\url{https://www.youtube.com/watch?v=pgwRBpxcaYA}
+		\begin{figure}[htb]%
+			\centering
+			\includegraphics[width=7cm]{pictures/platzhalter}
+			\caption{Ein Platzhalter}
+			\label{fig:platzhalter}
+		\end{figure}
+	
+	\section{Tabellen}
+	Tabellen können von \LaTeX standardmäßig kompiliert werden.
+	Hier ein Beispiel der Entwicklung einer Bevölkerungszahl:
+	\begin{table}[htb]
+	    \centering
+	    \begin{tabular}{lll}
+	      Jahr & D & F \\ \hline
+	      2000 & 500 & 795
+	    \end{tabular}
+	    \caption{Bevölkerung}
+	    \label{tbl:bevoelkerung}
+  \end{table}
+\begin{lstlisting}[style=texlisting, caption={Beispieltabelle Bevölkerungszahl}, label={lst:bevoelkerungszahl}]
+  \begin{table}[htb]
+    \centering
+    \begin{tabular}{lll}
+      Jahr & D & F \\ \hline
+      2000 & 500 & 795
+    \end{tabular}
+    \caption{Bevölkerung}
+    \label{tbl:bevoelkerung}
+  \end{table}
+\end{lstlisting}
+
+	\section{Fußnoten hinzufügen}
+		\label{sec:fussnoten}
+		\index{Fußnoten hinzufügen}
+		Hierzu muss nicht mehr viel gesagt werden. Nachfolgend das Beispiel:\\
+		Das ist eine Fußnote\footnote{Das ist der Beispieltext der Fußnote}
+\begin{lstlisting}[style=texlisting, float=h, caption={Fußnotencode}, label={lst:fussnotencode}]
+  Das ist eine Fußnote\footnote{Das ist der Beispieltext der Fußnote}
+\end{lstlisting}
+
+
+	\section{Referenzen setzen}
+		\label{sec:refsetzen}
+		\index{Referenzen setzen}
+		Um Referenzen setzen zu können ist es notwendig \textbackslash label Befehle an den jeweiligen Stellen zu setzen. In diesem Abschnitt wird bspw. auf  \autoref{ams:pythagoras}, auch wenn das jetzt keinen Sinn hier macht. Das kann mit dem Befehl \textbackslash autoref erzeugt werden. Außerdem generiert dieser Befehl das Wort \enquote{Gleichung} vor der eigentlichen Formelnummerierung. Der Befehl \textbackslash autoref ist aus dem Paket \emph{hyperref}.
+	
+	Mit dem Befehl \textbackslash ref$\{$ $\}$ ist es möglich auch auf Abschnitte oder Kapitel zu verweisen. Hier wird bspw. auf die Grundstruktur dieser Vorlage in (hier wird mit \textbackslash ref das Word \enquote{Abschnitt} nicht dargestellt) \ref{sec:grundstruktur}. Das Wort \enquote{Abschnitt} muss manuell eingetragen werden. In diesem Satz wird mit einem \textbackslash autoref Befehl auf den \autoref{lst:floatbeispiel} verwiesen. Das Wort \enquote{Quellcode} wird hier vor der Nummerierung dargestellt!
+	
+	Eine kleine Info des Authors: \\
+	Wenn ihr Sätze bringt wie \enquote{In nachfolgender Abbildung ist zu sehen ...}, aber die Abbildung oder der Quellcode wird woanders platziert habt ihr ein Problem. Die Voreinstellungen für den Quellcode lauten wie folgt: float=htbp -- $[$h=here$]$, $[$t=top$]$, $[$b=bottom$]$ und $[$p=current/next page$]$. Das bedeutet nichts anderes als, dass die Priorisierung der Platzierung gewählt wird. Ich empfehle daher, dass Verweise auch in bspw. so einem Satz \enquote{... ist auf Abbildung XY zu sehen.} geschrieben werden.
+	
+	Um auf Bücher zu referenzieren und damit diese auch im Literaturverzeichnis erscheinen, wird der \textbackslash cite$\{$ $\}$ Befehl benutzt. Am besten ist es, dass eine \enquote{jabref} Datenbank aufgebaut wird. Dort können die \textbackslash cite$\{$ $\}$ Befehle ganz einfach herauskopiert werden. Jetzt wird etwas aus einem Buch zitiert und dahinter erfolgt der \textbackslash cite Befehl. \cite[S.~27~ff.]{Raschka2017}
+	
+	\section[Bemerkungen eintragen]{Bemerkungen für nachträgliches Abarbeiten}
+		\label{sec:bemerkungen}
+		\index{Bemerkungen erstellen}
+		Oft lässt sich eine wissenschaftliche Arbeit nicht aufeinanderfolgend herunter schreiben. Es wird einfach an mehrere Baustellen gearbeitet und es müssen noch im Nachhinein Textteile eingefügt werden, da neue Arbeitsfortschritte erzielt wurden. Deswegen werden jetzt zwei Konzepte vorgestellt mit denen Bemerkungen im Text farblich gekennzeichnet werden können.
+	
+	\begin{description}
+\item[Das xcolor package] lässt sich hervorragend für farbliche Kennzeichnungen verwenden. Eine Vielzahl an Einstellungsmöglichkeiten lassen sich damit verwenden. Leider kann hier nicht auf alle Einstellungsmöglichkeiten eingegangen werden. Daher  wird auf die Dokumentation von xcolor verwiesen. -- Jetzt im Kurzformat zwei Beispiele:
+	\end{description}
+	
+	\colorbox{orange}{Ich weiß gerade nicht ob dieser Text hier} korrekt ist. Vielleicht \textcolor{orange}{soll} ich hier noch etwas verändern!
+\begin{lstlisting}[style=texlisting, caption={xcolor Definition}, label={lst:xcolorbeispiel}]
+  \colorbox{orange}{Dieser Text ist hervorgehoben}
+  \textcolor{orange}{Die Schrift wird markiert}
+\end{lstlisting}
+
+	Falls längere Abschnitte definiert werden sollen, empfiehlt sich das \enquote{tcolorbox} Paket, da xcolor bei 
+	längeren Markierungen aus dem Floatbereich der Seite fliegt. Die rote einstellung für den Textauschnitt ist bereits in 
+	config/package.tex unter dem Laden des Pakets \enquote{tcolorbox} zu finden.
+	\begin{description}
+		\item[Das tcolorbox package] lässt sich hervorragend für farbliche Hervorhebungen nutzen. 
+		Eine Vielzahl an Einstellungsmöglichkeiten lassen sich damit verwenden. Leider können wir 
+		hier nicht auf alle eingehen, sondern verweisen auf die Dokumentation von tcolorbox. -- Jetzt im Kurzformat zwei Beispiele:
+	\end{description}
+	
+	\begin{tcolorbox}	
+	Ich versuche hier einen ewig langen Text zu markieren ohne, dass ich aus dem Floatbereich von Latex fliege. Ich hoffe es hat geklappt.
+	\end{tcolorbox}
+\begin{lstlisting}[style=texlisting, caption={tcolorbox Definition}, label={lst:tcolorboxbeispiel}]
+  \begin{tcolorbox}	
+	Ich versuche hier einen ewig langen Text zu markieren ohne, dass ich aus dem Floatbereich von Latex fliege. Ich hoffe es hat geklappt.
+  \end{tcolorbox}
+\end{lstlisting}
+	\newpage
+
+	\section{Abkürzungsverzeichnis erstellen}
+		\label{sec:abkuerzungsverzeichnis}
+		\index{Abkürzungsverzeichnis}
+		Für das Abkürzungsverzeichnis wird das \enquote{acronym} Paket benutzt. Mit den Befehlen \textbackslash acro $\{$Abkürzungs Code$\}$ $\{$Ausgeschriebenes Wort$\}$ können in der content/list\_of\_abbreviations.tex Datei die Abkürzungen gesetzt werden. Im Fließtext später müssen mit dem Befehl \textbackslash ac $\{$Abkürzungs Code$\}$ die Abkürzung eingefügt werden. Es werden nur Abkürzungen im Verzeichnis angezeigt, die auch im Text eingefügt wurden. Das bedeutet, es reicht nicht aus diese nur zu definieren.
+		
+		Im Folgenden nun ein Beispiel:	\\
+		Hier verwenden wir viele Abkürzungen wie z.~\ B. \ac{KDE}, \ac{MAV}, \ac{HS} Aalen.
+		Das erneute Aufrufen von Abkürzungen, wie bspw. \ac{KDE} erfolgt dann nur noch in Kurzschreibweise.
+		
+		Hier kommt noch eine mega lange Abkürzung \ac{slmuklWdianshl}.
+		\ac{a}, \ac{b}, \ac{SQL}, \ac{PC}, \ac{FE}, \ac{OE}, oder \ac{MfI} finde ich super!
+	
+	
+	\section{KOMA--Script}
+		\label{sec:komascript}
+		\index{Koma--Script}
+		Die hier verwendete Dokumentenklasse ist die report Klasse aus dem Koma Skript \enquote{scrreprt}. 
+		Ich empfehle diese Vorlage nicht auf \enquote{scrbook} oder \enquote{scrartcl} abzuändern, da unerwünschte Nebeneffekte auftreten können.
+		
+		Ich empfehle sowohl die documentation/komascript/scrguide.pdf als auch das KOMA--Script Buch \cite{Kohm2014} als Anleitung und zum Nachlesen zu verwenden.
+	
+		\subsection{pagelayouts}
+			\label{subsec:pagelayouts}
+			\index{pagelayouts}
+			Die Kapitelüberschriften haben ab Standard ein \enquote{scrplain} Layout. Alle folgenden Seiten sind als \enquote{scrheadings} definiert. 
+			Nur die Titelseite, die Eidesstattliche Erklärung, der Abstract und das Vorwort sind als vollwertige \enquote{scrplain} Seitenstile definiert.
+	
+		\subsection{Kopf-- und Fußzeile einstellen}
+			\label{subsec:kopfundfusszeile}
+			\index{Kopf-- und Fußzeile einstellen}
+			Der Kopfbereich unterliegt der folgenden Definition: \\Auf der Kapitelseite ist standardmäßig \enquote{scrplain} aktiviert. Das bedeutet, dass der Kopfbereich leer ist und die Fußzeile weiterhin ihre Seitenzahl besitzt -- egal ob der Befehl \textbackslash chapter oder \textbackslash section ausgeführt wird. Auf den nächsten folgenden Seiten schaltet Koma--Script auf den pagelayout \enquote{scrheadings} um. Der Kopfbereich ist wieder zu sehen. Wenn weder auf der Kapitelseite noch auf einer der folgenden Seiten ein Abschnitt \textbackslash section erfolgt so bleibt im Kopfbereich links $[$ihead bei oneside oder lohead bei twoside$]$ die aktuelle Kapitelüberschrift zu sehen und rechts bleibt es leer. Wenn ein Abschnitt definiert wird dann tritt er frühestens auf der ersten folgenden Seite nach der Kapitelseite auf. Der Abschnitt wird im Kopfbereich rechts $[$ohead bei oneside oder rohead bei twoside$]$ angezeigt
+		
+			Um das eben erwähnte Verhalten zu realisieren, bedient sich diese Vorlage des \enquote{scrlayer--scrpage} Paketes. Kurz und knapp: Wichtig ist, dass nach jedem \textbackslash chapter Befehl ein \textbackslash input$\{$config/headingconfig$\}$ Befehl eingefügt wird. Ansonsten wird das Ergebnis nicht wie gewünscht und ihr erhaltet in der Kopfzeile teilweise links und rechts doppelte Kapiteleinträge.
+			
+			Vor dem Indexverzeichnis muss unbedingt der Befehl \textbackslash rohead eingefügt werden. Bitte den Befehl \textbf{nicht} löschen!			
+			
+			Das Kapitel content/appendix.tex ist das letzte in dieser Vorlage. Dort wird der \textbackslash input$\{$config/headingconfig$\}$ Befehl \textbf{nicht} eingefügt.
+			
+	\section{Anmerkungen zum hyperref package}
+			\label{sec:anmerkungenzuhyperref}
+			\index{hyperref}
+			Die Tiel-, Erklärung-, Abstract-, Vorwort-, und die Inhaltsseiten haben keine Lesezeichen in der PDF und es werden auch keine automatisch erzeugt. Daher wird der Befehl \textbackslash pdfbookmark des \enquote{hyperref} Pakets in den jeweiligen ausgelagerten Dateien eingefügt.  
+			Außerdem muss das \enquote{hyperref} Paket in der Präambel als letztes geladen werden, da es sonst zu Problemen führen kann.
+	

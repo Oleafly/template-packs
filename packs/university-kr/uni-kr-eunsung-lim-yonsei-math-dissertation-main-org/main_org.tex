@@ -1,0 +1,261 @@
+\documentclass[a4paper, 11pt]{report}
+
+% Essential packages
+\usepackage{grad}
+\usepackage{lipsum}
+\usepackage{kotex}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+
+% Fonts and figure path
+\usepackage{times}
+% \graphicspath{{./figures/}}
+\usepackage{fix-cm}
+
+% Math packages
+\usepackage{amsmath,amssymb,amsthm,amscd,amsfonts}
+\usepackage{mathtools}
+
+% Graphics and tables
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabulary}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+
+% Specialized math/figures
+\usepackage{bbm}
+\usepackage{ytableau}
+\usepackage{epic,eepic}
+\usepackage{tkz-euclide}
+
+% TikZ / PGFplots
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{angles,quotes,shapes,arrows}
+\pgfplotsset{compat=1.5}
+
+% TikZ styles
+\tikzstyle{emptybox} = [rectangle, draw, text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+
+% Float/tables/algorithm
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{rotfloat}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{subfig}
+\usepackage{subcaption}
+
+% Utilities
+\usepackage{indentfirst}
+\usepackage{hyperref}
+\usepackage{ifthen}
+\usepackage{dashrule}
+\usepackage[subfigure]{tocloft}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% New Definitions
+\theoremstyle{plain} % fat title, italic body
+  \newtheorem{thm}{Theorem}[chapter]
+  \newtheorem{prop}[thm]{Proposition}
+  \newtheorem{lem}[thm]{Lemma}
+  \newtheorem{cor}[thm]{Corollary}
+  \newtheorem*{sthm}{Theorem}
+  \newtheorem{conj}[thm]{Conjecture}
+  \newtheorem{quest}[thm]{Question}  
+  \newtheorem*{sprop}{Proposition}  
+\theoremstyle{definition} % fat title, roman body
+  \newtheorem{defn}[thm]{Definition}
+  \newtheorem{assumption}[thm]{Assumption}
+  \newtheorem{example}[thm]{Example}
+  \newtheorem{examples}[thm]{Examples}
+\theoremstyle{remark} % italic title, roman body
+  \newtheorem{rem}[thm]{Remark}
+  \newtheorem*{notation}{Notation}
+
+%\numberwithin{equation}{section}
+\newcommand{\la}{\lambda}
+
+% Math definitions
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\mR}{\mathbb{R}}
+\newcommand{\mP}{\mathbb{P}}
+\newcommand{\mE}{\mathbb{E}}
+\newcommand{\Sov}{\mathbf{H}^1_0(\Omega)}
+\newcommand{\SovOm}{\mathbf{H}^1_0(\Omega)}
+
+% Math definitions - Multiples.. usage is \E{r.v} like this
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\E}[1]{\mathrm{E} \left[#1 \right]  }
+\newcommand{\Var}[1]{\mathrm{Var}}
+\newcommand{\Cov}[1]{\mathrm{Cov}}
+\newcommand{\needref}[1]{\textbf{REF}(#1)}
+
+\DeclareMathOperator{\inte}{int}
+\DeclareMathOperator{\exte}{ext}
+\newcolumntype{Y}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{Z}{>{\centering\arraybackslash}X}
+
+
+\renewcommand{\baselinestretch}{1}
+%\renewcommand{\baselinestretch}{1.21} % one and one-half spacing 11-pt
+\renewcommand{\arraystretch}{1.3}
+
+\renewcommand{\cftfigfont}{\hspace{-16pt}Figure }
+\renewcommand{\cfttabfont}{\hspace{-16pt}Table }
+\renewcommand{\cftdotfill}{\dotfill}
+\renewcommand{\cftdotsep}{}
+\renewcommand{\cftnodots}{}
+%\ifthenelse{\equal{aa}{aaa}}{TRUE}{}
+
+
+% TODO-01: Change the following variables to your own information.
+% Input your Title, Name, Date, Department, Degree here.
+\newcommand{\txtTitle}{TITLE}
+\newcommand{\txtAuthor}{AUTHOR}
+\newcommand{\txtDate}{DATE}
+\newcommand{\txtTitleKorean}{한글 제목}
+\newcommand{\txtAuthorKorean}{저자 이름}
+
+\newcommand{\txtDepartment}{Department of Mathematics}
+%\newcommand{\txtThesisName}{Masters Thesis}
+%\newcommand{\txtDegree}{Master of Science}
+
+% TODO-02: Fill in the committee members' names. Note that the first one is the thesis supervisor.
+\newcommand{\txtCommitteeOne}{PROFESSOR1}
+\newcommand{\txtCommitteeTwo}{PROFESSOR2}
+\newcommand{\txtCommitteeThree}{PROFESSOR3}
+\newcommand{\txtCommitteeFour}{PROFESSOR4}
+\newcommand{\txtCommitteeFive}{PROFESSOR5}
+
+\title{\txtTitle}
+\author{\txtAuthor}
+\date{\txtDate}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TITLE PAGE
+\maketitle
+\pagestyle{plain}
+\setlength{\baselineskip}{8.5mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COMMITTEE SIGNATURE PAGE
+\clearpage
+\thispagestyle{empty}
+
+\null
+\begin{center}
+  \vskip -1.8cm
+  {\fontsize{14pt}{14pt}\selectfont This certifies that the dissertation of \txtAuthor\ is approved.}
+
+  \vskip 2.5cm
+    {\hskip 5cm\fontsize{12pt}{12pt}\selectfont \underline{\hskip 7cm}}\vspace*{0.2cm}\\
+  \hskip 5cm\fontsize{12pt}{12pt}\selectfont Thesis Supervisor: Prof. \txtCommitteeOne\\
+  \vskip 1.5cm
+    {\hskip 5cm\fontsize{12pt}{12pt}\selectfont \underline{\hskip 7cm}}\vspace*{0.2cm}\\
+  \hskip 5cm\fontsize{12pt}{12pt}\selectfont Prof. \txtCommitteeTwo\\
+  \vskip 1.5cm
+    {\hskip 5cm\fontsize{12pt}{12pt}\selectfont \underline{\hskip 7cm}}\vspace*{0.2cm}\\
+  \hskip 5cm\fontsize{12pt}{12pt}\selectfont Prof. \txtCommitteeThree\\
+  \vskip 1.5cm
+    {\hskip 5cm\fontsize{12pt}{12pt}\selectfont \underline{\hskip 7cm}}\vspace*{0.2cm}\\
+  \hskip 5cm\fontsize{12pt}{12pt}\selectfont Prof. \txtCommitteeFour\\
+  \vskip 1.5cm
+    {\hskip 5cm\fontsize{12pt}{12pt}\selectfont \underline{\hskip 7cm}}\vspace*{0.2cm}\\
+  \hskip 5cm\fontsize{12pt}{12pt}\selectfont Prof. \txtCommitteeFive\\
+  \vskip 2.8cm
+
+    {\fontsize{14pt}{24pt} \selectfont
+      The Graduate School \par
+      Yonsei University \par
+      \txtDate \par
+    }
+
+\end{center}
+\par
+\clearpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ACKNOWLEDGMENT
+\input{acknowledgment.tex} 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLE OF CONTENTS
+\clearpage
+\pagenumbering{roman}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LIST OF FIGURES
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\bfseries List of Figures}
+\listoffigures
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LIST OF TABLES
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\bfseries List of Tables}
+\listoftables
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABSTRACT
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\bfseries Abstract}
+\input{abstract.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document Body
+\clearpage
+
+\input{chap1.tex}
+
+\input{chap2.tex}
+
+\input{chap3.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BIBLIOGRAPHY
+% Any other bib style can be used.
+%\bibliographystyle{IEEEbib}
+%\bibliographystyle{ieeetr}
+\bibliographystyle{abbrv}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDIX
+\clearpage
+\input{appendixA.tex}
+% \clearpage
+% \input{appendixB.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BIBLIOGRAPHY
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\bfseries Bibliography}
+% Add \nocite{*} to include all references in the bibliography.
+% \nocite{*}
+% Your bib file path
+\bibliography{reference_thesis}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABSTRACT IN KOREAN
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\bfseries Abstract in Korean}
+\input{abstract_in_korean.tex}
+
+\end{document}

@@ -1,0 +1,100 @@
+\documentclass[a4paper,12pt,leqno,openbib]{memoir}
+\usepackage{lipsum} %this is only for palceholder text. Delete later.
+% Student-configured constants
+\input{config/thesis-details} 
+
+% PDF info
+\input{config/preamble/pdf-details} 
+
+% Packages
+\input{config/preamble/packages} 
+
+% Structure & layout         
+\input{config/preamble/presentation} % set up structure and layout
+\input{config/hyphenation} % custom hyphenation
+
+\input{config/glossary}
+\input{config/abbreviations}
+%\input{config/notations}
+
+% New commands
+\input{config/preamble/macros-structure} 
+\input{config/preamble/macros} 
+\input{config/preamble/optional/macros-math} % optional
+\input{config/preamble/optional/typesetting-theorem} % optional
+
+% Table of Contents, List of Figures, List of Tables and Index
+\makeindex
+
+\pgfplotsset{compat=1.18} %Package pgfplots Warning: running in backwards compatibility mode (unsuitable tick labels; missing features). Consider writing \pgfplotsset{compat=1.18} into your preamble. 
+%======================================
+\begin{document}
+\frontmatter
+\pagenumbering{roman}
+
+
+% Preliminary pages
+\input{pages/_preliminary/title}
+\input{pages/_preliminary/submission}
+\utsclearemptydoublepage
+\input{pages/_preliminary/declaration} \utsclearemptydoublepage
+\input{pages/_preliminary/dedication} \utsclearemptydoublepage
+\input{pages/_preliminary/abstract} \utsclearemptydoublepage
+\input{pages/_preliminary/contribution} \utsclearemptydoublepage
+\input{pages/_preliminary/acknowledgment} \utsclearemptydoublepage
+
+% Summary pages
+\renewcommand{\contentsname}{Table of Contents}
+\maxtocdepth{subsection}
+\tableofcontents*
+\printglossary[type=\acronymtype, title=List of Abbreviations, toctitle=List of Abbreviations]
+\utsclearemptydoublepage
+
+\import{config/}{notations}
+\utsclearemptydoublepage
+
+\listoffigures
+\addtocontents{lof}
+{\par\nobreak\textbf{{\scshape Figure} \hfill Page}\par\nobreak}
+\utsclearemptydoublepage
+
+\listoftables
+\addtocontents{lot}
+{\par\nobreak\textbf{{\scshape Table} \hfill Page}\par\nobreak}
+\utsclearemptydoublepage
+
+%===========================
+% Main content
+%===========================
+\mainmatter
+
+\part{A part}
+\import{pages/chapters/01/}{index} 
+\utsclearemptydoublepage
+
+%%%%%%
+\part{Some Part}
+\import{pages/chapters/02/}{index} 
+\utsclearemptydoublepage
+
+\part{Another part}
+\import{pages/chapters/03/}{index}
+\utsclearemptydoublepage
+
+\part{Appendices and References}
+\appendix
+\import{pages/appendices/a/}{index} 
+\utsclearemptydoublepage
+\import{pages/appendices/b/}{index} 
+\utsclearemptydoublepage
+
+%===========================
+% Back matter
+%===========================
+\backmatter
+\refstepcounter{chapter}
+\bibliographystyle{ieeetr}
+\bibliography{references} 
+\utsclearemptydoublepage
+
+\end{document}

@@ -1,0 +1,404 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Cardiff University PhD Thesis Template (XeLaTeX)
+%  Oriented towards Cardiff Business School.
+%
+%  Compile with:  latexmk main.tex
+%
+%  The defaults below follow Cardiff University's "Policy on the
+%  Submission and Presentation of Research Degree Theses",
+%  Version 8.0, approved 08.05.2025, in effect from 01.08.2025.
+%  Clause numbers are cited inline so you can check each one against
+%  the current version of the policy:
+%  https://www.cardiff.ac.uk/__data/assets/pdf_file/0010/1467235/
+%      Submission-and-Presentation-of-Research-Degree-Theses.pdf
+%
+%  Policy is revised periodically. Verify against the current version
+%  before you submit; the citations here are your starting points.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,a4paper,oneside]{report}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THESIS METADATA
+%
+% Policy Section 5.3: the title page must contain these details ONLY --
+% the full title (including any sub-title), the degree award title, the
+% University name, the month and year of presentation, and your full
+% name as recorded on the student record.
+%
+% Note what is NOT permitted there: your school or department, your
+% supervisors, and (Section 5.4) any image, including the University
+% logo. The school fields below are used in the README and the preface,
+% not on the title page.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\thesistitle}{Thesis Title and Any Sub-Titles, in Bold, with Each Word Capitalised}
+\newcommand{\thesisauthor}{Candidate's Full Name, as Recorded on the Student Record}
+\newcommand{\thesisdegree}{Doctor of Philosophy}
+\newcommand{\thesisuniversity}{Cardiff University}
+% Which date? Footnote 3 to Section 5.3.4: for a thesis submitted after
+% corrections approved by the examiners, use the ORIGINAL date of
+% submission -- not the date you hand in the corrected version. For a
+% re-examination, use the date of re-submission.
+\newcommand{\thesisdate}{Month Year}
+
+% Not printed on the title page -- used elsewhere in the front matter.
+\newcommand{\thesisschool}{Cardiff Business School}
+\newcommand{\thesisdepartment}{Section of Accounting and Finance}
+\newcommand{\thesissupervisor}{Prof.\ Supervisor Name}
+\newcommand{\thesissecondsupervisor}{Dr.\ Second Supervisor Name}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BODY FONT
+%
+% Policy Section 6.1 recommends a clear, readable font "for easy
+% reading (sans serif fonts such as Arial, Tahoma and Verdana)", no
+% smaller than 12 point. That is the default here.
+%
+% Serif faces remain widespread in Business School theses and the
+% policy states a recommendation, not a prohibition. To use Times
+% instead, comment out \usesansfonttrue and uncomment \usesansfontfalse.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifusesansfont
+\usesansfonttrue      % Arial -- follows the accessibility guidance
+% \usesansfontfalse   % Times New Roman -- traditional alternative
+
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+
+\ifusesansfont
+  \IfFontExistsTF{Arial}{\setmainfont{Arial}}{%
+    \IfFontExistsTF{TeX Gyre Heros}{\setmainfont{TeX Gyre Heros}}{%
+      \setmainfont{DejaVu Sans}}}
+\else
+  \IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{%
+    \setmainfont{TeX Gyre Termes}}
+\fi
+
+% ---------------------------------------------------------------------
+% OPTIONAL: CJK support, for theses quoting Chinese, Japanese or Korean.
+% ---------------------------------------------------------------------
+% \usepackage{xeCJK}
+% \xeCJKsetup{CJKmath=true}
+% \IfFontExistsTF{Songti SC}{\setCJKmainfont{Songti SC}}{\setCJKmainfont{Noto Serif CJK SC}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PAGE GEOMETRY
+%
+% The current policy sets no margin requirements -- submission is
+% electronic, and examiners' hard copies are printed double-sided by
+% your School (Section 2.9). The generous left margin below is the
+% long-standing Cardiff convention, kept because it also produces a
+% comfortable line length. Adjust freely.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{geometry}
+\geometry{a4paper, left=1.5in, right=1in, top=1in, bottom=1in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CORE PACKAGES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{setspace}
+\usepackage[explicit]{titlesec}
+\usepackage[titles]{tocloft}
+\usepackage[round,sort,comma]{natbib}
+\usepackage[page]{appendix}
+% Policy Section 4.1: the thesis must be in English or Welsh, apart from
+% quotations and recognised technical terms. For Welsh, use
+% \usepackage[welsh]{babel} and check that your hyphenation patterns
+% are installed.
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{upquote}
+\usepackage{microtype}
+\usepackage{etoolbox}
+\usepackage{subfiles}
+\usepackage{ragged2e}
+
+% Maths
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{unicode-math}
+\DeclareMathOperator{\sign}{sgn}
+% Latin Modern Math is the unicode-math default and ships with every
+% TeX Live install, so no \setmathfont call is needed. For Times-like
+% maths alongside the serif body font, uncomment:
+% \setmathfont{STIX Two Math}
+
+% Tables
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{rotating}
+\usepackage{lscape}
+\usepackage{threeparttable}
+
+% Figures and floats
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{subfig}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{caption}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta}
+\usepackage{xcolor}
+
+% Algorithms
+\usepackage[ruled]{algorithm}
+\usepackage[noend]{algpseudocode}
+\algnewcommand\algorithmicforeach{\textbf{for each}}
+\algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
+
+% Front matter machinery
+\usepackage{acronym}
+\usepackage{nomencl}
+\usepackage{enumerate}
+\usepackage{verbatim}
+\usepackage{textcomp}
+\usepackage[normalem]{ulem}
+\usepackage{soul}
+\usepackage{comment}
+\usepackage{lipsum}           % placeholder text -- remove when writing
+
+\makenomenclature
+\newcommand{\nomunit}[1]{\renewcommand{\nomentryend}{\hspace*{\fill}#1}}
+\renewcommand{\nompreamble}{\begin{multicols}{2}}
+\renewcommand{\nompostamble}{\end{multicols}}
+
+\addto{\captionsenglish}{\renewcommand{\bibname}{References}}
+
+% Policy Section 6.3: characters in all other text -- footnotes, figure
+% captions and the like -- "must not be less than 11 point". Section 6.5
+% extends the same requirement to characters inside tables and figures.
+%
+% At a 12pt base, LaTeX's \footnotesize (10pt), \scriptsize (8pt) and
+% \tiny (6pt) all fall below that floor, and table notes and stars
+% conventionally use them. Redefining them to 11pt keeps the document
+% compliant even where a chapter reaches for a smaller size. \small is
+% already 11pt at this base and is left alone.
+%
+% If you find yourself wanting something smaller to make a wide table
+% fit, the compliant fixes are a landscape page (\begin{landscape}),
+% splitting the table, or dropping columns -- not shrinking the type.
+%TC:macro \footnote [ignore]
+\usepackage[hang,flushmargin]{footmisc}
+\renewcommand{\footnotesize}{\fontsize{11pt}{13pt}\selectfont}
+\renewcommand{\scriptsize}{\fontsize{11pt}{13pt}\selectfont}
+\renewcommand{\tiny}{\fontsize{11pt}{13pt}\selectfont}
+\captionsetup{font={stretch=1.0},labelfont=bf,size=normalsize}
+
+% Mathematical superscripts and subscripts are necessarily smaller than
+% body text -- no thesis sets an index at 11pt -- so the 11pt floor above
+% cannot apply to them. But LaTeX's defaults are smaller than they need
+% to be (8.4pt and 6pt at a 12pt base), and Section 6.5 asks that
+% characters inside tables and figures be "legible and of a sufficiently
+% large font size for general accessibility" -- which is precisely the
+% case of significance stars in a regression table. These raise the
+% script levels as far as the notation allows.
+%
+% Verify what actually ends up in your PDF with tools/checkfonts.py.
+% unicode-math re-derives the script levels from the maths font's own
+% OpenType constants when the document begins, which silently undoes a
+% plain \DeclareMathSizes for the body size. Deferring it wins.
+\AtBeginDocument{%
+  \DeclareMathSizes{12}{12}{10}{9}%
+  \DeclareMathSizes{11}{11}{9.5}{9}%
+}
+
+% Section 6.5 also asks that text not be placed over images. If you
+% annotate a figure, put the labels beside the image or in the caption.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% WHERE TABLES AND FIGURES GO
+%
+% The policy is silent on placement. Section 6.4 only requires that
+% tables, figures and appendices stay inside the single page-number
+% sequence, which they do either way. So this is convention -- and the
+% convention differs between a thesis and a journal submission.
+%
+% A THESIS is the final artefact. Nobody typesets it afterwards, and
+% your examiners read exactly what you submit, so the exhibits stay in
+% the chapter. In empirical finance they conventionally take a float
+% page of their own -- \begin{table}[p] -- because a regression table
+% rarely fits beside the text discussing it. That is what the worked
+% tables in chapters/chapter1.tex do.
+%
+% A JOURNAL SUBMISSION is the opposite. JF, JFE, RFS and JFQA want
+% "[Table 1 about here]" in the text with the exhibits collected at the
+% end, because their typesetters place the floats. When you cut a
+% chapter into a submission, uncomment the two lines below rather than
+% moving anything by hand: endfloat moves every float to the end and
+% leaves the markers behind for you.
+%
+%   \usepackage[tablesfirst]{endfloat}
+%   \renewcommand{\efloatseparator}{\mbox{}}
+%
+% Use \FloatBarrier (from placeins, already loaded) to stop a float
+% drifting past a section heading it belongs to.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Hyperlinks -- loaded late; cleveref must follow hyperref.
+\usepackage[bookmarks=true, hidelinks]{hyperref}
+\hypersetup{
+    colorlinks = true,
+    linkcolor  = black,
+    citecolor  = blue,
+    filecolor  = blue,
+    urlcolor   = blue,
+    pdftitle   = {\thesistitle},
+    pdfauthor  = {\thesisauthor}
+}
+\usepackage{cleveref}
+\crefname{figure}{Figure}{Figures}
+\crefname{table}{Table}{Tables}
+\crefname{section}{Section}{Sections}
+
+\usepackage{silence}
+\WarningFilter*{latex}{Text page \thepage\space contains only floats}
+
+% Widow and orphan control
+\widowpenalty=10000
+\clubpenalty=10000
+
+% Policy Section 5.2: the contents list must itemise all chapters and
+% relevant sub-divisions, with a page number for each.
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\renewcommand{\cftsubsubsecfont}{\normalfont}
+\renewcommand{\cftsubsubsecpagefont}{\normalfont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HEADING STYLES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\thesischapterstyle}{%
+  \titleformat{\chapter}[display]
+    {\normalfont\bfseries\Huge\raggedright}
+    {\chaptertitlename\ \thechapter}{0pt}{{##1}}
+  \titlespacing*{\chapter}{0pt}{0pt}{30pt}%
+}
+
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{#1}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{#1}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Policy Section 6.2: line spacing wide enough to be generally
+% accessible, "e.g. 1.5 spacing", and paragraphs left-aligned rather
+% than justified. For justified text instead, delete \RaggedRight.
+\onehalfspacing
+\RaggedRight
+
+%------------------------------- FRONT MATTER -------------------------
+%
+% Policy Section 5.1 -- required preliminary pages, in this order:
+%   .1 title page          .2 summary (max 300 words)
+%   .3 list of contents    .4 acknowledgements, where a sponsor expects them
+%
+% Section 5.2 places any other lists (tables, figures, illustrations)
+% immediately after the contents list. Section 5.6 places an optional
+% dedication and acknowledgements after the required pages.
+%
+% Note there is no declaration page here. Cardiff collects the
+% statements and declarations on a separate signed form (Appendix 1 of
+% the policy), not bound into the thesis. The final word count goes on
+% that form too (Section 5.5), not in the thesis.
+
+%TC:ignore
+% Policy Section 6.4: the preliminary pages are numbered in roman
+% numerals, and page numbers appear on every page except the title page.
+% So the title page is page i and simply displays no number -- rather
+% than sitting outside the sequence and forcing the count to restart,
+% which would leave hyperref with two anchors named page.1.
+\pagenumbering{roman}
+
+\input{frontmatter/titlepage.tex}
+\input{frontmatter/summary.tex}
+
+%------------------------------- CONTENTS -----------------------------
+
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+\renewcommand{\cftchapfont}{\bfseries}
+\renewcommand{\cftchappagefont}{}
+\renewcommand{\cftchappresnum}{Chapter }
+\renewcommand{\cftchapaftersnum}{.}
+\renewcommand{\cftchapnumwidth}{5.5em}
+
+\renewcommand\contentsname{Contents}
+\begin{singlespace}
+\tableofcontents
+\end{singlespace}
+\clearpage
+
+% Section 5.2: other lists come immediately after the contents list.
+\addcontentsline{toc}{chapter}{List of Tables}
+\begin{singlespace}\listoftables\end{singlespace}
+\clearpage
+
+\addcontentsline{toc}{chapter}{List of Figures}
+\begin{singlespace}\listoffigures\end{singlespace}
+\clearpage
+
+%--------------------------- OPTIONAL PAGES ---------------------------
+
+\input{frontmatter/acknowledgements.tex}
+\input{frontmatter/dedication.tex}
+
+% Section 5.7 permits a preface. For a paper-style (three-essay)
+% thesis this is where co-authorship is declared -- see the file.
+\input{frontmatter/preface.tex}
+
+\input{frontmatter/abbreviations.tex}
+
+% Optional symbol list. Uncomment to include it.
+% \input{frontmatter/nomenclature.tex}
+
+%TC:endignore
+
+%------------------------------- MAIN MATTER --------------------------
+%
+% Policy Section 6.4: after the roman-numbered preliminary pages, a
+% single sequence of Arabic numerals runs to the end of the thesis --
+% including appendices and references.
+
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\thesischapterstyle
+
+\subfile{chapters/chapter1.tex}
+\subfile{chapters/chapter2.tex}
+\subfile{chapters/chapter3.tex}
+\subfile{chapters/chapter4.tex}
+\subfile{chapters/chapter5.tex}
+\subfile{chapters/chapter6.tex}
+
+%TC:ignore
+
+%------------------------------- APPENDICES ---------------------------
+
+\input{chapters/appendix.tex}
+
+%------------------------------- REFERENCES ---------------------------
+%
+% agsm is a Harvard style, the usual choice at Cardiff Business School.
+% Confirm the expected style with your supervisor.
+
+\begin{singlespace}
+\addcontentsline{toc}{chapter}{References}
+\bibliography{references}
+\bibliographystyle{agsm}
+\end{singlespace}
+%TC:endignore
+
+\end{document}

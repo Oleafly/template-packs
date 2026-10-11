@@ -1,0 +1,167 @@
+% # 公立はこだて未来大学・修士論文テンプレートファイル(unicode)
+%
+% ## 改訂履歴：
+% - 2019/12/01 初版 作成者：三上貞芳
+%
+% ## 論文作成の手順
+%
+% 1. 以下のtexファイルを作成してください
+% - cover.tex           氏名・タイトル等の表紙情報
+% - eabstract.tex       英語アブストラクト
+% - jabstract.tex       日本語アブストラクト
+% - chapterX.tex        本文第X章
+% - publications.tex    発表・採録等の実績（確定分も含む）
+% - acknowledgment.tex  謝辞
+% - bibliography    .tex    参考文献
+%
+% 2. このテンプレートの「TODO: 本文」以下に，作成した章に対応する\input{chapterX.tex}文を追記してください(Xは章番号)
+%
+% 3. このテンプレートとfunstyle_master.texと合わせてuplatex環境でコンパイルし，PDFを作成します．
+%
+
+\documentclass[uplatex, a4paper, report, 11pt, oneside]{jsbook}
+
+% packages
+\usepackage[utf8]{inputenc}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{lmodern}             % use latin modern font
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage{layout}
+
+% 未来大書式設定
+% \input{funstyle_master.tex}
+
+% TODO: タイトル・著者等の情報
+\input{cover.tex}
+
+% TODO: 英語アブストラクト
+\input{eabstract.tex}
+
+% TODO: 日本語アブストラクト
+\input{jabstract.tex}
+
+% page size
+\textheight     = 22.6truecm
+\textwidth      = 14.7truecm
+\oddsidemargin  = 0.6truecm
+
+% header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\footskip}{16pt}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\rhead{\leftmark}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\thepage}
+\lfoot{~~ \\Master's thesis, Future University Hakodate}
+\lhead{\eshorttitle}
+
+%-------------------------------------
+\begin{document}
+
+\thispagestyle{empty}
+\vspace*{1.5truemm}
+\begin{center}
+    \LARGE\bfseries
+    修士論文
+\end{center}
+\vspace*{2truemm}
+\begin{center}
+    \LARGE\bfseries\jtitle
+\end{center}
+\vspace*{2em}
+\begin{center}
+    \large\bfseries 公立はこだて未来大学大学院~~システム情報科学研究科\par%
+    \jaffiliation
+\end{center}
+\vspace*{1em}
+\begin{center}
+    \Large\bfseries\jauthor
+\end{center}
+\vspace*{1em}
+\begin{center}
+    \large 指導教員~~~~\jadvisor\par
+    \vspace{0.5em}
+    \large 提出日~~~~\jdate
+\end{center}
+\vspace*{3em}
+\begin{center}
+\textbf{\Large Master's Thesis}\par
+\vspace*{2em}
+\textbf{\Large \etitle}\par
+\vspace*{1em}
+{\normalsize by}\par
+\vspace*{1em}
+{\large \eauthor}\par
+\vspace*{1.5em}
+Graduate School of Systems Information Science, Future University Hakodate \par
+\eaffiliation
+
+% \vspace*{0.5em}
+\normalsize Supervisor: \quad \eadvisor \par
+\vspace*{2em}
+Submitted on \edate
+\end{center}
+%\vspace*{\fill}
+
+% 英語アブストラクト作成
+\newpage
+\thispagestyle{empty}
+\vspace*{30truemm}
+\noindent
+\textbf{Abstract--}~
+\eabstract
+
+\vspace*{1em}
+\noindent
+\textbf{Keywords:}~ 
+\ekeywords
+
+% 日本語アブストラクト作成
+\newpage
+\thispagestyle{empty}
+\vspace*{30truemm}
+\noindent
+\textgt{概~要：}~
+\jabstract
+
+\vspace*{1em}
+\noindent
+\textgt{キーワード：}~ 
+\jkeywords
+
+
+% 目次
+\tableofcontents
+\thispagestyle{empty}
+
+% ページ番号初期化
+\setcounter{page}{0}
+
+% TODO: 本文
+\input{chapter1.tex} 
+% 以下必要に応じてchapterX.texを作成してinput文を記入
+
+% TODO: 謝辞
+\input{acknowledgment.tex}
+
+% TODO: 発表等実績
+\input{publications.tex}
+
+
+% TODO: 参考文献
+% \input{bibliography.tex}
+% ipsj論文誌に準拠
+\bibliographystyle{tipsj}
+\bibliography{bibliography}
+
+% 図表一覧等自動生成
+\listoffigures
+\thispagestyle{plain}
+\listoftables
+\thispagestyle{plain}
+
+
+\end{document}

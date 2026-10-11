@@ -1,0 +1,211 @@
+% ============= Packages =============
+
+% Switch between German and English such as the title page design based on the main.tex. file settings
+\usepackage{ifthen}
+
+% Switch the Language (automatic)
+\ifuseGermanVersion
+	\usepackage[ngerman]{babel}	% German
+\else
+	\usepackage[english]{babel} % English
+\fi
+
+% Standard Packages
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} % Used to insert images
+\usepackage{float} %Package for using the [H] option on graphics to force them into place
+\usepackage[export]{adjustbox} % Used to constrain images to a maximum size
+\usepackage{enumerate} % Needed for markdown enumerations to work
+\usepackage{geometry} % Used to adjust the document margins
+\usepackage{amsmath} % Equations
+\usepackage{amssymb} % Equations
+\usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+\usepackage{fancyvrb} % verbatim replacement that allows latex
+\usepackage{grffile} % extends the file name processing of package graphics
+\usepackage{url}
+\def\UrlBreaks{\do\/\do-}
+\usepackage{hyperref}
+\usepackage{longtable} % longtable support required by pandoc >1.10
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage[nohyperlinks]{acronym}
+\usepackage{enumitem}
+\usepackage{fixmath}
+%\usepackage{showframe}
+\usepackage{blindtext}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\graphicspath{{Figures/}} % define path of images
+\usepackage{animate}
+\usepackage{fancyhdr}
+\usepackage{lmodern}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{footnote}
+\usepackage{lastpage}
+
+% Citation style
+\usepackage{natbib}
+\bibliographystyle{apalike}
+
+% BlockDiagram Drawing Package
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage[european,nooldvoltagedirection]{circuitikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepackage{mathtools}
+\usepackage{pgf-pie}
+\usepackage{textcomp}
+\usepackage{pgfplots}
+\usepgfplotslibrary{statistics}
+\usepackage{smartdiagram}
+
+%  ============= BlockDiagram Drawing Config =============
+% Definition of blocks:
+\tikzset{%
+  block/.style    = {draw, thick, rectangle, minimum height = 3em,
+    minimum width = 3em},
+  sum/.style      = {draw, circle, node distance = 2cm}, % Adder
+  input/.style    = {coordinate}, % Input
+  output/.style   = {coordinate}, % Output
+  mult/.style	  = {draw, isosceles triangle, minimum height=1cm, minimum width =1cm}
+}
+
+%  ============= Settings for listings  =============
+\usepackage{listings,lstautogobble}
+\lstset{title=\lstname, frame=single, framerule=0pt, rulecolor=\color{lightgray}, showspaces=false, showstringspaces=false, showtabs=false, numbers=left, numbersep=5pt, numberstyle=\sffamily\tiny\color{gray}, breaklines=false, autogobble=true, basicstyle=\sffamily\scriptsize}
+
+\usepackage[breakable]{tcolorbox}
+\newtcolorbox{codeblock}{
+    colback=gray!5!white,
+    colframe=gray!95!black,
+    before skip=20pt,
+    after skip=20pt
+    }
+\newtcolorbox{codeblock-b}{
+    breakable,
+    colback=gray!5!white,
+    colframe=gray!95!black,
+    before skip=20pt,
+    after skip=20pt
+    }
+\newtcolorbox{box-black}{
+    colback=black,
+    colframe=black,
+    before skip=10pt,
+    after skip=10pt
+    }
+
+%  ============= Color definition ============= 
+% FH-Blau
+\definecolor{FH}{RGB}{0, 84, 150}
+
+\ifuseAllgemein
+    % FH-Farbe 2
+    \definecolor{FH2}{RGB}{0, 84, 150}
+\fi
+\ifuseBahntechnologieundMobitlitaet
+    % FH-Farbe 2
+    \definecolor{FH2}{RGB}{4, 171, 192}
+\fi
+\ifuseDigitalBusinessundInnovation
+    % FH-Farbe 2
+    \definecolor{FH2}{RGB}{199, 195, 0}
+\fi
+\ifuseGesundheit
+    % FH-Farbe 2
+    \definecolor{FH2}{RGB}{243, 146, 0}
+\fi
+\ifuseInformatikundSecurity
+    % FH-Farbe 2
+    \definecolor{FH2}{RGB}{0, 139, 206}
+\fi
+\ifuseMedienundDigitaleTechnologien
+    % FH-Farbe 2
+    \definecolor{FH2}{RGB}{29, 175, 142}
+\fi
+\ifuseSoziales
+    % FH-Farbe 2
+    \definecolor{FH2}{RGB}{215, 48, 57}
+\fi
+
+% ============= No massive space betweend headline and chapter titel =============
+\renewcommand*{\chapterheadstartvskip}{\vspace*{-.4cm}}
+\renewcommand*{\chapterheadendvskip}{\vspace{.5cm}}
+
+\setlength{\parindent}{0pt} % no indent at paragraph start
+
+% ============= Header and Footer =============
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter~ #1}{}}
+
+\fancypagestyle{icmt-fancy}{%
+  \fancyhf{}% Clear header and footer
+  %\fancyhead[L]{\leftmark}
+  \fancyhead[L]{\subTitle}
+  \fancyhead[R]{}
+  \fancyfoot[L]{\studentLastNameone~|~\studentLastNametwo}
+  \fancyfoot[R]{\thepage}% Custom footer *~|~\pageref{LastPage}
+  \renewcommand{\headrulewidth}{0.4pt}% Line at the header visible
+  \renewcommand{\footrulewidth}{0.4pt}% Line at the footer visible
+}
+
+% Define horizontal lines above and below the main content
+\makeatletter
+\def\thickhline{%
+	\noalign{\ifnum0=`}\fi\hrule \@height \thickarrayrulewidth \futurelet
+	\reserved@a\@xthickhline}
+\def\@xthickhline{\ifx\reserved@a\thickhline
+	\vskip\doublerulesep
+	\vskip-\thickarrayrulewidth
+	\fi
+	\ifnum0=`{\fi}}
+\makeatother
+\newlength{\thickarrayrulewidth}
+\setlength{\thickarrayrulewidth}{2\arrayrulewidth}
+
+% ============= Redefine the plain page style =============
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[R]{\thepage}%
+  \renewcommand{\headrulewidth}{0.0pt}% Line at the header invisible
+  \renewcommand{\footrulewidth}{0.0pt}% Line at the footer visible
+}
+\renewcommand*{\chapterpagestyle}{icmt-fancy}
+
+% ============= Size of headings =============
+\setkomafont{chapter}{\LARGE}
+\setkomafont{section}{\Large}
+\setkomafont{subsection}{\large}
+\setkomafont{subsubsection}{\normalsize}
+\setkomafont{paragraph}{\normalsize}
+\setkomafont{subparagraph}{\small}
+
+% roman numbering with \RM{Zahl}
+\newcommand{\RM}[1]{\MakeUppercase{\romannumeral #1}}
+
+% ============= hyperref should always be added at the end =============
+\usepackage{hyperref}
+
+\hypersetup{
+    unicode=false, % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true, % show Acrobat’s toolbar?
+    pdfmenubar=true, % show Acrobat’s menu?
+    pdffitwindow=false, % window fit to page when opened
+    pdfstartview={FitV}, % fits the width of the page to the window
+    pdfpagelayout={SinglePage}, % displays only one page when opened in pdf viewer
+    pdftitle={\workTitle},
+	pdfsubject={\subTitle},
+	pdfauthor={\studentFirstNameone~\studentLastNameone,~\studentFirstNametwo~\studentLastNametwo},
+	pdfkeywords={\workTitle,~\subTitle,~\specialization},
+    pdfcreator={pdflatex}, % creator of the document
+    pdfproducer={LaTeX with hyperref}, % producer of the document
+    pdfnewwindow=true, % links in new window
+    colorlinks=false, % false: boxed links; true: colored links
+    linkcolor=black, % color of internal links (change box color with linkbordercolor)
+    citecolor=black, % color of links to bibliography
+    filecolor=black, % color of file links
+ 	breaklinks=true,	
+	menucolor=black,
+    urlcolor=black % color of external links
+}

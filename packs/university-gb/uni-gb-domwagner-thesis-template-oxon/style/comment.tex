@@ -1,0 +1,27 @@
+\ifdraft
+\usepackage[draft]{style/commenting}
+\else
+\usepackage[nompar]{style/commenting}
+\fi
+
+\declareauthor{lo}{LO}{red}
+\authorcommand{lo}{comment}
+
+\declareauthor{dw}{DW}{blue}
+\authorcommand{dw}{comment}
+\setdefaultauthor{dw}
+
+\makeatletter
+\renewcommand{\comm@todo@mpar}[1]{}
+\makeatother
+
+\def\divider{%
+  \leavevmode\leaders\hrule height 0.6ex depth \dimexpr0.4pt-0.6ex\hfill%
+  \kern0pt%
+}
+\newcommand{\ONGOING}[1]{%
+  \draftpar\comment*{\divider\MakeUppercase{Ongoing~#1}\divider}\draftpar%
+}
+
+\renewcommand{\OpenCommentBraket}{$\lceil$}
+\renewcommand{\ClosedCommentBraket}{$\rfloor$}

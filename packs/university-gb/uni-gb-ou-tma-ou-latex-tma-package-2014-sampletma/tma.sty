@@ -1,0 +1,143 @@
+%% Adapted by Peter McFarlane from various sources.
+%% All errors of style or content are mine.
+%% acknowledgements to Bob Margolis, and also Rob Lynas (from whom some macros are plagiarised).
+%% My apologies for not annotating this file, I shall do so soon (yeah, right).
+%%
+%% Package Options
+%%    [roman] varies question numbering to sequence used by M381 i.e. 1(ii)(b)
+%%    [alph]  (default) question numbering as 1(b)(ii)
+%%
+%% To use a package option, place the option before the package name:
+%%    \usepackage[roman]{tma}
+%%
+\ProvidesPackage{tma}[2013/10/04 v1.01 TMA document style]
+\NeedsTeXFormat{LaTeX2e}
+
+\newcommand{\name}{\relax}
+\newcommand{\tma}{\relax}
+\newcommand{\course}{\relax}
+\newcommand{\pin}{\relax}
+%%
+
+\title{\textbf{TMA: \course-\tma}}
+\author{\textbf{\name\space\pin}}
+
+\newcommand{\myname}[1]{\renewcommand{\name}{#1}}
+\newcommand{\mytma}[1]{\renewcommand{\tma}{#1}}
+\newcommand{\mycourse}[1]{\renewcommand{\course}{#1}}
+\newcommand{\mypin}[1]{\renewcommand{\pin}{#1}}
+
+\RequirePackage{amssymb}
+\RequirePackage{amsmath}
+\RequirePackage{amsfonts}
+\RequirePackage{amsthm}
+\RequirePackage{upgreek}
+\RequirePackage{wasysym}
+\RequirePackage{bm}
+\RequirePackage{fancyhdr}
+\RequirePackage{geometry}
+\RequirePackage{xifthen}
+\RequirePackage{verbatim}
+\RequirePackage{graphicx}
+\RequirePackage{lastpage}
+
+\geometry{headheight=10mm}
+\geometry{headsep=5mm}
+\geometry{bottom=25mm}
+\geometry{footskip=15mm}
+\geometry{rmargin=30mm,lmargin=30mm}%
+\geometry{includemp}
+\geometry{marginparwidth=0mm,marginparsep=0mm}
+\setlength{\headwidth}{\textwidth}
+
+\newcommand{\marginnote}[1]{\marginpar{#1}}
+\newcommand{\marginnotes}{\geometry{marginparwidth=40mm,marginparsep=5mm}%
+		\geometry{rmargin=15mm,lmargin=20mm}%
+		\setlength{\headwidth}{\textwidth}}
+
+\newcounter{question}
+\newcounter{qpart}[question]
+\newcounter{qsubpart}[qpart]
+\renewcommand{\thequestion}{\arabic{question}}
+
+\DeclareOption{roman}{
+\renewcommand{\theqpart}{\roman{qpart}}
+\renewcommand{\theqsubpart}{\alph{qsubpart}}
+}
+
+\DeclareOption{alph}{
+\renewcommand{\theqpart}{\alph{qpart}}
+\renewcommand{\theqsubpart}{\roman{qsubpart}}
+}
+
+\ExecuteOptions{alph}
+\ProcessOptions\relax
+
+\newenvironment{question}[1][0]{%
+		\ifthenelse{#1>0}{\setcounter{question}{#1-1}}{\relax}%
+		\stepcounter{question}\makebox[0pt][r]{\large{Q \thequestion .\quad }}}%
+		{\par \vspace{3em}}
+\newcommand{\qpart}[1][0]{%
+		\ifthenelse{#1>0}{\setcounter{qpart}{#1-1}}{\relax}%
+		\stepcounter{qpart}\par%
+		\makebox[0pt][r]{\large{(\theqpart )\quad }}}
+\newcommand{\qsubpart}[1][0]{%
+		\ifthenelse{#1>0}{\setcounter{qsubpart}{#1-1}}{\relax}%
+		\stepcounter{qsubpart}\par%
+		\makebox[0pt][r]{\large{(\theqsubpart )\quad }}}
+
+\newcommand{\deriv}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\newcommand{\pderiv}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\psderiv}[3]{\frac{\partial ^2#1}{\partial #2\partial #3}}
+\newcommand{\dd}{\ensuremath{\, \mathrm{d}}}
+\newcommand{\e}{\ensuremath{\mathrm{e}}}
+\newcommand{\ii}{\ensuremath{\mathrm{i}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\Rr}{\ensuremath{\mathcal{R}}}
+\newcommand{\ve}[1]{\mathbf{#1}}
+\newcommand{\st}{\ensuremath{^\mathrm{st}}}
+\newcommand{\nd}{\ensuremath{^\mathrm{nd}}}
+\newcommand{\rd}{\ensuremath{^\mathrm{rd}}}
+\newcommand{\nth}{\ensuremath{^\mathrm{th}}}
+
+\renewcommand{\vec}[1]{\overrightarrow{#1}}
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\rect}{\ensuremath{\sqsubset\!\!\sqsupset}}
+\newcommand{\comb}[2]{\ensuremath{^{#1}C_{#2}}}
+\newcommand{\perm}[2]{\ensuremath{^{#1}P_{#2}}}
+
+\DeclareMathOperator{\re}{Re}
+\DeclareMathOperator{\im}{Im}
+\DeclareMathOperator{\Log}{Log}
+\DeclareMathOperator{\Arg}{Arg}
+\DeclareMathOperator{\Wnd}{Wnd}
+\DeclareMathOperator{\Res}{Res}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Orb}{Orb}
+\DeclareMathOperator{\Stab}{Stab}
+\DeclareMathOperator{\Fix}{Fix}
+
+\numberwithin{equation}{question}
+
+\newtheorem{lemma}{Lemma}
+\newtheorem{theorem}{Theorem}
+\renewcommand{\qedsymbol}{\blacksmiley}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2 ex plus 0.3 ex minus 0.2 ex}
+
+\pagestyle{fancy}
+\lhead{\textrm{\course \ TMA-\tma }}
+\chead{}
+\rhead{\textrm{\name \ \pin }}
+\lfoot{}\cfoot{\textrm{ \ page \thepage \ of \pageref{LastPage}}}\rfoot{}
+
+\endinput
+
+
+

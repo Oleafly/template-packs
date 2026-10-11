@@ -1,0 +1,106 @@
+\documentclass[twoside]{dlut-thesis}
+
+\usepackage{listings}
+
+\lstdefinestyle{lfonts}{
+    basicstyle   = \footnotesize\ttfamily,
+    stringstyle  = \color{purple},
+    keywordstyle = \color{blue!60!black}\bfseries,
+    commentstyle = \color{olive},
+}
+
+\lstdefinestyle{lnumbers}{
+    numbers     = left,
+    numberstyle = \tiny,
+    numbersep   = 1em,
+    firstnumber = 1,
+    stepnumber  = 1,
+}
+
+\lstdefinestyle{llayout}{
+    breaklines = true,
+    tabsize    = 2,
+    % columns    = flexible,
+}
+
+\lstdefinestyle{lgeometry}{
+    xleftmargin  = 20pt,
+    xrightmargin = 0pt,
+    frame        = tb,
+    framesep     = \fboxsep,
+    framexleftmargin = 20pt,
+}
+
+\lstdefinestyle{lstrings}{
+    showstringspaces = false,
+}
+
+\lstdefinestyle{lgeneral}{
+    style = lfonts,
+    style = lnumbers,
+    style = llayout,
+    style = lgeometry,
+    style = lstrings,
+}
+
+\lstdefinestyle{TeX}{
+    language = {tex},
+    style    = lgeneral,
+}
+
+
+\begin{document}
+%-----------------------------------------------------------------------------------------------------------------------
+\include{data/info}
+\maketitle
+
+
+%-----------------------------------------------------------------------------------------------------------------------
+% \makeDeclareOriginal
+\includepdf[pages=-]{statement.pdf}
+
+
+%-----------------------------------------------------------------------------------------------------------------------
+\frontmatter
+\include{data/abstract}
+
+
+%-----------------------------------------------------------------------------------------------------------------------
+\mktoc
+\mktoe
+
+\listoffigures
+\addcontentsline{toc}{chapter}{图目录}
+\listoftables
+\addcontentsline{toc}{chapter}{表目录}
+
+
+%-----------------------------------------------------------------------------------------------------------------------
+\input{data/denotation}
+
+
+%-----------------------------------------------------------------------------------------------------------------------
+\mainmatter
+\let\cleardoublepage\clearpage
+
+\include{data/chap1}
+\include{data/chap2}
+\include{data/chap3}
+
+%-----------------------------------------------------------------------------------------------------------------------
+\bibliography{refs}
+
+
+%-----------------------------------------------------------------------------------------------------------------------
+\appendix
+\include{data/appendix}
+
+
+%-----------------------------------------------------------------------------------------------------------------------
+\backmatter
+\include{data/achievements}
+\include{data/acknowledgements}
+
+
+%-----------------------------------------------------------------------------------------------------------------------
+\end{document}

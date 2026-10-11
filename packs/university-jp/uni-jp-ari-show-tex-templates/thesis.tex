@@ -1,0 +1,264 @@
+\documentclass[12pt,uplatex]{jsarticle}   % 日本語
+\usepackage{tcu-thesis}
+\usepackage{fancyhdr}
+\usepackage{bm} % 太字の数式
+\usepackage{amssymb} % 数式
+\usepackage{amsmath} % 数式
+\usepackage{float} % 図表の位置
+\usepackage{listings} % ソースコード
+\usepackage{color} % ソースコードの色付け
+
+% ソースコードのスタイル設定
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  backgroundcolor=\color{white},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  frame=single,
+  rulecolor=\color{black},
+  tabsize=2,
+  captionpos=b,
+  breaklines=true,
+  breakatwhitespace=false,
+  title=\lstname,
+  keywordstyle=\color{blue},
+  commentstyle=\color{green},
+  stringstyle=\color{red},
+  escapeinside={\%*}{*)},
+  morekeywords={*,...}
+}
+
+% Python用のスタイル設定
+\lstdefinestyle{python}{
+  language=Python,
+  keywordstyle=\color{blue},
+  commentstyle=\color[RGB]{0,100,0},     %DarkGreen
+  stringstyle=\color[RGB]{128,0,0},      %Maroon
+  frame=single,
+  breaklines=true,
+  basicstyle=\ttfamily\footnotesize
+}
+
+% Jupyter Notebook用のスタイル設定
+\lstdefinestyle{jupyter}{
+  language=Python,
+  keywordstyle=\color{blue},
+  commentstyle=\color[RGB]{0,100,0},     %DarkGreen
+  stringstyle=\color[RGB]{128,0,0},      %Maroon
+  frame=single,
+  breaklines=true,
+  basicstyle=\ttfamily\footnotesize,
+  morekeywords={In, Out, print}
+}
+
+
+% アルゴリズムのレイアウト
+\newenvironment{algorithm_step}
+{\begin{list}{}
+    {\setlength{\leftmargin}{6em}  % Step X)の部分の幅
+     \setlength{\itemindent}{0em}
+     \setlength{\labelsep}{0em}
+     \setlength{\labelwidth}{6em}  % Step X)の部分の幅
+     \setlength{\itemsep}{1em}     % ステップ間の縦方向の間隔
+     \renewcommand{\makelabel}[1]{##1\hfill}}}
+{\end{list}}
+
+% 数式カウンターの定義
+\newcounter{myeqcounter} % 独自カウンターを定義
+
+\newcommand{\autoequation}[1]{
+\refstepcounter{myeqcounter} % カウンターを進める
+\begin{equation}
+#1 \tag{\themyeqcounter} % カウンター値をタグに適用
+\end{equation}
+}
+
+
+% オリジナルマクロ by Kyohei Fushida and Kenji Fujiwara
+\newcommand{\li}{\item}
+\newcommand{\ol}[1]{\begin{enumerate}#1\end{enumerate}}
+\newcommand{\ul}[1]{\begin{itemize}#1\end{itemize}}
+\newcommand{\dl}[1]{\begin{description}#1\end{description}}
+\newcommand{\equ}[1]{\begin{equation}#1\end{equation}}
+\newcommand{\eqenum}[1]{\begin{align}#1\end{align}}
+\newcommand{\eqa}[1]{\begin{align}#1\end{align}}
+\newcommand{\eqmul}[1]{\begin{equation}\begin{split}#1\end{split}\end{equation}}
+\usepackage{xcolor}
+
+%\newcommand{\figref}[1]{図\ref{#1}}
+%\newcommand{\tabref}[1]{表\ref{#1}}
+\renewcommand{\subsecref}[1]{\ref{#1}項}
+\newcommand{\chapref}[1]{\ref{#1}章}
+
+\definecolor{darkgreen}{rgb}{0, 0.5, 0} %下の色指定で使う
+\definecolor{whitesmoke}{rgb}{0.99, 0.99, 0.99} %下の色指定で使う
+\newcommand{\red}{\color{red}}%red
+\newcommand{\blue}{\color{blue}}
+\newcommand{\green}{\color{teal}}
+\newcommand{\purple}{\color{violet}}%violet
+\newcommand{\black}{\color{black}}
+\newcommand{\ea}{\xspace\emph{et al.}\xspace}
+\newcommand{\TODO}[1]{\nb{TODO:}{#1}}
+
+
+\newcommand{\methods}{\#methods}
+\newcommand{\colorrow}{\rowcolor[rgb]{0.851,0.851,0.851}}
+\newcommand{\colorcel}{\cellcolor[rgb]{0.851,0.851,0.851}}
+\def\et{\xspace et\ al.\xspace}
+\def\ie{i.e.,\xspace}
+\def\eg{e.g.,\xspace}
+\newcommand{\nb}[2]{
+    \fcolorbox{gray}{yellow}{\bfseries\sffamily\scriptsize#1}
+    {\sf\small\textit{\textcolor{blue}{#2}}}
+   }
+
+\newtheorem{defi}{定義}
+\newtheorem{hypo}{仮説}
+
+% 必要なパッケージの読み込み
+% とりあえず最低限使っておいて欲しいパッケージのみ書いています．
+% 色々なパッケージがあります．藤原が過去に使ってたパッケージなどは博士論文のファイルを参照してください．
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{cite} % 参考文献を [3,4]のようにまとめるのに便利．
+\usepackage{url} % urlを記載するときに使う．
+
+% 参考文献を引用された順で出力する
+\bibliographystyle{junsrt}
+
+% 学籍番号
+\studentnumber{20XXXXXX}
+
+% 日本語題目
+\title{論文タイトル}
+
+% 英語題目
+\etitle{Thesis Title}
+
+% 日本語氏名（姓と名の間に空白（半角）を入れて下さい）
+\author{姓 名}
+
+% 欧文氏名（first name, last name の順に記入し，先頭文字のみを大文字にする．）
+\eauthor{First Last}
+
+% 専攻
+\department{\media}
+\course{\jsys}
+
+% 論文提出年月日
+\syear{20XX}
+\smonth{1}
+\sday{1}
+
+% % キーワード５〜６個 (in LaTeX)
+% \keywords{キーワード1，キーワード2，キーワード3}
+
+% % 5 or 6 Keywords (in LaTeX)
+% \ekeywords{Keyword 1, Keyword 2, Keyword 3}
+
+% 内容梗概 (in LaTeX)
+%   Abstractは必須です．
+%   サンプルほど長々と書く必要はありません．
+%   注: 行の先頭が\\で始まらないようにすること．
+% \abstract{%
+% ここに内容梗概を記述する．
+% 研究背景，研究目的，提案内容，実験結果，結論を簡潔にまとめる．
+% 行の先頭が \\ で始まらないように注意する．
+% }
+
+%%%%%%%%%%%%%%%%%%%%%%%%% document starts here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+%
+% 表紙 および アブストラクト
+%
+\input{contents/cover}
+\thispagestyle{empty}
+% \titlepage
+% \jabstractpage
+%
+% 目次
+%
+\clearpage
+\pagenumbering{roman} % ページ番号をローマ数字にする
+\tableofcontents
+\clearpage
+\newpage
+
+% 以降本文
+\pagenumbering{arabic} % ページ番号をアラビア数字に戻す
+
+% この章構成はあくまで一例です．
+% \section:章
+% \subsection: 節
+% \subsubsection: 項
+% として使ってください．
+% 研究の内容によって自分が適切だと思う章構成を考えて下さい．
+% もちろん構成について藤原と相談するのも良いと思います．
+% \section{テンプレート}
+% %サンプルです．必要なければファイルごと削除してください．
+% 「はじめに」では研究の背景を述べつつ研究の目的を述べるのが一般的です．
+% 仰々しい論文の場合は論文の構成（以降の章構成）を説明したりもします．
+
+% 最初は世の中（といっても情報系分野ぐらいで十分ですが）全体の背景を述べつつ，
+% 徐々に的を絞ってどうして自身の研究を行う必要があるのかを上手く説明できると素晴らしいです．
+% 研究の背景となる課題や既存研究を紹介する際には必ず参考文献を引用するようにしましょう．
+
+% 「はじめに」は他の章に比べて非常に作成が難しいです．
+% どういう流れで書けばいいのか困った際は指導教員に聞くのもよいと思いまし，とりあえず書ける章（自分が実際に手を動かした章）から書いていくのも良いと思います．
+
+
+% \subsection{論文を書く際の注意事項}
+% \begin{itemize}
+%     \item 句読点は全角のカンマとピリオドである「，」と「．」を使って下さい．卒論執筆期間中は一時的にIMEの設定を変更して常にカンマとピリオドが使用されるようにしておくと安全だと思います．
+%     \item 表記揺れに注意しましょう．
+%     \item ですます調はNGです．
+%     \item 未定義語は使わない．一般的でない用語が出てくるタイミングで必ず説明を入れる．
+% \end{itemize}
+
+
+\section{序論}
+\input{contents/01_introduction}
+
+\section{準備}
+\input{contents/02_preparation.tex}
+
+\section{関連研究}
+\input{contents/03_default_method.tex}
+
+\section{提案手法}
+\input{contents/04_propose_method.tex}
+
+\section{実験}
+\input{contents/05_experiment}
+
+\section{考察}
+\input{contents/06_consideration}
+
+\section{結論}
+\input{contents/07_conclusion}
+
+% 謝辞
+\acknowledgements
+\input{contents/08_acknowledgements}
+
+% 参考文献
+% BibTeX を使って参考文献のリストをつくって下さい．
+% proceedings.bib: 雑誌名や国際会議の名称をマクロ化しています
+% ref.bib: ここに参考文献を書くと良いと思います．元々博士論文に使った論文の情報が載っています．
+% ref.bib以外のファイルに分けることも可能です．単純にカンマで区切ってファイル名（.bib除く）を
+% \bibliographyの引数に追加してください．
+\bibliography{proceedings,ref}
+
+% 付録
+% 付録には，本文に直接載せるべきではない，文字通り付録となる要素を載せます．
+% 例えば，詳細な数式の展開であったり，アンケートや実験の詳細な（ほぼ完全な）結果だったりを載せます．
+% 必要であれば以下の3行のコメントアウトを外して付録を加えてください．
+\appendix
+\input{contents/appendix}
+
+\end{document}

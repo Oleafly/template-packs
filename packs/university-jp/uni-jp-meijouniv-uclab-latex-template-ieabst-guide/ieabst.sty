@@ -1,0 +1,190 @@
+% 名城大学情報工学部情報工学科卒論発表アブストラクトスタイルファイル
+% 2005/01/18 By S.Usmai
+% Updated:2006/01/?? By 小中先生 2005年度版に更新
+% Updated:2006/02/02 By S.Usami 長さ指定を絶対表記(truept)に変更
+% Updated:2016/12/02 By H.Suzuki 文字コードをShiftJISからUTF-8に変更
+% Updated:2017/12/26 By Y.Kameya 論文概要ヘッダの内容を簡素化(TeX Live 2017に対応)
+% Updated:2025/11/25 By K.Asahi 冒頭コメントを情報工学部に修正
+% 本ファイルの問い合わせ先：susami@meijo-u.ac.jp
+%
+%
+\textwidth 469truept
+\textheight 682truept
+\headheight 0truept
+\headsep 0truept
+\footskip 18truept
+\columnsep 7truemm
+\oddsidemargin -7truept
+\evensidemargin -7truept
+\marginparwidth 0truept
+\topmargin 16truept
+
+\raggedbottom %ページごとに下がそろってなくてもOK
+
+%
+\floatsep 6truept plus 1truept minus 2truept        %図表間距離
+\textfloatsep 10truept plus 1truept minus 3truept   %図表と本文の距離[tb]
+\intextsep 6truept plus 1truept minus 2truept       %図表と本文の距離[h]
+\dblfloatsep 6truept plus 1truept minus 2truept     %2段ぶち抜き図表の場合
+\dbltextfloatsep 10truept plus 1truept minus 3truept%2段ぶち抜き図表の場合
+
+\setcounter{topnumber}{3}          %ページ上部の図表の最大数
+\def\topfraction{.8}               %ページ上部の最大図表割合
+\setcounter{bottomnumber}{2}       %ページ下部の図表の最大数
+\def\bottomfraction{.6}            %ページ下部の最大図表割合
+\setcounter{totalnumber}{5}        %1ページの最大図表数
+\def\textfraction{.1}              %ページ内の最小テキスト割合
+\def\floatpagefraction{.8}         %図表ページの最小図表割合
+\setcounter{dbltopnumber}{2}       %ぶち抜き図表のページ上部最大数
+\def\dbltopfraction{.8}            %ぶち抜き図表のページ上部の最大割合
+
+\def\section{
+ \@startsection
+  {section}
+  {1}                           %見出し表示レベル
+  {0truept}                         %ページ左端から見出しまでの距離
+  {.75ex plus .25ex minus .25ex}%見出し上の空き（なし）
+  {.45ex plus .2ex minus .2ex} %見出し下の空き
+  {\large\bf}}                  %見出しの文字
+\def\subsection{
+ \@startsection
+  {subsection}{2}{0truept}{.5ex plus .25ex minus .25ex}
+  {.3ex plus .1ex minus .1ex}{\normalsize\bf}}
+%\def\subsubsection{
+% \@startsection
+%  {subsubsection}{3}{0truept}{.5ex plus .25ex minus .25ex}
+%  {-1em}                        %改行せず
+%  {\normalsize\bf}}
+%%paragraph以下は使用しない前提で定義せず。
+\setcounter{secnumdepth}{2} %見出しを表示する最大レベル
+\def\thesection{\arabic{section}.$\!\!\!$} %節番号の表示形式
+\def\thesubsection{\thesection$\!$\ \ \arabic{subsection}$\!\!\!\!$} %準節番号
+
+%以下はlist(itemize,enumerate,description)用の設定
+\leftmargini=1.5zw
+\leftmarginii=1.5zw
+\leftmarginiii=1.25zw
+\leftmargin=\leftmargini
+\labelsep=.5zw
+\labelwidth=\leftmargini
+\advance \labelwidth by -\labelsep
+
+\def\@listI{
+ \leftmargin=\leftmargini
+ \parsep=\z@
+ \topsep=2truept plus 2truept minus 1truept
+ \itemsep=0truept plus 2truept\relax}
+\let \@listi=\@listI
+\@listi
+
+\def\@listii{
+ \leftmargin=\leftmarginii
+ \labelwidth=\leftmarginii
+ \advance \labelwidth by -\labelsep
+ \topsep=0truept plus 1truept minus 0truept
+ \parsep=\z@
+ \itemsep=0truept plus 1truept\relax}
+
+\def\@listiii{
+ \leftmargin=\leftmarginiii
+ \labelwidth=\leftmarginiii
+ \advance \labelwidth by -\labelsep
+ \topsep=0truept plus 1truept minus 0truept
+ \parsep=\z@}
+
+\long\def\@makecaption#1#2{ %図と表のキャプション設定
+ \vskip 5truept                 %図とキャプションの距離
+ \setbox\@tempboxa\hbox{#1: #2}
+ \ifdim \wd\@tempboxa >\hsize
+  #1: #2\par
+ \else
+  \hbox to\hsize{\hfil\box\@tempboxa\hfil}
+ \fi
+ \vskip 5truept}                %キャプションと表の距離
+\def\fps@figure{bh}         %位置指定のない図はbかt
+\def\fps@table{bh}          %位置指定のない表はbかt
+
+%\def\thefootnote{\arabic{footnote}} %脚注の定義
+%\def\@makefnmark{\textsuperscript{\nomalfont\@thefnmark)}}
+\def\footnoterule{%
+ \kern 2truept \hrule width .4\columnwidth \kern 4truept}%
+\long\def\@makefntext#1{%
+ \parindent=1zw \noindent \hbox to 2zw{\hss $^{\@thefnmark}$}#1}
+
+\def\thebibliography#1{ %
+ \subsection*{参考文献\@mkboth{参考文献}{参考文献}}
+% \small
+ \list{[\arabic{enumi}]}
+  {\settowidth{\labelwidth}{[#1]}
+   \leftmargin=\labelwidth
+   \advance \leftmargin by \labelsep
+   \usecounter{enumi}}
+ \def\newblock{\hskip .03em plus .1em minus .03em}
+ \sloppy
+ \clubpenalty=4000 \widowpenalty=4000
+ \sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist
+
+\def\eqnarray{ %数式で&=&の左右の空を防ぐ
+ \stepcounter{equation}
+ \let\@currentlabel=\theequation
+ \global\@eqnswtrue
+ \global\@eqcnt\z@
+ \tabskip\@centering
+ \let\\=\@eqncr
+ $$\halign to \displaywidth\bgroup\@eqnsel\hskip\@centering
+ $\displaystyle\tabskip\z@{##}$&\global\@eqcnt\@ne
+ \hfil$\displaystyle{{}##{}}$\hfil
+ &\global\@eqcnt\tw@$\displaystyle\tabskip\z@{##}$\hfil
+ \tabskip\@centering&\llap{##}\tabskip\z@\cr}
+
+
+%headingsの定義
+
+%以下はヘッダの定義
+\def\題目#1{\long\def\@題目{#1}}    %\def\@題目{}
+\def\学籍番号#1{\def\@学籍番号{#1}} %\def\@学籍番号{}
+\def\氏名#1{\def\@氏名{#1}}         %\def\@氏名{}
+\def\研究室#1{\def\@研究室{#1}}     %\def\@研究室{}
+\newcount\@unt@ \newcount\@@unt@
+
+\def\stop論文概要{}
+
+\newif\if論文error \論文errorfalse
+\def\@タイトルチェック#1{%
+  \@for\p@r@m:=#1\do{\expandafter
+    \ifx\csname @\p@r@m\endcsname\relax
+    \typeout{「\p@r@m」が指定されていません}\論文errortrue\fi}
+  \if論文error
+  \errmessage{未定義のタイトル項目があります}\else\relax\fi}
+
+\long\def\論文概要{%
+  \@タイトルチェック{題目,学籍番号,氏名,研究室}
+  \newpage
+  \pagestyle{plain} \thispagestyle{firstpage}
+  \c@page\@ne
+  \interlinepenalty=200}
+\def\end論文概要{\stop論文概要\@@par\pagebreak\@@par}
+
+\def\@論文概要ヘッダ{%
+ \vbox to \headheight{
+  \hbox to \textwidth{\hss
+   \def\arraystretch{1}
+   \begin{tabular}{c}
+	\begin{minipage}{\textwidth}
+     \centering\LARGE{\bf \@題目}
+    \end{minipage} \\ 
+    \\ % 単に空白の行を入れるだけにする
+    \large{\@学籍番号\ \ \@氏名} \\
+    \@研究室 研究室 \\
+   \end{tabular}
+  \hss}
+ \vss}
+}
+
+\def\ps@firstpage{\def\@oddhead{\@論文概要ヘッダ}\def\@oddfoot{}
+  \def\@evenhead{\@論文概要ヘッダ}\def\@evenfoot{}}
+\def\ps@plain{\def\@oddhead{}\def\@oddfoot{}
+  \def\@evenhead{}\def\@evenfoot{}}
+
+% end of file

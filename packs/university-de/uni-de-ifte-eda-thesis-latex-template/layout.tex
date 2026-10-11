@@ -1,0 +1,20 @@
+\usepackage[left=3cm,bottom=3cm,right=3cm,top=3cm]{geometry}
+
+% Kopfzeilen
+\usepackage[autooneside=false]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\automark[subsection]{section}
+% Kopfzeile rechtsbündig
+\ohead{\headmark}
+\chead[]{}
+
+% Sections erscheinen immer auf einer neuen Seite ohne Kopfzeile
+\makeatletter
+\newcommand*{\the@orig@section}{}
+\let\the@orig@section\section
+\renewcommand*{\section}{%
+  \clearpage
+  \thispagestyle{plain}%
+  \the@orig@section
+}
+\makeatother

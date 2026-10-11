@@ -1,0 +1,64 @@
+%%=====================================================================
+%%  附录
+%%  【规范】附录：（另起一页，小 4 号黑体，顶格）；附录中的公式编号为（A1）。
+%%=====================================================================
+
+\begin{theappendix}
+
+本附录给出系统实现过程中的部分核心代码，供评阅与复现参考。
+
+\subsection*{A1\quad 首页视图层结构}
+
+\begin{lstlisting}[style=xml, caption={首页视图层 index.wxml}]
+<view class="container" style='align-items: center;'>
+  <view class='top_notice' wx:if="{{notAuthorized}}">
+    <text>小程序需要您的授权才能正常使用</text>
+    <button bindtap='onOpenSetting'>去授权</button>
+  </view>
+  <view class='index_card_img' bindtap='toPunchcardPage'
+        style="background-image:url(https://xxx.com/card.png);">
+  </view>
+  <view class='index_text_bg'>
+    <text class='index_title'>幸运占卜</text>
+    <text class='index_subtitle'>每日需刷满20题可进行一次占卜</text>
+  </view>
+  <view class='countDown'>
+    <image src='/images/punchcard/{{day.left}}.png' class='l'></image>
+    <image src='/images/punchcard/{{day.right}}.png' class='r'></image>
+  </view>
+</view>
+\end{lstlisting}
+
+\subsection*{A2\quad 抽卡动画处理逻辑}
+
+\begin{lstlisting}[style=js, caption={洗牌动画 onShuffleEvent}]
+/* 洗牌 */
+onShuffleEvent: function (cb) {
+  shuffleCount++;
+  this.innerAudioContext1.play();          // 洗牌音效
+  this.shuffleAnimation2.rotateY(0).step();
+  wsAPI.taskSequence()
+    .then(() => {
+      this.shuffleAnimation1.left(-70).step();
+      this.shuffleAnimation2.left(70).step();
+    })
+    .then(() => {
+      var that = this;
+      clearTimeout(timer);
+      var timer = setTimeout(function () { cb && cb(that); }, 300);
+    });
+}
+\end{lstlisting}
+
+\subsection*{A3\quad 每日可占卜次数判定}
+
+用户当日可占卜次数由当日累计答题数与占卜基数共同决定，其判定公式为
+
+\begin{equation}
+  C = \left\lfloor \frac{Q}{20} \right\rfloor - U
+  \label{equ:appendix-count}
+\end{equation}
+
+式中：$C$ 为当日剩余可占卜次数；$Q$ 为当日累计答题数；$U$ 为当日已使用次数；$\lfloor \cdot \rfloor$ 表示向下取整。
+
+\end{theappendix}

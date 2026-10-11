@@ -1,0 +1,74 @@
+\chapter{数学}
+
+\label{cha:maths}
+
+\section{公式}
+\label{sec:formula}
+
+数学公式可以使用 \env{equation} 和 \env{equation*} 环境。
+注意数学公式的引用应前后带括号，建议使用 \cs{eqref} 命令，比如式~\eqref{eq:example}。
+\begin{equation}
+  \hat{f}(\xi) = \int_{-\infty}^\infty f(x) \eu^{-2 \uppi \iu x \xi} \dif x.
+  \label{eq:example}
+\end{equation}
+
+公式中含有中文
+\begin{align}
+    \begin{split}
+        \mbox{像素准确率} &= \sum_{i=1}^{n_{cl}}n_{ii} / \sum_{i=1}^{n_{cl}}t_i \\
+        \mbox{平均像素准确率} &= \frac{1}{n_{cl}} \sum_{i=1}^{n_{cl}}(n_{ii}/ t_i) \\
+        \mbox{Mean IU} &= \frac{1}{n_{cl}} \sum_{i=1}^{n_{cl}}\frac{n_{ii}}{t_i + \sum_j^{n_{cl}} n_{ji} - n_{ii}}
+    \end{split}
+\end{align}
+公式中含有矩阵
+\begin{equation}
+    \textbf{H} = \begin{bmatrix}
+        I*\mathbf{x}_i \\ \textbf{h}
+    \end{bmatrix}
+	\label{eq:matrix}
+\end{equation}
+每行后面都有编号的公式
+\begin{align}
+    \frac{\partial}{\partial W_{ij}^{(l)}} J(\mathbf{W},\mathbf{b};\mathbf{x},y) & = \frac{\partial J(\mathbf{W},\mathbf{b};\mathbf{x},y)}{\partial z_i^{(l+1)}}\cdot \frac{\partial z_i^{(l+1)}}{\partial W_{ij}^{(l)}} = \delta_i^{(l+1)}a_j^{(l)} \\
+    \frac{\partial}{\partial b_i^{(l)}} J(\mathbf{W},\mathbf{b};\mathbf{x},y)    & = \frac{\partial J(\mathbf{W},\mathbf{b};\mathbf{x},y)}{\partial z_i^{(l+1)}}\cdot \frac{\partial z_i^{(l+1)}}{\partial b_i^{(l)}} = \delta_i^{(l+1)}
+\end{align}
+
+多行公式尽可能在“=”处对齐，推荐使用 \env{align} 环境，比如式~\eqref{eq:align_2}。
+\begin{align}
+  a & = b + c + d + e \label{eq:align_1} \\
+    & = f + g. \label{eq:align_2}
+\end{align}
+
+\section{例子、定理与证明}
+
+示例文件中使用 \pkg{amsthm} 宏包配置了定理、引理和证明等环境。
+用户也可以使用 \pkg{ntheorem} 宏包。
+
+\begin{theorem}[定理例子]
+    \label{the:example-theorem}
+    这是一个定理。
+\end{theorem}
+
+\begin{corollary}[推论例子]
+    \label{the:example-corollary}
+    这是一个推论。
+\end{corollary}
+
+\begin{lemma}[引理例子]
+    \label{the:example-lemma}
+    这是一个引理。
+\end{lemma}
+
+这里我们先给出\autoref{the:example-theorem-sysu-thesis}
+
+\begin{theorem}[中山大学毕业论文模板定理]
+    \label{the:example-theorem-sysu-thesis}
+    中山大学 \LaTeX 毕业论文模板可以用于写各种证明。
+\end{theorem}
+
+下面我们对\autoref{the:example-theorem-sysu-thesis}进行证明：
+
+
+\begin{proof}
+  Trivial.
+\end{proof}

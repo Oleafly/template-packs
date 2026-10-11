@@ -1,0 +1,55 @@
+\chapter{数式}\label{chap:chapter4}
+逆運動学式では，ロボット車の移動速度から，左右のモータの速度へと変換を行う．
+それぞれのモータの速度を回転数に変換を行う．
+この回転数をPWM 信号として，モータへ入力して速度制御を行う．
+
+ロボットの移動速度（並進速度）を$V$ [m/s]，角速度を$\omega$ [rad/s]，左右輪の速度を$v_L$，$v_R$ [m/s] 車輪直径を$d$ [m]とする．
+このロボットは，差動駆動型のロボットであるため，運動学式より，(\ref{eq:ik})式が成り立つ．
+\begin{equation}
+    \label{eq:ik}
+    \begin{bmatrix}
+        V \\
+        \omega \\
+        R \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \dfrac{v_L + v_R}{2} \\
+        \dfrac{v_R - v_L}{2 d} \\
+        \dfrac{d(v_L + v_R)}{v_R - v_L} \\
+    \end{bmatrix}
+\end{equation}
+基準座標系での速度と角速度は
+\begin{equation}
+    \label{eq:ik_base}
+    \begin{bmatrix}
+        \dot{x} \\
+        \dot{y} \\
+        \dot{\theta} \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        v \cos{\theta} \\
+        v \sin{\theta} \\
+        \omega \\
+    \end{bmatrix}
+\end{equation}
+となる．これより，左右輪のモータの角速度はつぎとなる．
+\begin{equation}
+    \label{eq:wheel_speed}
+    \begin{bmatrix}
+        v_L \\
+        v_R \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        V - d \omega \\
+        V + d \omega \\
+    \end{bmatrix}
+\end{equation}
+モータ速度からモータ回転数$n$ [rpm]を求める式は，
+\begin{equation}
+    \label{eq:v_rpm}
+    n = \dfrac{60}{2 \pi r} \times v \times D \times \dfrac{1}{d}
+\end{equation}
+となる．このとき，$D$ は減速比であり，$v$ [m/s]には，左右輪の速度$v_L$，$v_R$ を代入する．

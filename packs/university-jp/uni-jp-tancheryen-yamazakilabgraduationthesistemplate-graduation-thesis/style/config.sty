@@ -1,0 +1,45 @@
+%--------------------------------------------------------------
+%  ページレイアウトの再定義（一段組のみ）
+%--------------------------------------------------------------
+\headheight=0cm
+\headsep=0cm
+\oddsidemargin=0.5cm \evensidemargin=0.5cm
+\textheight=21.5cm  \textwidth=15.0cm
+\footskip=1.5cm
+\topmargin=0.5cm
+
+%--------------------------------------------------------------
+%  行送りの再定義
+%--------------------------------------------------------------
+\renewcommand{\baselinestretch}{1.4}
+
+%--------------------------------------------------------
+%  少ない行で設定できるものはここに書く
+%--------------------------------------------------------
+% 関連図書 -> 参考文献に変える設定
+\renewcommand{\bibname}{参考文献}
+
+\newenvironment{gratitude}{
+  \newpage
+  \chapter*{謝辞}
+
+}{
+  \newpage
+}
+
+\def\paragraph {
+  \hspace{8pt}
+}
+
+\def\appendixpage#1{
+  \newpage
+  \appendix
+  \clearpage
+  \pagenumbering{roman}
+  \listoffigures
+  \ifnum#1=1
+    \listoftables
+  \fi
+  \clearpage
+  \pagenumbering{arabic}
+}

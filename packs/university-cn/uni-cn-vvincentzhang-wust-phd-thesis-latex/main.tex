@@ -1,0 +1,124 @@
+%%% Local Variables:
+%%% mode: Xelatex
+%%% TeX-master: t
+%%% End:
+\raggedbottom
+\documentclass[draftformat,mathCMR]{WUSTthesis}%草稿用这个
+%\documentclass[finalformat,mathCMR]{WUSTthesis}%盲审用这个
+%\raggedbottom
+
+\usepackage{WUSTtils}% 所有其它可能用到的包都统一放到这里了，可以根据自己的实际添加或者删除。这样做主要是为了避免class文件过于臃肿。
+%\usepackage[a4paper, margin=3.05cm]{geometry}
+%\usepackage{mathfont}
+\usepackage{amsmath,amssymb,amsfonts,bm}
+\usepackage{listings}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{RGB}{245,245,245}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,              
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle, escapeinside=``}
+%\usepackage{mathalpha}  % 提供更灵活的字体支持
+%\DeclareMathAlphabet{\mathtt}{T1}{pcr}{m}{n}  % 强制关联 Courier New
+\usepackage{graphicx}
+\usepackage{ragged2e}
+\newcolumntype{P}[1]{>{\RaggedRight\hspace{0pt}}p{#1}}
+\newcolumntype{Z}{>{\centering\arraybackslash}X}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{newtxmath}
+\DeclareSymbolFont{orilargesymbols}{OMX}{cmex}{m}{n}
+\DeclareMathSymbol{\orisum}{\mathop}{orilargesymbols}{"50}
+\renewcommand\sum\orisum
+\renewcommand\geq\geqslant 
+\renewcommand\leq\leqslant  
+\RequirePackage[top=3cm, bottom=3cm, left=3cm, right=3cm, headheight=2.0cm, footskip=2.4cm,]{geometry}
+\usepackage[font={small, stretch=1.5}, labelfont=bf, textfont=bf]{bicaption}
+\captionsetup{labelsep=space}
+\captionsetup[figure][bi-first]{name=图, font={small, stretch=1.5}, labelfont=bf, textfont=bf, justification=centering}
+\captionsetup[figure][bi-second]{name=Figure, font={small, stretch=1.5}, labelfont=bf, textfont=bf, justification=centering}
+\captionsetup[table][bi-first]{name=表, font={small, stretch=1.5}, labelfont=bf, textfont=bf, justification=centering}
+\captionsetup[table][bi-second]{name=Table, font={small, stretch=1.5}, labelfont=bf, textfont=bf, justification=centering}
+\usepackage[cal=cm]{mathalpha}
+%\setmainfont{Times New Roman}[Scale=.9]
+\setmainfont{Times New Roman}
+%\includeonly{body/chap02}
+\PassOptionsToPackage{no-math}{fontspec}
+\usepackage{setspace}
+
+\begin{document}
+\begin{sloppypar}
+%定义所有的eps文件在 figures 子目录下
+\graphicspath{{figures/}}
+
+% 生成封面，版权页，摘要
+
+\frontmatter
+\input{body/cover}
+\makecover
+
+% 手动设置页码延续
+%\pagenumbering{Roman} % 强制大写罗马数字
+%\setcounter{page}{2} % 假设摘要结束于Ⅱ，目录从Ⅲ开始
+
+% 生成目录
+\clearpage
+\pagestyle{tocpage} % 所有后续页使用 tocpage 样式
+\thispagestyle{tocpage} % 强制当前页（目录第一页）生效
+\tableofcontents
+%\tableofengcontents 
+\clearpage
+
+% 对照表
+%\include{body/denotation}  
+\clearpage
+\mainmatter
+\pagestyle{plain}
+\include{body/chap01}
+\include{body/chap02}
+\include{body/chap03}
+\include{body/chap04}
+%\include{body/chap05}
+
+%%% 结论
+\include{body/conclusion}
+
+%%% 致谢
+\include{body/ack}
+
+
+%%% 参考文献
+%Included for Gather Purpose only:
+%input "ref/refs.bib"
+\bibliographystyle{WUSTThesis}
+\bibliography{./ref/refs}
+
+%%% 附录（根据自己实际情况增加或删减）
+\begin{appendix}
+%\input{body/appendix01}
+\input{body/publications}
+%\input{body/appendix02}
+\input{body/project}
+%\input{body/appendix03}
+%\input{body/appendix04}
+\end{appendix}
+\end{sloppypar}
+\end{document}

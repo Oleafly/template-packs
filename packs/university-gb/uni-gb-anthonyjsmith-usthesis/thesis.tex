@@ -1,0 +1,285 @@
+\documentclass[a4paper,11pt]{report}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University of Sussex thesis template
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Modification History
+%
+% Based on usthesis.cls by Jonathon Read
+% http://www.cogs.susx.ac.uk/users/jlr24/latex.html
+% Modified by Anthony Smith, Feb 2007
+% Incorporated into single thesis.tex file, Anthony Smith, 30 June 2008
+% Minor alterations to page numbering, AJS, 25 July 2008
+% New alternative hyperref options for print version, AJS, 11 Sep 2008
+% "DRAFT" on header, AJS, 12 Sep 2008
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LINE SPACING
+\newcommand{\linespacing}{1.5}
+\renewcommand{\baselinestretch}{\linespacing}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BIBLIOGRAPHY STYLE
+\usepackage{natbib}
+% \bibliographystyle{plain} for [1], [2] etc.
+\bibliographystyle{apalike}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% OTHER FORMATTING/LAYOUT DECLARATIONS
+% Graphics
+\usepackage{graphicx,color}
+\usepackage{epstopdf}
+\usepackage[british]{babel}
+% The left-hand-side should be 40mm.  The top and bottom margins should be
+% 25mm deep.  The right hand margin should be 20mm.
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=4cm,right=2cm,headsep=10pt]{geometry}
+\flushbottom
+% Pages should be numbered consecutively thorugh the main text.  Page numbers
+% should be located centrally at the top of the page.
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{
+	\fancyhf{}
+	% Add "DRAFT: <today's date>" to header (comment out the following to remove)
+	\lhead{\textit{DRAFT: \today}}
+	%
+	\chead{\thepage}
+	\renewcommand{\headrulewidth}{0pt}
+}
+\pagestyle{plain}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ANY OTHER DECLARATIONS HERE:
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% HYPERREF
+\usepackage[colorlinks,pagebackref,pdfusetitle,urlcolor=blue,citecolor=blue,linkcolor=blue,bookmarksnumbered,plainpages=false]{hyperref}
+% For print version, use this instead:
+%\usepackage[pdfusetitle,bookmarksnumbered,plainpages=false]{hyperref}
+%\usepackage{backref}
+%\renewcommand{\backrefpagesname}{Cited on}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN DOCUMENT
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PREAMBLE: roman page numbering i, ii, iii, ...
+\pagenumbering{roman}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE PAGE: The title page should give the following information:
+%%	(i) the full title of the thesis and the sub-title if any;
+%%	(ii) the full name of the author;
+%%	(iii) the qualification aimed for;
+%%	(iv) the name of the University of Sussex;
+%%	(v) the month and year of submission.
+\thispagestyle{empty}
+\begin{flushright}
+\includegraphics[width=6cm]{uslogo}
+\end{flushright}	
+\vskip40mm
+\begin{center}
+% TITLE
+\huge\textbf{My Theory of Everything}
+\vskip2mm
+% SUBTITLE (optional)
+\LARGE\textit{How it all works}
+\vskip5mm
+% AUTHOR
+\Large\textbf{Joe Bloggs}
+\normalsize
+\end{center}
+\vfill
+\begin{flushleft}
+\large
+% QUALIFICATION
+Submitted for the degree of Doctor of Philosophy \\
+University of Sussex	\\
+% DATE OF SUBMISSION
+September 2008
+\end{flushleft}		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DECLARATIONS
+\chapter*{Declaration}
+I hereby declare that this thesis has not been and will not be submitted in whole or in part to another University for the award of any other degree.
+	
+% ADDITIONAL DECLARATIONS HERE (IF ANY)
+
+\vskip5mm
+Signature:
+\vskip20mm
+% AUTHOR
+Joe Bloggs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SUMMARY PAGE
+\thispagestyle{empty}
+\newpage
+\null\vskip10mm
+\begin{center}
+\large
+\underline{UNIVERSITY OF SUSSEX}
+\vskip20mm
+% AUTHOR, QUALIFICATION
+\textsc{Joe Bloggs, Doctor of Philosophy}
+\vskip20mm
+% TITLE
+\underline{\textsc{My Theory of Everything}}
+\vskip0mm
+% SUBTITLE (optional)
+\underline{\textsc{How it all works}}
+\vskip20mm
+\underline{\textsc{Summary}}
+\vskip2mm
+\end{center}
+% Change line spacing
+\renewcommand{\baselinestretch}{1.0}
+\small\normalsize
+% SUMMARY HERE (300 word limit for most subjects):
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ACKNOWLEDGEMENTS
+\chapter*{Acknowledgements}
+\renewcommand{\baselinestretch}{\linespacing}
+\small\normalsize
+% ACKNOWLEDGEMENTS HERE:
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TABLE OF CONTENTS, LISTS OF TABLES & FIGURES
+\newpage
+\pdfbookmark[0]{Contents}{contents_bookmark}
+\tableofcontents
+\listoftables
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoffigures
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Figures}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MAIN THESIS TEXT: arabic page numbering 1, 2, 3, ...
+\newpage
+\pagenumbering{arabic}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%-----------------------------------------------------
+% Chapter: Introduction
+%-----------------------------------------------------
+
+% NB Good idea to put each chapter in a separate file.
+% If you put the following in a file called "thesis_introduction.tex"
+% then you can include it with the following:
+
+% \input{thesis_introduction}
+
+\chapter{Introduction}
+\label{chap:intro}
+
+This is the introduction to the thesis.\footnote{And this is a footnote.}  The conclusion is in Chapter \ref{chap:conc} on page \pageref{chap:conc}.
+
+\section{About the logo}
+
+Figure \ref{us_figure} shows the logo for the University of Sussex.\footnote{This is a URL: \url{http://www.sussex.ac.uk}} This is consistent with Special Relativity \citep{Einstein1905}. $E=mc^2$.
+
+\begin{figure}
+\centering
+\includegraphics[width=5cm]{uslogo}
+\caption[US Logo (optional short caption)]{\label{us_figure} The logo for the University of Sussex.}
+\end{figure}
+
+Here is some Latin.
+
+Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Nullam suscipit lectus nec tellus. Praesent malesuada nisl in neque. Nam dictum semper nisl. Ut ultricies nonummy augue. Nunc ullamcorper eros in nisl. Sed eros purus, vehicula eget, mattis nec, dignissim non, nulla. Suspendisse ac est commodo libero rhoncus sagittis. Vestibulum quis augue ut enim tincidunt ullamcorper. Vestibulum sem. Pellentesque enim ligula, consequat quis, luctus vel, rutrum id, sem.
+
+Donec eleifend erat quis enim. Maecenas volutpat cursus libero. Fusce velit. Duis in metus. Sed lobortis, lorem id molestie ullamcorper, leo lacus interdum urna, a dapibus augue massa id magna. Curabitur leo. Cras sit amet lorem ut massa tincidunt ullamcorper. Nulla sed urna vulputate enim sodales pharetra. Cras vitae nulla a diam aliquam fermentum. Donec ullamcorper porttitor arcu. Ut laoreet est. Suspendisse potenti. Curabitur tincidunt, lorem nec pharetra viverra, arcu tellus tincidunt metus, sed fringilla ligula lorem at odio. Integer arcu turpis, facilisis quis, rhoncus quis, tristique et, nunc. Aenean massa pede, tempus nec, sodales at, tristique id, tortor. Aenean porttitor, sapien et interdum eleifend, urna felis eleifend nisi, non sagittis justo erat et lorem.
+
+Nam risus. Curabitur nec lectus. Nullam lobortis lacinia ipsum. Donec sit amet tortor id sem tincidunt congue. Praesent ut quam. Sed nisl nulla, adipiscing sit amet, dapibus ut, rutrum et, massa. Nunc fringilla tincidunt nisl. Vestibulum vehicula nisl id augue. Sed lobortis ligula sit amet nulla. Suspendisse viverra mauris non libero. Curabitur ac neque at lectus consectetuer tempus. Donec molestie magna consequat quam. Donec placerat turpis et risus. Integer purus purus, accumsan sed, euismod eget, commodo ornare, velit. Duis sit amet augue ut velit tristique blandit. Morbi in odio. Nam urna.
+
+Curabitur pulvinar tristique pede. Duis justo. Morbi libero diam, varius et, faucibus non, blandit sit amet, nisi. Nam quam nunc, mattis id, scelerisque vel, pellentesque at, nunc. Etiam mattis ultrices odio. Suspendisse aliquam nisi sed sem. Praesent scelerisque ultrices velit. Nam sit amet lectus. Nullam in ipsum vel lectus nonummy consectetuer. Sed dictum. Maecenas massa sapien, blandit in, sollicitudin id, vulputate ut, risus. Nulla facilisi. Vivamus ut erat. Etiam massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse hendrerit iaculis mi. Morbi tincidunt felis a urna.
+
+Ut a quam. Nam aliquet suscipit pede. In vitae magna. Aliquam erat volutpat. Etiam ut turpis. Ut convallis adipiscing velit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam luctus ante sit amet pede. Nulla facilisi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Etiam ultricies augue non eros. Vivamus nulla lacus, varius sed, consectetuer id, tempus sed, velit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus non dolor eu augue adipiscing molestie. Duis eu est. Proin sodales pellentesque quam. Duis at enim. Nulla vulputate, diam sed rutrum euismod, quam mauris consectetuer massa, a dapibus nisi eros ac ligula. Nam tortor metus, faucibus vitae, cursus vel, egestas sollicitudin, nulla. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.
+
+
+%-----------------------------------------------------
+% Chapter: Conclusion
+%-----------------------------------------------------
+\chapter{Conclusion}
+\label{chap:conc}
+
+I was right all along.
+
+\section{What was I right about?}
+
+I was right about the following things.
+
+\subsection{Previous theories were wrong}
+
+People thought they understood, but they didn't.
+
+\subsection{My new idea is right}
+
+Of course.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BIBLIOGRAPHY
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliography{bib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% START APPENDICES
+\appendix
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%-----------------------------------------------------
+% Appendix: Code
+%-----------------------------------------------------
+\chapter{Code}
+\label{app:code}
+
+\begin{verbatim}
+10 PRINT "HELLO WORLD"
+\end{verbatim}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END DOCUMENT
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%

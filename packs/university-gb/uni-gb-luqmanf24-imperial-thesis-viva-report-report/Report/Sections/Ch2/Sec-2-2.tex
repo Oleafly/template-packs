@@ -1,0 +1,20 @@
+\subsection{Spatial Discretisation}
+
+\lipsum[10]
+
+\subsection{Time Integration}
+
+After spatial discretisation the \ac{PDE} becomes a system of \ac{ODE}s in time. The explicit update is summarised in Algorithm~\ref{alg:explicit-euler}. \lipsum[11]
+
+\begin{algorithm}[ht!]
+\caption{Explicit Euler time stepping for Equation~\eqref{eq:transport}.}
+\label{alg:explicit-euler}
+\begin{algorithmic}[1]
+\Require initial field $\phi^0$, time step $\Delta t$, number of steps $N$
+\For{$n = 0, 1, \dots, N-1$}
+    \State compute fluxes $F^n$ from $\phi^n$
+    \State $\phi^{n+1} \gets \phi^n + \Delta t \, F^n$
+\EndFor
+\Ensure $\phi^N$
+\end{algorithmic}
+\end{algorithm}

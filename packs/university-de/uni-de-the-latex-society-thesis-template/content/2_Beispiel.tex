@@ -1,0 +1,179 @@
+\chapter{Weitere Beispiele}
+\label{chp:Weitere_Beispiele}
+
+\section{Textformatierung}
+\label{sec:Textformatierung}
+
+Beispiel für \code{einen Codeausschnitt} in einem Text.
+
+Beispiel für \name{einen Eigennamen} in einem Text.
+
+Beispiel für \emph{eine Hervorhebung} in einem Text.
+
+Text kann auch {\color{red}eingefärbt} werden.
+Es empfiehlt sich, für alle im Text verwendeten Hervorhebungsarten jedoch einen eigenen Befehl in style.tex zu definieren.
+Dies garantiert Einheitlichkeit, insbesondere im Fall einer Änderung dieser Hervorhebung.
+
+Schriftgrößen sollten im Fließtext nie geändert werden. Für Tabellen und Abbildungen stehen folgende Befehle für entsprechende Fontgröße zur Verfügung:
+
+\begin{table}[ht!]
+	\selectfont
+	\centering
+	\begin{tabular}{|l|r|}
+		\hline
+		tiny & 6pt \\\hline
+		scriptsize & 8pt \\\hline
+		footnotesize & 10pt \\\hline
+		small & 11pt \\\hline
+		normalsize & 12pt \\\hline
+		large & 14pt \\\hline
+		Large & 17pt \\\hline
+		LARGE & 20pt \\\hline
+		huge & 25pt \\\hline
+		Huge & 25pt \\\hline
+	\end{tabular}
+	\caption{Schriftgrößen}
+	\label{tab:fontsize}
+\end{table}
+
+\section{Aufzählungen}
+\label{sec:Aufzaehlungen}
+
+Eine unnummerierte Liste:
+
+\begin{itemize}
+	\item Listenelement 1,
+	\item Listenelement 2 und
+	\item Listenelement 3.
+\end{itemize}
+
+Eine nummerierte Liste:
+
+\begin{enumerate}
+	\item nummeriertes Listenelement 1,
+	\item nummeriertes Listenelement 2 und
+	\item nummeriertes Listenelement 3.
+\end{enumerate}
+
+\subsection{Veränderte Aufzählungssymbole}
+\label{sub:Veraenderte_Aufzaehlungssymbole}
+
+Mit dem Parameter \emph{label} kann die Aufzählung individuell gestaltet werden.
+Möglich sind zum Beispiel
+
+\begin{enumerate}[label=\Roman*.)]
+	\item \textbackslash{}alph* für Klein- und \textbackslash{}Alph* für Großbuchstaben,
+	\item \textbackslash{}arabic* für Zahlen und
+	\item \textbackslash{}roman* für kleine und \textbackslash{}Roman* für große römische Zahlen.
+\end{enumerate}
+
+Mit weiteren Parametern wie z.\,B. \emph{align} und \emph{leftmargin} kann die Darstellung weiter angepasst werden.
+
+\section{Referenzen}
+\label{sec:Referenzen}
+
+Kapitel, Schaubilder usw. können über ihr optionales Label referenziert werden.
+
+Was alles in der Referenz stehen soll kann über verschiedene Befehle festgelegt werden.
+
+{ % Stylized tabular environment to look like text instead of like a table
+	\def\arraystretch{1.2}
+	\begin{tabular}{@{}lcl@{}} % @{} at beginning / end removes default left / right indentation
+		\normalsize ref & $\rightarrow$ & \normalsize\ref{sec:Referenzen} \\
+		\normalsize nameref & $\rightarrow$ & \normalsize\nameref{sec:Referenzen} \\
+		\normalsize autoref & $\rightarrow$ & \normalsize\autoref{sec:Referenzen} \\
+		\normalsize fullref & $\rightarrow$ & \normalsize\fullref{sec:Referenzen} \\
+	\end{tabular}
+}
+
+Labels können auch als \textlabel[TL]{Textlabel (TL)}{text:tl} definiert und später erneut referenziert werden: \ref{text:tl}.
+
+\section{Abkürzungen}
+\label{sec:Abkuerzungen}
+
+Abkürzungen werden in der acronyms.tex Datei angelegt.
+
+Beim ersten Aufruf wird der volle Text angezeigt: \ac{HFU}.
+
+Bei erneutem Aufruf wird nurnoch die Abkürzung angezeigt: \ac{HFU}.
+
+\section{Quellen}
+\label{sec:Quellen}
+
+Quellen können, wie Referenzen, mit verschiedenen Befehlen referenziert werden.
+
+{
+	\def\arraystretch{1.2}
+	\begin{tabular}{@{}lcl@{}}
+		\normalsize cite & $\rightarrow$ & \normalsize\cite{mustermann12} \\
+		\normalsize citeA & $\rightarrow$ & \normalsize\citeA{mustermann12} \\
+		\normalsize citeauthor & $\rightarrow$ & \normalsize\citeauthor{mustermann12} \\
+		\normalsize citeyear & $\rightarrow$ & \normalsize\citeyear{mustermann12} \\
+	\end{tabular}
+}
+
+Es können auch mehrere Quellen gleichzeitig zitiert werden \cite{doe01,musterfrau20,normal19}
+
+Alternativ können auch Fußnoten zum Quellenvermerk dienen\,\footnote{\citeA{dupont12}}. % der Befehl \, erzeugt ein geschütztes, halbes Leerzeichen
+
+\subsection{Einträge in bibliography.bib}
+\label{sub:Eintraege_in_bibliography.bib}
+
+In \autoref{tab:bibentries} werden die am häufigst benötigten Felder für die jeweiligen Eintragsarten aufgelistet.
+Um ein gutes Quellverzeichnis zu erzeugen sollten möglichst viele dieser Felder bei jeder Quelle bestückt werden.
+Darüber hinaus finden sich auf der Dokumentation des jeweils verwendeten Zitierstils (hier: apacite) weitere Felder wie \emph{originaltitle} o.\,Ä., welche jedoch selten benötigt werden.
+Wie diese Felder sich auswirken, kann im Literaturverzeichnis dieser Demo gesehen werden.
+
+\begin{table}[ht!]
+	\centering
+	\resizebox*{\linewidth}{!}{
+		\begin{tabular}{l|p{3.5cm}|c|c|c|c|c|p{5.5cm}}
+			\multirow{2}{*}{Feld} & \multirow{2}{*}{Beschreibung} & \multicolumn{5}{c|}{Entry Type} & \multirow{2}{*}{Anmerkungen} \\
+			\cline{3-7}
+			& & article & book & inproceedings & techreport & misc & \\
+			\hline
+			author* & Autor(en) & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & Mehrere Autoren werden mit \emph{and} getrennt. Autoren können als \name{Vorname Nachname} oder \name{Nachname, Vorname} angegeben werden. \\
+			year* & Erscheinungsjahr & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & \\
+			day & Erscheinungstag & $\times$ & & $\times$ & $\times$ & $\times$ & \\
+			month & Erscheinungsmonat & $\times$ & & $\times$ & $\times$ & $\times$ & \\
+			title* & Titel & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & Groß- / Kleinschreibung wird entfernt. Kann vermieden werden, indem das komplette Feld in zwei paar geschweifte Klammern geschrieben wird. \\
+			englishtitle & Englischer Titel & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & Optional falls Werk einen übersetzten Titel hat. Groß- / Kleinschreibung wird wie bei \emph{title} entfernt. \\
+			booktitle* & Buchtitel & & & $\times$ & & & Titel des Buchs, in dem der Artikel erschienen ist. Groß- / Kleinschreibung wird wie bei \emph{title} entfernt. \\
+			editor & Herausgeber & & $\times$ & & & & \\
+			translator & Übersetzer & $\times$ & $\times$ & & & & \\
+			type & Art des Werks & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & Bspw. Doktorarbeit, Rezension, Broschüre \\
+			journal* & Journal, in dem Artikel erschienen ist & $\times$ & & & & & \\
+			volume* & Ausgabe & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & \\
+			number* & Nummer der Ausgabe & $\times$ & $\times$ & & $\times$ & $\times$ & \\
+			pages & Referenzierte Seiten & $\times$ & & & & & \\
+			howpublished & Veröffentlichungsart & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & Beschreibung, wie etwas veröffentlicht wurde (z.\,B. Name einer Webseite, \name{Unveröffentlichte Arbeit}, \name{Vorgestellt auf Konferenz}). \\
+			address* & Adresse des Verlags / der Institution & & $\times$ & $\times$ & $\times$ & $\times$ & Meist nur Stadt oder bei amerikanischen Verlagen Stadt, Staat. \\
+			publisher* & Verlag & & $\times$ & $\times$ & & $\times$ & \\
+			institution* & Veröffentlichende Institution & & & & $\times$ & & \\
+			\makecell[tl]{urldate* / \\ lastchecked} & Letztes Zugriffsdatum auf URL & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & Nur in Kombination mit \emph{url} nötig. Felder urldate und lastchecked sind austauschbar. \\
+			url* & URL & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & \\
+			note & Notizen & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & \\
+			doi & DOI & $\times$ & $\times$ & $\times$ & $\times$ & $\times$ & \\
+			\multicolumn{8}{l}{\rule{0pt}{4ex}*\,Markierte Felder sind besonders wichtig. Alle anderen sind in den meisten Fällen nur optional.}
+		\end{tabular}
+	}
+	\caption{Felder für bibliography.bib}
+	\label{tab:bibentries}
+\end{table}
+
+\section{Theoreme}
+\label{sec:Theoreme}
+
+Für Definitionen, Beispiele o.\,Ä. können sogenannte Theoreme verwendet werden.
+Diese sehen beispielsweise wie in \autoref{def:example-definition} oder \autoref{ex:example-example} aus.
+Weitere solcher Theoreme können selbst in der Datei style.tex in dem entsprechenden Bereich definiert werden.
+
+\begin{definition}
+	Dies ist eine Definition.
+	\label{def:example-definition}
+\end{definition}
+
+\begin{example}
+	Dies ist ein Beispiel.
+	\label{ex:example-example}
+\end{example}

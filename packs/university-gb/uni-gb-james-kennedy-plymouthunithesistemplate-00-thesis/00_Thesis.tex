@@ -1,0 +1,47 @@
+\documentclass[11pt, a4paper, oneside]{book}
+
+\input{prelim/preamble}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+% SET THE FIRST PART TO BE SINGLE SPACED
+{\setstretch{1.0}
+\input{prelim/prelim}
+}
+
+\mainmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\include{chapters/01_intro}
+\cleartooddpage
+
+% insert more chapters here
+
+% glossary and acronyms managed in prelim/glossary, to print:
+% 1. run latex command
+% 2. use command: makeglossaries %
+% 3. use normal build procedure (PDFLaTeX, BibTeX, PDFLaTeX, PDFLaTeX)
+\printglossaries
+\cleartooddpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{appendices}
+\input{appendices/appendices}
+\end{appendices}
+\cleartooddpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{\setstretch{1.0}
+\bibliographystyle{prelim/apa-good}
+\bibpunct[ ]{(}{)}{;}{a}{}{,}
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliography{BibFile}
+\cleartooddpage
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+
+\end{document}

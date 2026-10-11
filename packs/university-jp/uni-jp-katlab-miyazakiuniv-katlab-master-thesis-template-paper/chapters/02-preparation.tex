@@ -1,0 +1,82 @@
+\chapter{研究の準備}\label{cha:Preparation}
+
+本章では、LaTeX での論文執筆に必要な基本的な書き方について説明する。
+LaTeX の詳細な文法については、文献\cite{kimura-latex}に詳しい解説がある。
+
+\section{セクションとサブセクション}
+
+\verb|\section{}| でセクション、\verb|\subsection{}| でサブセクションを作成できる。
+
+\subsection{サブセクションの例}
+
+このようにサブセクションを作成できる。
+さらに細かく分けたい場合は \verb|\subsubsection{}| も使用できる。
+
+\section{箇条書き}
+
+\subsection{番号なし箇条書き}
+
+\verb|itemize| 環境を使用する：
+
+\begin{itemize}
+  \item 項目1
+  \item 項目2
+  \item 項目3
+\end{itemize}
+
+\subsection{番号付き箇条書き}
+
+\verb|enumerate| 環境を使用する：
+
+\begin{enumerate}
+  \item 最初の項目 \label{enum:first}
+  \item 2番目の項目
+    \begin{enumerate}
+      \item サブ項目A \label{enum:sub-a}
+      \item サブ項目B \label{enum:sub-b}
+    \end{enumerate}
+  \item 3番目の項目 \label{enum:third}
+\end{enumerate}
+
+リスト項目にもラベルを付けて参照できる。
+例えば、\verb|\ref{enum:first}| で\ref{enum:first}を参照でき、
+サブ項目は\verb|\ref{enum:sub-a}| で\ref{enum:sub-a}のように参照できる。
+\verb|\cref| を使えば、\cref{enum:first}や\cref{enum:sub-a}のように参照できる。
+
+\section{強調表示}
+
+以下のようなフォントスタイルが使用できる：
+
+\begin{itemize}
+  \item \textbf{太字}: \verb|\textbf{太字}|
+  \item \textit{Italic}: \verb|\textit{Italic}|
+  \item \underline{下線}: \verb|\underline{下線}|
+\end{itemize}
+
+一部のフォントスタイルは、日本語に対応していないもの (\verb|\textit{斜体}| など) があるので注意。
+
+\section{verbatim 環境}
+
+コマンドやコードをそのまま表示したい場合は、\verb|verbatim| 環境またはインライン \verb|\verb| コマンドを使用する。
+
+\begin{verbatim}
+これは verbatim 環境の例です。
+LaTeX のコマンドも \command{そのまま} 表示されます。
+\end{verbatim}
+
+インラインで表示する場合は、\verb|\verb|コマンド| のように書く。
+
+\section{ラベルと参照}
+
+\subsection{ラベルの付け方}
+
+章、節、図、表などにラベルを付けることで、後から参照できる：
+
+\begin{verbatim}
+\section{セクション名}\label{sec:label_name}
+\end{verbatim}
+
+\subsection{参照の仕方}
+
+ラベルを付けた箇所を参照するには、\verb|\ref{}| コマンドを使用する。
+例えば、この章は第\ref{cha:Preparation}章であり、第\ref{cha:Introduction}章で本テンプレートの概要を説明した。

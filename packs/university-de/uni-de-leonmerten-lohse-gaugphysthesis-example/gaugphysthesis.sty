@@ -1,0 +1,152 @@
+\RequirePackage{graphicx}
+\RequirePackage{hyperref}
+\RequirePackage{ifluatex}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{gaugphysthesis}[2015/10/12 GAUG Phys Thesis]
+
+\ifluatex
+\else
+\RequirePackage[utf8]{inputenc}
+\fi
+
+\DeclareOption{detitlepage}{%
+  \gdef\@angefertigtstring{angefertigt von}
+  \gdef\@ausstring{aus}
+  \gdef\@amstring{am}
+  \gdef\@erstgutachterstring{Erstgutachter}
+  \gdef\@zweitgutachterstring{Zweitgutachter}
+  \gdef\@abgabestring{Abgabe}
+  \gdef\@bachelorstring{Bachelorarbeit}
+  \gdef\@masterstring{Masterarbeit}
+  \gdef\@betreuerstring{Betreuer}
+}
+\DeclareOption{entitlepage}{%
+  \gdef\@angefertigtstring{prepared by}
+  \gdef\@ausstring{from}
+  \gdef\@amstring{at the}
+  \gdef\@erstgutachterstring{First referee}
+  \gdef\@zweitgutachterstring{Second referee}
+  \gdef\@abgabestring{Submission}
+  \gdef\@bachelorstring{Bachelor's thesis}
+  \gdef\@masterstring{Master's thesis}
+  \gdef\@betreuerstring{Supervisor}
+}
+
+\gdef\@thesissubject{%
+\PackageError{gaugphysthesis}{%
+  Either bachelor or master must be passed as options.
+}{%
+  Muuuuh!
+}}%
+
+\DeclareOption{bachelor}{%
+  \gdef\@thesissubject{\@bachelorstring}
+}
+\DeclareOption{master}{%
+  \gdef\@thesissubject{\@masterstring}
+}
+
+\ExecuteOptions{detitlepage}
+\ProcessOptions\relax
+
+
+\gdef\@herkunft{}
+\gdef\@erstgutachter{}
+\gdef\@zweitgutachter{}
+\gdef\@thesistitel{%
+\PackageError{gaugphysthesis}{%
+  No \protect\thesistitel\space given%
+}{%
+  You fucked up. Deal with it!
+}%
+}
+\gdef\@thesistiteleng{%
+\PackageError{gaugphysthesis}{%
+  No \protect\thesistileleng\space given%
+}{%
+  You fucked up. Deal with it!
+}%
+}
+\gdef\@abgabetermin{}
+\gdef\@institut{}
+\gdef\@institutslogo{}
+
+\gdef\logo@height{1.5cm}
+
+\newcommand{\herkunft}[1]{\gdef\@herkunft{#1}}
+\newcommand{\erstgutachter}[1]{\gdef\@erstgutachter{#1}}
+\newcommand{\zweitgutachter}[1]{\gdef\@zweitgutachter{#1}}
+\newcommand{\betreuer}[1]{\gdef\@betreuer{#1}}
+\newcommand{\thesistitel}[1]{\gdef\@thesistitel{#1}}
+\newcommand{\thesistiteleng}[1]{\gdef\@thesistiteleng{#1}}
+\newcommand{\abgabetermin}[1]{\gdef\@abgabetermin{#1}}
+\newcommand{\institut}[1]{\gdef\@institut{#1}}
+\newcommand{\institutslogo}[1]{\gdef\@institutslogo{\includegraphics[height=\logo@height]{#1}}}
+
+\newcommand*{\setpdfoptions}{
+\hypersetup{%
+pdftitle=\@thesistitel,
+pdfsubject=\@thesissubject,
+pdfauthor=\@author
+}%
+}
+
+\renewcommand*{\maketitle}{%
+\begin{titlepage}
+    \includegraphics[height=\logo@height]{unilogo.pdf}
+    \hfill
+    \@institutslogo
+    \vfill
+    \begin{center}
+      {\Large\bfseries \@thesissubject}
+      \\[10mm]
+      {\LARGE\bfseries \@thesistiteleng}
+      \\[10mm]
+      {\LARGE\bfseries \@thesistitel}
+      \\[10mm]
+    \end{center}
+
+    \begin{center}
+      \@angefertigtstring\\[3mm]
+      {\large\bfseries \@author}\\[3mm]
+      \@ausstring\space \@herkunft\\[5mm]
+      \@amstring\space \@institut
+    \end{center}
+    \vfill
+    \begin{center}
+    \begin{tabular}{l l}
+      {\bfseries \@abgabestring:} & \@abgabetermin \\
+\ifx\@betreuer\undefined
+\else
+      {\bfseries \@betreuerstring:} & \@betreuer \\
+\fi
+      {\bfseries \@erstgutachterstring:} & \@erstgutachter \\
+      {\bfseries \@zweitgutachterstring:} & \@zweitgutachter
+    \end{tabular}
+    \end{center}
+\end{titlepage}
+}
+
+\newcommand*{\erklaerung}{%
+\ifluatex
+\begin{otherlanguage}{german}
+\else
+\begin{otherlanguage}{ngerman}
+\fi
+Hiermit erkläre ich, dass ich diese Abschlussarbeit
+selbständig verfasst habe, keine anderen als die
+angegebenen Quellen und Hilfsmittel benutzt habe und alle Stellen,
+die wörtlich oder sinngemäß aus veröffentlichten Schriften
+entnommen wurden, als solche kenntlich gemacht habe.
+
+Darüberhinaus erkläre ich, dass diese Abschlussarbeit nicht, auch nicht
+auszugsweise, im Rahmen einer nichtbestandenen Prüfung an dieser oder
+einer anderen Hochschule eingereicht wurde.
+\bigskip\\
+Göttingen, den \today
+\bigskip\\
+\makebox[8cm]{\hrulefill}
+\end{otherlanguage}
+}
+
+\endinput

@@ -1,0 +1,628 @@
+%% boolean flags and if's
+%\newif\ifdissdraft
+%\dissdraftfalse
+%\dissdrafttrue 
+
+\DeclareUnicodeCharacter{20AC}{\euro}
+
+%% NOTES
+\definecolor{oxygenorange}{HTML}{ff8d4d}
+\definecolor{myorange}{RGB}{242,149,18}
+\definecolor{coolblue}{HTML}{9bd8e0}
+%\usepackage[color=oxygenorange]{todonotes}
+%\newcommand{\itd}[1]{\todo[inline,color=pink]{#1}\xspace}
+
+%%%% Specific todo notes
+%\newcommand{\fe}[1]{\todo[inline,color=pink]{#1}}
+%\newcommand{\que}[1]{\todo[inline,color=green]{#1}}
+%\newcommand{\dissnew}[1]{\todo[inline,color=coolblue]{{\textbf New:} #1}}
+
+
+% Highlighting
+% \highlight[<colour>]{<stuff>}
+%\newcommand{\highlight}[2][yellow]{\colorbox{#1}{$\displaystyle#2$}}%
+\renewcommand{\pclinecomment}[2][0em]{\hspace{#1}{\mbox{/\!\!/ } \text{\scriptsize\textcolor{gray}{#2}}}} % line comments in grey in cryptocode's procedure environment
+
+
+% Global
+%% fonts
+\newcommand{\algorithmfont}[1]{\mathsf{#1}}
+\newcommand{\schemefont}[1]{\mathsf{#1}}
+\newcommand{\keyfont}[1]{\mathit{#1}}
+\newcommand{\secexpnamefont}[1]{\mathsf{#1}}
+
+
+% Pseudocode
+\newcommand{\pcset}{\highlightkeyword{set}}
+\newcommand{\pccompute}{\highlightkeyword{compute}}
+\newcommand{\pcignore}{\highlightkeyword{ignore}}
+
+% Text stuff
+\newcommand{\etal}{et~al.,\xspace}
+\newcommand{\ie}{i.e.,\xspace}
+\newcommand{\eg}{e.g.,\xspace}
+
+
+% parameter
+\newcommand{\secp}{\lambda}
+\renewcommand{\secpar}{\secp}
+
+\newcommand{\negl}{\mathsf{negl}}
+%\newcommand{\poly}{\mathsf{poly}}
+
+\newcommand{\nonnegl}{\kappa}
+
+\newcommand{\pp}{\keyfont{pp}}
+
+\newcommand{\crs}{\keyfont{crs}}
+
+\newcommand{\ctx}{\keyfont{ctx}}
+
+\newcommand{\msgspace}{\ensuremath{\mathcal{M}}}
+
+\newcommand{\rndspace}{\ensuremath{\mathcal{R}}}
+\newcommand{\comrndspace}{\rndspace^\CommitmentScheme}
+
+\newcommand{\universe}{\mathcal{U}}
+\newcommand{\attrspace}{\universe_{\mathsf{Attr}}}
+
+
+%\newcommand{\univ}[1][]{\mathbb{U}_{#1}}
+
+
+% Keys 
+\newcommand{\pk}{\keyfont{pk}}
+\newcommand{\td}{\keyfont{td}}
+\newcommand{\tdsim}{\td_{\keyfont{sim}}}
+\newcommand{\tdextr}{\td_{\keyfont{extr}}}
+\newcommand{\msk}{\keyfont{msk}}
+
+\newcommand{\sk}{\keyfont{sk}}
+
+
+
+% Math and cypto common, basics
+\newcommand{\set}[1]{\left\{  #1 \right\}}
+\newcommand{\zostar}{\set{0,1}^{*}}
+
+\newcommand{\zo}{\set{0,1}}
+
+\newcommand{\adv}{\ensuremath{\mathcal{A}}\xspace}
+\newcommand{\advb}{\ensuremath{\mathcal{B}}\xspace}
+\newcommand{\advc}{\ensuremath{\mathcal{C}}\xspace}
+\newcommand{\advd}{\ensuremath{\mathcal{D}}\xspace}
+\newcommand{\adve}{\ensuremath{\mathcal{E}}\xspace}
+\newcommand{\advf}{\ensuremath{\mathcal{F}}\xspace}
+
+\newcommand{\forger}{\ensuremath{{F}}\xspace}
+\newcommand{\dist}{\ensuremath{\mathcal{D}}\xspace}
+
+\newcommand{\ROM}{\ac{ROM}\xspace}
+\newcommand{\statealg}{\keyfont{st}}
+
+\newcommand{\Zp}{\ensuremath{\mathbb{Z}_p}}
+
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\renewcommand{\NN}{\N}
+
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+
+\newcommand{\length}[1]{|#1|}
+
+\newcommand{\getsrnd}{\leftarrow}
+\newcommand{\getsrndright}{\rightarrow}
+
+\newcommand{\oracle}{\mathcal{O}}
+\newcommand{\ro}{\ensuremath{\algorithmfont{RO}}\xspace}
+
+
+% Relation
+\newcommand{\relation}{\ensuremath{R}}
+\newcommand{\relationGen}{\ensuremath{\algorithmfont{RGen}}}
+\newcommand{\relinstance}{\ensuremath{x}}
+\newcommand{\relwitness}{\ensuremath{w}}
+\newcommand{\reltuple}{\ensuremath{(\relinstance, \relwitness)}}
+\newcommand{\relinstanceDomain}{\mathcal{I}}
+\newcommand{\relwitnessDomain}{\mathcal{W}}
+%\newcommand{\rellang}{\mathcal{L}}
+
+
+
+
+
+
+% Schemes
+
+%% hash functions
+\newcommand{\HashFunctionScheme}{\ensuremath{\algorithmfont{Hash}}\xspace}
+\newcommand{\hash}{\algorithmfont{H}}
+\newcommand{\hk}{\keyfont{hk}}
+
+%% Commitment scheme
+\newcommand{\CommitmentScheme}{\ensuremath{\algorithmfont{Com}}\xspace}
+\newcommand{\Commit}{\algorithmfont{Commit}}
+
+\newcommand{\com}{\keyfont{com}}
+
+%% Signature scheme
+\newcommand{\SigScheme}{\ensuremath{\algorithmfont{Sig}}\xspace}
+\newcommand{\DS}{\ensuremath{\SigScheme}}
+
+%% Blind signature scheme
+\newcommand{\BsScheme}{\ensuremath{\algorithmfont{BS}}\xspace}
+\newcommand{\BS}{\ac{BS}\xspace}
+
+%% Structure-preserving signture scheme SPS
+\newcommand{\SPS}{\ensuremath{\algorithmfont{SPS}}\xspace} 
+
+
+%% Non-interactive witness indistinguishable proof system NIWI
+\newcommand{\NIWI}{\ensuremath{\algorithmfont{NIWI}}\xspace}
+
+
+%% Signature common algorithms / ABS
+\newcommand{\Setup}{\algorithmfont{Setup}}
+\newcommand{\KeyGen}{\algorithmfont{KeyGen}}
+\newcommand{\Sign}{\algorithmfont{Sign}}
+\newcommand{\Verify}{\algorithmfont{Verify}}
+
+%% Blind signatur algorithms
+\newcommand{\BlindSign}{\algorithmfont{BlindSign}}
+\newcommand{\BlindRcv}{\algorithmfont{BlindRcv}}
+\newcommand{\interacts}{\leftrightarrow}
+%%% Blind signature short handles
+\newcommand{\BsSetup}{\ensuremath{\mathsf{\BsScheme.\Setup}}}
+\newcommand{\BsKeyGen}{\ensuremath{\mathsf{\BsScheme.\KeyGen}}}
+\newcommand{\BsCommit}{\ensuremath{\mathsf{\BsScheme.\Commit}}}
+\newcommand{\BsVerify}{\ensuremath{\mathsf{\BsScheme.\Verify}}}
+\newcommand{\BsBlindSign}{\ensuremath{\mathsf{\BsScheme.\BlindSign}}}
+\newcommand{\BsBlindRcv}{\ensuremath{\mathsf{\BsScheme.\BlindRcv}}}
+
+
+%% signing algorithm variations
+\newcommand{\SignPrime}{\Sign^\prime}
+
+
+%% Digital signature scheme
+\newcommand{\sigSetup}{\algorithmfont{\SigScheme.\Setup}}
+\newcommand{\sigKeyGen}{\algorithmfont{\SigScheme.\KeyGen}}
+\newcommand{\sigSign}{\algorithmfont{\SigScheme.\Sign}}
+\newcommand{\sigVerify}{\algorithmfont{\SigScheme.\Verify}}
+
+%% NIWI scheme
+\newcommand{\niwiSetup}{\ensuremath{{\NIWI.\Setup}}}
+\newcommand{\niwiProve}{\ensuremath{{\NIWI.\Prove}}}
+\newcommand{\niwiVerify}{\ensuremath{{\NIWI.\Verify}}}
+\newcommand{\niwiExtr}{\ensuremath{{\NIWI.\Extr}}}
+
+% ZKPoK NIZK
+\newcommand{\ArgSystem}{\ensuremath{\algorithmfont{Arg}}\xspace} % Arg NIZK scheme
+\newcommand{\ArgSystemCrs}{\ensuremath{\algorithmfont{Arg}^{\secexpnamefont{crs}}}\xspace}
+\newcommand{\ExtrSetup}{\algorithmfont{ExtrSetup}}
+\newcommand{\Prove}{\algorithmfont{Prove}}
+\newcommand{\SimProve}{\algorithmfont{SimProve}}
+
+
+\newcommand{\ArgSetup}{\ensuremath{\mathsf{\ArgSystem.\Setup}}}
+\newcommand{\ArgProve}{\ensuremath{\mathsf{\ArgSystem.\Prove}}}
+\newcommand{\ArgVerify}{\ensuremath{\mathsf{\ArgSystem.\Verify}}}
+\newcommand{\ArgSimProve}{\ensuremath{\mathsf{\ArgSystem.\SimProve}}}
+\newcommand{\ArgExtr}{\ensuremath{\mathsf{\ArgSystem.\Extr}}}
+
+\newcommand{\ArgProveRo}{\ensuremath{\mathsf{\ArgSystem.\ProveRo}}}
+\newcommand{\ArgVerifyRo}{\ensuremath{\mathsf{\ArgSystem.\VerifyRo}}}
+
+
+\newcommand{\trans}{\ensuremath{\keyfont{trans}}} % transcript
+
+%% CS proof notation
+%\ArgSystem[ (\hidparam,r); c = \BsCommit(\pp,\pk,\attrSet,r) ]
+\newcommand{\csproof}[2]{ \ArgSystem[ (#1): #2 ] }
+
+%% NIZKAoK in the ROM
+\newcommand{\ProveRo}{\Prove^\ro}
+\newcommand{\VerifyRo}{\Verify^\ro}
+\newcommand{\Sim}{\ensuremath{\algorithmfont{Sim}}\xspace}
+\newcommand{\SimRo}{\ensuremath{\Sim\ro}\xspace}
+\newcommand{\advRo}[1][\adv]{#1^\ro}
+\newcommand{\oracleArgRo}[1][]{\oracle^{\ro_{#1}}}
+
+
+%%% NIZK oracles
+\newcommand{\oracleArgProve}[2][]{\oracle^{\Prove_{#1}}_{#2}}
+\newcommand{\oracleArgSimProve}[1]{\oracle^{\SimProve}_{#1}} 
+
+%% Algorithms
+\newcommand{\Extr}{\ensuremath{\algorithmfont{Extr}}\xspace}
+
+%% Anonymous credentials 
+\newcommand{\uac}{\ac{UAC}\xspace}
+%\newcommand{\acs}{\ac{AC}\xspace} % does not work because of acronym commands
+\newcommand{\UACSystem}{\ensuremath{\algorithmfont{UAC}}\xspace}
+\newcommand{\UACSystemGeneric}{\ensuremath{\algorithmfont{UAC}^{\secexpnamefont{gc}}}\xspace}
+\newcommand{\UACSystemCrs}{\ensuremath{\algorithmfont{UAC}^{\secexpnamefont{crs}}}\xspace}
+\newcommand{\UACSystemABS}{\ensuremath{\algorithmfont{UAC}^{\ABSScheme}}\xspace}
+%\newcommand{\cpp}{\keyfont{cpp}}
+\newcommand{\updfunc}{\upsilon}
+\newcommand{\updfuncspace}{\Upsilon}
+\newcommand{\predicate}{\chi}
+\newcommand{\predicatespace}{\mathcal{X}}
+\newcommand{\cred}{\ensuremath{\keyfont{cred}}\xspace}
+\newcommand{\credstar}{\ensuremath{\cred^*}\xspace}
+\newcommand{\hidparam}{\alpha}
+\newcommand{\usk}{\ensuremath{\keyfont{usk}}\xspace}
+
+\newcommand{\favitem}{\texttt{favorite item}\xspace}
+\newcommand{\nrofpurchases}{\texttt{number of purchases}\xspace}
+
+%%% ac algorithms
+%\newcommand{\ParamGen}{\ensuremath{\algorithmfont{ParamGen}}\xspace}
+\newcommand{\IssuerKeyGen}{\ensuremath{\algorithmfont{IssuerKeyGen}}\xspace}
+\newcommand{\IssueCred}{\ensuremath{\algorithmfont{IssueCred}}\xspace}
+\newcommand{\ReceiveCred}{\ensuremath{\algorithmfont{ReceiveCred}}\xspace}
+\newcommand{\UpdateCred}{\ensuremath{\algorithmfont{UpdateCred}}\xspace}
+\newcommand{\ReceiveUpd}{\ensuremath{\algorithmfont{ReceiveUpd}}\xspace}
+\newcommand{\ShowCred}{\ensuremath{\algorithmfont{ShowCred}}\xspace}
+\newcommand{\ShowVerify}{\ensuremath{\algorithmfont{ShowVerify}}\xspace}
+\newcommand{\ValidCred}{\ensuremath{\algorithmfont{ValidCred}}\xspace}
+
+% Experiments
+
+%% security experiment
+% #1 name, #2 adv, scheme etc
+\newcommand{\secexp}[2]{\mathrm{Exp}_{#2}^{\secexpnamefont{#1}}}
+\newcommand{\secexpWithParams}[3]{\mathrm{Exp}_{#2}^{\secexpnamefont{#1}, #3}}
+
+\newcommand{\game}[2]{\secexp{#1}{#2}}
+%% advantage
+\newcommand{\tadvantage}[2]{\mathrm{Adv}^{\secexpnamefont{#1}}_{#2}}
+\newcommand{\advantage}[2]{\tadvantage{#1}{#2}(\secp)}
+
+
+%% general security experiments
+%% DLOG
+\newcommand{\secexpDlog}[1]{\secexp{dlog}{#1}(\secp)}
+\newcommand{\advantageDlog}[1]{\advantage{dlog}{#1}}
+
+
+%% digital signature scheme experiments
+\newcommand{\secexpDSEUF}[1]{\secexp{euf\text{-}cma}{#1, \SigScheme}(\secp)}
+\newcommand{\advantageDSEUF}[1]{\advantage{euf\text{-}cma}{#1, \SigScheme}}
+
+%% blind signatures experiments and advantages
+\newcommand{\advantageBsEuf}[1]{\advantage{euf\text{-}cma\text{-}bs}{#1, \BsScheme}}
+\newcommand{\secexpBsEuf}[1]{\secexp{euf\text{-}cma\text{-}bs}{#1, \BsScheme}(\secp)}
+\newcommand{\oracleBsSign}[1][]{\oracle^{\BlindSign_{#1}}}
+%%% BS commitment hiding
+\newcommand{\advantageBsHiding}[1]{\advantage{hiding\text{-}bs}{#1, \BsScheme}}
+\newcommand{\secexpBsHiding}[1]{\secexp{hiding\text{-}bs}{#1, \BsScheme}(\secp)}
+%%% BS blindness
+\newcommand{\advantageBsMsgPriv}[1]{\advantage{msg\text{-}priv\text{-}bs}{#1, \BsScheme}}
+\newcommand{\secexpBsMsgPriv}[1]{\secexp{msg\text{-}priv\text{-}bs}{#1, \BsScheme}(\secp)}
+\newcommand{\oracleBsRcv}[1][]{\oracle^{\BlindRcv_{#1}}}
+\newcommand{\oracleBsCommit}{\oracle^{\Commit}}
+
+%% UAC anonymity und soundness
+\newcommand{\secexpUACAnon}[2]{\secexpWithParams{anon}{#1, \UACSystem}{#2}(\secp)}
+\newcommand{\secexpUACAnonGeneric}[2]{\secexpWithParams{anon}{#1, \UACSystemGeneric}{#2}(\secp)}
+\newcommand{\secexpUACAnonGenericStepOne}[1]{\secexp{anon\text{-}step\text{-}1}{#1, \UACSystemGeneric}(\secp)}
+\newcommand{\secexpUACAnonGenericStepTwo}[1]{\secexp{anon\text{-}step\text{-}2}{#1, \UACSystemGeneric}(\secp)}
+
+\newcommand{\advantageUACAnon}[1]{\advantage{anon}{#1, \UACSystem}}
+\newcommand{\advantageUACAnonGeneric}[1]{\advantage{anon}{#1, \UACSystemGeneric}}
+
+\newcommand{\oracleUACRcvCred}[1][]{\oracle^{\ReceiveCred_{#1}}}
+\newcommand{\oracleUACRcvUpd}[1][]{\oracle^{\ReceiveUpd_{#1}}}
+\newcommand{\oracleUACShowCred}[1][]{\oracle^{\ShowCred_{#1}}}
+
+
+\newcommand{\secexpUACSound}[1]{\secexp{sound}{#1, \UACSystem}(\secp)}
+\newcommand{\secexpUACSoundGeneric}[1]{\secexp{sound}{#1, \UACSystemGeneric}(\secp)}
+\newcommand{\advantageUACSound}[1]{\advantage{sound}{#1, \UACSystem}}
+\newcommand{\advantageUACSoundGeneric}[1]{\advantage{sound}{#1, \UACSystemGeneric}}
+%\newcommand{\secexpUACSimExt}[1]{\secexp{sim\text{-}ext}{#1, \UACSystem}(\secp)}
+%\newcommand{\advantageUACSimExt}[1]{\advantage{sim\text{-}ext}{#1, \UACSystem}}
+
+\newcommand{\oracleUACIssueCred}{\oracle^{\IssueCred}}
+\newcommand{\oracleUACUpdateCred}{\oracle^{\UpdateCred}}
+\newcommand{\oracleUACShowVerify}{\oracle^{\ShowVerify}}
+
+
+\newcommand{\SimReceiveCred}{\ensuremath{\algorithmfont{SimReceiveCred}}}
+\newcommand{\SimReceiveUpd}{\ensuremath{\algorithmfont{SimReceiveUpd}}}
+\newcommand{\SimShowCred}{\ensuremath{\algorithmfont{SimShowCred}}}
+
+\newcommand{\Qset}[1][]{\ensuremath{Q_{\mathsf{#1}}}}
+\newcommand{\List}[1][]{\ensuremath{L_{\mathsf{#1}}}}
+
+\newcommand{\Lcred}{\List[cred]}
+
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%% UC and ABS Commands
+%
+% General
+
+
+%
+
+
+% restricted message (responsive environments)
+
+\newcommand{\respondmsg}[1]{\ensuremath{( \mathtt{Respond}, (#1) )}}
+\newcommand{\kid}{\ensuremath{\keyfont{kid}}}
+%
+
+
+\newcommand{\aus}{\mathcal{A}(\mathbb{U})}
+\newcommand{\aos}{\mathcal{A}(\mathbb{O})}
+
+\newcommand{\pcv}{\text{\ensuremath{\mathbb{P}}}_{ComV}}
+\newcommand{\pscv}{\text{\ensuremath{\mathbb{P}}}_{SignComV}}
+\newcommand{\pkscv}{\text{\ensuremath{\mathbb{P}}}_{PKSignComV}}
+
+
+% UC
+\newcommand{\idealf}{\mathcal{F}}
+% UC Verify
+\newcommand{\fout}{\ensuremath{f_{\mathrm{out}}}}
+\newcommand{\ucrestrictions}{\emph{adaptive, erasure, secure channels}}
+
+
+% ABS scheme and algorithms
+\newcommand{\ABS}{\ac{ABS}\xspace}
+\newcommand{\ABSScheme}{\ensuremath{\algorithmfont{ABS}}\xspace}
+
+\newcommand{\SimSign}{\algorithmfont{SimSign}}
+\newcommand{\SimSetup}{\algorithmfont{SimSetup}}
+\newcommand{\SimKeyGen}{\algorithmfont{SimKeyGen}}
+
+
+\newcommand{\attrSet}{\mathbb{A}}
+\newcommand{\skattr}[1]{\sk_{\attrSet_{#1}}}
+\newcommand{\skattrSet}{\sk_{\attrSet}}
+\newcommand{\skattrSetStar}{\sk_{\attrSet^*}}
+
+\newcommand{\tpk}{\keyfont{tpk}}
+\newcommand{\tsk}{\keyfont{tsk}}
+\newcommand{\apk}{\keyfont{apk}}
+\newcommand{\ask}{\keyfont{ask}}
+
+
+\newcommand{\policy}{\mathbb{P}}
+\newcommand{\policyclass}{\set{\policy}_{\pp}}
+\newcommand{\ucprotocol}{\rho}
+
+\newcommand{\ABSProtocol}{\ucprotocol_{\ABSScheme}}
+
+
+% ABS algorithm inputs
+\newcommand{\SimSignInput}[1][]{\pp, \msk, \tdsim, m_{#1}, \policy_{#1}}
+
+% ABS functionality
+\newcommand{\fsimIndex}[1]{\mathcal{S}_{#1}^{\adv}}
+
+\newcommand{\fsim}{\mathcal{S}}
+
+\newcommand{\falg}{\mathsf{alg}}
+
+
+\newcommand{\fmsgfont}[1]{\texttt{#1}}
+
+\newcommand{\fsetup}{\fmsgfont{Setup}}
+\newcommand{\fkeygen}{\fmsgfont{KeyGen}}
+\newcommand{\fkeygenreq}{\fmsgfont{KeyGenRequest}}
+\newcommand{\fsign}{\fmsgfont{Signature}}
+\newcommand{\fverify}{\fmsgfont{Verify}}
+
+\newcommand{\fmsgpp}{\fmsgfont{PublicParams}}
+\newcommand{\fmsgverified}{\fmsgfont{Verified}}
+
+\newcommand{\recordelement}[1]{\ensuremath{\langle #1 \rangle}}
+
+\newcommand{\PSetup}{\ensuremath{P_{\Setup}}}
+
+\newcommand{\sSetup}[1][]{\fsim.\Setup_{#1}}
+\newcommand{\sKeyGen}[1][]{\fsim.\KeyGen_{#1}}
+\newcommand{\sSign}[1][]{\fsim.\Sign_{#1}}
+\newcommand{\sVerify}[1][]{\fsim.\Verify_{#1}}
+
+
+%\newcommand{\fsinglesignerABSIG}{\mathcal{F}_{SS-\algorithmfont{ABS}}}
+
+\newcommand{\fideal}[1]{\idealf_#1}
+\newcommand{\fABS}{\fideal{\algorithmfont{ABS}}}
+
+\newcommand{\idealprotocol}{\mathrm{IDEAL}_\mathcal{F}}
+
+\newcommand{\toraclekeygen}[1][]{\oracle^{\KeyGen_{#1}}}
+\newcommand{\oraclekeygenABS}{\oracle^{\KeyGen}_{\pp,\msk}}
+
+\newcommand{\oraclekeygenABSOne}{\oracle^{\KeyGen_{1}}_{\pp,\msk}}
+
+\newcommand{\oraclekeygenABSwithb}{\oracle^{\KeyGen_{b}}}
+\newcommand{\oraclekeygenABSZero}{\oracle^{\KeyGen_{0}}_{\pp,\msk, \tdsim}}
+
+\newcommand{\oraclekeygenABSStar}[1][]{\oracle^{\KeyGen^*_{#1}}_{\pp,\msk}}
+\newcommand{\oraclesimkeygenABS}[1][]{\oracle^{\SimKeyGen_{#1}}_{\pp,\msk,\tdsim}}
+\newcommand{\toraclesimkeygenABS}[1][]{\oracle^{\SimKeyGen_{#1}}}
+%\newcommand{\oraclesimkeygenABSStar}[1][]{\oracle^{\SimKeyGen^*_{#1}}_{\pp,\msk,\tdsim}}
+%% oracle sign
+\newcommand{\oraclesign}[1][]{\oracle^{\Sign_{#1}}}
+\newcommand{\toraclesign}[1][]{\oraclesign}
+%%% oracle sign ABS
+\newcommand{\oraclesignABS}[1][]{\oraclesign[#1]}
+\newcommand{\oraclesignABSStar}[1][]{\oraclesign[#1]^*_{\pp,\msk}}
+\newcommand{\oraclesignABSZero}{\oraclesign[0]_{\pp,\msk,\tdsim}}
+\newcommand{\oraclesignABSOne}{\oraclesignABS[1]_{\pp}}
+\newcommand{\oraclesimsignABS}[1][]{\oracle^{\SimSign_{#1}}_{\pp,\msk,\tdsim}}
+%\newcommand{\oraclesimsignABSStar}[1][]{\oracle^{\SimSign^*_{#1}}_{\pp,\msk, \tdsim}}
+
+\newcommand{\Reveal}{\algorithmfont{Reveal}}
+\newcommand{\oraclereveal}[1][]{\oracle^{\Reveal{#1}}}
+\newcommand{\oraclechallenge}{\oracle^{b}}
+
+\newcommand{\env}{\mathcal{E}}
+
+\newcommand*{\rom}[1]{\MakeUppercase{\romannumeral #1{}}}
+
+\newcommand{\sid}{\ensuremath{\keyfont{sid}}}
+
+
+\newcommand{\fkeygenmsg}{(\fkeygen,\sid,\attrSet)}
+%\newcommand{\fverifykeymsg}[1]{(\mathrm{Verification\,Key},\sid,#1)}
+
+\newcommand{\envfmsabs}{\env[\fABS,\fsim^{(\cdot)}](\secp)}
+\newcommand{\envprotabs}{\env[\ABSProtocol,\adv](\secp)}
+
+
+\newcommand{\policyi}[1]{\mathbb{P}_{#1}}
+\newcommand{\fmskeygenmsg}[2]{(\fkeygen,\sid,\attrSet_{#1}.P_{#2})}
+%\newcommand{\fmsverifykeymsg}[1]{(\mathrm{Verification\,Key},\sid,#1)}
+\newcommand{\lkeygen}{\mathrm{KEYGEN}}
+
+
+%%% ABS experiments 
+\newcommand{\eufABS}{euf}
+
+\newcommand{\secexpABSEUF}[1][\forger, \ABSScheme]{\secexp{\eufABS}{#1}(\secp)}
+
+%\newcommand{\expABSEUF}[1]{\mathrm{Exp}_{#1}^{\mathrm{UF}}(\secp)}
+% #1 adv, #2 bit (0=real, 1=sim)
+\newcommand{\privacy}{privacy}
+\newcommand{\secexpABSStdPrivacy}[2]{\secexpWithParams{\privacy}{#1, \ABSScheme}{#2}(\secp)}
+
+\newcommand{\simprivacy}{sim\text{-}privacy}
+
+\newcommand{\secexpABSSimPrivacy}[2]{\secexpWithParams{\simprivacy}{#1, \ABSScheme}{#2}(\secp)}
+
+%\newcommand{\SPExp}[1]{\mathrm{SP}_{#1}^{\ABSScheme}}
+
+\newcommand{\secexpABSSimExtBlackBox}[1]{\secexp{bb\text{-}sim\text{-}ext}{#1,\ABSScheme}(\secp)}
+%\newcommand{\secexpABSSimExtPlain}{\secexp{sim\text{-}ext}{}}
+
+\newcommand{\secexpABSSimExtWhiteBox}[1]{\secexp{wb\text{-}sim\text{-}ext}{#1,\ABSScheme}(\secp)}
+
+\newcommand{\secexpABSSimExtWhiteBoxPlain}{\secexp{wb\text{-}sim\text{-}ext}{}}
+
+%% 
+%\newcommand{\expABSSimExt}[1]{\mathrm{Exp}_{#1}^{\mathrm{sim-ext}}(\secp)}
+%\newcommand{\expABSSimExtsimple}[1]{\mathrm{Exp}_{#1}^{\mathrm{sim-ext}}}
+
+%%% ABS advantages
+
+\newcommand{\advantageABSeuf}[1]{\advantage{\eufABS}{#1}}
+
+\newcommand{\advantageABSPrivacy}[1]{\advantage{\privacy}{#1}}
+
+\newcommand{\advantageABSSimPrivacy}[1]{\advantage{\simprivacy}{#1}}
+
+\newcommand{\abswbsimext}{\secexpnamefont{wb\text{-}sim\text{-}ext}}
+\newcommand{\advantageABSSimExtBlackBox}[1]{\advantage{bb\text{-}sim\text{-}ext}{#1}}
+\newcommand{\advantageABSSimExtWhiteBox}[1]{\advantage{\abswbsimext}{#1}}
+
+
+
+%% ABS scheme
+\newcommand{\relationGenABS}{\relationGen^{\mathrm{\ABS}}_{\SigScheme}}
+\newcommand{\relationABS}{\relation^{\mathrm{\ABS}}_{\SigScheme}}
+\newcommand{\relationdlogABS}{\relation^{\mathrm{\ABS\text{-}dlog}}_{\SigScheme}}
+\newcommand{\PC}{\ensuremath{\algorithmfont{PC}}} % policy checker
+\newcommand{\ABSSchemeSuccinct}{\ensuremath{\ABSScheme^{\secexpnamefont{succi}}}\xspace}
+\newcommand{\ABSSchemeCons}{\ensuremath{\ABSScheme^{\secexpnamefont{gc}}}\xspace}
+% counter-example scheme
+\newcommand{\ABSSchemeCe}{\ensuremath{\ABSScheme^{\secexpnamefont{ce}}}\xspace}
+
+
+%% Signature of knowledge SoK
+\newcommand{\GMSok}{\algorithmfont{GM\text{-}SoK}} % Groth Maller SoK scheme name
+
+\newcommand{\Sok}{\ensuremath{\algorithmfont{SoK}}\xspace}
+\newcommand{\sokSetup}{\ensuremath{\algorithmfont{\Sok.\Setup}}}
+\newcommand{\sokSign}{\ensuremath{\algorithmfont{\Sok.\Sign}}}
+\newcommand{\sokVerify}{\ensuremath{\algorithmfont{\Sok.\Verify}}}
+\newcommand{\sokSimSetup}{\ensuremath{\algorithmfont{\Sok.\SimSetup}}}
+\newcommand{\sokSimSign}{\ensuremath{\algorithmfont{\Sok.\SimSign}}}
+
+
+\newcommand{\argSokSign}{\ensuremath{(\pp,\relinstance, \relwitness, m)}}
+\newcommand{\argSokVerify}{\ensuremath{(\pp, \relinstance, m , \sigma)}}
+\newcommand{\argSokSimSign}{\ensuremath{(\pp, \tdsim, \relinstance, m)}}
+
+%% SoK advantage
+\newcommand{\sokwbsimext}{\secexpnamefont{wb\text{-}sok\text{-}ext}}
+\newcommand{\sokbbsimext}{\secexpnamefont{bb\text{-}sok\text{-}ext}}
+\newcommand{\advantageSokSim}[1]{\advantage{sim}{#1,\Sok}}
+%\newcommand{\advantageSokExt}[1]{\advantage{sig\text{-}ext}{\Sok, #1}}
+\newcommand{\advantageSokExtWhiteBox}[1]{\advantage{\sokwbsimext}{#1, \Sok}}
+\newcommand{\advantageSokExtBlackBox}[1]{\advantage{\sokbbsimext}{#1, \Sok}}
+
+%% SoK experiments
+\newcommand{\secexpSoKSimul}[1]{\ensuremath{\secexp{sim}{#1, \Sok}}(\secp)}
+%\newcommand{\gameSoKSimExt}[1]{\ensuremath{\game{\secexpnamefont{sig\text{-}ext}}{\Sok,#1,\Extr_{#1}}}(\secp)}
+
+\newcommand{\secexpSoKSimExtWhiteBox}[1]{\ensuremath{\secexp{\sokwbsimext}{#1,\Extr_{#1},\Sok}}(\secp)}
+\newcommand{\secexpSoKSimExtBlackBox}[1]{\ensuremath{\secexp{\sokbbsimext}{#1,\Extr,\Sok}}(\secp)}
+
+%%% SoK oracles
+\newcommand{\oraclesoksimsign}[1]{\oracle^{\mathrm{S}}_{#1}}
+
+
+% Argument systems / proof systems
+\newcommand{\secexpArgWi}[1]{\secexp{wi}{#1,\ArgSystem}(\secp)}
+
+\newcommand{\secexpArgZk}[1]{\ensuremath{\secexp{zk}{#1,\ArgSystem}}(\secp)}
+
+\newcommand{\secexpArgSound}[1]{\ensuremath{\secexp{wb\text{-}extr}{#1,\Extr_{#1},\ArgSystem}(\secp)}}
+
+\newcommand{\secexpArgExtr}[1]{\secexp{bb\text{-}extr}{#1,\ArgSystem}(\secp)}
+
+\newcommand{\advantageArgSimExt}[1]{\advantage{sim\text{-}ext}{#1,\ArgSystem}}
+\newcommand{\secexpArgSimExt}[1]{\ensuremath{\secexp{sim\text{-}ext}{#1,\Extr_{#1},\ArgSystem}(\secp)}}
+
+
+\newcommand{\advantageArgWi}[1]{\advantage{wi}{#1,\ArgSystem}}
+\newcommand{\advantageArgZk}[1]{\advantage{zk}{#1,\ArgSystem}}
+\newcommand{\advantageArgExtr}[1]{\advantage{bb\text{-}extr}{#1,\ArgSystem}}
+\newcommand{\advantageArgSound}[1]{\advantage{wb\text{-}extr}{#1,\Extr_{#1},\ArgSystem}}
+
+%% in ROM
+\newcommand{\advantageArgZkRo}[1]{\advantage{zk\text{-}rom}{#1,\ArgSystem}}
+\newcommand{\secexpArgZkRo}[1]{\ensuremath{\secexp{zk\text{-}rom}{#1, \ArgSystem}(\secp)}}
+
+%%%% not used
+\newcommand{\advantageArgSimSoundRo}[1]{\advantage{sim\text{-}sound\text{-}rom}{#1,\ArgSystem}}
+\newcommand{\secexpArgSimSoundRo}[1]{\ensuremath{\secexp{sim\text{-}sound\text{-}rom}{#1, \ArgSystem}(\secp)}}
+%%%
+\newcommand{\advantageArgExtRo}[1]{\advantage{extr\text{-}rom}{#1,\ArgSystem}}
+\newcommand{\secexpArgExtRo}[1]{\ensuremath{\secexp{extr\text{-}rom}{#1,\ArgSystem}(\secp)}}
+
+
+\newcommand{\advantageArgSimExtRo}[1]{\advantage{sim\text{-}ext\text{-}rom}{#1,\ArgSystem}}
+\newcommand{\secexpArgSimExtRo}[1]{\ensuremath{\secexp{sim\text{-}ext\text{-}rom}{#1,\ArgSystem}(\secp)}}
+
+% Groups
+
+%% group gen for single group
+%\newcommand{\GroupGenSingle}{\algorithmfont{GrGen}}
+%% bilinear group gen
+\newcommand{\GroupGen}{\algorithmfont{GrGen}}
+%% group description
+\newcommand{\grdesc}{\ensuremath{\mathbb{GD}}}
+%% bilinear map
+\newcommand{\map}{\ensuremath{e}}
+
+\newcommand{\group}{\mathbb{G}}
+
+\newcommand{\gone}{\mathbb{G}_{1}}
+\newcommand{\gtwo}{\mathbb{G}_{2}}
+\newcommand{\gt}{\mathbb{G}_{T}}
+
+\newcommand{\gtilde}{\tilde{g}}
+
+%% complete group description
+\newcommand{\grdescList}{(\gone, \gtwo, \gt, p, \map, g_1, g_2)}
+
+
+% Events
+\newcommand{\eventforge}{\event{Forge}}

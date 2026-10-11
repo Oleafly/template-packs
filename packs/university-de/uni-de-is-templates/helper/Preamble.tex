@@ -1,0 +1,595 @@
+% ------------
+% | Preamble |
+% ------------
+%\pdfsuppresswarningpagegroup=1
+%\pdfminorversion=7
+
+\usepackage[ngerman,british]{babel}
+%\setlength{\marginparwidth}{1.5cm}
+\usepackage[textsize=scriptsize]{todonotes}
+\usepackage{lipsum}
+\usepackage[figuresright]{rotating}
+
+
+\usepackage{titlecaps}
+\Addlcwords{a, an, and, as, at, but, by, for, if, in, nor, of, off, on, or, per, so, the, to, up, via, yet}
+
+% --------------
+% | Custom |
+% --------------
+\usepackage{xltabular}
+\usepackage{multicol}
+
+% BPMS
+\newcommand{\arti}{design theory}
+\newcommand{\faarti}{functional affordance}
+\newcommand{\faartipl}{functional affordances}
+\newcommand{\toarti}{technical object}
+\newcommand{\toartipl}{technical objects}
+\newcommand{\company}{WomOut}
+
+%\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\newcommand\tabrotate[1]{\begin{turn}{90}\rlap{#1}\end{turn}}
+
+% --------------
+% | Font Stuff |
+% --------------
+% Alternative to Myriad Pro
+\usepackage{tgheros} % qhv
+
+% Alternative to Minion Pro
+\usepackage{tgpagella} % qpl
+
+\usepackage[utf8]{inputenc}
+\usepackage[LGR,T1]{fontenc} 			
+ 
+% Greek Font
+%\usepackage{palatino}
+\usepackage{pifont}						% Pi font with some symbols
+\usepackage[right]{eurosym}				% Euro-Symbol
+\usepackage{tablefootnote}
+\usepackage{hyphenat}
+\usepackage{adjustbox}
+\usepackage{minibox}
+\usepackage{framed}
+\usepackage[misc,geometry]{ifsym}
+\usepackage[
+	activate={true,nocompatibility},
+	final,
+	babel=true,
+	tracking=true,
+	kerning=true,
+	spacing=true,
+	factor=1100,
+	stretch=10,
+	shrink=10]{microtype}
+\microtypecontext{spacing=nonfrench}
+\SetTracking{encoding={*}, shape=sc}{40}
+\SetExtraKerning[unit=space]
+{encoding={*}, family={bch}, series={*}, size={footnotesize,small,normalsize}}
+{\textendash={400,400}, % en-dash, add more space around it
+	"28={ ,150}, % left bracket, add space from right
+	"29={150, }, % right bracket, add space from left
+	\textquotedblleft={ ,150}, % left quotation mark, space from right
+	\textquotedblright={150, }} % right quotation mark, space from left
+
+\emergencystretch=1.5em
+
+% activate={true,nocompatibility} - activate protrusion and expansion
+% final - enable microtype; use "draft" to disable
+% tracking=true, kerning=true, spacing=true - activate these techniques
+% factor=1100 - add 10% to the protrusion amount (default is 1000)
+% stretch=10, shrink=10 - reduce stretchability/shrinkability (default is 20/20)
+
+% ----------------
+% | Hyphenation  |
+% ----------------
+\usepackage[shortcuts]{extdash}
+\usepackage{hyphenat}	% enable hyphenation
+%\usepackage[none]{hyphenat} % disable hyphenation
+
+\hyphenation{me-di-um Ar-nott Mend-ling Poly-vyanyy leg-isla-tive}
+
+\usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+
+% ----------------------------------
+% | KOMA: Adjust Headings |
+% ----------------------------------
+\setkomafont{part}{\Huge\bfseries}
+%\setkomafont{chapter}{\Huge}
+%\setkomafont{section}{\LARGE}
+\setkomafont{subsection}{\large\emph}
+%\setkomafont{subsubsection}{\large}
+%\setkomafont{paragraph}{\large}
+%\setkomafont{subparagraph}{\large}
+
+% ----------------------------------
+% | KOMA: Adjust Headers |
+% ----------------------------------
+\usepackage[pagestyleset=standard,
+            markcase=used]
+            {scrlayer-scrpage} 
+% pagestyleset=standard matches the page styles of the standard LaTeX document classes, i.e.
+% (1) frontmatter uses Roman numerals
+% (2) no running heads for part and chapter pages
+% (3) running heads inner-aligned, page numbers outer-aligned
+% (4) automatic running heads are converted to capital letters
+
+\setkomafont{pagehead}{\sffamily} % Set header font family to sans serif
+\setkomafont{pagenumber}{\sffamily} % Set pagenumber font family to sans serif
+
+%%%
+% Remove formatting symbols before marks
+%%%
+
+% \renewcommand*{\chaptermarkformat}{}
+% \renewcommand*{\sectionmarkformat}{}
+
+\renewcommand*{\indexpagestyle}{headings}
+\renewcommand*{\partpagestyle}{empty}
+\renewcommand*{\chapterpagestyle}{empty}
+
+\renewcommand*{\partformat}{\thepart\autodot}
+
+% ------------------------------
+% | Compact Paragraph Sections |
+% ------------------------------
+\makeatletter
+\renewcommand{\paragraph}{%
+	\@startsection{paragraph}{4}%
+	{\z@}{3.25ex \@plus 1ex \@minus .2ex}{-1em}%
+	{\normalfont\normalsize\bfseries}%
+}
+\makeatother
+
+% ----------------
+% | ToC & Tweaks |
+% ----------------
+% fix spacing in LoT, e.g., 19.18
+ \makeatletter
+ \renewcommand*\l@table{\@dottedtocline{1}{1em}{2.8em}}
+ \renewcommand*\l@figure{\@dottedtocline{1}{1em}{2.8em}}
+ \let\l@table\l@figure
+ \makeatother
+
+% Adjustments to the style of the tables of contents, list of figures, ...
+% Chapter
+\DeclareTOCStyleEntry[raggedentrytext=on]{tocline}{chapter} % fixes overfull hboxes in chapter titles in toc
+% Section
+\DeclareTOCStyleEntry[raggedentrytext=on]{tocline}{section} % fixes overfull hboxes in section titles in toc
+\DeclareTOCStyleEntry[entryformat=\sffamily]{tocline}{section} % force sans serif on section entries in toc
+\DeclareTOCStyleEntry[pagenumberformat=\sffamily]{tocline}{section} % force sans serif on page number of section entries in toc
+% Subsection
+\DeclareTOCStyleEntry[entryformat=\sffamily]{tocline}{subsection} % force sans serif on subsection entries in toc
+\DeclareTOCStyleEntry[raggedentrytext=on]{tocline}{section} % force sans serif on subsection entries in toc
+\DeclareTOCStyleEntry[pagenumberformat=\sffamily]{tocline}{subsection} % force sans serif on page number of subsection entries in toc
+% Figure
+\DeclareTOCStyleEntry[entryformat=\sffamily]{tocline}{figure} % force sans serif on section entries in toc
+\DeclareTOCStyleEntry[pagenumberformat=\sffamily]{tocline}{figure} % force sans serif on page number of section entries in toc
+\DeclareTOCStyleEntry[entryformat=\sffamily]{tocline}{table} % force sans serif on section entries in toc
+\DeclareTOCStyleEntry[pagenumberformat=\sffamily]{tocline}{table} % force sans serif on page number of section entries in toc
+%\addtokomafont{disposition}{\rmfamily}			% set chapter font, default in KOMA-Script is sffamily 
+\addtokomafont{dictum}{\sffamily\itshape\justify}			% set dictum font
+\addtokomafont{partentrypagenumber}{\nullfont}	% no page numbers for parts
+\renewcommand*{\dictumwidth}{.8\textwidth}
+\renewcommand*{\dictumrule}{\smallskip}
+\renewcommand*{\raggeddictumtext}{}
+\renewcommand*{\dictumauthorformat}[1]{#1\vspace{1em}}
+
+% ----------------
+% | Tight Enumerate |
+% ----------------
+\newenvironment{tight_enumerate}{
+	\begin{enumerate}
+		\setlength{\itemsep}{0pt}
+		\setlength{\parskip}{0pt}
+	}{\end{enumerate}}
+
+% -------------
+% | Tight Itemize |
+% -------------
+\newenvironment{tight_itemize}{
+	\begin{itemize}
+		\setlength{\parskip}{0pt}
+	}{\end{itemize}}
+
+% -------------
+% | Float Env |
+% -------------
+%\usepackage{flafter}  			% figures and tables always after first reference
+
+\usepackage[section]{placeins} 	% Floatbarrier
+\usepackage[bottom]{footmisc}	% no figures below footnotes
+%\usepackage{float}				% use H to force placement
+
+% ---------------------------------------------
+% | Do not reset footnote counter per chapter |
+% ---------------------------------------------
+\usepackage{chngcntr}
+\counterwithout{footnote}{chapter}
+\deffootnote{2em}{1em}{\textsuperscript{\thefootnotemark}\hspace{0.5em}}
+
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{enumerate}
+\usepackage{soul}
+% ------------
+% | Geometry |
+% ------------
+\usepackage[includehead,
+			top 		= 2.5cm,
+			bottom 		= 2.5cm,
+			inner 		= 2.5cm,
+			outer		= 2.5cm,
+			%left 		= 2.8cm,		% old: 2.8cm
+			%right 		= 2.8cm,		% old: 2.8cm
+			footskip	= 1cm]{geometry}
+
+% -----------------------
+% | Theorem Environment |
+% -----------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{obs}{Observation}[] % reset theorem numbering for each chapter
+\newtheorem*{reo}{Research Objective} % * disables numbering of theorem. Remove if several research objectives.
+\newtheorem{req}{Research Question}[] % reset theorem numbering for each chapter
+\newtheorem{hypothesis}{Hypothesis}
+\usepackage[euler]{textgreek}
+
+% Definitions
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[]
+
+\usepackage{letltxmacro}
+
+% --------
+% | tikz |
+% --------
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{matrix}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes.geometric}
+%
+\usepackage{pgfplots}
+\pgfplotsset{width=0.9\textwidth,compat=1.13}
+\newcommand*{\escape}[1]{\texttt{\textbackslash#1}}
+\usepackage{forest}
+\usepackage{tikz-dependency}
+\usepackage{lstautogobble}
+% ------------
+% | Acronyms |
+% ------------
+% Attention: works only with version 2 of acro package. Add [version=2] as option to usepackage if compiling fails.
+\usepackage{acro}[=v2]
+\acsetup{
+    extra-style=comma,
+    list-style=longtable, 
+    list-short-format={\bfseries}
+}
+% Returning to version 2 requires the following code to be added to suppress an error
+\acsetup{display-foreign = false}
+\acsetup{foreign-format = {\scshape} }
+\ExplSyntaxOn
+\prop_new:N \l__acro_foreign_format_prop
+\ExplSyntaxOff
+
+\usepackage{expl3}
+\ExplSyntaxOn
+\tex_let:D \c_minus_one \scan_stop:
+\int_const:Nn \c_minus_one {-1}
+\ExplSyntaxOff
+
+\usepackage{etoolbox}
+\usepackage{paralist}	 	% compact itemize lists
+
+\usepackage{makeidx}
+\usepackage{ellipsis}		% Improve whitespace around \ldot
+
+
+% ----------------
+% | Line Spacing |
+% ----------------
+\usepackage{setspace}
+\onehalfspacing
+
+% ------------
+% | ragged2e |
+% ------------
+\usepackage{ragged2e}		% Flattersatz mit Silbentrennung
+\raggedbottom
+
+% ----------
+% | Tables |
+% ----------
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\usepackage{longtable}
+\usepackage{lscape}
+
+% -----------
+% | Caption |
+% -----------
+
+% The caption package offers customization of captions in floating environments such figure and table and cooperates with many other packages.
+
+\usepackage[font=sf]{caption}
+%\captionsetup[algorithm]
+%             {format=hang,
+%              labelfont={bf},
+%              aboveskip=2ex,
+%              belowskip=1ex,
+%              justification=raggedright, % Horizontal zentriert
+%              singlelinecheck = false,
+%              position=bottom,           % Vertikal "drunter"
+%              textformat=simple}         %
+
+\captionsetup{format=hang,
+        font={sf,small},
+	labelfont={bf},
+	aboveskip=2ex,
+	belowskip=1ex,
+	justification=raggedright, % Horizontal zentriert
+	singlelinecheck = false,
+	position=bottom,           % Vertikal "drunter"
+	textformat=simple}         %
+
+\usepackage{subcaption}
+\newcommand{\source}[1]{
+	\caption*{\footnotesize{\hfill \textsc{Source}: {#1}}} \vspace{-4mm} 
+}
+\newcommand{\quoteSource}[1]{
+	\nopagebreak\vspace{-2mm}
+	\footnotesize{\hfill \textsc{Source}: {#1}}
+}
+
+% --------------
+% | Algorithms |
+% --------------
+
+\usepackage{algorithmicx}
+\usepackage[plain]{algorithm}% http://ctan.org/pkg/algorithms
+\usepackage[noend]{algpseudocode}% http://ctan.org/pkg/algorithmicx
+
+\algrenewcommand\alglinenumber[1]{\tiny #1:}
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+\algnewcommand\algorithmicassert{\texttt{assert}}
+\algnewcommand\Assert[1]{\State \algorithmicassert(#1)}%
+\algnewcommand{\IfThen}[2]{% \IfThenElse{<if>}{<then>}{<else>}
+	\State \algorithmicif\ #1\ \algorithmicthen\ #2}
+% New "environments"
+\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndSwitch}%
+\algtext*{EndCase}%
+\algnewcommand{\algorithmicgoto}{\textbf{go to}}%
+\algnewcommand{\Goto}[1]{\algorithmicgoto~\ref{#1}}%
+
+
+% -------------
+% | ToC Depth |
+% -------------
+% -->  bis (2) subsection | (3) subsubsection | (4) paragraph
+\setcounter{secnumdepth}{2}		% Numbering in documente
+\setcounter{tocdepth}{2}		% in ToC
+
+% ------------
+% | Listings |
+% ------------
+\usepackage{listings}
+	\lstset{linewidth=\linewidth}
+	\lstset{breaklines=true}
+	\lstset{breakatwhitespace=true}
+	\lstset{language=XML}
+	\lstset{usekeywordsintag=true}
+	\lstset{basicstyle=\scriptsize\ttfamily}
+	\lstset{stringstyle=\ttfamily}
+	\lstset{keywordstyle=\sffamily}
+	\lstset{numbers=left, numberstyle=\tiny, numbersep=5pt}
+
+
+% ---------------------
+% | Tab Item in Table |
+% ---------------------
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+
+% ----------------
+% | Circled Mark |
+% ----------------
+\newcommand\circledmark[1][gray!50]{%
+  \tikz[baseline=(A.south)]{
+    \node[circle,fill=#1,inner sep=0.75ex] (A) {};
+    \node at (A) {\ding{51}};
+  }%
+}
+
+\newcommand{\xmark}{\ding{55}}%
+
+\newcommand\circledcross[1][gray!50]{%
+	\tikz[baseline=(A.south)]{
+		\node[circle,fill=#1,inner sep=0.75ex] (A) {};
+		\node at (A) {\ding{55}};
+	}%
+}
+
+% ----------------------------------
+% | Hurenkinder und Schusterjungen |
+% ----------------------------------
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+\interfootnotelinepenalty=10000
+
+% ----------------
+% | Bibliography |
+% ----------------
+\usepackage[backend=biber,giveninits=true,doi=true,url=true,isbn=false,natbib=true,style=apa,maxbibnames=99,maxcitenames=2,hyperref=true,backref=false,defernumbers=true,dashed=false,autopunct=true,uniquename=false,uniquelist=false,useprefix=true,date=long,sorting=nyt]{biblatex}
+\usepackage[autostyle=true,german=quotes]{csquotes}
+\usepackage{breakcites}
+\apptocmd{\sloppy}{\hbadness 10000\relax}{}{} %prevent underfull hbox warnings
+
+\renewcommand{\finentrypunct}{.}
+
+
+% -------------------------------------
+% | Rename Bibliography to References |
+% -------------------------------------
+\DefineBibliographyStrings{english}{%
+	bibliography = {References},
+}
+
+% ------------
+% | Citeapos |
+% ------------
+\def\citeapos#1{\citeauthor{#1}'s (\citeyear{#1})}
+
+% --------------------
+% | Tweak Full-Cite  |
+% --------------------
+\preto\fullcite{\AtNextCite{\defcounter{maxnames}{99}}}
+
+% -----------------
+% | Table Columns |
+% -----------------
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}   % linksbündig mit Breitenangabe
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}     % zentriert mit Breitenangabe
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}    % rechtsbündig mit Breitenangabe
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+
+
+
+\newcommand{\ks}[1]{\hangindent=0.5cm \textbf{#1}}
+
+% ----------------------
+% | Abstract in Part B |
+% ----------------------
+\newcommand\paperTitle[1]{%
+	\newpage
+	\begin{center}
+	{\Large\sffamily\noindent
+	\textbf{#1}}
+	\end{center}
+	\parskip
+}
+
+\newenvironment{abstract}{%
+  \vskip-\lastskip
+  \quotation
+  \vskip-\partopsep\vskip-\parsep\vskip-\itemsep\vskip-2\baselineskip\vskip-\parskip%
+  \leavevmode\small\subparagraph*{\abstractname.}%
+}{%
+  \par\endquotation
+}
+
+
+% -----------------------------------
+% | Define mytexttt with hypenation |
+% -----------------------------------
+\makeatletter
+\DeclareRobustCommand\ttfamily
+        {\not@math@alphabet\ttfamily\mathtt
+         \fontfamily\ttdefault\selectfont\hyphenchar\font=-1\relax}
+\makeatother
+\DeclareTextFontCommand{\mytexttt}{\ttfamily\hyphenchar\font=45\relax}
+
+
+
+% ------------------
+% | Custom colors  |
+% ------------------
+\usepackage{xcolor}
+\definecolor{LightGray}{gray}{0.9}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\definecolor{mygray}{gray}{0.85}
+\definecolor{mycyan}{rgb}{0.88,1,1}
+\definecolor{LightGray}{gray}{0.9}
+\definecolor{crowdstrom}{RGB}{46, 170, 225}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\definecolor{mygray}{gray}{0.85}
+\definecolor{mycyan}{rgb}{0.88,1,1}
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+\definecolor{colorPositive}{RGB}{0,100,0}
+\definecolor{colorNeutral}{RGB}{100,0,0}
+\definecolor{colorNegative}{RGB}{95,95,95}
+
+% ------------------
+% | Abbreviations  |
+% ------------------
+% For correct spacing after abbreviations
+\usepackage{xspace}
+\DeclareRobustCommand\xdot{.\@\xspace}
+\newcommand{\etc}{\mbox{etc}\xdot}
+\newcommand{\eg}{\mbox{e.g}\xdot}
+\newcommand{\Eg}{\mbox{E.g}\xdot}
+\newcommand{\etal}{\mbox{et al}\xdot}
+\newcommand{\esp}{\mbox{esp}\xdot}
+\newcommand{\ie}{\mbox{i.e}\xdot}
+\newcommand{\wrt}{\mbox{w.r.t}\xdot}
+\newcommand{\sect}{\mbox{sec}\xdot}
+\newcommand{\resp}{\mbox{resp}\xdot}
+\newcommand{\apprx}{\mbox{approx}\xdot}
+\newcommand{\tab}{\mbox{tab}\xdot}
+\newcommand{\Tab}{\mbox{Tab}\xdot}
+\newcommand{\fig}{\mbox{fig}\xdot}
+\newcommand{\Fig}{\mbox{Fig}\xdot}
+\newcommand{\viz}{\mbox{viz}\xdot}
+\newcommand{\Ie}{\mbox{I.e}\xdot}
+\newcommand{\cf}{\mbox{cf}\xdot}
+\newcommand{\as}{\mbox{a.s}\xdot}
+\newcommand{\iid}{\mbox{i.i.d}\xdot}
+\newcommand{\p}[1]{\mbox{p.~#1}}
+\newcommand{\pp}[1]{\mbox{pp.~#1}}
+\newcommand{\pf}[1]{\mbox{p.~#1~f}\xdot}
+\newcommand*\elide{\textup{[\,\dots]}}
+
+
+\newenvironment{myquote}%
+{\list{}{\leftmargin=0.3in\rightmargin=0.3in}\item[]}%
+{\endlist}
+
+% ------------
+% | Hyperref |
+% ------------
+\PassOptionsToPackage{hyphens}{url}
+\usepackage[breaklinks=true,
+			plainpages=false,
+			linktocpage=true,
+			hidelinks,
+			unicode]{hyperref}
+\hypersetup{
+	pdfauthor={\myname},
+	pdftitle={\myplaintitle},
+	pdfsubject={Dissertation},
+	pdflang=EN}
+
+	% -------------
+	% | CleverRef |
+	% -------------
+	\usepackage{cleveref} % use same footnote mulitple times
+	\crefformat{footnote}{#2\footnotemark[#1]#3}
+
+% --------------------------------
+% | scrhack: must be loaded last |
+% --------------------------------
+\usepackage{scrhack}
+
+\input{helper/listPubPerYear}

@@ -1,0 +1,191 @@
+%%
+%% ics.sty
+%% A style file for master/bachelor thesis
+%% This style should be used with jreport
+%%
+%% (c) Takahiro Koh
+%%
+%% 2013 December: Yuichi GOTO, いくつかの変数をsample.texへ移動
+%% 2025 June: Yuichi GOTO, mabst.styの外部発表を流用して公表論文を変更。
+%%                                     
+
+%% レイアウトパラメータ設定
+\setlength{\textwidth}{424pt} %本文部の横幅、全角文字37文字程度。
+\setlength{\textheight}{600pt} %本文部の縦幅、全角文字50文字程度。
+\setlength{\topmargin}{-0.1pt}
+\setlength{\oddsidemargin}{12pt}
+\setlength{\evensidemargin}{12pt}
+\setlength{\footskip}{60pt}
+\setlength{\parskip}{1.5ex} %段落間のスペース。全角文字0.5文字分。
+
+%% 段落はじめの字下げ
+\usepackage{indentfirst} %強制的に字下げする
+\setlength{\parindent}{12pt} %段落はじめの字下げ。全角1文字。
+
+%% 表紙に記載する情報
+\long\def\Supervisor{指導教員}
+\long\def\Address{埼玉県さいたま市桜区下大久保255}
+
+%% 表紙の設定
+% 変数設定
+\def\papercode#1{\gdef\@papercode{#1}}
+\let\@papercode\@empty
+
+\long\def\supervisor#1{\gdef\@supervisor{#1}}
+\let\@supervisor\@empty
+
+\long\def\affiliation#1{\gdef\@affiliation{#1}}
+\let\@affiliation\@empty
+
+\long\def\studentID#1{\gdef\@studentID{#1}}
+\let\@studentID\@empty
+
+\long\def\labaffiliation#1{\gdef\@labaffiliation{#1}}
+\let\@labaffiliation\@empty
+
+\long\def\labname#1{\gdef\@labname{#1}}
+\let\@labname\@empty
+
+
+\def\maketitle{%
+   \cleardoublepage%
+   \thispagestyle{empty}%
+   \setcounter{page}{1}%
+   \begin{flushright}%
+    {\large \@papercode}%
+   \end{flushright}%
+   \vspace*{1cm}\noindent
+    \begin{center}%
+     {\Large \@title}\\%
+     \vspace*{2.0cm}%
+     {\Large \Supervisor\hspace{1.5cm}\@supervisor}\vspace*{2.0cm}\\%
+     {\Large \@date}\\\vspace*{1.5cm}%
+     {\Large \@affiliation}\vspace*{2.5cm}\\%
+     {\Large \@studentID\\}%
+     {\Large \vspace*{0.5em}\@author}\vspace*{2.0cm}\\%
+     {\Large \@labaffiliation\\\@labname\\}%
+     {\Large \vspace*{0.5em}\Address}%
+    \end{center}
+   \newpage
+}
+
+%% 箇条書きの行間の調整
+\makeatletter
+
+\renewenvironment{enumerate}%% enumerate 環境を再定義
+  {\ifnum \@enumdepth >\thr@@\@toodeep\else%
+   \advance\@enumdepth\@ne
+   \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+   \list{\csname label\@enumctr\endcsname}{%
+      \iftdir
+         \ifnum \@listdepth=\@ne \topsep.5\normalbaselineskip
+           \else\topsep\z@\fi
+         % 元々ここにあった定義を...
+         \labelwidth1zw \labelsep.3zw
+         \ifnum \@enumdepth=\@ne \leftmargin1zw\relax
+           \else\leftmargin\leftskip\fi
+         \advance\leftmargin 1zw
+      \fi
+         \parskip\z@ \itemsep\z@ \parsep\z@% こちらに移動
+         \usecounter{\@enumctr}%
+         \def\makelabel##1{\hss\llap{##1}}}%
+   \fi}{\endlist}
+
+\renewenvironment{itemize}%% itemize 環境を再定義
+  {\ifnum \@itemdepth >\thr@@\@toodeep\else
+   \advance\@itemdepth\@ne
+   \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+   \expandafter
+   \list{\csname \@itemitem\endcsname}{%
+      \iftdir
+         \ifnum \@listdepth=\@ne \topsep.5\normalbaselineskip
+           \else\topsep\z@\fi
+         % 元々ここにあった定義を...
+         \labelwidth1zw \labelsep.3zw
+         \ifnum \@itemdepth =\@ne \leftmargin1zw\relax
+           \else\leftmargin\leftskip\fi
+         \advance\leftmargin 1zw
+      \fi
+         \parskip\z@ \itemsep\z@ \parsep\z@% こちらに移動
+         \def\makelabel##1{\hss\llap{##1}}}%
+   \fi}{\endlist}
+
+\makeatother
+
+\makeatletter%% プリアンブルで定義する場合は必須
+\renewenvironment{description}%% description 環境を再定義
+  {\list{}{\labelwidth\z@ \itemindent-\leftmargin
+   \iftdir
+     \leftmargin\leftskip \advance\leftmargin3\Cwd
+     \rightmargin\rightskip
+     \labelsep=1zw% 元々ここにあった定義を...
+   \fi
+     \itemsep\z@% こちらに移動
+     \listparindent\z@ \topskip\z@ \parskip\z@ \partopsep\z@% こちらに移動
+           \let\makelabel\descriptionlabel}}{\endlist}
+\makeatother%% プリアンブルで定義する場合は必須
+
+%% 公表論文
+\makeatletter
+\newcommand{\pubrefname}{公表論文}
+\def\pubbibitemprefix{P}
+\def\@pubbiblabel#1{[\pubbibitemprefix#1]}
+\newenvironment{thepubbibliography}[1]
+{\chapter*{\Huge\pubrefname}%
+ \addcontentsline{toc}{chapter}{\pubrefname}% 目次に表示
+  \list{\@pubbiblabel{\@arabic\c@enumiv}}%
+        {\setlength{\itemsep}{0mm}%
+         \setlength{\parsep}{0mm}%
+         \settowidth\labelwidth{\@pubbiblabel{#1}}%
+         \leftmargin\labelwidth
+         \advance\leftmargin\labelsep
+         \@openbib@code
+         \usecounter{enumiv}%
+         \let\p@enumiv\@empty
+         \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+   \sloppy
+   \clubpenalty4000
+   \@clubpenalty\clubpenalty
+   \widowpenalty4000%
+   \sfcode`\.\@m}
+  {\def\@noitemerr
+    {\@latex@warning{Empty `thepubbibliography' environment}}%
+   \endlist}
+\def\pubbibitem{\@ifnextchar[\@lbibitem\@pubbibitem}
+\def\@pubbibitem#1{%
+	\item\if@filesw \immediate\write\@auxout
+          {\string\bibcite{#1}{\pubbibitemprefix\the\value{\@listctr}}}\fi\ignorespaces}
+\makeatother
+
+%% thebibliography を再定義
+%%
+\makeatletter
+\renewenvironment{thebibliography}[1]% 再定義
+{\chapter*{\bibname\@mkboth{\bibname}{\bibname}}%
+ \addcontentsline{toc}{chapter}{\bibname}% この行追加
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{#1}}%
+         \leftmargin\labelwidth
+         \advance\leftmargin\labelsep
+         \@openbib@code
+         \usecounter{enumiv}%
+         \let\p@enumiv\@empty
+         \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+   \sloppy
+   \clubpenalty4000
+   \@clubpenalty\clubpenalty
+   \widowpenalty4000%
+   \sfcode`\.\@m}
+  {\def\@noitemerr
+    {\@latex@warning{Empty `thebibliography' environment}}%
+   \endlist}
+
+\makeatother
+
+\renewcommand{\abstractname}{\Huge 概要}
+% ついでに「関連図書」ではなく「参考文献」になるようにする
+\renewcommand{\bibname}{参考文献}
+
+
+\def\epsfsize#1#2{\ifnum#1>\hsize\hsize\else#1\fi}
+

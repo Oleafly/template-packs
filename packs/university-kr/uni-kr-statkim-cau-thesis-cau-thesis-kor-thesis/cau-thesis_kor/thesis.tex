@@ -1,0 +1,306 @@
+%%=====================================================================
+%%
+%% thesis-kor.tex
+%%
+%% cau-thesis.cls 를 이용한 중앙대학교 석,박사 학위논문 한글용 예제
+%%
+%% 2001년 3월 2일
+%%
+%% 최 재훈 (goopy74@yahoo.com)
+%%
+%% 비고 1: cau-thesis.cls 는 HLaTeX-0.97 또는 0.98 로
+%%         중앙대학교 석,박사 학위논문을 제작하려는
+%%         사람들을 위해서 만들어졌습니다.
+%% 비고 2: 이 파일은 한국과학기술원 수학과 차재춘씨가 제작하고
+%%         조진환씨가 HLaTex-0.97용으로 바꾼것을
+%%         중앙대학교 졸업논문 형식에 맞도록 수정한 것입니다.
+%%
+%%=====================================================================
+%
+% cau-thesis.cls 는 LaTeX2e 의 report.cls 를 사용하므로 report.cls 의
+% 모든 옵션을 사용할 수 있습니다. 특히 10pt, 11pt, 12pt 옵션을 사용하여
+% 본문의 글자 크기를 조정할 수 있습니다.
+%
+% 본문이 영어인 경우에는 hangul 옵션을 사용하지 마십시오.
+%
+%%=====================================================================
+% 2007년 12월 18일
+% 남기환(snowall@gmail.com)
+%
+% 2007년 졸업논문 양식과 가능한 동일하게 출력되도록 수정하였습니다.
+%
+% 단, cau-thesis.cls 파일에서 겉표지와 인정서 부분의 주석을 참고하여 
+% 하단 여백이 3cm가 되도록 숫자를 조절하여야 합니다.
+%
+% 해결되지 않은 문제 : 본문 하단 여백에서 페이지 하단부터 페이지 번호까지 
+% 규정된 2cm보다 커집니다. 이 문제는 아직 해결 못하였습니다.
+%
+% 컴파일은 LaTeX+dvipdf를 이용할 것을 권장합니다. 
+% pdflatex은 겉표지, 속표지, 인정서 페이지가 a4로 출력됩니다.
+%
+% 컴파일 테스트는 MikTeX 2.7beta + ko.TeX-0.1.0 에서 WinEdt 5.5를 이용하였습니다.
+% 
+%%=====================================================================
+% 2020년 9월 4일
+% 김현성(hyunsung1021@gmail.com)
+%
+% 한자 용어 및 디테일한 여백 등을 수정하였습니다.
+%
+% 겉표지와 인정서의 사이즈를 B5로 되도록 수정하였으며 하단 여백이 3cm가
+% 되도록 수정하였습니다.
+%
+% 용지 하단부터 페이지 번호까지 2cm가 되로록 조절하였고 페이지 번호부터
+% 본문 하단까지 1cm가 되도록 수정하였습니다.
+%
+% 표지는 한글, 내용은 영어에 맞도록 수정하였습니다.
+% 한글 논문 양식은 별도로 수정하지 않았습니다.
+%
+% 컴파일 테스트는 Overleaf를 이용하였습니다.
+% 
+%%=====================================================================
+% PART : 용지 및 서식 옵션
+\documentclass[12pt,b5paper]{cau-thesis} % 본문이 영어인 경우에는 hangul 옵션을 사용하지 마십시오.
+\usepackage{kotex}
+\usepackage[b5paper]{geometry} % b5종이 정보를 알려주기 위해 사용하는 Geometry
+%
+%
+%----------------------------------------------------------------------
+%
+% Part A: 학위논문에 필요한 정보 입력
+%
+%     박사의 경우 D, 석사의 경우 M 을 입력합니다.
+\code{M}
+%
+%     영어 및 한글 학과명을 입력합니다. "Department of"는 없어도 됩니다.
+\edept{Statistics}
+\kdept{통계학과}
+%
+%     영어 및 한글 세부전공명을 입력합니다.
+\emajor{Statistics}
+\kmajor{통계학}
+%
+%     영어 및 한글로 학위논문 제목을 입력합니다.
+\etitle{Title in English}
+\ktitle{Title in Korean}
+%
+%     지도교수의 한글 이름을 입력합니다.
+%     공동지도교수가 있을 경우에만 공동지도교수의 한글 이름을 입력합니다.
+%     한글자씩 띄어서 입력합니다.
+\advisor{교 수 명}
+%\coadvisor{}
+%
+%     영어, 한글로 자신의 이름을 입력합니다.
+%   영어 이름을 한자씩 띄어쓰기로 입력합니다.
+\ename{English Name}
+%   한글 이름을 한자씩 띄어쓰기로 입력합니다.
+\kname{한 글 이 름}
+%   자신의 한글 이름을 모든 글자를 붙여서 입력합니다. 
+%   이것은 "인정서" 부분에 사용되는 이름입니다.
+\knamenospace{한글이름}
+%
+%     자신의 졸업차수를 입력합니다.
+\gcount{134}
+%
+%     학위수여년도를 입력합니다. 이 년도는 앞표지에 사용됩니다.
+\coveryear{2021년 2월}
+%
+%----------------------------------------------------------------------
+%
+% Part B: 학위논문 Preamble
+%
+% B1. 학위논문을 작성하는데 필요한 패키지들은 여기에서 부릅니다.
+%
+%     PostScript 글꼴을 처리하는 TeX 을 사용하는 경우 \usepackage{times}
+%     를 이용해 Times 글꼴을 사용할 수 있습니다.
+%
+%     줄 간격을 조절할 필요가 있을 때는 \usepackage{setspace} 를 사용하면
+%     되며 이 패키지는 cau-thesis.cls 와 함께 배포됩니다.
+%
+%     한글 문서의 경우 첫 단락의 indent 가 필요하지만 영문 문서의 경우에는
+%     사용하지 않는 것이 보통입니다. 그러므로 본문이 한글일 경우
+%     \usepackage{indentfirst} 를 사용하는 것이 좋습니다.
+%
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{times}
+\usepackage{setspace}
+\usepackage{indentfirst}
+% 추가한 packages
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{amscd}
+\usepackage{multirow} 
+\usepackage{array}
+\usepackage{caption}
+\usepackage{rotating}
+\usepackage{subfig}
+\usepackage{color}
+\usepackage{natbib}
+\usepackage{lscape}
+\usepackage{graphics}
+\usepackage{fancyvrb,enumerate}
+\usepackage{mathtools}
+\usepackage{verbatim} 
+\usepackage{afterpage}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{hyperref}
+\usepackage[flushleft]{threeparttable}
+%
+% B2. 새롭게 정의하거나 고칠 명령
+%
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\long\def\comment#1{} 
+
+%\newtheorem*{thm}{Theorem}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newcommand{\rb}[1]{\raisebox{-.5em}[0pt]{#1}}
+% \renewcommand{\baselinestretch}{1.8}
+\renewcommand{\mid}{\, | \ }
+\newcommand{\eighth}{{\textstyle \frac{1}{8}}}
+
+\def \bY { \mathbf{ Y } }
+\def \bX { \mathbf{ X } }
+\def \bU { \mathbf{ U } }
+\def \bmu { \boldsymbol{ \mu } }
+\def \bSigma { \boldsymbol{ \Sigma } } 
+\def \bphi { \boldsymbol{ \phi } }
+\def \bepsilon { \boldsymbol{ \epsilon } }
+\def \bD { \boldsymbol{\mathcal{D}} }
+
+\newcommand{\eqdis}{\overset{\mathrm{d}}{=\joinrel=}}
+\newcommand{\ba}{\mbox{\boldmath $a$}}
+\newcommand{\bg}{\mbox{\boldmath $g$}}
+\newcommand{\bx}{\mbox{\boldmath $x$}}
+\newcommand{\by}{\mbox{\boldmath $y$}}
+\newcommand{\bd}{\mbox{\boldmath $d$}}
+\newcommand{\bff}{\mbox{\boldmath $f$}}
+\newcommand{\bz}{\mbox{\boldmath $z$}}
+\newcommand{\bu}{\mbox{\boldmath $u$}}
+\newcommand{\bv}{\mbox{\boldmath $v$}}
+\newcommand{\bW}{\mbox{\boldmath $W$}}
+\newcommand{\bI}{\mbox{\boldmath $I$}}
+\newcommand{\bJ}{\mbox{\boldmath $J$}}
+\newcommand{\bL}{\mbox{\boldmath $L$}}
+\newcommand{\bQ}{\mbox{\boldmath $Q$}}
+\newcommand{\bZ}{\mbox{\boldmath $Z$}}
+\newcommand{\bV}{\mbox{\boldmath $V$}}
+\newcommand{\bG}{\mbox{\boldmath $G$}}
+\newcommand{\bdm}{\begin{displaymath}}
+\newcommand{\edm}{\end{displaymath}}
+\newcommand{\bnu}{\mbox{\boldmath $\nu$}}
+\newcommand{\btau}{\mbox{\boldmath $\tau$}}
+\newcommand{\biota}{\mbox{\boldmath $\iota$}}
+\newcommand{\bbeta}{\mbox{\boldmath $\beta$}}
+\newcommand{\bomega}{\mbox{\boldmath $\omega$}}
+\newcommand{\btheta}{\mbox{\boldmath $\theta$}}
+\newcommand{\bep}{\mbox{\boldmath $\epsilon$}}
+\newcommand{\bdelta}{\mbox{\boldmath $\delta$}}
+\newcommand{\balpha}{\mbox{\boldmath $\alpha$}}
+\newcommand{\bxi}{\mbox{\boldmath $\xi$}}
+\newcommand{\bgamma}{\mbox{\boldmath $\gamma$}}
+\newcommand{\bOmega}{\mbox{\boldmath $\Omega$}}
+\newcommand{\bPi}{\mbox{\boldmath $\Pi$}}
+\newcommand{\bzeta}{\mbox{\boldmath $\zeta$}}
+\newcommand{\bpsi}{\mbox{\boldmath $\psi$}}
+\newcommand{\bPsi}{\mbox{\boldmath $\Psi$}}
+\newcommand{\bl}{\mbox{\boldmath $l$}}
+\newcommand{\C}{{\rm Cov}}
+\newcommand{\bH}{\bold H}
+\newcommand{\blambda}{\mbox{\boldmath $\lambda$}}
+\newcommand{\bbh}{\bld h}
+%
+% 또는 thesis.cfg 파일을 새로 만들어 이용해도 됩니다.
+% \InputIfFileExists{thesis.cfg}{}{}
+%
+%----------------------------------------------------------------------
+%
+% Part C: 학위논문 Body
+%
+% C1. 논문 표지 및 인정서
+\AtBeginDocument{\makecovertitle}
+% 
+% C2. 논문 본문
+\begin{document}
+    % 본문 줄간격 설정
+    \setstretch{2}
+	%
+	%     목차(Contents): 목차를 자동으로 만들어 줍니다.
+	%
+	\makecontents
+	%
+	%     목록(lists): 표와 그림 목록을 자동으로 만들어 줍니다.
+	\makelist
+	%
+	%     본문: 각 Chapter 별로 main.tex 파일에 만들어 이용합니다.
+	%     본문에서 줄 간격을 늘리거나 줄이려면 setspace.sty 에서 제공하는
+	%     \begin{spacing}{1.5}...\end{spacing} 을 사용하면 됩니다.
+	%
+	%페이지 번호 붙이기를 아라비아 숫자(1,2,3...)으로 바꿉니다. 앞서 목차에서는 로마 숫자(i, ii, ...)을 사용합니다.
+	\setcounter{page}{1}\pagenumbering{arabic}
+	%
+	% 본문 내용
+    % \include{content}
+    %
+    %   Chapter 1
+    \chapter{Chapter 1}
+    
+    \section{Section 1}
+    
+    \subsection{Subsection 1}
+    
+    \subsection{Subsection 2}
+    
+    
+    \section{Section 2}
+    
+    
+    %   Chapter 2
+    \chapter{Chapter 2}
+    
+    \chapter{Chapter 1}
+    
+    \section{Section 1}
+    
+    \subsection{Subsection 1}
+    
+    \subsection{Subsection 2}
+    
+    
+    \newpage
+    
+    %   참고문헌(References)
+    \begin{thebibliography}{}
+        \addcontentsline{toc}{chapter}{\bibname}   % Table Of Content에 추가
+    
+        \bibitem[{James et~al.(2000)}]{James2000}
+        James, G. M., Hastie, T. J., \& Sugar, C. A. (2000). Principal component models for sparse functional data. {\em Biometrika}, {\bf 87}, 587-602.
+         
+        \bibitem[{Ramsay and Silverman(2005)}]{Ramsay2005}
+        Ramsay, J. O., \& Silverman, B. W. (2005) {\em Functional Data Analysis}, 2nd ed., Springer Series in Statistics, New York.
+        
+        \bibitem[{Yao et~al.(2005)}]{Yao2005}
+        Yao, F., Müller, H. G., \& Wang, J. L. (2005). Functional data analysis for sparse longitudinal data. {\em Journal of the American Statistical Association}, {\bf 100}, 577-590.
+    
+    \end{thebibliography}
+    
+    \newpage
+    
+    %   논문초록(Abstract) : 초록의 내용을 영어로 작성합니다.
+    \begin{abstract}
+    	Abstract in English
+        
+        % keywords
+        \makekeyword{Keywords: keyword1, keyword2, keyword3}
+    \end{abstract}
+    
+    %   국문 초록 내용(kabstract) : 초록의 내용을 한글로 작성합니다.
+    \begin{kabstract}
+        국문초록
+        
+        % keywords
+        \makekeyword{주요 용어: 키워드1, 키워드2, 키워드3}
+    \end{kabstract}
+\end{document}

@@ -1,0 +1,347 @@
+%% Version: 0.8 (12.02.2019)
+
+%% thesis.tex
+%% Copyright 2020 KIT, IAR-IPR (Denis Štogl)
+%% Mail: denis.stogl@kit.edu
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is M. Y. Name.
+%
+% This work consists of the files pig.dtx and pig.ins
+% and the derived file thesis.tex.
+
+
+%% ==============================
+\chapter{How to use this Template}
+\label{sec:how-to-use}
+%% ==============================
+
+\textbf{IMPORTANT:} This chapter will disappear when you add final parameter on the document. See section \ref{ssec:finalizing_the_document}.
+
+\subsection{Getting Started}
+Initially you \textbf{should only edit} the \texttt{My\_document\_info.tex} with important data regarding your work.
+
+Add \textbf{content} in files in \texttt{Content} folder.
+
+Add \textbf{bibliography} in the file \texttt{Bibliography/my\_thesis\_bibliography.bib} or just add a file from your supervisior in the \texttt{Bibliography} folder and reference it in the \texttt{\textbackslash mybibliographyfiles} command in the \texttt{My\_document\_info.tex} file.
+
+As an useful aid in all scientific work following book is recommended: \cite{deininger2005studien}.
+
+
+\subsection{Inline lists}
+My robot can:
+\begin{enumerate*}[label=(\roman*)]
+ \item forward and backward movements,
+ \item sidewards movements,
+ \item rotation along any curve in space,
+ \item place of artificial forces along paths.
+\end{enumerate*}
+
+\begin{enumerate*}[label=(\arabic*),itemjoin={{; }}]
+    \item the independently controllable wheels
+    \item the rechargeable battery pack
+    \item the Sick LMS100 laser range scanner
+    \item the force-torque sensor
+    \item the handlebar for controlling the robotic device
+\end{enumerate*}
+
+\url{https://ctan.math.illinois.edu/macros/latex/contrib/enumitem/enumitem.pdf}
+
+\subsection{Todos}
+
+Todo command can be used in multiple form and paramters set. You can set todos on the right side with commands:
+{\small
+\begin{verbatim}
+\todo{Rewrite this section}
+\todo[color=green]{Stuff}
+\end{verbatim}
+} which render as:
+\todo{Rewrite this section}
+\todo[color=green]{Stuff}
+
+
+
+% \todo[due=2017-08-18]{Stuff}
+% \todo[done]{Stuff}
+
+You can also create inline todos with command:
+{\small
+\begin{verbatim}
+\todo[inline]{Rewrite this section}
+\todo[inline,color=green]{Rewrite this section}
+\todoin{Stuff}
+\end{verbatim}
+} which rendrs as:
+\todo[inline]{Rewrite this section}
+\todo[inline,color=green]{Rewrite this section}
+\todoin{Stuff}
+
+One can also use command for figure placeholder with command:
+{\small
+\begin{verbatim}
+ \missingfigure{Please add some figures}
+\end{verbatim}
+} which renders as:
+\missingfigure{Please add some figures}
+
+
+\subsubsection{User defined version of ToDos for easier usage}
+
+\paragraph{Short for inline}
+\begin{verbatim}
+ \todoin{This I have to do}
+\end{verbatim}
+\todoin{This I have to do}
+
+\paragraph{Remember to rewrite something better}
+\begin{verbatim}
+ \todoBetter{This I have to do}
+\end{verbatim}
+\todoBetter{This I have to do}
+\begin{verbatim}
+ \todoBetterin{This I have to do}
+\end{verbatim}
+\todoBetterin{This I have to do}
+
+\paragraph{Remember to add some stuff later}
+\begin{verbatim}
+ \todoAdd{This I have to do}
+\end{verbatim}
+\todoAdd{This I have to do}
+\begin{verbatim}
+ \todoAddin{This I have to do}
+\end{verbatim}
+\todoAddin{This I have to do}
+
+\paragraph{Remember to remove some copy-pasted text}
+\begin{verbatim}
+ \todoCopied{This I have to do}
+\end{verbatim}
+\todoCopied{This I have to do}
+\begin{verbatim}
+ \todoCopiedin{This I have to do}
+\end{verbatim}
+\todoCopiedin{This I have to do}
+
+\paragraph{Remember that something is important to consider in the future}
+\begin{verbatim}
+ \todoImportant{This I have to do}
+\end{verbatim}
+\todoImportant{This I have to do}
+\begin{verbatim}
+ \todoImportantin{This I have to do}
+\end{verbatim}
+\todoImportantin{This I have to do}
+
+\paragraph{Remember that something need to be checked}
+\begin{verbatim}
+ \todoCheckThis{This I have to do}
+\end{verbatim}
+\todoCheckThis{This I have to do}
+\begin{verbatim}
+ \todoCheckThisin{This I have to do}
+\end{verbatim}
+\todoCheckThisin{This I have to do}
+
+
+\subsection{Glossaries and Acronyms}
+Please use \texttt{glossaries} package for this. See \href{https://en.wikibooks.org/wiki/LaTeX/Glossary}{\textit{documentation}}.
+
+Example (Acronym):
+{\small
+\begin{verbatim}
+\newacronym{ipr}{IAR-IPR}{Institute for Anthropomatics and Robotics - Intelligent Process Control and Robotics}
+\end{verbatim}
+} \newacronym{ipr}{IAR-IPR}{Institute for Anthropomatics and Robotics - Intelligent Process Control and Robotics}
+is used by
+{\small
+\begin{verbatim}
+\gls{ipr}
+\end{verbatim}
+}
+rendering as ``\gls{ipr}'', on the first use and as ``\gls{ipr}'' on every following use. For further feature see \href{https://en.wikibooks.org/wiki/LaTeX/Glossary}{\textit{documentation}}.
+
+Please keep in mind that one has to call \href{https://www.dickimaw-books.com/cgi-bin/faq.cgi?action=view&categorylabel=glossaries#noglossary}{\textit{external commands}} for glossaries to work.
+
+
+\subsection{Nomenclature}
+For more details see \href{https://tex.stackexchange.com/questions/27824/using-package-nomencl}{\textit{example}}.
+
+Use following command:
+\textbackslash nomenclature\{IAR-IPR\}\{Institute for Anthropomatics and Robotics (IAR) - Intelligent Process Control and Robotics (IPR)\}
+\nomenclature{IAR-IPR}{Institute for Anthropomatics and Robotics (IAR) - Intelligent Process Control and Robotics (IPR)}
+
+
+\subsection{SI Units}
+Please use \texttt{siunitx} package for this. See:  \url{https://ctan.org/pkg/siunitx}
+
+\subsection{Tables}
+\begin{table}[H]
+\caption{Tables have caption on top.}
+\label{tab:table_caption}
+\centering
+\resizebox{\columnwidth}{!}{
+ \begin{tabular}{| c | c | c | c |}
+  \hline
+  Object & Speed $[cm/s]$ & Inner LR $[cm]$ & Inner UR $[cm]$ \\ \hline \hline
+  \multirow{3}{*}{\emph{Pitcher}} & real & $ n/a $ & $ 5.65 $ \\
+   & $4.60$ & $3.71 \pm 0.67$ & $5.09 \pm 2.23$ \\
+   & $10.64$ & $3.55 \pm 0.57$ & $6.14 \pm 0.69$ \\ \hline \hline
+  \multirow{3}{*}{Cookie O} & real & $ 7.55 $ & $ 7.55 $ \\
+   & $4.60$ & $6.98 \pm 0.27$ & $6.98 \pm 0.27$ \\
+   & $10.64$ & $6.77 \pm 0.26$ & $6.77 \pm 0.26$ \\ \hline
+ \end{tabular}
+ }
+\end{table}
+
+Use \texttt{\textbackslash longtable} for tables over multiple pages. See \href{https://de.wikibooks.org/wiki/LaTeX-W%C3%B6rterbuch:_longtable_(Umgebung)}{documentation}.
+
+\subsection{Figures}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\columnwidth]{Logos/KIT-Departments/IPRLogo_en}
+    \caption{Figures have caption under. If you use figures from other work, do not forget to reference them \cite{deininger2005studien}.}
+    \label{fig:figure_caption}
+\end{figure}
+
+\subsection{Subfigures}
+%For more explanation see \href{https://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions#Subfloats}{Wikibooks}
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Logos/KIT-Departments/IPRLogo_en}
+        \caption{First logo}
+        \label{fig:logo1}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+      %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Logos/KIT-Departments/IPRLogo_en}
+        \caption{Second logo}
+        \label{fig:logo2}
+    \end{subfigure}
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc.
+    %(or a blank line to force the subfigure onto a new line)
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{Logos/KIT-Departments/IPRLogo_en}
+        \caption{Third logo}
+        \label{fig:logo3}
+    \end{subfigure}
+    \caption{Pictures of Logos}\label{fig:logos}
+\end{figure}
+
+
+\subsection{Citation}
+
+\todoin{Add citet und citep}
+
+\subsubsection{Multiple citations}
+Use multiple citation like this:
+{\small
+\begin{verbatim}
+\cite{deininger2005studien, deininger2005studien}
+\end{verbatim}
+}
+rendered as ``\cite{deininger2005studien, deininger2005studien}''.
+
+
+\subsubsection{More powerfull cite commands: \texttt{\textbackslash citet} and \texttt{\textbackslash citep}}
+For comprehensive description please check \href{http://merkel.texture.rocks/Latex/natbib.php}{\textit{the natbib documentation}}.
+
+Rather than using the awkward construction\footnote{The example is from the template for the conference \href{http://www.roboticsconference.org/information/authorinfo/}{\textit{Robotic Science and Systems}}.}
+{\small
+\begin{verbatim}
+\cite{deininger2005studien} describes...
+\end{verbatim}
+}
+\noindent
+rendered as ``\cite{deininger2005studien} demonstrated...,'' or the inconvenient
+{\small
+\begin{verbatim}
+Deininger \cite{deininger2005studien} describes...
+\end{verbatim}
+}
+\noindent
+rendered as ``Deininger \cite{deininger2005studien} demonstrated...'', one can write
+{\small
+\begin{verbatim}
+\citet{deininger2005studien} describes...
+\end{verbatim}
+}
+\noindent
+which renders as ``\citet{deininger2005studien} demonstrated...'' and is
+both easy to write and much easier to read.
+
+
+\textbf{Citing specific chapter}:
+
+\citet[sec. III]{Kroger2008MultiSensor}
+
+\citep[sec. III]{Kroger2008MultiSensor}
+
+For more examples check \href{http://merkel.texture.rocks/Latex/natbib.php}{\textit{the natbib documentation}}.
+
+\subsection{Using Hyperlinks}
+Please use the ability of PDF viewers to interpret hyperlinks\footnote{The example is from the template for the conference \href{http://www.roboticsconference.org/information/authorinfo/}{\textit{Robotic Science and Systems}}.}, specifically to allow each reference in the bibliography to be a
+link to an online version of the reference.
+As an example, if you were to cite ``Passive Dynamic Walking''
+\cite{McGeer01041990}, the entry in the bibtex would read:
+
+{\tiny
+\begin{verbatim}
+@article{McGeer01041990,
+  author = {McGeer, Tad},
+  title = {\href{http://ijr.sagepub.com/content/9/2/62.abstract}{Passive Dynamic Walking}},
+  volume = {9},
+  number = {2},
+  pages = {62-82},
+  year = {1990},
+  doi = {10.1177/027836499000900206},
+  URL = {http://ijr.sagepub.com/content/9/2/62.abstract},
+  eprint = {http://ijr.sagepub.com/content/9/2/62.full.pdf+html},
+  journal = {The International Journal of Robotics Research}
+}
+\end{verbatim}
+}
+\noindent
+and the entry in the compiled PDF would look like:
+
+\def\tmplabel#1{[#1]}
+
+\begin{enumerate}
+\item[\tmplabel{1}] Tad McGeer. \href{http://ijr.sagepub.com/content/9/2/62.abstract}{Passive Dynamic
+Walking}. {\em The International Journal of Robotics Research}, 9(2):62--82,
+1990.
+\end{enumerate}
+%
+where the title of the article is a link that takes you to the article on IJRR's website.
+
+
+Also use this for adding links into text as done in the \footnotemark[2]. For more information see documentation on \href{https://de.wikibooks.org/wiki/LaTeX-W%C3%B6rterbuch:_hyperref}{wikibooks}. The \texttt{hyperref} package is already configured for this document in \texttt{KIT\_document\_setup.tex} file.
+
+
+\subsection{Equations}
+Use numbered equations:
+\begin{equation} \label{equ:equ}
+  m \cdot \ddot{x}(t) + d \cdot \dot{x}(t) = F(t)
+\end{equation}
+
+
+\subsection{Inline comments}
+Use command \texttt{\textbackslash comment\{\}} for inline comments.
+
+\subsection{After Review marking}
+Use command \texttt{\textbackslash afterReview\{\}} for marking text parts as \afterReview{changed}.
+
+\subsection{Finalizing the Document}
+\label{ssec:finalizing_the_document}
+Please check here: \url{https://github.com/KITrobotics/Latex_Template/blob/master/README.md#finalizing-document}

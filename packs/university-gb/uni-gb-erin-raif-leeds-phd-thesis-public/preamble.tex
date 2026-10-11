@@ -1,0 +1,307 @@
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+% !!!!              --- IMPORTANT FOR OVERLEAF USERS ---                      !!!!
+% !!!!  You must make the following changes to the default settings for this  !!!!
+% !!!!  to work                                                               !!!!
+% !!!!  Go to File -> Settings -> Compiler and change in the drop down menus: !!!!
+% !!!!    -  Compiler to XeLaTeX                                              !!!!
+% !!!!    -  Main document to main.tex                                        !!!!
+% !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+%-----------------------------  README  ------------------------------------------
+% University of Leeds thesis template - Erin Raif, 2025 (hopefully)
+% Inspired by templates of Sam Greenwood (2020) and Jonathan Coney (2024).
+% **Tested** pull requests to improve this are very welcome!
+%
+% Compatible with University of Leeds guidelines (included below), and designed
+% for use when submitting a standard thesis, rather than by publication.
+% I recommend that those looking for template for a thesis by publication
+% use the Sam Greenwood thesis template that can be found at
+% https://github.com/sam-greenwood/SOEE-thesis-template
+%
+% PLEASE NOTE: If you click recompile while viewing this preamble, Overleaf
+% will break! This is an overleaf bug. You can only recompile while viewing
+% a file with content (e.g. main.tex; 1_intro.tex). If you're still struggling
+% to make it work, check that File -> Settings -> Compiler -> Main Document is
+% main.tex. For offline compilation, read full notes (which you should anyway).
+%
+% ------------ Notes on this template: ------------------------------------------
+% STRUCTURE - each piece of writing is contained in a separate .tex file.
+% This allows faster compilation by only selecting relevant files using the
+% \includeonly command on line 17 of main.tex. 
+%
+% LINKING and CROSS-REFERENCING - this package is designed to use
+% the \cref command rather than the \ref demand, automatically creating
+% the e.g. "Figure" or "Table" part of the reference, which is clickable.
+%
+% FONT - Open Sans font is used here and .ttf files are supplied. There are
+% two warnings since there are one or two unusal characters that don't have
+% a monospace bold equivalent, these are safely ignored (and can be turned
+% off with the silence pacakges). Alternatively, remove reference to fontspec,
+% \setmainfont and \sffamily to revert to Computer Modern.
+% Open Sans is a open-source humanist font designed by Steve Matteson.
+%
+% REFERENCING - The University of Leeds only requires you to use an
+% "established referencing standard" in your field. Since I studied
+% Atmospheric Physics, I have chosen the Copernicus style used by the
+% Atmospheric Chemistry and Physics Journal, since the Leeds Harvard style
+% is grim.
+%
+% PDF METADATA - You will need to change this in the preamble to include
+% your own name, title etc. I could have automated this and the front page.
+% I haven't.
+%
+% CUSTOM MATHS/HYPENATION/SHORTHANDS - enter these in custom_defs.tex
+%    for ease and input after maths packages have been loaded
+%
+% ABBREVIATIONS - please see detailed comment in preamble to choose between
+%    two possible setups for abbreviations. You need to make this decision
+%    early, I'm afraid.
+% 
+% --- Complilation instructions: ---
+%   - Tested to work on Overleaf with XeLaTeX (as of February 2026)
+% TODO DO THIS OFFLINE, NOTE USING XeLaTeX NOT pdfLaTeX if using font changes here
+%   - Otherwise to compile yourself:
+%     pdflatex 0_thesis.tex
+%     biber 0_thesis                                         
+%.    makeindex 0_thesis.nlo -s nomencl.ist -o 0_thsis.nls    
+%     pdflatex thesis.tex
+% PDFLATEX WILL BREAK WHEN USING THE CUSTOM FONT!
+%
+% --- University of Leeds Thesis Guidance (Aug 2024) ---
+% Please note that you should check the guidance has not changed since I
+% started my thesis. To be honest, I will probably forget to check that
+% the guidance hasn't changed by the time I submit it. I've only included
+% the things that actually affect what needs to go into the LaTeX template,
+% you should check for rules on the actual thesis content!
+%
+% Font - clear, standard font of 11-12pt size
+% Text in double or 1.5 line spacing
+% Margins at binding edge not less than 40mm
+% Margins at other edges not less than 20mm
+% Pages numbered consecutively, inclduing images or diagrams
+% Page numbers on every page, preferably top centre (top-corner here)
+% Title page must have thesis full title, your full name, submission status,
+%     The University of Leeds, your School, Month and Year of Exam
+%     note the date is not the date of submission!
+% Second page must have intellectual property statements
+% Page 3 - acknowledgements with at least those who have assisted work
+%     as well as optional personal acknowledgements.
+% Abstract of max. 300 words on page 4 (or 5 since we're using correct
+%   binding)
+% Table of Contents and further content lists on page immediately
+%     after abstract page.
+% Ethics approval in appendix, list of abbreviations somewhere
+% References using an established standard in your subject area
+%
+% With additional thanks to preceding students (now doctors) whose work
+% the Greenwood template was based on: M.C. Garthwaite, D.P.S. Baekart
+% and M.E. Gaddes
+%---------------------------------------------------------------------------------
+
+\documentclass[titlepage,twoside,onecolumn,a4paper,11pt]{report}
+
+%%%%%%%%%%%%%%%%%%%%%% Helpful LaTeX pacakges for macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{ifthen}
+\usepackage{comment}
+\usepackage{silence}                        % get rid of specific annoying errors or warnings
+                                            % using WarningFilter (example below)
+                                            % not recommended, but I'm not your dad
+                                            % and I definitely didn't use the filters below to
+                                            % remove warnings for safe choices
+% \WarningFilter{latexfont}{Font shape `TS1/OpenSans}
+% \WarningFilter{latexfont}{Some font shapes were not available, defaults substituted}
+%%%%%%%%%%%%%%%%%%%%%% Fonts, symbols and text %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% If you want to revert to traditional LaTeX Computer Modern font, just comment the font setting bits
+% out and the switch at the end
+\usepackage[T1]{fontenc}                    % Allow fonts with foreign charaters
+\usepackage{fontspec}                       % Use different font from Computer/Latin Modern
+\usepackage{textcomp}                       % Avoid warnings from gensymb
+
+% Setting custom font - ADVANCED note. I have opted for a sans-serif font. To implement this
+% I renew the familydefault command so that sans-serif is the default. This means you can
+% still switch to a roman (seriffed) font if need be.
+% I then use \setsansfont to set my custom font, which is OpenSans. If you want a Roman
+% font of your own choosing, you should remove the renewal of the familydefault command below
+% and change \setsansfont to \setmainfont.
+\renewcommand{\familydefault}{\sfdefault}
+\setsansfont{OpenSans}[                     % Use OpenSans font
+    Path=./OpenSans/,                       % Note this is switched on at very end of preamble
+    Scale=0.9,
+    Extension = .ttf,
+    UprightFont=*-Regular,                  % alternatively, "Medium" is provided
+    BoldFont=*-SemiBold,                    % alternatively, "Bold" is provided
+    ItalicFont=*-LightItalic,               % alternatively, "Italic" is provided
+    BoldItalicFont=*-SemiBoldItalic         % alternatively, "BoldItalic" is provided
+    ]
+\usepackage[dvipsnames]{xcolor}             % Colour fonts, with extra named font options
+\usepackage{textgreek}                      % Greek letters in text
+\usepackage{gensymb}                        % Additional "generic symbols" like degrees
+\newcommand{\textapprox}{\raisebox{0.5ex}{\texttildelow}} % in-line tilde in text
+\usepackage[UKenglish]{babel}               % Ensures correct hyphenation
+% Note for advanced users:
+% Open Sans is a modern font for unicode, so you should be able to remove textcomp and gensymb
+% and avoid the warnings - however, this requires a little more overhead to create symbols
+% like degrees, so I've left them in. If you're trying to add something particularly complex,
+% try removing these as they can interfere with some other packages.
+%%%%%%%%%%%%%%%%%%%%%% Optional dark mode for night owls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\pagecolor[rgb]{0.075,0.075,0.075}         % "dark mode" background when uncommented
+%\color[rgb]{0.9,0.9,0.9}                   % "dark mode" font when uncommented
+                                            % note this does not change images/non-default 
+                                            % colours produced with \textcolor
+%%%%%%%%%%%%%%%%%%%%%% Page layout %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{a4}                             % TODO: check if redundant
+\usepackage{geometry}                       % Package to setup page margins
+\geometry{a4paper,inner=40mm,outer=25mm,top=30mm,bottom=30mm}
+\usepackage{multicol}                       % multicolumn text where appropriate (not used here
+                                            % but you might want it to save reference space)
+\usepackage{verbatim}                       % allows font without formatting
+\usepackage{pdflscape}                      % for landscape pages in the appendix
+\usepackage{setspace}                       % choose spacing
+\onehalfspacing                             % my preference - 1.5x linespacing
+%\doublespacing                             % if you prefer 2x linespacing
+\usepackage{xurl}                           % neat URL format
+\usepackage[left,mathlines]{lineno}         % Places line numebrs in margin
+\usepackage{fancyhdr} 						% for making headers and footers
+\pagestyle{fancy}                           % 'fancy' will place header and footers. 'plain' will not
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter:\ #1}{}} % sets format of Chapter mark (left pages)
+\renewcommand{\sectionmark}[1]{\markright{Section \thesection:\ #1}}        % sets format of section mark (right pages)
+\renewcommand{\headrulewidth}{0.5pt}        % sets thickness of header rule
+\renewcommand{\footrulewidth}{0pt}          % sets thickness of footer rule
+\fancyhead[RO,LE]{\thepage} 				% options R - Right-hand side L - Left-hand side O - odd page E - even page
+\fancyfoot{}
+\setlength\headheight{13.6pt}			    % if chapter titles stay on one line in the headers
+%\setlength\headheight{26.0pt}              % if chapter titles need to go onto two lines in the header
+                                            % (note you can avoid this by using \chaptermark to have a shorter header)
+\fancyhfoffset[EL,OR]{0mm}
+%%%%%%%%%%%%%%%%%%%%%% Figures %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}                       % Effectively default package for graphics.
+\usepackage{placeins}                       % for more comfortable float placement including \FloatBarrier
+\usepackage{wrapfig}                        % figures to side of page with text wrapping around them
+\usepackage{rotating}                       % allow rotated floats (useful for sideways tables)
+\usepackage[font={small},labelfont=bf,singlelinecheck=false]{caption} % caption with separate properties
+\renewcommand{\figurename}{Figure}          % Sets figures to be presented as Fig. N
+\graphicspath{ {./images/} }                % change as appropriate, allows you to use filenames only
+\renewcommand{\dblfloatpagefraction}{.66}   % place floats on separate page more appropriately by
+                                            % changing the size a figure has to be
+                                            % (relative to the page size) to get its own page
+%%%%%%%%%%%%%%%%%%%%%% Tables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Note these choices are compatible with LaTeX tables generated using 
+% https://www.tablesgenerator.com/
+% though you will want to swap tabular for tabularx in the table generator output should you
+% want to avail of column types L and x that have been added below or take advantage of
+% any of the other useful features of tabularx.
+\usepackage{tabularx}                               % Perhaps a more modern choice is booktabs but this is what I'm used to
+\usepackage{array}                                  % Definition of table sizes allowed
+\newcolumntype{x}{>{\centering}X}                   % Neat centre-aligned columns in tabularx tables
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}  % Neat left-aligned columns in tabularx tables
+\usepackage{multirow}                               % multirow boxes in tables where appropriate
+\usepackage{xltabular}
+%%%%%%%%%%%%%%%%%%%%%% Mathematics %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage[separate-uncertainty=true]{siunitx}     % Consistent SI units. Use \qty, \unit and \qtyrange commands.
+                                                    % e.g. \qty{20}{\per\centi\meter\cubed} is 20cm^-3 printed nice
+% NOTE FOR ADVANCED USERS:
+% The next line tells siunitx to use the text font for numbers throughout, even if they're in equations.
+% This means writing, say, $<\qty{0.5}{\metre}$ in a sentence looks in keeping with the rest of the text.
+% This isn't always what you want, so if you need units in a proper equation, use \qty[mode=math].
+\sisetup{detect-weight,detect-shape,mode=text}      
+
+%%%%%%%%%%%%%%%%%%%%%% Hyperlinks and PDF Metadata Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[pdfpagelabels,hidelinks]{hyperref}      % Use in-document hyperlinks
+\usepackage[capitalize,nameinlink]{cleveref}        % Use clever references to get names linking and autopopulation of type
+                                                    % NOTE: Weird quirk - cleveref struggles to identify
+                                                    % tables and figures from the main text if you do not
+                                                    % indent within your figure/table environment. Very strange...
+                                                    
+\crefformat{figure}{#2Figure~#1#3}                  % Set figure reference in text to be Figure rather than Fig.
+\hypersetup{
+    plainpages=false,                               % Resets counter in main matter (Problems of links to early pages)
+    %bookmarks=true,                                % show bookmarks bar?
+    unicode=true,                                   % non-ASCII characters in Acrobat's bookmarks
+    pdftoolbar=true,                                % show Acrobat's toolbar?
+    pdfmenubar=true,                                % show Acrobat's menu?
+    pdffitwindow=true,                              % page fit to window when opened
+    pdfstartview={FitV},
+    pdftitle={The formation of ice in clouds and the impact on climate.},           % title
+    pdfauthor={Erin N. Raif},                                                       % author
+    pdfsubject={PhD Thesis, School of Earth and Environment, University of Leeds},  % subject of the document
+    pdfkeywords={},
+    pdfdisplaydoctitle=true
+}
+\usepackage{doi}
+\usepackage[nottoc]{tocbibind}      % Bibliography in table of contents
+%%%%%%%%%%%%%%%%%%%%%% Appendices %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{appendix}                       % Allows appendix environments
+%%%%%%%%%%%%%%%%%%%%%% List of abbreviations (acronyms) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% There are two options here and you should decide which to use BEFORE YOU START.
+% Option 1: Abbreviations link to the list of abbreviations. Use the \ac command whenever you
+%           write an acronym in the text, e.g. \ac{INP} to create the list. Pros and cons:
+%           + will print the full name of the abbreviation on the first instance
+%               e.g. ice-nucleating particle (INP) but not on others.
+%           + links to the list every time, which is helpful
+%           + you should (?) be warned if you call an undefined abbreviation
+%           - extra overhead when writing to remember to do this every time
+%           - sometimes stylistically you want to clarify what an acronym is midway through
+%           - lots of hyperlinks can be irritating for your examiner if they read on tablet
+% Option 2: Low-effort acronym implementation. Manually create the list of abbreviations. No
+%           need to type \ac all the time but you do need to remember to add them as you go.
+%\usepackage[printonlyused]{acronym}  % <--- Option 1
+\usepackage[nohyperlinks]{acronym}    % <--- Option 2 (I used this)
+%%%%%%%%%%%%%%%%%%%%%% Nomenclature (a.k.a. list of symbols) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% If you want to have groups in your nomenclature, you will need to use the etoolbox package
+% and follow the instructions here. https://www.overleaf.com/learn/latex/Nomenclatures
+% The Greenwood thesis template linked above has an example of implementing this
+\usepackage{nomencl}                        
+\makenomenclature                           
+\setlength\nomlabelwidth{1.5cm} 
+%%%%%%%%%%%%%%%%%%%%%% Bibliography %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This uses the old-fashioned BibTeX way of doing references. This works nicely with .bst
+% files so you can pick your favourite (mine is Copernicus) and put straight in. However,
+% it does not do references by chapter - see the Greenwood thesis template which uses biber
+% rather than BibTeX to implement this
+\usepackage[comma]{natbib}          % Author-date referencing style
+\setcitestyle{citesep={;}}          % Separate in-line refreences with semi-colons        
+% NOTE 2026: Copernicus now has an updated .bst style. This template has been tested with
+% the old version. There's no reason why the new version shouldn't work, so I cautiously
+% recommend you upgrade if you encounter any anonying bibliography issues.
+%%%%%%%%%%%%%%%%%%%%%% Thesis-specific commands (my/your hacks)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------- Custom definitions -------%
+% Maths symbols and shorthands are defined for your convenience in a separate file
+% I also include words which the language package struggles to hyphenate over two lines
+\input{custom_defs}
+%------- Subsubsubsections -------%
+% Create subsubsubsection (e.g. 3.1.1.1) that appears in the Table of Contents.
+% Call by using the \paragraph command. God help the poor reader if you need it!
+\usepackage{titlesec}                       
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+%------- Chapters start on right-hand page -------%
+% Define "clear double page". First end the current page and start a new one, dumping floats.
+% Then check for two-sided formatting. If so, and the current page number is odd, continue
+% on the current page. If the current page no. is even, make an empty line on an empty page,
+% then make a new page (unless two-column, in which case make a new empty column first).
+\makeatletter
+\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else%
+\hbox{}%
+\thispagestyle{empty}
+\newpage%
+\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother
+%-------  Include thesis chapter -------%
+% Create command to include thesis chapters. Takes one argument: chapter filename.
+% Note unlike for precursors, the chapter env is set up INSIDE the chapter.tex file.
+% See main.tex for discussion of how this appears to create unexpected blank pages! 
+\newcommand{\includethesischapter}[1]{
+  \include{#1}
+  \cleardoublepage
+  \fancyhead[RE]{\leftmark}
+  \fancyhead[LO]{\rightmark}
+}
+%%%%%%%%%%%%%%%%%%%%%% Font %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% If you don't want to use OpenSans but do want a sans-serif font, you can use the default
+% built-in one with zero faff by uncommenting this line. Make sure you remove all the guff
+% that I've added if you do!
+%\sffamily

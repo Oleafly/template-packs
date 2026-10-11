@@ -1,0 +1,80 @@
+% !TeX root = ../thuthesis-example.tex
+
+\chapter{引用文献的标注}
+
+模板支持 BibTeX 和 BibLaTeX 两种方式处理参考文献。
+下文主要介绍 BibTeX 配合 \pkg{natbib} 宏包的主要使用方法。
+
+
+\section{顺序编码制}
+
+在顺序编码制下，默认的 \cs{cite} 命令同 \cs{citep} 一样，序号置于方括号中，
+引文页码会放在括号外。
+统一处引用的连续序号会自动用短横线连接。
+
+% \gduptsetup{
+%   cite-style = super,
+% }
+% \bibstyle{super}
+\begin{tabular}{l@{\quad$\Rightarrow$\quad}l}
+  \verb|\cite{zhangkun1994}|               & \cite{zhangkun1994}               \\
+  \verb|\citet{zhangkun1994}|              & \citet{zhangkun1994}              \\
+  \verb|\citep{zhangkun1994}|              & \citep{zhangkun1994}              \\
+  \verb|\cite[42]{zhangkun1994}|           & \cite[42]{zhangkun1994}           \\
+  \verb|\cite{zhangkun1994,zhukezhen1973}| & \cite{zhangkun1994,zhukezhen1973} \\
+\end{tabular}
+
+
+也可以取消上标格式，将数字序号作为文字的一部分。
+建议全文统一使用相同的格式。
+
+% \gduptsetup{
+%   cite-style = inline,
+% }
+
+% \bibstyle{inline}
+\begin{tabular}{l@{\quad$\Rightarrow$\quad}l}
+  \verb|\cite{zhangkun1994}|               & \cite{zhangkun1994}               \\
+  \verb|\citet{zhangkun1994}|              & \citet{zhangkun1994}              \\
+  \verb|\citep{zhangkun1994}|              & \citep{zhangkun1994}              \\
+  \verb|\cite[42]{zhangkun1994}|           & \cite[42]{zhangkun1994}           \\
+  \verb|\cite{zhangkun1994,zhukezhen1973}| & \cite{zhangkun1994,zhukezhen1973} \\
+\end{tabular}
+
+
+
+\section{著者-出版年制}
+
+著者-出版年制下的 \cs{cite} 跟 \cs{citet} 一样。
+
+% \gduptsetup{
+%   cite-style = author-year,
+% }
+
+%\bibstyle{author-year}
+\begin{tabular}{l@{\quad$\Rightarrow$\quad}l}
+  \verb|\cite{zhangkun1994}|                & \cite{zhangkun1994}                \\
+  \verb|\citet{zhangkun1994}|               & \citet{zhangkun1994}               \\
+  \verb|\citep{zhangkun1994}|               & \citep{zhangkun1994}               \\
+  \verb|\cite[42]{zhangkun1994}|            & \cite[42]{zhangkun1994}            \\
+  \verb|\citep{zhangkun1994,zhukezhen1973}| & \citep{zhangkun1994,zhukezhen1973} \\
+\end{tabular}
+
+\vskip 2ex
+% \gduptsetup{
+%   cite-style = super,
+% }
+
+% \bibstyle{super}
+\section{注意事项} (1) 引文参考文献的每条都要在正文中标注\\
+\indent (2) 在bib中，中文文献请加上属性 language   = \{ c \}   或  language   = \{ chinese \}  ,\\
+\indent (3) BibTeX比较不稳定，当文献引用标记全部变成？ 时，请先检查引用标签是否正确，然后再检查Tex文档部分是否存在语法问题，排除Tex部分语法问题后再重新用Xelatex--> BibTeX-->Xelatex*2 编译。
+\\
+\par
+示例：\par
+I.\Cspace 连续引用示例：\cite{zhangkun1994,zhukezhen1973} 
+
+II.\space 多篇新文献的连续引用示例：\cite{zhengkaiqing1987, aaas1883science, baishunong1998zhiwu, bixon1996dynamics}
+
+III. \space  引用不存在的标签:  \cite{wronglabelid}
+

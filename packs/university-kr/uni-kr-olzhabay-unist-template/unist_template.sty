@@ -1,0 +1,143 @@
+\ProvidesPackage{template}
+\usepackage{dblfloatfix}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{enumerate}
+\usepackage{bbm}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{epsfig}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{cases}
+\usepackage{url}
+\usepackage{cite}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage{pdfpages}
+\usepackage{lipsum}
+
+
+%% 
+\makeatletter
+\def\PaperType#1{\gdef\paper@type{#1}}
+\def\PaperTypeFull#1{\gdef\paper@fulltype{#1}}
+\def\Title#1{\gdef\name@title{#1}}
+\def\NameofDegree#1{\gdef\name@degree{#1}}
+\def\DepartmentName#1{\gdef\name@department{#1}}
+\def\AuthorName#1{\gdef\name@author{#1}}
+\def\AdvisorName#1{\gdef\name@advisor{#1}}
+\def\GraduationDate#1{\gdef\date@graduation{#1}}
+\def\SubmissionDate#1{\gdef\date@submission{#1}}
+\def\RefereeDate#1{\gdef\referee@date{#1}}
+\def\RefereeChief#1{\gdef\referee@chief{#1}}
+\def\RefereeSecond#1{\gdef\referee@second{#1}}
+\def\RefereeThird#1{\gdef\referee@third{#1}}
+\def\RefereeFourth#1{\gdef\referee@fourth{#1}}
+\def\RefereeFifth#1{\gdef\referee@fifth{#1}}
+\def\KeyWords#1{\gdef\key@words{#1}}
+\def\StudentNumber#1{\gdef\student@number{#1}}
+
+%% Front cover
+\newcommand{\CoverPage}{
+  \thispagestyle{empty} \noindent
+  \begin{center}
+    \LARGE \paper@fulltype 
+    \vskip 3cm
+    \huge \name@title 
+    \vfill 
+    \LARGE \name@author 
+    \vskip 2cm
+    \LARGE \name@department 
+    \vskip 2cm
+    \LARGE The Graduate School of UNIST 
+    \vskip 2cm
+    \LARGE \date@graduation 
+  \end{center}
+  \newpage 
+}
+
+%% Title Page
+\newcommand{\TitlePage}{
+  \thispagestyle{empty} \noindent
+  \begin{center}
+    \huge \name@title 
+    \vfill
+    \LARGE \name@author 
+    \vfill
+    \LARGE \name@department
+    \vskip 2cm
+    \LARGE Graduate School of UNIST 
+  \end{center}
+  \newpage
+}
+
+%% Approval Page
+\newcommand{\ApprovalPage}{
+  \thispagestyle{empty} \noindent
+  \begin{center}	    
+    \huge \name@title 
+    \vfill
+    \Large A \MakeLowercase{\paper@type} \\
+    \Large submitted to the the Graduate School of UNIST \\
+    \Large in partial fulfillment of the \\
+    \Large requirements for the degree of \\
+    \Large \name@degree  
+    \vskip 3cm
+    \Large \name@author 
+    \vfill
+    \Large \date@submission \\
+    \Large Approved by
+    \vskip 1cm
+    \underline{\makebox[5cm][s]{}} \\
+    \Large Advisor \\       
+    \Large \name@advisor \\ 
+  \end{center}
+  \newpage
+}
+
+%% Confirmation page. For master's, you can skip setting 4th and 5th committee members.
+\newcommand{\ConfirmationPage}{
+  \thispagestyle{empty} \noindent
+  \begin{center}
+    \huge \name@title 
+    \vskip 2cm
+    \Large \name@author
+    \vskip 2cm
+    \Large This certifies that the \MakeLowercase{\paper@type} \ of \name@author \ is approved. 
+    \vskip 1cm
+    \Large \date@submission
+    \vfill
+    \begin{flushright}
+    \begin{tabular}{l l c}
+        & & \Large signature \\ 
+        & & \underline{\makebox[5cm][s]{}} \\
+        & & \Large \referee@chief : Advisor \\
+        & & \Large signature \\ 
+        & & \underline{\makebox[5cm][s]{}} \\ 
+        & & \Large \referee@second : Thesis Committee Member \#1 \\
+        & & \Large signature \\ 
+        & & \underline{\makebox[5cm][s]{}} \\ 
+        & & \Large \referee@third : Thesis Committee Member \#2 
+        \@ifundefined{referee@fourth}{}{
+    	\\
+        & & \Large signature \\ 
+        & & \underline{\makebox[5cm][s]{}} \\ 
+        & & \Large \referee@fourth : Thesis Committee Member \#3 \\
+        }
+        \@ifundefined{referee@fourth}{}{
+        & & \Large signature \\ 
+        & & \underline{\makebox[5cm][s]{}} \\ 
+        & & \Large \referee@fifth : Thesis Committee Member \#4  
+        }
+    \end{tabular}
+    \end{flushright}
+  \end{center}
+  \vskip 0.5cm
+  \newpage
+}

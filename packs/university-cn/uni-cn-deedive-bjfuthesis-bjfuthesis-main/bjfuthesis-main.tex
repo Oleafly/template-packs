@@ -1,0 +1,66 @@
+% !TeX encoding = UTF-8
+% !TeX program = xelatex
+% !TeX spellcheck = en_US
+
+
+\documentclass[AutoFakeBold]{bjfuthesis}
+
+
+% 论文基本配置，加载宏包等全局配置
+\input{bjfusetup}
+
+
+\begin{document}
+
+% LongTable Caption间距设置
+\setlength{\textfloatsep}{5pt}
+\setlength\LTpre{0em} \setlength\LTpost{0em}
+
+% 导入封面
+% 请填写docs下的封面word模板之后转换为pdf放置到static目录下，命名为coverpage.pdf
+\includepdf[pages=1]{static/coverpage.pdf}
+
+% 导入独创性声明
+\includepdf[pages=1]{static/statement.pdf}
+
+% 导入任务书声明
+% 请下载任务书后封面转换为pdf放置到static目录下，命名为task.pdf
+% \includepdf[pages=1]{static/task.pdf}
+
+
+\frontmatter
+\input{contents/abstract}
+% 目录
+\tableofcontents
+
+%删去空白页
+\cleardoublepage
+
+% 正文部分
+\mainmatter
+\input{contents/chap00}
+\input{contents/chap01}
+
+% 其他部分
+\backmatter
+
+% 参考文献
+\phantomsection\addcontentsline{toc}{chapter}{参考文献}
+\nocite{*} % 若需要隐藏未引用的文献，请删除本行
+\bibliography{bibdata/refs}  % 参考文献使用 BibTeX 编译
+%\printbibliography       % 参考文献使用 BibLaTeX 编译
+
+
+% 致谢
+\phantomsection\addcontentsline{toc}{chapter}{致谢}
+\input{contents/acknowledgements}
+
+% 附录
+\appendix
+\input{contents/appendix}
+
+
+% 封底（一般会和封面一起打印，所以这里注释掉了）
+% \includepdf[pages=2]{covers/coverpage.pdf}
+
+\end{document}

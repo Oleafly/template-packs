@@ -1,0 +1,178 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=0.88in,headheight=14pt]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{needspace}
+\usepackage{microtype}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+% Shared assets live at the repository root.  The second path also supports
+% compilers whose working directory is the repository root (for example Overleaf).
+\graphicspath{{../assets/}{assets/}}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  urlcolor=blue!60!black,
+  citecolor=blue!60!black,
+  pdfauthor={}
+}
+
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\setlist[itemize]{topsep=0.25em,itemsep=0.15em,leftmargin=1.6em}
+\setlist[enumerate]{topsep=0.25em,itemsep=0.15em,leftmargin=1.8em}
+
+\titleformat{\section}{\Needspace{8\baselineskip}\normalfont\Large\bfseries}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\Needspace{6\baselineskip}\normalfont\large\bfseries}{\thesubsection}{0.8em}{}
+\titlespacing*{\section}{0pt}{1.0em}{0.45em}
+\titlespacing*{\subsection}{0pt}{0.75em}{0.35em}
+
+% =========================
+% Template metadata
+% =========================
+% Edit only this block when preparing a new course report.
+\newcommand{\CourseName}{[Course Name]}
+\newcommand{\ReportTitle}{[Report Title]}
+\newcommand{\CoverReportTitle}{[Report Title Line 1]\\[0.35cm]
+[Report Title Line 2]}
+\newcommand{\StudentName}{[Student Name]}
+\newcommand{\StudentID}{[Student ID]}
+\newcommand{\InstructorName}{[Instructor Name]}
+\newcommand{\SchoolName}{[School Name]}
+\newcommand{\InstitutionName}{Tongji University}
+\newcommand{\ReportDate}{[Month, Year]}
+
+% The running header intentionally contains no course, report, or personal metadata.
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Course Report Template}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+
+\begin{document}
+
+% =========================
+% Cover Page
+% =========================
+\begin{titlepage}
+    \thispagestyle{empty}
+    \newgeometry{left=2.0cm,right=2.0cm,top=1.8cm,bottom=2.0cm}
+
+    \noindent
+    \begin{minipage}[t]{0.36\textwidth}
+        \vspace{0pt}
+        \includegraphics[height=2.6cm]{top_left_logo.png}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.58\textwidth}
+        \vspace{0pt}
+        \raggedleft
+        \parbox[c][2.6cm][c]{\linewidth}{
+            \raggedleft
+            {\large\bfseries \InstitutionName\ Graduate Course\par}
+            \vspace{0.35cm}
+            {\large\bfseries \CourseName\par}
+        }
+    \end{minipage}
+
+    \vspace{1.9cm}
+
+    \begin{center}
+        \includegraphics[width=0.58\textwidth]{tongji_logo.png}
+    \end{center}
+
+    \vspace{1.55cm}
+
+    \begin{center}
+        {\Huge\bfseries \CoverReportTitle\par}
+        \vspace{1.05cm}
+        {\LARGE\bfseries \CourseName\par}
+    \end{center}
+
+    \vspace{1.5cm}
+
+    \begin{center}
+        \renewcommand{\arraystretch}{2.0}
+        \begin{tabular}{>{\Large\bfseries}r @{\hspace{0.8cm}} c}
+            Name: & \underline{\makebox[8.0cm][c]{\Large \StudentName}} \\
+            Student ID: & \underline{\makebox[8.0cm][c]{\Large \StudentID}} \\
+            Instructor: & \underline{\makebox[8.0cm][c]{\Large \InstructorName}} \\
+        \end{tabular}
+    \end{center}
+
+    \vfill
+
+    \begin{center}
+        {\LARGE\bfseries \SchoolName \\ \InstitutionName\par}
+        \vspace{0.8cm}
+        {\Large \ReportDate\par}
+    \end{center}
+
+    \restoregeometry
+\end{titlepage}
+
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section{Introduction}
+This document is a neutral course-report template. Replace this paragraph with a concise description of the topic, the practical or theoretical motivation, and the question addressed in the report. A useful introduction moves from the broad context to a clearly bounded task and closes with a short outline of the document.
+
+The template intentionally contains no original assignment text, data, code, or figures. Its purpose is to demonstrate headings, equations, tables, lists, page numbering, and the retained cover layout.
+
+\section{Problem Statement}
+Define the objects, assumptions, variables, and evaluation criteria before presenting a method. Let $x_t$ denote the system state, $u_t$ a decision variable, and $c_t$ the observed context. A generic objective may be written as
+\begin{equation}
+  J(\boldsymbol{u})=
+  \sum_{t=1}^{T} L(x_t,u_t,c_t)+\lambda R(\boldsymbol{u}),
+\end{equation}
+where $L(\cdot)$ measures task performance, $R(\cdot)$ represents a regularization or constraint penalty, and $\lambda$ controls the trade-off between them.
+
+\section{Method}
+\subsection{Workflow}
+A clear method section can be organized into the following steps:
+\begin{enumerate}
+  \item state the inputs, outputs, and assumptions;
+  \item describe the model or analytical procedure;
+  \item specify comparison methods and evaluation metrics;
+  \item explain how uncertainty and limitations are handled.
+\end{enumerate}
+
+\subsection{Implementation Notes}
+Use this subsection for details that are necessary for independent understanding of the report. Avoid including private file paths, account names, or machine-specific information. If code or data are required for a future submission, describe their availability without embedding personal identifiers.
+
+\section{Results}
+Table~\ref{tab:example} illustrates a compact comparison layout. Replace all labels and values with verified results from the actual course task.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Example comparison table.}
+  \label{tab:example}
+  \begin{tabular}{lccc}
+    \toprule
+    Method & Metric A & Metric B & Overall assessment \\
+    \midrule
+    Baseline & 0.72 & 0.68 & Reference \\
+    Proposed approach & 0.81 & 0.76 & Improved \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The results section should report the evidence before interpreting it. State what was measured, give units and uncertainty where relevant, and distinguish observations from explanations.
+
+\section{Discussion}
+Discuss why the observed behavior is plausible, how it compares with expectations, and where the analysis may fail. Important limitations may include simplified assumptions, limited samples, measurement uncertainty, or incomplete coverage of operating conditions. Claims that have not been tested should be identified as hypotheses or future work.
+
+\section{Conclusion}
+Summarize the answer to the question posed in the introduction. A strong conclusion emphasizes the most reliable finding, its practical meaning, and the principal boundary of the analysis without introducing new evidence.
+
+\end{document}

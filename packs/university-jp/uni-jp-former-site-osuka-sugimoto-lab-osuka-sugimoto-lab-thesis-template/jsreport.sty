@@ -1,0 +1,80 @@
+%%
+%% J S R E P O R T . S T Y
+%%
+%% Copyright (C) 2003--2005 by Tohma
+%%
+%% This file is NOT part of LaTeX.
+%%
+%% Last Modified : Tue, 16 Aug 2005 12:19:49 +0900
+%%
+%% 独断と偏見で作成したものです。
+%% 使用・転用・転載などはすべて自由ですが、本パッケージに含まれるマクロ
+%% を使用したことにより、万一障碍等が生じましても、作者は一切の責任を負
+%% いません。
+%% また、ヴァージョンアップなどに伴い、予告なく中身を変更します。
+%%
+%% [説明]
+%% jsbook.clsを利用してjsreport.clsを仮想的に作るスタイルファ
+%% イル．
+%% jsbookからの変更点は具体的には次の通り．
+%% 	・jsbookのヘッダおよび上部の横線を消去
+%% 	・ページ番号をフッタ中央に表示
+%% 	・上下のマージンが等しい
+%% 	・左右のマージンが等しい
+%% 	・chapterの表示をjreport.clsぽく
+%%
+%% [使い方]
+%% documentclassに次のように指定する
+%% 		\documentclass[12pt,oneside,openany]{jsbook}
+%% 		\usepackage{jsreport}
+%%
+%% [ChageLog]
+%% * 2004-06-10: onesideオプションを付けなかったときに偶数ページが左に
+%%               はみ出すのを修正
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \chapterを出力をjreport.styっぽく
+
+\def\oreChapterSpace{10mm}
+
+\newcommand{\setchapterspace}[1]{
+  \def\oreChapterSpace{#1}
+}
+
+\def\@makechapterhead#1{%
+  \vspace*{2\Cvs}% 欧文は50pt
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        \huge\headfont \@chapapp\thechapter\@chappos
+        %\par\nobreak
+        %\vskip \Cvs % 欧文は20pt
+        \hspace{\oreChapterSpace}
+      \fi
+    \fi
+    \interlinepenalty\@M
+    \Huge \headfont #1\par\nobreak
+    \vskip 3\Cvs}} % 欧文は40pt
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ページスタイルをjreport.styっぽく
+
+\setlength{\textwidth}{\fullwidth}
+\setlength{\evensidemargin}{\oddsidemargin}
+
+\makeatletter
+\renewcommand{\chapter}{%
+    \if@openright\cleardoublepage\else\clearpage\fi
+    \global\@topnum\z@
+    \secdef\@chapter\@schapter}
+\makeatother
+
+\makeatletter
+    \let\@mkboth\@gobbletwo
+    \let\@oddhead\@empty
+    \let\@evenhead\@empty
+    \def\@oddfoot{\normalfont\hfil-- \thepage\ --\hfil}%
+    \let\@evenfoot\@oddfoot
+\makeatother
+    \setlength\footskip{2\baselineskip}
+    \addtolength{\textheight}{-2\baselineskip}
