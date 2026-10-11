@@ -1,0 +1,449 @@
+% uithesis09.sty (LaTeX 2e thesis style file, version 0.9)
+%
+% Original author: Larry Peterson, 1998
+% Revisions by: John Castelloe, 1999
+% Revisions by: Patrick Breheny, 2009
+%
+% Purpose: for assistance in writing a mathematical/statistical Ph.D.
+%   thesis at the University of Iowa
+%
+% Note from Patrick Breheny:
+% I didn't write, nor have I taken the time to understand, most of
+% the code below. Nevertheless, the formatting passed inspection for
+% my thesis, submitted in May 2009. Since then, several students have
+% modified the code to keep up with the University's formatting changes. Since
+% 2015, these modifications have been tracked via git. I unfortunately do
+% not have a complete record of changes from 2009 to 2015.
+
+\makeatletter
+
+% Define margins
+\voffset 0.00in \addtolength{\voffset}{-.50in}
+\hoffset 0.00in
+\oddsidemargin 0.54in
+\evensidemargin 0.54in
+\marginparwidth 40pt
+\marginparsep 10pt
+\topmargin 0.00in
+\headsep .35in
+\footskip 0.40in
+\newlength{\li} \setlength{\li}{12pt}
+\newlength{\si} \setlength{\si}{.4in}
+\setlength{\parindent}{\si}
+\textheight 9.00in
+\textwidth 5.88in
+\brokenpenalty=10000
+
+\newcommand{\singlespace}{\baselineskip 1.1\li}
+\newcommand{\doublespace}{\baselineskip 2.0\li}
+
+% Define headers and footers
+% frontstyle = style for front material
+\newcommand{\ps@frontstyle}{
+  \renewcommand{\@oddhead}{}
+  \renewcommand{\@oddfoot}{\hfill \thepage \hfill}
+  \renewcommand{\@evenhead}{}
+  \renewcommand{\@evenfoot}{\hfill \thepage \hfill}}
+% mainstyle = style for main body
+\newcommand{\ps@mainstyle}{
+  \renewcommand{\@oddhead}{\hfil \rm\thepage}
+  \renewcommand{\@oddfoot}{}
+  \renewcommand{\@evenhead}{\rm \thepage\hfil}
+  \renewcommand{\@evenfoot}{}}
+
+\newcommand{\setsty}{	\setlength{\parindent}{\si}
+			\setlength{\parsep}{0pt}
+			\setlength{\topsep}{0pt}
+			\setlength{\parskip}{0pt}
+			\setlength{\partopsep}{0pt}
+			\setlength{\itemsep}{0pt}
+			\setlength{\abovedisplayskip}{10pt}
+			\setlength{\belowdisplayskip}{10pt}
+			\setlength{\abovedisplayshortskip}{10pt}
+			\setlength{\belowdisplayshortskip}{10pt}
+			%\setcounter{topnumber}{3}
+			\setcounter{topnumber}{2}
+			\setcounter{bottomnumber}{2}
+			\setlength{\floatsep}{3\li}
+			\setlength{\textfloatsep}{3\li}
+			\setlength{\intextsep}{2\li}
+			\renewcommand{\arraystretch}{1.65}
+			\renewcommand{\topfraction}{1.0}
+			\renewcommand{\bottomfraction}{1.0}
+ 	 		\renewcommand{\textfraction}{0} }
+
+\def\cl@chapter{\@elt{section}\@elt{footnote}}
+\def\thefigure{\arabic{chapter}.\arabic{figure}}
+\def\thetable{\arabic{chapter}.\arabic{table}}
+\def\theequation{\arabic{chapter}.\arabic{equation}}
+
+\newcommand{\Chapter}[1]{\def\thechapter{\arabic{chapter}}
+            \renewcommand{\myvskip}{.50in}
+            \setcounter{equation}{0}
+			\setcounter{figure}{0}
+            \setcounter{table}{0}
+                        \chapter{#1}
+			\thispagestyle{mainstyle}
+                        \addtocontents{toc}{\protect\vspace{0\li}}
+                        \addtocontents{toc}{\protect\vspace{1\li}}}
+
+\newcommand{\myvskip}{.50in}
+
+\renewcommand{\@chapapp}{CHAPTER}
+\renewcommand{\@makechapterhead}[1]
+ 	{\begin{center}
+		{\normalsize \bf
+		\ifnum \c@secnumdepth >\m@ne
+		       \@chapapp~\thechapter \vskip .6ex \fi
+		\uppercase{#1} \vskip 2\li}
+	\end{center}
+        \def\thechapter{\arabic{chapter}}
+	\setsty}
+
+\renewcommand{\@makeschapterhead}[1]
+ 	{\begin{center}
+		{\normalsize \bf \uppercase{#1 \vskip 3\li}}
+	\end{center}
+	\setsty}
+
+\setcounter{secnumdepth}{3}
+
+\renewcommand{\section}{\vspace*{.9\li}\@startsection{section}{1}{\z@}
+        {1\li} {1pt} {\normalsize \bf \noindent
+		\parbox[b][1.5\totalheight][b]{4in}}}
+\renewcommand{\subsection} {\vspace*{.9\li}\@startsection{subsection}{2}
+        {\z@}{1\li} {1pt} {\normalsize \rm \noindent
+		\parbox[b][1.5\totalheight][b]{4in}}}
+\renewcommand{\subsubsection}{\vspace*{.9\li}\@startsection{subsubsection}
+        {3}{\z@} {1\li} {1pt} {\normalsize \rm \noindent
+		\parbox[b][1.5\totalheight][b]{4in}}}
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\z@}
+		{1\li} {1pt} {\normalsize \em}}
+\renewcommand{\subparagraph}{\@startsection{subparagraph}{4}{\z@}
+		{1\li} {1pt} {\normalsize \rm}}
+
+\renewcommand{\appendix}{\par \setcounter{chapter}{0}
+      \setcounter{section}{0}
+      \def\@chapapp{APPENDIX}\renewcommand{\thechapter}{\Alph{chapter}}
+	  \renewcommand{\thesection}{\Alph{chapter}.\arabic{section}}
+	  \renewcommand{\thesubsection}
+	  {\Alph{chapter}.\arabic{section}.\arabic{subsection}}
+      \renewcommand{\theequation}{\Alph{chapter}.\arabic{equation}}
+      \renewcommand{\thefigure}{\Alph{chapter}.\arabic{figure}}
+      \renewcommand{\thetable}{\Alph{chapter}.\arabic{table}}
+    \renewcommand{\myvskip}{3.5in}
+        \addtocontents{toc}{\protect\vspace{\li}}
+		\addtocontents{toc}{\hspace{-32pt} APPENDIX}
+        \addtocontents{toc}{\protect\vspace{\li}} }
+\newcommand{\Appendix}[1]{ \chapter{#1}
+	   \thispagestyle{mainstyle}
+       \addtocontents{toc}{\protect\vspace{0\li}}
+       \addtocontents{toc}{\protect\vspace{1\li}}
+       \setcounter{figure}{0}
+       \setcounter{table}{0}
+       \renewcommand{\thechapter}{\Alph{chapter}}
+       \renewcommand{\thesection}{\Alph{chapter}.\arabic{section}}
+	   \renewcommand{\thesubsection}
+	   {\Alph{chapter}.\arabic{section}.\arabic{subsection}}
+       \renewcommand{\theequation}{\Alph{chapter}.\arabic{equation}}
+       \renewcommand{\thefigure}{\Alph{chapter}.\arabic{figure}} }
+
+\newcommand{\references}
+      {\renewcommand{\myvskip}{0.5in}}
+
+\renewcommand{\tableofcontents}
+  {\chapter*{TABLE OF CONTENTS}\@starttoc{toc}}
+\renewcommand{\listoffigures}
+  {\chapter*{LIST OF FIGURES}\@starttoc{lof}}
+\renewcommand{\listoftables}   {\chapter*{LIST OF TABLES}\@starttoc{lot}}
+\newcommand{\l@head}            {\@dottedtocline{0}{0.0em}{1.5em}}
+\renewcommand{\l@chapter}       {\rule[0pt]{0em}{0pt}
+				 \@dottedtocline{0}{2.0em}{1.5em}}
+\renewcommand{\l@section}       {\@dottedtocline{1}{3.5em}{2.3em}}
+\renewcommand{\l@subsection}    {\@dottedtocline{2}{5.8em}{3.2em}}
+\renewcommand{\l@subsubsection} {\@dottedtocline{3}{9.0em}{4.1em}}
+\renewcommand{\l@paragraph}     {\@dottedtocline{4}{11em}{5em}}
+\renewcommand{\l@subparagraph}  {\@dottedtocline{5}{13em}{6em}}
+
+\def\thebibliography#1{\chapter*{References\markboth
+  {REFERENCES}{REFERENCES}}\list
+  {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}
+    \thispagestyle{mainstyle}
+    \leftmargin\labelwidth
+    \raggedbottom
+    \advance\leftmargin\labelsep
+    \usecounter{enumi}}
+    \itemsep 7pt
+    \def\newblock{\hskip .11em plus .33em minus -.07em}
+    \sfcode`\.=1000\relax}
+
+\vskip 1.0em plus 1pt
+\def\dept#1{\gdef\@dept{#1}}
+\def\advisor{\gdef\@advisor}
+\def\submitdate#1{\gdef\@submitdate{#1}}
+\def\copyrightyear#1{\gdef\@copyrightyear{#1}}
+\def\@title{}
+\def\@author{}
+\def\@dept{}
+\def\supervisor{\gdef\@supervisor}
+\def\membera{\gdef\@membera}
+\def\memberb{\gdef\@memberb}
+\def\memberc{\gdef\@memberc}
+\def\memberd{\gdef\@memberd}
+\def\@submitdate{\ifcase\the\month\or
+  January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or December\fi
+  \space \number\the\year}
+\edef\@copyrightyear{\number\the\year}
+
+\newif\ifabtitlepg	\abtitlepgtrue		%true
+\newif\ifabstractpg	\abstractpgtrue     	%true
+\newif\iftitlepg 	\titlepgtrue		%true
+\newif\ifcopyright	\copyrightfalse
+%\newif\ifsignaturepage	\signaturepagetrue	%true
+\newif\ifdedication	\dedicationfalse
+\newif\ifack      	\acktrue		%true
+\newif\iftablecontents  \tablecontentstrue 	%true
+\newif\iftablespage	\tablespagefalse
+\newif\iffigurespage	\figurespagetrue   	%true
+\newif\ifpreface    \prefacetrue
+%BEGIN JMC
+\newif\ifabswithesis \abswithesistrue     	%true
+\newif\ifpubabswithesis \pubabswithesistrue     	%true
+%END JMC
+
+
+\def\abswithesis{
+	\newpage
+	\thispagestyle{frontstyle}
+        \doublespace
+	\prefacesection{Abstract}
+	\abstextwithesis
+	}
+
+\def\pubabswithesis{
+	\newpage
+	\thispagestyle{frontstyle}
+        \doublespace
+	\prefacesection{Public Abstract}
+	\pubabstextwithesis
+	}
+
+\def\titlepg{%
+	\newpage
+	\pagenumbering{roman}
+	\thispagestyle{empty}
+	\singlespace
+        \null\vskip1.25in
+	\begin{center}
+		{\normalsize\uppercase\expandafter{\@title}}
+	\end{center}
+	\vfill
+	\begin{center}
+	   \rm 	by\\
+                \vskip \li
+		\singlespace
+		\@author\\
+	\end{center}
+	\vfill
+	\begin{center}
+           {\rm
+                \vskip \li
+   	        A thesis submitted in partial fulfillment of the\\
+                requirements for the Doctor of Philosophy\\
+                degree in {\@dept} in the\\
+                Graduate College of The\\
+                University of Iowa}
+	\end{center}
+	\vskip 1\li
+	\begin{center}
+          \rm \@submitdate \\
+	\end{center}
+	\vskip 1\li
+    Thesis Committee: \hspace*{0.79in}{\@supervisor, Thesis Supervisor}\\
+        \hspace*{2.2in}{\@membera}\\
+        \hspace*{2.2in}{\@memberb}\\
+        \hspace*{2.2in}{\@memberc}\\
+        \hspace*{2.2in}{\@memberd}\\
+        \vskip.5in}
+
+\def\copyrightpage{
+	\newpage
+	\null\vfill
+	\thispagestyle{empty}
+	\begin{center}
+		{\normalsize Copyright by\\ \vskip 1pt
+		{\normalsize\uppercase\expandafter{\@author}}\\ \vskip 1 pt
+		\@copyrightyear \\ \vskip 1pt
+                All Rights Reserved}
+	\end{center}
+	\vskip 1.0in
+	\vfill}
+
+%\def\signaturepage{
+%	\newpage
+%	\pagenumbering{roman}			%3/14/98
+%	\null
+%	\thispagestyle{empty}
+%	\begin{center}
+%           \singlespace
+%           \rm	Graduate College\\
+% 		The University of Iowa\\
+%		Iowa City, Iowa\\
+%                \vfill
+%		CERTIFICATE OF APPROVAL\\
+%          	\vfill
+%		\rule{2.4in}{0.4pt}
+%          	\vfill
+%		PH.D. THESIS
+%          	\vfill
+%		\rule{1.1in}{0.4pt}
+%	\end{center}
+%        \vfill
+%        \hspace*{1.535in} This is to certify that the Ph.D. thesis of
+%      	\vspace*{4ex}
+%	\begin{center}
+%		\@author
+%	\end{center}
+%       	\vspace*{4ex}
+%        \singlespace
+%        \hspace*{1.54in} has been approved by the Examining Committee  \\
+%        \hspace*{1.54in} for the thesis requirement for the Doctor of  \\
+%        \hspace*{1.54in} Philosophy degree in {\@dept} at the
+%		  {\@submitdate}\\
+%        \hspace*{1.54in} graduation.
+%        \vfill
+%        \hspace*{1.41in} Thesis Committee:  \hrulefill
+%        \newline\hspace*{3.2in} \raisebox{4.3mm}{\@supervisor, Thesis Supervisor}
+%        \newline\hspace*{3.2in} \hrulefill
+%        \newline\hspace*{3.2in} \raisebox{4.3mm}{\@membera}
+%        \newline\hspace*{3.2in} \hrulefill
+%        \newline\hspace*{3.2in} \raisebox{4.3mm}{\@memberb} % changed these to 4.3 from 6.8 to match others in abstract
+%        \newline\hspace*{3.2in} \hrulefill
+%        \newline\hspace*{3.2in} \raisebox{4.3mm}{\@memberc}
+%        \newline\hspace*{3.2in} \hrulefill
+%        \newline\hspace*{3.2in} \raisebox{4.3mm}{\@memberd}
+%        }
+
+% the Certificate of Approval page has been removed since Dec 2019
+
+\def\dedicationpage{
+	\newpage
+%	\pagenumbering{roman}
+%	\setcounter{page}{2}
+	\pagestyle{frontstyle}
+	\singlespace
+	\vspace*{\fill}
+	\begin{quote}
+	\begin{quote}
+	\dedication
+	\end{quote}
+	\end{quote}
+	\vspace*{\fill}
+	}
+
+\def\ackpage{
+	\newpage
+	\pagenumbering{roman}
+	\setcounter{page}{2}
+	\pagestyle{frontstyle}
+	\doublespace
+	\prefacesection{Acknowledgments}
+	\indent
+	\acknowledgement
+        }
+
+\def\beforepreface{
+	%\raggedright
+	\raggedbottom
+%BEGIN JMC
+\iftitlepg\titlepg\fi			%3/9/98
+\ifcopyright\copyrightpage\fi		%3/9/98
+%\ifsignaturepage\signaturepage\fi	%3/9/98
+\ifdedication\dedicationpage\fi		%3/9/98
+\ifack\ackpage\fi			%3/9/98
+\ifabswithesis\abswithesis\fi
+\ifpubabswithesis\pubabswithesis\fi
+\pagestyle{frontstyle}
+\doublespace
+    }
+
+
+\def\prefacesection#1{%
+	{\setsty
+%	\null\vskip .50in
+ 	\begin{center}
+		{\normalsize \bf \uppercase{#1 \vskip 2\li}} %% this was 2, this changes the space between abstract and start of it!!!
+	\end{center}}
+	\setsty}
+
+\addtocontents{toc}{\protect\thispagestyle{frontstyle}}
+\addtocontents{lot}{\protect\thispagestyle{frontstyle}}
+\addtocontents{lof}{\protect\thispagestyle{frontstyle}}
+
+\def\afterpreface{\newpage
+	\singlespace
+	\raggedbottom
+	\iftablecontents\tableofcontents\fi%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\newpage
+	\iftablespage
+		{\addvspace{10pt}
+		\let\saveaddvspace=\addvspace
+		\def\addvspace##1{}
+		\addcontentsline{toc}{head}{LIST OF TABLES}
+                \addtocontents{toc}{\protect\vspace{\li}}
+			%puts blank line between LIST OF TABLES and LIST OF
+			%FIGURES in toc; use it if there is a lof
+
+               % \addtocontents{lot}{\protect\vspace{-\li}} % JDS, took these 2 lines out to get an extra space in LIST of TABLES
+               % \addtocontents{lot}{\protect\vspace{-\li}}
+			%added to take out extra blank lines after
+			%heading in lot
+                \addtocontents{lot}{Table}
+                \addtocontents{lot}{\protect\vspace{\li}}
+
+\let\l@tableOLD \l@table
+
+\renewcommand{\l@table}{\vspace{\baselineskip}\l@tableOLD}
+		\listoftables
+		\let\addvspace=\saveaddvspace}
+		\newpage
+	\fi
+	\iffigurespage
+		{\addvspace{30pt}
+		\let\saveaddvspace=\addvspace
+		\def\addvspace##1{}
+		\addcontentsline{toc}{head}{LIST OF FIGURES}
+
+        	%\addtocontents{toc}{\protect\vspace{\li}}
+
+                %\addtocontents{lof}{\protect\vspace{-\li}} % JDS, took these 2 lines out to get an extra space in LIST of TABLES
+                %\addtocontents{lof}{\protect\vspace{-\li}}
+			%added to take out extra blank lines after
+			%heading in lof
+                \addtocontents{lof}{Figure}
+                \addtocontents{lof}{\protect\vspace{\li}}
+
+\let\l@figureOLD \l@figure
+ 
+\renewcommand{\l@figure}{\vspace{\baselineskip}\l@figureOLD}
+		\listoffigures
+	% The next three lines put the heading "CHAPTER" before the
+	% list of chapters in the toc.  If there is not a lof, they need
+	% to be moved to the corresponding position in lot above.
+        \addtocontents{toc}{\protect\vspace{\li}}
+		\addtocontents{toc}{\hspace{-32pt} CHAPTER}
+        \addtocontents{toc}{\protect\vspace{\li}}
+		\let\addvspace=\saveaddvspace}
+		\newpage
+	\fi
+	\pagenumbering{arabic}
+	\markboth{\thepage}{\thepage}
+	\pagestyle{mainstyle}
+	%\raggedright
+	\raggedbottom
+	\doublespace
+ }
+
+
+\makeatother

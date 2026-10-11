@@ -1,0 +1,134 @@
+% June 2015 (TOC contents linked in blue in pdf file)
+%This template was prepared by Dorothea F. Brosius of the
+%Institute for Electronics and Applied Physics, University of Maryland, College Park, MD
+%The template was last updated in June 2015
+%Thesis Main Page used with thesis.sty based on the
+%University of Maryland Electronic Thesis and Dissertation (ETD) Style Guide (2014)
+
+%The YourInformation file was created by Freja Nordsiek, 2014.
+%Code for linking the TOC titles to the text in the pdf file was created by Freja Nordsiek, 2014.
+
+%Code clean-up and addition of glossaries by Patrick Stanley, 2017.
+%Assumed printing to pdf and extra sections not needed (such as preface and forward)
+
+\documentclass[12pt]{thesis}
+
+%some packages may not be needed depending on your use
+\usepackage{titlesec}
+   \titleformat{\chapter}
+      {\normalfont\large}{Chapter \thechapter:}{1em}{}
+\usepackage{lipsum} %Remove before final draft, used to generate filler text
+\usepackage{graphicx}
+  \graphicspath{ {Images/} } %defining where images go here so I don't have to every time
+\usepackage{cite}
+\usepackage{pdflscape} %allows turning pages to landscape
+\usepackage{indentfirst}
+\usepackage{latexsym}
+\usepackage{multirow}
+\usepackage{tabls}
+\usepackage{wrapfig}%for wrapping text around figures in the document; don't need figure wrapping in this document
+\usepackage{longtable}
+\usepackage{supertabular}%for large tables that do not fit on a single page; also probably won't need this
+%\usepackage{subeqn} %removed to fix error with glossaries package
+\usepackage{subfigure}%allows creation of subfigures (i.e.  Fig #a, Fig. #b...)
+\usepackage{microtype}%readablity enhancements
+\usepackage[bookmarks, bookmarksnumbered, colorlinks=true, plainpages=false, pdfpagelabels, citecolor=blue, urlcolor=blue, filecolor=blue, linkcolor=blue]{hyperref}
+\usepackage{bookmark}%manually add missing bookmarks with \pdfbookmark
+\usepackage[toc, nonumberlist]{glossaries} %needs to be after hyperref
+
+\newcommand{\tbsp}{\rule{0pt}{18pt}} %used to get a vertical distance after \hline
+\renewcommand{\baselinestretch}{2}
+\setlength{\textwidth}{5.9in}
+\setlength{\textheight}{9in}
+\setlength{\topmargin}{-.50in}
+\setlength{\oddsidemargin}{.55in}
+\setlength{\parindent}{.4in}
+\pagestyle{empty}
+
+
+\setacronymstyle{long-short} %first use of acronym gives full name
+\glsdisablehyper %turns off hyperlinking
+\loadglsentries{definitions} %defines file with all entries
+\renewcommand{\glossarysection}[2][]{} %Hides glossary title so it can be named manually
+\makeglossaries
+
+
+\begin{document}
+\hypersetup{pageanchor=false} %Fixes hyperref error with unnumbered title pages
+\include{FrontMatter/Abstract} %(must be first, required, non-numbered)
+\include{FrontMatter/Titlepage} %(must follow Abstract, required, non-numbered)
+\include{FrontMatter/Copyright} %(highly recommended, non-numbered)
+
+\hypersetup{pageanchor=true}%Pages from this point start at lower-case Roman number ii)
+\pagestyle{plain}
+\pagenumbering{roman}
+\setcounter{page}{2}
+
+%\addcontentsline{toc}{chapter}{Preface}
+%\include{Preface}  %(if present, start at lower-case Roman number ii)
+%\addcontentsline{toc}{chapter}{Foreword}
+%\include{Foreword} %(if present, lower-case Roman)
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Dedication}%adds to toc so hyperref links correctly
+\include{FrontMatter/Dedication} %(if present, lower-case Roman)
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Acknowledgements}%adds to toc so hyperref links correctly
+\include{FrontMatter/Acknowledgements} %(if present, lower-case Roman)
+
+\renewcommand{\baselinestretch}{1}
+\small\normalsize
+
+\tableofcontents %(required, lower-case Roman)
+
+\newpage
+\listoftables %(if present, lower-case Roman)
+
+\newpage
+\listoffigures %(if present, lower-case Roman)
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Abbreviations and Symbols} %Manually put in ToC
+\renewcommand{\baselinestretch}{1}
+\small\normalsize
+%\hbox{\ }
+\begin{center}
+\large{List of Abbreviations and Symbols} %Manually create centered title
+\end{center}
+
+\vspace{3pt}
+
+\printglossary
+
+
+\newpage
+\setlength{\parskip}{0em}
+\renewcommand{\baselinestretch}{2}
+\small\normalsize
+
+%Pages from this point start at Arabic numeral 1
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\include{Chapters/Chapter1}
+\include{Chapters/Chapter2}
+\include{Chapters/Chapter3}
+
+\appendix
+\titleformat{\chapter}
+      {\normalfont\large}{Appendix \thechapter:}{1em}{}
+\include{Appendices/AppendixA}
+\include{Appendices/AppendixB}
+
+\renewcommand{\baselinestretch}{1}
+\small\normalsize
+
+%Assuming you are using BibTeX
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{Bibliography}
+
+\end{document}

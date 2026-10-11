@@ -1,0 +1,77 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ph. D Proposal LaTeX Template		%
+% Version 1.0						%
+%									%
+% Faculty of Engineering 			%
+% CHRIST (Deemed to be University)	%
+%									%
+% Template Author:					%
+% Venkataswamy R 					%
+% Assistant Professor, Dept. EEE	%
+% venkataswamy@christuniversity.in	%
+%									%
+% July 2019							%
+% Software Used: TeXLive 2019,		% 
+%				 TeXStudio 2.12.16 	%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Updation
+% --------
+%
+% Date		Autor	    VersionNo   Change
+% ---------------------------------------------
+%
+%----------------------------------------------
+
+% ---------------------------------------------------------------
+% Licence: GNU GPL v3											
+% This program is free software; you can redistribute it and/or
+% modify it under the terms of the GNU General Public License
+% as published by the Free Software Foundation; either version 3
+% of the License, or (at your option) any later version.
+%----------------------------------------------------------------
+
+\documentclass[12pt, oneside, a4paper]{article}
+
+
+\usepackage[square, numbers, comma, sort&compress]{natbib} 
+\usepackage{mathptmx, imakeidx,tfrupee, hyperref,listings,color,textcomp,algorithm, pdfpages, setspace,imakeidx, datetime, ragged2e, enumitem,changepage, etoolbox, ifthen}
+
+\usepackage[T1]{fontenc}
+\makeatletter
+\renewcommand\tableofcontents{%
+	\null\hfill\textbf{\Large\contentsname}\hfill\null\par
+	\@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
+	\@starttoc{toc}%
+}
+\makeatother
+
+\usepackage{array}
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}} 
+
+\usepackage{booktabs}
+
+\usepackage[table]{xcolor}
+
+\graphicspath{Pictures/}
+
+
+
+\begin{document}
+	\input{Source/Data}
+	\input{Source/Titlepage}
+	\input{Source/Innerpage}
+	\input{Source/DetailsPage}
+	\tableofcontents
+	\input{Source/Content}
+	\input{Source/Bibliography}
+	
+	\ifthenelse{\equal{\BeforeorAfterPlagiarism}{After}}
+	{
+		\addcontentsline{toc}{section}{Appendix (Plagiarism check report)}
+		\hspace*{-5cm}
+		\includepdf[pages=-,pagecommand={},scale=0.8]{Documents/PlagiarismReport.pdf}
+	}{}
+
+	
+\end{document} 

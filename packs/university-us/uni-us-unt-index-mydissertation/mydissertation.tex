@@ -1,0 +1,138 @@
+\documentclass[12pt, titlepage, openany]{amsbook}
+
+%%% Comment or uncomment any or all of the following packages as
+%%% necessary. 
+
+%%% The standard AMS math packages
+\usepackage{amsmath, amsfonts, amssymb, amsthm}
+
+%%% For diagrams and images
+\usepackage[all]{xy}
+
+%%% For hyperrefs
+% \usepackage{color}
+%\usepackage{aliascnt}
+\usepackage[colorlinks, linktocpage, allcolors=black,%
+breaklinks]{hyperref}
+
+%%% One option for complicated tables and arrays. The array package is used
+%%% in
+\usepackage{array}
+
+%%% One option for including graphics
+%\usepackage{graphicx}
+
+%%% For professional tables (as in the appendix), comment out if there are
+%%% no tables
+\usepackage{booktabs, caption, multicol}
+
+
+%%% Uncomment the following line for font similiar to Arial.
+%\usepackage{cmbright}
+%%% Uncomment the following line if line spacing is funky when the last line
+%%% is uncommented.
+%\usepackage[standard-baselineskip]{cmbright}
+
+%%%% Uncomment the following line. It's only included for sample text.
+\usepackage{lipsum}
+
+%%% Cleveref plays nicely with amsthm and likes to be the last package to be
+%%% loaded
+\usepackage[capitalise, nameinlink]{cleveref}
+
+%%%%%%%%%%% Preamble
+%%% This loads the main style file.
+\input{UNTdissertation.sty}
+
+%%% If you need the hypcap package, uncomment the following line
+%\usepackage[all]{hypcap}
+
+%%% Choose REFERENCES or BIBLIOGRAPHY
+\newcommand\myrefbibname{REFERENCES}
+%\newcommand\myrefbibname{BIBLIOGRAPHY}
+
+%%% Make your own macros and put them in macros.tex.
+\input{macros}
+
+%%% Uncomment the following line and add the basename of the chapter file
+%%% (for example chapter1 for chapter1.tex) to have LaTeX process only
+%%% chapter 1. This probably isn't as relevant now as it was when computers
+%%% had slower processers and less memory, but if you are running tex on
+%%% your smartphone, it might come in handy
+%\includeonly{chapter1}
+
+\begin{document}
+
+%%% These are the roman numbered pages -- the frontmatter.
+\frontmatter
+
+%%% Title page information
+\title{Sample UNT Dissertation in \\ LaTeX}
+\author{Student Name}
+\degree{Dissertation Prepared for the Degree of\\ DOCTOR OF PHILOSOPHY}
+\degreedate{May 2026}
+\approved{FirstName Surname, Major Professor\\
+  FirstName Surname, Committee Member\\
+ FirstName Surname, Committee Member\\
+  FirstName Surname, Chair of the\\
+  \hspace{36pt} Department of (Dept. Name)\\
+  First Name Surname, Dean of the College of\\
+  \hspace{36pt}(College Name)\\
+  Pamela Padilla, Vice President for\\
+  \hspace{36pt} Research and Innovation}
+
+%%% This makes the title page
+\maketitle
+
+%%% This makes the abstract page
+\include{LaTex/Abstract}
+%%% This makes the copyright page
+\include{copyright}
+
+%%% An acknowledgments page (called acknowledgments.tex), this can be
+%%% commented out if there are no acknowledgments
+\include{acknowledgments}
+
+%%% This makes the table of contents.
+\tableofcontents
+
+%%% Uncomment the following to generate lists of tables or figures.
+\listoftables
+%\listoffigures
+
+%%% The body of the document
+\mainmatter
+
+%%% This helps LaTeX to break a display across two pages in some
+%%% circumstances.
+\allowdisplaybreaks
+
+%%% Include the chapters here.
+\include{chapter1}
+\include{chapter2}
+%\include{chapter3}
+%\include{chapter4}
+
+%%% Uncomment if there are appendices. This command sets some things up in
+%%% preparation for the actual appendices.
+\appendix
+
+%%% Include appendix "chapters" here. A single appendix should start with
+ \appchapter*{TITLE} %%%rather than \chapter{TITLE}. This surpresses the
+%%% numbering (if there is only one appendix it doesn't rate a number). If
+%%% there is more than one appendix, use \appchapter to get numbered
+%%% appendices (A, B, C, ...).
+\include{appendix}
+
+%%% This starts the backmatter, which so far is only the bibliography.
+\backmatter
+
+%%% This modifies some bits of the amsplain bibliography style to conform
+%%% with UNT/TGS requirements.
+\bibliographystyle{UNTamsplain}
+
+%%% Include the .bib file containing the bibliographic information (in
+%%% BiBTeX format...). ``bibliography.bib'' is a descriptive name for a
+%%% bibliography file in BiBTeX format.
+\bibliography{bibliography}
+\end{document}

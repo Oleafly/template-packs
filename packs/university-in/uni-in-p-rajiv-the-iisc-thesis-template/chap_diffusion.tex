@@ -1,0 +1,605 @@
+\chapter{Diffusion Models}
+\label{chap:diffusion}
+
+% \input{theories/diffusion_theory.tex}
+
+\section{Diffusion Probabilistic Models}
+\label{sec:diffusion_theory}
+
+Diffusion models \cite{ho2020denoising,rombach2022highresolutionimagesynthesislatent,song2019generative,song2021scorebasedgenerativemodelingstochastic} are likelihood-based generative models that learn to synthesize data by reversing a gradual noising process.
+Unlike GANs, diffusion models optimize a tractable variational objective and provide stable training with high sample quality.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\linewidth]{model_architectures/ddpm_for_back.png}
+    \caption{Overview of the DDPM (Denoising Diffusion Probabilistic Model) architecture.}
+    \label{fig:ddpm_architecture}
+\end{figure}
+
+
+\subsection{Forward Diffusion Process}
+
+Let $\mathbf{x}_0 \sim p_{\text{data}}(\mathbf{x})$ denote a real image.
+
+The forward process gradually adds Gaussian noise over $T$ timesteps:
+
+\begin{equation}
+q(\mathbf{x}_t \mid \mathbf{x}_{t-1}) =
+\mathcal{N}\left(
+\sqrt{1 - \beta_t}\mathbf{x}_{t-1},
+\beta_t I
+\right)
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $\beta_t \in (0,1)$ is a predefined variance schedule,
+    \item $t = 1, \dots, T$.
+\end{itemize}
+
+Define:
+
+\begin{equation}
+\alpha_t = 1 - \beta_t,
+\quad
+\bar{\alpha}_t = \prod_{s=1}^{t} \alpha_s
+\end{equation}
+
+Then, sampling directly from timestep $t$ can be written in closed form:
+
+\begin{equation}
+q(\mathbf{x}_t \mid \mathbf{x}_0) =
+\mathcal{N}\left(
+\sqrt{\bar{\alpha}_t}\mathbf{x}_0,
+(1 - \bar{\alpha}_t) I
+\right)
+\end{equation}
+
+Equivalently:
+
+\begin{equation}
+\mathbf{x}_t =
+\sqrt{\bar{\alpha}_t}\mathbf{x}_0 +
+\sqrt{1 - \bar{\alpha}_t}\boldsymbol{\epsilon},
+\quad
+\boldsymbol{\epsilon} \sim \mathcal{N}(0,I)
+\end{equation}
+
+As $t \to T$, $\mathbf{x}_T$ approaches pure Gaussian noise.
+
+\subsection{Reverse Denoising Process}
+
+The goal is to learn a reverse process:
+
+\begin{equation}
+p_\theta(\mathbf{x}_{t-1} \mid \mathbf{x}_t)
+\end{equation}
+
+parameterized as:
+
+\begin{equation}
+p_\theta(\mathbf{x}_{t-1} \mid \mathbf{x}_t)
+=
+\mathcal{N}\left(
+\boldsymbol{\mu}_\theta(\mathbf{x}_t, t),
+\Sigma_\theta(\mathbf{x}_t, t)
+\right)
+\end{equation}
+
+This is modeled using a neural network (typically a U-Net).
+
+\subsection{Variational Objective}
+
+Training maximizes a variational lower bound on log-likelihood:
+
+\begin{equation}
+\log p_\theta(\mathbf{x}_0)
+\ge
+\mathcal{L}_{\text{VLB}}
+\end{equation}
+
+The simplified training objective reduces to noise prediction:
+
+\begin{equation}
+\mathcal{L}_{\text{simple}} =
+\mathbb{E}_{\mathbf{x}_0, \boldsymbol{\epsilon}, t}
+\left[
+\left\|
+\boldsymbol{\epsilon}
+-
+\boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)
+\right\|_2^2
+\right]
+\end{equation}
+
+Thus, the model learns to predict the added noise at each timestep.
+\section{Score Matching Interpretation}
+
+Diffusion models can be interpreted as learning the \textit{score function}, i.e., the gradient of the log-density of the data distribution at different noise levels:
+
+\begin{equation}
+\nabla_{\mathbf{x}_t} \log q(\mathbf{x}_t)
+\end{equation}
+
+Directly estimating this quantity is intractable since $q(\mathbf{x}_t)$ is unknown. Instead, diffusion models leverage \textit{denoising score matching} (DSM), where the model is trained to predict the score of a perturbed distribution:
+
+\begin{equation}
+\mathcal{L}_{\text{DSM}} =
+\mathbb{E}_{q(\mathbf{x}_0), q(\mathbf{x}_t|\mathbf{x}_0)}
+\left[
+\left\|
+s_\theta(\mathbf{x}_t, t)
+-
+\nabla_{\mathbf{x}_t}
+\log q(\mathbf{x}_t \mid \mathbf{x}_0)
+\right\|_2^2
+\right]
+\end{equation}
+
+For the commonly used Gaussian forward process:
+
+\begin{equation}
+q(\mathbf{x}_t \mid \mathbf{x}_0) =
+\mathcal{N}(\mathbf{x}_t; \sqrt{\bar{\alpha}_t}\mathbf{x}_0, (1-\bar{\alpha}_t)\mathbf{I})
+\end{equation}
+
+the score has a closed-form expression:
+
+\begin{equation}
+\nabla_{\mathbf{x}_t} \log q(\mathbf{x}_t \mid \mathbf{x}_0)
+=
+-\frac{\mathbf{x}_t - \sqrt{\bar{\alpha}_t}\mathbf{x}_0}{1 - \bar{\alpha}_t}
+\end{equation}
+
+This allows the network $s_\theta(\mathbf{x}_t, t)$ to be trained using supervised learning. In practice, this formulation is equivalent (up to scaling) to the commonly used noise prediction objective in diffusion models.
+
+\vspace{0.5em}
+\noindent
+\textbf{Connection to Score Matching.} \\
+Classical score matching (Hyvärinen, 2005) aims to minimize:
+
+\begin{equation}
+\mathbb{E}_{q(\mathbf{x})}
+\left[
+\left\|
+s_\theta(\mathbf{x}) - \nabla_{\mathbf{x}} \log q(\mathbf{x})
+\right\|^2
+\right]
+\end{equation}
+
+However, this requires access to clean samples from $q(\mathbf{x})$. DSM circumvents this by training on noisy samples $\mathbf{x}_t$, making it suitable for high-dimensional data such as images.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.65\textwidth]{model_architectures/score_illustration.png}
+    \caption{Score-based model architecture used for noise prediction in diffusion models.}
+    \label{fig:score-architecture}
+\end{figure}
+
+
+
+\subsection{Langevin Dynamics and Sampling}
+
+Once the score function is learned, it can be used to generate samples via \textit{Langevin dynamics}, which iteratively refines noise into data by following the gradient of the log-density.
+
+The Langevin update rule is given by:
+
+\begin{equation}
+\mathbf{x}_{k+1} =
+\mathbf{x}_k
++
+\frac{\epsilon}{2} \nabla_{\mathbf{x}} \log q(\mathbf{x}_k)
++
+\sqrt{\epsilon}\,\mathbf{z}_k,
+\quad \mathbf{z}_k \sim \mathcal{N}(0, \mathbf{I})
+\end{equation}
+
+In score-based models, the true score is replaced by the learned approximation:
+
+\begin{equation}
+\mathbf{x}_{k+1} =
+\mathbf{x}_k
++
+\frac{\epsilon}{2} s_\theta(\mathbf{x}_k, t)
++
+\sqrt{\epsilon}\,\mathbf{z}_k
+\end{equation}
+
+This procedure can be interpreted as performing stochastic gradient ascent on $\log q(\mathbf{x})$ with injected noise to ensure proper exploration of the distribution.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{model_architectures/langevin_issustration.png}
+    \caption{Langevin dynamics illustration in the context of diffusion models and score-based generative modeling.}
+    \label{fig:langevin-dynamics}
+\end{figure}
+
+
+\vspace{0.5em}
+\noindent
+\textbf{Annealed Langevin Dynamics.} \\
+In practice, sampling is performed across multiple noise levels $\{t\}$, starting from pure Gaussian noise and gradually denoising:
+
+\begin{equation}
+\mathbf{x} \sim \mathcal{N}(0, \mathbf{I}) \rightarrow \cdots \rightarrow q(\mathbf{x}_0)
+\end{equation}
+
+At each noise level, several Langevin steps are performed using the corresponding score estimate $s_\theta(\mathbf{x}_t, t)$. This is known as \textit{annealed Langevin dynamics} and forms the basis of early score-based generative models.
+
+\section{Connection to Stochastic Differential Equations}
+
+Diffusion models can be formulated in continuous time as stochastic differential equations (SDEs). The forward process is defined as:
+
+\begin{equation}
+d\mathbf{x} = f(\mathbf{x}, t)\,dt + g(t)\,d\mathbf{w}
+\end{equation}
+
+where $\mathbf{w}$ is a Wiener process. The reverse-time SDE, which generates samples, is given by:
+
+\begin{equation}
+d\mathbf{x} =
+\left[
+f(\mathbf{x}, t) - g(t)^2 \nabla_{\mathbf{x}} \log q_t(\mathbf{x})
+\right] dt
++
+g(t)\,d\bar{\mathbf{w}}
+\end{equation}
+
+Replacing the true score with the learned model yields:
+
+\begin{equation}
+d\mathbf{x} =
+\left[
+f(\mathbf{x}, t) - g(t)^2 s_\theta(\mathbf{x}, t)
+\right] dt
++
+g(t)\,d\bar{\mathbf{w}}
+\end{equation}
+
+This formulation unifies diffusion probabilistic models and score-based generative models, showing that both can be interpreted as numerical solvers of reverse-time SDEs.
+
+\vspace{0.5em}
+\noindent
+\textbf{Key Insight.} \\
+Diffusion models do not directly model the data distribution. Instead, they learn its \textit{gradient field} (the score), and sampling corresponds to integrating this field backward in time from noise to data.
+
+\section{Sampling Procedure}
+
+Generation starts from Gaussian noise:
+
+\begin{equation}
+\mathbf{x}_T \sim \mathcal{N}(0, I)
+\end{equation}
+
+Then iteratively sample:
+
+\begin{equation}
+\mathbf{x}_{t-1}
+=
+\frac{1}{\sqrt{\alpha_t}}
+\left(
+\mathbf{x}_t
+-
+\frac{\beta_t}{\sqrt{1 - \bar{\alpha}_t}}
+\boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)
+\right)
++
+\sigma_t \mathbf{z}
+\end{equation}
+
+where $\mathbf{z} \sim \mathcal{N}(0,I)$ if $t > 1$.
+
+% \subsection{Classifier Guidance}
+
+% To condition generation on label $y$, guidance modifies the score:
+
+% \begin{equation}
+% \nabla_{\mathbf{x}_t}
+% \log p(\mathbf{x}_t \mid y)
+% =
+% \nabla_{\mathbf{x}_t}
+% \log p(\mathbf{x}_t)
+% +
+% \nabla_{\mathbf{x}_t}
+% \log p(y \mid \mathbf{x}_t)
+% \end{equation}
+
+% Classifier-free guidance approximates this without an external classifier.
+
+\subsection{DDIM: Deterministic Sampling}
+
+DDIM modifies sampling to:
+
+\begin{equation}
+\mathbf{x}_{t-1}
+=
+\sqrt{\bar{\alpha}_{t-1}}
+\hat{\mathbf{x}}_0
++
+\sqrt{1 - \bar{\alpha}_{t-1}}
+\boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)
+\end{equation}
+
+allowing faster deterministic sampling.
+
+\subsection{Geometric Interpretation of DDIM}
+
+DDIM sampling can be understood geometrically as constructing a deterministic trajectory in data space that connects an initial noise sample $\mathbf{x}_T \sim \mathcal{N}(0, \mathbf{I})$ to a final data sample $\mathbf{x}_0$.
+
+At each timestep, the model predicts $\hat{\mathbf{x}}_0$, which can be interpreted as a projection of the noisy sample $\mathbf{x}_t$ onto the data manifold. The update rule:
+
+\begin{equation}
+\mathbf{x}_{t-1}
+=
+\sqrt{\bar{\alpha}_{t-1}}\,\hat{\mathbf{x}}_0
++
+\sqrt{1 - \bar{\alpha}_{t-1}}\,\boldsymbol{\epsilon}_\theta
+\end{equation}
+
+can be viewed as moving along a curve that balances two components:
+\begin{itemize}
+    \item A \textbf{data-aligned direction} (towards $\hat{\mathbf{x}}_0$)
+    \item A \textbf{noise-aligned direction} (given by $\boldsymbol{\epsilon}_\theta$)
+\end{itemize}
+
+In DDPM, randomness perturbs this trajectory at every step, resulting in a stochastic path. In contrast, DDIM removes this stochasticity, yielding a \textit{single deterministic path} for each initial noise sample.
+
+\vspace{0.5em}
+\noindent
+\textbf{Manifold View.} \\
+The data distribution can be thought of as lying on a low-dimensional manifold embedded in high-dimensional space. The forward diffusion process gradually moves data points away from this manifold toward isotropic Gaussian noise. DDIM reverses this process by following a smooth trajectory back toward the manifold using learned score directions.
+
+\vspace{0.5em}
+\noindent
+\textbf{Straight vs Curved Paths.} \\
+Unlike naive interpolation, DDIM trajectories are not straight lines in pixel space. Instead, they follow curved paths defined implicitly by the score function, which captures the geometry of the data distribution. This explains why DDIM produces semantically meaningful intermediate samples.
+
+\subsection{Comparison: DDPM vs DDIM vs ODE-Based Samplers}
+
+Diffusion models admit multiple sampling strategies, each with different trade-offs between speed, diversity, and accuracy.
+
+\vspace{0.5em}
+\noindent
+\textbf{DDPM (Stochastic Sampling).}
+\begin{itemize}
+    \item Based on a reverse-time Markov chain with injected Gaussian noise.
+    \item Closely approximates the true data distribution.
+    \item Requires a large number of steps (typically $\sim$1000).
+    \item Produces diverse samples due to stochasticity.
+    \item Sampling is slow due to many iterations.
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+\textbf{DDIM (Deterministic / Semi-Stochastic Sampling).}
+\begin{itemize}
+    \item Removes or reduces noise in the reverse process.
+    \item Can use significantly fewer steps (e.g., 20--50).
+    \item Deterministic when $\eta = 0$, enabling consistent outputs.
+    \item Supports interpolation and inversion due to path consistency.
+    \item Slight bias may be introduced when using very few steps.
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+\textbf{ODE-Based Samplers (e.g., Probability Flow ODE, DPM-Solver).}
+\begin{itemize}
+    \item Interpret diffusion as a continuous-time ordinary differential equation.
+    \item Use numerical solvers (e.g., Runge-Kutta, multistep methods) for integration.
+    \item Achieve very fast sampling with high accuracy (as few as 10--20 steps).
+    \item Deterministic by construction.
+    \item Better theoretical grounding in numerical analysis.
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+\textbf{Summary of Trade-offs.}
+
+\begin{center}
+\begin{tabular}{lccc}
+\toprule
+Method & Speed & Diversity & Fidelity \\
+\midrule
+DDPM & Slow & High & High \\
+DDIM & Fast & Medium & High (moderate steps) \\
+ODE Samplers & Very Fast & Low & Very High \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.5em}
+\noindent
+\textbf{Key Insight.} \\
+All three methods rely on the same trained model but differ in how they traverse the learned score field. DDPM simulates a stochastic process, DDIM follows a deterministic discretized path, and ODE-based samplers solve a continuous-time flow. This highlights that improvements in sampling efficiency often arise from better \textit{numerical integration strategies} rather than changes in the underlying model.
+
+\subsection{Advantages Over GANs and VAEs}
+
+Diffusion models provide:
+
+\begin{itemize}
+    \item Stable training (no adversarial minimax instability)
+    \item Full mode coverage (no mode collapse)
+    \item Explicit likelihood optimization
+    \item High-fidelity image synthesis
+\end{itemize}
+
+Compared to VAEs:
+\begin{itemize}
+    \item Avoid blurry reconstructions
+    \item Do not require strong latent Gaussian compression
+\end{itemize}
+
+Compared to GANs:
+\begin{itemize}
+    \item Better diversity
+    \item More stable convergence
+    \item Improved anatomical consistency
+\end{itemize}
+
+\subsection{Relevance to Medical Image Generation}
+
+For chest X-ray generation:
+
+\begin{itemize}
+    \item Diffusion models preserve fine-grained anatomical structures.
+    \item Enable controlled pathology synthesis.
+    \item Provide better diversity for rare disease modeling.
+\end{itemize}
+
+This explains their recent dominance in medical image synthesis compared to VAEs and GANs.
+
+\section{Latent Diffusion Models}
+
+Latent Diffusion Models (LDMs), introduced by Rombach et al. (2022), address the high computational cost of pixel-space diffusion by performing the diffusion process in a lower-dimensional latent space. Instead of directly modeling images $\mathbf{x} \in \mathbb{R}^{H \times W \times 3}$, LDMs first encode images into a compact latent representation using a pretrained autoencoder.
+
+\subsection{Latent Space Formulation}
+
+Let $\mathcal{E}$ and $\mathcal{D}$ denote the encoder and decoder of a variational autoencoder (VAE). An image $\mathbf{x}$ is mapped to a latent representation:
+
+\begin{equation}
+\mathbf{z} = \mathcal{E}(\mathbf{x})
+\end{equation}
+
+The diffusion process is then applied in latent space:
+
+\begin{equation}
+q(\mathbf{z}_t | \mathbf{z}_0) = \mathcal{N}(\mathbf{z}_t; \sqrt{\bar{\alpha}_t}\mathbf{z}_0, (1-\bar{\alpha}_t)\mathbf{I})
+\end{equation}
+
+A neural network $\epsilon_\theta(\mathbf{z}_t, t, \mathbf{c})$ is trained to predict the noise, optionally conditioned on $\mathbf{c}$ (e.g., text embeddings). The final image is reconstructed via:
+
+\begin{equation}
+\hat{\mathbf{x}} = \mathcal{D}(\mathbf{z}_0)
+\end{equation}
+
+\vspace{0.5em}
+\noindent
+\textbf{Key Insight.} \\
+Operating in latent space reduces spatial resolution (e.g., by a factor of $8\times$), leading to significant savings in memory and computation while preserving perceptual quality.
+
+\subsection{Perceptual Compression and Autoencoder Design}
+
+A critical component of LDMs is the perceptual autoencoder. Unlike standard VAEs optimized purely for pixel-wise reconstruction, LDMs employ:
+\begin{itemize}
+    \item \textbf{Perceptual loss} (e.g., LPIPS) to preserve semantic content
+    \item \textbf{Adversarial loss} to improve sharpness
+    \item \textbf{Mild KL regularization} to maintain a structured latent space
+\end{itemize}
+
+This results in a latent space that is both \textit{compressive} and \textit{semantically meaningful}, making it suitable for diffusion modeling.
+
+\subsection{Cross-Attention Conditioning}
+
+LDMs introduce cross-attention layers to incorporate conditioning signals such as text. Given text embeddings $\mathbf{c}$, the U-Net backbone integrates them via:
+
+\begin{equation}
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^\top}{\sqrt{d}}\right)V
+\end{equation}
+
+where queries are derived from image latents and keys/values from text embeddings. This mechanism enables precise alignment between textual descriptions and generated images.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{model_architectures/ldm_arch.png}
+    \caption{Overview of the Latent Diffusion Model (LDM) architecture. Images are encoded into a latent space by a pretrained autoencoder, denoising diffusion occurs in this compressed latent space (optionally conditioned via cross-attention), and the final image is decoded back to pixel space.}
+    \label{fig:ldm_architecture}
+\end{figure}
+
+
+\subsection{Variants of Latent Diffusion Models: SD1 vs SDXL}
+
+\subsubsection{Stable Diffusion v1 (SD1)}
+
+Stable Diffusion v1 is a direct implementation of the LDM framework with the following characteristics:
+
+\begin{itemize}
+    \item \textbf{Latent Resolution:} Typically $64 \times 64$ for $512 \times 512$ images (compression factor of 8)
+    \item \textbf{Text Encoder:} CLIP text encoder (ViT-L/14)
+    \item \textbf{Architecture:} U-Net with cross-attention layers at multiple resolutions
+    \item \textbf{Training Objective:} Noise prediction ($\epsilon$-prediction)
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+\textbf{Nuances:}
+\begin{itemize}
+    \item Efficient and widely deployable due to moderate model size
+    \item Strong generalization but limited fine-grained compositionality
+    \item Tends to struggle with complex prompts involving multiple objects or spatial relations
+    \item Relatively lower fidelity at very high resolutions (requires upscalers)
+\end{itemize}
+
+\subsubsection{Stable Diffusion XL (SDXL)}
+
+SDXL is a significantly enhanced version of SD1, designed for higher fidelity and better prompt alignment.
+
+\begin{itemize}
+    \item \textbf{Larger U-Net Backbone:} Increased capacity for better representation learning
+    \item \textbf{Dual Text Encoders:} Combines two text encoders for richer conditioning
+    \item \textbf{Higher Native Resolution:} Designed for $1024 \times 1024$ generation
+    \item \textbf{Refiner Model:} A second-stage diffusion model for improving details
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+\textbf{Nuances:}
+\begin{itemize}
+    \item \textbf{Improved Prompt Understanding:} Better handling of long and complex prompts
+    \item \textbf{Hierarchical Generation:} Base model generates structure, refiner enhances details
+    \item \textbf{Better High-Frequency Details:} Sharper textures and more realistic outputs
+    \item \textbf{Higher Computational Cost:} Larger models and multi-stage pipeline increase inference cost
+\end{itemize}
+
+\subsection{Comparison and Practical Implications}
+
+\begin{itemize}
+    \item \textbf{Efficiency vs Quality:}  
+    SD1 offers a good balance between speed and quality, while SDXL prioritizes fidelity and realism.
+
+    \item \textbf{Resolution Scaling:}  
+    SD1 often relies on external upscaling, whereas SDXL natively supports higher resolutions.
+
+    \item \textbf{Compositionality:}  
+    SDXL shows significant improvements in handling complex scene descriptions.
+
+    \item \textbf{Use Cases:}
+    \begin{itemize}
+        \item SD1: Prototyping, lightweight deployment, research experimentation
+        \item SDXL: High-quality image synthesis, professional content generation
+    \end{itemize}
+\end{itemize}
+
+\vspace{0.5em}
+\noindent
+\textbf{Key Insight.} \\
+Latent diffusion separates \textit{representation learning} (via the autoencoder) from \textit{generative modeling} (via diffusion), enabling scalable high-resolution synthesis. Advances from SD1 to SDXL primarily arise from improving conditioning mechanisms, model capacity, and multi-stage refinement strategies.
+
+
+\section{Experiments}
+
+\subsection{Stable Diffusion V1-4}
+Images generated are as follows
+
+FID of images generated as follows
+
+Sample generated images are : 
+
+
+\subsection{Stable Diffusion V1-5}
+Images generated are as follows
+
+FID of images generated as follows
+
+Sample generated images are : 
+
+
+\subsection{Stable Diffusion XL}
+
+Images generated are as follows
+
+FID of images generated as follows
+
+Sample generated images are : 
+
+
+

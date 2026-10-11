@@ -1,0 +1,1217 @@
+% Copyright note: This package defines how titles should
+% be typeset at the RV College of Engineering
+% Author: P Narashimaraja, Assistant Professor, ECE, RVCE
+% Added: \ifMinor in Ver.3.2
+% Fix: spacing issue for 3 guides & 4 students in Ver.3.4
+% Added: \appendix command support in Ver.3.5
+% Added: \IDPProject with change in color for titles in Ver 3.8
+% Added: \DTLProject cmd. in Ver 3.8, but the document structure needs to be updated accordingly
+% Added: \InternProject cmd. in Ver 3.9.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ecproject}[2026/01/17 v.3.9 an project report package for RVCE]
+\RequirePackage{graphicx}
+\RequirePackage{tikz}
+\RequirePackage{xifthen}
+\RequirePackage{fancyhdr}
+\RequirePackage{qrcode}
+\RequirePackage{background}
+\RequirePackage{changepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\subCode}[1]{\gdef\@subCode{#1}}
+\newcommand*{\@subCode}{\texttt{\string\subCode} \texttt{currently not set. Please fix this.}}
+\newcommand*{\academicYear}[1]{\gdef\@acadYear{#1}}
+\newcommand*{\@acadYear}{\texttt{\string\academicYear} \texttt{currently not set. Please fix this.}}
+
+% Department & program cmd set
+\newcommand*{\Department}[2][ECE]{\gdef\@departmentSF{#1}\gdef\@departmentLF{#2}}
+\newcommand*{\@departmentSF}{\texttt{Department Name ShortForm is not defined.} \texttt{ Fix this by placing inside square brackets.}}
+\newcommand*{\@departmentLF}{\texttt{Department Name LongForm is not defined.} \texttt{ Fix this by placing inside curly brackets.}}
+\newcommand*{\MastersIn}[2][M.Tech]{\gdef\@mastersInSF{#1}\relax \def\@mastersInLF{#2}\relax}
+\newcommand*{\@mastersInSF}{\texttt{Masters ShortForm is not defined.} \texttt{ Fix this by placing inside square brackets.}}
+\newcommand*{\@mastersInLF}{\texttt{Masters LongForm is not defined.} \texttt{ Fix this by placing inside curly brackets.}}
+\newcommand*{\pgProgramName}[1]{\gdef\@PGprgName{#1} }
+\newcommand*{\@PGprgName}{\texttt{\string\pgProgramName} \texttt{currently not set. Please fix this.}}
+
+% Esteemed members cmd set
+\newcommand*{\HOD}[1]{\gdef\@hod{#1}}
+\newcommand*{\@hod}{\texttt{\string\HOD} \texttt{currently not set. Please fix this.}}
+\newcommand*{\Principal}[1]{\gdef\@principal{#1}}
+\newcommand*{\@principal}{\texttt{\string\Principal} \texttt{currently not set. Please fix this.}}
+% Ver 3.8 : Check \DeanAcademics only if \IDPProject is used
+\newcommand*{\DeanAcademics}[1]{\gdef\@deanAcad{#1}}
+\newcommand*{\VicePrincipal}[1]{\gdef\@vicePrincipal{#1}}
+% Ver 3.9 : For COE and 
+% QR code generator
+\newcommand*{\QRurl}[1]{\gdef\@qrurl{#1}}
+\newcommand*{\@qrurl}{\qrset{draft, version=20}}
+
+% initial state: false
+\newif\ifGuideNameBUsed
+\newif\ifGuideNameCUsed\GuideNameCUsedfalse
+\newif\ifProjectMemBUsed\ProjectMemBUsedfalse
+\newif\ifProjectMemCUsed\ProjectMemCUsedfalse
+\newif\ifPanelMemBUsed\PanelMemBUsedfalse % Ver 3.8
+\newif\ifStuNameBUsed           % Used to check for more than one student in UG major project
+\newif\ifStuNameCUsed           % ditto
+\newif\ifStuNameDUsed           % ditto
+\newif\ifStuNameEUsed           % Ver 3.8 : To support UG IDP as well as DTL students - Used to cross verify with \IDP or \DTL flag
+\newif\ifStuNameFUsed           % Ver 3.8
+\newif\ifPG\PGfalse          % ditto
+\newif\ifDrf\Drffalse          % ditto
+\newif\ifMinor\Minorfalse          % ditto
+\newif\ifIDP\IDPfalse          % Ver 3.8
+\newif\ifDTL\DTLfalse          % Ver 3.8
+\newif\ifINT\INTfalse          % Ver 3.9
+\newif\ifMajor\Majortrue          % Ver 3.9
+% Students cmd set
+\newcommand*{\stuNameA}[1]{\gdef\@stuNameA{#1}}
+\newcommand*{\@stuNameA}{\texttt{\string\stuNameA} \texttt{currently not set. Please fix this.}}
+\newcommand*{\stuUSNA}[1]{\gdef\@stuUSNA{#1}}
+\newcommand*{\@stuUSNA}{\texttt{\string\stuUSNA} \texttt{currently not set. Please fix this.}}
+\newcommand*{\stuNameB}[1]{\gdef\@stuNameB{#1}\global\StuNameBUsedtrue}
+\newcommand*{\@stuNameB}{}
+\newcommand*{\stuUSNB}[1]{\gdef\@stuUSNB{#1}}
+\newcommand*{\@stuUSNB}{}
+\newcommand*{\stuNameC}[1]{\gdef\@stuNameC{#1}\global\StuNameCUsedtrue}
+\newcommand*{\@stuNameC}{}
+\newcommand*{\stuUSNC}[1]{\gdef\@stuUSNC{#1}}
+\newcommand*{\@stuUSNC}{}
+\newcommand*{\stuNameD}[1]{\gdef\@stuNameD{#1}\global\StuNameDUsedtrue}
+\newcommand*{\@stuNameD}{}
+\newcommand*{\stuUSND}[1]{\gdef\@stuUSND{#1}}
+\newcommand*{\@stuUSND}{}
+% Added support to 2 more students for DTL & IPD in Ver 3.8
+\newcommand*{\stuNameE}[1]{\gdef\@stuNameE{#1}\global\StuNameEUsedtrue}
+\newcommand*{\@stuNameE}{}
+\newcommand*{\stuUSNE}[1]{\gdef\@stuUSNE{#1}}
+\newcommand*{\@stuUSNE}{}
+\newcommand*{\stuNameF}[1]{\gdef\@stuNameF{#1}\global\StuNameFUsedtrue}
+\newcommand*{\@stuNameF}{}
+\newcommand*{\stuUSNF}[1]{\gdef\@stuUSNF{#1}}
+\newcommand*{\@stuUSNF}{}
+
+% Guides cmd set
+\newcommand*{\guideNameA}[1]{\gdef\@guideNameA{#1}}
+\newcommand*{\@guideNameA}{\texttt{\string\guideNameA} \texttt{currently not set. Please fix this.}}
+\newcommand*{\guideDesignationA}[1]{\gdef\@guideDesigA{#1}}
+\newcommand*{\@guideDesigA}{\texttt{\string\guideDesignationA} \texttt{currently not set. Please fix this.}}
+\newcommand*{\guideOrgA}[1]{\gdef\@guideOrgA{#1}}
+\newcommand*{\@guideOrgA}{\texttt{\string\guideOrgA} \texttt{currently not set. Please fix this.}}
+% Ver 3.8
+\newcommand*{\guideDeptA}[2][ECE]{\gdef\@guideDeptAInSF{#1}\relax \gdef\@guideDeptAInLF{#2}\relax}
+\newcommand*{\@guideDeptAInSF}{\texttt{\string\guideDeptA ShortForm in not defined.} \texttt{Fix this by placing inside square brackets.}}
+\newcommand*{\@guideDeptAInLF}{\texttt{\string\guideDeptA LongForm in not defined.} \texttt{Fix this by placing inside surly brackets.}}
+
+\newcommand*{\guideNameB}[1]{\gdef\@guideNameB{#1}\global\GuideNameBUsedtrue}
+\newcommand*{\@guideNameB}{}
+\newcommand*{\guideDesignationB}[1]{\gdef\@guideDesigB{#1}}
+\newcommand*{\@guideDesignationB}{}
+\newcommand*{\guideDeptB}[1]{\gdef\@guideDeptB{#1}}
+\newcommand*{\@guideDeptB}{}
+\newcommand*{\guideOrgB}[1]{\gdef\@guideOrgB{#1}}
+\newcommand*{\@guideOrgB}{}
+
+% Used only for external guide in Major project. Not used in IDP or DTL
+\newcommand*{\guideNameC}[1]{\gdef\@guideNameC{#1}\global\GuideNameCUsedtrue}
+\newcommand*{\@guideNameC}{}
+\newcommand*{\guideDesignationC}[1]{\gdef\@guideDesigC{#1}}
+\newcommand*{\@guideDesignationC}{}
+\newcommand*{\guideDeptC}[1]{\gdef\@guideDeptC{#1}}
+\newcommand*{\@guideDeptC}{}
+\newcommand*{\guideOrgC}[1]{\gdef\@guideOrgC{#1}}
+\newcommand*{\@guideOrgC}{}
+
+% Added:Ver 3.6
+% Project Co-ordinates member cmd set
+\newcommand*{\projectCoOrdNameA}[1]{\gdef\@projectMemA{#1}}
+\newcommand*{\@projectMemA}{\texttt{\string\projectCoOrdNameA} \texttt{currently not set. Please fix this.}}
+\newcommand*{\projectCoOrdDesigA}[1]{\gdef\@projectMemDesigA{#1}}
+\newcommand*{\@projectMemDesigA}{\texttt{\string\projectCoOrdDesigA} \texttt{currently not set. Please fix this.}}
+
+\newcommand*{\projectCoOrdNameB}[1]{\gdef\@projectMemB{#1}\global\ProjectMemBUsedtrue}
+\newcommand*{\@projectMemB}{}
+\newcommand*{\projectCoOrdDesigB}[1]{\gdef\@projectMemDesigB{#1}}
+\newcommand*{\@projectMemDesigB}{}
+
+\newcommand*{\projectCoOrdNameC}[1]{\gdef\@projectMemC{#1}\global\ProjectMemCUsedtrue}
+\newcommand*{\@projectMemC}{}
+\newcommand*{\projectCoOrdDesigC}[1]{\gdef\@projectMemDesigC{#1}}
+\newcommand*{\@projectMemDesigC}{}
+% Ver 3.8
+\newcommand*{\projectCoOrdDeptA}[2][ECE]{\gdef\@projectCoOrdDeptAInSF{#1}\relax \gdef\@projectCoOrdDeptAInLF{#2}\relax}
+\newcommand*{\@projectCoOrdDeptAInSF}{\texttt{\string\projectCoOrdDeptA ShortForm in not defined.} \texttt{Fix this by placing inside square brackets.}}
+\newcommand*{\@projectCoOrdDeptAInLF}{\texttt{\string\projectCoOrdDeptA LongForm in not defined.} \texttt{Fix this by placing inside surly brackets.}}
+\newcommand*{\projectCoOrdDeptB}[2][ECE]{\gdef\@projectCoOrdDeptBInSF{#1}\relax \gdef\@projectCoOrdDeptBInLF{#2}\relax}
+\newcommand*{\@projectCoOrdDeptBInSF}{\texttt{\string\projectCoOrdDeptB ShortForm in not defined.} \texttt{Fix this by placing inside square brackets.}}
+\newcommand*{\@projectCoOrdDeptBInLF}{\texttt{\string\projectCoOrdDeptB LongForm in not defined.} \texttt{Fix this by placing inside surly brackets.}}
+
+% Ver 3.9 (For Internship)
+\newcommand*{\internCoOrdNameA}[1]{\gdef\@internMemA{#1}}
+\newcommand*{\@internMemA}{\texttt{\string\internCoOrdNameA} \texttt{currently not set. Please fix this.}}
+\newcommand*{\internCoOrdDesigA}[1]{\gdef\@internMemDesigA{#1}}
+\newcommand*{\@internMemDesigA}{\texttt{\string\internCoOrdDesigA} \texttt{currently not set. Please fix this.}}
+\newcommand*{\internCoOrdDeptA}[2][ECE]{\gdef\@internCoOrdDeptAInSF{#1}\relax \gdef\@internCoOrdDeptAInLF{#2}\relax}
+\newcommand*{\@internCoOrdDeptAInSF}{\texttt{\string\internCoOrdDeptA ShortForm in not defined.} \texttt{Fix this by placing inside square brackets.}}
+\newcommand*{\@internCoOrdDeptAInLF}{\texttt{\string\internCoOrdDeptA LongForm in not defined.} \texttt{Fix this by placing inside surly brackets.}}
+
+% Panel members cmd set
+\newcommand*{\panelMemberNameA}[1]{\gdef\@panelMemA{#1}}
+\newcommand*{\@panelMemA}{\texttt{\string\panelMemberNameA} \texttt{currently not set. Please fix this.}}
+\newcommand*{\panelMemberDesigA}[1]{\gdef\@panelMemDesigA{#1}}
+\newcommand*{\@panelMemDesigA}{\texttt{\string\panelMemberDesigA} \texttt{currently not set. Please fix this.}}
+\newcommand*{\panelMemberNameB}[1]{\gdef\@panelMemB{#1}\global\PanelMemBUsedtrue}
+\newcommand*{\@panelMemB}{\texttt{\string\panelMemberNameB} \texttt{currently not set. Please fix this.}}
+\newcommand*{\panelMemberDesigB}[1]{\gdef\@panelMemDesigB{#1}}
+\newcommand*{\@panelMemDesigB}{\texttt{\string\panelMemberDesigB} \texttt{currently not set. Please fix this.}}
+% Ver 3.8
+\newcommand*{\panelMemberDeptA}[2][ECE]{\gdef\@panelMemDeptAInSF{#1}\relax \gdef\@panelMemDeptAInLF{#2}\relax}
+\newcommand*{\@panelMemDeptAInSF}{\texttt{\string\panelMemberDeptA ShortForm in not defined.} \texttt{Fix this by placing inside square brackets.}}
+\newcommand*{\@panelMemDeptAInLF}{\texttt{\string\panelMemberDeptA LongForm in not defined.} \texttt{Fix this by placing inside surly brackets.}}
+\newcommand*{\panelMemberDeptB}[2][ECE]{\gdef\@panelMemDeptBInSF{#1}\relax \gdef\@panelMemDeptBInLF{#2}\relax}
+\newcommand*{\@panelMemDeptBInSF}{\texttt{\string\panelMemberDeptB ShortForm in not defined.} \texttt{Fix this by placing inside square brackets.}}
+\newcommand*{\@panelMemDeptBInLF}{\texttt{\string\panelMemberDeptB LongForm in not defined.} \texttt{Fix this by placing inside surly brackets.}}
+
+%%% Report Type
+\newcommand*{\pgProgram}{\global\PGtrue}%
+
+% \let\DraftCopy\Drfttrue%
+\newcommand*{\EnPlagReport}{\global\Drftrue}%
+
+\newcommand*{\MinorProject}{\global\Minortrue \global\Majorfalse}%
+% Ver: 3.8
+\newcommand*{\IDPProject}{\global\IDPtrue \global\Majorfalse}%
+\newcommand*{\DTLProject}{\global\DTLtrue \global\Majorfalse}%
+% Ver: 3.9
+\newcommand*{\InternProject}{\global\INTtrue \global\Majorfalse}%
+
+% Ver 3.8
+\ifIDP
+\newcommand*{\@deanAcad}{\texttt{\string\DeanAcademics} \texttt{currently not set. Please fix this.}}
+\fi
+
+%%%To get the definitions out of package:
+\newcommand*{\printTitle}{\leavevmode\@title}
+\newcommand*{\printCode}{\leavevmode\@subCode}
+\newcommand*{\printAcadYear}{\leavevmode\@acadYear}
+%% Program & Department
+\newcommand*{\printMastersInLF}{\leavevmode\@mastersInLF}
+\newcommand*{\printMastersInSF}{\leavevmode\@mastersInSF}
+\newcommand*{\printMastersPrgName}{\leavevmode\@PGprgName}
+
+\newcommand*{\printDepartmentSF}{\leavevmode\@departmentSF}
+\newcommand*{\printDepartmentLF}{\leavevmode\@departmentLF}
+%% Principal & HOD Name
+\newcommand*{\printPrincipal}{\leavevmode\@principal}
+\newcommand*{\printVicePrincipal}{\leavevmode\@vicePrincipal}
+\newcommand*{\printDA}{\leavevmode\@deanAcad}
+\newcommand*{\printHOD}{\leavevmode\@hod}
+%%Guide Name
+\newcommand*{\printGuideNameA}{\leavevmode\@guideNameA}
+\newcommand*{\printGuideDesigA}{\leavevmode\@guideDesigA}
+% Ver 3.8
+\newcommand*{\printGuideDeptAInSF}{\leavevmode\@guideDeptAInSF}
+\newcommand*{\printGuideDeptAInLF}{\leavevmode\@guideDeptAInLF}
+\newcommand*{\printGuideOrgA}{\leavevmode\@guideOrgA}
+\newcommand*{\printGuideNameB}{\leavevmode\@guideNameB}
+\newcommand*{\printGuideDesigB}{\leavevmode\@guideDesigB}
+\newcommand*{\printGuideOrgB}{\leavevmode\@guideOrgB}
+\newcommand*{\printGuideNameC}{\leavevmode\@guideNameC}
+\newcommand*{\printGuideDesigC}{\leavevmode\@guideDesigC}
+\newcommand*{\printGuideOrgC}{\leavevmode\@guideOrgC}
+%%Panel Member
+\newcommand*{\printPanelMemberA}{\leavevmode\@panelMemA}
+\newcommand*{\printPanelMemberDesigA}{\leavevmode\@panelMemDesigA}
+\newcommand*{\printPanelMemberB}{\leavevmode\@panelMemB}
+\newcommand*{\printPanelMemberDesigB}{\leavevmode\@panelMemDesigB}
+% Ver 3.8
+\newcommand*{\printPanelMemberDeptAInSF}{\leavevmode\@panelMemDeptAInSF}
+\newcommand*{\printPanelMemberDeptAInLF}{\leavevmode\@panelMemDeptAInLF}
+\newcommand*{\printPanelMemberDeptBInSF}{\leavevmode\@panelMemDeptBInSF}
+\newcommand*{\printPanelMemberDeptBInLF}{\leavevmode\@panelMemDeptBInLF}
+%%Student Name
+\newcommand*{\printStuNameA}{\leavevmode\@stuNameA}
+\newcommand*{\printStuUSNA}{\leavevmode\@stuUSNA}
+\newcommand*{\printStuNameB}{\leavevmode\@stuNameB}
+\newcommand*{\printStuUSNB}{\leavevmode\@stuUSNB}
+\newcommand*{\printStuNameC}{\leavevmode\@stuNameC}
+\newcommand*{\printStuUSNC}{\leavevmode\@stuUSNC}
+\newcommand*{\printStuNameD}{\leavevmode\@stuNameD}
+\newcommand*{\printStuUSND}{\leavevmode\@stuUSND}
+% Ver 3.8
+\newcommand*{\printStuNameE}{\leavevmode\@stuNameE}
+\newcommand*{\printStuUSNE}{\leavevmode\@stuUSNE}
+\newcommand*{\printStuNameF}{\leavevmode\@stuNameF}
+\newcommand*{\printStuUSNF}{\leavevmode\@stuUSNF}
+% Added:Ver 3.6
+%%Project co-ordinator Names
+\newcommand*{\printProjectMemberA}{\leavevmode\@projectMemA}
+\newcommand*{\printProjectMemberDesigA}{\leavevmode\@projectMemDesigA}
+\newcommand*{\printProjectMemberDeptAInSF}{\leavevmode\@projectCoOrdDeptAInSF}
+\newcommand*{\printProjectMemberDeptAInLF}{\leavevmode\@projectCoOrdDeptAInLF}
+\newcommand*{\printProjectMemberB}{\leavevmode\@projectMemB}
+\newcommand*{\printProjectMemberDesigB}{\leavevmode\@projectMemDesigB}
+\newcommand*{\printProjectMemberDeptB}{\leavevmode\@projectCoOrdDeptB}
+\newcommand*{\printProjectMemberC}{\leavevmode\@projectMemC}
+\newcommand*{\printProjectMemberDesigC}{\leavevmode\@projectMemDesigC}
+
+% Added:Ver 3.9
+%%Internship co-ordinator Names
+\newcommand*{\printInternMemberA}{\leavevmode\@internMemA}
+\newcommand*{\printInternMemberDesigA}{\leavevmode\@internMemDesigA}
+\newcommand*{\printInternMemberDeptAInSF}{\leavevmode\@internCoOrdDeptAInSF}
+\newcommand*{\printInternMemberDeptAInLF}{\leavevmode\@internCoOrdDeptAInLF}
+
+%Added: Ver 3.4
+%Added to count the number of lines used in the title - to adjust the spacing of title page
+%Ref: https://tex.stackexchange.com/questions/528391/count-the-number-of-lines-of-a-long-title-with-a-specific-line-width
+\newcounter{numtitlelines}
+\newcount\titlelines % auxiliary counter
+%\newcommand*{\titlelinescount}[1]{%
+%    \setbox\titlebox=\vbox{\huge\bfseries %Use the setting of title here
+%        #1\unskip\strut\par
+%        \global\titlelines=\the\prevgraf
+%    }
+%    \setcounter{numtitlelines}{\the\titlelines}
+%} % Use \thenumtitlelines to know the count value
+
+%%%%%% Title Page %%%%%%%%%%%
+\renewcommand*{\maketitle}{%
+\begin{titlepage}
+%Added in Ver 3.6 [13/08/2023]
+\NoBgThispage
+\ifDrf
+% Empty
+\else
+\ifMajor
+
+% ==========================================
+% PAGE 1: 
+% ==========================================
+ \begin{tikzpicture}[remember picture, overlay]
+	\node[anchor=south east,inner sep=0, fill=white] (image) at ($(current page.south east) + (-0.4in,0.4in)$) {\fbox{\qrcode[hyperlink,height=1.75cm]{\@qrurl}}};
+	\node[anchor=north,align=center, text width=\textwidth] (dept) at ($(current page.south) + (0in,1in)$) {	{\large\bfseries Department of\space\@departmentSF\unskip\strut\par}
+		{\large\bfseries\@acadYear \par}};
+ \end{tikzpicture}
+ \begin{center}
+ 	\vspace{-2cm}
+ 	{\includegraphics[width=0.3\textwidth]{Figures/RV_logoVec}\par}
+ 	\vspace{0.25cm}
+	{\Large\bfseries RV College of Engineering$^{\small{\textregistered}}$\unskip\strut\par}
+	{\normalsize\bfseries Mysore Road, RV Vidyaniketan Post, Bengaluru - 560059, Karnataka, India\unskip\strut\par}
+	\vspace{0.25cm}
+	{\Large\bfseries\@title\unskip\strut\par \global\titlelines=\the\prevgraf}% To count the number of lines used in the title - to adjust the spacing of title page
+	\setcounter{numtitlelines}{\the\titlelines}
+	\vspace{0.25cm}
+	{\large\bfseries MAJOR PROJECT REPORT\unskip\strut\par}
+	{\large\bfseries (\@subCode)\unskip\strut\par}
+	{\Large\bfseries \vspace{0.5cm} Submitted by,\unskip\strut\par}
+  \end{center}
+  \ifGuideNameCUsed\vspace{0.25cm}\else \vspace{0.5cm}\fi
+  {\noindent\large\bfseries\@stuNameA\unskip\strut}\hfill{\large\bfseries\@stuUSNA\unskip\strut\par}
+  \ifPG
+  \vspace{1cm}
+  \else
+  \vspace{0.25cm}
+  {\noindent\large\bfseries\@stuNameB\unskip\strut}\hfill{\large\bfseries\@stuUSNB\unskip\strut\par}
+  \vspace{0.25cm}
+  {\noindent\large\bfseries\@stuNameC\unskip\strut}\hfill{\large\bfseries\@stuUSNC\unskip\strut\par}
+  \vspace{0.25cm}
+  {\noindent\large\bfseries\@stuNameD\unskip\strut}\hfill{\large\bfseries\@stuUSND\unskip\strut\par}
+  \fi% PG Major
+  \ifGuideNameCUsed
+  \ifnum\value{numtitlelines}>2 %Hope this vl fix the issue.
+  {\vspace{0.125cm}}
+  \else
+  {\vspace{0.25cm}}
+  \fi
+  \else
+  \vspace{1cm}
+  \fi
+  \begin{center}
+  	{\large\itshape Under the guidance of \unskip\strut\par}
+  \end{center}
+  \ifGuideNameBUsed
+  {% Both
+  	{\noindent\large\bfseries\@guideNameA\unskip\strut}\hfill{\large\bfseries\@guideNameB\unskip\strut\par}
+  	\vspace{0.1cm}
+  	{\noindent\large\@guideDesigA\unskip\strut}\hfill{\large\@guideDesigB\unskip\strut\par}
+  	\vspace{0.1cm}
+  	{\noindent\large Dept. of\space\@guideDeptAInSF\unskip\strut}\hfill{\large\@guideDeptB\unskip\strut\par}
+  	\vspace{0.1cm}
+  	{\noindent\large\@guideOrgA\unskip\strut}\hfill{\large\@guideOrgB\unskip\strut\par}
+  	\ifGuideNameCUsed
+  	{% 
+  		\begin{center}
+  			{\large\bfseries\@guideNameC\unskip\strut\par}
+  			\vspace{0.1cm}
+  			{\large\@guideDesigC\unskip\strut\par}
+  			\vspace{0.1cm}
+  			{\large\@guideDeptC\unskip\strut\par}
+  			\vspace{0.1cm}
+  			{\large\@guideOrgC\unskip\strut\par}
+  		\end{center}
+  	}
+  	\fi%\ifGuideNameCUsed
+  }
+  \else
+  {% Internal guide
+  	\begin{center}
+  		{\large\bfseries\@guideNameA\unskip\strut\par}
+  		\vspace{0.1cm}
+  		{\large\@guideDesigA\unskip\strut\par}
+  		\vspace{0.1cm}
+  		{\large Dept. of\space\@guideDeptAInSF\unskip\strut\par}
+  		\vspace{0.1cm}
+  		{\large\@guideOrgA\unskip\strut\par}
+  	\end{center}
+  }\fi%\ifGuideNameBUsed
+  \ifGuideNameCUsed\vspace{0.25cm}\else \ifPG\vspace{3.5cm}\else\vspace{1.125cm}\fi\fi
+  	\begin{center}% May be try use \vbox cmd for equal spacing, but I need to know the better location (lower)
+  		{\large\itshape In partial fulfillment for the award of degree of \par}
+  		\vspace{0.125cm}
+  		{\large\bfseries \ifPG \@mastersInLF\, \else Bachelor of Engineering \fi \par} 
+%  		\vspace{0.1cm}
+  		{in \unskip\strut\par} %respective departments\fi\par}
+%  		\vspace{0.1cm}
+  		{\ifPG \Large\bfseries \@PGprgName\unskip\strut\par \else \Large\bfseries \@departmentLF\unskip\strut\par \fi}
+  		\ifGuideNameCUsed\vspace{0.375cm}\else\vspace{0.5cm}\fi
+%  		{\large\bfseries Department of\space\@departmentSF\unskip\strut\par}
+%  		{\large\bfseries\@acadYear \par}
+  	\end{center}
+  	
+% Force a page break within the titlepage environment
+\clearpage
+\thispagestyle{empty}
+\cleardoublepage
+\fi% Major
+\fi% Draft
+% ==========================================
+% PAGE 2: 
+% ==========================================
+\ifDrf
+ \begin{center}
+  {\huge\bfseries\@title\unskip\strut\par}
+  \vspace{0.4\pdfpageheight}
+  {\Large\bfseries Submitted by,\unskip\strut\par}
+ \end{center}
+\else
+\begin{tikzpicture}[remember picture, overlay]
+	\draw[line width = 4pt] ($(current page.north west) + (0.75in,-0.75in)$) rectangle ($(current page.south east) + (-0.75in,0.75in)$);
+\end{tikzpicture}
+\ifIDP
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=south east,inner sep=0, fill=white] (image) at ($(current page.south east) + (-0.8in,0.8in)$) {\fbox{\qrcode[hyperlink,height=1.75cm]{\@qrurl}}};
+  \end{tikzpicture}
+\else
+\ifMajor
+% Empty
+\else
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[anchor=north east,inner sep=0, fill=white] (image) at ($(current page.north east) + (-0.15in,-0.15in)$) {\fbox{\qrcode[hyperlink,height=1.75cm]{\@qrurl}}};
+  \end{tikzpicture}
+\fi% Major
+\fi% IDP
+
+\begin{center}
+\vspace{-1cm}
+{\includegraphics[width=1\textwidth]{Figures/RV_newLogo}\par}
+\vspace{1cm}
+%\ifINT{\Large\itshape Summer Internship Report\par on\par}\fi %Intern
+{\huge\bfseries\@title\unskip\strut\par \global\titlelines=\the\prevgraf}% To count the number of lines used in the title - to adjust the spacing of title page
+\setcounter{numtitlelines}{\the\titlelines}
+\ifIDP\vspace{1cm}\else\ifGuideNameCUsed\vspace{0.5cm}\fi\fi
+{\Large\itshape \ifINT \vspace{0.5cm} An Internship \else\ifMinor A Minor Project \else \ifDTL A Design Thinking Lab \else \ifIDP An Interdisciplinary Project \else A Major Project \fi\fi\fi\fi  Report\;(\@subCode)\unskip\strut\par}
+% \fi
+\vspace{0.25cm}
+{\Large\bfseries \vspace{0.5cm} Submitted by,\unskip\strut\par}
+\end{center}
+\fi % Draft
+
+{\noindent\large\bfseries\@stuNameA\unskip\strut}\hfill{\large\bfseries\@stuUSNA\unskip\strut\par}
+\ifIDP\vspace{0.125cm}\else\vspace{0.25cm}\fi
+% Ver 3.9:
+%\ifINT
+%\vspace{0.5cm}
+%\else
+\ifPG
+\vspace{0.5cm}
+\else
+{\noindent\large\bfseries\@stuNameB\unskip\strut}\hfill{\large\bfseries\@stuUSNB\unskip\strut\par}
+\ifIDP\vspace{0.125cm}\else\vspace{0.25cm}\fi
+{\noindent\large\bfseries\@stuNameC\unskip\strut}\hfill{\large\bfseries\@stuUSNC\unskip\strut\par}
+\ifIDP\vspace{0.125cm}\else\vspace{0.25cm}\fi
+{\noindent\large\bfseries\@stuNameD\unskip\strut}\hfill{\large\bfseries\@stuUSND\unskip\strut\par}
+% Ver 3.8: 
+\ifIDP
+\vspace{0.125cm}
+{\noindent\large\bfseries\@stuNameE\unskip\strut}\hfill{\large\bfseries\@stuUSNE\unskip\strut\par}
+\vspace{0.125cm}
+{\noindent\large\bfseries\@stuNameF\unskip\strut}\hfill{\large\bfseries\@stuUSNF\unskip\strut\par}
+\fi
+\fi
+%\fi % Intern
+
+\ifDrf
+% Empty
+\else
+% Exclude GuideC support for IDP in Ver 3.8
+%Updated in Ver 3.4 [4/6/2021]
+\ifINT
+\begin{center}
+{\Large\bfseries Under the guidance of \unskip\strut\par}
+\end{center}
+\begin{center}
+  {\large\bfseries\@guideNameA\unskip\strut\par}
+  \vspace{0.1cm}
+  {\large\@guideDesigA\unskip\strut\par}
+  \vspace{0.1cm}
+  {\large Dept. of\space\@guideDeptAInSF\unskip\strut\par}
+  \vspace{0.1cm}
+  {\large\@guideOrgA\textsuperscript{\small\textregistered}\unskip\strut\par}
+\end{center}
+\else
+\ifIDP
+\vspace{0.75cm}
+\else
+\ifGuideNameCUsed
+	\ifnum\value{numtitlelines}>2 %Hope this vl fix the issue.
+		{\vspace{0.125cm}}
+	\else
+		{\vspace{0.25cm}}
+	\fi
+\else
+	\ifnum\value{numtitlelines}>2 %Hope this vl fix the issue.
+	{\vspace{0.25cm}}
+	\else
+	{\vspace{1cm}}
+	\fi
+\fi
+\fi
+
+\begin{center}
+{\Large\bfseries Under the guidance of \unskip\strut\par}
+\end{center}
+\ifDTL
+  % Don't Add Guide B and C
+  \begin{center}
+  {\large\bfseries\@guideNameA\unskip\strut\par}
+  \vspace{0.1cm}
+  {\large\@guideDesigA\unskip\strut\par}
+  \vspace{0.1cm}
+  {\large Dept. of\space\@guideDeptAInSF\unskip\strut\par}
+  \vspace{0.1cm}
+  {\large\@guideOrgA\textsuperscript{\small\textregistered}\unskip\strut\par}
+  \end{center}
+\else
+  \ifIDP
+    % Don't Add Guide B and C
+    \begin{center}
+    {\large\bfseries\@guideNameA\unskip\strut\par}
+    \vspace{0.1cm}
+    {\large\@guideDesigA\unskip\strut\par}
+    \vspace{0.1cm}
+    {\large Dept. of\space\@guideDeptAInSF\unskip\strut\par}
+    \vspace{0.1cm}
+    {\large\@guideOrgA\textsuperscript{\small\textregistered}\unskip\strut\par}
+    \end{center}
+  \else{
+    \ifGuideNameBUsed
+    {% Both
+    {\noindent\large\bfseries\@guideNameA\unskip\strut}\hfill{\large\bfseries\@guideNameB\unskip\strut\par}
+    \vspace{0.1cm}
+    {\noindent\large\@guideDesigA\unskip\strut}\hfill{\large\@guideDesigB\unskip\strut\par}
+    \vspace{0.1cm}
+    {\noindent\large Dept. of\space\@guideDeptAInSF\unskip\strut}\hfill{\large\@guideDeptB\unskip\strut\par}
+    \vspace{0.1cm}
+    {\noindent\large\@guideOrgA\unskip\strut}\hfill{\large\@guideOrgB\unskip\strut\par}
+      \ifGuideNameCUsed
+        {% 
+        \begin{center}
+        {\large\bfseries\@guideNameC\unskip\strut\par}
+        \vspace{0.1cm}
+        {\large\@guideDesigC\unskip\strut\par}
+        \vspace{0.1cm}
+        {\large\@guideDeptC\unskip\strut\par}
+        \vspace{0.1cm}
+        {\large\@guideOrgC\unskip\strut\par}
+        \end{center}
+        }
+      \fi%\ifGuideNameCUsed
+    }
+    \else
+    {% Internal guide
+    \begin{center}
+    {\large\bfseries\@guideNameA\unskip\strut\par}
+    \vspace{0.1cm}
+    {\large\@guideDesigA\unskip\strut\par}
+    \vspace{0.1cm}
+    {\large Dept. of\space\@guideDeptAInSF\unskip\strut\par}
+    \vspace{0.1cm}
+    {\large\@guideOrgA\unskip\strut\par}
+    \end{center}
+    }\fi%\ifGuideNameBUsed
+  }\fi%\ifIDP
+\fi%\ifDTL
+\fi%\ifINT
+\par.
+\ifINT\vspace{3cm}\else\ifIDP\vspace{1cm}\else\ifGuideNameCUsed\vspace{0.125cm}\else\ifnum\value{numtitlelines}>2 %Hope this vl fix the issue.
+{\vspace{1cm}}\else\vspace{3cm}\fi\fi\fi\fi
+\begin{center}% May be try use \vbox cmd for equal spacing, but I need to know the better location (lower)
+{\large\bfseries In partial fulfillment of the requirements for the degree of \par}
+\vspace{0.25cm}
+{\large\bfseries \ifPG \@mastersInLF\, \else Bachelor of Engineering \fi in \ifIDP respective departments\fi\par}
+\vspace{0.25cm}
+\ifIDP
+
+\else
+{\ifPG \Large\bfseries \@PGprgName\unskip\strut\par \else \Large\bfseries \@departmentLF\unskip\strut\par \fi}
+\vspace{0.25cm}
+\fi
+%\ifINT \vspace{3cm} {\large\bfseries \@departmentLF\unskip\strut\par} \par\fi
+{\Large\bfseries\@acadYear \par}
+\end{center}
+\fi % Draft 
+%\end{tcolorbox}
+%\newpage
+\thispagestyle{empty}
+
+\end{titlepage}
+}
+
+%%%%%%%%%%%%%%%%%% Page Style %%%%%%%%%%%%%%%%%%%%%%%%
+%
+\fancypagestyle{mplain}{%              
+    \fancyhf{}%                            
+    \renewcommand{\headrulewidth}{0.2pt}%    
+    \renewcommand{\footrulewidth}{0.2pt}%
+    \ifDrf
+    % \fancyhead {Draft}%
+    \fancyhead{}%
+    \fancyfoot[R] {\thepage}%
+    \else
+    \ifPG
+    \fancyfoot[C] {\@mastersInSF\, in \@PGprgName, Department of \@departmentSF,\space\@acadYear}%
+    \else
+    \ifIDP
+    \fancyfoot[L] {RV College of Engineering\textsuperscript{\small\textregistered}}%
+    \fancyfoot[C] {\@acadYear}%
+    \else
+    \ifINT
+    \fancyfoot[L] {\ifPG PG\else UG\fi\space Internship Report} 
+    \fancyfoot[C] {Department of \@departmentSF, \@acadYear}% 
+    \else
+    \fancyfoot[L] {\ifMinor UG Minor Project Report\else \ifDTL Design Thinking Lab Report\else Department of \@departmentSF \fi\fi }%
+    %\fancyfoot[C] {Department of \@departmentSF \ifIDP \\\@acadYear\else \ifDTL \\\@acadYear\else ,\@acadYear\fi\fi}%
+    \fancyfoot[C] {\ifDTL \hspace{2cm}\else \fi \@acadYear}%
+    \fi
+    \fi
+    \fi
+    \fancyfoot[R]{\thepage}%
+    \ifIDP
+    \fancyhead[C]{\@title}%
+    \else
+%    \if@twoside
+%    	\fancyhead[CE]{\@title}%
+%    	\fancyhead[CO]{\nouppercase{\leftmark}}%
+%	\else
+%    	\fancyhead[C]{\nouppercase{\leftmark}}%
+%    \fi
+	\fancyhead[C]{\@title}%
+    \fi
+    \fi
+}
+\fancypagestyle{emptypg}{%              
+    \fancyhf{}%
+    \ifDrf
+    \fancyhead[R] {}%
+    \fancyfoot[R] {\thepage}%
+    \else
+    \ifIDP
+    \renewcommand{\headrulewidth}{0pt}%
+    \else
+    \renewcommand{\headrulewidth}{0.2pt}%
+    \fi
+    \renewcommand{\footrulewidth}{0.2pt}%
+
+    \ifPG
+    \fancyfoot[C] {\@mastersInSF\, in \@PGprgName, Department of \@departmentSF,\space\@acadYear}%
+    \fancyfoot[R] {}%
+    \else
+    \fancyfoot[L] {\ifMinor UG Minor Project \else \ifIDP Interdisciplinary Project \else \ifDTL Design Thinking Lab \else \ifINT UG Internship \else UG Major Project \fi\fi\fi\fi  Report}%
+    \fancyfoot[C] {\ifIDP \else Department of \@departmentSF\fi}%
+    \fancyfoot[R] {\@acadYear}%
+    \fi
+    \ifIDP
+    \else
+%    \fancyhead[C] {RV College of Engineering\textsuperscript{\small\textregistered}, Bengaluru - 560059}%
+    \fancyhead[C] {\@title}%
+    \fi
+    \fi
+}
+\fancypagestyle{fplain}{%              
+    \fancyhf{}%                            
+    \renewcommand{\headrulewidth}{0.2pt}%    
+    \renewcommand{\footrulewidth}{0.2pt}%
+%	\fancyhead[L]{\vrule depth \textheight \toc}%
+    \fancyfoot[C] {\thepage}%
+}
+\fancypagestyle{fempty}{%              
+    \fancyhf{}%                            
+    \renewcommand{\headrulewidth}{0pt}%    
+    \renewcommand{\footrulewidth}{0pt}%
+%	\fancyhead[L]{\vrule depth \textheight \toc}%
+%    \fancyfoot[C] {\thepage}%
+}
+
+%%%%%%%%%%%%%%%% Section Style %%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+                                   {0.1pt }%\@plus 0.1ex \@minus -.05ex}%
+                                   {0.1ex }%\@plus.2ex}%
+                                   {\normalfont\Large\bfseries}}
+\renewcommand\subsection{\@startsection {subsection}{2}{\z@}%
+                                   {-1ex }%\@plus 0.1ex \@minus -.05ex}%
+                                   {0.1ex }%\@plus.2ex}%
+                                   {\normalfont\large\bfseries}}
+\renewcommand\subsubsection{\@startsection {subsubsection}{3}{\z@}%
+                                   {-1ex }%\@plus 0.1ex \@minus -.05ex}%
+                                   {0.1ex }%\@plus.2ex}%
+                                   {\normalfont\normalsize\bfseries}}								   
+%%%%%%%%%%%%%%%% Chapter Style %%%%%%%%%%%%%%%%%%%%%%%
+% helper macros
+\gdef\thinrule{\rule{\textwidth}{0.4pt}}
+\gdef\mediumrule{\rule{\textwidth}{0.8pt}}
+%% broad positions
+\newif\if@pgone\@pgonefalse
+\newif\if@pgtwo\@pgtwofalse
+\newif\if@left\@leftfalse
+\newif\if@right\@rightfalse
+\newif\if@center\@centerfalse
+\newif\if@leftpgone
+\newif\if@rightpgone
+\newif\if@centerpgone
+\newif\if@leftpgtwo
+\newif\if@rightpgtwo
+\newif\if@centerpgtwo
+%Default values
+\@leftpgonefalse
+\@rightpgonefalse
+\@centerpgonefalse
+\@leftpgtwofalse
+\@rightpgtwofalse
+\@centerpgtwofalse
+% newifs for number position
+\newif\if@lefttitle
+\newif\if@righttitle
+\newif\if@leftname
+\newif\if@rightname
+%
+% Define a family for chapter styling keys
+\pgfkeys{/chapter/.is family}
+\pgfkeys{/schapter/.is family}
+\pgfkeys{/apndx/.is family}
+
+\def\pnrset{\pgfqkeys{/chapter}} %Notice this is pgf q keys
+% We define keys for all major components
+\def\cxset{\pgfqkeys{/schapter}}
+\def\apnset{\pgfqkeys{/apndx}}
+
+\pnrset{%
+  name/.code={\gdef\chaptername{#1}},
+%
+  chapter font-family/.store in=\chapterfontfamily@pnr,
+  chapter font-family/.default=\sffamily,
+  chapter font-weight/.store in=\chapterfontweight@pnr,
+  chapter font-size pgone/.store in=\chapterfontsizepgone@pnr,
+  chapter font-size pgtwo/.store in=\chapterfontsizepgtwo@pnr,
+  chapter color/.store in=\chaptercolor@pnr,
+  chapter color/.default=black,
+  chapter before/.store in=\chapterbefore@pnr,
+  chapter after/.store in=\chapterafter@pnr,
+  %
+  number font-family/.store in=\numberfontfamily@pnr,
+  number font-family/.default=\sffamily,
+  number font-weight/.store in=\numberfontweight@pnr,
+  number font-size pgone/.store in=\numberfontsizepgone@pnr,
+  number font-size pgtwo/.store in=\numberfontsizepgtwo@pnr,
+  number color/.store in=\numbercolor@pnr,
+  number color/.default=black,
+  number before/.store in=\numberbefore@pnr,
+  number after/.store in=\numberafter@pnr,
+  % title keys
+  title font-family/.store in=\titlefontfamily@pnr,
+  title font-family/.default=\rmfamily,
+  title font-weight/.store in=\titlefontweight@pnr,
+  title font-size pgone/.store in=\titlefontsizepgone@pnr,
+  title font-size pgtwo/.store in=\titlefontsizepgtwo@pnr,
+  title color/.store in=\titlefontcolor@pnr,
+  title color/.default=black,
+  title before/.store in=\titlebefore@pnr,
+  title after/.store in=\titleafter@pnr,
+  title beforeskip/.store in=\titlebeforeskip@pnr,
+  title afterskip/.store in=\titleafterskip@pnr,
+  %
+  position pgone/.is choice,
+  position pgone/left/.code={\@leftpgonetrue},
+  position pgone/right/.code={\@rightpgonetrue},
+  position pgone/center/.code={\@centerpgonetrue}, 
+  position pgtwo/.is choice,
+  position pgtwo/left/.code={\@leftpgtwotrue},
+  position pgtwo/right/.code={\@rightpgtwotrue},
+  position pgtwo/center/.code={\@centerpgtwotrue},  
+% numbering options that are required
+  numbering/.is choice,
+  numbering/roman/.code={\gdef\thechapter{\@roman\c@chapter}},
+  numbering/Roman/.code={\gdef\thechapter{\@Roman\c@chapter}},
+  numbering/arabic/.code={\gdef\thechapter{\@arabic\c@chapter}},
+  numbering/none/.code={\gdef\thechapter{}},
+  number dot/.store in=\numberpunctuation@pnr,
+  number position/.is choice,
+  number position/leftname/.code={\@leftnametrue\@rightnamefalse},
+  number position/rightname/.code={\@rightnametrue\@leftnamefalse},
+  number position/absolute/.code={},
+  number position/righttitle/.code={\@righttitletrue},
+  number position/lefttitle/.code={\@lefttitletrue},
+% headers and footers
+  header style/.store in=\headerstyle@pnr,  
+}
+
+\cxset{%
+  % title keys
+  title font-family/.store in=\titlefontfamily@cx,
+  title font-family/.default=\rmfamily,
+  title font-weight/.store in=\titlefontweight@cx,
+  title font-size/.store in=\titlefontsize@cx,
+  title color/.store in=\titlefontcolor@cx,
+  title color/.default=black,
+  title before/.store in=\titlebefore@cx,
+  title after/.store in=\titleafter@cx,
+  title beforeskip/.store in=\titlebeforeskip@cx,
+  title afterskip/.store in=\titleafterskip@cx,
+  %
+  position/.is choice,
+  position/left/.code={\@lefttrue},
+  position/right/.code={\@righttrue},
+  position/center/.code={\@centertrue},
+% headers and footers
+  header style/.store in=\headerstyle@cx,  
+}
+% Appendix pgfkey setup
+% Added to Ver.3.5 [01/09/2021]
+\apnset{%
+  name/.code={\gdef\chaptername{#1}},
+%
+  chapter font-family/.store in=\chapterfontfamily@pnr,
+  chapter font-family/.default=\sffamily,
+  chapter font-weight/.store in=\chapterfontweight@pnr,
+  chapter font-size pgone/.store in=\chapterfontsizepgone@pnr,
+  chapter font-size pgtwo/.store in=\chapterfontsizepgtwo@pnr,
+  chapter color/.store in=\chaptercolor@pnr,
+  chapter color/.default=\color{black},
+  chapter before/.store in=\chapterbefore@pnr,
+  chapter after/.store in=\chapterafter@pnr,
+  %
+  number font-family/.store in=\numberfontfamily@pnr,
+  number font-family/.default=\sffamily,
+  number font-weight/.store in=\numberfontweight@pnr,
+  number font-size pgone/.store in=\numberfontsizepgone@pnr,
+  number font-size pgtwo/.store in=\numberfontsizepgtwo@pnr,
+  number color/.store in=\numbercolor@pnr,
+  number color/.default=\color{black},
+  number before/.store in=\numberbefore@pnr,
+  number after/.store in=\numberafter@pnr,
+  % title keys
+  title font-family/.store in=\titlefontfamily@pnr,
+  title font-family/.default=\rmfamily,
+  title font-weight/.store in=\titlefontweight@pnr,
+  title font-size pgone/.store in=\titlefontsizepgone@pnr,
+  title font-size pgtwo/.store in=\titlefontsizepgtwo@pnr,
+  title color/.store in=\titlefontcolor@pnr,
+  title color/.default=\color{black},
+  title before/.store in=\titlebefore@pnr,
+  title after/.store in=\titleafter@pnr,
+  title beforeskip/.store in=\titlebeforeskip@pnr,
+  title afterskip/.store in=\titleafterskip@pnr,
+  %
+  position pgone/.is choice,
+  position pgone/left/.code={\@leftpgonetrue},
+  position pgone/right/.code={\@rightpgonetrue},
+  position pgone/center/.code={\@centerpgonetrue}, 
+  position pgtwo/.is choice,
+  position pgtwo/left/.code={\@leftpgtwotrue},
+  position pgtwo/right/.code={\@rightpgtwotrue},
+  position pgtwo/center/.code={\@centerpgtwotrue},  
+% numbering options that are required
+  numbering/.is choice,
+  numbering/roman/.code={\gdef\thechapter{\@roman\c@chapter}},
+  numbering/Roman/.code={\gdef\thechapter{\@Roman\c@chapter}},
+  numbering/Alphabet/.code={\gdef\thechapter{\@Alph\c@chapter}}, % Added to Ver.3.5 [01/09/2021]
+  numbering/alphabet/.code={\gdef\thechapter{\@alph\c@chapter}}, % Added to Ver.3.5 [01/09/2021]
+  numbering/arabic/.code={\gdef\thechapter{\@arabic\c@chapter}},
+  numbering/none/.code={\gdef\thechapter{}},
+  number dot/.store in=\numberpunctuation@pnr,
+  number position/.is choice,
+  number position/leftname/.code={\@leftnametrue\@rightnamefalse},
+  number position/rightname/.code={\@rightnametrue\@leftnamefalse},
+  number position/absolute/.code={},
+  number position/righttitle/.code={\@righttitletrue},
+  number position/lefttitle/.code={\@lefttitletrue},
+% headers and footers
+  header style/.store in=\headerstyle@pnr,  
+}
+%% This is the Default Chapter tile setting, if \setdefaults is not called inside documnet
+
+\pnrset{%
+  name={Chapter},
+%
+  chapter font-family=\sffamily,
+  chapter font-weight=\bfseries,
+  chapter font-size pgone=\Huge,
+  chapter font-size pgtwo=\Large,
+  chapter color=gray,
+  chapter before=,%{\leavevmode\par},%need to correct for 0pt
+  chapter after=,%{\leavevmode\par},
+ % 
+  number font-size pgone=\Huge,
+  number font-size pgtwo=\Large,
+  number font-family=\sffamily,
+  number font-weight=\bfseries,
+  number color=\color{gray},
+  number before=,
+  number after=,
+  %
+  title font-family=\rmfamily,
+  title font-weight=\bfseries,
+  title font-size pgone=\Huge,
+  title font-size pgtwo=\Large,
+  title color=\color{purple},
+  title after=,
+  title before=,
+  title afterskip={\vskip0pt},
+  title beforeskip={\vskip0pt},
+  %
+  position pgone=right,
+  position pgtwo=center,
+  %
+  numbering=arabic,
+  number dot=,
+  number position=rightname,
+  %
+  header style=mplain,
+}%\fi
+%
+\cxset{%
+  title font-family=\rmfamily,
+  title font-weight=\bfseries,
+  title font-size=\Large,
+  title color=\color{purple},
+  title after=,
+  title before=,
+  title afterskip={\vskip25pt},
+  title beforeskip={\par\par},
+  %
+  position=center,
+  %
+  header style=fplain,
+}
+
+% Redefining the appendix command to suit the pgfkeys setup
+% Added to Ver.3.5 [01/09/2021]
+\gdef\appendix{%
+\setcounter{chapter}{0}
+\apnset{%
+  name={Appendix},
+ %
+  chapter font-family=\sffamily,
+  chapter font-weight=\bfseries,
+  chapter font-size pgone=\Huge,
+  chapter font-size pgtwo=\Large,
+  chapter color=gray,
+  chapter before=,%{\leavevmode\par},%need to correct for 0pt
+  chapter after=,%{\leavevmode\par},
+ % 
+  number font-size pgone=\Huge,
+  number font-size pgtwo=\Large,
+  number font-family=\sffamily,
+  number font-weight=\bfseries,
+  number color=\color{gray},
+  number before=,
+  number after=,
+  %
+  title font-family=\rmfamily,
+  title font-weight=\bfseries,
+  title font-size pgone=\Huge,
+  title font-size pgtwo=\Large,
+  title color=\color{purple},
+  title after=,
+  title before=,
+  title afterskip={\vskip0pt},
+  title beforeskip={\vskip0pt},
+  %
+  position pgone=right,
+  position pgtwo=center,
+  %
+  numbering=Alphabet,
+  number dot=,
+  number position=rightname,
+  %
+  header style=mplain,
+}
+}
+
+
+\renewcommand\@makeschapterhead[2][]{%
+% macro for typesetting the chapter name
+  {%
+    \parindent\z@
+    \normalfont%
+	\if@left%
+		\raggedright%
+	\fi%
+	\if@center%
+		\centering%
+	\fi%
+	\if@right%
+		\raggedleft%
+	\fi%
+	 %chapter title
+    \interlinepenalty\@M%
+    \titlebeforeskip@cx%
+    \titlefontfamily@cx%
+    \titlefontweight@cx%
+    \titlefontsizepgtwo@pnr
+    \titlefontcolor@cx%
+    \selectfont%
+    \titlebefore@cx%
+		{\uppercase\expandafter{#2}}
+    \titleafter@cx%
+    \par\nobreak%
+	% skip after title
+    \titleafterskip@cx%
+% headers
+    \thispagestyle{\headerstyle@cx}% Have to use \this option to apply on the current page
+  }%
+}
+% Added in Ver 3.8: For checking whether more than one mutual exclusive commands are uncommented
+\AtBeginDocument{
+  % Chapter setting
+%  % For using chapter name as header without Chapter #.
+%  \renewcommand{\chaptermark}[1]{%
+%	\markboth{#1}{}%
+%  }
+  \renewcommand\@makechapterhead[2][]{%
+  	% macro for typesetting the chapter number
+  	\def\printnumber{%
+  		\numberbefore@pnr
+  		{%
+  			\numbercolor@pnr
+  			\if@pgone
+  			\numberfontsizepgone@pnr
+  			\fi
+  			\if@pgtwo
+  			\numberfontsizepgtwo@pnr
+  			\fi      
+  			\numberfontfamily@pnr
+  			\numberfontweight@pnr
+  			\thechapter
+  			\numberpunctuation@pnr
+  		}
+  		\numberafter@pnr
+  	}%
+  	% macro for typesetting the chapter name
+  	\def\printchaptername{%
+  		{
+  			\chapterfontfamily@pnr
+  			\chapterfontweight@pnr
+  			\color{\chaptercolor@pnr}
+  			\if@pgone
+  			\chapterfontsizepgone@pnr
+  			\chaptername%
+%  			\vspace*{0.35\paperheight}
+  			\fi
+  			\if@pgtwo
+  			\chapterfontsizepgtwo@pnr
+  			\uppercase\expandafter{\chaptername}%
+%  			\vspace*{0.05\textwidth}
+  			\fi
+  			\space
+  		}%
+  	}%
+  	% set all keys
+  	{%
+  		{% 1st page
+  			\clearpage
+  			\thispagestyle{empty}
+  			\@pgonetrue\@pgtwofalse
+  			\parindent\z@
+  			\normalfont%
+  			\if@twoside
+  			\vspace*{0.325\paperheight}% ADDED in Ver 3.9
+  			\else
+  			\vspace*{0.35\paperheight}% ADDED in Ver 3.9
+  			\fi
+  				\ifnum \c@secnumdepth>\m@ne%
+  				\if@mainmatter%
+  				\chapterbefore@pnr%
+  				\if@leftpgone\raggedright\fi%
+  				\if@centerpgone\centering\fi%
+  				\if@rightpgone\raggedleft\fi%
+  				\if@leftname\printnumber\fi%
+  				\printchaptername
+  				\if@rightname\printnumber\fi%
+  				\chapterafter@pnr
+  				
+  				\fi%
+  				\fi%
+  				%chapter title
+  				\interlinepenalty\@M%
+  				\titlebeforeskip@pnr%
+  				\titlefontfamily@pnr%
+  				\titlefontsizepgone@pnr
+  				\titlefontweight@pnr%
+  				\titlefontcolor@pnr%
+  				\titlebefore@pnr%
+  				{#2}
+  				\titleafter@pnr%
+  				\par\nobreak%
+  				\if@twoside
+  					\vspace*{0.325\paperheight}% ADDED in Ver 3.9
+  				\else
+  				
+  				\fi
+  			\titleafterskip@pnr%
+  			\thispagestyle{emptypg}%
+  		}
+%  		\pagebreak
+  		\cleardoublepage
+%  		\pagebreak
+      {%2nd page
+      \@pgtwotrue\@pgonefalse
+        \parindent\z@
+        \normalfont%
+        \ifnum \c@secnumdepth>\m@ne%
+          \if@mainmatter%
+            \chapterbefore@pnr%
+        \if@leftpgtwo%
+          \raggedright
+        \fi%
+        \if@centerpgtwo%
+          \centering
+        \fi%
+        \if@rightpgtwo%
+          \raggedleft
+        \fi%
+            \if@leftname
+                \printnumber
+            \fi%
+            {\uppercase\expandafter{\printchaptername}}
+            \if@rightname
+                \printnumber
+            \fi%
+            \chapterafter@pnr
+          \fi%
+        \fi%
+        %chapter title
+        \interlinepenalty\@M%
+        \titlebeforeskip@pnr%
+        \titlefontfamily@pnr%
+        \titlefontweight@pnr%
+        \titlefontsizepgtwo@pnr
+        \titlefontcolor@pnr%
+      % \selectfont%
+        \titlebefore@pnr%
+        {\uppercase\expandafter{#2}}
+        \titleafter@pnr%
+        \par\nobreak%
+    % skip after title
+        \titleafterskip@pnr%
+    % headers
+        \pagestyle{\headerstyle@pnr}%
+      }
+      }
+    }
+
+  % Errors and Warning settings
+  \ifINT
+    \PackageInfo{ecproject}{You have used \string\INTProject, checking for any undesired uncomment of commands....}
+    %\pnrset{title color=\color{black}}
+	  %\cxset{title color=\color{black}}
+    \ifIDP
+      \PackageError{ecproject}{Can't Use \string\IDPProject\space along with \string\INTProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \ifDTL
+      \PackageError{ecproject}{Can't Use \string\DTLProject\space along with \string\INTProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \ifINT
+      \PackageError{ecproject}{Can't Use \string\INTProject\space along with \string\IDPProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \fi
+    \ifMinor
+      \PackageError{ecproject}{Can't Use \string\MinorProject\space along with \string\INTProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \ifPG
+      \PackageError{ecproject}{Can't Use \string\pgProgram\space along with \string\INTProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+  \fi
+
+  \ifIDP
+    \PackageInfo{ecproject}{You have used \string\IDPProject, checking for any undesired uncomment of commands....}
+    \pnrset{title color=\color{black}}
+	  \cxset{title color=\color{black}}
+    \ifINT
+      \PackageError{ecproject}{Can't Use \string\INTProject\space along with \string\IDPProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \ifDTL
+      \PackageError{ecproject}{Can't Use \string\DTLProject\space along with \string\IDPProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \ifMinor
+      \PackageError{ecproject}{Can't Use \string\MinorProject\space along with \string\IDPProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \ifPG
+      \PackageError{ecproject}{Can't Use \string\pgProgram\space along with \string\IDPProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+  \fi
+
+  \ifDTL
+    \PackageInfo{ecproject}{You have used \string\DTLProject, checking for any undesired uncomment of commands....}
+
+    \ifINT
+      \PackageError{ecproject}{Can't Use \string\INTProject\space along with \string\DTLProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \ifIDP
+      \PackageError{ecproject}{Can't Use \string\IDPProject\space along with \string\DTLProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \ifMinor
+      \PackageError{ecproject}{Can't Use \string\MinorProject\space along with \string\DTLProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \ifPG
+      \PackageError{ecproject}{Can't Use \string\pgProgram\space along with \string\DTLProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+  \fi
+
+  \ifMinor
+    \PackageInfo{ecproject}{You have used \string\MinorProject, checking for any undesired uncomment of commands....}
+    \ifINT
+      \PackageError{ecproject}{Can't Use \string\INTProject\space along with \string\MinorProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \ifDTL
+      \PackageError{ecproject}{Can't Use \string\DTLProject\space along with \string\MinorProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \ifIDP
+      \PackageError{ecproject}{Can't Use \string\IDPProject\space along with \string\MinorProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+  \fi
+
+  \ifPG
+    \PackageInfo{ecproject}{You have used \string\pgProgram, checking for any undesired uncomment of commands....}
+    \ifINT
+      \PackageError{ecproject}{Can't Use \string\INTProject\space along with \string\pgProject.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \ifDTL
+      \PackageError{ecproject}{Can't Use \string\DTLProject\space along with \string\pgProgram.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+    \ifIDP
+      \PackageError{ecproject}{Can't Use \string\IDPProject\space along with \string\pgProgram.}{Uncomment one of these conditions: \string\INTProject, \string\DTLProject, \string\IDPProject, \string\MinorProject (with option of \string\pgProgram), \string\pgProgram. While other options need to be commented.}
+    \fi
+  \fi
+}
+%\newcommand*{\indentPara}[1]{\ifthenelse{\equal{#1}{yes}}{\@indenttrue}{\@indentfalse}}
+\endinput

@@ -1,0 +1,518 @@
+%%% \makeatletter is neneeded to be able to access some of the more
+%%% primitive macros below.
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Modifying amsbook.cls
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% The following supersedes the amsbook.cls class file.
+%%%
+%%%
+%%% Page Dimensions
+%%%
+%%% \voffset shifts the whole ``page'' up (negative) or down (positive) on
+%%% the paper.
+%%%
+%%% \topmargin is the distance from 1'' down on the page (assuming
+%%% \voffset=0pt) and the top of the headline.
+%%%
+%%% \headheight is the height of the headline above its baseline
+%%%
+%%% \headsep is the distance from the baseline of the headline to the top of
+%%% the page body.
+%%%
+%%% The first baseline for a line on the page body is: 1'' + \topmargin +
+%%% \headheight + \headsep + point size (12pt)
+%%%
+%%% \textheight is the goal distance from the top of the first line of text
+%%% to the baseline of the last line of text.
+%%%
+%%% If TeX can't get a baseline exactly \texheight from the top of the first
+%%% line of text, the first line stays put and space is added
+%%% ``more-or-less'' evenly between each line of text on the page.
+%%%
+%%% \footsep is the distance from the bottom of the body of the text on the
+%%% page to the baseline of the footline.
+%%%
+%%% To get page numbers .5in from the bottom of the page for 8 1/2 x 11
+%%% paper, we need:
+%%% 1'' + \topmargin + \headheight + \headsep + \textheight + \footskip
+%%% = 10.5in
+%%% Mess with \textheight and \footskip to change the size of the
+%%% body of the page and the distance from the last baseline to the
+%%% baseline of the footline. To move the whole thing up, using
+%%% \voffset is probably safest.
+\setlength{\voffset}{0pt}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\textheight}{9in}
+\setlength{\footskip}{.5in}
+
+%%% \hoffset is the horizontal analog of \voffset, positive to shift right,
+%%% negative to shift left
+%%%
+%%% \oddsidemargin is the left hand margin minus 1'' on odd numbered
+%%% pages.
+%%% \evensidemargin is the left hand margin minus 1'' on even numbered
+%%% pages.
+%%%
+%%% \textwidth is the width of the body of the text on the page.
+\setlength{\hoffset}{0pt}
+\setlength{\evensidemargin}{0pt}
+\setlength{\oddsidemargin}{0pt}
+\setlength{\textwidth}{6.5in}
+
+%%% This changes the standard line breaking penalties back to the plain TeX
+%%% standard which is much less stringent than for AMS styles
+\widowpenalty=150
+\clubpenalty=150
+\brokenpenalty=100
+\displaywidowpenalty=50
+
+%%% ``Double'' spacing can be achieved by either of the following -- the
+%%% LaTeX book recommends \baselinestretch and some online source says
+%%% \linespread is to draconian.
+\renewcommand{\baselinestretch}{1.66}
+%\linespread{1.66}
+
+%%% Half inch \parindent per TGS style ... this hurts....
+\setlength{\parindent}{.5in}
+
+%%% To help reduce underfull hboxes when pages are typeset 
+\lineskip=1pt plus 1pt
+\setlength{\parskip}{0pt plus 2pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% This is the page style, no headline, footline contains the page number,
+%%% which is centered.
+\pagestyle{plain}
+
+%%% AMS document classes seem to like scriptsize page numbers. Here is a
+%%% fix.
+\def\ps@plain{\ps@empty%
+  \def\@oddfoot{\normalfont \hfil\textnormal{\thepage}\hfil}%
+  \let\@evenfoot\@oddfoot}
+%%% For the other page styles...
+\renewcommand{\@evenfoot}{\hfil\textnormal{\thepage}\hfil}%
+\renewcommand{\@oddfoot}{\@evenfoot}%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% These need to be redefined to disable the usual AMS book style which
+%%% inserts blank pages all over creation. To get blank pages between the
+%%% frontmatter, mainmatter, and backmatter, replace \clearpage with
+%%% \cleardoublepage.
+\def\frontmatter{\clearpage\pagenumbering{roman}}
+\def\mainmatter{\clearpage\pagenumbering{arabic}}
+\def\backmatter{\if@openright\clearpage\else\clearpage\fi
+  \let\chaptername\relax}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Title page
+%%%
+\renewcommand\titlepage{%
+  \clearpage
+  \thispagestyle{empty}\setcounter{page}{0}}
+\renewcommand\maketitle{\par
+  \@topnum\z@ % this prevents figures from falling at the top of page 1
+  \begingroup
+  \@maketitle
+  \endgroup
+  \c@footnote\z@
+  \def\do##1{\let##1\relax}%
+  \do\maketitle \do\@maketitle \do\title \do\@xtitle \do\@title
+  \do\author \do\@xauthor \do\address \do\@xaddress
+  \do\email \do\@xemail \do\curraddr \do\@xcurraddr
+  \do\dedicatory \do\@dedicatory \do\thanks \do\thankses
+  \do\keywords \do\@keywords \do\subjclass \do\@subjclass
+}
+\renewcommand*{\title}[1]{\gdef\@title{\uppercase {#1}}}
+\renewcommand\@maketitle{%
+  \clearpage \thispagestyle{empty}%
+  \begingroup \topskip\z@skip \null
+    \vfil
+    \begingroup \centering \@title\par
+      \def\and{\par\medskip}\centering
+      \mdseries\authors\par\bigskip
+    \endgroup
+    \vfill
+    \begingroup \centering
+      \ifx\@empty\degree \else  \@degree\par \fi
+      \vfill
+      \ifx\@empty\degreedate \else \@degreedate\par  \fi
+    \endgroup
+    \vfill
+    \begingroup
+    %  \parindent=0pt
+    %  \raggedleft
+      \parindent= 0 in
+    %% The following sets up single space for the list of approvers jmd
+    %% 6/2012
+      \renewcommand{\baselinestretch}{1} \normalsize
+      \begin{tabular}{l}
+        APPROVED: \vspace{.75em} \\ \noalign{\smallskip} \@approved
+      \end{tabular}\par
+    \endgroup
+  \endgroup
+}
+%%%
+\newcommand\degree[1]{\def\@degree{#1}}
+\let\@degree=\@empty
+\newcommand\degreedate[1]{\def\@degreedate{UNIVERSITY OF NORTH TEXAS\\
+    #1}}
+\let\@degreedate=\@empty
+%%%
+\newcommand\approved[1]{\def\@approved{#1}}
+\let\@approved\@empty
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% The numbering commands
+%%%
+%%% Chapters and sections are in arabic numerals and sections are numbered
+%%% as chapter.section.
+\renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\thesection}{\thechapter.\arabic{section}}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+%%% This redefines the \section command so that it's flush left and the font
+%%% is the normal text font.
+\renewcommand\section{\@startsection{section}{1}%
+  \z@{.35\linespacing\@plus\linespacing}{.25\linespacing}%
+  {\normalfont}}
+
+%%% This redefines the \subsection command so that it's flush left and
+%%% in the normal font.
+\renewcommand\subsection{\@startsection{subsection}{2}%
+  \z@{.35\linespacing\@plus.7\linespacing}{.25\linespacing}%
+  {\normalfont}}
+
+%%% This redefines the \subsubsection command so that it's flush left and
+%%% in the normal font.
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}%
+  \z@{.35\linespacing\@plus.7\linespacing}{.25\linespacing}%
+  {\normalfont}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% These redefine how chapters are started and the table of contents
+%%% entries are written.
+%%%
+%%% \@makechapterhead is for numbered chapters (called with \chapter{MY
+%%% CHAPTER}). \@makeshapterhead (called with \chapter*{MY CHAPTER WITH
+%%% NO CHAPTER NUMBER}) is for unnumbered chapters, such as an appendix (if
+%%% there's only one). For example, \chapter*{Appendix} would be a great way
+%%% to start an appendix. If there's more than one appendix, then look up
+%%% how the \appendix command affects chapter numbering
+\renewcommand\@makechapterhead[1]{\global \topskip 44pt\relax%
+  %%% 44pt seems to be the secret number to get the baseline of CHAPTER X to
+  %%% be 1in + Cap Height from the top of the page
+  \begingroup%
+  \fontsize{\@xivpt}{18}\centering%
+  \ifnum\c@secnumdepth>\m@ne%
+    \leavevmode \hskip-\leftskip%
+    \rlap{\vbox to\z@{\vss%
+      \centerline{\normalsize\mdseries%
+        \uppercase\@xp{\chaptername}\enspace\thechapter}%
+      \vskip 3pc}}\hskip\leftskip\fi%
+  \uppercase{#1}\par \endgroup%
+  \skip@34\p@ \advance\skip@-\normalbaselineskip%
+  \vskip\skip@}
+\renewcommand\@makeschapterhead[1]{\global \topskip 10pt\relax%
+  %%% Numbered chapters have an extra line at the top -- CHAPTER
+  %%% X -- and this line is set using \vbox above, unnumbered
+  %%% chapters don't have this bonus line, so topskip goes back to its normal
+  %%% value 
+  \begingroup%
+  \fontsize{\@xivpt}{18}\centering%
+  \uppercase{#1}\par \endgroup%
+  \skip@34\p@ \advance\skip@-\normalbaselineskip%
+  \vskip\skip@}
+\def\@chapter[#1]#2{\refstepcounter{chapter}%
+  \ifnum\c@secnumdepth<\z@ \let\@secnumber\@empty
+  \else \let\@secnumber\thechapter \fi
+  \typeout{\chaptername\space\@secnumber}%
+  \def\@toclevel{0}%
+  \ifx\chaptername\appendixname \@tocwriteb\tocappendix{chapter}{#2}%
+%%% The next line has the effect of ignoring the toc chapter title option
+%%% in the \chapter command. Presumably this is an AMS style "feature."
+%%% Change #2 to #1 to (hopefully) get the default LaTeX behavior. 
+  \else \@tocwriteb\tocchapter{chapter}{#2}\fi
+
+%  \else \@tocwriteb\tocchapter{chapter}{#2}\fi
+  \chaptermark{#1}%
+  \@makechapterhead{#2}\@afterheading}
+\def\@schapter#1{\typeout{#1}%
+  \let\@secnumber\@empty
+  \def\@toclevel{0}%
+  \ifx\chaptername\appendixname \@tocwriteb\tocappendix{chapter}{#1}%
+  \else \@tocwriteb\tocchapter{chapter}{#1}\fi
+  \chaptermark{#1}%
+  \@makeschapterhead{#1}\@afterheading}
+
+
+%%% The following redefines the \appendix command so that
+%%% when appendices start with \appchapter,
+%%% for numbered appendices, like, say, if there is more than one, or
+%%% \appchapter*, in case there is only one appendix, the "chapter" title is
+%%% centered on a page it gets all to itself.
+\renewcommand\appendix{\par
+  \c@chapter\z@ \c@section\z@
+  \let\chaptername\appendixname
+  \renewcommand{\thechapter}{\@Alph\c@chapter}
+  \newcommand\appchapter{\clearpage \thispagestyle{plain}%
+       \null\vfill \markboth{}{}\secdef\@appchapter\@appschapter}}
+\def\@appchapter[#1]#2{\refstepcounter{chapter}%
+  \ifnum\c@secnumdepth<\z@ \let\@secnumber\@empty \else
+  \let\@secnumber\thechapter \fi \typeout{\chaptername\space\@secnumber}%
+  \def\@toclevel{0}%
+  \ifx\chaptername\appendixname \@tocwriteb\tocappendix{chapter}{#2}%
+  \else \@tocwriteb\tocchapter{chapter}{#2}\fi
+  \chaptermark{#1}%
+  \begingroup\centering
+  \ifnum \c@secnumdepth >-2\relax {\chaptername\ \thechapter} \vskip 12\p@
+  \fi #2\vfill\endgroup \newpage\thispagestyle{plain}%%% next line added...
+  \renewcommand{\thetable}{\Alph{chapter}.\arabic{table}}
+  \renewcommand{\thefigure}{\Alph{chapter}.\arabic{figure}}}
+
+\def\@appschapter#1{\typeout{#1}%
+  \refstepcounter{chapter}
+  \let\@secnumber\thechapter
+  \def\@toclevel{0}%
+  \@tocwriteb\tocsappendix{chapter}{#1}%
+  \chaptermark{#1}%
+  \begingroup\centering
+  \ifnum \c@secnumdepth >-2\relax {\chaptername} \vskip 12\p@
+  \fi #1\vfill\endgroup \newpage\thispagestyle{plain}%%% next line added
+  \renewcommand{\thetable}{A.\arabic{table}}
+  \renewcommand{\thefigure}{A.\arabic{figure}}}
+
+%%% Make the lists of tables, list of figures, contents, chapter, appendix,
+%%% and bibliography all uppercase.
+\renewcommand\contentsname{TABLE OF CONTENTS}
+\renewcommand\listtablename{LIST OF TABLES}
+\renewcommand\listfigurename{LIST OF FIGURES}
+\renewcommand\chaptername{CHAPTER}
+\renewcommand\appendixname{APPENDIX}
+\renewcommand\bibname{\myrefbibname}
+
+%%% TOC, LOT, and LOF
+%%% Note that AMS style is to have section/table/figure numbers in the
+%%% TOC/LOT/LOF followed by a .
+
+%%% Add "Page" at the top of the column of page numbers
+\def\@starttoc#1#2{%
+  \begingroup
+  \setTrue {#1}%
+  \let \secdef \@gobbletwo \chapter
+  \let \@secnumber \@empty
+  \ifx \contentsname #2%
+  \else \@tocwrite {chapter}{#2}\fi
+  \typeout {#2}\@xp \chaptermark \@xp {#2}%
+  \@makeschapterhead {#2}\@afterheading
+  \hbox to \hsize{\hfill Page} % per UNT style ...
+  \parskip\z@skip
+  \makeatletter
+  \@input {\jobname .#1}%
+  \if@filesw
+    \@xp \newwrite \csname tf@#1\endcsname
+    \immediate \@xp \openout \csname tf@#1\endcsname \jobname .#1\relax
+  \fi
+  \global \@nobreakfalse \endgroup
+  \newpage
+}
+
+%%% Chapters and appendices 
+%%% begin CHAPTER X followed by a space (\ ), followed
+%%% by the chapter title, followed by space, followed by the page number
+%%% flush right. Chapter titles that are longer than one line will have
+%%% hanging indentation that will be larger than the indent to the chapter
+%%% title.
+%\def\l@chapter{\@tocline{0}{8pt plus1pt}{0pt}{7pc}{}} %% for consistency
+\renewcommand{\tocchapter}[3]{%
+  \indentlabel{\@ifnotempty{#2}{\ignorespaces#1 #2\ }}#3}
+\renewcommand{\tocappendix}[3]{%
+  \indentlabel{#1\@ifnotempty{#2}{ #2}\ }#3}
+%%% and in case there is just one appendix ... (jmd 3/2017)
+\newcommand{\tocsappendix}[3]{%
+  \indentlabel{#1\ }#3}
+
+%%%  In \@tocline, the first
+%%% argument is the level, the second in the vertical spacing, the third is
+%%% the indent before the section number 
+%%% and the fourth is the additional
+%%% indent before the section title. Either the fourth argument in \@tocline
+%%% or the \makebox controls the hanging indentation for wrapped section
+%%% titles.
+\def\l@section{\@tocline{1}{0pt}{3pc}{3pc}{}}
+\renewcommand{\tocsection}[3]{%
+  \indentlabel{\@ifnotempty{#2}{\makebox[3pc][l]{%
+    \ignorespaces#1 #2.\hfill}}}#3}
+
+%%% The same comments as for sections, but for subsections, add one half
+%%% inch of indents all around.
+\def\l@subsection{\@tocline{2}{0pt}{6pc}{6pc}{}}
+\renewcommand{\tocsubsection}[3]{%
+  \indentlabel{\@ifnotempty{#2}{\makebox[3pc][l]{%
+    \ignorespaces#1 #2.\hfill}}}#3}
+
+%%%
+%\def\l@subsubsection{\@tocline{3}{0pt}{9pc}{9pc}{}}
+%\renewcommand{\tocsubsubsection}[3]{%
+%  \indentlabel{\@ifnotempty{#2}{\makebox[3pc][l]{%
+%    \ignorespaces#1 #2\hfill}}}#3}
+
+%%% This will change the figure and table numbers for the TOC (jmd 4-3-2006)
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+
+%%% and the LOF and TOF spacing 
+%\renewcommand\@pnumwidth{3em} %% Max width for page numbers
+\renewcommand\l@table{\@tocline{0}{0pt}{0pt}{6pc}{}}
+\renewcommand\l@figure{\@tocline{0}{0pt}{0pt}{6pc}{}}
+%\renewcommand\l@table{\@tocline{0}{0pt}{0pt}{3pc}{}}  %% no "Table" in LOT
+%\renewcommand\l@figure{\@tocline{0}{0pt}{0pt}{3pc}{}} %% analog for LOF
+
+
+%%% To get "Table 1.1" in the
+%%% list of tables, the easiest fix is to redefine the definition in
+%%% latex.ltx. To revert to the usual LaTeX behavior, comment out the
+%%% definition below and swap the two \l@table and \l@figure definitions
+%%% above.
+\def\@caption#1[#2]#3{%
+  \par
+  \addcontentsline{\csname ext@#1\endcsname}{#1}%
+    {\protect\numberline{\csname fnum@#1\endcsname.}{\ignorespaces #2}}%
+    %% fnum@ gives the caption type followed by the caption number.
+  \begingroup
+    \@parboxrestore
+    \if@minipage
+      \@setminipage
+    \fi
+    \normalsize
+    \@makecaption{\csname fnum@#1\endcsname}{\ignorespaces #3}\par
+  \endgroup%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% The bibliography
+%%%
+%%% Amsbook includes \chapter* in \@bibtitlestyle. "Thebibliography" calls
+%%% \@bibtitlestyle to typeset the title and add the entry to the table of
+%%% contents. The code below replaces \chapter with something that doesn't
+%%% generate an additional appendix. \bigskip should probably be replaced by
+%%% the same skip as in \chapter
+\renewcommand{\@bibtitlestyle}{%
+
+  % \cleardoublepage\phantomsection
+    \clearpage\phantomsection   % replaced line above with this to remove
+                                % blank page before bibliography 
+%%
+  \addcontentsline{toc}{chapter}{\myrefbibname}%
+  \centerline{\@xp{\bibname}}\bigskip}%
+%}
+
+%%% This will change the bibliography font so that it's ``normal'' sized --
+%%% AMS style is smaller... For some reason, probably having to do with when
+%%% the bibliography is read and typeset,
+%%% \renewcommand\bibliofont{\textsize} doesn't work. This
+%%% should generate a \textsize bibliography instead of a \footnotesize
+%%% bibliography. The latter is the AMS style.
+%%% 9/2011 - \normalsize works
+\renewcommand\bibliofont{\normalsize}
+
+%%% Get rid of the bold face in citations.
+\def\@cite#1#2{{%
+    \m@th\upshape\mdseries[{#1}{\if@tempswa, #2\fi}]}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Set up footnotes to be 10pt on a 12pt baseline with a 2pt skip between
+%%% footnotes
+\long\def\@footnotetext#1{%
+  \insert\footins{%
+    \def\baselinestretch{1}%
+    \reset@font\footnotesize \interlinepenalty\interfootnotelinepenalty
+    \splittopskip\footnotesep \splitmaxdepth \dp\strutbox \floatingpenalty
+    \@MM \hsize\columnwidth \@parboxrestore \protected@edef\@currentlabel{%
+      \csname p@footnote\endcsname\@thefnmark}%
+    \color@begingroup \@makefntext{%
+      \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
+    \color@endgroup}}
+\AtBeginDocument{\setlength{\footnotesep}{14pt}}
+
+
+%%% This redfines the proof environment -- the only change to the original
+%%% is to have ``Proof:'' appear in caps/smallcaps and not bold.
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \itemindent0pt
+  \item[\hskip\labelsep
+        \scshape
+    #1\@addpunct{.}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% @ needs to go back to being an active character.
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Theorem 
+%%%
+%%% Define UNTtheorems style for theorems, lemmas, etc... and UNTdefinitions
+%%% for definitions notes, whatever -- the theme is that only statements that
+%%% require proof of some sort should be italicicized, other highlighted
+%%% statements should be in the normal text font.
+\newtheoremstyle{UNTtheorems}% name
+  {10pt}%      Space above
+  {0pt}%      Space below
+  {\itshape}%         Body font
+  {}%         Indent amount (empty = no indent, \parindent = paragraph indent)
+  {\scshape}% Thm head font
+  {.}%        Punctuation after thm head
+  {.5em}%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+\newtheoremstyle{UNTdefinitions}% name
+  {10pt}%      Space above
+  {10pt}%      Space below
+  {}%         Body font
+  {}%         Indent amount (empty = no indent, \parindent = paragraph indent)
+  {\scshape}% Thm head font
+  {.}%        Punctuation after thm head
+  {.5em}%     Space after thm head: " " = normal interword space;
+        %       \newline = linebreak
+  {}%         Thm head spec (can be left empty, meaning `normal')
+
+%%% Now define the theorem and definition environment names.
+%%%
+%%% The following environments will be in UNTtheorem style.
+\numberwithin{equation}{chapter}
+\theoremstyle{UNTtheorems}
+\newtheorem{lemma}[equation]{Lemma}
+\newtheorem{corollary}[equation]{Corollary}
+\newtheorem{proposition}[equation]{Proposition}
+\newtheorem{theorem}[equation]{Theorem}
+\newtheorem{claim}[equation]{Claim}
+
+%%% The following environments will be in UNTdefinition style
+\theoremstyle{UNTdefinitions}
+\newtheorem{definition}[equation]{Definition}
+\newtheorem{assumption}[equation]{Assumption}
+\newtheorem{convention}[equation]{Convention}
+\newtheorem{remark}[equation]{Remark}
+\newtheorem{example}[equation]{Example}
+
+%%% Cleveref
+\crefname{equation}{}{}
+\crefformat{section}{#2\S#1#3}
+

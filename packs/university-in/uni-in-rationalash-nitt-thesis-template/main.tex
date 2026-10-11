@@ -1,0 +1,125 @@
+\documentclass[a4paper,12pt,oneside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{times}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{tocloft}
+\usepackage{tabu}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{caption}
+
+%Defining some new commands for some repeated text.
+%Modify your name and other details in this section.
+\newcommand{\theauthor}{John Smith}
+\newcommand{\therollno}{314159265}
+\newcommand{\thedegree}{B.Tech}
+\newcommand{\thedegreelong}{Bachelor of Technology}
+\newcommand{\thetitle}{Absurdly long Thesis Title Written in All Caps}
+\newcommand{\theguide}{Name of Guide}
+\newcommand{\thehod}{Name of HOD}
+\newcommand{\thedepartment}{Name of the Department}
+\newcommand{\theyear}{2016}
+\newcommand{\theacadyear}{2015-2016}
+\newcommand{\themonth}{May}
+
+%Adjusting the caption settings
+\captionsetup[figure]{labelfont=bf, textfont=bf}
+\captionsetup[table]{labelfont=bf, textfont=bf, position=top}
+
+%Set paragraph indentation to zero
+\setlength\parindent{0pt}
+%Set paragraph spacing
+\setlength{\parskip}{12pt}
+
+%Set the paper size and the margins
+\geometry{a4paper, tmargin=1in, rmargin=1in, bmargin=1in, lmargin=1.5in}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+
+%Format the chapter headings to be 14pt, centered and Uppercase
+\titleformat{\chapter}[display]
+  {\large\bfseries\centering}
+  {\MakeUppercase\chaptertitlename\ \thechapter}{7pt}{\large\MakeUppercase}
+
+%Format the section headings to be uppercase and 12pt
+\titleformat{\section}[hang]
+  {\MakeUppercase\normalfont\bfseries}
+  {\thesection}{12pt}{\MakeUppercase}
+
+%Format the subsections to be 12pt
+\titleformat{\subsection}[hang]
+  {\MakeUppercase\normalfont\bfseries}
+  {\thesubsection}{12pt}{}
+
+%Set the spacing between the chapter headings and the margins
+\titlespacing*{\chapter}{0pt}{0pt}{24pt}
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+%Add dots to the table of contents for chapters
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % for chapters
+%Set the spacings before and after the titles for the TOC, LOF and LOT
+\setlength{\cftbeforetoctitleskip}{0.43in}
+\setlength{\cftaftertoctitleskip}{21pt}
+\setlength{\cftbeforelottitleskip}{0.43in}
+\setlength{\cftafterlottitleskip}{21pt}
+\setlength{\cftbeforeloftitleskip}{0.43in}
+\setlength{\cftafterloftitleskip}{21pt}
+%Set the fontsize and formatting for the TOC, LOF and LOT 
+\renewcommand\contentsname{\centerline{\fontsize{16pt}{16pt}\selectfont TABLE OF CONTENTS}}
+\renewcommand\listfigurename{\centerline{\fontsize{16pt}{16pt}\selectfont LIST OF FIGURES}}
+\renewcommand\listtablename{\centerline{\fontsize{16pt}{16pt}\selectfont LIST OF TABLES}}
+%Setting page numbers to bottom center
+\pagestyle{fancy}
+\cfoot{\thepage}
+\rhead{}
+\lhead{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%Setting bibliography title format
+\renewcommand{\bibname}{\fontsize{16pt}{24pt}\selectfont References \hfill}
+
+
+\begin{document}
+%Adding all the stuff that should be numbered with roman numerals
+\frontmatter
+\addtocontents{toc}{\textbf{Title}\hfill\textbf{Page No.}\par}
+\addtocontents{toc}{\vspace{-0.3cm}}
+\input{titlepage}
+\input{bonafide}
+\addcontentsline{toc}{chapter}{ABSTRACT}
+\addtocontents{toc}{\vspace{-0.3cm}}
+\input{abstract}
+\addcontentsline{toc}{chapter}{ACKNOWLEDGEMENTS}
+\addtocontents{toc}{\vspace{-0.3cm}}
+\input{Acknowledge}
+\addcontentsline{toc}{chapter}{TABLE OF CONTENTS}
+\addtocontents{toc}{\vspace{-0.3cm}}
+\tableofcontents
+\newpage
+\addcontentsline{toc}{chapter}{LIST OF TABLES}
+\addtocontents{toc}{\vspace{-0.3cm}}
+\listoftables
+\newpage
+\addcontentsline{toc}{chapter}{LIST OF FIGURES}
+\addtocontents{toc}{\vspace{-0.3cm}}
+\listoffigures
+ 
+\mainmatter
+
+\chapter{Introduction}
+\fontsize{12pt}{18pt}\selectfont
+\input{Chapter1}
+
+\chapter{Implementation}
+\fontsize{12pt}{18pt}\selectfont
+\input{Chapter2}
+
+\bibliography{ashwin_refs}{}
+\addcontentsline{toc}{chapter}{REFERENCES}
+\bibliographystyle{unsrt}
+\end{document}

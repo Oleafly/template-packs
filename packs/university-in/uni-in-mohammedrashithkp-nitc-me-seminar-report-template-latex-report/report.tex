@@ -1,0 +1,100 @@
+
+
+
+\documentclass[12pt,a4paper]{report}
+\usepackage{etex}
+\usepackage{ragged2e}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{blindtext}
+\usepackage[pdftex]{graphicx} %for embedding images
+\usepackage{url} %for proper url entries
+\usepackage[a4paper,left=1.5in,right=1.25in,top=1in,bottom=1.25in]{geometry}
+\usepackage{titlesec}
+\usepackage{setspace}
+% Define a new chapter format with a 2-inch top margin
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries} % Format (bold, large font)
+  {\chaptername\ \thechapter} % Chapter number
+  {20pt} % Space between number and title
+  {}
+
+\titlespacing*{\chapter}{0pt}{2in}{1cm} % (Left, top, bottom spacing)
+
+\titlespacing{\chapter}{0pt}{0pt}{24pt} 
+\titlespacing{\section}{0pt}{12pt}{6pt}  
+\titlespacing{\subsection}{0pt}{10pt}{5pt}  
+\titlespacing{\subsubsection}{0pt}{8pt}{4pt} 
+\renewcommand{\baselinestretch}{1.5}
+
+
+
+
+% \usepackage[bookmarks, colorlinks=false, pdfborder={0 0 0}, pdftitle={\texttt{<}pdf title here\texttt{>}}, pdfauthor={\texttt{<}author's name here\texttt{>}}, pdfsubject={\texttt{<}subject here\texttt{>}}, pdfkeywords={\texttt{<}keywords here\texttt{>}}]{hyperref} %for creating links in the pdf version and other additional pdf attributes, no effect on the printed document
+%\usepackage[final]{pdfpages} %for embedding another pdf, remove if not required
+
+\usepackage[colorlinks=false, pdfborder={0 0 0}]{hyperref} % Simplified options to reduce memory usage
+
+
+\begin{document}
+\renewcommand\bibname{References} %Renames "Bibliography" to "References" on ref page
+
+
+
+%include other pages
+\input{title}
+\input{acknow}
+\input{certificate}
+\input{abstract}
+
+\clearpage % Ensures that numbering starts on a fresh page
+\pagenumbering{roman} %numbering before main content starts
+\chapter*{List of Abbreviations}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
+
+\begin{tabbing}
+    \hspace{2cm} \= \hspace{5cm} \= \kill
+    AI \> Artificial Intelligence \\
+    ML \> Machine Learning \\
+    NLP \> Natural Language Processing \\
+\end{tabbing}
+
+
+% Add List of Symbols
+\chapter*{List of Symbols}
+\addcontentsline{toc}{chapter}{List of Symbols}
+\begin{tabbing}
+    \hspace{2cm} \= \hspace{5cm} \= \kill
+    $\alpha$ \> Alpha (Coefficient) \\
+    $\beta$ \> Beta (Regression Coefficient) \\
+    $\sum$ \> Summation \\
+\end{tabbing}
+
+
+% Add List of Figures
+\listoffigures
+ \addcontentsline{toc}{chapter}{List of Figures}
+
+% Add List of Tables
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+
+\renewcommand{\contentsname}{\centering\vspace{-1cm}Contents}
+\renewcommand{\baselinestretch}{0.35} % Reduce only ToC spacing
+
+% Now, add the Table of Contents
+\tableofcontents
+
+
+\newpage
+\pagenumbering{arabic} %reset numbering to normal for the main content
+\input{introduction} %objective changed to problem definition
+\input{Literature-Review} %literature survey included in this
+\input{TopicSpecific}
+ \input{contents}
+\input{Results}
+\input{Conclusion}
+
+\input{ref}
+
+\end{document}

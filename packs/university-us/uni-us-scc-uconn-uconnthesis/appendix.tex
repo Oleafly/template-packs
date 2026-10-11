@@ -1,0 +1,65 @@
+\chapter{Derivations for Mean and Variance Estimation}
+\label{app:variance}
+
+
+This appendix supports the variance estimate used in
+Chapter~\ref{chap:normal-mean}. Suppose $X_1,\ldots,X_n$ are independent and
+identically distributed with mean $\mu$ and finite variance $\sigma^2$, where
+$n\geq 2$. The results here do not require a normal distribution.
+
+
+\section{Centering the observations}
+\begin{lemma}[Sum of squares decomposition]
+  \label{lem:sum-squares}
+  For any real numbers $x_1,\ldots,x_n$ and $a\in\RR$,
+  \begin{equation}
+    \label{eq:sum-squares}
+    \sum_{i=1}^{n}(x_i-a)^2
+    = \sum_{i=1}^{n}(x_i-\bar{x})^2+n(\bar{x}-a)^2.
+  \end{equation}
+\end{lemma}
+\begin{proof}
+  Write $x_i-a=(x_i-\bar{x})+(\bar{x}-a)$ and expand:
+  \begin{align*}
+    \sum_{i=1}^{n}(x_i-a)^2
+      &= \sum_{i=1}^{n}(x_i-\bar{x})^2 \\
+      &\quad +2(\bar{x}-a)\sum_{i=1}^{n}(x_i-\bar{x})
+        +n(\bar{x}-a)^2.
+  \end{align*}
+  The middle term is zero because centered observations sum to zero, proving
+  Equation~\eqref{eq:sum-squares}.
+\end{proof}
+
+
+\section{Estimating the population variance}
+Apply Lemma~\ref{lem:sum-squares} to the random sample with $a=\mu$.
+Taking expectations in Equation~\eqref{eq:sum-squares} and using
+Theorem~\ref{thm:sample-mean-properties} gives
+\begin{align*}
+  \mathbb{E}\left[\sum_{i=1}^{n}(X_i-\overline{X})^2\right]
+    &= \sum_{i=1}^{n}\mathbb{E}\bigl[(X_i-\mu)^2\bigr]
+       -n\mathbb{E}\bigl[(\overline{X}-\mu)^2\bigr] \\
+    &= n\sigma^2-n\frac{\sigma^2}{n} \\
+    &= (n-1)\sigma^2.
+\end{align*}
+Consequently, $S^2$ in Chapter~\ref{chap:normal-mean} is unbiased for
+$\sigma^2$. Division by $n$ instead would give expectation
+$(n-1)\sigma^2/n$. This correction concerns unbiasedness of the variance
+estimate; it does not make $S$ unbiased for $\sigma$.
+
+
+\section{Bias and mean squared error}
+For an estimator $T$ with finite second moment, its mean squared error (MSE)
+for estimating $\mu$ is
+\begin{equation}
+  \label{eq:mse-decomposition}
+  \operatorname{MSE}_{\mu}(T)
+  = \mathbb{E}_{\mu}\bigl[(T-\mu)^2\bigr]
+  = \operatorname{Var}_{\mu}(T)
+    +\bigl[\mathbb{E}_{\mu}(T)-\mu\bigr]^2.
+\end{equation}
+To verify Equation~\eqref{eq:mse-decomposition}, write
+$T-\mu=(T-\mathbb{E}_{\mu}T)+(\mathbb{E}_{\mu}T-\mu)$, square, and take
+expectations. The cross term vanishes. Thus precision and bias both matter
+when comparing estimators; unbiasedness alone does not guarantee the smallest
+MSE.

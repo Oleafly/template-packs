@@ -1,0 +1,225 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Formatting for UNC-Chapel Hill Physics dissertations
+%
+% Author: Zane Beckwith (zanebeckwith at aol dot com)
+% Copyright 2014
+%
+% Feel free to use and modify this as you wish.
+% There are NO WARRANTIES.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProvidesPackage{UNCCHDissertation}
+
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage[doublespacing]{setspace}
+\usepackage{titling}
+\usepackage{natbib}
+\usepackage{tocloft}
+\usepackage[nottoc]{tocbibind}
+\usepackage{titlesec}
+\usepackage{eqlist}
+\usepackage{indentfirst}
+\usepackage{etoolbox}
+\usepackage{varwidth}
+
+% To get true spacing of an inch between pieces
+\newlength{\MyChapSpace}
+\setlength{\MyChapSpace}{1.0in}
+\addtolength{\MyChapSpace}{-2em}
+\newlength{\MyTitleSpace}
+\setlength{\MyTitleSpace}{1.0in}
+\addtolength{\MyTitleSpace}{-1em}
+
+% Headings settings
+\titleformat{\chapter}[hang]
+{\singlespacing\normalfont\bfseries\centering}{CHAPTER \thechapter:}{1em}{}
+
+\titlespacing{\chapter}{0pt}{\MyChapSpace}{0pt}
+
+\titleformat{\section}[hang]
+{\singlespacing\normalfont\bfseries}{Section \thesection:}{1em}{}
+
+\titleformat{\subsection}[hang]
+{\singlespacing\normalfont}{\thesubsection:}{1em}{}
+
+
+% Get rid of blank page between frontmatter and mainmatter sections
+\makeatletter
+\renewcommand\mainmatter{\clearpage \@mainmattertrue \pagenumbering{arabic}}
+\makeatother
+
+% Page numbering options
+\pagestyle{plain}       % Put page numbers at bottom of page
+\setlength{\footskip}{0.5in}    % Page numbers 0.5in above bottom of page
+\setlength{\footnotesep}{\baselineskip} % Doublespace between footnotes
+
+% Table of contents options
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\renewcommand{\cfttoctitlefont}{\hfil \normalsize \bfseries}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+\setlength{\cftaftertoctitleskip}{0pt}
+\newcommand{\maketableofcontents}{\begin{singlespacing}\clearpage\tableofcontents\end{singlespacing}}
+\renewcommand\cftchapafterpnum{\vskip\baselineskip}
+\renewcommand\cftsecafterpnum{\vskip\baselineskip}
+\renewcommand\cftsubsecafterpnum{\vskip\baselineskip}
+
+% List of tables options
+\renewcommand{\listtablename}{LIST OF TABLES}
+\renewcommand{\cftlottitlefont}{\hfil \normalsize \bfseries}
+\setlength{\cftbeforelottitleskip}{-\baselineskip}
+\setlength{\cftafterlottitleskip}{0pt}
+\newcommand{\maketablelist}{\clearpage\listoftables}
+
+% List of figures options
+\renewcommand{\listfigurename}{LIST OF FIGURES}
+\renewcommand{\cftloftitlefont}{\hfil \normalsize \bfseries}
+\setlength{\cftbeforeloftitleskip}{-\baselineskip}
+\setlength{\cftafterloftitleskip}{0pt}
+\newcommand{\makefigurelist}{\clearpage\listoffigures}
+
+% Appendix options
+\let\OldApp\appendix
+\renewcommand{\appendix}{
+\titlespacing{\chapter}{0pt}{-2\baselineskip}{\baselineskip}       % Reset heading spacing
+\titleformat{\chapter}[hang]
+{\singlespacing\normalfont\bfseries\centering}{APPENDIX \thechapter:}{1em}{}
+\OldApp{}
+}
+
+% Bibliography options (also many things are set in the .bst file)
+\let\OldBib\bibliography
+\renewcommand{\bibliography}[1]{
+\begingroup
+\titlespacing{\chapter}{0pt}{-2\baselineskip}{\baselineskip}       % Reset heading spacing
+\setlength{\bibsep}{0.5\baselineskip}
+\setstretch{1}
+\renewcommand{\bibname}{REFERENCES}
+\OldBib{#1}
+\endgroup
+}
+
+% New environment for List of Symbols and Abbreviations
+\newenvironment{AbbrevList}{%
+        \clearpage
+
+        \addcontentsline{toc}{chapter}{LIST OF ABBREVIATIONS AND SYMBOLS}
+        \begin{center}
+        {\bfseries LIST OF ABBREVIATIONS AND SYMBOLS}
+        \end{center}
+
+        \begin{eqlist}
+                \let\OldItem\item
+                \renewcommand{\item}{\singlespace \OldItem}
+}{
+        \end{eqlist}
+}
+
+% New environment for the abstract
+\newcommand{\advisor}[1]{\newcommand{\advisorname}{#1}}
+\newenvironment{abstract}{
+        \clearpage
+
+        \newgeometry{left=1in, top=2in, right=1in, bottom=1in}
+
+        \begin{center}
+        {\bfseries ABSTRACT}
+
+
+        \begin{singlespace}
+        \theauthor: \thetitle
+
+        (Under the direction of \advisorname)
+        \end{singlespace}
+
+        \end{center}
+
+}
+{
+        \vfill
+        \clearpage
+        \aftergroup\restoregeometry
+}
+
+% Command to set the year completed
+\newcommand{\theyear}[1]{\newcommand{\yearcompleted}{#1}}
+
+% Titlepage
+\newcommand{\committee}[1]{
+        \newsavebox{\committeemems}
+        \sbox{\committeemems}{Blah}
+        \sbox{\committeemems}{
+                \begin{varwidth}{0.5\textwidth}
+                        Approved by:
+
+                        \def\nextitem{\def\nextitem{}}
+                        \renewcommand*{\do}[1]{\nextitem ##1\\}
+                        \docsvlist{#1}
+                \end{varwidth}
+        }
+}
+\newcommand{\maketitlepage}[1]{
+        % Don't show page number on this page
+        \thispagestyle{empty}
+
+        \clearpage
+
+        \newgeometry{left=1in, top=2in, right=1in, bottom=1in}
+
+        \begin{center}
+
+                {\MakeUppercase \thetitle}
+
+                \vspace{\MyTitleSpace}
+
+                \theauthor
+
+                \vspace{\MyTitleSpace}
+
+                \begin{singlespace}
+                        A dissertation submitted to the faculty at the
+                        University of North Carolina at Chapel Hill
+                        in partial fulfillment of the requirements
+                        for the degree of Doctor of Philosophy
+                        in the Department of Physics.
+                \end{singlespace}
+
+                \vspace{\MyTitleSpace}
+
+                \begin{singlespace}
+                        Chapel Hill
+
+                        \yearcompleted
+                \end{singlespace}
+
+        \end{center}
+
+        \vspace{\MyTitleSpace}
+
+        \hfill\usebox{\committeemems}
+
+        \restoregeometry
+}
+{}
+
+% Copyright page
+\newcommand{\makecopyrightpage}{
+        \clearpage
+
+        \begin{center}
+                \null
+                \vfill
+
+                \begin{singlespace}
+                \textcircled{c} \yearcompleted
+
+                \theauthor
+
+                ALL RIGHTS RESERVED
+                \end{singlespace}
+
+                \vspace*{\MyTitleSpace}
+
+        \end{center}
+}

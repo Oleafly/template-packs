@@ -1,0 +1,93 @@
+% #############################################################################
+% ################################################## Primary LaTeX Control File
+% #############################################################################
+
+\documentclass[11pt, oneside]{mnthesis}
+
+% When creating final version, comment this line out. 
+\draft
+
+% =============================================================================
+% ============================================================== LaTex Packages
+% =============================================================================
+
+% Some of these may not be in use -- but it's safer to leave them than it is to
+% remove them and have something break. 
+\usepackage{epsfig} % Allows the inclusion of eps files
+\usepackage{epic} % Enhanced picture mode
+\usepackage{eepic} % Extensions for epic
+\usepackage{units} % SI unit typesetting
+\usepackage{url} % URL handling
+\usepackage{longtable} % Tables that continue onto multiple pages
+\usepackage{mathrsfs} % Support for \mathscr script
+\usepackage{multirow} % Span rows in tables
+\usepackage{amssymb} % AMS math symbols and helpers
+\usepackage{graphicx} % Enhanced graphics support
+\usepackage{setspace} % Adjust spacing in captions, single by default
+\usepackage{xspace} % Automatically adjusting space after macros
+\usepackage{amsmath} % \text, and other math formatting options
+\usepackage{siunitx} % \num{} formatting and SI unit formatting
+\usepackage{booktabs} % Enhanced tables with \toprule, etc.
+\usepackage{hyperref} % Add clickable links to other parts of the document
+\usepackage[noabbrev,capitalize]{cleveref} % Automatically determine \cref type
+\usepackage[hang,flushmargin]{footmisc} % Prevent indent in footnotes. 
+\usepackage{lineno} % In draft mode, number lines 
+\usepackage{xcolor} % Allows color text for \todo
+\usepackage{doi} % Link to doi in the bibliography. Doesn't seem to work. 
+\usepackage{parskip} % http://ctan.org/pkg/parskip vskip instead of indent
+\usepackage{float} % Allows [H] for telling LaTeX to put an image HERE!
+\usepackage[section]{placeins} % Prevetn figures before the start of a section
+
+% =============================================================================
+% =============================================================== Configuration
+% =============================================================================
+
+% Try to prevent dangling parts of paragraphs over page breaks. 
+\widowpenalty10000
+\clubpenalty10000
+
+% Configure the siunitx package
+\sisetup{
+    group-separator = {,}, % Use , to separate groups of digits, like 12,345
+    list-final-separator = {, and } % Always use the serial comma in \SIlist
+}
+
+% Configure the cleveref package
+\newcommand{\creflastconjunction}{, and } % Always use the serial comma
+
+% Bring in the macros defined in my_definitions.tex
+\input{my_definitions}
+
+% Spacing in LaTeX is weird. This is whatever the style guide asks for. 
+\linespread{1.3}
+
+% Drafts have numbered lines. 
+\ifdraft
+  \linenumbers
+\fi
+
+% Set bibliography style -- references are ordered alphabetically, not by the
+% order in which they are cited. 
+\bibliographystyle{abbrv}
+
+% =============================================================================
+% =========================================================== Document Contents
+% =============================================================================
+
+\begin{document}
+
+% The abstract, etc, are all handled by title.tex
+\include{preliminaries/title}
+
+\include{chapters/data}
+
+% Assemble the bibliography using dissertation.bib
+\bibliography{dissertation}
+
+% Include appendices, if any. 
+\appendix
+\include{chapters/app_math}
+
+\end{document}
+
+

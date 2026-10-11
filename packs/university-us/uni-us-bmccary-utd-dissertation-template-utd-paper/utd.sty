@@ -1,0 +1,785 @@
+%
+% utd.sty and utd-local.sty
+%
+% I wrote this b/c the dissertation template
+% template supplied from the graduate office
+% was garbage. The net effect is that when I
+% I looked at the LaTeX source for the style
+% of other students' dissertations, everything
+% was a nightmare.
+%
+% May your dissertation proceed smoothly.
+%
+% Brady C McCary
+%
+
+
+
+
+
+
+
+% -----------------------------------------------------------------------------
+%
+% NOTE: You probably don't need to edit
+% this file at all, but you do need to
+% edit utd-local.sty
+%
+% -----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+\typeout{*}
+\typeout{*}
+\typeout{* UTD Thesis/Dissertation style.}
+\typeout{*}
+\typeout{*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% -----------------------------------------------------------------------------
+%
+% Spacing of the page number using fancyhdr.
+%
+% -----------------------------------------------------------------------------
+
+\usepackage{fancyhdr}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% -----------------------------------------------------------------------------
+%
+% Spacing using setspace.
+%
+% -----------------------------------------------------------------------------
+
+\usepackage{setspace}
+
+\doublespacing
+
+
+
+
+
+
+
+
+
+
+
+% -----------------------------------------------------------------------------
+%
+% Chapter/Section/Subsection styling using titlesec.
+%
+% -----------------------------------------------------------------------------
+
+%
+% tiny -> section/subsection/etc all
+%         appear the same (tiny).
+%
+\usepackage[compact,tiny]{titlesec}
+
+\setcounter{secnumdepth}{3}
+
+\gdef \ttl@space {0}
+
+%
+% Format the \chapter command.
+%
+\titlespacing*{\chapter}{0.00in}{0.40in}{5mm}
+\titleformat{\chapter}[display]{\normalfont\normalsize\filcenter}{\centering\chaptertitlename\ \thechapter}{0pt}{\normalsize\uppercase}
+
+
+
+% -----------------------------------------------------------------------------
+%
+% Table of Contents styling using tocloft.
+%
+% -----------------------------------------------------------------------------
+
+%
+% titles -> Use LaTeX to syle the titles.
+%
+\usepackage[titles]{tocloft}
+
+\setcounter{tocdepth}{3}
+
+\renewcommand{\contentsname}{TABLE OF CONTENTS}
+\renewcommand{\cftchapfont}{\normalsize}
+\renewcommand{\cftchappagefont}{\normalsize}
+\renewcommand{\cftchapdotsep}{\@dotsep}
+\renewcommand{\cftchapleader}{\normalsize\cftdotfill{\cftchapdotsep}}
+
+
+
+
+% -----------------------------------------------------------------------------
+%
+% LOF and LOT styling using tocloft.
+%
+% -----------------------------------------------------------------------------
+
+\newcommand{\utdlistfigurename}{LIST OF FIGURES}
+\newcommand{\utdlisttablename}{LIST OF TABLES}
+
+%
+% Doublespace between enteries.
+%
+\setlength{\cftbeforefigskip}{0.5\baselineskip}
+\setlength{\cftbeforetabskip}{0.5\baselineskip}
+
+%
+% Don't indent in LIST OF FIGURES or LIST OF TABLES.
+%
+\setlength{\cftfigindent}{0pt}
+\setlength{\cfttabindent}{0pt}
+
+
+
+% -----------------------------------------------------------------------------
+%
+% Caption styling using ccaption.
+%
+% -----------------------------------------------------------------------------
+
+\usepackage{ccaption}
+
+%
+% UTD requires
+%
+%     Figure 2.5.
+%
+% not
+%
+%     Figure 2.5:
+%
+
+% What almost everybody uses.
+%\captiondelim{: } 
+
+% What UTD uses.
+\captiondelim{. }
+
+
+
+
+% -----------------------------------------------------------------------------
+%
+% Bibiliography using natbib.
+%
+% -----------------------------------------------------------------------------
+
+\usepackage[square]{natbib}
+%\usepackage[square,numbers]{natbib}
+
+
+
+
+
+
+
+% -----------------------------------------------------------------------------
+%
+% These are parameters of your dissertation that you must define.
+%
+% DO NOT EDIT THESE, rather edit their counterparts in
+% 
+%    utd-local.sty
+%
+% -----------------------------------------------------------------------------
+
+\newcommand{\utdauthorpermanentadress}{UNDEFINED-Permanent-Address}
+\newcommand{\utdauthortitlecase}      {UNDEFINED-Author}
+\newcommand{\utdauthoruppercase}      {\uppercase{UNDEFINED-Author}}
+\newcommand{\utdcommitteeone}         {UNDEFINED-Professor-1}
+\newcommand{\utdcommitteetwo}         {UNDEFINED-Professor-2}
+\newcommand{\utdcommitteethr}         {UNDEFINED-Professor-3}
+\newcommand{\utdcommitteefou}         {UNDEFINED-Professor-4}
+\newcommand{\utddegreename}           {UNDEFINED-Degree-Name}
+\newcommand{\utddegreemajor}          {UNDEFINED-Degree-Major}
+\newcommand{\utddoctype}              {\uppercase{UNDEFINED-Dissertation-or-Thesis}}
+\newcommand{\utdgraduationmonth}      {UNDEFINED-Graduation-Month}
+\newcommand{\utdgraduationyear}       {UNDEFINED-Graduation-Year}
+\newcommand{\utdpreviousdegrees}      {UNDEFINED-Previous-Degrees}
+\newcommand{\utdtargetdegree}         {UNDEFINED-Target-Degree}
+\newcommand{\utddoctitleuppercase}    {\uppercase{UNDEFINED-The-Title}}
+\newcommand{\utddocsubmissionmonth}   {UNDEFINED-Submission-Month}
+\newcommand{\utddocsubmissionyear}    {UNDEFINED-Submission-Year}
+\newcommand{\utdappendixcount}        {0}
+
+%
+% These are probably fine.
+%
+\newcommand{\approvalwords}         {APPROVED BY SUPERVISORY COMMITTEE:}
+\newcommand{\utduniversitytitlecase}{The University of Texas at Dallas}
+\newcommand{\utduniversityuppercase}{\uppercase{The University of Texas at Dallas}}
+
+\renewcommand{\chaptername}{CHAPTER}
+
+\hbadness=10000
+\hfuzz=\maxdimen 
+\tolerance=10000
+\clubpenalty10000
+\widowpenalty10000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% -----------------------------------------------------------------------------
+%
+% The dimensions of a UTD thesis.
+%
+% These dimensions are a LaTeX translation
+% of the exact instructions from the graduate office.
+% Other spacings in this style depend on these values,
+% so if you change these values, you may also have to
+% change other dimensions.
+%
+% -----------------------------------------------------------------------------
+
+%
+% I used these constants below.
+%
+%      1.00 in = 72.27 pt
+%      1.00 pt =  0.013837 in
+%
+
+%
+% Set the dimensions for a US-Letter page,
+% which is 8.5 inches by 11 inches.
+%
+\newcommand{\utdsetdimensions}{
+    %
+    % Horizontal
+    %
+    \setlength{\hoffset}       {0.00 in} % 1.00 in
+    \setlength{\oddsidemargin} {0.25 in} % 1.25 in
+    \setlength{\evensidemargin}{0.25 in} % 1.25 in
+    \setlength{\textwidth}     {6.50 in} % 7.75 in
+    \setlength{\marginparsep}  {0.00 in} % 7.75 in
+    \setlength{\marginparwidth}{0.00 in} % 7.75 in
+    %                                    % 8.50 in
+    % 
+    %
+    % Vertical
+    %
+    \setlength{\voffset}   {-0.25 in}              %  0.75 in
+    \setlength{\topmargin} { 0.00 in}              %  0.75 in
+    \setlength{\headheight}{ 0.200636502006365 in} %  0.950636502006365 in
+    \setlength{\headsep}   { 0.299363497993635 in} %  1.25 in
+    \setlength{\textheight}{ 8.50in}               %  9.75 in
+    \setlength{\footskip}  { 0.50 in}              % 10.25 in
+                                                   % 11.00 in
+}
+
+\utdsetdimensions
+
+
+
+
+% -----------------------------------------------------------------------------
+%
+% Indentation.
+%
+% The preface, abstract, acknowledgements, and vita
+% all should have paragraphs with no indentation.
+% Instead of indentation, vertical space is added.
+%
+% Otherwise, the indentation follows the standard
+% scheme in LaTeX.
+%
+% -----------------------------------------------------------------------------
+
+\newlength{\utdparindent}
+\newlength{\utdparskip}
+\setlength{\utdparindent}{\parindent}
+\setlength{\utdparskip}{\parskip}
+
+\newcommand{\utdindentedparagraphs}
+{
+    \setlength{\parindent}{\utdparindent}
+    \setlength{\parskip}{\utdparskip}
+}
+
+\newcommand{\utdunindentedparagraphs}
+{
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{\baselineskip}
+}
+
+\newlength{\utdteeheight}
+\settoheight{\utdteeheight}{T}
+
+
+
+
+
+% -----------------------------------------------------------------------------
+%
+% Various canned pages.
+%
+% These commands were defined according
+% to the exact instructions on spacing
+% from the graduate office.
+%
+% -----------------------------------------------------------------------------
+
+%
+% Signature Page
+%
+\newcommand{\utdsignatureline}[3]{\rule{#1}{0.5pt}\par#2#3\par}
+
+\newcommand{\utdsignaturepage}%
+{
+    \thispagestyle{empty}
+    \utdsetdimensions
+    \setlength{\headheight}{1.25in} %  2.00 in
+    \setlength{\headsep}   {0.00in} %  2.00 in
+    \begin{spacing}{1.0}
+        \centerline{\utddoctitleuppercase}
+        \centerline{}
+        \centerline{}
+        \centerline{by}
+        \centerline{}
+        \centerline{}
+        \centerline{\utdauthortitlecase}
+        \centerline{} \centerline{}
+        \centerline{} \centerline{}
+        \centerline{} \centerline{}
+        \centerline{} \centerline{}
+        \centerline{} \centerline{}
+        \newlength{\www}
+        \settowidth{\www}{\approvalwords}
+        \begin{flushright}
+            \begin{minipage}{\www}
+                    \approvalwords\par
+                    \centerline{}
+                    \centerline{}
+                    \centerline{}
+                    \utdsignatureline{\www}{\utdcommitteeone}{, Chair}
+                    \centerline{}
+                    \centerline{}
+                    \centerline{}
+                    \utdsignatureline{\www}{\utdcommitteetwo}{}
+                    \centerline{}
+                    \centerline{}
+                    \centerline{}
+                    \utdsignatureline{\www}{\utdcommitteethr}{}
+                    \centerline{}
+                    \centerline{}
+                    \centerline{}
+                    \utdsignatureline{\www}{\utdcommitteefou}{}
+            \end{minipage}
+        \end{flushright}
+    \end{spacing}
+    \vspace*{5.5mm}
+    \clearpage
+    \utdsetdimensions
+}
+
+
+%
+% Copyright Page
+%
+\newenvironment{utdcopyrightpage}%
+{
+    \thispagestyle{empty}
+    \vspace*{\fill}
+    \begin{spacing}{1.5}
+}
+{
+    \end{spacing}
+    \vspace*{\fill}
+    \clearpage
+}
+
+
+
+%
+% Dedication Page
+%
+\newenvironment{utddedication}%
+{
+    \thispagestyle{empty}
+    \vspace*{\fill}
+}
+{
+    \vspace*{\fill}
+    \vspace*{\fill}
+    \clearpage
+}
+
+
+
+%
+% Title Page
+%
+\newcommand{\utdtitlepage}{
+    \thispagestyle{empty}
+    \setlength{\headheight}{1.25in}
+    \setlength{\headsep}{0.00in}
+    \begin{spacing}{1.00}
+        \centerline{\utddoctitleuppercase}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{by}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{\utdauthoruppercase, \utdpreviousdegrees}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{\utddoctype}
+        \centerline{}
+        \centerline{Presented to the Faculty of}
+        \centerline{}
+        \centerline{\utduniversitytitlecase}
+        \centerline{}
+        \centerline{in Partial Fulfillment}
+        \centerline{}
+        \centerline{of the Requirements}
+        \centerline{}
+        \centerline{for the Degree of}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{\utddegreename}
+        \centerline{}
+        \centerline{\utddegreemajor}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{\utduniversityuppercase}
+        \centerline{}
+        \centerline{\utdgraduationmonth \ \utdgraduationyear}
+    \end{spacing}
+    \clearpage
+    \utdsetdimensions}
+
+%
+% Acknowledgements
+%
+\newenvironment{utdacknowledgements}%
+{
+    \chapter*{ACKNOWLEDGEMENTS}
+    \pagestyle{plain}
+    \addcontentsline{toc}{chapter}{ACKNOWLEDGEMENTS}
+    \utdunindentedparagraphs
+    \vspace*{-2\baselineskip}
+    \vspace*{-5mm}
+    \vspace*{10mm}
+    \vspace*{\utdteeheight}
+}
+{
+    \par
+    \utddocsubmissionmonth \ \utddocsubmissionyear
+    \hfill \mbox{}
+    \clearpage
+    \utdindentedparagraphs
+}
+
+%
+% Preface
+%
+\newenvironment{utdpreface}%
+{
+    \chapter*{PREFACE}
+    \pagestyle{plain}
+    \addcontentsline{toc}{chapter}{PREFACE}
+    \utdunindentedparagraphs
+    \vspace*{-2\baselineskip}
+    \vspace*{-5mm}
+    \vspace*{10mm}
+    \vspace*{\utdteeheight}
+}
+{
+    \clearpage
+    \utdindentedparagraphs
+}
+
+
+
+%
+% Abstract
+%
+\newenvironment{utdabstract}%
+{
+    \phantomsection
+    \utdsetdimensions
+    \addcontentsline{toc}{chapter}{ABSTRACT}
+    \chapter*{\utddoctitleuppercase}
+    \pagestyle{plain}
+    \begin{spacing}{1.0}
+        \centerline{Publication No. \rule{1.5in}{0.5pt}}
+        \centerline{}
+        \centerline{\utdauthortitlecase, \utdtargetdegree}
+        \centerline{\utduniversitytitlecase, \utdgraduationyear}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \rule{\parindent}{0pt} Supervising Professor: \utdcommitteeone \hfill \mbox{}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+        \centerline{}
+    \end{spacing}
+    \utdunindentedparagraphs
+    \vspace*{-\baselineskip}
+}
+{%
+    \clearpage%
+    \utdindentedparagraphs%
+}
+
+
+
+
+
+
+%
+% Chapter: \utdchapter
+%
+% UTD wants the chapter information to appear
+% in a very specific way in the TOC. This
+% command accomplishes that. Just use
+% \utdchapter everywhere you would have used
+% \chapter.
+%
+% The following two commands are lifted from
+% report.cls. The only modifications are
+% the name and the \addcontentsline arguments.
+%
+\newcommand\utdchapter{\if@openright\cleardoublepage\else\clearpage\fi
+                    \thispagestyle{plain}%
+                    \global\@topnum\z@
+                    \@afterindentfalse
+                    \secdef\@utdchapter\@schapter}
+
+\def\@utdchapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+                         \refstepcounter{chapter}%
+                         \typeout{\@chapapp\space\thechapter.}%
+                         \addcontentsline{toc}{chapter}%
+                                   {\chaptername\ \protect\numberline{\thechapter}\uppercase{#1}}%
+                    \else
+                      \addcontentsline{toc}{chapter}{\chaptername\ \uppercase{#1}}%
+                    \fi
+                    \chaptermark{#1}%
+                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                    \if@twocolumn
+                      \@topnewpage[\@makechapterhead{#2}]%
+                    \else
+                      \@makechapterhead{#2}%
+                      \@afterheading
+                    \fi}
+
+
+
+
+
+
+%
+% Appendix
+%
+\renewcommand{\appendixname}{APPENDIX}
+
+\newenvironment{utdappendix}%
+{
+    \renewcommand{\chaptername}{\appendixname}
+
+    %
+    % Only do this if there is an appendix
+    % because this puts something in the TOC.
+    %
+    \ifthenelse{\utdappendixcount > 0}
+    {
+        %
+        % If there is more than one appendix
+        % then there should be an unnumbered
+        % page which marks the appendices.
+        %
+        \ifthenelse{\utdappendixcount > 1}{%
+            \clearpage
+            \thispagestyle{empty}
+            \vspace*{\fill}
+            \centerline{APPENDICES}
+            \vspace*{\fill}
+            \clearpage
+        }
+        {
+            % Do nothing 
+        }
+        \appendix
+    }
+    {
+    }
+}
+{
+    \clearpage
+}
+
+
+
+
+
+
+%
+% List of Figures
+%
+\newcommand{\utdlistoffigures}%
+{
+    \phantomsection
+    \renewcommand{\listfigurename}{\utdlistfigurename}
+    \addcontentsline{toc}{chapter}{\listfigurename}
+    \renewcommand{\listfigurename}{\vspace*{\utdteeheight}\utdlistfigurename\vspace*{-4mm}}
+    \listoffigures
+    \clearpage
+}
+
+
+%
+% List of Tables
+%
+\newcommand{\utdlistoftables}%
+{
+    \phantomsection
+    \renewcommand{\listtablename}{\utdlisttablename}
+    \addcontentsline{toc}{chapter}{\listtablename}
+    \renewcommand{\listtablename}{\vspace*{\utdteeheight}\utdlisttablename\vspace*{-4mm}}
+    \listoftables 
+    \clearpage
+}
+
+
+
+
+
+%
+% Bibliography
+%
+\newcommand{\utdbibname}{REFERENCES}
+\renewcommand{\bibname}{\vspace*{\utdteeheight}\utdbibname\vspace*{3mm}}
+
+\newenvironment{utdbibliography}%
+{
+    %
+    % UTD wants the biliography to be
+    % single-spaced within entries, but
+    % double-spaced between entries.
+    %
+    % UTD also wants there to be a 10mm
+    % separation between the baseline
+    % of the centered title and the
+    % top of the of the first line.
+    % This requirement is stupid because
+    % it depends on many things, including
+    % the font. The standard way to measure
+    % distances between lines is from
+    % baseline to baseline, but I promise
+    % these kind of comments fall on deaf
+    % ears in the graduate office.
+    %
+    % These requirements are at-odds with 
+    % what the \bibliography command
+    % wants to do, so the following lines
+    % concerning the bibliography are a
+    % an ugly hack to meet UTD's requirements.
+    %
+    \phantomsection
+    \addcontentsline{toc}{chapter}{\utdbibname}
+    \begin{spacing}{1.0}
+        \renewcommand{\bibname}{\vspace*{\utdteeheight}\utdbibname\vspace*{3mm}}
+}
+{
+    \end{spacing}
+    \clearpage
+}
+
+
+
+
+
+
+%
+% Vita Page
+%
+\newenvironment{utdvita}%
+{
+    %
+    % The vita should appear in the TOC,
+    % but should not have a page number
+    % in the TOC.
+    %
+    \phantomsection
+    \chapter*{VITA}
+    \thispagestyle{empty}
+    \pagestyle{empty}
+    \addtocontents{toc}{\cftpagenumbersoff{chapter}}
+    \addcontentsline{toc}{chapter}{VITA}
+    \utdunindentedparagraphs
+    \vspace*{-2\baselineskip}
+    \vspace*{-5mm}
+    \vspace*{10mm}
+    \vspace*{\utdteeheight}
+}
+{
+    \par
+    Permanent address: \parbox[t]{3.5in}{\raggedright\utdauthortitlecase\\\utdauthorpermanentadress}
+    \utdindentedparagraphs
+}
+
+% vim:ts=4:sw=4:et

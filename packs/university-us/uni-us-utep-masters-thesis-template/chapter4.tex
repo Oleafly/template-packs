@@ -1,0 +1,120 @@
+% chap4.tex (Definitions and Theorem)
+
+\chapter{Solving Most Narrow-Interval Linear Systems Is Easy: Known
+Result} \label{MostNarrowEasy}
+
+In this chapter we will define what we mean by {\em narrow intervals\/} and
+present a positive result concerning systems of interval linear equations
+having such narrow intervals.  This result was first discovered by Lakeyev
+and Kreinovich in the mid 1990's.
+
+\section{Definitions}
+
+\begin{definition}
+{\rm We say that the number $\tilde x$ represents a number $x$ with
+{\em absolute accuracy\/} $\Delta>0$ if $|x-\tilde x|\leq\Delta$.}
+\end{definition}
+
+\begin{definition}
+{\rm By {\em absolute half-width\/} of the interval ${\bf x}=[x^-,x^+]$, we
+mean the smallest number $\Delta>0$ for which every number in ${\bf x}$ is
+represented with an absolute accuracy~$\Delta$ by $\tilde x=\displaystyle{
+\frac{x^-+x^+}{2}}$.\\[0.5pc]
+{\bf Proposition} It can be seen that the absolute half-width of ${\bf x}$ is
+$$
+  \max_{x\in [x^-,x^+]} |x-\tilde x| = \frac{x^+-x^-}{2}.
+$$}
+\end{definition}
+
+\begin{definition}
+{\rm By {\em absolute width\/} $W$ of an interval ${\bf x}=[x^-,x^+]$, we mean
+twice the absolute half-width of ${\bf x}$, i.e.,
+$$
+  W([x^-,x^+])=x^+-x^-.
+$$}
+\end{definition}
+
+\begin{definition}
+{\rm We say that an interval ${\bf x}$ is {\em $\Delta$-narrow in the sense
+of absolute accuracy\/} if $W({\bf x})\leq\Delta$.}
+\end{definition}
+
+\begin{definition}
+{\rm Let $\varepsilon>0$ be a real number, let $D\subseteq R^N$ be a closed
+and bounded set of positive $N$-dimension volume $V(D)>0$, and let
+$P(x)$ be a property that is true for some points $x\in D$.  We say that $P(x)$
+is true for {\em $(D,\varepsilon)$-almost all\/} $x$ if}
+$$
+  \frac{V(\{x\in D|\neg P(x)\})}{V(D)}\leq \varepsilon.
+$$
+\end{definition}
+
+\begin{definition}
+{\rm Let $\eta>0$ be a real number.  We say that intervals
+$$
+  [r_1-d_1,r_1+d_1],\ldots,[r_n-d_n,r_n+d_n]
+$$
+are {$\eta$-close} to intervals
+$$
+  [\tilde x_1-\Delta_1,\tilde x_1+\Delta_1],\ldots,[\tilde x_n-\Delta_n,
+   \tilde x_n+\Delta_n]
+$$
+if $|r_i-\tilde x_i|\leq\eta$ and 
+$|d_i-\Delta_i|\leq\eta$ for all $i$.}
+\end{definition}
+
+\begin{definition}
+{\rm Let $\cal U$ be an algorithm that solves some systems of interval linear
+equations, and let $\eta>0$ be a real number.  We say that an algorithm 
+$\cal U$ is {\em $\eta$-exact\/} for the interval matrices ${\bf a}_{ij}$ and
+${\bf b}_i$ if for every interval matrix ${\bf a}_{ij}^\prime$ and 
+${\bf b}_i^\prime$ that are $\eta$-close to ${\bf a}_{ij}$ and ${\bf b}_i$,
+the algorithm $\cal U$ returns the exact solution to the system}
+$$
+  \sum_{j=1}^n {\bf a}_{ij}^\prime x_j = {\bf b}_i^\prime.
+$$
+\end{definition}
+
+\begin{definition}
+{\rm We say that an algorithm $\cal U$ is {\em almost always exact for narrow 
+input intervals\/} if for every closed and bounded set $D\subseteq R^N
+(N=n\cdot m+n)$ there exist $\varepsilon>0$, $\Delta>0$ and $\eta>0$ such
+that, for $(D,\varepsilon)$-almost all $\tilde a_{ij}$ and $\tilde b_i$, if
+all input intervals ${\bf a}_{ij}$ and ${\bf b}_i$
+(containing $\tilde a_{ij}$ and $\tilde b_i$ respectively)
+are $\Delta$-narrow (in the sense of absolute accuracy), then the
+algorithm $\cal U$ is $\eta$-exact for ${\bf a}_{ij}$ and ${\bf b}_i$.}
+\end{definition}
+
+\section{Theorem}
+
+\begin{theorem} \label{almost-all-theorem}
+There exists a feasible (polynomial-time) algorithm $\cal U$ that is almost 
+always exact for narrow input intervals.
+\end{theorem}
+
+\medskip
+
+\noindent
+This theorem was proven in 1995 by Lakeyev and Kreinovich
+(see~\cite{Lakeyev1995}).
+
+\section{Open Problem}
+Theorem \ref{almost-all-theorem} says that we can have a feasible algorithm 
+that solves {\em almost all\/} narrow-interval linear equation systems, but 
+it does not say whether we can solve {\em all\/} of them in reasonable time.  
+Thus, there still remains an open question:
+
+\begin{quote}
+{\it Can a feasible algorithm be developed for the general problem of
+solving systems of linear equations with narrow-interval coefficients?}
+\end{quote}
+
+\noindent
+The answer to this open question is the main concern of this thesis.
+
+We will show that the problem of solving all narrow-interval linear equation
+systems is NP-hard; moreover, we will show that the problem is NP-hard not
+only for intervals that are narrow in the sense of absolute accuracy, but
+also in the sense of relative accuracy.
+

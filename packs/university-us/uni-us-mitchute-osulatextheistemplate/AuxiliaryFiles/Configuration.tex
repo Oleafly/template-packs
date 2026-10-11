@@ -1,0 +1,109 @@
+%====================== font dependent settings
+\renewcommand{\labelitemi}{$\bullet$}
+
+%====================== provides some shapes, not necessarily used directly =====
+\usepackage{pict2e}
+
+%====================== get rid of tiny overfull box warnings ===================
+\hfuzz=3pt
+
+%====================== create an execute function so we can shell out ==========
+\def\execute{%
+	\begingroup
+	\catcode`\%=12
+	\catcode`\\=12
+	\executeaux}
+\def\executeaux#1{\immediate\write18{#1}\endgroup}
+
+%====================== indexing ================================================
+\usepackage{makeidx} %index package
+\execute{makeindex main}
+\makeindex
+
+%====================== bibliography ============================================
+\usepackage[round]{natbib} %bibliography citation style with round brackets
+
+%====================== AMS math packages =======================================
+\usepackage{amsmath}
+\usepackage{amsxtra}
+\usepackage{amstext}
+\usepackage{amssymb}
+
+%====================== Tables, figures =========================================
+\usepackage{array}
+\usepackage{subcaption}
+\usepackage{rotating}
+\usepackage{longtable}
+
+%====================== Units package ===========================================
+\usepackage{siunitx}
+\sisetup{per-mode = symbol}
+
+%====================== Other packages ==========================================
+\usepackage{graphicx} %convenient graphics import package
+\usepackage{ifthen}       %Add ifthenelse support
+\usepackage{enumerate} %modify enumerate style
+\usepackage[usenames,dvipsnames,table,xcdraw]{xcolor}
+\usepackage[colorlinks,citecolor=Black,linkcolor=Black,urlcolor=Black,filecolor=Black]{hyperref}
+\usepackage{url} % allow typsetting urls
+\usepackage{setspace} % allow easy variation of line spacing
+\usepackage{lipsum}
+\usepackage{calc}
+
+%====================== margin comments ========================================
+\setlength{\marginparwidth}{1.0in}
+\setlength{\marginparsep}{0.1in}
+\let\oldmarginpar\marginpar
+\renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\tiny #1]{\raggedright\scriptsize\color{red} #1}}
+
+%============ tell LaTeX where to find images ==================================
+\graphicspath{
+              {Ch-Introduction/images/}
+              {Ch-Methods/images/}
+              {Ch-Results/images/}
+             }
+
+%============ specify how deep layout numbering goes ===========================
+\setcounter{secnumdepth}{3} %3 specifies to number down to subsection
+\setcounter{tocdepth}{3} %3 specifies to include down to subsections in the TOC
+
+%============ add leader dots to the TOC chapters ==============================
+\usepackage{etoolbox}
+ \makeatletter
+ \patchcmd{\l@chapter}
+   {\hfil}
+   {\leaders\hbox{\normalfont$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill}
+   {}{}
+ \makeatother
+
+%============ reformat chapters numbers to match model =========================
+\renewcommand{\thechapter}{\Roman{chapter}}
+\renewcommand{\thesection}{\arabic{chapter}.\arabic{section}}
+\renewcommand{\thefigure}{\arabic{chapter}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{chapter}.\arabic{table}}
+\renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}} 
+
+%============ commands for adding Chapter/Table/Figure  Page to the TOC/LOT/LOF=
+\usepackage{afterpage}
+\DeclareRobustCommand*{\conttocheading}{%
+  \afterpage{{\normalfont
+  \begin{flushleft}
+  Chapter \hfill Page
+  \end{flushleft}
+   \par\medskip}}}
+   
+\usepackage{afterpage}
+\DeclareRobustCommand*{\conttotheading}{%
+  \afterpage{{\normalfont
+  \begin{flushleft}
+  Table \hfill Page
+  \end{flushleft}
+   \par\medskip}}}
+   
+\usepackage{afterpage}
+\DeclareRobustCommand*{\conttofheading}{%
+  \afterpage{{\normalfont
+  \begin{flushleft}
+  Figure \hfill Page
+  \end{flushleft}
+   \par\medskip}}}

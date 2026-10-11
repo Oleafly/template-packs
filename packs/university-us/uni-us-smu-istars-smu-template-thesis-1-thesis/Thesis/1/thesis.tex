@@ -1,0 +1,393 @@
+\documentclass[titlepage,a4paper,12pt,thmsb]{report}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage[english]{babel}
+\usepackage[left=1.5in, right=1.5in, top=1in, bottom=1in]{geometry}
+\usepackage{float,epsfig,floatflt}
+\usepackage{amsmath, amssymb}
+\usepackage{a4}
+\usepackage[nottoc]{tocbibind}
+\usepackage{siunitx}
+\usepackage{fancyhdr}
+\usepackage{makeidx}
+\usepackage{multirow}
+\usepackage[most]{tcolorbox}
+\usepackage{moreverb}
+%\usepackage{loremipsum}
+\usepackage{tabularx}
+\usepackage{tabulary}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{ragged2e}
+\justifying
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{textcomp}
+\usepackage{multirow}
+% \usepackage{amsthm,amsmath}
+\usepackage{newtxtext,newtxmath}
+\usepackage{caption}
+\usepackage{xcolor}
+% \usepackage{subcaption}
+\usepackage[ruled,linesnumbered]{algorithm2e}
+\usepackage{enumitem}
+\usepackage[most]{tcolorbox}
+\usepackage{balance}
+\usepackage{url}
+\usepackage{pifont} % Include the pifont package
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{amsmath,amsfonts}
+\usepackage{array}
+\usepackage{algorithmic}
+\usepackage{tocloft}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{adjustbox}
+\usepackage[most]{tcolorbox}
+\usepackage{balance}
+\usepackage[colorlinks, linkcolor=black, citecolor=blue]{hyperref}
+\usepackage{listings}
+\usepackage{tipa}
+\usepackage{svg}
+\usepackage{color, colortbl}
+\usepackage{soul}
+\usepackage{fancyhdr}
+\usepackage{subfloat}
+\usepackage[skip=1pt,labelfont=bf]{caption}
+\usepackage{marginnote}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{cancel}
+\usepackage{ragged2e}
+\usepackage{threeparttable}
+
+\SetAlCapFnt{\small}
+\SetAlCapNameFnt{\small}
+\usepackage{algorithmic}
+\algsetup{linenosize=\small}
+\SetKwInput{KwInput}{Input}                % Set the Input
+\SetKwInput{KwOutput}{Output}              % set the Output
+
+% \textwidth 16cm \textheight 22.5cm \selectlanguage{english}
+% \topmargin 0cm \headheight 0.5 cm \oddsidemargin 0cm
+% \evensidemargin 0cm
+\renewcommand{\baselinestretch} {1.2} \setlength{\parindent}{0.0cm}
+\setlength{\parskip} {0.5 cm}
+%\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thechapter}{\arabic{chapter}}
+\setcounter {secnumdepth}{5} \setcounter{tocdepth}{5}
+\let\oldTitle\title
+\renewcommand{\title}[1]{\newcommand{\myTitle}{#1}\oldTitle{#1}}
+\newcommand{\leftscripts}[3]{{\vphantom{#3}}^{#1}_{#2}{#3}}
+
+
+\newtcolorbox{boxA}{
+    boxrule = 1.5pt,
+    % rounded corners,
+    colback = myblue, % background color
+    boxsep=0.1pt,
+    top=3pt,bottom=2pt,
+    boxrule=1pt,
+    frame hidden,
+    sharp corners,
+    enhanced,
+    borderline north={1pt}{0pt}{black},
+    borderline south={1pt}{0pt}{black},
+    boxsep=2pt,left=2pt,right=2pt,top=2.5pt,bottom=2pt
+}
+% \definecolor{mygrey}{HTML}{d3d3d3}
+\definecolor{myblue}{HTML}{F5DDFE}
+% \definecolor{mygreen}{HTML}{CEF5D3}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{
+ backgroundcolor=\color{white}, 
+ basicstyle = \footnotesize \ttfamily,       
+ breakatwhitespace = false,        
+ breaklines = true,                 
+ captionpos = b,                    
+ commentstyle = \color{mygreen}\bfseries,
+ extendedchars = false,             
+ % frame =shadowbox, 
+ frame=leftline,
+ framerule=0.5pt,
+ keepspaces=false,
+ keywordstyle=\color{blue}\bfseries, % keyword style
+ language = Go,                     % the language of code
+ otherkeywords={}, 
+ numbers=left, 
+ numbersep=5pt,
+ numberstyle=\tiny\color{mygray},
+ rulecolor=\color{black},         
+ showspaces=false,  
+ showstringspaces=false, 
+ showtabs=false,    
+ stepnumber=1,         
+ stringstyle=\color{mymauve},        % string literal style
+ tabsize=2,          
+ title=\lstname                      
+}
+
+\newcommand{\fish}[1]{\textcolor{purple}{#1}\xspace}
+
+\newcommand{\fishfix}[1]{\textcolor{black}{#1}\xspace}
+
+\newtcolorbox{boxB}{
+    boxrule = 1.5pt,
+    rounded corners,
+    colback = mygreen, % background color
+    boxsep=0.1pt,
+    top=3pt,bottom=2pt,
+}
+%%% Fancy Header %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fancy Header Style Options
+\pagestyle{fancy}                  % Sets fancy header and footer
+%\fancyfoot{}                           % Delete current footer settings
+\renewcommand{\chaptermark}[1]{         % Lower Case Chapter marker style
+  \markboth{\chaptername\ \thechapter.\ #1}{}} %
+\renewcommand{\sectionmark}[1]{         % Lower case Section marker style
+  \markright{\thesection.\ #1}}         %
+% Commented out to remove page number from header
+%\fancyhead[LE,RO]{\thepage}             % Page number in header
+%\fancyhead[RE]{\bfseries\leftmark}     % Chapter in the right on even pages
+\fancyhead[R]{}               % Chapter in the right on even pages
+%\fancyhead[LO]{\bfseries\rightmark}    % Section in the left on odd pages
+\fancyhead[LO]{\rightmark}              % Section in the left on odd pages
+
+\renewcommand{\headrulewidth}{0.1pt}    % Width of head rule
+\renewcommand{\footrulewidth}{0.1pt}    % Width of foot rule
+% Remove existing footers
+%\fancyfoot[CE,CO]{\myTitle}{}
+%\fancyfoot[CE,CO]{}{}
+% Add page number to the center of the footer
+\fancyfoot[C]{\thepage}
+\makeindex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\cashift}{CAShift\xspace}
+
+\usepackage{tikz}
+\newcommand*\emptycirc[1][.8ex]{\tikz\draw (0,0) circle (#1);} 
+\newcommand*\halfcirc[1][.8ex]{%
+	\begin{tikzpicture}
+	\draw[fill] (0,0)-- (90:#1) arc (90:270:#1) -- cycle ;
+	\draw (0,0) circle (#1);
+	\end{tikzpicture}}
+\newcommand*\fullcirc[1][.8ex]{\tikz\fill (0,0) circle (#1);}
+
+\usepackage{wrapfig}
+
+% table color
+\newcommand{\worst}{\cellcolor{red!10}}
+\newcommand{\best}{\cellcolor{green!10}}
+
+\newcolumntype{B}{>{\bfseries}c}
+\newcolumntype{G}{>{\columncolor{gray!20}}c}
+
+\usepackage{diagbox}
+
+\newcommand{\chimera}{\textit{Chimera}\xspace}
+\newcommand{\dataset}{\textit{ChimeraLog}\xspace}
+
+\newcommand{\cert}{\textit{CERT}\xspace}
+\newcommand{\twos}{\textit{TWOS}\xspace}
+
+\begin{document}
+\pagenumbering{roman}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+\thispagestyle{empty}
+
+\begin{center}
+
+{\bf \fontsize{16pt}{\baselineskip}\selectfont SECURING CLOUD-NATIVE SYSTEMS: \\[0cm] FROM VULNERABILITY ANALYSIS TO\\[.1cm]
+EXTERNAL AND INSIDER THREAT DETECTION}
+
+\vspace{5cm}
+
+{\Large JIONGCHI YU}
+
+\vfill
+{\Large SCHOOL OF COMPUTING AND INFORMATION SYSTEMS}
+{\Large SINGAPORE MANAGEMENT UNIVERSITY \\[0.3cm]
+MAY 2025}
+
+\end{center}
+
+\end{titlepage}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+\thispagestyle{empty}
+
+\begin{center}
+
+{\bf SECURING CLOUD-NATIVE SYSTEMS: \\[.1cm] FROM VULNERABILITY ANALYSIS TO\\[.1cm]
+EXTERNAL AND INSIDER THREAT DETECTION}
+
+\vspace{.5cm} % 
+
+{\normalsize by} % 
+
+\vspace{0.1cm}
+
+{\bf Jiongchi Yu}
+
+\vspace{.5cm}
+
+{\small Submitted to School of Computing and Information Systems \\ in partial fulfillment of the requirements for \\ the Degree of Doctor of Philosophy in Computer Science}
+
+\vspace{.5cm}
+
+{\normalsize \bf Dissertation Committee:}
+
+\vspace{-0.4cm}
+
+{\small
+\begin{center}
+Xiaofei Xie (Supervisor / Chair) \\
+Assistant Professor \\
+Singapore Management University
+
+David Lo \\
+Professor\\
+Singapore Management University
+
+Lingxiao Jiang \\
+Professor\\
+Singapore Management University
+
+Yang Liu \\
+Professor\\
+Nanyang Technological University
+\end{center}
+}
+
+\vfill
+
+{\normalsize Singapore Management University \\
+2025}
+
+\vspace{0.3cm}
+
+{\normalsize Copyright (2026) Jiongchi Yu}
+
+\end{center}
+
+\end{titlepage}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+\thispagestyle{empty}
+
+\begin{center}
+
+\vspace*{3cm}
+
+\begin{minipage}{0.9\textwidth}
+\centering
+I hereby declare that this PhD dissertation is my original work and \\ it has been written by me in its entirety. I have duly \\ acknowledged all the sources of information which have \\ been used in this dissertation.
+
+\vspace{1.5cm}
+
+This PhD dissertation has also not been submitted for any \\ degree in any university previously.
+\end{minipage}
+
+\vspace{2cm}
+
+% \includegraphics[width=10cm]{logo/Signature-English-Jiongchi Yu.png}
+\textbf{FISH}
+
+\vspace{-1cm}
+\rule{8cm}{0.4pt}
+
+\vspace{0.5cm}
+
+Jiongchi Yu \\
+
+\vspace{0.3cm}
+
+30 May 2026
+
+\end{center}
+
+\end{titlepage}
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{titlepage}
+\thispagestyle{empty}
+\input{Sections/ack}
+\end{titlepage}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \input{Sections/Certificate}
+
+% \chapter*{Executive Summary}
+%\addcontentsline{toc}{chapter}{\numberline{}Abstract}
+% \addcontentsline{toc}{chapter}{\numberline{}Executive Summary}
+
+% \newpage
+% \addcontentsline{toc}{chapter}{\numberline{}Table of Contents}
+%\tableofcontents
+%\makeindex
+% \newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{roman}
+\chapter*{Abstract}
+\thispagestyle{empty} % Suppresses page number on this page
+\addcontentsline{toc}{chapter}{\protect\numberline{}Abstract}
+\markboth{Abstract}{}
+\input{Sections/abstract}
+\thispagestyle{empty} % Suppresses page number on this page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{tocdepth}{2}
+\newpage
+\addcontentsline{toc}{chapter}{\numberline{}Table of Contents}
+\tableofcontents
+% \input{Sections/Acknowledgement}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{arabic}
+
+\input{Sections/introduction}
+
+\input{Sections/related_work}
+
+\input{Sections/bugs_in_pods}
+
+\input{Sections/cashift}
+
+\input{Sections/chimera}
+
+\input{Sections/conclusion}
+
+\bibliographystyle{plain}
+
+\bibliography{thesis}
+\end{document}

@@ -1,0 +1,318 @@
+% File: utepcsthesis.sty
+% Author: Luc Longpré
+% email: longpre@utep.edu
+% Date: February 17, 2005.
+%
+% Change to this version, since the version of February 17, 2005:
+% - The name for the dean of the Graduate School is no longer hard-coded
+% - Optional copyright notice
+% - Typist name no longer required
+% - Author degrees can be added
+%
+% This package was written to help students in the UTEP
+% computer science department who write a thesis using
+% LaTeX2e.
+%
+% The LaTeX file should begin with
+% \documentclass[12pt]{report}
+% \usepackage{utepcsthesis}
+%
+% The following commands are defined in this package:
+% \ssp                Switch to single spacing
+% \dsp                Switch to double spacing
+% \CommitteeChair     To provide the names to put on the signature page
+% \CommitteeMembers   To provide the names to put on the signature page
+% \AdditionalMember   In case there is a fourth committee member
+% \GraduateSchoolDean Name of the Dean of Graduate School
+% \AuthorDegrees      To provide the student degrees on the title page
+% \makesigpage        Generates the signature page.
+% \maketitlepage      Generates the title page and starts roman page numbers
+% \StartBody          Sets up to start page 1 of thesis, after preliminaries
+%
+% In addition, we define an environment for the dedication page. This
+% page is optional.
+
+% For some environments we switch back to single-spacing, also
+% provides \dsp in case you need double-spacing where single-spacing
+% is otherwise used.
+\def\ssp{\def\baselinestretch{1}\large\normalsize}
+\def\dsp{\def\baselinestretch{1.5}\large\normalsize}
+
+% \smallssp is used to produce tabular environments in the small font.
+% This is required because single-spacing requires a change in font size.
+% \scriptsizessp is a still smaller version of the same thing.
+
+\def\smallssp{\def\baselinestretch{1}\large\small}
+\def\scriptsizessp{\def\baselinestretch{1}\large\scriptsize}
+
+%The following taken from report.cls, modified
+%to suit our purpose in table of contents, list of figures,
+%list of tables and references.
+
+\renewcommand\tableofcontents{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\contentsname
+        \@mkboth{%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
+    \addcontentsline{toc}{chapter}{Table of Contents}%
+    \@starttoc{toc}%
+    \if@restonecol\twocolumn\fi
+    }
+\def\l@chapter{\@dottedtocline{0}{0.1em}{1.4em}}
+\def\l@section{\@dottedtocline{1}{1.5em}{2.3em}}
+\def\l@subsection{\@dottedtocline{2}{3.8em}{3.2em}}
+\def\l@subsubsection{\@dottedtocline{3}{7.0em}{4.1em}}
+\def\l@paragraph{\@dottedtocline{4}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{5}{12em}{6em}}
+
+\def\listoffigures{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+ \fi\chapter*{List of Figures\@mkboth
+ {List of Figures}{List of Figures}}
+ \addcontentsline{toc}{chapter}{List of Figures}
+ \@starttoc{lof}\if@restonecol
+ \twocolumn\fi}
+\def\l@figure{\@dottedtocline{1}{1.5em}{2.3em}}
+
+\def\listoftables{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+ \fi\chapter*{List of Tables\@mkboth
+ {List of Tables}{List of Tables}}
+ \addcontentsline{toc}{chapter}{List of Tables}
+ \@starttoc{lot}\if@restonecol
+ \twocolumn\fi}
+\let\l@table\l@figure
+
+% If you are using the ``thereference'' environment, this is redefinition is useful
+\def\thereferences#1{\chapter*{References\@mkboth
+ {References}{References}}\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+ \def\newblock{\hskip .11em plus .33em minus .07em}
+ \sloppy\clubpenalty4000\widowpenalty4000
+ \sfcode`\.=1000\relax}
+\let\endthereferences=\endlist
+
+%The following taken from report.cls, modified
+%to have no header space above new chapters and
+%make chapter titles centered.
+
+\def\@makeschapterhead#1{%
+%  \vspace*{50\p@}%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \centering
+    \interlinepenalty\@M
+    \Huge \bfseries  #1\par\nobreak
+    \vskip 40\p@
+  }}
+ 
+\def\@makechapterhead#1{%
+%  \vspace*{50\p@}%
+  {\parindent \z@ \raggedright \normalfont
+    \centering
+    \ifnum \c@secnumdepth >\m@ne
+        \huge\bfseries \@chapapp\space \thechapter
+        \par\nobreak
+        \vskip 20\p@
+    \fi
+    \interlinepenalty\@M
+    \Huge \bfseries #1\par\nobreak
+    \vskip 40\p@
+  }}
+
+%The following, also taken from report.cls, was
+%modified to line up the text properly on the left
+%when the text of the caption does not fit on one
+%line.
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{#1: #2}%
+  \ifdim \wd\@tempboxa >\hsize
+     \sbox\@tempboxa{#1: #2}%
+     \begin{center}
+     \ssp
+     #1: \parbox[t]{5in}{#2}
+     \end{center}
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+
+% Page format
+% left and top margins (+1in)
+\setlength{\oddsidemargin}{0.05in}
+\setlength{\topmargin}{0.05in}
+% head
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+% body
+\setlength{\textwidth}{6.4in}
+\setlength{\textheight}{8.9in}
+% foot
+\setlength{\footskip}{0in}
+
+\pagestyle{empty}       % No page numbers printing, but still counts pages
+\pagenumbering{roman}   % Roman numeral page numbers
+
+\renewcommand\contentsname{Table of Contents}
+\renewcommand\listfigurename{List of Figures}
+\renewcommand\listtablename{List of Tables}
+\renewcommand\bibname{References}
+
+% Define new theorem blocks
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+
+% Internal boolean set to true when there is
+% a fourth member on the committee
+\newif\if@fourthmem
+\@fourthmemfalse
+
+% Internal boolean set to true when there is
+% a list of degrees
+\newif\if@degrees
+\@degreesfalse
+
+\newcommand{\CommitteeChair}[1]{%
+ \gdef\@comchair{#1}
+}
+
+\newcommand{\CommitteeMembers}[2]{%
+ \gdef\@commbtwo{#1}
+ \gdef\@commbthree{#2}
+}
+
+\newcommand{\AdditionalMember}[1]{%
+ \@fourthmemtrue
+ \gdef\@commbfour{#1}
+}
+
+\newcommand{\DeptName}[1]{%
+ \gdef\@deptnm{#1}
+}
+
+\newcommand{\GradSchoolDean}[1]{%
+ \gdef\@gradschooldean{#1}
+}
+
+\newcommand{\AuthorDegrees}[1]{%
+ \@degreestrue
+ \gdef\@authordegrees{#1}
+}
+
+\newcommand{\makesigpage}{
+\begin{center}
+% title
+\@title\\[0.4in]
+% author
+\@author\\[0.4in]
+% department
+\@deptnm
+\end{center}
+\vfill
+\hspace{3.5in}APPROVED:\\[0.15in]
+
+\noindent
+\hspace{3.5in}\underline{\hspace{2.9in}}
+
+\noindent
+\hspace{3.5in}\@comchair\\[0.15in]
+
+\noindent
+\hspace{3.5in}\underline{\hspace{2.9in}}
+
+\noindent
+\hspace{3.5in}\@commbtwo\\[0.15in]
+
+\noindent
+\hspace{3.5in}\underline{\hspace{2.9in}}
+
+\noindent
+\hspace{3.5in}\@commbthree%
+%
+\if@fourthmem%
+   \\[0.15in]
+
+   \noindent
+   \hspace{3.5in}\underline{\hspace{2.9in}}
+
+   \noindent
+   \hspace{3.5in}\@commbfour%
+\fi%
+\\[1in]
+
+\noindent
+\underline{\hspace{2.9in}}\\
+\@gradschooldean\\
+Dean of the Graduate School
+
+\newpage}
+
+\newenvironment{CenteredPage}
+  {
+    \vspace*{10pc}
+    \begin{center}}
+  {
+    \end{center}
+    \newpage}
+
+\newcommand{\maketitlepage}{
+% The following should logically be after the title page
+% but putting it there messes up the first
+% page number position.
+\setlength{\textheight}{8.4in}
+\pagestyle{plain}
+\thispagestyle{empty}
+%
+\begin{center}
+\@title
+\vfill
+by
+\vfill
+\@author%
+\if@degrees%
+, \@authordegrees%
+\fi%
+\\[1.67in]
+THESIS\\[1pc]
+Presented to the Faculty of the Graduate School of\\[1pc]
+The University of Texas at El Paso\\[1pc]
+in Partial Fulfillment\\[1pc]
+of the Requirements\\[1pc]
+for the Degree of\\[0.5in]
+MASTER OF SCIENCE\\[1.33in]
+\@deptnm\\[1pc]
+THE UNIVERSITY OF TEXAS AT EL PASO\\[1pc]
+\@date
+\end{center}
+\newpage
+% Double-spacing begins here
+\dsp
+\setlength{\footskip}{0.5in}
+}
+
+\newcommand{\addboldline}[2]{%
+    \immediate\write\@mainaux{%
+        \string\@writefile{#1}{\noindent {\string\bf\space#2}}}
+}
+
+\newcommand{\StartBody}{%
+%
+\include{null}          % this to get Roman numeral page numbering correct
+\pagenumbering{arabic}  % Arabic page numbers
+\setcounter{page}{1}    % Reset page numbering to 1
+\addboldline{toc}{Chapter} %Adds the word ``Chapter'' in the TOC.
+}
+
+\newcommand{\StartAppendix}{%
+\addboldline{toc}{Appendix} %Adds the word ``Appendix'' in the TOC.
+\appendix
+}
+
+\addtocontents{toc}{\hfill{\bf Page}}

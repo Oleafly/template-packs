@@ -1,0 +1,39 @@
+\chapter{Literature Survey}\label{ch:literature_review}
+
+\section{How to Write a Literature Review}\label{sec:literature_review:howto}
+
+This chapter will contain some practical advice for starting the research journey by finding the state-of-the-art for the project at hand. However, until we have time to write this chapter, we are including some related works form an in-progress project.
+
+In this chapter, we review some supervised and unsupervised techniques that are used to identify human activities using mobile sensor data. Additionally, we review some methods that can help identify appropriate features that need to be extracted from the raw sensor data to better identify activity patterns.
+
+\subsection{Activity Recognition}
+Appropriate datasets are hard to find for human activity recognition (HAR) research, which lead many authors to collect their own data using several sensors. Chen and Shen~\cite{chen2017} presented performance analysis based on the placement of smartphones on various parts of a subject's body. In their data collection phase, they captured data from a combination of different sensors, e.g., only accelerometer versus combined accelerometer and gyroscope, from smartphones attached to the forearm, abdomen, or legs of the subject, with the ultimate goal of classifying the type of activity being performed.
+%%
+Su et al.~\cite{su2014} computed features in two different domains: time and frequency. In the time domain, they calculated mean, max-min, standard deviation, correlation, and signal magnitude area (SMA). In the frequency domain, they calculated energy, entropy, binned distribution, and the time difference between peaks. They tested a number of supervised learning methods for activity recognition, such as using decision tree, na\"{i}ve Bayes, and support vector machine (SVM) classification models. 
+
+% \subsection{Supervised Approaches}
+Anguita et al.~\cite{anguita2013} focused on labeled data collection using built-in smartphone sensors (accelerometer, gyroscope at 50Hz) with six predefined activity labels. To validate the quality of the dataset, they used the SVM classifier, after filtering noise, and feature mapping to a randomly-split test/train dataset. Kim et al.~\cite{kim2010} summarized pattern discovery in supervised HAR approaches, including hidden Markov model (HMM), linear chain conditional random fields (CRF), and skip-chain CRF (SCCRF).
+% \subsection{Unsupervised Approaches}
+Several approaches have been devised for unsupervised learning for human activity recognition. Bhattacharya et al.~\cite{bhattacharya2014} and Li et al.~\cite{yongmou2014} compared sparse encoding and principle component analysis (PCA) for activity recognition from unlabeled sensor data and found sparse encoding to be better. In~\cite{yongmou2014}, Li et al. also compared denoising autoencoder (DAE) and fast fourier transform (FFT) techniques for feature extraction and found sparse autoencoder to provide better results than other techniques.
+
+Chamroukhi et al.~\cite{chamroukhi2013} described a method to identify hidden discrete logistic processes that maximize the likelihood of data being observed, which they trained via a dedicated expectation maximization (EM) algorithm. Similarity, Kwon et al.~\cite{kwon2014} compared various clustering algorithms for labeling a mixed bag of known and unknown activities. Results showed that given a number of activities, GMM seems to outperform $k$-means and hierarchical clustering for a given known number of activities, but DBSCAN~\cite{ester1996} proved the best choice when the number of activities is unknown.
+
+Wang et al.~\cite{wang2014} discussed linear dynamical systems for human activity recognition, which uses $k$-medoids clustering and a bag-of-systems (BoS) to predict activities involving motion, such as jumping and running. Ronao and Cho~\cite{ronao2015} proposed using a deep convolutional neural networks (DCNN) to extract features from the time series data. They found that, as the number of layers increases, the classification performance improved but the complexity of derived features decreased. Analysis of additional algorithms showed that DCNNs with hand designed features yield better results. Gjoreski and Roggen~\cite{gjoreski2017} proposed a method called ``Unsupervised Online Activity Discovery Using Temporal Behavior Assumption'' (UnADevs) based on an online clustering which includes the temporal information of the occurring activities. It is well suited to identify clusters of repeating activities while keeping track of the time interval of discovered activity clusters.
+
+Most of the works in the area of human activity recognition involves smartphones, which have many built-in sensors  which can generate diverse signal shapes given the phone's position. These signals can be used to recognize many different human activities. Existing works have used many different combinations of the sensors and machine learning techniques, but are primarily focused on identifying base activities (sitting, running), while our method is designed to characterize human activity patterns and identify how these patterns change over time.
+
+\subsection{Multivariate Time Series Segmentation}
+Time series segmentation has been an area of interest for many research communities, including signal processing, pattern recognition, machine learning and language processing. 
+% Time series segmentation with multi-variables adds new challenges to segment definition. Many have introduced approaches like statistical latent processing models, clustering algorithms, dynamic programming to likely address the segmentation issue in different fields. 
+%
+Abonyi et al.~\cite{abonyi2005} presented fuzzy clustering as one such approach but it requires clusters to be contiguous in time. It uses probabilistic PCA models to measure homogeneity of the segments and fuzzy sets. To overcome this limitation, Wang et al. proposed an improved unsupervised method~\cite{wang2012} that can automatically determine the optimal segmentation order. 
+
+Dynamic programming (DP) algorithms have been widely explored to automatically segment multivariate time series~\cite{guo2015, anastasiu2015}. 
+% The advantage is that it can recursively formulate segmentation errors of univariate time series to multivariate time series. Hence making dynamic programming a computationally viable approach for this problem. 
+In one example, Anastasiu et al.~\cite{anastasiu2015} proposed an algorithm for optimal cross-user segmentation for identifying how users use their computers and how that usage changes over time. Our method is similar in scope, but focused on automatic discovery of human activity patterns. A similar dynamic programming based approach was proposed by Guo et al.~\cite{guo2016}. It initially applies fuzzy clustering to predefined segments and uses dynamic time warping to determine distances between non-equal length series. Segments are then iteratively updated through a segmentation objective function optimized using dynamic programming.
+
+% Majority of the above works focus on activity detection based on various sensors, data collection methods and, supervised/unsupervised models. A handful of research have also gone into time series segmentation in various domains. In this project, we propose to implement a multivariate time-series segmentation on human activities data collected over time, to classify activity patterns for a group of users.
+
+\subsection{Where to Find More Information About Literature Reviews}\label{sec:literature_review:more_info}
+
+This section will contain some relevant references on this topic.

@@ -1,0 +1,260 @@
+%
+%  revised  thesis.tex  2012-09-12  Jason St. John <jstjohn@purdue.edu>
+%  thesis.tex  2011-07-01  Mark Senn  https://engineering.purdue.edu/~mark
+%
+%  This is the thesis ``root file''.
+%
+%  To print the final copy of your thesis put a '%'
+%  in front of the \includeonly command and type
+%  (from page 71 of _LaTeX User's Guide and Reference Manual_, 2nd edition):
+%      latex thesis
+%      bibtex thesis
+%      latex thesis
+%      latex thesis
+%
+%  In "Reference:" listings below:
+%      KEY  MEANING
+%      TM   ``A Manual for the Preparation of Graduate Theses'',
+%             seventh revised edition, The Graduate School, 2006.
+%             http://www2.itap.purdue.edu/gradschool//Publications/graduate-thesis-manual.pdf
+%      PU   ``A Manual for the Preparation of Graduate Theses'',
+%           The Graduate School, Purdue University, 1996.
+%           http://www2.itap.purdue.edu/gradschool//Publications/graduate-thesis-manual.pdf
+%
+%  Search for "CHANGE" below and change things as necessary.
+%  I recommend putting "%%" before any existing lines that
+%  need to be changed and adding your new line(s) immediately
+%  below the existing lines.
+%
+
+% See https://engineering.purdue.edu/~mark/puthesis/#Options
+% for documentclass options.
+%
+% 'tech' is for all theses and dissertations in the CoT
+% 'thesisproposal' is for M.S. thesis proposals
+% 'dissertationproposal' is for Ph.D. dissertation proposals
+% 'nochapterblankpages' removes the requirement that chapters must start on odd-numbered pages
+% 'apacite' is the correct style for the CoT
+% CHANGE NEXT LINE?
+\documentclass[tech,thesisproposal,apacite,nochapterblankpages]{puthesis-cot}
+
+% Ensures that the first paragraph after a \section or \subsection tag is indented
+% properly.  (All other paragraphs are automatically indented properly.)
+\usepackage{indentfirst}
+
+% Unfortunately, the "indentfirst" package does not work with the first paragraph 
+% after a \subsubsection tag.  Put the tag \ip after a \subsubsection tag to indent the
+% first paragraph after the \subsubsection tag.
+\newcommand{\ip}{\mbox{}\indent}
+
+% The "fixltx2e" package is required for superscripting and subscripting.
+\usepackage{fixltx2e}
+
+% Create an "italicdesc" environment for use in the "Definitions" section. This
+% is provided by the "enumitem" package.
+\usepackage{enumitem}
+\newlist{italicdesc}{description}{4}
+\setlist[italicdesc]{font=\normalfont\itshape}
+
+% Per Dr. Mohler, there should be no hyphenation throughout the thesis.
+\usepackage[none]{hyphenat}
+% \raggedright prevents long, non-hyphenated words from bleeding into the margins.
+\raggedright
+% \raggedright gets rid of normal paragraph indentation, so we must reset that here.
+\parindent=0.5in
+
+% Define "align" environment used in demo-mathematics.tex.
+% CHANGE NEXT LINE?
+\usepackage{amsmath}
+
+% Define "multicols" environment environment used in demo-multicols.tex.
+% CHANGE NEXT LINE?
+\usepackage{multicol}
+
+% Define "subfigure" environment used in "demo-figure.tex".
+% CHANGE NEXT LINE?
+\usepackage{subfigure}
+
+% Title of thesis (used on cover and in abstract).
+% The title shown must be the full, official title of the
+% thesis.  Superscripts and subscripts are not permitted in
+% the title.
+% Reference: TM 26.
+% Use \title{Put Title Here} for a one-line title.
+% Use \\ to separate lines.
+% Put % at the end of the last line to avoid getting an extra space
+% in the abstract.
+% There are two forms of title: one line or more than one line.
+% There are examples of both below.
+% Only use one \title.
+% CHANGE NEXT FOUR LINES.
+\title{An Example Thesis Done with \LaTeX}
+\title{%
+  An Example Thesis Done with \LaTeX\\
+  with a Very Long Title in the\\
+  College of Technology%
+}
+
+% First author name with first name first is used for cover.
+% Second author name with last name first is used for abstract.
+% Your full name as it appears in the University records appears
+% on the cover.
+% Reference: TM 26, 29.
+% There are two forms of author, with and without initials.
+% There are examples of both below.
+% Only use one \author line.
+%
+% Template:
+% \author{Firstname M. Lastname}{Lastname, Firstname M.}
+%
+% CHANGE NEXT TWO LINES.
+\author{Mark Senn}{Senn, Mark}
+\author{Mark D. Senn}{Senn, Mark D.}
+
+% First is long title of degree (used on cover).
+% Second is abbreviation for degree (used in abstract).
+% Third is the month the degree was (will be) awarded (used on cover
+% and abstract).
+% Last is the year the degree was (will be) awarded (used on cover
+% and abstract).
+% The degree title for all doctoral candidates is ``Doctor of Philosophy.''
+% The precise degree names for master's candidates appear in the list of
+% ``Degrees Offered'' in the Graduate School bulletin.
+% The date is the month and year that the degree is actually awarded.
+% (If you have registered for ``degree only,'' revise the thesis title
+% page to reflect the new date on which the degree is to be awarded.)
+% Reference: TM 26--27, 30.
+% Only use one \pudegree line.
+% CHANGE NEXT LINE?
+\pudegree{Doctor of Philosophy}{Ph.D.}{December}{2012}
+\pudegree{Master of Science}{M.S.}{December}{2012}
+
+% Major professor (used in abstract).
+% Use, for example:
+%     \majorprof{John Q. Professor}
+%     \majorprofs{John Q. Professor and Thomas R. Jones}
+%     \majorprofs{John Q. Professor, Thomas R. Jones, and David S. Smith}
+% depending on the number of major professors you have.
+% CHANGE NEXT LINE.
+\majorprof{James L. Mohler}
+
+% Campus (used only on cover)
+% Use one of the following:
+%     Fort Wayne
+%     Hammond
+%     Indianapolis
+%     West Lafayette
+%     Westville
+% Reference: TM 27.
+% CHANGE NEXT LINE?
+\campus{West Lafayette}
+
+% My command definitions not specific to my thesis.
+% CHANGE NEXT LINE?
+\input{mydefs}
+
+
+% My command definitions specific to my thesis.
+
+% CHANGE NEXT LINE TWO LINES?
+% Set things up so \margins will show where the margins on the page are.
+\newcommand{\margins}{\Repeat{Show where the margins for the page are.}{4}}
+
+% CHANGE NEXT TWO LINES?
+% Let typing "\en" be exactly the same as typing "\ensuremath". 
+\let\en=\ensuremath
+
+% CHANGE NEXT FIVE LINES?
+% Define a \ve command with two arguments, so if it called with
+%     \ve an
+% it will expand to
+%     {\en{a_1},~\en{a_2},\ \ldots,~\en{a_{n}}}
+\newcommand{\ve}[2]{\en{#1_1},~\en{#1_2},\ \ldots,~\en{#1_{#2}}}
+
+
+% To LaTeX only some parts of your thesis put the
+% names of the parts to include here.  For example,
+% \includeonly{front} would only process front.tex.
+% \includeonly{front,introduction} would only process
+% front.tex and introduction.tex.
+% To print the final copy of your thesis put a '%'
+% in front of the \includeonly command and run LaTeX
+% three times to make sure that all cross-references
+% are correct.  Then run BibTeX once and LaTeX twice
+% more.
+% CHANGE NEXT LINE?
+%\includeonly{front,introduction}
+
+\begin{document}
+
+% Start a new volume for your thesis.  All theses must have at least one
+% volume.  If your thesis is too long to fit in one binder put another
+% "\volume" between chapters below.
+\volume
+
+% Front matter (dedication, etc.).
+\include{front}
+
+% Put chapter \include commands here.
+% CHANGE \include{...} COMMANDS BELOW?
+\include{introduction}
+
+% The literature review
+% The placement of this section may be incorrect!
+\include{literaturereview}
+
+% The methodology section
+% The placement of this section may be incorrect!
+\include{methodology}
+
+% Summary and/or conclusions are optional but often used.
+% The summary and/or conclusions often are the last
+% major division(s) of the text.
+% Reference: TM 32.
+% CHANGE NEXT LINE?
+\include{summary}
+
+% Recommendations are optional.
+% You may include recommendations as a major division if your
+% subject matter and research dictate.
+% Reference: TM 32.
+% CHANGE NEXT LINE?
+\include{recommendations}
+
+% Appendices are optional.
+% Appendices are not necessarily part of every thesis. Appendices are used
+% for supplementary illustrative material, original data, computer programs,
+% and other material not necessarily appropriate for inclusion within the
+% text of your thesis. 
+% Reference: TM 33.
+% Use "\appendix" for one appendix or "\appendices" for more than one
+% appendix.
+% CHANGE NEXT 7 LINES?
+\appendices
+\include{demo-citations}
+\include{demo-figures}
+\include{demo-mathematics}
+\include{demo-multicols}
+\include{demo-tables}
+\include{demo-text}
+
+% Bibliography is required if you consulted any outside references.
+% Reference: TM 32.
+\include{bibliography}
+
+% Notes and footnotes are optional.
+% Reference: TM 34.
+% I have not implemented this yet.  Mark Senn 2002-06-03
+%%\include{notes}
+
+% A vita is optional for master's theses
+% and required for doctoral dissertations.
+% Reference: TM 13.
+% CHANGE NEXT LINE?
+\include{vita}
+
+\end{document}
+
+% LaTeX won't read after the \end{document} command.
+% You can put notes to yourself or LaTeX input not
+% ready for use here if you'd like.

@@ -1,0 +1,195 @@
+% ============================================================
+%  PREAMBLE — packages, settings, custom commands
+%  Department of Earth Sciences, IIT Roorkee
+%  M.Tech Thesis Template
+% ============================================================
+
+% ---- Page Geometry -----------------------------------------
+\usepackage[
+    a4paper,
+    twoside,
+    top=20mm,
+    bottom=20mm,
+    inner=30mm,     % Binding side gets extra margin
+    outer=20mm,
+    headheight=14pt,
+    headsep=0pt     % zero gap: header area reserved but no text in it (page number is in footer)
+]{geometry}
+
+% ---- External PDF inclusion (for Turnitin report) ----------
+\usepackage{pdfpages}
+
+% ---- Font & Encoding ---------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathptmx}         % Times New Roman for text + math
+\usepackage{helvet}           % Helvetica for sans-serif (rarely used)
+
+% ---- Line Spacing ------------------------------------------
+\usepackage{setspace}
+\doublespacing                % 12pt double-spaced (standard for M.Tech theses)
+
+% ---- Paragraph Style ---------------------------------------
+\setlength{\parindent}{0pt}   % no first-line indent
+\setlength{\parskip}{8pt}     % small vertical gap between paragraphs
+
+% ---- Counter Utilities -------------------------------------
+\usepackage{chngcntr}
+
+% ---- Mathematics -------------------------------------------
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+
+% ---- Figures -----------------------------------------------
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+\graphicspath{{figures/}}     % place all figures in the figures/ folder
+
+% Flat numbering: Figure 1, 2, 3 ... (no chapter prefix)
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+
+% ---- Tables ------------------------------------------------
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{colortbl}
+
+% ---- Captions ----------------------------------------------
+\usepackage[
+    font=small,
+    labelfont=bf,
+    format=plain,
+    justification=justified
+]{caption}
+
+% ---- Bibliography ------------------------------------------
+% DEFAULT: SEG author-year style  (Smith, 2020) / (Smith and Jones, 2020)
+\usepackage[
+    round,
+    authoryear,
+    sort&compress
+]{natbib}
+%
+% ALTERNATIVE: IEEE numbered style  [1], [2], ...
+% To switch: comment out the block above and uncomment below.
+% Also change \bibliographystyle{seg} to \bibliographystyle{ieeetr} in main.tex.
+% \usepackage[
+%     numbers,
+%     sort&compress
+% ]{natbib}
+
+% ---- Hyperlinks --------------------------------------------
+\usepackage[
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue,
+    bookmarks=true,
+    bookmarksopen=true
+]{hyperref}
+
+% PDF metadata — uses config variables from main.tex
+\hypersetup{
+    pdftitle={\ThesisTitle},
+    pdfauthor={\AuthorName},
+    pdfsubject={M.Tech Thesis, \InstituteShort},
+    pdfkeywords={add your keywords here}
+}
+
+% ---- Headers & Footers -------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[RO,LE]{\thepage}          % page number on outer (non-binding) edge
+\renewcommand{\headrulewidth}{0pt}   % no header rule
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \fancyfoot[RO,LE]{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+% ---- Chapter & Section Title Style -------------------------
+\usepackage{titlesec}
+
+\newif\ifappendixmode
+\appendixmodefalse
+
+\newcommand{\underlineupper}[1]{\underline{\MakeUppercase{#1}}}
+\makeatletter
+\titleformat{\chapter}[block]
+    {\normalfont\Large\bfseries\centering\ifttl@label\vspace*{36pt}\fi}
+    {\ifappendixmode APPENDIX \thechapter\else CHAPTER \thechapter\fi}
+    {0pt}
+    {\\\underlineupper}
+\makeatother
+\titlespacing*{\chapter}{0pt}{-68.7pt}{20pt}
+\titlespacing{\chapter}{0pt}{-68.7pt}{20pt}
+
+\titleformat{\section}
+    {\normalfont\large\bfseries}
+    {\thesection}
+    {1em}
+    {}
+\titlespacing*{\section}{0pt}{12pt}{4pt}
+
+\titleformat{\subsection}
+    {\normalfont\normalsize\bfseries}
+    {\thesubsection}
+    {1em}
+    {}
+\titlespacing*{\subsection}{0pt}{10pt}{3pt}
+
+% ---- Miscellaneous -----------------------------------------
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{wasysym}          % checkbox symbols for AI disclosure form (\Square, \CheckedBox)
+\setlength{\medskipamount}{8pt}
+
+% ---- Front-matter chapter titles ---------------------------
+\renewcommand{\contentsname}{Table of Contents}
+\renewcommand{\listfigurename}{List of Figures}
+\renewcommand{\listtablename}{List of Tables}
+\renewcommand{\bibname}{References}
+
+% ---- Compact ToC / LoF / LoT spacing -----------------------
+\usepackage[titles]{tocloft}
+\titlespacing{\chapter}{0pt}{-68.7pt}{20pt}
+\setlength{\cftbeforefigskip}{6pt}
+\setlength{\cftbeforetabskip}{6pt}
+\renewcommand{\cftfigfont}{\normalsize}
+\renewcommand{\cfttabfont}{\normalsize}
+\renewcommand{\cftfigindent}{0pt}
+\renewcommand{\cfttabindent}{0pt}
+\setlength{\cftfignumwidth}{2em}
+\setlength{\cfttabnumwidth}{2em}
+\setlength{\cftbeforechapskip}{6pt}
+\renewcommand{\cftchapaftersnum}{.}
+
+% ---- Odd-page break ----------------------------------------
+% Ensures every chapter/frontmatter section opens on an odd (right-hand) page.
+\newcommand{\clearoddpage}{%
+    \clearpage
+    \ifodd\value{page}%
+    \else
+        \hbox{}\thispagestyle{empty}\newpage
+    \fi
+}
+
+% ---- Custom Math Commands ----------------------------------
+% Define shorthand notation for symbols used throughout your thesis.
+% Examples below — replace or extend with your own.
+%
+% \newcommand{\MySymbol}{\mathrm{SYM}}
+% \newcommand{\MyGreek}{\alpha_{\mathrm{sub}}}
+%
+% Common useful ones (uncomment as needed):
+% \newcommand{\SNR}{\mathrm{SNR}}
+% \newcommand{\sinc}{\operatorname{sinc}}
+% \newcommand{\dz}{\Delta z}

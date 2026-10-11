@@ -1,0 +1,308 @@
+\documentclass[english,a4paper,11pt]{report}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{latexsym}
+\usepackage{rotating}
+\usepackage[super]{nth}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage[includefoot, top=1.5in, bottom=1.5in, left=1in, right=1in]{geometry}
+\usepackage{listings}
+\usepackage[scaled=0.95]{helvet}
+\usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage{enumerate}
+\usepackage{titlesec}
+\usepackage{indentfirst}
+\usepackage{datetime}
+\usepackage{cite, array, amsmath, url}
+\usepackage{afterpage}
+\usepackage{mathptmx}
+
+% Adjusting the height above titles - probably doesn't do much
+\renewcommand{\headrule}{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{14pt}
+\addtolength{\topmargin}{0.0pt}
+
+% Try uncommenting the following line if fonts don't
+% display correctly in the PDF file.
+%\usepackage{pslatex}
+
+\newcommand{\precursortitle}[1]{
+	\begin{center}
+		\textbf{\Large #1}
+	\end{center}
+}
+
+% Setting the correct font size for everything
+\usepackage{titlesec}
+\titleformat{\chapter}[block]{\normalfont\Large\bfseries\centering}{\thechapter.}{14pt}{\MakeUppercase}
+\titleformat*{\section}{\normalfont\normalsize\bfseries}
+\titleformat*{\subsection}{\normalfont\normalsize\bfseries}
+
+% Moving the page number to bottom right corner
+\fancypagestyle{plain}{
+\fancyhf{}
+\fancyfoot[R]{\thepage}
+}
+
+% Changes the title of the Table of Contents(ToC)
+\renewcommand{\contentsname}{Contents}
+
+%------------------------------------------------------------
+
+% ACTUAL CONTENT HERE!
+%------------------------------------------------------------
+% Make sure to configure these!
+%------------------------------------------------------------
+\newcommand{\reporttitle}{my-title}
+\newcommand{\studentname}{my-name}
+\newcommand{\rollnumber}{aMT20xxyyy}
+\newcommand{\advisorname}{SomeAdvisorName}
+% Retain whichever is applicable
+\newcommand{\mydegree}{Master of Technology/Master of Science (Digital Society)}
+\newcommand{\companyname}{company-name}
+\newcommand{\internstart}{1st January 2023}
+\newcommand{\internend}{1st June 2023}
+\newcommand{\companyaddress}{company-address in the middle of nowhere}
+%------------------------------------------------------------
+% END of configuration
+%------------------------------------------------------------
+
+% This generates the monthname<space>year
+\newdateformat{monthyear}{\monthname[\THEMONTH] \THEYEAR}
+
+\begin{document}
+	\pagenumbering{roman}
+	%------------------------------------------------------------
+	% Title page
+	%------------------------------------------------------------
+	\thispagestyle{empty}
+	\begin{center}
+		\vspace*{1mm}
+		\Large{\textbf{\reporttitle}}\\
+		\large
+		
+		\vspace{4cm}
+		\textit{\textbf{Internship Report}}\\
+		\textit{\textbf{Submitted in Partial fulfillment for the Award of}}\\
+		\textbf{\mydegree}
+		\vspace*{1.5cm}
+		
+		By\\
+		
+		\vspace*{1.4cm}
+		{\bf \studentname}\\
+		\textbf{\rollnumber}\\
+		
+		\vspace{3.6cm}
+		
+		To\\	
+		\vspace{2.4cm}
+		\begin{figure}[h]
+			\centering
+			\large
+			\includegraphics[width=0.15\columnwidth]{images/iiitb_logo.png}\\
+			\textbf{International Institute of Information Technology Bangalore}\\
+			\textbf{\monthyear\today}
+		\end{figure}
+	\end{center}
+	\clearpage
+	
+	%------------------------------------------------------------
+	% Certificate page
+	%------------------------------------------------------------
+	\newpage
+	
+	\thispagestyle{empty}
+	\begin{center}
+		\Large
+		\vspace*{0.5cm}
+		\textbf{Certificate}
+		\vspace{1cm}
+	\end{center}
+	
+	\large
+	\noindent This is to certify that the internship report titled, \textbf{\reporttitle} submitted by \textbf{\studentname} (\textbf{\rollnumber}) is a bona fide work carried out under my/our supervision at \textbf{\companyname} from \textit{\internstart} to \textit{\internend}	(\textbf{$<$enter duration$>$}), in partial fulfilment of the \normalfont{\mydegree} course of International Institute of Information Technology Bangalore.\\
+	
+	\noindent His/ Her performance \& conduct during the internship was satisfactory.
+	
+	\vspace*{6cm}
+	\begin{flushright}
+		\makebox[2.5in]{\hrulefill}\\
+		\advisorname\\
+		\companyaddress\\
+	\end{flushright}
+	
+	\vspace*{3cm}
+	\noindent Date: \\
+	\noindent Place: Bengaluru \\
+	\clearpage
+	
+	%------------------------------------------------------------
+	% Student undertaking page
+	%------------------------------------------------------------
+	\newpage
+	
+	\thispagestyle{empty}
+	\begin{center}
+		\Large
+		\underline{\textbf{Undertaking by the Student}}
+		\vspace{1cm}
+	\end{center}
+	
+	\large
+	\noindent I, \textbf{\studentname}, hereby declare that the report of the internship program titled,	\textbf{\reporttitle} is prepared by me. I also confirm that, the report is only prepared for my academic requirement and not for any other purposes.
+	
+	\vspace*{0.5cm}
+	\noindent I also confirm that, the submitted softcopy has been reviewed and approved for submission by my supervisor.
+	
+	\vspace*{2cm}
+	\begin{flushright}
+		\makebox[2.5in]{\hrulefill}\\
+		Signature of the student\\
+		\rollnumber
+	\end{flushright}
+	
+	\vspace*{2cm}
+	\noindent Date: \\
+	\noindent Place: Bengaluru \\
+	
+	%------------------------------------------------------------
+	% Acknowlegdement page
+	%------------------------------------------------------------
+	\newpage
+	\pagenumbering{roman}
+	\setcounter{page}{4}
+	\thispagestyle{plain}
+	
+	\addcontentsline{toc}{chapter}{Acknowledgement}
+	\precursortitle{Acknowledgement}
+	\vspace{1cm}
+	
+	Put your acknowledgments here (copied from the thesis format, \textbf{MODIFY})...
+	\vspace{1cm}
+	
+	\noindent\emph{``Intellectual and practical assistance, advice, encouragement and
+		sources of monetary support should be acknowledged. It is appropriate to
+		acknowledge the prior publication of any material included in the thesis
+		either in this section or in the introductory chapter of the thesis.''}\\
+	
+	\hfill --- MUN School of Graduate Studies
+	\clearpage
+	
+	%------------------------------------------------------------
+	% Index(Table of Contents) page
+	%------------------------------------------------------------
+	\newpage
+	
+	\thispagestyle{plain}
+
+	\addcontentsline{toc}{chapter}{Table of Contents}
+	\tableofcontents
+	\clearpage
+	
+	%------------------------------------------------------------
+	% Tables page
+    % Remove this page if it's not required
+	%------------------------------------------------------------
+	\newpage
+	\addcontentsline{toc}{chapter}{List of Tables}
+	\listoftables
+	
+	%------------------------------------------------------------
+	% Figures page
+    % Remove this page if it's not required
+	%------------------------------------------------------------
+	\newpage
+	\addcontentsline{toc}{chapter}{List of Figures}
+	\listoffigures
+	
+	%------------------------------------------------------------
+	% Abstract page
+	%------------------------------------------------------------
+	\newpage
+	\addcontentsline{toc}{chapter}{Abstract}
+	\chapter*{Abstract}
+	
+	\singlespacing
+	\hspace*{0.25cm}
+	
+	This document provides information on how to write your thesis using
+	the \LaTeX\ document preparation system.  You can use these files as a
+	template for your own thesis, just replace the content, as necessary.
+	You should put your real abstract here, of course.
+	
+	\vspace{1cm}
+	
+	\emph{``The purpose of the abstract, which should not exceed 150 words for
+		a Masters' thesis or 350 words for a Doctoral thesis, is to provide
+		sufficient information to allow potential readers to decide on relevance
+		of the thesis. Abstracts listed in Dissertation Abstracts International
+		or Masters' Abstracts International should contain appropriate key
+		words and phrases designed to assist electronic searches.''}
+	
+	\hfill --- MUN School of Graduate Studies
+	
+	%------------------------------------------------------------
+	% Introduction chapter
+	%------------------------------------------------------------
+	\newpage
+	\pagenumbering{arabic}
+        \doublespacing
+        \pagestyle{plain}
+	
+	\chapter{Introduction}
+	\section{Section}
+	\subsection{Subsection}
+	\subsubsection{Subsubsection}
+
+    % Please remove these! This is only there to show the \doublespacing
+    \lipsum[100]\\
+
+    \lipsum[50]
+
+	%------------------------------------------------------------
+	% Content chapter 1
+	% Copy this template for new chapters
+	%------------------------------------------------------------
+	
+	\chapter{Some Topic}
+
+	Put all your content in chapters from here onwards. Add chapters as per need
+
+    %------------------------------------------------------------
+	% Content chapter N-1
+	% Copy this template for new chapters
+	%------------------------------------------------------------
+	
+	\chapter{Key Takeaways from the Internship}
+
+	Don't remove this chapter, it's actually required.
+
+ 	%------------------------------------------------------------
+	% Content chapter N
+	% Copy this template for new chapters
+	%------------------------------------------------------------
+	
+	\chapter{Conclusions}
+
+	This is the last numbered chapter in the report.
+
+	%------------------------------------------------------------
+	% Glossary page(s)
+	%------------------------------------------------------------
+	\addcontentsline{toc}{chapter}{Glossary}
+	\chapter*{Glossary}
+
+	%------------------------------------------------------------
+	% Bibliography page(s)
+	%------------------------------------------------------------
+	\addcontentsline{toc}{chapter}{Bibliography}
+	\chapter*{Bibliography}
+
+    You can use 'bibtex' styling for this. I am not providing this in the template, because it can be a pain sometimes, but that's one of the easiest ways I know of.
+	
+\end{document}

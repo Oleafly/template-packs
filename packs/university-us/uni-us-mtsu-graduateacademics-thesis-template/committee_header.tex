@@ -1,0 +1,104 @@
+% command for 
+\newenvironment{nscenter}
+ {\parskip=0pt\par\nopagebreak\centering}
+ {\par\noindent\ignorespacesafterend}
+
+% Change margins on-command.
+\def\changemargin#1{\list{}{\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
+
+% Macro:	addTitleAndAuthor
+% Parameters:
+%	- 1: Title Name
+%	- 2: Your Name
+\newcommand{\addTitleAndAuthor}[2]{
+\begin{nscenter} 
+\mbox{ }\\
+  % Process Title..
+#1% if #1 is not empty
+\\[\baselineskip]
+
+By\\[0\baselineskip]
+
+#2
+\\[2\baselineskip]% if #1 is not empty
+
+\end{nscenter}
+}
+
+\newcommand{\addCommitteeMember}[2][Computer Science]{
+	\ifthenelse{\isempty{#1}}
+	{\\[0\baselineskip] \underline{\hspace{11.54cm}} \\[0\baselineskip] Dr. professor's name (Computer Science or other department)\\[0\baselineskip]}
+	{\\[0\baselineskip] \underline{\hspace{11.54cm}} \\[0\baselineskip] Dr. {#2} (#1) \\[0\baselineskip]}
+}
+
+
+\newcommand{\addSupervisor}[2][Computer Science]{
+	\ifthenelse{\isempty{#1}}
+	{\\[0\baselineskip] \underline{\hspace{11.54cm}} \\[0\baselineskip] Supervisor Dr. professor's name (Computer Science) \\[0\baselineskip]}
+	{\\[0\baselineskip] \underline{\hspace{11.54cm}} \\[0\baselineskip] Supervisor Dr. {#2} (#1) \\[0\baselineskip]}
+}
+
+\newcommand{\addChair}[1][Chair's Name]{
+	\noindent\underline{\hspace{11.54cm}} \newline Dr. #1, Chairperson Computer Science Department \\
+}
+
+\newcommand{\addDean}[1][Dean's Name]{
+	\noindent\underline{\hspace{11.54cm}} \newline Dr. #1, Interim Dean of the College of Graduate Studies
+}
+
+% Macro:	addCommittee
+% Parameters:
+%	- 1. Committee Member 1 (Supervisor)
+%	- 2. Committee Member 1's Department
+%	- 3. Committee Member 2
+%	- 4. Committee Member 2's Department
+%	- 5. Committee Member 3
+%	- 6. Committee Member 3's Department
+%	- 7. Computer Science Chairperson
+%	- 8. Dean of Graduate Studies
+\newcommand{\addCommittee}[8]{
+	\noindent APPROVED: 
+	\begin{changemargin}{2.54cm}
+		Graduate Committee\vspace{1mm} \newline
+		% set committee members
+		\addSupervisor[#2]{#1}
+		\addCommitteeMember[#4]{#3}
+		\addCommitteeMember[#6]{#5}
+	\end{changemargin}
+
+	\addChair[#7]
+
+	\addDean[#8]
+
+}
+
+\newcommand{\addDegreeNotes}[1]{
+\vspace{8ex}
+\centerline{A thesis submitted in partial fulfillment}
+\centerline{of the requirements for the degree of}
+
+\vspace{8ex}
+
+\centerline{MASTER OF SCIENCE}
+\centerline{in}
+\centerline{Computer Science}
+
+\vspace{8ex}
+
+\centerline{Middle Tennessee State University}
+\vspace{1ex}
+
+\centerline{#1}
+
+\vspace{8ex}
+
+\centerline{Thesis Committee:}
+
+\centerline{Dr. Professor One}
+
+\centerline{Dr. Professor Two}
+
+\centerline{Dr. Professor Three}
+
+}

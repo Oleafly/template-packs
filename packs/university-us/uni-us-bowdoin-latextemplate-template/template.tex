@@ -1,0 +1,153 @@
+\documentclass[11pt,twocolumn]{article} 
+\usepackage{fullpage}
+
+
+\begin{document}
+
+\title{A writeup for my favorite class}
+\author{Me Myself}
+\maketitle 
+
+
+\abstract{This writeup summarizes the design and findings of my first
+  project in csci350, Spring09. }
+
+\section{Overview}
+
+This project acts as a miniature GIS and lets the user execute the
+followig commands: 
+\begin{verbatim}
+gis>help
+2drender grid.ass
+3drender grid.asc
+flowdir elev.asc dir.asc
+flowaccu elev.asc dir.asc accu.asc
+bye
+gis>
+\end{verbatim}
+
+To start a new paragraph you need to start a new line. 
+
+The \texttt{flowdir}  program computes the flow direction grid
+corresponding to an elevation file. 
+
+
+The \texttt{flowaccu} program computes the flow accumulation grid
+corresponding to an elevation file and a flow direction file.
+
+
+\section{Algorithm and analysis}
+
+\paragraph{Flow direction. }
+The flow direction computation works by
+iterating in order over the grid, and computing, for each point
+$(i,j)$, the neighbor of minimum height. A neighbor is considered a
+point $(i+/-1, j+/-1)$.
+
+{\bf Space:} My algorithm is very space-aware. Or is it
+space-oblivious. 
+
+{\bf Time: } And the running time is also outstanding.
+
+
+\paragraph{Flow accumulation.} And here is my flow accumulation
+approach. The flow accumlaion algorithm works as follows...
+
+{\bf Space:} The array is $a_1, a_2, ..., a_n$. 
+
+{\bf Time: } The running time is $O(n \log n)$ if $n > 3$ otherwise it
+is $O(n^3)$. 
+
+
+
+
+\section{Experimental evaluation}
+
+To determine the performance in practice of my algorithms I performed
+a careful experimental evaluation.
+
+{\bf Platform.} The code was written in C, compiled with \texttt{gcc
+  4.0.2, -O3}, 64 bits enable, and executed on a Mac dual core 2.xx
+GHZ, 4GB RAM you check all these things, right? running Leopard.
+
+{\bf Datasets: } The test datasets are real-life grid terrains ranging
+from 1 million to 1,000 million points.  They are given in
+Table~\ref{tbl:datasets} below.
+
+
+\begin{table}[htp]
+    \centering{
+    \begin{tabular}{|l|r|}
+      \hline 
+      Dataset & nb. of points \\
+      \hline 
+      \hline 
+      {Kaweah}        &      $1.6 \cdot 10^6$ \\
+      {Sierra}        &      $9.5 \cdot 10^6$ \\
+      {East-Coast USA (usadem2)} & $ 246 \cdot 10^6$ \\
+      {Washington State}    & $1,066 \cdot 10^6$ \\
+      \hline
+    \end{tabular}
+  }
+  \caption{Size of terrain datasets.}
+  \label{tbl:datasets}
+\end{table}
+      
+
+The running times for \texttt{flowaccu} and \texttt{flowdir} are
+summarized in Tables~\ref{tbl:rundir} and \ref{tbl:runaccu}. Don't
+worry about the placement of tables cause Latex places the figures and
+table the best it can. That's not always where you want them.
+
+\begin{table}[htp]
+    \centering{
+    \begin{tabular}{|l|r|r|}
+      \hline 
+      Dataset & time & CPU\\
+      \hline 
+      \hline 
+      {Kaweah}        &     ? & ? \\
+      {Sierra}        &      ? & ? \\
+      {East-Coast USA (usadem2)} & ? & ? \\
+      {Washington State}    & ? & ? \\
+      \hline
+    \end{tabular}
+  }
+  \caption{Running times (seconds) and CPU-utilization for
+    \texttt{flowdir}.}
+  \label{tbl:rundir}
+\end{table}
+
+
+\begin{table}[htp]
+    \centering{
+    \begin{tabular}{|l|r|r|}
+      \hline 
+      Dataset & time & CPU\\
+      \hline 
+      \hline 
+      {Kaweah}        &     ? & ? \\
+      {Sierra}        &      ? & ? \\
+      {East-Coast USA (usadem2)} & ? & ? \\
+      {Washington State}    & ? & ? \\
+      \hline
+    \end{tabular}
+  }
+  \caption{Running times (seconds) and CPU-utilization for
+    \texttt{flowaccu}.}
+  \label{tbl:runaccu}
+\end{table}
+
+%%in case you want to put a figure
+% \begin{figure}[hptb]
+%   \centering
+%   \includegraphics [width=0.45 \linewidth] {figures/kaweah2.pdf} 
+%   \includegraphics [width=0.45 \linewidth]{figures/sierra.pdf}
+
+
+\section{Conclusion}
+The conclusion goes here.  
+
+\end{document}
+
+

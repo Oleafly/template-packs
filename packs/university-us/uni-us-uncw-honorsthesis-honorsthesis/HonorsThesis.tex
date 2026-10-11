@@ -1,0 +1,225 @@
+\documentclass[12 pt]{uncw_thesis}
+%
+% Packages
+%
+\usepackage{amsmath, amssymb, amsthm} % AMS packages
+\usepackage{setspace}    % Needed for multiple spacing (single and double)
+\usepackage{graphicx}    % Needed for images
+\usepackage{epstopdf}     % Use to convert eps images
+\usepackage{afterpage}   % Needed to make figures and tables on separate pages
+\usepackage{indentfirst} % Use to indent first paragraphs
+\usepackage{hyperref}    % Needed for live links
+\usepackage{tikz}        % Package for drawing figures
+\hypersetup{
+    %bookmarks=false,%
+    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+    urlcolor=black
+}                        % Eliminate colored links See http://en.wikibooks.org/wiki/LaTeX/Hyperlinks
+\urlstyle{same}          % Makes links same font aas text
+\usepackage{lipsum}      % Generate dummy text for sample thesis
+
+\usepackage{tocloft}
+
+%
+% Formatting
+%
+
+% For 1.5" left margin and 1.0" right margin set
+% \oddsidemargin=.54in and \textwidth = 5.92in 
+
+\doublespacing
+\oddsidemargin=0in
+\topmargin = -.48in
+\textwidth = 6.5in 
+\setlength{\textheight}{8.9in}
+
+% These lines force page numbering to upper right
+% You need to add \thispagestyle{main} after each chapter section % and in biblio - See the sample chapters.
+\usepackage{titleps}  
+\newpagestyle{main}{%
+\sethead[\thepage][][]{}{}{\thepage}
+}
+
+% Math environments
+\usepackage{amsthm}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+
+% ******************************************************************
+
+
+% Used for forced indentation
+\newenvironment{myindentpar}[1]%
+{\begin{list}{}%
+         {\setlength{\leftmargin}{#1}}%
+         \item[]%
+}
+{\end{list}}
+
+% \numberwithin{equation}{subsection}   %Uncomment for Equation Numbering by Subsection
+
+%
+% Start of Document
+%
+\begin{document}
+\pagenumbering{roman}
+%
+%  TITLE PAGE
+%
+\pagestyle{empty}
+\begin{singlespace}
+\begin{center}
+     \hskip 1pt \\    % Title on Line 2 - 15 words or fewer
+     {\large SAMPLE UNCW HONORS THESIS}\\
+     \hskip 1pt \\
+     by \\
+     \hskip 1pt \\    % Name on line 6
+     Russell L. Herman 
+\end{center} % Start statement on line    
+     A paper submitted in partial fulfillment of the requirements to complete Honors in \\
+     the Department of Mathematics and Statistics. \\
+     \hskip 1pt \\
+     \hskip 1pt \\
+% When changing committee names need to adjust hspace values
+Examining Committee:\hspace*{1.6in} Approved By: \\
+ \\ 
+ \\
+\rule{6.5cm}{.01in}\hspace*{.7in} \rule{6.5cm}{.01in}\\ 
+Dr. Russell Herman
+\hspace*{1.77in} Dr. Lilit Martirosyan \\ Mathematics and Statistics\hspace*{1.31in} Faculty Supervisor \\ 
+\\
+\\
+\rule{6.5cm}{.01in}\\
+Dr. Sridhar Narayan \\ 
+Computer Science\\
+\\ 
+\\
+\rule{6.5cm}{.01in} \hspace*{.7in} \rule{6.5cm}{.01in}\\ 
+Dr. Erik Slivken  \hspace*{2.05in} Dr. Johannes Hattingh\\
+Mathematics and Statistics \hspace*{1.29in} Chair, Mathematics and Statistics
+\\
+\\
+\\ % Uncomment if Liaison assigned
+% \rule{6.5cm}{.01in}
+ \\
+% (Name of Honors Faculty Liaison)
+ \\
+%     Honors Council Representative 
+\\
+    \\ 
+    \\
+    \rule{6.5cm}{.01in}\\
+    Dr. Shawn Bingham
+    \\
+     Director of the Honors Scholars College \\
+\begin{center}   
+    %\hskip 1pt \\
+    \hskip 1pt \\    % UNCW on line
+    University of North Carolina Wilmington\\
+    \hskip 1pt \\    % UNCW on line
+    Wilmington, North Carolina \\
+    \hskip 1pt \\    % Year on line 
+    November 2021\\
+\end{center}
+\end{singlespace}
+\newpage
+
+%
+% Table of Contents
+%
+
+\newpage
+\pagestyle{plain}
+\begin{center}
+\tableofcontents
+\end{center}
+
+
+%
+% Abstract
+%
+\newpage
+\sectionx*{ABSTRACT}
+\addcontentsline{toc}{section}{ABSTRACT}
+The purpose of this sample is to show the results of using the
+style files needed to conform to the UNCW Honors Thesis format.
+
+%
+% Dedication (Optional)
+%
+%\newpage
+%\sectionx*{DEDICATION}
+%\addcontentsline{toc}{section}{DEDICATION}
+%This thesis sample is dedicated to all of the undergraduate students who had struggled with the formatting of their theses.
+
+%
+% Acknowledgments (Optional)
+%
+%\newpage
+%\sectionx*{ACKNOWLEDGMENTS}
+%\addcontentsline{toc}{section}{ACKNOWLEDGMENTS}
+%We would like to thank all committee members for their help with this thesis. (This is optional)
+\newpage
+
+%
+% Lists of Figures and Tables (Optional)
+%
+\begin{singlespace}
+
+  \setlength{\cftparskip}{1\baselineskip}
+\listoftables \addcontentsline{toc}{section}{LIST OF TABLES}
+\newpage
+\listoffigures \addcontentsline{toc}{section}{LIST OF FIGURES}
+\end{singlespace}
+
+%
+% List of symbols and abbreviations (Optional)
+%
+%\newpage
+%\sectionx*{LIST OF SYMBOLS}
+%\addcontentsline{toc}{section}{LIST OF SYMBOLS}
+
+
+%
+% Body of Thesis
+%
+% The thesis may be typed using one file or each chapter composed
+% individually and called using a \input chapx statement. This is
+% useful for compiling individual chapters by using %\input chapx
+% in order not to compile other chapters until the thesis is done.
+%
+% All chapters use section command which does not display the
+% chapter number on the first page of a chapter.
+%
+\pagestyle{main}
+\newpage
+\pagenumbering{arabic}
+
+
+\input chap1
+\input chap2
+\input biblio
+\input appendix
+%
+% Biographical Sketch (Optional)
+%
+\newpage
+\begin{singlespace}
+\section*{BIOGRAPHICAL SKETCH}
+Here is the section where you can let the reader know something
+about your educational background and any other pertinent
+professional information that you would like the reader to know.
+\end{singlespace}
+\end{document}

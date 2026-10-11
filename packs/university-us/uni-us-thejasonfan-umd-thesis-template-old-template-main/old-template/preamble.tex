@@ -1,0 +1,176 @@
+\usepackage{titlesec}
+
+% \usepackage{times}
+% \usepackage[usenglish]{babel}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage[onehalfspacing]{setspace} %used for footnote spacing
+
+% symbols need to be loaded before unicode-math
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[ruled, linesnumbered, noend, vlined]{algorithm2e}
+% \usepackage[noEnd=true,indLines=true]{algpseudocodex}
+% \usepackage[ruled]{algorithm}
+\usepackage{siunitx}
+\sisetup{
+group-separator = {,},
+round-mode = places,
+round-precision = 0,
+group-minimum-digits = 3
+}
+
+\usepackage[bold-style=ISO]{unicode-math}
+%----------------------------------------------------------------------------------------
+%	Margins
+%----------------------------------------------------------------------------------------
+\geometry{
+	paper=letterpaper, % Change to letterpaper for US letter
+	inner=2.5cm, % Inner margin
+	outer=2.5cm, % Outer margin
+	% bindingoffset=.5cm, % Binding offset
+	top=2.5cm, % Top margin
+	bottom=2.5cm, % Bottom margin
+	%showframe, % Uncomment to show how the type block is set on the page
+}
+
+\usepackage[sort,square,numbers]{natbib}
+%%%\usepackage[sectionbib]{chapterbib}   %used for placing
+%%%bibliography after each chapter
+% \usepackage{bibentry}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+
+
+%----------------------------------------------------------------------------------------
+%	Packages
+%----------------------------------------------------------------------------------------
+% \usepackage[hide]{chato-notes} % Custom note boxes
+\usepackage[textwidth=1in, textsize=scriptsize]{todonotes}
+\usepackage{booktabs} % Better tables
+\usepackage{multirow}
+\usepackage{xspace} % No need for "\" after macros
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{flafter} % Float figures and tables after sections
+\usepackage{amsthm}
+\usepackage[shortcuts]{extdash}
+
+%% Customize lists,
+% inline lists with enumerate*
+% shortlabels lets you do \begin{enumerate}[(1)] for easy label formatting
+\usepackage[inline,shortlabels]{enumitem}
+
+
+%% subcaptions
+% Make subfigure labels look like Figure~1.1(b)
+\usepackage[labelformat=simple]{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})}
+%% making \caption, \caption[]{} from caption package
+% \renewcommand{\caption}[1]{\caption[]{#1}}
+
+%----------------------------------------------------------------------------------------
+% Niceties, writing modern laTex
+%----------------------------------------------------------------------------------------
+\usepackage[style=english]{csquotes} %uncomment for super fancy quotes
+\SetBlockEnvironment{quotation}% So block quotes have indented paragraphs.
+
+%----------------------------------------------------------------------------------------
+% UMD TOC
+%----------------------------------------------------------------------------------------
+\usepackage{tocloft,calc}
+\renewcommand{\cftlottitlefont}{\hspace*{\fill}\large}
+\renewcommand{\cftafterlottitle}{\hspace*{\fill}}
+\renewcommand{\cftloftitlefont}{\hspace*{\fill}\large}
+\renewcommand{\cftafterloftitle}{\hspace*{\fill}}
+\renewcommand{\cftchapaftersnum}{:\ }
+\renewcommand{\cftchappresnum}{\chaptername\space}
+\setlength{\cftchapnumwidth}{\widthof{\textbf{Appendix\ }}}
+\makeatletter
+\g@addto@macro\appendix{%
+  \addtocontents{toc}{%
+    \protect\renewcommand{\protect\cftchappresnum}{\appendixname\space}%
+  }%
+}
+\setlength{\cftchapnumwidth}{9em} %adds space between chapter/appendix and title in toc
+
+
+%---
+% rust code listing
+%---
+\usepackage{color}
+\usepackage{listings}
+\definecolor{GrayCodeBlock}{RGB}{241,241,241}
+\definecolor{BlackText}{RGB}{110,107,94}
+\definecolor{RedTypename}{RGB}{182,86,17}
+\definecolor{GreenString}{RGB}{96,172,57}
+\definecolor{PurpleKeyword}{RGB}{184,84,212}
+\definecolor{GrayComment}{RGB}{170,170,170}
+\definecolor{GoldDocumentation}{RGB}{180,165,45}
+\lstdefinelanguage{Rust}
+{
+	numbers=left,
+	numberstyle=\small\ttfamily\color{GrayComment},
+    columns=fullflexible,
+    keepspaces=true,
+	firstnumber=last,
+    frame=single,
+    framesep=0pt,
+    framerule=0pt,
+    framexleftmargin=4pt,
+    framexrightmargin=4pt,
+    framextopmargin=5pt,
+    framexbottommargin=3pt,
+    xleftmargin=30pt, % margin to indent code blocks
+    xrightmargin=4pt,
+    backgroundcolor=\color{GrayCodeBlock},
+    basicstyle=\small\ttfamily\color{BlackText},
+    keywords={
+        true,false,
+        unsafe,async,await,move,
+        use,pub,crate,super,self,mod,
+        struct,enum,fn,const,static,let,mut,ref,type,impl,dyn,trait,where,as,
+        break,continue,if,else,while,for,loop,match,return,yield,in
+    },
+    keywordstyle=\color{PurpleKeyword},
+    ndkeywords={
+        bool,u8,u16,u32,u64,u128,i8,i16,i32,i64,i128,char,str,
+        Self,Option,Some,None,Result,Ok,Err,String,Box,Vec,Rc,Arc,Cell,RefCell,HashMap,BTreeMap,
+        macro_rules
+    },
+    ndkeywordstyle=\color{RedTypename},
+    comment=[l][\color{GrayComment}\slshape]{//},
+    morecomment=[s][\color{GrayComment}\slshape]{/*}{*/},
+    morecomment=[l][\color{GoldDocumentation}\slshape]{///},
+    morecomment=[s][\color{GoldDocumentation}\slshape]{/*!}{*/},
+    morecomment=[l][\color{GoldDocumentation}\slshape]{//!},
+    morecomment=[s][\color{RedTypename}]{\#![}{]},
+    morecomment=[s][\color{RedTypename}]{\#[}{]},
+    stringstyle=\color{GreenString},
+    string=[b]"
+}
+
+%----------------------------------------------------------------------------------------
+% MUST BE LAST:	Linking and context-dependent references
+% - myst be loaded last in order: bookmarks > hyperref > cleveref
+% - cleverref lets you do \cref{<label>} for "Figure X", "Table X" etc.
+% - use \Cref for start of sentences
+%----------------------------------------------------------------------------------------
+%hyperref
+\usepackage[colorlinks=true,urlcolor=black,linkcolor=blue,citecolor=blue,debug=true]{hyperref}
+\usepackage{bookmark}
+\usepackage[capitalize,nameinlink]{cleveref}
+\crefformat{equation}{#2(#1)#3}
+\Crefformat{equation}{#2Equation~(#1)#3}
+
+
+%----------------------------------------------------------------------------------------
+% Other commands
+%----------------------------------------------------------------------------------------
+
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{problem}{Problem}[chapter]
+\titleformat{\chapter}{\large}{\chaptername~\thechapter:}{1em}{}
+\renewcommand{\paragraph}[1]{{\bfseries #1.}\hspace{1em}}

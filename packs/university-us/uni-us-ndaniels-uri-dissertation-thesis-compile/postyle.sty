@@ -1,0 +1,174 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% All this has been extracted from the urithesis.cls file created by
+% Timothy Toolan in Electrical Engineering Dept at URI
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Set page dimensions.  These values give us 1.6in on the left margin,
+% and 1.1in on the other margins, as well as placing the page numbers
+% correctly.
+
+\newlength{\@realheadsep}
+\newlength{\@realtextheight}
+
+\makeatletter
+
+\setlength{\oddsidemargin}{.65in}   %<=== Maybe change here
+\setlength{\textwidth}{5.8in}
+\setlength{\marginparsep}{.2in}
+\setlength{\marginparwidth}{1in}
+
+\setlength{\topmargin}{-0.5in}   %<=== Maybe change here
+\setlength{\headheight}{0.25in}
+\setlength{\@realheadsep}{0.35in}
+\setlength{\@realtextheight}{8.8in}
+\setlength{\footskip}{.5in}
+
+\setlength{\paperheight}{11.0in}
+\setlength{\paperwidth}{8.5in}
+
+\setlength{\headsep}{\@realheadsep}
+\setlength{\textheight}{\@realtextheight}
+
+% set paragraph indentation to 2em
+\parindent 2em
+\pagestyle{plain}
+
+\def\copyrightyear#1{\gdef\@copyrightyear{#1}}
+\def\signature#1{
+  \@ifundefined{@signatureA}{%
+    \gdef\@signatureA{#1}}{
+  \@ifundefined{@signatureB}{%
+    \gdef\@signatureB{#1}}{
+  \@ifundefined{@signatureC}{%
+    \gdef\@signatureC{#1}}{
+  \@ifundefined{@signatureD}{%
+    \gdef\@signatureD{#1}}{
+  \gdef\@signatureE{#1}}}}}
+}
+
+%%%%%%
+%\def\@title{}
+%\def\@author{}
+
+% Lengths used by capheadings where we expand the header and shrink
+% the text body to allow the heading on each page within original margins.
+\newlength{\@headerextra}
+\setlength{\@headerextra}{0.35in}
+
+\newlength{\@altheadsep}
+\setlength{\@altheadsep}{\@realheadsep}
+\addtolength{\@altheadsep}{\@headerextra}
+
+\newlength{\@alttextheight}
+\setlength{\@alttextheight}{\@realtextheight}
+\addtolength{\@alttextheight}{-\@headerextra}
+
+\newlength{\@fullheadheight}
+\setlength{\@fullheadheight}{\headheight}
+\addtolength{\@fullheadheight}{\@realheadsep}
+
+\newlength{\@headtofootheight}
+\setlength{\@headtofootheight}{\@alttextheight}
+\addtolength{\@headtofootheight}{\@realheadsep}
+\addtolength{\@headtofootheight}{\@headerextra}
+
+% Set double spacing command for 12pt font.
+\def\doublespace{%
+  \renewcommand{\baselinestretch}{1.66}
+  \renewcommand{\arraystretch}{0.602}
+  \normalsize%
+}
+
+% Set double spacing command for 11pt font.
+\def\@tmppt{11pt}
+\ifx\@optptsize\@tmppt
+  \def\doublespace{%
+    \renewcommand{\baselinestretch}{1.62}
+    \renewcommand{\arraystretch}{0.617}
+    \normalsize%
+  }
+\fi
+
+% Set double spacing command for 10pt font.
+\def\@tmppt{10pt}
+\ifx\@optptsize\@tmppt
+  \def\doublespace{%
+    \renewcommand{\baselinestretch}{1.67}%
+    \renewcommand{\arraystretch}{0.599}%
+    \normalsize%
+  }
+\fi
+% Set single spacing command.
+\def\singlespace{%
+  \renewcommand{\baselinestretch}{1.0}%
+  \renewcommand{\arraystretch}{1.0}%
+  \normalsize%
+}
+
+% Do double spacing by default.
+\doublespace
+
+
+% Set some names used as chapter headings.
+\renewcommand\contentsname{\normalsize TABLE OF CONTENTS}
+\renewcommand\listtablename{\normalsize  LIST OF TABLES}
+\renewcommand\listfigurename{\normalsize  LIST OF FIGURES}
+\renewcommand\chaptername{MANUSCRIPT}
+
+
+% Make table of contents entries for numbered chapter headers.
+\renewcommand*\l@chapter[2]{%
+    \vskip 1.0ex \@plus\p@
+  {\@dottedtocline{0}{1.5em}{1.5em}{\bfseries\noindent#1}{#2}}%
+}
+
+% Make table of contents entries for unnumbered chapter headers.
+\newcommand*\l@chapterx[2]{%
+    \vskip 1.0ex \@plus\p@
+  {\@dottedtocline{0}{0em}{1.5em}{\bfseries\noindent#1}{#2}}%
+}
+
+% Redefined from report.cls to change left offset.
+\renewcommand*\l@section{\@dottedtocline{1}{3.0em}{2.0em}} %%<=== Changed 4.0em to 2.0em
+\renewcommand*\l@subsection{\@dottedtocline{2}{5.3em}{2.9em}}  %%<=== Changed 4.9em to 2.9em
+\renewcommand*\l@subsubsection{\@dottedtocline{3}{8.5em}{5.6em}}
+
+% These commands generate the figure/table/equation name, and records
+% if we have any figures or tables and need a list page for them.
+\renewcommand\thefigure{\thechapter.\@arabic\c@figure}
+\renewcommand\thetable{\thechapter.\@arabic\c@table}
+\renewcommand\theequation{\thechapter.\@arabic\c@equation}
+
+% Change caption to have period instead of colon.
+% This is from report.cls.
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{#1. #2}%
+  \ifdim \wd\@tempboxa >\hsize
+    #1. #2\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\hfil\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+
+
+% Make first paragraph indented.
+% this is from report.cls.
+\renewcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
+                    \thispagestyle{plain}%
+                    \global\@topnum\z@
+                    \@afterindenttrue
+                    \secdef\@chapter\@schapter}
+
+
+% Set single spacing in figures, tables, etc.  This is from latex.ltx.
+\def \@floatboxreset {%
+        \singlespace
+        \reset@font
+        \normalsize
+        \@setminipage
+}
+

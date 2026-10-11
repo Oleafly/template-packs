@@ -1,0 +1,574 @@
+%%%---------------------------------------------------------------------
+%%%  utsathesis.sty
+%%%
+%%%  Author:  Prof. Weining Zhang, Feb. 2012 
+%%%  Adapted from a package written by Xu (Kevin) Su in Sept 2008 
+%%%  
+%%%  Updated: November 20, 2012 by Weining Zhang
+%%%  Last Updated: June 30, 2016 by Weining Zhang
+%%%-----------------------------------------------------------------------
+%%%
+%%%  Usage: \documentclass[12pt]{report}
+%%%         \RequirePackage{UTSAthesis} or \RequirePackage[ms]{UTSAthesis}
+%%%         The default thesis style is for PhD Dissertation
+%%%
+%%%  This file is a LaTeX2e style file for creating documents which
+%%%  meet the June 2016 UTSA Graduate School dissertation guidelines.
+%%%  Note that this style file has not been tested under every
+%%%  possible configuration and no guarantee is made.
+%%%  
+%%%  Need to define the following 
+%%% \thesistitle{Thesis Title}
+%%% \thesisauthor{Author's Name}
+%%% \thesiscopyright{Optional Copyright Statement}
+%%% \thesismonth{Month, which should be the graduation month}
+%%% \thesisyear{Year, which should be the graduation year}
+%%% \thesisabstract{The abstract starts here. Should within one page.}
+%%% \degree{Doctor of Philosophy in Field Name}
+%%% \degreeshort{Ph.D.}
+%%% \department{Department Name}
+%%% \college{College Name}
+%%% \dedication{Optional Dedication}
+%%% \acknowledgements{People, organization, supports that you want to thank for}
+%%% \supervisor{My Supervisor, Degree}
+%%% \cosupervisor{Optional, default to empty string}
+%%% \committeeB{Committe member B, Degree}
+%%% \committeeC{Committe member C, Degree}
+%%% \committeeD{Committe member D, Degree}
+%%% \committeeE{Committe member E, Degree}
+
+
+\NeedsTeXFormat{LaTeX2e}
+
+\DeclareOption{phd}{%
+\def\@thesistype{DISSERTATION}%
+\def\@committee{
+\begin{center}
+  COMMITTEE MEMBERS: \\
+  \@committeeA \\
+  \@committeeB \\
+  \@committeeC \\
+  \@committeeD \\
+  \@committeeE 
+  \end{center}
+}
+
+}% End PHD
+
+\DeclareOption{ms}{%
+\def\@thesistype{THESIS}%
+\def\@committee{
+\begin{center}
+  COMMITTEE MEMBERS: \\
+  \@committeeA \\
+  \@committeeB \\
+  \@committeeC 
+  \end{center}
+}
+
+}% End MS
+
+
+\typeout{UTSAthesis.sty by Prof. Weining Zhang, March 2012}
+\typeout{Vertion 3.0.0 Confirm to UTSA Thesis/Dissertation Style 2016}
+\typeout{Last updated on June 30, 2016, by Weining Zhang}
+
+\ExecuteOptions{phd}
+\ProcessOptions
+
+\RequirePackage{times}            
+\RequirePackage{epsfig}   
+\RequirePackage{amsmath}         
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+\RequirePackage{setspace}         
+\RequirePackage{lscape}
+\RequirePackage{graphicx}
+\RequirePackage{cite}
+\RequirePackage{latexsym}
+\RequirePackage{amsfonts}
+\RequirePackage{algorithm}
+\RequirePackage[noend]{algorithmic}
+\RequirePackage{xspace}
+\RequirePackage{enumerate}
+\RequirePackage{array} 
+\RequirePackage{color}
+\RequirePackage{subfig}
+\RequirePackage{cases}
+\RequirePackage{textcase}
+\RequirePackage{longtable}
+
+%
+%--------------------- margins ------------------------------------------%
+%   This sets the top, left margin to 1 and 1/4 inches                   %
+%   right and bottom margin to 3/4 inch.                                 %
+%   the distance between page number and bottom edge of page to 1/2 inch %
+%------------------------------------------------------------------------%
+
+\setlength{\pdfpagewidth}{8.5in}    % paper width
+\setlength{\pdfpageheight}{11in}    % paper height
+\setlength{\textwidth}{6.5in}      %
+\setlength{\textheight}{9in}     %
+\setlength{\oddsidemargin}{0in}  % left margin;
+\setlength{\evensidemargin}{0in} %
+\setlength{\topmargin}{0in}      % top margin;
+\setlength{\headheight}{0.0in}      % Height of the header (the header is text that appears atop all pages)
+\setlength{\headsep}{0.0in}         % Distance from bottom of header to the body of text on a page.
+\setlength{\topskip}{0.0in}         % Distance from top of main text box to the baseline of the first line of 
+                                    % text in the main text box.
+\setlength{\footskip}{0.5in}       % Distance from bottom of body to the bottom of the footer\
+%                                   % value = 11 - (1.0 + 0) - 9 - 0.5 = 0.5
+
+% ------------------ change name format---------------
+
+
+
+
+
+% -----------------------change heading ------------------------
+%  This is used for change title font size for  table of content,
+%  List of Figures and List of Tables
+% --------------------------------------------------------------
+\renewcommand{\l@chapter}[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak
+      \leaders\hbox{$\m@th
+        \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
+        mu$}\hfill
+      \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+      \penalty\@highpenalty
+    \endgroup
+  \fi
+}
+\def\@chapter[#1]#2{
+  \ifnum \c@secnumdepth >\m@ne
+     \refstepcounter{chapter}%
+     \typeout{\@chapapp\space\thechapter.}%
+     \addcontentsline{toc}{chapter}%
+        {\@chapapp\space {\thechapter}: {#1}}
+  \else
+     \addcontentsline{toc}{chapter}{#1}%                     
+  \fi
+  \chaptermark{#1}%
+  \addtocontents{lof}{\protect\addvspace{10\p@}}%
+  \addtocontents{lot}{\protect\addvspace{10\p@}}%
+  \if@twocolumn
+      \@topnewpage[\@makechapterhead{#2}]%
+  \else
+      \@makechapterhead{#2}%
+      \@afterheading
+  \fi
+}
+                    
+\def\@makechapterhead#1{%
+   \vspace*{-20\p@}%
+   {\parindent \z@ \raggedright \normalfont
+    \interlinepenalty\@M
+    \ifnum \c@secnumdepth >\m@ne
+       \centering  \large\bfseries 
+       \MakeUppercase{\@chapapp\space \thechapter: #1}
+    \fi
+    \vskip 20\p@
+   }
+}
+
+\def\@makeschapterhead#1{%
+  %\vspace*{-26\p@}%
+  \vspace*{-20\p@}%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    %\centering \large \bfseries  #1\par\nobreak
+    \centering \bfseries  #1\par\nobreak
+    \vskip 20\p@
+  }}
+
+
+% ------------------ define section/subsection format---------------
+
+\renewcommand{\section}{\@startsection
+{section}% % the name
+{1}% % the level
+{0mm}% % the indent
+{-0.5\baselineskip}% % the before skip
+{0.5\baselineskip}% % the after skip
+{\normalfont\large\bfseries}} % the style
+%
+%
+\renewcommand{\subsection}{\@startsection
+{subsection}% % the name
+{2}% % the level
+{0mm}% % the indent
+{-0.5\baselineskip}% % the before skip
+{0.5\baselineskip}% % the after skip
+%{\normalfont\large\bfseries}} % the style
+{\normalfont\normalsize\bfseries}} % the style
+
+\renewcommand{\subsubsection}{\@startsection
+{subsubsection}% % the name
+{3}% % the level
+{0mm}% % the indent
+{-0.5\baselineskip}% % the before skip
+{0.5\baselineskip}% % the after skip
+{\normalfont\normalsize\bfseries}} % the style
+
+%------------------------------------------------------------
+% Re-define titles of Table of Contents, 
+% List of Figures, and List of Tables
+%
+
+\renewcommand\tableofcontents{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \newpage
+    \renewcommand{\contentsname}{
+       \vspace{0.1875in}\centering\bf TABLE OF CONTENTS}
+    \chapter*{\contentsname}%
+        \@mkboth{%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
+    \@starttoc{toc}%
+    \if@restonecol\twocolumn\fi
+    }
+
+ \renewcommand\listoffigures{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+         \newpage
+      \addcontentsline{toc}{chapter}{List of Figures}
+    \renewcommand{\listfigurename}{%
+       \vspace{0.1875in}\centering\bf LIST OF FIGURES} 
+      \chapter*{\listfigurename}%
+      \@mkboth{\MakeUppercase\listfigurename}%
+              {\MakeUppercase\listfigurename}%
+    \@starttoc{lof}%
+    \if@restonecol\twocolumn\fi
+    }
+
+\renewcommand\listoftables{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \newpage
+    \addcontentsline{toc}{chapter}{List of Tables}
+    \renewcommand\listtablename{%
+        \vspace{0.1875in}\centering\bf LIST OF TABLES}
+    \chapter*{\listtablename}%
+      \@mkboth{%
+          \MakeUppercase\listtablename}%
+         {\MakeUppercase\listtablename}%
+    \@starttoc{lot}%
+    \if@restonecol\twocolumn\fi
+    }
+
+% \renewcommand{\bibname}{\vspace{0.1875in}\centering\large\bf BIBLIOGRAPHY
+%     \addcontentsline{toc}{chapter}{\hspace{-0.25in}\protect\numberline{}
+%        {Bibliography}{\dotfill}}
+% }    
+ \renewenvironment{thebibliography}[1]
+     {\chapter*{\MakeUppercase\bibname}%
+     \addcontentsline{toc}{chapter}{\bibname}
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}   
+      {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+%-------------------------------------------------------------------
+% Redefine line titles appearing in List of Figures and List of Tables
+%--------------------------------------------------------------------
+\renewcommand*\l@figure{\@dottedtocline{1}{1.5em}{5.3em}}
+\renewcommand{\fnum@figure}{{\bf   \figurename~\thefigure}} %
+\newcommand{\ffnum@figure}{Figure \thefigure}
+\renewcommand*\l@table{\@dottedtocline{1}{1.5em}{5.3em}}
+\renewcommand{\fnum@table}{{\bf   \tablename~\thetable}} %
+\newcommand{\ffnum@table}{Table \thetable}
+\long\def\@caption#1[#2]#3{%
+  \par
+  \addcontentsline{\csname ext@#1\endcsname}{#1}%
+    {\protect\numberline{\csname ffnum@#1\endcsname}{\ignorespaces #2}}%
+     %% caption label in lof & lot must be in normal face
+  \begingroup
+    \@parboxrestore
+    \if@minipage
+      \@setminipage
+    \fi
+    \normalsize
+    \@makecaption{\csname fnum@#1\endcsname}{\ignorespaces #3}\par %%
+      %% caption label in text must be in bold face
+  \endgroup}
+ 
+ %-----------------------------------------------------
+ % Change longtables in the List of Tables 11/20/2012
+ %------------------------------------------------------
+ \def\LT@c@ption#1[#2]#3{%
+  \LT@makecaption#1\fnum@table{#3}%
+  \def\@tempa{#2}%
+  \ifx\@tempa\@empty\else
+     {\let\\\space
+     \addcontentsline{lot}{table}{\protect\numberline{Table \thetable}{#2}}}%
+  \fi}
+
+ 
+\newenvironment{acknowledgements}{
+    \addcontentsline{toc}{chapter}{Acknowledgements}
+    \begin{center}
+       {\bf ACKNOWLEDGEMENTS}
+    \end{center}
+    \vspace{2ex}
+    \hspace*{0.7\parindent}
+}{
+    \vfill
+    \begin{singlespace}
+    \begin{center}
+      \@month\  \@year
+    \end{center}
+    \end{singlespace}
+    \newpage
+}
+  
+\renewenvironment{abstract}{
+    \addcontentsline{toc}{chapter}{Abstract}
+       \begin{center}
+         \@thesistitle 
+         \vspace{0.4in}
+         \begin{spacing}{1}
+         \@thesisauthor,  \@degreeshort \\
+         The University of Texas at San Antonio, \@year \\
+         \end{spacing}
+         \vspace{0.25in}
+         \ifx \@empty\@cosupervisor
+            Supervising Professor: 
+         \@supervisor \\
+        \else
+            Supervising Professors: 
+	 \@supervisor\space and \@cosupervisor \\
+       \fi
+      \end{center}
+      \hspace*{0.7\parindent}
+}{
+\newpage
+\tableofcontents
+\listoftables
+\listoffigures
+}
+\newcommand{\pageone}{
+\newpage
+\pagenumbering  {arabic} 
+\setcounter     {page}{1} 
+\pagestyle{plain}
+}
+%----------------------------------------------------------
+% The command that produces the preliminary pages 
+% satisfying UTSA Grad School guideline as of 2016
+%
+\renewcommand{\maketitle}{
+\doublespacing
+
+%-----------------------------------------------------------------
+% Preliminaries - as per June 2016 UTSA Graduate School Guidelines
+%-----------------------------------------------------------------
+% 1. Blank Page (not counted or typed)
+%    \pagestyle{empty}
+%    \mbox{}
+    
+% 2. Signature Page (not counted or typed)
+%    \newpage
+%    \pagestyle{empty}
+%    \begin{center}
+%    \@thesistitle
+%    \end{center}
+%    \vfill       % put signature lines at bottom of page
+%    \@signature
+
+    
+% 5. Title page (counted, note typed)
+    \newpage  
+    \pagenumbering{roman} % page counting starts
+    \pagestyle{empty} % page number not typed
+    \begin{center}
+      %\MakeUppercase{\@thesistitle}
+      \@thesistitle
+    \vspace{4ex} 
+    
+    by
+    
+    \vspace{4ex}
+    
+    \MakeUppercase{\@thesisauthor}, \@lastdegree
+    
+    \vspace{1in}
+    \begin{singlespace}
+    \@thesistype\\
+    Presented to the Graduate Faculty of \\
+    The University of Texas at San Antonio \\
+    In Partial Fulfillment \\
+    Of the Requirements \\
+    For the Degree of
+    \vspace{.25in}
+    
+    \MakeUppercase{\@degree}
+    
+     \vspace{.25in}
+     
+    \@committee
+     
+    \vfill
+    THE UNIVERSITY OF TEXAS AT SAN ANTONIO \\
+    \@college \\
+    \@department \\
+    \@month\space  \@year 
+    \end{singlespace}
+    \end{center} %\linespace{2}
+    
+    % 3. Copyright (optional, counted, not typed)
+    \ifx \@empty\@thesiscopyright
+    \else
+      \newpage
+      \pagestyle{empty}    % not typed
+      \vspace*{1.5in} 
+      \begin{singlespace}
+      \begin{center}
+        \@thesiscopyright
+      \end{center}
+      \end{singlespace}
+    \fi
+    
+% 4. Dedication (optional, counted, not typed)
+    \newpage
+%    \ifx \@empty\@thesiscopyright
+%	    \pagenumbering{roman} %counting starts
+%    \fi
+    \pagestyle{empty} % not typed
+    \begin{center}
+    {\bf DEDICATION}
+    \end{center}
+    \vspace{2ex}
+    \begin{singlespace}
+    \@dedication
+    \end{singlespace}
+
+    \newpage
+    \pagestyle{plain} % page number typed starts
+% % 6. Acknowledgements (counted, typed in lower case Roman numerals   
+% % 7. Abstract  (counted, typed in lower case Roman numerals)  
+% % 8. Table of contents (counted, typed in lower case Roman numerals)
+% % 9. List of Tables (counted, typed in lower case Roman numerals)
+% % 10. List of Figures (counted, typed in lower case Roman numerals)
+
+%------------new bibname ---------------------
+%\renewcommand{\bibname}{BIBLIOGRAPHY}
+}
+
+
+\newcommand{\informationitems}[7]{
+\def\@degree{#1}
+\def\@degreeshort{#2}
+\def\@lastdegree{#3}
+\def\@department{#4}
+\def\@college{#5}
+\def\@month{#6}
+\def\@year{#7}
+}
+\newcommand{\degree}[1]{\def\@degree{#1}}%
+\newcommand{\degreeshort}[1]{\def\@degreeshort{#1}}%
+\newcommand{\lastdegree}[1]{\def\@lastdegree{#1}}%
+\newcommand{\department}[1]{\def\@department{#1}}%
+\newcommand{\college}[1]{\def\@college{#1}}%
+
+\newcommand{\supervisor}[1]{\def\@supervisor{#1} 
+\def\@committeeA{#1, Chair}}%
+\newcommand{\cosupervisor}[1]{ \def\@cosupervisor{#1}%
+\def\@committeeA{\@supervisor, Co-Chair}%
+\def\@committeeB{#1, Co-Chair}}%
+\newcommand{\committeeB}[1]{\def\@committeeB{#1}}%
+\newcommand{\committeeC}[1]{\def\@committeeC{#1}}%
+\newcommand{\committeeD}[1]{\def\@committeeD{#1}}%
+\newcommand{\committeeE}[1]{\def\@committeeE{#1}}%
+
+\newcommand{\thesisauthor}[1]{\def\@thesisauthor{#1}}%
+\newcommand{\thesismonth}[1]{\def\@month{#1}}%
+\newcommand{\thesisyear}[1]{\def\@year{#1}}%
+\newcommand{\thesisdate}[2]{\def\@month{#1} \def\@year{#2}}%
+
+\newcommand{\thesisabstract}[1]{\def\@thesisabstract{#1}}%
+\newcommand{\dedication}[1]{\def\@dedication{#1}}%
+\newcommand{\thesiscopyright}[1]{\def\@thesiscopyright{#1}}%
+
+
+
+%-------------------------------------------------------
+% Defined for one page vita
+%
+\newcommand{\l@vita}[2]{%
+  \ifnum \c@tocdepth >\m@ne
+    \addpenalty{-\@highpenalty}%
+    \vskip 1.0em \@plus\p@
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\hfil 
+      %\nobreak\hb@xt@\@pnumwidth{\hss #2}
+      \par
+      \penalty\@highpenalty
+    \endgroup
+  \fi}
+\newenvironment{vita}{
+ \newpage
+ \thispagestyle{empty}
+ \doublespacing
+ \addcontentsline{toc}{vita}{Vita}
+ \vspace{0.1875in}
+ \begin{center}
+  {\large\bf VITA}
+ \end{center}
+  \vspace{2ex}
+  \hspace*{0.7\parindent}
+} {}
+
+\def\@thesistitle{\@title}
+\def\@thesisauthor{\@author}
+
+\thesiscopyright{} % Optional
+\thesisabstract{The abstract starts here. Should within one page.}
+\dedication{Optional Dedication}
+\cosupervisor{} % optional
+\informationitems{Full Name of the Degree}{Short Degree Name}%
+                 {The Last Degree}{Department Name}{College Name}%
+                 {Graduation Month}{Graduation Year}
+\supervisor{Supervisor Name, Degree}
+\cosupervisor{Co-Supervisor Name, Degree}
+\committeeC{Name, Degree}
+\committeeD{Name, Degree}
+\committeeE{Name, Degree}

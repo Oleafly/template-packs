@@ -1,0 +1,440 @@
+%
+%
+% package:  iitmdissertation
+% version:  2022
+%
+%
+\NeedsTeXFormat {LaTeX2e}
+\ProvidesPackage{iitmdissertation}
+
+\RequirePackage{microtype}
+\RequirePackage[nodisplayskipstretch,
+                \ifdiss@synopsis\else doublespacing\fi]
+               {setspace}
+\RequirePackage{graphicx}
+\RequirePackage[belowskip=0pt]
+               {subcaption}
+\RequirePackage{mathtools}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{amsthm}
+\RequirePackage{amssymb}
+\RequirePackage[shortlabels]{enumitem}
+\RequirePackage[authoryear,
+                round]
+               {natbib}
+\RequirePackage{eso-pic}
+\RequirePackage[acronym,
+                nonumberlist,
+                nogroupskip,
+                toc]
+               {glossaries}
+\RequirePackage[intoc]
+               {nomencl}
+\makenomenclature
+
+\ifdiss@devx
+\RequirePackage{fontspec}
+\RequirePackage{unicode-math}
+\setmainfont{TeX Gyre Termes}
+\setmathfont{TeX Gyre Termes Math}
+% \setmainfont{TeX Gyre Termes}
+\else
+\RequirePackage{newtxtext}
+\RequirePackage{newtxmath}
+\RequirePackage[utf8]{inputenc}
+\fi
+\RequirePackage{csquotes}
+%
+%
+%
+%
+%
+\newcommand\doCoverTitleBorder{%
+\AddToShipoutPictureBG*{%
+    \color{\dissertationTitleTapeColor}
+    \AtPageLowerLeft{%
+        \rule{\dimexpr 1in + \oddsidemargin\relax}{\paperheight}%
+    }%
+}}
+%
+%
+% Divide the document into parts
+%
+%
+\newcommand\printTOCLists{%
+\par
+\begin{singlespacing}
+    \pagestyle{plain}
+    \tableofcontents
+    \listoftables
+    \listoffigures
+\end{singlespacing}
+\par}
+\newenvironment
+    {FrontMatter}
+    {\begingroup
+     \renewcommand*{\chapterpagestyle}{plain}
+     \pagenumbering{roman}
+     \frontmatter
+     \input 1-frontmatter/front-acknowledgements
+     \input 1-frontmatter/front-abstract
+     \printTOCLists}
+    {\endgroup}
+\ifdiss@synopsis\else
+    \newenvironment
+        {MainMatter}
+        {\mainmatter
+         \pagestyle{plain}
+         \pagenumbering{arabic}
+         \renewcommand*{\chapterpagestyle}{empty}}
+        {\thispagestyle{plain}}
+\fi
+\newenvironment
+    {BackMatter}
+    {\begingroup
+     \pagestyle{plain}
+     \renewcommand*{\chapterpagestyle}{plain}
+     \renewcommand\thepage{\arabic{page}}
+     \backmatter\singlespacing}
+    {\pagestyle{plain}
+     \newpage
+     \endgroup}
+%
+%
+% [Provide for unnumbered pages preceding the fontmatter]
+%
+%
+\ifdiss@synopsis
+    \newcommand\prematter{%
+        \pagestyle{empty}
+        \begin{doublespacing}
+        \input zz-imp/pre-imp-do-covers
+        \end{doublespacing}
+        \pagestyle{plain}
+        \pagenumbering{arabic}
+    }
+\else
+    \newcommand\prematter{%
+        \pagestyle{empty}
+        \renewcommand*{\chapterpagestyle}{empty}
+        \input zz-imp/pre-imp-do-covers
+    }
+\fi
+\newcommand\printCertificate{\input zz-imp/pre-imp-cert}
+%
+%
+% Configure the display-style quotes
+%
+%
+\AtBeginEnvironment
+    {displayquote}
+    {\vspace{-0.75\baselineskip}}
+\renewenvironment*
+    {displayquote}
+    {\begingroup
+     \setlength{\leftmargini}{1cm}
+     \csq@getcargs{\csq@bdquote{}{}}
+     \singlespacing}
+    {\csq@edquote\endgroup}
+\AtEndEnvironment
+    {displayquote}
+    {\vspace{-0.75\baselineskip}}
+%
+%
+% Define some common maths blocks
+%
+%
+\renewcommand\qedsymbol{$\blacksquare$}
+\newenvironment{Proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \partopsep=0pt \topsep=-\ifdiss@synopsis0.5\parskip\else\parskip\fi
+  \trivlist
+  \item[\hskip\labelsep
+        \itshape
+    #1\@addpunct{.}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\ifdiss@synopsis
+    \newtheoremstyle
+      {dissthmstyle}
+      {-0.5\parskip}
+      {-0.5\parskip}
+      {\itshape}
+      {}
+      {\bfseries}
+      {.}
+      {0.5em}
+      {}
+    \newtheoremstyle
+      {dissdefstyle}
+      {-0.5\parskip}
+      {-0.5\parskip}
+      {}
+      {}
+      {\itshape}
+      {.}
+      {0.5em}
+      {}
+
+    \theoremstyle {dissthmstyle}
+    \newtheorem   {theorem}                {Theorem}    [section]
+    \newtheorem   {lemma}        [theorem] {Lemma}
+    \newtheorem   {corollary}              {Corollary}  [theorem]
+
+    \theoremstyle {dissdefstyle}
+    \newtheorem   {definition}   {Definition} [section]
+    \newtheorem   {remark}       {Remark}
+    \newtheorem   {proposition}  {Proposition}
+\else
+    \newtheoremstyle
+      {dissthmstyle}
+      {-\parskip}
+      {-\parskip}
+      {\itshape}
+      {}
+      {\bfseries}
+      {.}
+      {0.5em}
+      {}
+    \newtheoremstyle
+      {dissdefstyle}
+      {-\parskip}
+      {-\parskip}
+      {}
+      {}
+      {\itshape}
+      {.}
+      {0.5em}
+      {}
+
+    \theoremstyle {dissthmstyle}
+    \newtheorem   {theorem}                {Theorem}    [chapter]
+    \newtheorem   {lemma}        [theorem] {Lemma}
+    \newtheorem   {corollary}              {Corollary}  [theorem]
+
+    \theoremstyle {dissdefstyle}
+    \newtheorem   {definition}   {Definition} [chapter]
+    \newtheorem   {remark}       {Remark}
+    \newtheorem   {proposition}  {Proposition}
+\fi
+%
+%
+%
+% Define some common math operators
+%
+%
+\DeclareMathOperator*{\argmin}{\arg\!\min}
+\DeclareMathOperator*{\argmax}{\arg\!\max}
+%
+%
+% Provide a chapter (excluded from the TOC) for the 'prematter'
+%
+%
+\newenvironment
+    {Chapter}[1]
+    {\begingroup
+     \doublespacing
+     \begin{center}
+        {\changefontsizes{15pt}\bfseries\MakeUppercase{#1}}
+     \end{center}
+     \par}
+    {\endgroup}
+\newcommand\itemhead[1]{\item {\bfseries\MakeUppercase{#1}}\par}
+%
+%
+% Definitions related to the CV,Committee in the backmatter
+%
+%
+\newenvironment
+    {CVsubtab}
+    {\newline
+     \begin{tabular}{@{} p{0.25\textwidth} >{\qquad\raggedright}p{0.3\textwidth} l @{}}}
+    {\end{tabular}}
+\newenvironment
+    {CMTsubtab}
+    {\begin{tabular}[t]{@{} p{0.67\textwidth} @{}}}
+    {\end{tabular}}
+\newcommand\CVYearAndDegree[2]{\vspace{\parskip}\par\qquad {\bfseries #1} \qquad \qquad {\bfseries #2}}
+%
+%
+%
+%
+%
+\newcommand{\asserttoken}[2]{%
+\if\relax\the\expandafter\csname#1\endcsname\relax#2\else{\the\expandafter\csname#1\endcsname}\fi}
+%
+%
+% The 'iitm.bst' file uses old font commands; so we redefine those
+%
+%
+\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
+\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
+\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
+\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+%
+%
+% IITM bibliography style; accompanying file 'iitm.bst'
+%
+%
+\newcommand{\bibstyle@iitm}{%
+    \bibpunct{(}{)}{;}{a}{,}{,}%
+     \gdef\NAT@biblabel##1{##1. }%
+}
+\setlength{\bibhang}{0pt}
+\citestyle{iitm}
+\renewcommand\bibname{References}
+\newcommand\printAllBibliographyReferences[1]{%
+    \nocite{*}
+    \bibliographystyle{iitm}
+    \bibliography{#1}
+}
+\newcommand\printBibliographyReferences[1]{%
+    \bibliographystyle{iitm}
+    \bibliography{#1}
+}
+%
+%
+% Provide environments for various itemized lists
+%
+%
+\AtBeginEnvironment{enumerate}{\par\singlespacing}
+\AtBeginEnvironment{itemize}{\par\singlespacing}
+\ifdiss@synopsis
+\setlist{
+  partopsep = 0cm,
+  parsep    = -0.5\baselineskip,
+  topsep    = -0.5\baselineskip,
+  itemsep   = \baselineskip,
+}\else
+\setlist{
+    partopsep = 0cm,
+    topsep    = -\baselineskip,
+    parsep    = \baselineskip,
+    itemsep   = 0cm,
+}
+\fi
+\SetEnumerateShortLabel{rsc}{\textsc{\roman*}}
+\SetEnumerateShortLabel{blt}{\textbullet}
+\SetEnumerateShortLabel{dmd}{$\diamond$}
+\SetEnumerateShortLabel{str}{$\star$}
+\SetEnumerateShortLabel{sqr}{$\square$}
+\SetEnumerateShortLabel{bsq}{$\blacksquare$}
+\SetEnumerateShortLabel{dsh}{--}
+
+\newcommand\allowverticalruleshere{%
+%     \setlength\abovetopsep    {0pt}
+%     \setlength\belowbottomsep {0pt}
+    \setlength\aboverulesep   {0pt}
+    \setlength\belowrulesep   {0pt}
+}
+
+\newlength{\toprulewidth}
+\setlength{\toprulewidth}{0.25ex}
+\patchcmd{\toprule}{\heavyrulewidth}{\toprulewidth}{}{}
+\patchcmd{\bottomrule}{\heavyrulewidth}{\toprulewidth}{}{}
+%
+%
+% Optionally provide some convenient maths
+%
+%
+\ifdiss@smplmath
+    \DeclarePairedDelimiter\abs    {\lvert}  {\rvert}
+    \DeclarePairedDelimiter\ceil   {\lceil}  {\rceil}
+    \DeclarePairedDelimiter\floor  {\lfloor} {\rfloor}
+    \DeclarePairedDelimiter\anglbr {\langle} {\rangle}
+    \DeclarePairedDelimiter\flbr   {\{}      {\}}
+    \DeclarePairedDelimiter\sqbr   {[}       {]}
+    \DeclarePairedDelimiter\rdbr   {(}       {)}
+
+    \let\oldabs\abs
+    \def\abs{\@ifstar{\oldabs}{\oldabs*}}
+
+    \let\oldflbr\flbr
+    \def\flbr{\@ifstar{\oldflbr}{\oldflbr*}}
+
+    \let\oldsqbr\sqbr
+    \def\sqbr{\@ifstar{\oldsqbr}{\oldsqbr*}}
+
+    \let\oldrdbr\rdbr
+    \def\rdbr{\@ifstar{\oldrdbr}{\oldrdbr*}}
+
+    \let\oldceil\ceil
+    \def\ceil{\@ifstar{\oldceil}{\oldceil*}}
+
+    \let\oldfloor\floor
+    \def\floor{\@ifstar{\oldfloor}{\oldfloor*}}
+
+    \let\oldanglbr\anglbr
+    \def\anglbr{\@ifstar{\oldanglbr}{\oldanglbr*}}
+
+    \newcommand{\EX}[2][]{%
+    \mathbb{E}_{#1}\sqbr{#2}%
+    }
+    \newcommand{\PR}[2][]{%
+    \mathbb{P}_{#1}\sqbr{#2}%
+    }
+    \newcommand{\IND}[2][]{%
+    \mathbb{I}_{#1}\rdbr{#2}%
+    }
+
+    \newcommand{\reci}[1]{%
+    \frac{1}{#1}%
+    }
+\fi
+%
+%
+%
+%
+\newcommand\printCV{\input zz-imp/back-imp-cv}
+\newcommand\printCommittee{\pagestyle{plain}\thispagestyle{plain}\input 3-backmatter/back-committee}
+\allowdisplaybreaks
+%
+%
+% Deal with glossary and acronyms
+%
+%
+\newcommand\setupGlossaryAbbreviationsDefinitions{
+\input 1-frontmatter/front-glossary-abbreviations
+\makeglossaries
+\renewcommand{\glossarypreamble}{\glsfindwidesttoplevelname[\currentglossary]}
+\setglossarystyle{alttree}
+}
+
+\newcommand{\printGlossaryAndAbbreviations}{%
+\par
+\begin{singlespacing}
+    \glsaddall
+    \printglossary[title={\textupper{Glossary}}]
+    \printglossary[type=\acronymtype,title={\textupper{Abbreviations}}]
+\end{singlespacing}
+\par
+}
+%
+%
+% Notations
+%
+%
+\newcommand\addNotationDefinitions{
+\input 1-frontmatter/front-notation
+\renewcommand{\nomname}{Notation}
+}
+
+\newcommand\printNotation{%
+\addNotationDefinitions\par
+\begin{singlespacing}
+\printnomenclature
+\thispagestyle{plain}
+\end{singlespacing}\par
+}
+
+\raggedbottom
+
+%
+%
+% Captions
+%
+%
+\AtBeginDocument{\captionsetup[table]{skip=0.3cm}}

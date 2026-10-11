@@ -1,0 +1,112 @@
+\chapter{Estimating a Normal Population Mean}
+\label{chap:normal-mean}
+
+
+This worked example shows how to connect a statistical model, an estimator,
+an uncertainty statement, and an interpretation. The observations are
+illustrative; they do not represent a scientific study. General treatments of
+estimation and confidence intervals are given by \citet{wasserman2004all}.
+
+
+\section{Model and estimand}
+Assume $X_1,\ldots,X_n$ are independent normal random variables with mean
+$\mu$ and variance $\sigma^2$, where $n\geq 2$ and $\sigma^2>0$. The target is
+$\mu$, the population mean. For observed values $x_1,\ldots,x_n$, the density
+of one observation is
+\begin{equation}
+  \label{eq:normal-density}
+  f(x;\mu,\sigma^2)
+  = \frac{1}{\sqrt{2\pi\sigma^2}}
+    \exp\left\{-\frac{(x-\mu)^2}{2\sigma^2}\right\},
+  \qquad x\in\RR.
+\end{equation}
+Equation~\eqref{eq:normal-density} specifies the sampling model, not a
+probability distribution on the unknown parameter $\mu$.
+
+
+\section{Maximum likelihood estimation}
+The log likelihood is
+\begin{equation}
+  \label{eq:normal-loglikelihood}
+  \ell(\mu,\sigma^2)
+  = -\frac{n}{2}\log(2\pi\sigma^2)
+    -\frac{1}{2\sigma^2}\sum_{i=1}^{n}(x_i-\mu)^2.
+\end{equation}
+Holding $\sigma^2$ fixed in Equation~\eqref{eq:normal-loglikelihood},
+differentiation with respect to $\mu$ gives
+\begin{align*}
+  \frac{\partial\ell}{\partial\mu}
+    &= \frac{1}{\sigma^2}\sum_{i=1}^{n}(x_i-\mu), \\
+  \frac{\partial^2\ell}{\partial\mu^2}
+    &= -\frac{n}{\sigma^2}<0.
+\end{align*}
+The score is zero at $\widehat{\mu}=\bar{x}$. The negative second derivative
+shows that this is the unique maximizer in $\mu$ for each fixed variance.
+If the observed values are not all equal, joint maximization also gives
+$\widehat{\sigma}^2_{\mathrm{ML}}
+= n^{-1}\sum_{i=1}^{n}(x_i-\bar{x})^2$. This variance estimate differs from
+the unbiased sample variance used below. For identical observations, the
+joint likelihood has no finite maximizer with $\sigma^2>0$.
+
+
+\section{Confidence intervals}
+\begin{prop}[Normal-mean pivot]
+  \label{prop:normal-pivot}
+  Under the normal sampling model, define
+  \[
+    S^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i-\overline{X})^2.
+  \]
+  Then
+  \begin{equation}
+    \label{eq:normal-pivot}
+    T = \frac{\overline{X}-\mu}{S/\sqrt{n}}\sim t_{n-1}.
+  \end{equation}
+\end{prop}
+\begin{proof}
+  The standardized mean is standard normal, $(n-1)S^2/\sigma^2$ has a
+  chi-squared distribution with $n-1$ degrees of freedom, and these two
+  quantities are independent. Their ratio, with the chi-squared quantity
+  divided by its degrees of freedom and square-rooted, has the stated
+  Student distribution.
+\end{proof}
+Let $t_{\nu,p}$ denote the $p$ quantile of a Student distribution with $\nu$
+degrees of freedom. Proposition~\ref{prop:normal-pivot} and
+Equation~\eqref{eq:normal-pivot} give a $100(1-\alpha)\%$ confidence interval
+for $\mu$, for $0<\alpha<1$:
+\begin{equation}
+  \label{eq:mean-confidence-interval}
+  \left[\bar{x}-t_{n-1,1-\alpha/2}\frac{s}{\sqrt{n}},\quad
+        \bar{x}+t_{n-1,1-\alpha/2}\frac{s}{\sqrt{n}}\right].
+\end{equation}
+Here $s$ is the observed sample standard deviation. Appendix~\ref{app:variance}
+explains the $n-1$ denominator in the sample variance.
+
+
+For the illustrative values $1,2,3$, we have $n=3$, $\bar{x}=2$, and $s=1$.
+Using $t_{2,0.975}\approx 4.303$ in
+Equation~\eqref{eq:mean-confidence-interval} gives a 95\% confidence interval
+of approximately $[-0.484,4.484]$. The wide interval reflects the uncertainty
+associated with three observations. These values demonstrate a calculation;
+they do not provide evidence for the normal sampling assumption.
+
+
+\begin{remark}[Coverage]
+  The interval procedure covers the fixed population mean in 95\% of repeated
+  samples under the stated model. A realized frequentist interval does not
+  assign a 95\% probability to the fixed parameter. Exact coverage relies on
+  normality and independence; a small sample alone does not justify a normal
+  approximation.
+\end{remark}
+
+
+\section{Planning a simulation study}
+A simulation can examine interval coverage when the sampling model changes.
+Before generating data, specify the aim, data-generating mechanisms, estimand,
+methods, and performance measures \citep{morris2019using}. For example,
+compare normal and skewed populations with the same mean and variance, vary
+sample size, and evaluate the interval in
+Equation~\eqref{eq:mean-confidence-interval}.
+
+
+Report the repetition count, Monte Carlo uncertainty, and failed fits.
+Retain reproducible code. This template reports no simulation results.

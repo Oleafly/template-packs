@@ -1,0 +1,240 @@
+%% General use preamble. Some packages, environments, and macros are
+%% included already as suggestions. Modify as needed.
+\usepackage{mathtools}
+\usepackage{amsmath, amsthm, amssymb, amsfonts, amsopn, bm, bbm}
+
+% Silence warnings about \titlecap in hyperref links. This may silence other related warnings. Comment out to check.
+\usepackage{silence}
+\WarningFilter{hyperref}{Token not allowed in a PDF string}
+
+% More flexibility formatting enumerated/itemized lists.
+\usepackage{enumitem}
+
+\usepackage{etoolbox} % General code fixing. Useful for macros that redefine things in the class file.
+
+% To make pretty pictures with tex instead of importing figures. Comment out/delete if not drawing with pstricks. Be aware that adding a lot of images increases the time it takes to compile the document.
+% Opacity does not work with PDFtex and you will have to change the compiler. On Overleaf, click on Menu - Compiler  and select XeLaTeX, 2020 version. The 2021 version has a bug that ignores opacity. Should be fixed in the 2022 version but that has not been released at time of writing (Summer 2022). 
+% \usepackage[usenames,dvipsnames]{pstricks}
+\usepackage{epsfig}
+% \usepackage{pst-grad} % For gradients
+% \usepackage{pst-plot} % For axes
+\usepackage[space]{grffile} % For spaces in paths
+
+\usepackage{float}
+
+\usepackage{relsize} % make large math symbols
+\usepackage{tikz}
+\usepackage{breqn} % break long math into lines
+
+%%% Only loading these packages because this is a template. Not necessary for math, so feel free to delete this.
+\usepackage{lipsum}
+
+% With this you can insert pages from any other pdf document.
+\usepackage{pdfpages}
+
+% Modified list environment for a to-do list
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+% To include code that looks pretty
+\usepackage{listings} % for code listing
+\lstset{language=[LaTeX]TeX} % set the programming language for listings
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+\usepackage{printlen}
+\usepackage{layout}
+%%%%
+
+
+%% Define theorem environments
+
+% Use the syntax \newtheorem{<command>}[<counter>]{<Environment name>}
+
+% Theorems are numbered by chapter, other environments use the same counter as theorems.
+% If you change these commands, make sure to adjust the cleveref names below. 
+\newtheorem{Thm}{Theorem}[chapter]
+\newtheorem{Coro}[Thm]{Corollary}
+\newtheorem{Prop}[Thm]{Proposition}
+\newtheorem{Lem}[Thm]{Lemma}
+\newtheorem{Conj}[Thm]{Conjecture}
+\newtheorem{Prob}[Thm]{Problem}
+\theoremstyle{definition}
+\newtheorem{Def}[Thm]{Definition}
+\newtheorem{Ex}[Thm]{Example}
+\newtheorem{Rmk}[Thm]{Remark}
+\newtheorem{Note}[Thm]{Notation}
+
+% To add comments. Feel free to change the names/colors and add more people.
+% Use syntax \Name{<text>}
+\newcommand{\PersonA}[1]{{\color{OliveGreen}\textbf{Person A says:} #1}}
+
+% A non-comprehensive list of useful math symbols, delimiters and operators.
+% Hopefully enough examples are provided to help you write more of your own.
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\tinfty}{\rightarrow \infty}
+\newcommand{\seq}[1]{\left(#1_n\right)_{n \in \N}}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclareMathOperator{\sign}{sign}
+
+%% Some personalization can happen here. 
+
+% For the bibliography
+\usepackage[backend=bibtex8,style=numeric, sortcites]{biblatex}
+% \usepackage[backend=bibtex8,style=authoryear, sortcites]{biblatex}
+\addbibresource{references}
+
+% \usepackage[%
+%   backend=bibtex8,
+%   style=numeric,%
+%   sortcites, % name, year, title
+%   % maxbibnames=10, % default: 3, et al.
+%   % backref=true,%
+%   % natbib=true % natbib compatibility mode (\citep and \citet still work)
+%   ]{biblatex}
+% \addbibresource{references.bib}
+
+
+% ETD guidelines suggest you can either indent all paragraphs or none. An argument can be made that paragraphs immediately after a section heading do not need to be indented* and this is the default LaTeX behavior. if you feel strongly about it, do not load the indentfirst package and talk to your ETD reviewer about your choice. At time of writing (Summer 2022), they seem to be willing to be lenient as long as the choices for indentation are consistent throughout the document. 
+
+% *Chicago manual of style points out these are often flush left, and this appears to be a common choice among US/UK typographers, though it is not universal (MLA prefers ALL paragraphs without exception to be indented). You can choose your own (unless ETD reviewers are very insistent)
+
+\usepackage{indentfirst}
+
+\usepackage[dvipsnames]{xcolor}
+\definecolor{pdflinkcolor}{rgb}{.1,.1,.6}	% darkblue
+\definecolor{pdfcitecolor}{rgb}{.6,.1,.1}	% darkred
+\definecolor{pdfanchorcolor}{rgb}{0,1,0}	% green
+\definecolor{pdfurlcolor}{rgb}{.1,.6,.1}	% darkgreen
+\definecolor{pdfpagecolor}{rgb}{0,0,1}	 % blue
+\definecolor{pdffilecolor}{rgb}{1,0,0}	 % red
+
+% Entirely optional, though it improves navigation for the readers of electronic documents. ETD guidelines at time of writing (Summer 2022) do not mention hyperlink formatting and reviewers seem to decide if they fit on a case by case basis. 
+% If you are not attached (like I am) to hyperlinks, comment it out. If you want hyperlinks but want to avoid a round of formatting revisions, consider making all links black (i.e. citecolor=black,linkcolor=black, etc.). If you are determined, talk to ETD reviewers about your use of hyperlinks, they may let it slide.
+\usepackage[%
+breaklinks,
+hidelinks,
+colorlinks=false,
+citecolor=pdfcitecolor,
+linkcolor=pdflinkcolor,
+anchorcolor=pdfanchorcolor,
+urlcolor=pdfurlcolor,
+filecolor=pdffilecolor,
+pagebackref=false,
+pdfauthor={\theauthor},
+pdftitle={\thetitle},
+linktoc=page]{hyperref}
+\urlstyle{same}
+
+\usepackage[noabbrev,capitalize]{cleveref} % improvement
+
+% Feeding the names of environments to cleveref. Adjust if needed.
+\crefname{Thm}{theorem}{theorems}
+\crefname{Prop}{proposition}{propositions}
+\crefname{Lem}{lemma}{lemmas} % Lemmata for the extra pedanticc
+\crefname{Coro}{corollary}{corollaries}
+\crefname{Ex}{example}{examples}
+\crefname{Rmk}{remark}{remarks}
+
+%%%% Tidying up
+% List of words that will not be capitalized in Title Case
+\Addlcwords{of, and, a, an, the, or, to, in, on, at, for}
+
+% Correct bad hyphenation here. Add words to the list separated by hyphens so that if LaTeX decides to break a line halfway through it does so correctly.
+\hyphenation{hy-phen-a-tion}
+
+
+%% NEW %%
+
+% move page numbering to bottom right margin
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{
+    \fancyhf{} 
+    \fancyfoot{}
+    \fancyfoot[R]{\thepage} 
+    \renewcommand{\headrulewidth}{0pt} 
+    \renewcommand{\footrulewidth}{0pt} 
+}
+\pagestyle{plain}
+
+
+% Adjust spacing in ToC
+% \setlength{\cftchapnumwidth}{0em}
+\setlength{\cftsecnumwidth}{0.8em}
+\setlength{\cftsubsecnumwidth}{0.9em}
+
+% Adjust Appendix spacing in ToC
+\makeatletter
+    \let\oldappendix\appendix
+    \renewcommand\appendix{%
+    \oldappendix
+    \addtocontents{toc}{\setlength{\cftsecnumwidth}{1em}}
+    \addtocontents{toc}{\setlength{\cftsubsecnumwidth}{1em}}
+    \addtocontents{toc}{\setlength{\cftchapnumwidth}{1.7em}}
+    }
+\makeatother
+
+
+% Adjust indentation
+\setlength{\parindent}{0.5in}
+
+% Adjust style of headings
+\usepackage[normalem]{ulem}
+\titleformat{\section}[block]{}{\textbf{\thesection}~}{0pt}{\textbf}
+\titleformat{\subsection}[block]{}{\thesubsection~}{0pt}{}
+\titleformat{\subsubsection}[block]{}{\textit{\thesubsubsection}~}{0pt}{\itshape}
+\titleformat{\paragraph}[block]{}{\uline{\theparagraph~}}{0pt}{\uline}
+\titleformat{\subparagraph}[block]{}{\uline{\textit{\thesubparagraph}~}}{0pt}{\itshape\uline}
+
+\titlespacing*{\section}{0pt}{2em}{2em}
+\titlespacing*{\subsection}{0pt}{1.5em}{1.5em}
+\titlespacing*{\subsubsection}{0pt}{1em}{1em}
+\titlespacing*{\paragraph}{0pt}{1em}{1em}
+\titlespacing*{\subparagraph}{0pt}{1em}{1em}
+
+
+% Figure and table numbering
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+\renewcommand{\thetable}{\thechapter.\arabic{figure}}
+\counterwithin{figure}{chapter}
+\counterwithin{table}{chapter}
+
+% Removes spaces between chapters in LoF and LoT
+\makeatletter\def\ttl@tocsep{}\makeatother
+
+% Adjusts left margin between figure numbers and figure captions in lot and lof
+\cftsetindents{figure}{0.0in}{1in}
+\cftsetindents{table}{0.0in}{1in}
+
+
+% Adjust caption space above and below
+\setlength\abovecaptionskip{3ex}
+\setlength\belowcaptionskip{3ex}
+
+% Disable Vertical Centering for floats
+\makeatletter
+\setlength{\@fptop}{0pt}
+\makeatother

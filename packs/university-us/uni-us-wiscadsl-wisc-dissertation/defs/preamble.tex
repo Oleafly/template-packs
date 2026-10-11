@@ -1,0 +1,166 @@
+%% Preambles: package, settings, and stuff
+
+\DisemulatePackage{setspace}
+\usepackage[onehalfspacing]{setspace}
+
+%% Feel free to add more or remove packages and settings below...
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{wasysym}
+\usepackage{latexsym}
+\usepackage{centernot}
+\usepackage{ifthen}
+
+\usepackage{chapterbib}
+\usepackage{cite}
+
+\usepackage{xspace}
+\usepackage{bold-extra}
+\usepackage{graphbox}
+
+\usepackage{float}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage{changepage}
+
+\usepackage{color}
+\usepackage[dvipsnames,table]{xcolor}
+
+\usepackage{listings}
+\usepackage{pdfpages}
+\usepackage{verbatim}
+\usepackage{minted}
+
+\usepackage{etoolbox}
+\makeatletter
+\preto{\@verbatim}{\topsep=1pt \partopsep=1pt}
+\makeatother
+
+\usepackage{enumitem}
+\SetLabelAlign{center}{\strut\smash{\parbox[t]\labelwidth{\centering#1}}}
+
+\usepackage[ruled,linesnumbered]{algorithm2e}
+\SetArgSty{textup}
+
+\usepackage{caption}
+\captionsetup{labelfont=bf,justification=justified,singlelinecheck=false}
+
+\usepackage[labelformat=simple]{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{graphs,quotes}
+
+\usepackage[framemethod=TikZ]{mdframed}
+
+\IfFileExists{mathpartir.sty}{%
+\usepackage{mathpartir}%
+}{}
+
+\IfFileExists{listings.sty}{%
+\usepackage{listings}%
+}{}
+
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{xurl}
+
+%% Get rid of ugly borders around PDF hyperlinks:
+\hypersetup{pdfborder = 0 0 0}
+
+%% If you want microtype:
+\IfFileExists{microtype.sty}{%
+\usepackage[protrusion=true,expansion=true,kerning,spacing=false]{microtype}%
+}{}
+
+%% Use ACM default font -- Libertine (much better than original):
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{pslatex}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[tt=false, type1=true]{libertine}
+\RequirePackage[varqu]{zi4}
+\microtypecontext{spacing=nonfrench}
+
+%% Surround parts of graphics with box
+\usepackage{boxedminipage}
+
+%% If you want booktabs:
+\IfFileExists{booktabs.sty}{%
+\usepackage{booktabs}%
+}{}
+
+%% This is now the recommended way for checking for PDFLaTeX:
+\usepackage{ifpdf}
+
+\usepackage[T1]{eulervm}
+\renewcommand*\ttdefault{lmtt}
+
+\usepackage{graphicx}
+
+\usepackage{makeidx}
+\makeindex
+
+{\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{define}[thm]{Definition}
+\newtheorem{exmpl}[thm]{Example}
+}
+{\theoremstyle{remark}
+\newtheorem{rmk}[thm]{Remark}
+}
+
+%% If need custom theorem block styling:
+\newtheoremstyle{customsty1}
+{3pt}%
+{3pt}%
+{}% --- body font
+{}% --- indent amount
+{\bfseries}% --- Theorem head font
+{:}% --- Punctuation after head
+{.5em}% --- space after head
+{}% --- theorem head spec (can be left empty, meaning 'normal')
+
+{\theoremstyle{customsty1}  % define 'newtheorems' that use ``customsty1''
+}
+
+%% More styling stuff:
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+
+\copypagestyle{chapter}{plain}
+\makeoddfoot{chapter}{}{}{}
+\makeevenhead{chapter}{\thepage}{}{}
+\makeoddhead{chapter}{}{}{\thepage}
+
+%% Bibliography stuff:
+\makeatletter
+\newenvironment{wb-bib}[1]{%
+  \chapter*{references}
+\ifnobibintoc\else 
+\phantomsection 
+\addcontentsline{toc}{chapter}{References} 
+\fi 
+\prebibhook
+  \begin{bibitemlist}{#1}}{\end{bibitemlist}\postbibhook}
+
+\AtBeginDocument{%
+  \@ifpackageloaded{natbib}{% natbib is loaded
+    \addtodef{\endthebibliography}{}{\vskip-\lastskip\postbibhook}
+    \@ifpackagewith{natbib}{sectionbib}{% with sectionbib option
+      \renewcommand{\bibsection}{\@memb@bsec}}%
+      {\renewcommand{\bibsection}{\@memb@bchap}}}%
+  {}
+  \@ifpackagewith{chapterbib}{sectionbib}{%
+    \renewcommand{\sectionbib}[2]{}
+    \renewcommand{\bibsection}{\@memb@bsec}}{}
+}
+\makeatother

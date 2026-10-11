@@ -1,0 +1,454 @@
+% Northeastern University COS Ph.D. Dissertation LaTeX Template NEU_COS_thesis_style.sty shared on https://github.com/jxhuangphys/NEU_COS_thesis
+% Adapted from University of Pennsylvania Ph.D. Dissertation LaTeX Template and Penn Biostat LaTeX Template, which was modified from the Dissertation Template for Wharton PhD Candidates in LaTeX.
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{NEU_COS_thesis_style}[2022/04/28 Thesis Style]
+
+\RequirePackage[left=1in,
+                right=1in,
+                vmargin=1in,
+                nohead,
+                includeheadfoot,
+                letterpaper]{geometry} 
+\RequirePackage[T1]{fontenc}
+\RequirePackage[american]{babel}
+\RequirePackage{csquotes}
+\RequirePackage{amsthm}
+\RequirePackage{amsmath,amssymb,amsfonts}
+\RequirePackage{amscd}
+\RequirePackage{calc}
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\RequirePackage{caption}
+\RequirePackage{multirow}
+\RequirePackage{blindtext}
+\RequirePackage{verbatim}
+\RequirePackage{appendix}
+\RequirePackage[doublespacing]{setspace} % Sets double-spacing for the main document. Ad hoc commands required for single space tables, etc.
+\RequirePackage{array} % Also for better arrays (eg matrices) in maths
+\RequirePackage{tabularx}
+\RequirePackage{booktabs}
+\RequirePackage{pdflscape}
+
+% LINKS
+\RequirePackage[hidelinks]{hyperref}
+\hypersetup{
+    breaklinks=true
+}
+\urlstyle{same}
+\RequirePackage{tocloft}%
+
+\RequirePackage{parskip} % To allow for better management of the Dutch paragraph style
+\RequirePackage[compact]{titlesec}
+%\RequirePackage[explicit]{titlesec}
+
+% CHAPTERS AND SECTIONS
+\renewcommand{\beforetitleunit}{0 pt}
+\titleformat{\section}[hang]{\large\bfseries}{\thesection}{20 pt}{}
+\titleformat{\subsection}[hang]{\normalsize\bfseries}{\thesubsection}{6 pt}{}
+%
+%\titleformat{\chapter}[display]
+%  {\normalfont\sffamily\huge\bfseries\color{blue}}
+%  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+
+\titleformat{\chapter}[display]
+  {\huge\bfseries\color{blue}}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+
+% Format chapters (dots, including the word chapter, etc.) in ToC
+%\renewcommand{\cftchapfont}{\upshape}
+\renewcommand{\cftchapfont}{\large}
+\renewcommand{\cftchapleader}{\upshape\cftdotfill{\cftdotsep}}
+\renewcommand{\cftchappagefont}{\upshape}
+\renewcommand{\cftchappagefont}{\large}
+\renewcommand{\cftchappresnum}{Chapter }
+%\renewcommand{\cftchappresnum}{} % remove "chapter" from table of contents
+\renewcommand{\cftchapaftersnum}{ : }
+\newlength{\mylen}   % a "scratch" length
+\settowidth{\mylen}{\cftchappresnum \cftchapaftersnum} % extra space
+%\settowidth{\mylen}{\cftchappresnum}
+\addtolength{\cftchapnumwidth}{\mylen} % add the extra space
+\renewcommand{\beforetitleunit}{0 pt}
+\titleformat{\section}[hang]{\large\bfseries}{\thesection}{6 pt}{}
+\titleformat{\subsection}[hang]{\normalsize\bfseries}{\thesubsection}{6 pt}{}
+ 
+% TABLE OF CONTENTS
+\setcounter{tocdepth}{2} % Only show chapters and sections in ToC
+\addto\captionsamerican{\renewcommand{\contentsname}{\hfill Table of Contents \hfill}}%
+%\renewcommand{\cfttoctitlefont}{\large\bfseries}%
+\renewcommand{\cfttoctitlefont}{\normalsize}%
+\renewcommand{\cftaftertoctitle}{\hfill}%
+\renewcommand{\cftbeforetoctitleskip}{-21 pt} % Key value is -21 pt
+% set table of contents fonts
+\renewcommand\cftchapfont{\normalsize}
+\renewcommand\cftsecfont{\normalsize}
+\renewcommand\cftchappagefont{\normalsize}
+\renewcommand\cftsecpagefont{\normalsize}
+
+% LIST OF TABLES
+\addto\captionsamerican{\renewcommand{\listtablename}{LIST OF TABLES}}
+\renewcommand{\cftlottitlefont}{\large\bfseries\hfill}
+\renewcommand{\cftafterlottitle}{\hfill}
+\renewcommand{\cftbeforelottitleskip}{-21 pt} % Key value is -21 pt
+\renewcommand{\cfttableader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cfttabpresnum}{TABLE }
+\newlength{\mylent}   % a "scratch" length
+\settowidth{\mylent}{\cfttabpresnum} % extra space
+\addtolength{\cfttabnumwidth}{\mylent} % add the extra space
+\setlength{\cftbeforetabskip}{-7 pt} % Approximates single-spaced entries
+
+% LIST OF ILLUSTRATIONS (figures)
+\addto\captionsamerican{\renewcommand{\listfigurename}{List of Figures}}
+%\renewcommand{\cftloftitlefont}{\large\bfseries\hfill}
+\renewcommand{\cftloftitlefont}{\normalsize\hfill}
+\renewcommand{\cftafterloftitle}{\hfill}
+\renewcommand{\cftbeforeloftitleskip}{-21 pt} % Key value is -21 pt
+\renewcommand{\cftfigleader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftfigpresnum}{Figure }
+\newlength{\mylenf}   % a "scratch" length
+\settowidth{\mylenf}{\cftfigpresnum} % extra space
+\addtolength{\cftfignumwidth}{\mylenf} % add the extra space
+\setlength{\cftbeforefigskip}{-7 pt} % Approximates single-spaced entries
+%\renewcommand\cftfigfont{\normalsize}
+%\renewcommand\cftfigpagefont{\normalsize}
+
+% TITLE PAGE
+\newcommand{\specialization}[1]{%
+  \expandafter\gdef\csname specialization@\endcsname{#1}}
+  \newcommand{\gradgroup}[1]{%
+  \expandafter\gdef\csname gradgroup@\endcsname{#1}}
+\newcommand{\supervisor}[1]{%
+  \expandafter\gdef\csname supervisor@\endcsname{#1}}
+\newcount\cosup@cnt
+\cosup@cnt=0
+\newcommand{\cosupervisor}[1]{%
+  \expandafter\gdef\csname cosupervisor@\romannumeral\cosup@cnt\endcsname{#1}%
+  \advance\cosup@cnt by 1}
+\newcommand{\supervisortitle}[1]{%
+  \expandafter\gdef\csname supervisortitle@\endcsname{#1}}
+\newcommand{\cosupervisortitle}[1]{%
+  \expandafter\gdef\csname cosupervisortitle@\endcsname{#1}}
+\newcommand{\gradchair}[1]{%
+  \expandafter\gdef\csname gradchair@\endcsname{#1}}
+\newcount\comm@cnt
+\comm@cnt=1
+\newcommand{\committee}[1]{%
+  \expandafter\gdef\csname committee@\romannumeral\comm@cnt\endcsname{#1}%
+  \advance\comm@cnt by 1}
+
+\renewcommand\maketitle{\par
+  \begingroup
+     \singlespace
+      \@maketitle
+%      \pagenumbering{roman}
+      \pagenumbering{arabic} % this command will overwrite the command in \newcommand \maketitle
+  \endgroup
+  \setcounter{footnote}{1}% title page number 1
+  \global\let\maketitle\relax
+  \global\let\@maketitle\relax
+  \global\let\@commitee\@empty
+  \global\let\committee\relax
+  \global\let\and\relax
+}
+
+%\newcommand{\@maketitle}{%
+%  \begin{center}%
+%    \normalsize{\doublespacing\MakeUppercase{\@title}%
+%    \singlespace%     
+%    \vskip 0em%
+%     {by}%   
+%    \vskip 0em%
+%   {\@author}%
+%      {\vskip 1cm}%
+%   {A dissertation submitted to }%
+%    \vskip 1cm%
+%%      {in}%   
+%%    \vskip 0em%
+%%    {\csname gradgroup@\endcsname}%
+%%    \vskip 0em%
+%%   {Presented to}%
+%    \vskip 0em%
+%   {The Faculty of }%
+%     \vskip 0em%
+%    { College of Science of}%
+%    \vskip 0em%
+%    { Northeastern University}%
+%    \vskip 0em%
+%   {in partial fulfillment of the requirements}%
+%    \vskip 0em%
+%   {for the degree of Doctor of Philosophy}%
+%%      {\vskip 1cm}%
+%%      {by}%   
+%%    \vskip 0em%
+%%       {\@author}%
+%    \vskip 0em%
+%    {\@date}%
+%    \vskip 1.5cm}%
+%  \end{center}%
+%   \begin{flushleft}%
+%   \ifnum \cosup@cnt=0 {%
+%    {Advisor of Dissertation}\vskip 0em%
+%   {\csname supervisor@\endcsname} %\vskip 0em%
+%%  {\csname supervisortitle@\endcsname}
+%  }%
+%  \else {%
+% \begin{tabular*}{\textwidth}{@{\extracolsep{\fill} }p{0.4\linewidth} p{0.4\linewidth}}%
+%   {Supervisor of Dissertation} & {Co-Supervisor of Dissertation}\\ & \\ %\vskip 0em%
+%   {\csname supervisor@\endcsname} & {\csname cosupervisor@\endcsname}\\ & \\ %\vskip 0em%
+%   {\csname supervisortitle@\endcsname} & {\csname cosupervisortitle@\endcsname} %\vskip 0em%%
+%\end{tabular*}%
+%}%
+% \fi%  
+%  \vskip 1.0cm%
+%%  {Graduate Group Chairperson} \vskip 0em%
+%   {\csname gradchair@\endcsname}%
+%%  \vskip 1.0cm%
+%  {Dissertation Committee}\vskip 0em%
+%  \newcount\n%
+%  \n=1%
+%  \loop {\csname committee@\romannumeral\n\endcsname}%
+%  \advance \n by 1%
+%  \ifnum\n<\comm@cnt%
+%  \\%\vskip 0em 
+%  \repeat%
+%  \end{flushleft}
+%  \thispagestyle{empty}
+%  \clearpage
+%}
+
+
+\newcommand{\@maketitle}{%
+  \begin{center}%
+%    \normalsize{\doublespacing\MakeUppercase{\@title}%
+     \normalsize{\doublespacing{\@title}%
+    \singlespace%     
+    \vskip 1em%
+%     {by}%   
+    \vskip 0em%
+   { by \@author}%
+      {\vskip 1em}%
+     {B.S. in Physics, XXX University } \\%
+      {M.S. in Physics, YYY University} \\%
+      {\vskip 2em}%
+   {A dissertation submitted to }%
+    \vskip 1cm%
+%      {in}%   
+%    \vskip 0em%
+%    {\csname gradgroup@\endcsname}%
+%    \vskip 0em%
+%   {Presented to}%
+%    \vskip 0em%
+   {The Faculty of } \\ % //
+%     \vskip 0em%
+    {the College of Science of} \\%
+%    \vskip 0em%
+    { Northeastern University} \\%
+%    \vskip 0em%
+   {in partial fulfillment of the requirements} \\%
+%    \vskip 0em%
+   {for the degree of Doctor of Philosophy} \\%
+      {\vskip 1cm}%
+%      {by}%   
+%    \vskip 0em%
+%       {\@author}%
+    \vskip 2em%
+    {\@date}%
+    \vskip 2em}%
+  \end{center}%
+   \begin{centering}
+   \ifnum \cosup@cnt=0 {%
+%    {Advisor of Dissertation}\vskip 0em%
+     \leftskip=6cm
+   {\csname supervisor@\endcsname} %\vskip 0em%
+%  {\csname supervisortitle@\endcsname}
+  }%
+  \else {%
+ \begin{tabular*}{\textwidth}{@{\extracolsep{\fill} }p{0.4\linewidth} p{0.4\linewidth}}%
+   {Supervisor of Dissertation} & {Co-Supervisor of Dissertation}\\ & \\ %\vskip 0em%
+   {\csname supervisor@\endcsname} & {\csname cosupervisor@\endcsname}\\ & \\ %\vskip 0em%
+   {\csname supervisortitle@\endcsname} & {\csname cosupervisortitle@\endcsname} %\vskip 0em%%
+\end{tabular*}%
+}%
+ \fi%  
+%  \vskip 1.0cm%
+%  {Graduate Group Chairperson} \vskip 0em%
+   {\csname gradchair@\endcsname}%
+%  \vskip 1.0cm%
+  {Dissertation Committee} \\
+   \doublespacing
+  \newcount\n%
+  \n=1%
+  \loop {\csname committee@\romannumeral\n\endcsname}% 
+  \advance \n by 1%
+  \ifnum\n<\comm@cnt%
+  \\
+  \doublespacing
+%  \vskip 0em 
+  \repeat%
+  \end{centering}
+  \pagenumbering{arabic}
+%  \thispagestyle{empty}
+  \clearpage
+}
+
+
+\newcommand{\ifundefined}[1]{\expandafter\ifx\csname#1\endcsname\relax}
+
+% COPYRIGHT NOTICE
+\newcommand{\authorlegal}[1]{%
+  \expandafter\gdef\csname authorlegal@\endcsname{#1}}
+\newcommand{\cclicense}[1]{%
+  \expandafter\gdef\csname cclicense@\endcsname{#1}}
+\newcommand{\cclicenseurl}[1]{%
+  \expandafter\gdef\csname cclicenseurl@\endcsname{#1}}
+  
+  
+  
+\newcommand{\makecopyright}{%
+  \vspace*{\fill} 
+  \thispagestyle{empty} % this will clear the page number at the bottom
+  \begin{flushleft}%
+%  \hspace{0pt} % this is required to enable \vskip
+%   \vskip 7cm
+%   \vspace{6cm}
+%  \MakeUppercase{\@title}  \vskip 10em%
+  {Copyright Xinzhi Li} \vskip -0.5em%
+%  \@date \vskip -0.5em%
+  {\csname authorlegal@\endcsname}
+   \addcontentsline{toc}{chapter}{COPYRIGHT}
+\end{flushleft}%
+%  \vspace*{\fill} 
+%  \pagenumbering{roman} % this command will reset the page number, start from one and change the format.
+%\clearpage
+}
+
+
+\newcommand{\makecreativecommons}{%
+  \vspace*{\fill} 
+  \thispagestyle{empty}
+  \begin{flushleft}%
+  \MakeUppercase{\@title}  \vskip -0.5em%
+  {COPYRIGHT} \vskip -0.5em%
+  \@date \vskip -0.5em%
+  {\csname authorlegal@\endcsname} \vskip 0.6em%
+ {This work is licensed under the} \vskip -1em {Creative Commons} \vskip -1em {\csname cclicense@\endcsname} \vskip -1em {License} \vskip 0.3em%
+ {To view a copy of this license, visit} \vskip -0.5em% 
+ \underline{\url{{\csname cclicenseurl@\endcsname}}} %
+\end{flushleft}%
+\clearpage
+}
+
+% DEDICATION
+\newcommand{\dedication}[1]{%
+    \expandafter\gdef\csname dedication@\endcsname{#1}}
+\newcommand{\makededication}{%
+   {\csname dedication@\endcsname}%
+}
+
+% ACKNOWLEDGEMENT
+\newcommand{\acknowledgement}[1]{%
+    \expandafter\gdef\csname acknowledgement@\endcsname{#1}}
+\newcommand{\makeacknowledgement}{%
+%   \titleformat{\chapter}[hang]{\large\center\bfseries}{\scshape\thechapter}{0 pt}{}%
+ \titleformat{\chapter}[hang]{\normalsize\center}{\thechapter}{0 pt}{}%
+   \titlespacing*{\chapter}{0pt}{-33 pt}{6 pt} % Key value is -33 pt   
+   \chapter*{Acknowledgements}%
+   \addcontentsline{toc}{chapter}{Acknowledgements} % This is to include this section in the Table of Contents}
+     \setlength{\parskip}{10 pt} % Same as Word file
+  \setlength{\parindent}{15pt} %
+   {\csname acknowledgement@\endcsname}%
+}
+
+% ABSTRACT
+\renewcommand{\abstract}[1]{%
+    \expandafter\gdef\csname abstract@\endcsname{#1}}
+\newcommand{\makeabstract}{%
+%   \titleformat{\chapter}[hang]{\large\center\bfseries}{\scshape\thechapter}{0 pt}{}%
+    \titleformat{\chapter}[hang]{\normalsize\center}{\scshape\thechapter}{0 pt}{}%
+   \titlespacing*{\chapter}{0pt}{-33 pt}{6 pt} % Key value is -33 pt
+   \chapter*{Abstract of Dissertation} \vskip -0.3em%
+   \addcontentsline{toc}{chapter}{Abstract of Dissertation}% This is to include this section in the Table of Contents
+     \setlength{\parskip}{10 pt} % Same as Word file
+  \setlength{\parindent}{15pt} %
+%   \begin{center}%
+%   {\MakeUppercase{\@title}} \vskip 0em%
+%   {\@author} \vskip -0.3em%
+%   \ifnum \cosup@cnt=0 {%
+%    {\csname supervisor@\endcsname} \vskip 0.3em%
+%   } \else {%
+%    {\csname supervisor@\endcsname} \vskip -0.3em%
+%    {\csname cosupervisor@\endcsname} \vskip 0.3em%
+%   } \fi%
+%   \end{center}%
+    {\csname abstract@\endcsname}%
+    \clearpage%
+}
+
+% PREFACE
+\newcommand{\preface}[1]{%
+    \expandafter\gdef\csname preface@\endcsname{#1}}
+\newcommand{\makepreface}{%
+   \titleformat{\chapter}[hang]{\large\center\bfseries}{\scshape\thechapter}{0 pt}{}%
+   \titlespacing*{\chapter}{0pt}{-33 pt}{6 pt} % Key value is -33 pt   
+   \chapter*{PREFACE}
+   \addcontentsline{toc}{chapter}{PREFACE} % This is to include this section in the Table of Contents}
+   {\csname preface@\endcsname}%
+   \clearpage
+}
+
+% MAIN TEXT
+\newenvironment{mainf}{%
+%  \titleformat{\chapter}[display]{\Large\raggedright\scshape\bfseries}{CHAPTER \thechapter}{0pt}{}
+% make chapter title regular not small capital
+
+   \titleformat{\chapter}[display]{\large\raggedright\bfseries}{Chapter \thechapter}{0pt}{}
+
+
+  \titlespacing*{\chapter}{0pt}{-29 pt}{6 pt} % Key value is -29 pt
+  \newpage%
+%  \pagenumbering{arabic}% this command will reset the page number start from one and change the format.
+  \pagestyle{plain} % This has to be repeated here because the lists change the style
+  \setlength{\parskip}{10 pt} % Same as Word file
+  \setlength{\parindent}{15pt} %
+}{}
+
+%\newcommand{\chpt}[1]{\chapter[\textsc{#1}]{#1}} % this command will make small capital titles in ToC
+
+%\newcommand{\chpt}[1]{\chapter[\uppercase{#1}]{#1}} % this command will make small capital titles in ToC
+
+\newcommand{\chpt}[1]{\chapter{#1}}
+
+% SINGLE APPENDIX 
+\newcommand{\oneappendix}{
+\renewcommand\appendixtocname{APPENDIX}
+\clearpage
+\addappheadtotoc
+\titlespacing*{\chapter}{0pt}{-33 pt}{6 pt}
+\titleformat{\chapter}[display]{\large\center\scshape\bfseries}{APPENDIX}{0pt}{}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+}
+
+% MULTIPLE APPENDICES
+\newcommand{\multappendices}{
+\renewcommand\appendixtocname{APPENDICES}
+\clearpage
+\addappheadtotoc
+\titlespacing*{\chapter}{0pt}{-33 pt}{6 pt}
+\titleformat{\chapter}[display]{\large\center\scshape\bfseries}{APPENDIX \thechapter}{0pt}{}
+\addtocontents{toc}{\protect\setcounter{tocdepth}{-1}}
+}
+
+%% BIBLIOGRAPHY
+\newenvironment{bibliof}{%
+\singlespacing%
+\addtocontents{toc}{\protect\setcounter{tocdepth}{1}} % This is to bring things back to normal
+\titleformat{\chapter}[hang]{\large\center\bfseries}{\thechapter}{0 pt}{}
+\titlespacing*{\chapter}{0pt}{-25 pt}{6 pt} % Key value is -25 pt
+\renewcommand\bibname{Bibliography}
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\setlength{\bibsep}{\baselineskip}
+}{}

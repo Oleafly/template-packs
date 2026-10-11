@@ -1,0 +1,206 @@
+%& --shell-escape --enable-write18
+%
+% The University of Tulsa TeX Template
+%
+%
+%                     Written by
+%
+%                 Richard A. Redner
+%             Associate Dean of Research
+%               and Graduate Studies
+%
+%              The University of Tulsa
+%
+%                     July 2004
+%
+%     Please see the README.TUthesis file for information
+%     on using the TUthesis template.
+%
+%              Modified November 2004
+%
+%  Summary of changes
+%      1.  section, subsection and subsubsection replaced with
+%          TUsection, TUsubsection and TUsubsubsection to correct
+%          the Table of Contents.  This will add bold face and
+%          italics to the appropriate places in the Table of Contents.
+%      2.  Spacing added between first few items in Table of Contents.
+%
+%             Modified January 31, 2005
+%
+%  Summary of changes
+%      1.  Correction made to code for the appendices so that the
+%          automatic numbering is correct for subheadings, figures
+%          and tables. TUappendix command added.
+%
+%             Modified August 15, 2005
+%
+%  Summary of changes
+%
+%      1.  Adjusted spacing after "by".
+%      2.  Added Latex option so that margins are correct
+%          for both PDFLaTeX and for LaTeX.
+%
+%             Modified June 14, 2007
+%
+%  Summary of changes
+%
+%      1.  Implementation of changes proposed by Mike Spanehower  and
+%          Jesus Gonzalez to fix the page numbering problem when tables
+%          and figures cover more than one page.
+%      2.  Implemented a test page so that users can directly verify that
+%          all of the margins are correct and made adjustments to current
+%          margins.
+%      3.  Numerous other minor changes to improve the compliance of the
+%          TeX Thesis Template.
+%
+% This TUthesis Template uses the following two style files
+%
+%       TUthesis.sty
+%       setspace.sty
+%
+% The TUthesis style file was created from scratch, but its
+% construction would not be possible without extensive use of
+% the Stanford Ph.D./Thesis style document.
+%
+% The TUthesis style and template files can be used for
+% both theses and dissertations.
+%
+
+
+\documentclass[12pt,letterpaper]{report}
+
+\usepackage{TUthesis}
+
+\usepackage{listings} \lstset{basicstyle=\small}
+\usepackage{lastpage}
+\usepackage{url}
+\usepackage{microtype} % Provides margin kerning, font expansion, etc.
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{dot2texi}
+\usepackage{tikz} \usetikzlibrary{shapes,arrows}
+
+\includeonly{chapter1,chapter2,chapter3,chapter4,chapter5,chapter6,chapter7} %
+
+\begin{document}
+
+% Enter the information for the title page,
+% signature page and abstract.
+%
+\titleoneline{Hybrid Attack Graphs For Modeling Cyber-Physical Systems}
+% The title with line breaks for the front pages:
+\title{Hybrid Attack Graphs For Modeling Cyber-Physical Systems}
+\author{George Robert Louthan IV}
+\degreename{Master of Science}
+\dept{Computer Science}
+\submityear{2011}
+
+%
+% If there is a co-advisor, use \coadvisortrue
+% otherwise use \coadvisorfalse
+%
+\coadvisorfalse  %\coadvisortrue
+
+%
+% The number of members on the committee
+% including the chairperson or the co-advisors
+%
+\committeesize=3
+
+\advisor{John C. Hale}    % name of chairperson or co-advisor
+\secondmember{Mauricio Papa} % name of second member or co-advisor
+\thirdmember{Peter Hawrylak}   % name of third member
+
+\numofpages{\pageref{LastPage}}                    % number of pages in the document
+\numofchapters=1                   % number of chapters in the document
+\numofabstractwords{75}            % number of words in the abstract
+
+%
+% If this is a thesis use \thesistrue
+% and if this is a dissertation use \thesisfalse
+%
+\thesistrue  %\thesisfalse
+
+% The template is set up for a copyright page along with a figures
+% page and a tables page. If one of these is missing, change
+%
+%      \copyrightrue to  \copyrighfalse
+%      \tablestrue   to  \tablesfalse
+%      \figurestrue  to  \figuresfalse
+%
+% respectively.
+
+%\copyrighttrue     %
+\copyrightfalse
+\figurespagetrue   %
+%\figurespagefalse
+\tablespagetrue    %
+% \tablespagefalse
+
+
+\beforeabstract    % generates the pages that come before the abstract
+\abstractp         % generates initial content of the abstract
+
+
+%
+% Place the text of the abstract here
+%
+
+\input{abstract}
+
+\acknowledgementsp
+For their continued support, I thank my family and Evan Mackay.
+
+The work of Chris Hartney and Matt Young in relation to the National Vulnerability
+Database and exploit pattern terminology and Carsten M\"{u}ller with respect to
+the Common Platform Enumeration is gratefully acknowledged, as is the
+role of Aleks Kissinger in the whiteboard conversation that resulted in the 
+concept of hybrid link automata. My further thanks to Chris Hartney, Zach 
+Harbort, and Jordan Sanderson for their collaboration on a variety of attack 
+graph related research and development.
+
+I would also like to thank my advisor, Dr. John Hale, for his patience and
+guidance, as well as my other committee members..
+% Leech?
+
+This material is based on research sponsored by DARPA under agreement number 
+FA8750-09-1-0208. The U.S. Government is authorized to reproduce and distribute 
+reprints for Governmental purposes notwithstanding any copyright notation 
+thereon. The views and conclusions contained herein are those of the authors and
+should not be interpreted as necessarily representing the official policies or 
+endorsements, either expressed or implied, of DARPA or the U.S. Government.
+  
+\afteracknowledgementsp
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Main Body of Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{chapter1}
+\include{chapter2}
+\include{chapter3}
+\include{chapter4}
+\include{chapter5}
+\include{chapter6}
+\include{chapter7}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BIBLIOGRAPHY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\addtocontents{toc}{\protect{\hfill \ }}
+%\addcontentsline{toc}{section}{\contentsadj NOMENCLATURE}
+
+\bibliographyp
+\bibliography{TUthesis}
+\bibliographystyle{plain}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDICES AS NECESSARY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendixpages       % prepare for the generation of the appendices
+%\include{Appendices}
+\end{document}

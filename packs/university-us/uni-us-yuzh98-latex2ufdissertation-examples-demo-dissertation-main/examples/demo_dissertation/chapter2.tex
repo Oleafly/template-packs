@@ -1,0 +1,309 @@
+%%% Chapter 2 — Main body (methods)
+%%% Demonstrates: three figures (TikZ + pgfplots, colorful, real),
+%%% three tables (simple, threeparttable w/ footnote, longtable),
+%%% equation, theorem, lemma, algorithm pseudocode, citation, paired
+%%% subsections, block quote, two \addObject calls.
+
+\chapter{METHODS}\label{ch:methods}
+
+This chapter describes the validator's two-layer architecture. The
+source layer is presented in Section~\ref{sec:source} and the PDF
+layer in Section~\ref{sec:pdf}. Reporting conventions follow in
+Section~\ref{sec:reporting}.
+
+The validator's design follows a standing convention in the UF
+template documentation~\citep{ufitTemplates2026}:
+\begin{quote}
+We don't recommend that you change much of anything in the class file
+unless you're absolutely sure of what you are doing.
+\end{quote}
+The validator honors this guidance by treating the template as
+authoritative and flagging only student-introduced overrides. If you
+are reading this demo as a reference, take heart: the template does
+most of the work. Your job is to write a great dissertation and not
+fight with margins.
+
+\section{Source-Layer Checks}\label{sec:source}
+
+The source layer parses the LaTeX project files and reports violations
+that can be determined without compiling the document.
+
+\subsection{Override Scans}
+
+Most UF formatting rules are enforced by the \texttt{ufdissertation}
+class. A source-layer override scan looks for patterns that bypass the
+class's defaults --- for example, a manual
+\texttt{\textbackslash pagenumbering\{roman\}} that would violate the
+new template's arabic-throughout rule per
+UF-F6~\citep{ufFormatting2026}.
+
+The override-detection problem reduces to pattern matching, which is
+formalized in Lemma~\ref{lem:override}.
+
+\begin{lemma}\label{lem:override}
+Let $T$ be the set of formatting properties enforced by the
+\texttt{ufdissertation} class. For each $t \in T$ there exists a finite
+set $O_t$ of LaTeX command patterns that, if present in a project's
+source, override the class's enforcement of $t$. Detection of any
+violation of $t$ at the source layer reduces to scanning the source
+for membership in $O_t$.
+\end{lemma}
+
+\begin{theorem}\label{thm:source-soundness}
+The source layer is sound: every violation it reports corresponds to a
+real override of a UF formatting rule. The source layer is not
+complete: violations introduced via mechanisms outside $\bigcup_t O_t$
+are missed.
+\end{theorem}
+
+\noindent The PDF layer (Section~\ref{sec:pdf}) provides
+defense-in-depth against the incompleteness identified in
+Theorem~\ref{thm:source-soundness}. Algorithm~\ref{alg:override} states
+the procedure formally.
+
+\begin{algorithm}[H]
+\caption{Source-layer override scan for a single rule.}
+\label{alg:override}
+\begin{algorithmic}[1]
+    \Require project files $F$, rule $t$ with override patterns $O_t$
+    \Ensure list of findings $L$
+    \State $L \gets [\,]$
+    \ForAll{$f \in F$ with extension \texttt{.tex}}
+        \State $\textit{lines} \gets$ \Call{ReadLines}{$f$}
+        \For{$i \gets 1$ to $|\textit{lines}|$}
+            \ForAll{$p \in O_t$}
+                \If{\Call{Match}{$p$, $\textit{lines}[i]$}}
+                    \State append $(f, i, t, p)$ to $L$
+                \EndIf
+            \EndFor
+        \EndFor
+    \EndFor
+    \State \Return $L$
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Presence Checks}
+
+Other rules require the student to set specific macros or files. A
+presence check verifies, for instance, that
+\texttt{\textbackslash setAbstractFile} has been called and that the
+named abstract file exists on disk.
+
+\section{PDF-Layer Checks}\label{sec:pdf}
+
+The PDF layer inspects the compiled output for properties the source
+layer cannot predict.
+
+\subsection{Geometric Properties}
+
+Margins, page numbering placement, and embedded font families are
+verified against the rendered output. Equation~\ref{eq:margin}
+formalizes the margin acceptance criterion:
+\begin{equation}\label{eq:margin}
+m_{\text{page}} \geq 1.0\,\text{in} \quad
+\forall\,m \in \{m_{\text{top}}, m_{\text{bottom}}, m_{\text{left}}, m_{\text{right}}\}.
+\end{equation}
+
+\subsection{Accessibility Tags}
+
+Tagged-structure presence is verified by inspecting the PDF's
+\texttt{/StructTreeRoot}. UF's template, when compiled with LuaLaTeX
+under TeX Live 2025, produces tagged output by default
+\citep{ufitTemplates2026}.
+
+\section{Reporting}\label{sec:reporting}
+
+Findings are grouped by category and severity. Each finding includes a
+file and line (source-layer) or page number (PDF-layer), the UF rule
+identifier, and a URL pointing to the rule's authoritative source.
+Severity tiers are listed in Table~\ref{tab:severity}; per-rule layer
+assignment in Table~\ref{tab:layers}; and a longer enumeration of
+formatting rules in Table~\ref{tab:rules-long}. The overall architecture
+is sketched in Figure~\ref{fig:architecture}, input-mode routing in
+Figure~\ref{fig:input-modes}, and per-category rule counts in
+Figure~\ref{fig:rule-counts}.
+
+Submitting a dissertation is the last mile of a long race. The
+validator exists to help you finish that mile without tripping on a
+shoelace.
+
+\addObject{Reference dataset: anonymized UF dissertation submissions, 2018--2025.}
+
+\addObject{Source archive of the validator implementation accompanying this dissertation.}
+
+%%% =====================================================================
+%%% UF-F12: tables and figures placed at end of chapter to avoid
+%%% mid-text blank gaps. Multiple tables and figures grouped here so
+%%% the body text reads continuously above.
+%%% =====================================================================
+
+%%% --- Table 2-1 -------------------------------------------------------
+\begin{table}[h]
+\caption{Severity tiers used in the validator's report.}
+\label{tab:severity}
+\centering
+\begin{tabular}{ll}
+\hline
+Tier & Meaning \\
+\hline
+must-fix & Documented UF rule violation; submission will be rejected. \\
+review   & Likely issue requiring human judgment. \\
+\hline
+\end{tabular}
+\end{table}
+
+%%% --- Table 2-2 -------------------------------------------------------
+\begin{table}[h]
+\caption{Per-rule layer assignment (subset).}
+\label{tab:layers}
+\centering
+\begin{threeparttable}
+\begin{tabular}{lll}
+\hline
+Rule & Severity & Layer \\
+\hline
+UF-F1  Margins       & must-fix & source\tnote{a} + pdf \\
+UF-F6  Page numbers  & must-fix & source\tnote{a} + pdf \\
+UF-F8  Page order    & must-fix & source                \\
+UF-F12 Blank gaps    & review   & pdf                   \\
+UF-F15 Abstract $\leq 350$ words & must-fix & source + pdf \\
+UF-S3  Internal refs & must-fix & source                \\
+UF-A1  PDF tagged    & review   & pdf                   \\
+\hline
+\end{tabular}
+\begin{tablenotes}\small
+\item[a] Source layer checks for student-introduced overrides of the
+template's defaults; the template itself enforces the rule.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+%%% --- Table 2-3 -------------------------------------------------------
+\begin{longtable}{lll}
+\caption{Documented formatting rules ($F$-series), severity, and primary
+detection layer. Continues across page breaks if the table grows.}
+\label{tab:rules-long} \\
+\hline
+Rule & Severity & Primary layer \\
+\hline
+\endfirsthead
+\multicolumn{3}{l}{\footnotesize\itshape Table~\ref{tab:rules-long} continued.} \\
+\hline
+Rule & Severity & Primary layer \\
+\hline
+\endhead
+\hline
+\multicolumn{3}{r}{\footnotesize\itshape continued on next page} \\
+\endfoot
+\hline
+\endlastfoot
+UF-F1  Margins                  & must-fix & source + pdf \\
+UF-F2  Font family              & must-fix & source + pdf \\
+UF-F3  Font size 12pt           & must-fix & source \\
+UF-F4  Line spacing             & must-fix & source + pdf \\
+UF-F5  Alignment (ragged-right) & must-fix & source \\
+UF-F6  Page numbering           & must-fix & source + pdf \\
+UF-F7  Paragraph indentation    & must-fix & source \\
+UF-F8  Required page order      & must-fix & source \\
+UF-F9  Singleton structure      & must-fix & source \\
+UF-F10 $\geq 3$ chapters        & must-fix & source \\
+UF-F11 Heading style hierarchy  & must-fix & source \\
+UF-F12 No mid-chapter blank gaps & review  & pdf \\
+UF-F13 \texttt{ufdissertation} class & must-fix & source \\
+UF-F14 Required metadata macros & must-fix & source \\
+UF-F15 Abstract $\leq 350$ words & must-fix & source + pdf \\
+UF-F16 Subsection pairing       & review   & source \\
+\end{longtable}
+
+%%% --- Figure 2-1 ------------------------------------------------------
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    node distance=8mm,
+    box/.style={rectangle, rounded corners, draw, minimum width=24mm,
+                minimum height=10mm, align=center, font=\footnotesize},
+    source/.style={box, fill=blue!12, draw=blue!60},
+    pdf/.style={box, fill=green!15, draw=green!50!black},
+    agg/.style={box, fill=orange!18, draw=orange!70!black},
+    report/.style={box, fill=gray!12, draw=gray!60},
+    arrow/.style={-{Stealth[length=2mm]}, thick}
+]
+    % Left column: source layer (blue, top) above PDF layer (green, bottom).
+    \node[source] (s1) {\textbf{Source layer}\\override scans};
+    \node[source, below=4mm of s1] (s2) {Source layer\\presence checks};
+    \node[pdf, below=8mm of s2] (p1) {\textbf{PDF layer}\\geometric};
+    \node[pdf, below=4mm of p1] (p2) {PDF layer\\accessibility};
+    % Aggregator sits to the right of the whole stack; report to its right.
+    \node[agg, right=26mm of $(s2)!0.5!(p1)$] (a) {Findings\\aggregator};
+    \node[report, right=16mm of a] (r) {Report\\(human / JSON)};
+    \draw[arrow, blue!60] (s1.east) -- (a.west);
+    \draw[arrow, blue!60] (s2.east) -- (a.west);
+    \draw[arrow, green!50!black] (p1.east) -- (a.west);
+    \draw[arrow, green!50!black] (p2.east) -- (a.west);
+    \draw[arrow] (a) -- (r);
+\end{tikzpicture}
+\caption{High-level architecture of the two-layer validator. The source layer (blue) and the PDF layer (green) feed into a findings aggregator (orange), which produces a grouped report (gray).}
+\label{fig:architecture}
+\end{figure}
+
+%%% --- Figure 2-2 ------------------------------------------------------
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    node distance=8mm,
+    input/.style={ellipse, draw, minimum width=18mm, minimum height=7mm,
+                  align=center, font=\footnotesize, thick},
+    inzip/.style={input, fill=red!12, draw=red!60},
+    indir/.style={input, fill=yellow!22, draw=olive},
+    inpdf/.style={input, fill=purple!12, draw=purple!60},
+    decision/.style={diamond, draw, aspect=2, minimum width=22mm,
+                     align=center, font=\footnotesize},
+    layer/.style={rectangle, rounded corners, draw, minimum width=26mm,
+                  minimum height=8mm, align=center, font=\footnotesize},
+    arrow/.style={-{Stealth[length=2mm]}, thick}
+]
+    \node[inzip] (z) {\texttt{*.zip}};
+    \node[indir, below=of z] (d) {directory};
+    \node[inpdf, below=of d] (p) {\texttt{*.pdf}};
+    \node[decision, right=18mm of d] (q) {has PDF\\bundled?};
+    \node[layer, right=18mm of q, yshift=8mm, fill=blue!12, draw=blue!60] (src) {Source layer};
+    \node[layer, right=18mm of q, yshift=-8mm, fill=green!15, draw=green!50!black] (pdf) {PDF layer};
+    \draw[arrow] (z.east) -- (q.west);
+    \draw[arrow] (d.east) -- (q.west);
+    \draw[arrow, purple!60] (p.east) -| ($(q.south)+(0,-8mm)$) -| (pdf.south);
+    \draw[arrow] (q.east) -- node[above, font=\scriptsize]{run both} (src.west);
+    \draw[arrow] (q.east) -- (pdf.west);
+\end{tikzpicture}
+\caption{Input-mode routing. \texttt{.zip} and directory inputs run both layers; if no PDF is bundled, the source is compiled to obtain one. A bare \texttt{.pdf} input skips the source layer.}
+\label{fig:input-modes}
+\end{figure}
+
+%%% --- Figure 2-3 ------------------------------------------------------
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    width=0.78\textwidth,
+    height=55mm,
+    bar width=8mm,
+    ymin=0,
+    ymax=18,
+    ylabel={\footnotesize Rule count},
+    symbolic x coords={F-formatting, S-submission, D-doc class, P-presence, J-journal, A-access.},
+    xtick=data,
+    xticklabel style={font=\scriptsize},
+    yticklabel style={font=\scriptsize},
+    ylabel style={font=\scriptsize},
+    nodes near coords,
+    nodes near coords style={font=\scriptsize},
+    enlarge x limits=0.10
+]
+\addplot[fill=blue!45, draw=blue!70!black] coordinates {
+    (F-formatting,16) (S-submission,3) (D-doc class,3) (P-presence,1) (J-journal,2) (A-access.,2)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Number of documented rules by category. The formatting series dominates the rule catalog; submission, doc-class, presence, journal, and accessibility categories contribute smaller but still meaningful coverage. The submission bar counts three rules rather than the five UF-S identifiers in the catalog: UF-S2 shares a code path with UF-F8 (it is a marketing-friendly grouping in the report output, not a separate check), and UF-S4 (external URL liveness) is deferred to v1.1.}
+\label{fig:rule-counts}
+\end{figure}

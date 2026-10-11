@@ -1,0 +1,221 @@
+% Drexel University, Ph.D. Dissertation Latex Template
+
+
+% Adopted for Overleaf by Maryam Daniali, March 2022
+% based on the efforts of:
+% Modified by Mark W. Boady, June 2016
+% Modified by Jeff Abrahamson, May 2005
+% Patched by C.Y. Ip, 2005-02-12
+% Patched by Christopher S. Dahn, 2004-04-19
+% Patched by Christopher D. Cera, 2003-03-10
+% Patched by Mitchell Peabody, 2002
+% Patched by David T. McWherter, 2000-07-13
+% Written by Vincent A. Cicirello, 1999-02-13 based on:
+% University of Toronto Thesis LaTex2e, Class definition.
+% Written by Robert Bernecky, 1997-07-10
+% based on the thesis.sty written at UofT by fpitt.
+
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{drexel_style}[2022/03/31 Drexel University Style]
+
+
+% based on guidelines on https://drexel.edu/graduatecollege/academics/thesis-and-dissertation/
+% "All portrait-oriented pages must have a left margin of at least 1.5 inches throughout the document. Landscape-oriented pages must have a top margin of 1.5 inches. All other margins must be at least 1 inch."
+
+\RequirePackage[includehead, head=1em, left=1.5in, right=1in, top=1.5in, bottom=1in]{geometry} 
+\RequirePackage{graphicx}
+\RequirePackage{datetime}
+\RequirePackage{datetime2}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{float}
+\RequirePackage{setspace} % for doublespacing
+\RequirePackage{lipsum} % for clearemptydoublepage
+\RequirePackage{afterpage} % for blank page
+
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
+\newcommand{\clearemptydoublepage}{\newpage{\pagestyle{empty}\cleardoublepage}}
+\newcommand{\mytableofcontents}{%
+  \begin{singlespace}
+  \if@twocolumn
+  \@restonecoltrue\onecolumn
+  \else
+  \@restonecolfalse
+  \fi
+  {\centering \section*{Table of Contents}}%
+  \@starttoc{toc}%
+  \if@restonecol\twocolumn\fi
+  \newpage
+  \end{singlespace}
+	\clearpage
+}
+
+
+\newcommand{\mylistoffigures}{
+  \clearemptydoublepage
+  \phantomsection
+  \addcontentsline{toc}{chapter}{LIST OF FIGURES}
+  \begin{singlespace}
+		{
+	  \if@twocolumn
+  		\@restonecoltrue\onecolumn
+  	\else
+  		\@restonecolfalse
+  	\fi
+		{\centering \section*{List of Figures}}%
+  	\setlength{\parskip}{\baselineskip}
+  	\@starttoc{lof}%
+  	\if@restonecol\twocolumn\fi
+  	\newpage
+  	}
+  \end{singlespace}
+	\clearpage
+}
+
+\newcommand{\mylistoftables}{
+  \phantomsection
+  \addcontentsline{toc}{chapter}{LIST OF TABLES}
+  \begin{singlespace}
+	  {
+	  \if@twocolumn
+  		\@restonecoltrue\onecolumn
+  	\else
+  		\@restonecolfalse
+ 		\fi
+  	{\centering \section*{List of Tables}}
+  	\setlength{\parskip}{\baselineskip}
+  	\@starttoc{lot}%
+  	\if@restonecol\twocolumn\fi
+  	\newpage
+  	}
+  \end{singlespace}
+	\clearpage
+}
+
+
+\newcommand{\degree}[1]{\ifx\empty#1\else\gdef\@degree{#1}\fi}
+\renewcommand{\author}[1]{\ifx\empty#1\else\gdef\@author{#1}\fi}
+\newcommand{\advisor}[1]{\ifx\empty#1\else\gdef\@advisor{#1}\fi}
+\renewcommand{\title}[1]{\ifx\empty#1\else\gdef\@title{#1}\fi}
+\newcommand{\gyear}[1]{\ifx\empty#1\else\gdef\@gyear{#1}\fi}
+\newcommand{\gmonth}[1]{\ifx\empty#1\else\gdef\@gmonth{#1}\fi}
+
+                
+\global\def\@degree{\mbox{}}
+\global\def\@degreearea{\mbox{}}
+\global\def\@author{\mbox{}}
+\global\def\@advisor{\mbox{}}
+\global\def\@title{\mbox{}}
+\global\def\@gyear{\number\year} % Default year is current year
+\global\def\@gmonth{\mbox{}}
+
+
+\renewcommand{\maketitle}{
+  \begin{titlepage}
+    \vspace*{\fill} %%use 2 vertical fill to center the title
+    \noindent
+    \begin{minipage}{5.5in} %% 5.5in make right margin=1.5in for centering
+      \begin{doublespace}
+        \centering
+      	  \begin{singlespace}
+      			\textbf{{\@title}}\\
+      		\end{singlespace}
+        \vspace*{1em}
+        A Thesis \\
+        Submitted to the Faculty \\
+        of \\
+        Drexel University \\
+        by \\
+        {\@author}\\
+        in partial fulfillment of the \\
+				requirements for the degree \\
+				of \\
+				{\@degree} 
+				\\
+        {\@gmonth} {\@gyear} \\
+      \end{doublespace}
+      \centering
+      \vspace{4cm}
+      \includegraphics[width=4cm]{images/Drexel_logo.png}
+    \end{minipage}
+    \vspace*{\fill}
+  \end{titlepage}
+  \clearpage
+}%\maketitle
+
+\newcommand{\copyrightpage}{
+  \clearpage
+	\setcounter{page}{1}
+  \thispagestyle{empty}
+  \vspace*{\fill}
+  \noindent
+  \begin{minipage}{5.5in}
+    \begin{singlespace}
+      \centering
+      \copyright~Copyright \@gyear \\
+      \@author.  All Rights Reserved.
+    \end{singlespace}
+  \end{minipage}
+  \vspace*{\fill}
+%  \addtocounter{page}{1}
+  \clearpage
+}
+
+\newenvironment{acknowledgments}{
+  \clearemptydoublepage
+  \begin{center}
+    \section*{Acknowledgments}
+  \end{center}
+  \begingroup
+}{\clearpage\endgroup}
+
+\newenvironment{dedications}{
+  \clearemptydoublepage
+  \begin{center}
+    \section*{Dedications}
+  \end{center}
+  \begingroup
+}{\clearpage\endgroup}
+
+
+\newenvironment{vita}{
+  \clearemptydoublepage
+  \begin{center}
+    \section*{Vita}
+  \end{center}
+  \begingroup
+}{\clearpage\endgroup}
+
+
+\renewenvironment{thebibliography}[1]{
+  \clearpage
+  \begin{center}
+    \phantomsection
+    \addcontentsline{toc}{chapter}{Bibliography}
+ 		\section*{\bibname}
+  \end{center}
+  \vspace{1em}
+  \singlespacing
+  \list{\@biblabel{\@arabic\c@enumiv}} %
+  {\settowidth\labelwidth{\@biblabel{#1}}%
+    \leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \@openbib@code
+    \usecounter{enumiv}%
+    \let\p@enumiv\@empty
+    \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+  \sloppy
+  \singlespacing
+  \clubpenalty4000
+  \@clubpenalty \clubpenalty
+  \widowpenalty4000%
+  \sfcode`\.\@m}
+  
+{\def\@noitemerr
+  {\@latex@warning{Empty `thebibliography' environment}}%
+  \endlist \clearpage}

@@ -1,0 +1,584 @@
+% chap5.tex (Definitions, Theorem and Proof)
+
+\chapter{Solving Narrow-Interval Linear Systems Is
+NP-Hard: New Result} \label{NewResult}
+
+In this chapter we present the main result upon which this thesis is
+centered---a new theorem and a proof for it based upon the
+reduction\footnote{The reduction used is called a {\em polynomial-time
+one-one reduction}, a special case of polynomial-time many-one reductions.}
+of a system of (arbitrary) interval linear equations to a system of
+narrow-interval linear equations.
+
+\section{Definitions}
+
+\begin{definition}
+{\rm We say that the (non-zero) number $\tilde x$ represents a number $x$ with
+a {\em relative accuracy\/} $\delta>0$ if $\displaystyle{\frac{|x-\tilde x|}
+{|\tilde x|}}\leq\delta$.}
+\end{definition}
+
+\begin{definition}
+{\rm By {\em relative half-width\/} of the interval ${\bf x}=[x^-,x^+]$
+where $0\not\in[x^-,x^+]$, we
+mean the smallest number $\delta>0$ for which every number in ${\bf x}$ is
+represented with a relative accuracy~$\delta$ by $\tilde x=\displaystyle{
+\frac{x^-+x^+}{2}}$.\\[0.5pc]
+{\bf Proposition} It can be seen that the relative half-width of ${\bf x}$
+where $0\not\in[x^-,x^+]$ is}
+$$
+  \max_{x\in [x^-,x^+]}\frac{|x-\tilde x|}{|\tilde x|}=
+   \frac{x^+-x^-}{2|\tilde x|}.
+$$
+\end{definition}
+
+\begin{definition}
+{\rm By {\em relative width\/} $W^{rel}$ of an interval ${\bf x}=[x^-,x^+]$
+where $0\not\in[x^-,x^+]$,
+we mean twice the relative half-width of ${\bf x}$, i.e.,
+$$
+  W^{rel}([x^-,x^+])=\frac{x^+-x^-}{|\tilde x|}.
+$$}
+\end{definition}
+
+\begin{definition}
+{\rm We say that an interval ${\bf x}$ is {\em $\delta$-narrow in the sense 
+of relative accuracy\/} if $W^{rel}({\bf x})\leq\delta$.}
+\end{definition}
+
+\begin{definition}
+{\rm We say that an interval ${\bf x}$ is {\em $\delta$-narrow\/} if it is
+both $\delta$-narrow in the sense of absolute accuracy and $\delta$-narrow in
+the sense of relative accuracy.}
+\end{definition}
+
+\section{Theorem}
+\begin{theorem}
+For every $\delta>0$, the problem of solving systems of interval linear
+equations with $\delta$-narrow intervals is computationally intractable
+(\/{\rm NP}-hard).
+\end{theorem}
+
+\begin{corollary}
+For every $\Delta>0$, the problem of solving systems of interval linear
+equations with intervals $\Delta$-narrow in the sense of absolute accuracy 
+is computationally intractable (\/{\rm NP}-hard).
+\end{corollary}
+
+\begin{corollary}
+For every $\delta>0$, the problem of solving systems of interval linear
+equations with intervals $\delta$-narrow in the sense of relative accuracy is
+computationally intractable (\/{\rm NP}-hard).
+\end{corollary}
+
+\newpage
+\section{Proof}
+
+\subsection{Part I: Reduction of Interval Linear System to Narrow-Interval
+Linear System}
+
+We have seen that the general problem of solving interval linear equation
+systems (\ref{d1}) is NP-hard.  We now intend to show that this general
+problem can be reduced to the problem of solving a system of 
+interval linear equations with $\delta$-narrow intervals.
+
+Let us start with an arbitrary interval linear equation system (\ref{d1}).  To
+reduce it to a $\delta$-narrow interval linear equation system, we introduce
+new variables $w_i$, $y_{ij}$ and $z_{ij}$ for all $i=1,\ldots,m$ and
+$j=1,\ldots,n$.  For the enlarged list of $m+n+2mn$ variables (i.e., $x_j$,
+$w_i$, $y_{ij}$ and $z_{ij}$) we introduce the following new system of
+$m+n+2mn$ $\delta$-narrow interval linear equations\footnote{For clarity,
+non-interval coefficients can be thought of as intervals of zero width; e.g., 
+the coefficient for each variable $y_{ij}$ is $[1,1]$ and each coefficient 
+$c_i$ is equivalent to the interval $[c_i,c_i]$.}:
+\begin{eqnarray}
+  \sum_{j=1}^n y_{ij} +
+   \sum_{j=1}^n [1-\frac{\delta}{2},1+\frac{\delta}{2}]z_{ij} +
+   [1-\frac{\delta}{2},1+\frac{\delta}{2}]w_i &=& c_i, \label{p1a}\\
+  w_i &=& \gamma_i, \label{p1b}\\
+  y_{ij} - \mu_{ij} x_j &=& 0, \label{p1c}\\
+  z_{ij} - \nu_{ij} x_j &=& 0, \label{p1d}
+\end{eqnarray}
+where $\delta>0$ and the numerical (non-interval) coefficients $c_i$,
+$\gamma_i\geq 0$, $\mu_{ij}$ and $\nu_{ij}\geq 0$ will be chosen in such a
+way that for every solution of this $\delta$-narrow interval linear equation
+system (\ref{p1a})--(\ref{p1d}) we have
+\begin{equation}
+  c_i - [1 - \frac{\delta}{2}, 1 + \frac{\delta}{2}] w_i =
+   [b_i^-, b_i^+] \label{p2}
+\end{equation}
+and
+\begin{equation}
+  y_{ij} + [1 - \frac{\delta}{2}, 1 + \frac{\delta}{2}] z_{ij} =
+   [a_{ij}^-, a_{ij}^+] x_j \label{p3}
+\end{equation}
+for all $i=1,\ldots,m$ and $j=1,\ldots,n$.
+
+Let us first find the values for $c_i$ and $\gamma_i$.  From equation
+(\ref{p1b}) we know that $w_i = \gamma_i$.  By substituting this expression
+into equation (\ref{p2}) we get
+$$
+  c_i - [1 - \frac{\delta}{2}, 1 + \frac{\delta}{2}] \gamma_i =
+   [b_i^-, b_i^+]. \label{p4}
+$$
+Intervals are equal {\em if and only if\/} their endpoints coincide.  Since we
+are looking for a solution with $\gamma_i\geq 0$, the equations for the
+endpoints take the following forms:
+\begin{equation}
+  c_i - (1 - \frac{\delta}{2}) \gamma_i = b_i^+ \label{p5}
+\end{equation}
+and
+\begin{equation}
+  c_i - (1 + \frac{\delta}{2}) \gamma_i = b_i^-. \label{p6}
+\end{equation}
+Subtracting the second equation from the first we get
+$$
+  \delta\cdot\gamma_i = b_i^+ - b_i^-,
+$$
+and hence,
+\begin{equation}
+  \fbox{${\displaystyle\gamma_i=\frac{1}{\delta}(b_i^+-b_i^-).}$} \label{GAMMA}
+\end{equation}
+Substituting this value into equation (\ref{p5}), we get
+$$
+  c_i - (1 - \frac{\delta}{2}) \frac{1}{\delta}(b_i^+ - b_i^-) = b_i^+
+$$
+from which we get
+$$
+  c_i - (\frac{1}{\delta} - \frac{1}{2}) (b_i^+ - b_i^-) =  b_i^+,
+$$
+and hence,
+\begin{equation}
+  \fbox{${\displaystyle c_i=\frac{1}{2}(b_i^++b_i^-)
+   +\frac{1}{\delta}(b_i^+-b_i^-).}$}                                 \label{C}
+\end{equation}
+
+Now let us find the values for $\mu_{ij}$ and $\nu_{ij}$.  From
+equations (\ref{p1c}) and (\ref{p1d}) we conclude that $y_{ij}=\mu_{ij}x_j$
+and $z_{ij}=\nu_{ij}x_j$.  Substituting these expressions into equation
+(\ref{p3}) we get
+$$
+  \mu_{ij} x_j + [1-\frac{\delta}{2},1+\frac{\delta}{2}] \nu_{ij} x_j =
+   [a_{ij}^-, a_{ij}^+] x_j.
+$$
+For this equality to be true for all $x_j$, coefficients for $x_j$ on both
+sides of the equation must coincide.  Thus, we conclude that
+$$
+  \mu_{ij} + [1 - \frac{\delta}{2}, 1 + \frac{\delta}{2}] \nu_{ij} =
+   [a_{ij}^-, a_{ij}^+].
+$$
+As stated before, for intervals to be equal their endpoints must coincide,
+and since we are looking for a solution for $\nu_{ij}\geq 0$, the equations
+for the endpoints take the following forms:
+\begin{equation}
+  \mu_{ij} + (1 + \frac{\delta}{2}) \nu_{ij} = a_{ij}^+ \label{p8}
+\end{equation}
+and
+\begin{equation}
+  \mu_{ij} + (1 - \frac{\delta}{2}) \nu_{ij} = a_{ij}^-. \label{p9}
+\end{equation}
+Subtracting the second equation from the first we get
+$$
+  \delta\cdot\nu_{ij} = a_{ij}^+ - a_{ij}^-,
+$$
+and hence,
+\begin{equation}
+  \fbox{${\displaystyle\nu_{ij}=\frac{1}{\delta}(a_{ij}^+-a_{ij}^-).}$}
+                                                                     \label{NU}
+\end{equation}
+Substituting this value back into equation (\ref{p8}) we get
+$$
+  \mu_{ij} + (1 + \frac{\delta}{2}) \frac{1}{\delta}(a_{ij}^+ - a_{ij}^-) =
+   a_{ij}^+
+$$
+which leads to
+$$
+  \mu_{ij}+(\frac{1}{\delta}+\frac{1}{2})(a_{ij}^+ - a_{ij}^-) = a_{ij}^+,
+$$
+and hence,
+\begin{equation}
+  \fbox{${\displaystyle\mu_{ij}=\frac{1}{2}(a_{ij}^++a_{ij}^-)
+   -\frac{1}{\delta}(a_{ij}^+-a_{ij}^-).}$}                          \label{MU}
+\end{equation}
+
+\newpage
+\subsection{Part II: The Two Systems Are ``Equivalent''}
+
+Let us show that every system (\ref{d1}) of interval linear equations is
+``equivalent'' to the $\delta$-narrow interval linear equation system
+(\ref{p1a})--(\ref{p1d}) in the following sense:
+\begin{description}
+  \item[Claim 1] If $(x_1,\ldots,x_n)$ is a solution of the original system
+    (\ref{d1}), then for the same values $x_1,\ldots,x_n$, and for some values
+    $w_1,\ldots,w_m$, $y_{11},\ldots,y_{mn}$ and $z_{11},\ldots,z_{mn}$, the 
+    extended tuple
+    \begin{equation}
+       (x_1,\ldots,x_n,w_1,\ldots,w_m,y_{1 1},\ldots,y_{m n},
+        z_{1 1},\ldots,z_{m n}) \label{extsolution}
+    \end{equation}
+    is a solution of the $\delta$-narrow interval system
+    (\ref{p1a})--(\ref{p1d}).
+  \item[Claim 2] Conversely, if tuple (\ref{extsolution}) is a solution of the
+    $\delta$-narrow interval linear equation system (\ref{p1a})--(\ref{p1d}),
+    then $(x_1,\ldots,x_n)$ is a solution of the original system (\ref{d1})
+    for the same values $x_1,\ldots,x_n$.
+\end{description}
+We will now prove that the two systems are indeed ``equivalent'' in the above
+sense.
+
+\subsubsection{Proof of Claim 1}
+Let us assume that ($x_1,\ldots,x_n$) is a solution of the
+original system (\ref{d1}).  By definition, 
+if $(x_1,\ldots,x_n)$ is a solution to the original system (\ref{d1}), then
+there must exist values $a_{ij}\in[a_{ij}^-,a_{ij}^+]$ and
+$b_i\in[b_i^-,b_i^+]$ such that
+\begin{equation}
+  \sum_{j=1}^n a_{ij} x_j = b_i \label{claim1}
+\end{equation}
+for all $i=1,\ldots,m$.  With this in mind, let us introduce new parameters
+$\alpha_{ij}=a_{ij}-a_{ij}^-$ and $\beta_i=b_i-b_i^-$; thus, $a_{ij}=a_{ij}^-+
+\alpha_{ij}$ and $b_i=b_i^-+\beta_i$.  Substituting these expressions into
+(\ref{claim1}) we get
+\begin{equation}
+  \sum_{j=1}^n (a_{ij}^-+\alpha_{ij}) x_j = b_i^-+\beta_i. \label{newsolution}
+\end{equation}
+Since $a_{ij}\in[a_{ij}^-,a_{ij}^+]$, we conclude that 
+$\alpha_{ij}\in[0,a_{ij}^+-a_{ij}^-]$.  Similarly, since
+$b_i\in[b_i^-,b_i^+]$, we conclude that $\beta_i\in[0,b_i^+-b_i^-]$.
+
+Now let us show that there exists an extended tuple (\ref{extsolution}) that is
+a solution to system (\ref{p1a})--(\ref{p1d}) for the same values
+$x_1,\ldots,x_n$ and for appropriately chosen values of $w_1,\ldots,w_m$,
+$y_{11},\ldots,y_{mn}$ and $z_{11},\ldots,z_{mn}$.  In order to have equations
+(\ref{p1b})--(\ref{p1d}) automatically satisfied, we will take $w_i=\gamma_i$,
+$y_{ij}=\mu_{ij}x_j$ and $z_{ij}=\nu_{ij}x_j$.  It is thus sufficient to show
+that equation (\ref{p1a}) is satisfied for all $i=1,\ldots,m$; in other words,
+we need to show that there exist values
+${\displaystyle\kappa_i\in[1-\frac{\delta}{2},1+\frac{\delta}{2}]}$ and
+${\displaystyle\lambda_{ij}\in[1-\frac{\delta}{2},1+\frac{\delta}{2}]}$ such
+that
+\begin{equation}
+  \sum_{j=1}^n y_{ij}+\sum_{j=1}^n\lambda_{ij}z_{ij}+\kappa_i w_i=c_i
+   \label{s1a}
+\end{equation}
+for all $i=1,\ldots,m$.
+
+Note that for any given $i$, if $\gamma_i=0$ (and thus $w_i=0$), then
+$\kappa_i w_i=0$, implying that $\kappa_i$ can be {\em any value\/} as long as
+${\displaystyle\kappa_i\in[1-\frac{\delta}{2},1+\frac{\delta}{2}]}$ (e.g., 
+$\kappa_i=1$).  Likewise, for any given $i$ and $j$, if $\nu_{ij}=0$ (and thus 
+$z_{ij}=0$), then  $\lambda_{ij}z_{ij}=0$, implying that $\lambda_{ij}$ can be 
+{\em any value\/} as long as ${\displaystyle\lambda_{ij}\in[1-\frac{\delta}{2},
+1+\frac{\delta}{2}]}$ (e.g., $\lambda_{ij}=1$).  Therefore, for the remainder
+of the proof we will be choosing $\kappa_i$ only for those $i$ for which
+$\gamma_i>0$ (i.e., $b_i^-<b_i^+$), and we will be choosing $\lambda_{ij}$ 
+only for those $i$ and $j$ for which $\nu_{ij}>0$ (i.e., $a_{ij}^-<a_{ij}^+$).
+
+We have chosen $w_i$ and $c_i$ for which the equation (\ref{p2}) is true,
+i.e., for which
+$$
+  c_i - [1 - \frac{\delta}{2}, 1 + \frac{\delta}{2}] w_i = [b_i^-, b_i^+].
+$$
+Crudely speaking, this equality means that when we take different values for
+$\kappa_i$ such that
+$\kappa_i\in[1-{\displaystyle\frac{\delta}{2}},1+{\displaystyle\frac{\delta}
+{2}}]$, the set
+$$
+  c_i - [1 - \frac{\delta}{2}, 1 + \frac{\delta}{2}] w_i
+$$
+of possible values of $c_i-\kappa_i w_i$ coincides with the interval
+$[b_i^-, b_i^+]$.  In particular, since $b_i\in[b_i^-,b_i^+]$, there must
+exist a value $\kappa_i\in[1-{\displaystyle\frac{\delta}{2}},1+{\displaystyle
+\frac{\delta}{2}}]$ for which
+$$
+  c_i-\kappa_i w_i = b_i = b_i^- + \beta_i.
+$$
+From this equation we can find the exact value of $\kappa_i$.
+
+We know from equation (\ref{p1b}) that $w_i=\gamma_i$, so by substitution we
+get
+$$
+  c_i - \kappa_i \gamma_i = b_i^- + \beta_i,
+$$
+and hence,
+$$
+  \kappa_i=\frac{1}{\gamma_i}(c_i-b_i^--\beta_i).
+$$
+Substituting the values of $\gamma_i$ and $c_i$ from equations (\ref{GAMMA})
+and (\ref{C}) we get
+$$
+  \kappa_i=\frac{\delta}{b_i^+-b_i^-}(\frac{1}{2}(b_i^++b_i^-) +
+   \frac{1}{\delta}(b_i^+-b_i^-) - b_i^- - \beta_i).
+$$
+Simplifying, we get
+$$
+  \kappa_i=1+\frac{\delta}{b_i^+-b_i^-}(\frac{1}{2}(b_i^++b_i^-)-b_i^--\beta_i)
+$$
+from which we get
+$$
+  \kappa_i=1+\frac{\delta}{b_i^+-b_i^-}(\frac{1}{2}(b_i^+-b_i^-)-\beta_i),
+$$
+and hence,
+\begin{equation}
+  \fbox{${\displaystyle\kappa_i=1+\frac{\delta}{2}-
+   \frac{\delta\cdot\beta_i}{b_i^+-b_i^-}.}$}                     \label{KAPPA}
+\end{equation}
+
+We have also chosen $y_{ij}$ and $z_{ij}$ for which the equation (\ref{p3}) is
+true, i.e., for which
+$$
+  y_{ij} + [1 - \frac{\delta}{2}, 1 + \frac{\delta}{2}] z_{ij} =
+   [a_{ij}^-, a_{ij}^+] x_j
+$$
+Crudely speaking, this equality means that when we take different values for
+$\lambda_{ij}$ such that $\lambda_{ij}\in[1-{\displaystyle\frac{\delta}{2}},
+1+{\displaystyle\frac{\delta}{2}}]$, the set
+$$
+  y_{ij} + [1 - \frac{\delta}{2}, 1 + \frac{\delta}{2}] z_{ij}
+$$
+of possible values of $y_{ij}+\lambda_{ij}z_{ij}$ coincides with the interval
+$[a_{ij}^-, a_{ij}^+]x_j$. In particular, since $a_{ij}\in[a_{ij}^-,a_{ij}^+]$,
+there must exist a value $\lambda_{ij}\in
+[1-{\displaystyle\frac{\delta}{2}},1+{\displaystyle\frac{\delta}{2}}]$ for
+which
+$$
+  y_{ij} + \lambda_{ij} z_{ij} = (a_{ij}^- + \alpha_{ij}) x_j.
+$$
+From this equation we can find the exact value of $\lambda_{ij}$.
+
+We conclude from equations (\ref{p1c}) and (\ref{p1d}) that
+$y_{ij}=\mu_{ij}x_j$ and $z_{ij}=\nu_{ij}x_j$, so by substitution we get
+$$
+  \mu_{ij} x_j + \lambda_{ij} \nu_{ij} x_j = (a_{ij}^- + \alpha_{ij}) x_j,
+$$
+and hence,
+$$
+  \lambda_{ij}=\frac{1}{\nu_{ij}}(a_{ij}^-+\alpha_{ij}-\mu_{ij}).
+$$
+Substituting the values of the coefficients $\nu_{ij}$ and $\mu_{ij}$ from
+equations (\ref{NU}) and (\ref{MU}) we get
+$$
+  \lambda_{ij}=\frac{\delta}{a_{ij}^+-a_{ij}^-}(a_{ij}^-+\alpha_{ij}-
+   \frac{1}{2}(a_{ij}^++a_{ij}^-) + \frac{1}{\delta}(a_{ij}^+-a_{ij}^-)).
+$$
+Simplifying, we get
+$$
+  \lambda_{ij}=1+\frac{\delta}{a_{ij}^+-a_{ij}^-}
+   (a_{ij}^-+\alpha_{ij}-\frac{1}{2}(a_{ij}^++a_{ij}^-))
+$$
+from which we get
+$$
+  \lambda_{ij}=1-\frac{\delta}{a_{ij}^+-a_{ij}^-}
+   (\frac{1}{2}(a_{ij}^+-a_{ij}^-)-\alpha_{ij}),
+$$
+and hence,
+\begin{equation}
+  \fbox{${\displaystyle\lambda_{ij}=1-\frac{\delta}{2}+
+   \frac{\delta\cdot\alpha_{ij}}{a_{ij}^+-a_{ij}^-}.}$}          \label{LAMBDA}
+\end{equation}
+
+To show that these values for $\kappa_i$ and $\lambda_{ij}$ are indeed the
+ones desired, we first note that, since $\beta_i\in[0,b_i^+-b_i^-]$ and
+$\alpha_{ij}\in[0,a_{ij}^+-a_{ij}^-]$, we can conclude that
+$$
+  \frac{\beta_i}{b_i^+-b_i^-}\in[0,1]
+$$
+and
+$$
+  \frac{\alpha_{ij}}{a_{ij}^+-a_{ij}^-}\in[0,1].
+$$
+Thus,
+$$
+  \frac{\delta\cdot\beta_i}{b_i^+-b_i^-}\in[0,\delta]
+$$
+and
+$$
+  \frac{\delta\cdot\alpha_{ij}}{a_{ij}^+-a_{ij}^-}\in[0,\delta]
+$$
+from which it follows that
+$$
+  1+\frac{\delta}{2}-\frac{\delta\cdot\beta_i}{b_i^+-b_i^-}
+   \in[1-\frac{\delta}{2},1+\frac{\delta}{2}]
+$$
+and
+$$
+  1-\frac{\delta}{2}+\frac{\delta\cdot\alpha_{ij}}{a_{ij}^+-a_{ij}^-}
+   \in[1-\frac{\delta}{2},1+\frac{\delta}{2}],
+$$
+and hence,
+$$
+  \kappa_i\in[1-\frac{\delta}{2},1+\frac{\delta}{2}]
+$$
+and
+$$
+  \lambda_{ij}\in[1-\frac{\delta}{2},1+\frac{\delta}{2}].
+$$
+
+Our goal is to prove that equation (\ref{p1a}) is satisfied.  By showing that
+we have found appropriate values for $\kappa_i$ and $\lambda_{ij}$ such that
+equation (\ref{s1a}) is satisfied, we can do just that.  We have already
+chosen the values for $y_{ij}$ and $z_{ij}$.  Substituting these values into
+equation (\ref{s1a}) we get an equivalent equation
+$$
+  \sum_{j=1}^n \mu_{ij} x_j + \sum_{j=1}^n \lambda_{ij} \nu_{ij} x_j +
+   \kappa_i w_i = c_i.
+$$
+This equation, in its turn, is equivalent to the equation
+\begin{equation}
+  \sum_{j=1}^n(\mu_{ij}+\lambda_{ij}\nu_{ij})x_j=c_i-\kappa_i w_i. \label{s1x}
+\end{equation}
+
+Let us now show that this equation is satisfied and thus prove that the
+equivalent equation (\ref{s1a}) is satisfied as well.
+\begin{itemize}
+\item According to our choice of $\kappa_i$, the right-hand side of equation
+  (\ref{s1x}) is equal to $b_i$.
+\item According to our choice of $\lambda_{ij}$, we have
+  $$
+    \mu_{ij}+\lambda_{ij}\nu_{ij}=a_{ij},
+  $$
+  and hence, the left-hand side of equation (\ref{s1x}) is equal to
+  $$
+    \sum_{j=1}^n a_{ij}x_j.
+  $$
+\end{itemize}
+We started with $x_1,\ldots,x_n$ for which ${\displaystyle\sum_{j=1}^n a_{ij}
+x_j=b_i}$; hence, the left-hand side and the right-hand side of equation
+(\ref{s1x}) coincide.  Thus, we have proven that equation (\ref{s1a}) is
+satisfied.
+
+Since we are able to show that there do indeed exist values
+${\displaystyle\kappa_i\in[1-\frac{\delta}{2},1+\frac{\delta}{2}]}$ and
+${\displaystyle\lambda_{ij}\in[1-\frac{\delta}{2},1+\frac{\delta}{2}]}$ such
+that equation (\ref{s1a}) is satisfied for all $i=1,\ldots,m$, it follows that
+if $(x_1,\ldots,x_n)$ is a solution of system (\ref{d1}), then for the same
+values $x_1,\ldots,x_n$ and for some values $w_1,\ldots,w_m$,
+$y_{11},\ldots,y_{mn}$ and $z_{11},\ldots,z_{mn}$, there exists an extended
+tuple (\ref{extsolution}) that is a solution of system
+(\ref{p1a})--(\ref{p1d}).  This proves Claim~1.
+
+\subsubsection{Proof of Claim 2}
+Now we must show that the converse is true, namely, that if tuple
+(\ref{extsolution}) is a solution of the $\delta$-narrow interval linear
+equation system (\ref{p1a})--(\ref{p1d}), then $(x_1,\ldots,x_n)$ is a 
+solution of the interval linear equation system (\ref{d1}) for the same 
+values $x_1,\ldots,x_n$.
+
+Let us assume tuple (\ref{extsolution}) is a solution of system
+(\ref{p1a})--(\ref{p1d}).  For this to be true, equations
+(\ref{p1b})--(\ref{p1d}) must be satisfied, and thus we can conclude that
+$w_i=\gamma_i$, $y_{ij}=\mu_{ij}x_j$ and $z_{ij}=\nu_{ij}x_j$.
+The fact that equation (\ref{p1a}) is satisfied by a given tuple means that
+\begin{equation}
+  \sum_{j=1}^n y_{ij} + \sum_{j=1}^n \lambda_{ij}z_{ij} + \kappa_i w_i = c_i
+   \label{x1}
+\end{equation}
+for some $\lambda_{ij}\in[1-{\displaystyle\frac{\delta}{2}},1+{\displaystyle
+\frac{\delta}{2}}]$ and $\kappa_i\in[1-{\displaystyle\frac{\delta}{2}},1+
+{\displaystyle\frac{\delta}{2}}]$.  Let us show that
+\begin{equation}
+  \sum_{j=1}^n a_{ij}x_j = b_i \label{x1.5}
+\end{equation}
+for some values $a_{ij}\in[a_{ij}^-,a_{ij}^+]$ and $b_i\in[b_i^-,b_i^+]$.
+
+From equation (\ref{x1}) we conclude that
+$$
+  \sum_{j=1}^n y_{ij} + \sum_{j=1}^n \lambda_{ij}z_{ij} = c_i - \kappa_i w_i.
+$$
+Since $w_i=\gamma_i$, $y_{ij}=\mu_{ij}x_j$ and $z_{ij}=\nu_{ij}x_j$, by
+substitution we conclude that
+$$
+  \sum_{j=1}^n (\mu_{ij} + \lambda_{ij}\nu_{ij})x_j = c_i - \kappa_i\gamma_i.
+$$
+Note that this equation has the desired form (\ref{x1.5}) where
+\begin{equation}
+  a_{ij}=\mu_{ij}+\lambda_{ij}\nu_{ij}                                \label{A}
+\end{equation}
+and 
+\begin{equation}
+  b_i=c_i-\kappa_i\gamma_i.                                           \label{B}
+\end{equation}
+Thus, to complete the proof, we need only show that 
+$a_{ij}\in[a_{ij}^-,a_{ij}^+]$ and $b_i\in[b_i^-,b_i^+]$.
+
+Let us first show that $b_i\in[b_i^-,b_i^+]$.  Since $\kappa_i\in[1-
+{\displaystyle\frac{\delta}{2}},1+{\displaystyle\frac{\delta}{2}}]$, we have
+that
+$$
+  1+\frac{\delta}{2} \geq \kappa_i \geq 1-\frac{\delta}{2}.
+$$
+By multiplying all sides of the inequality by $\gamma_i\geq 0$, we conclude
+that
+$$
+  (1+\frac{\delta}{2})\gamma_i \geq \kappa_i\gamma_i \geq
+   (1-\frac{\delta}{2})\gamma_i.
+$$
+By subtracting all parts of this inequality from $c_i$, we conclude that
+$$
+  c_i-(1+\frac{\delta}{2})\gamma_i \leq c_i-\kappa_i\gamma_i \leq
+   c_i-(1-\frac{\delta}{2})\gamma_i.
+$$
+According to our choice of $c_i$ and $\gamma_i$ (which led to equations 
+(\ref{p5}) and (\ref{p6})), this is equivalent to
+$$
+  b_i^- \leq c_i-\kappa_i\gamma_i \leq b_i^+.
+$$
+Thus, the value $b_i=c_i-\kappa_i\gamma_i$ we have chosen indeed belongs
+to the interval $[b_i^-,b_i^+]$.
+
+Let us now show, in like fashion, that $a_{ij}\in[a_{ij}^-,a_{ij}^+]$.  Since
+$\lambda_{ij}\in[1-{\displaystyle\frac{\delta}{2}},1+{\displaystyle\frac
+{\delta}{2}}]$, we have that
+$$
+  1-\frac{\delta}{2} \leq \lambda_{ij} \leq 1+\frac{\delta}{2}.
+$$
+By multiplying all sides of the inequality by $\nu_{ij}\geq 0$, we conclude
+that
+$$
+  (1-\frac{\delta}{2})\nu_{ij} \leq \lambda_{ij}\nu_{ij} \leq
+   (1+\frac{\delta}{2})\nu_{ij}.
+$$
+By adding all parts of this inequality to $\mu_{ij}$, we conclude that
+$$
+  \mu_{ij}+(1-\frac{\delta}{2})\nu_{ij}\leq\mu_{ij}+\lambda_{ij}\nu_{ij} \leq
+   \mu_{ij}+(1+\frac{\delta}{2})\nu_{ij}.
+$$
+According to our choice of $\mu_{ij}$ and $\nu_{ij}$ (which led to equations
+(\ref{p8}) and (\ref{p9})), this is equivalent to
+$$
+  a_{ij}^- \leq \mu_{ij}-\lambda_{ij}\nu_{ij} \leq a_{ij}^+,
+$$
+i.e., the value $a_{ij}=\mu_{ij}-\lambda_{ij}\nu_{ij}$ that we have chosen
+indeed belongs to the interval $[a_{ij}^-,a_{ij}^+]$.
+
+Thus, we have shown that if tuple (\ref{extsolution}) is a solution of system
+(\ref{p1a})--(\ref{p1d}), then $(x_1,\ldots,x_n)$ is a solution of system
+(\ref{d1}) for the same values $x_1,\ldots,x_n$.  This proves Claim~2.
+
+\newpage
+\subsection{Conclusion}
+
+\noindent
+We saw in part~II that the two systems, namely, the interval linear
+equation system (\ref{d1}) and the $\delta$-narrow interval linear equation
+system (\ref{p1a})--(\ref{p1d}), are ``equivalent'' in the sense described
+therein.  In part~I we saw that the number of equations and unknowns of system
+(\ref{p1a})--(\ref{p1d}) is bounded by a polynomial of the number of equations
+and unknowns of system (\ref{d1}).  Further, the number of steps required for 
+reducing an interval linear equation system (\ref{d1}) to a $\delta$-narrow 
+interval linear equation system (\ref{p1a})--(\ref{p1d}) is bounded by a 
+polynomial of the number of equations and unknowns of system (\ref{d1}).  
+Thus, it follows from parts I and II that if we have an algorithm $\cal U$ 
+that can solve $\delta$-narrow interval linear equation systems in polynomial 
+time, then we can solve an arbitrary
+system (\ref{d1}) of interval linear equations in polynomial time by applying
+this hypothetical algorithm $\cal U$ to the ``equivalent'' $\delta$-narrow
+interval linear equation system (\ref{p1a})--(\ref{p1d}).  But, as stated in
+part~I, solving interval linear equation systems is an NP-hard problem.
+
+So, if we can (in general) solve interval linear equation systems in
+polynomial time, we can solve any problem from the class NP in polynomial time.
+Therefore, if we can (in general) solve $\delta$-narrow interval linear
+equation systems in polynomial time, we can solve any problem from the class
+NP in polynomial time.  Thus, we conclude that {\em the problem of solving
+$\delta$-narrow interval linear equation systems is\/ {\rm NP}-hard}. Q.E.D.

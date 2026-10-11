@@ -1,0 +1,186 @@
+%% Latex template for PhD dissertation or MS thesis
+%% Linguistics Department
+%% Brigham Young University
+%% Last Modified:  Feb 2016 (or later; use git to determine)
+
+\documentclass[12pt]{report}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Setup BYU thesis format
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{byustyle}
+% Setup the byu style sheet
+\byustylesetup{%
+    %
+    %isdissertation = true,            % Uncomment this if you're doing a PhD dissertation
+    %etdsubmission = true,            % Uncomment this if you're compiling it for ETD submission
+    singlepageabstract = true, % Comment this out if your abstract is multiple pages
+    %singlepageacknowledgements = true, % Uncomment this if your Acknowledgements is multiple pages
+    %
+    % Definitions of names needed in thesis/dissertation
+    deptname          = Department of Humanities,    %
+    collegename       = Linguistics, %
+    committeechairman = Firstname Mi. Lastname,                      %
+    committeemembera  = Firstname Mi. Lastname,                         %
+    committeememberb  = Firstname Mi. Lastname,                          %
+    %committeememberc  = Firstname Mi. Lastname,                    % PhD Only
+    %committeememberd  = Firstname Mi. Lastname,                     % PhD Only
+    graddate = June 2016,  % Leave commented for current month and year
+    %copyrightyear = 2016,      % Leave commented for current year
+    % uncomment the keywords for a dissertation
+    keywords         = {Some linguistic keywords}
+    %
+    % Uncomment to shorten for proofreading purposes
+    %noabstract = true,         % Don't show the abstract page
+    %nouniversitypages = true,  % Don't show any of the "university pages"
+    %noacknowledgements = true, % Don't show the Acknowledgements page
+    %notableofcontents = true,  % Don't show the Table of Contents
+    %nolistoffigures = true,    % Don't show the List of Figures
+    %nolistoftables = true,     % Don't show the List of Tables
+    %notocandlists = true,      % Don't show the Table of Contents, List of Figures, or the List of Tables
+    %noheaderatall = true,      % Don't show any of the BYU Thesis header pages
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  END:  Setup BYU thesis format
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Include other \usepackage{} statements here.
+%    Add one package at a time.
+%    Warning:  Some packages are not compatible with byuthesis.sty
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage[normalmargins]{savetrees} % prints smaller to save trees (draft only)
+\usepackage{amsmath,amssymb} % math definitions
+\usepackage{graphicx}        % for figures
+\usepackage{subfigure}       % for figures with multiple subfigures
+\usepackage{setspace}        % so all the captions will be single spaced
+\usepackage{natbib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  END: Include other \usepackage{} statements here.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For doing bookmarks in the PDF file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For more info, see:
+% http://www.geocities.com/kijoo2000/latex2pdf.pdf
+% http://www.tug.org/applications/hyperref/manual.html
+\usepackage[backref,pagebackref,plainpages=false,driverfallback=dvipdfm]{hyperref}
+\hypersetup{
+    %bookmarks    = true, % Make bookmarks (default=true). This option
+                          %cannot be used after package has been loaded,
+                          %thus use like this: \usepackage[bookmarks=false]{hyperref}.
+    %
+    breaklinks   = false, % Allow link text to break across lines (default=false).
+    linktocpage  = false, % make page number, not text, be link on TOC, LOF and LOT
+    colorlinks   = false, % Color the text of links (true) or put color frames over
+                          % the links (false).
+% NOTE: if you need to use a dvi->ps->pdf path for things like PSTricks, you
+% may find that commenting out the next line is necessary.
+    pdfborder    = 001,   % sets the default for pdf links
+    pdfstartview = {FitH}, % Set the startup page view. Possible options are:
+                           % FitH: Fit whole width of page
+                           % FitV: Fit whole height of page
+                           % FitB: Fit whole �Bounding Box� page
+                           % FitBH: Fit whole width of �Bounding Box� of page
+                           % FitBV: Fit whole height of �Bounding Box� of page
+    bookmarksnumbered  = true, % Put section numbers in bookmarks (default=false)
+    bookmarksopen      = true, % Open up the bookmark trees (default=false).
+    bookmarksopenlevel = 1, % Level to which bookmarks are open (default=\maxdimen).
+    bookmarkstype      = toc, % Specify which toc file to mimic (default=toc).
+    pdfpagemode        = {UseOutlines}, %  Specify how document starts when opened ({None}).
+                                        % Possible options are:,
+                                        % None: Neither bookmarks nor thumbnails are visible.
+                                        % UseOutlines: Bookmarks are visible.
+                                        % UseThumbs: Thumbnails are visible.
+                                        % FullScreen: Full-screen mode
+    pdftitle    = {Name of your thesis/dissertation.},
+    pdfauthor   = {Firstname Lastname},
+    pdfcreator  = {Firstname Lastname},
+    pdfsubject  = {Firstname Lastname's Master's Thesis},
+    pdfkeywords = {Thesis Template, BYU},
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  END: For doing bookmarks in the PDF file
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                Macros
+%  Define macros here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\proof{\noindent{\it Proof: }}
+\def\QED{\mbox{\rule[0pt]{1.5ex}{1.5ex}}}
+\def\endproof{\hspace*{\fill}~\QED\par\endtrivlist\unskip}
+%
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\defeq}{\stackrel{\triangle}{=}}
+\newcommand{\re}{\mathbb{R}} % real numbers
+\newcommand{\OMIT}[1]{{}} % omit sections of text
+\newcommand{\pd}[2]{\ensuremath{\frac{\partial #1}{\partial #2}}} % partial derivative
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                End Macros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% To only print a few chapters without changing the reference numbers,
+% uncomment the chapters you want
+%\includeonly{intro}
+%\includeonly{chapter2}
+%\includeonly{appendixa}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Start Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% Define Title & Author
+\title{Name of your thesis/dissertation.}
+\author{Firstname Lastname}
+
+% For displaying the BYU Thesis header
+% This command assumes that there are documents called abstract.tex and
+% acknowledgements.tex that will be included in the header
+\showBYUHeader
+
+
+% Include chapters of the thesis here:
+% each chapter should be in a file with a .tex extension and the text
+% of the file should begin with \chapter{Chapter Title}, followed
+% by the text of the chapter.
+%  Note: the introduction is considered Chapter 1.
+\include{chapter1_intro}
+\include{chapter2_methods}
+\include{chapter3_results}
+\include{chapter4_conclusion}
+
+
+
+
+%%%%%%%%%%%%% begin Bibliography %%%%%%%%%%%%%%%%%
+\phantomsection %Forces a new section prior to setting the bibliography reference point
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+% Bibliographies are best created and maintained using BibTeX
+% To use Bibtex, create a bibliography file, e.g., refs.bib
+% The sample file sources.bib shows examples of different
+% bibliographic entries.
+% The bibliography is created by executing:
+%  1.  latex, 2. bibtex, 3. latex, 4. latex
+%%%%%%%%%%%%%%%% end Bibliography %%%%%%%%%%%%%%%%%
+
+%Included because WinEdit is RETARDED and it needs it for Gather Purposes:
+%input "refs.bib"
+
+
+% Include appendix sections here:
+% each appendix should be a file with a .tex extension and the text
+% of the file should begin with \appendix{Appendix Title}, followed
+% by the contents of the appendix
+\include{appendixa}
+
+%End the document
+\end{document}

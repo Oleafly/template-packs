@@ -1,0 +1,236 @@
+\documentclass[11pt]{report}
+\usepackage[
+  dissertation
+ ,final
+ ,raggedbottom
+]{USCthesis}
+
+% guidelines for manuscript formatting: http://graduateschool.usc.edu/wp-content/themes/fictional-university-theme/assets/doc/Manuscript_Formatting_and_Documentation_Styles.pdf
+
+%% our customizations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[export]{adjustbox} % for frame option in \includegraphics
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage[utf8]{inputenc} % load inputenc before csquotes
+\usepackage[english]{babel}
+\usepackage[
+  backend     = bibtex,
+  natbib      = true,
+  doi         = true,
+  hyperref    = true,
+  citestyle   = authoryear,
+  maxbibnames = 99,
+  % sortlocale  = en_US,
+]{biblatex}
+% pkg: biblatex
+\setlength\bibitemsep{0.5\baselineskip}                 % add a line between entries
+\AtEveryBibitem{\iffieldundef{doi}{}{\clearfield{url}}} % if DOI, hide URL
+\AtEveryBibitem{
+    \clearfield{urlyear}
+    \clearfield{urlmonth}
+}
+\DeclareFieldFormat{labelnumberwidth}{}
+\addbibresource{references.bib}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage{booktabs}
+\usepackage{color, colortbl}
+\usepackage{csquotes}
+\usepackage{efbox}
+\usepackage{enumitem}
+\usepackage[shortcuts]{extdash} % use `\-/' to hyphenate words/phrases that have a dash in them
+\usepackage{libertine}
+\usepackage[
+  showframe = false,% draw a border around textwidth
+  pass      = true, % force 8.5"x11" pagesize
+]{geometry}
+\usepackage{graphicx}
+\usepackage{hyphenat}
+\usepackage{ifthen}
+\usepackage{lipsum}
+\usepackage{multirow}
+\usepackage{parnotes}
+\usepackage{pdflscape} % rotate some pages in an {landscape} environment
+\usepackage{pifont}
+\usepackage{ragged2e}
+\usepackage{seqsplit}
+\usepackage{siunitx}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{xspace}
+\usepackage{float}
+\usepackage{listings}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    language=Python,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\usepackage{url}
+\renewcommand{\baselinestretch}{1.2} 
+\newcommand{\supplement}{%
+  \setcounter{table}{0}
+  \renewcommand{\thetable}{S\thechapter.\arabic{table}}%
+  \setcounter{figure}{0}
+  \renewcommand{\thefigure}{S\thechapter.\arabic{figure}}%
+  \setcounter{equation}{0}
+  \renewcommand{\theequation}{S\thechapter.\arabic{equation}}%
+}
+\usepackage{bm}
+\usepackage{outlines}
+
+\usepackage[
+  breaklinks    = true,
+  colorlinks    = true,
+  hypertexnames = false,
+  pdfpagelabels = false,
+  citecolor     = {blue!80!black},
+  linkcolor     = {blue!80!black},
+  urlcolor      = {blue!80!black},
+]{hyperref} % load hyperref as the last package
+
+% pkg: siunitx
+% some guidelines https://physics.nist.gov/cuu/Units/checklist.html
+\sisetup{
+  tight-spacing  = true
+  ,detect-family = true
+  ,detect-mode   = true
+  ,binary-units  = true    % support for MB, GB, etc.
+  ,range-units   = single  % "3% to 5%" -> "3 to 5%"
+  ,range-phrase  = --      % "3 to 5%"  -> "3--5%"
+}
+
+% pkg: babel, hyperref
+\addto\extrasenglish{%
+  \renewcommand{\chapterautorefname}{Chapter}
+  \renewcommand{\sectionautorefname}{Section}
+  \renewcommand{\subsectionautorefname}{Section}
+  \renewcommand{\subsubsectionautorefname}{Section}
+}
+
+% pkg: url
+\renewcommand{\UrlFont}{\footnotesize\tt}
+
+% our custom commands
+% \renewcommand{\ttdefault}{cmtt} % use computer modern for teletype
+\usepackage[scaled=0.9]{sourcecodepro}
+\usepackage[symbol]{footmisc}
+% \usepackage[multiple]{footmisc}
+
+%%% draft mode / toggle commands %%%
+\usepackage{etoolbox}
+\newtoggle{draft}
+% \settoggle{draft}{true} % change toggle for draft or final versions
+\settoggle{draft}{false} % change toggle for draft or final versions
+
+\iftoggle{draft}{
+  % if 'draft' toggle is true
+  \overfullrule=10pt                       % highlight overfull hboxes
+}{
+  % if 'draft' toggle is false
+  \PassOptionsToPackage{final}{showlabels} % hide labels on figures, etc
+}
+
+% if you're including existing papers into your thesis, it helps to put
+% content behind a toggle (or conditional) so you only have to maintain
+% and keep consistency on one copy. see "introduction.tex".
+\newtoggle{thesis}
+\settoggle{thesis}{true}
+
+\usepackage[english]{babel}
+\usepackage{blindtext}
+
+% \usepackage[inline]{showlabels}
+% \renewcommand{\showlabelfont}{\sffamily \color{blue}}
+% \renewcommand{\showlabelsetlabel}[1]{\efbox{\showlabelfont #1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% front matter %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+% title should be all caps
+\title{Title}
+
+% use your full name!
+% https://cs.stanford.edu/~knuth/news19.html
+% "Let's celebrate everybody's full names"
+\author{First Last}
+
+% major should be all caps
+\majorfield{Major}
+
+% date should be May, August, or December (when degrees are conferred)
+\submitdate{August 2021}
+
+%%% preface %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{preface}
+  \prefacesection{Dedication}
+  \input{dedication.tex}
+
+  \prefacesection{Acknowledgements}
+  \input{acknowledgements.tex}
+
+  {
+  \hypersetup{hidelinks} % color all links black in the preface
+  \tableofcontents
+  \listoftables
+  \listoffigures
+  }
+
+  \prefacesection{Abstract}
+  \input{abstract.tex}
+\end{preface}
+
+%%% introduction %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Introduction} \label{ch:introduction}
+\input{introduction.tex}
+
+\chapter{Study I with example figures, tables, and equations} \label{ch:study-i}
+\input{study-i.tex}
+
+\chapter{Study II with example Python code and citations} \label{ch:study-ii}
+\input{study-ii.tex}
+
+\chapter{Conclusion} \label{ch:conclusion}
+\input{Conclusion.tex}
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+\begin{singlespace}
+  % increase penalty such that we don't break entries over pages
+  % source: https://tex.stackexchange.com/a/43275
+  \patchcmd{\bibsetup}{\interlinepenalty=5000}{\interlinepenalty=10000}{}{}
+
+  % reduce spacing between each bibentry
+  \setlength\bibitemsep{0.9\baselineskip}
+
+  % don't justify-align entries: this prevents stretching out each line
+  \raggedright
+  \printbibliography[title=Bibliography]
+\end{singlespace}
+
+
+\end{document}

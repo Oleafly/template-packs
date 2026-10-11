@@ -1,0 +1,224 @@
+%for a more compact document, add the option openany to avoid
+%starting all chapters on odd numbered pages
+\documentclass[hidelinks, 12pt]{cmuthesis}
+
+% This is a template for a CMU thesis.  It is 18 pages without any content :-)
+% The source for this is pulled from a variety of sources and people.
+% Here's a partial list of people who may or may have not contributed:
+%
+%        bnoble   = Brian Noble
+%        caruana  = Rich Caruana
+%        colohan  = Chris Colohan
+%        jab      = Justin Boyan
+%        josullvn = Joseph O'Sullivan
+%        jrs      = Jonathan Shewchuk
+%        kosak    = Corey Kosak
+%        mjz      = Matt Zekauskas (mattz@cs)
+%        pdinda   = Peter Dinda
+%        pfr      = Patrick Riley
+%        dkoes = David Koes (me)
+
+% My main contribution is putting everything into a single class files and small
+% template since I prefer this to some complicated sprawling directory tree with
+% makefiles.
+
+% some useful packages
+\usepackage{times}
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{subfiles}
+\usepackage[numbers,sort]{natbib}
+\usepackage[backref,pageanchor=true,plainpages=false, pdfpagelabels, bookmarks,bookmarksnumbered,
+%pdfborder=0 0 0,  %removes outlines around hyper links in online display
+]{hyperref}
+%% \usepackage{subfigure}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{gensymb} 
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{float}
+\let\labelindent\relax
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tabu}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usepackage{algorithm}
+% \usepackage{algorithmic}
+\usepackage{algpseudocode}
+\usepackage{xparse}
+\usetikzlibrary{positioning}
+
+
+% \usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+% \usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+% \usepackage{amsfonts}       % blackboard math symbols
+% \usepackage{nicefrac}       % compact symbols for 1/2, etc.
+% \usepackage{microtype}      % microtypography
+% \usepackage{}
+\usepackage{multirow}
+% \usepackage{pbox}
+% \usepackage{enumitem}
+% \usepackage{bbm}
+% \usepackage{unicode-math}
+% % \usepackage[table,xcdraw]{xcolor}
+% \usepackage{xfrac}
+% \usepackage{pifont}% http://ctan.org/pkg/pifont
+% \usepackage{dblfloatfix}
+
+% % For figures
+% \graphicspath{{figs/}}
+
+\usepackage[prependcaption,textsize=tiny]{todonotes}
+
+
+
+
+\DeclareDocumentCommand{\particles}{ O{} O{} O{}}{^{#2}X_{#1}^{#3}}
+% \particle[time][index][section]
+\DeclareDocumentCommand{\particle}{ O{} O{} O{}}{^{#2}x_{#1}^{#3}}
+\newcommand{\state}{x}
+
+\newcommand{\sampled}{\tilde}
+\newcommand{\subcap}[1]{\textbf{(\subref{#1})}}
+\newcommand{\maction}{\mathcal{M}}
+%% \newcommand{\particles}{\mathcal{P}}
+%% \newcommand{\particle}{x}
+\newcommand{\bin}{b}
+\newcommand{\groups}{L}
+\newcommand{\measurement}{m}
+\newcommand{\measurementSet}{M}
+\newcommand{\totalWeight}{\mathcal{W}}
+\newcommand{\feature}{\mathcal{S}}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\def\BState{\State\hskip-\ALG@thistlm}
+
+% Approximately 1" margins, more space on binding side
+%\usepackage[letterpaper,twoside,vscale=.8,hscale=.75,nomarginpar]{geometry}
+%for general printing (not binding)
+\usepackage[letterpaper,twoside,vscale=.8,hscale=.75,nomarginpar,hmarginratio=1:1]{geometry}
+
+% Provides a draft mark at the top of the document. 
+\draftstamp{\today}{DRAFT}
+
+\begin {document} 
+\frontmatter
+
+%initialize page style, so contents come out right (see bot) -mjz
+\pagestyle{empty}
+
+\title{ %% {\it \huge Thesis Proposal}\\
+{\bf Some fancy title}}
+\author{Your awsome name}
+\date{\today}
+\Year{2017}
+\trnumber{CMU-RI-TR-XX-OO}
+
+\committee{
+Your Boss \\
+Your Second Boss \\
+Your Third Boss 
+}
+
+\support{}
+\disclaimer{}
+
+% copyright notice generated automatically from Year and author.
+% permission added if \permission{} given.
+
+%% \keywords{}
+
+\maketitle
+
+%% \begin{dedication}
+
+%% \end{dedication}
+
+\pagestyle{plain} % for toc, was empty
+
+%% Obviously, it's probably a good idea to break the various sections of your thesis
+%% into different files and input them into this file...
+
+\begin{abstract}
+  TODO
+\end{abstract}
+
+\begin{acknowledgments}
+    TODO
+
+  
+\end{acknowledgments}
+
+
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\mainmatter
+
+%% Double space document for easy review:
+%\renewcommand{\baselinestretch}{1.66}\normalsize
+
+% The other requirements Catherine has:
+%
+%  - avoid large margins.  She wants the thesis to use fewer pages, 
+%    especially if it requires colour printing.
+%
+%  - The thesis should be formatted for double-sided printing.  This
+%    means that all chapters, acknowledgements, table of contents, etc.
+%    should start on odd numbered (right facing) pages.
+%
+%  - You need to use the department standard tech report title page.  I
+%    have tried to ensure that the title page here conforms to this
+%    standard.
+%
+%  - Use a nice serif font, such as Times Roman.  Sans serif looks bad.
+%
+% Other than that, just make it look good...
+
+
+\chapter{Introduction}
+\subfile{Introduction/intro.tex}
+
+\chapter{Related Work} \label{chap:related_work}
+\subfile{RelatedWork/relatedWork.tex}
+
+\chapter{Work 1} \label{chap:work1}
+\subfile{work1/work1.tex}
+
+\chapter{Work 2} \label{chap:work2}
+\subfile{work2/work2.tex}
+
+\chapter{Work 3} \label{chap:work3}
+\subfile{work3/work3.tex}
+
+\chapter{Conclusion and Future Work}
+\subfile{Conclusion/conclusion.tex}
+
+%\appendix
+%\include{appendix}
+
+\backmatter
+
+%\renewcommand{\baselinestretch}{1.0}\normalsize
+
+% By default \bibsection is \chapter*, but we really want this to show
+% up in the table of contents and pdf bookmarks.
+\renewcommand{\bibsection}{\chapter{\bibname}}
+%\newcommand{\bibpreamble}{This text goes between the ``Bibliography''
+%  header and the actual list of references}
+\bibliographystyle{unsrtnat}
+\bibliography{ref} %your bib file
+\nocite{*}
+
+\end{document}

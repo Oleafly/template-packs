@@ -1,0 +1,206 @@
+\documentclass[11pt,letterpaper]{smallfontreport}
+\usepackage{booktabs} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is a modified version of the urithesis.cls package created by
+% Timothy Toolan in the Electrical Engineering department.
+%
+% I copied as much stuff as his that I could so that the output
+% product will be similar.  Unfortunately, you will need to make
+% more edits to the various files then with the urithesis.sty.
+%
+% I also modified report.cls provided with latex to make the
+% smallfontreport.cls file used here.  I changed the font sizes
+% and spacings of the part and chapter sections to make them
+% smaller.
+%
+% BUT
+% With this version, you can use the citet and citep options
+% provided with natbib.sty for citing your references.  You can
+% also use difference styles for your references in each manuscript.
+% The overall bibliography can be created too.
+%
+% Caveat:  I assumed that manuscript style would be used.
+% So changes will be needed if the traditional style is used.
+%
+% Karen Tracey  Created Feb 2008
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Here's what you need to do to get the overall bibliography
+% and separate reference lists
+%
+% For overall bibliography:
+% select the  \usepackage[rootbib]{chapterbib} line below
+% latex thesis, bibtex thesis,
+% THEN to get chapter bibliography
+% change to \usepackage{chapterbib}
+% latex thesis, bibtex manuscript1 , bibtex mauscript2, latex thesis, latex thesis
+%
+% latex thesis, bibtex manuscript1 , bibtex mauscript2, latex thesis, latex thesis
+%
+%% See http://www.ele.uri.edu/info/thesis/guide for details.
+\usepackage{latexsym, graphicx, graphics, amsmath, amsthm, amssymb, lscape,rotating}
+
+%\usepackage[english]{babel}
+
+%% This makes the pdf file contain active links for all references,
+%% urls, the table of contents, etc., and creates a pdf menu.
+%\usepackage[pdfborder={0 0 0}]{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ 
+
+\usepackage[square]{natbib}
+%\usepackage{apacite}
+\usepackage{postyle}%,times}
+\usepackage[nooneline]{caption}
+
+%\usepackage[rootbib]{chapterbib}  % <=== Select one according to your needs
+\usepackage{chapterbib}
+\usepackage{float}
+
+\usepackage{pifont}
+\usepackage[export]{adjustbox}
+\usepackage[normalem]{ulem}
+
+
+\usepackage{multirow}
+\usepackage{soul} 
+%\usepackage{tabulary}
+
+\usepackage{threeparttable}
+
+\usepackage{xcolor}
+
+\usepackage{subfig}
+\usepackage[T1]{fontenc}
+\usepackage{bm}
+\usepackage{enumitem}
+\usepackage[capitalize]{cleveref}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{color}
+\usepackage[normalem]{ulem}
+
+\usepackage{mathrsfs}
+\usepackage{url}
+%\RequirePackage{natbib}
+%\let\cite\shortcite %xx So get et al. with three authors the first time.
+%\let\citep\shortcite %xx A natbib command.
+%\let\citet\shortcite %xx Ditto.
+%\let\citeA\shortciteA %xx Ditto.
+
+
+
+\bibpunct{(}{)}{;}{a}{,}{,}
+\renewcommand{\thesubsubsection}{\thesubsection.\alph{subsubsection}}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}    %Change what sections are included in TOC
+
+%\include{defs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+
+%\setcounter{tocdepth}{3}    %Change what sections are included in TOC
+
+\input{boilerplate_revised}  % <=== Edit the contents of this file
+
+%\addcontentsline{toc}{chapter}{MANUSCRIPT 1 Along-stream and temporal variability in the West Greenland Current System}
+%\renewcommand{\thesection}{\arabic{section}}
+\include{Chapter1_TexFiles/chapter1}   % <=== Change to use your file names
+
+
+%%%%%
+% Change style for appendices
+% Do not change these lines
+%   \newpage
+%   \setcounter{chapter}{0}
+%   \renewcommand\thechapter{\Alph{chapter}}
+%  \renewcommand\chaptername{APPENDIX}
+% % %%%%%
+% % %\input{Chapter1_TexFiles/appendix}  % <=== Change to use your file names;
+%   \include{Chapter1_TexFiles/Appendix}
+
+
+%%%%%
+% Do not change these two lines
+%\renewcommand\bibname{BIBLIOGRAPHY}
+%\addcontentsline{toc}{chapter}{BIBLIOGRAPHY}
+%%%%%
+%\bibliographystyle{natbib}  % <=== Change if necessary
+%\bibliography{Chapter1_TexFiles/waveres.bib}  % <=== Use MACRO names for Journals
+
+
+%\newpage                % <=== comment these two lines out if not needed
+
+\newpage
+%\clearpage
+% I need to redefine the command to manuscript.
+%\setcounter{chapter}{1}
+%\renewcommand\thechapter{\arabic{chapter}}
+%\renewcommand\chaptername{MANUSCRIPT}
+%%%\include{Chapter2_TexFiles/chapter2}    % <=== Add more \include statements if needed
+
+
+
+
+
+% change setting back to mauscript:
+%\setcounter{chapter}{3}
+%\renewcommand\thechapter{\arabic{chapter}}
+%\renewcommand\chaptername{MANUSCRIPT}
+\newpage
+% \newpage
+% \clearpage
+% \include{Chapter3_TexFiles/chapter3}    % <=== Add more \include statements if needed
+
+%%% Insert the appendix here:
+%% appendix for Chap1
+  \newpage
+   \setcounter{chapter}{0}
+   \renewcommand\thechapter{\Alph{chapter}}
+   \renewcommand\chaptername{APPENDIX}
+% % %%%%%
+% % %\input{Chapter1_TexFiles/appendix}  % <=== Change to use your file names;
+   \include{Chapter1_TexFiles/Appendix}
+
+%% appendix for Chap2-part2:
+% Add appendix to this  part;
+ \newpage
+ \setcounter{chapter}{1}
+ \renewcommand\thechapter{\Alph{chapter}}
+ \renewcommand\chaptername{APPENDIX}
+ \include{Chapter2_TexFiles/Appendix}
+    
+%% Insert Bibliography - - Not required for manuscript format
+
+%\renewcommand\bibname{BIBLIOGRAPHY}
+%\addcontentsline{toc}{chapter}{BIBLIOGRAPHY}
+%%%%%
+\clearpage
+%\newpage
+% \bibliographystyle{agu04}  % <=== Change if necessary
+%\bibliographystyle{ametsocV6}  
+%\nocite{*} 
+%\bibliography{All_references/references}
+%\bibliography{bookref}  % <=== Use MACRO names for Journals
+
+
+
+
+%%%%%
+% Do not change these two lines
+%\renewcommand\bibname{BIBLIOGRAPHY}
+%\addcontentsline{toc}{chapter}{BIBLIOGRAPHY}
+%%%%%
+%\bibliographystyle{agu04LongTitles}  % <=== Change if necessary
+%\bibliography{references.bib}  % <=== Use MACRO names for Journals
+
+%% Include any references which should appear in the bibliography,
+%% but are not explicitly referenced in the thesis.
+%\nocite{Book, Bower1989, Cushman, DewarBane, LiuThesis, Logoutov, Mueller, QiuEtAl, SavidgeBane, TalleyEtAl, WattsSunRintoul, Yasuda1996}
+
+\end{document}

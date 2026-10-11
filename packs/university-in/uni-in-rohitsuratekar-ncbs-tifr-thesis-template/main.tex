@@ -1,0 +1,135 @@
+% !TeX spellcheck = en_US
+\documentclass[
+12pt,
+a4paper, 
+%oneside, % Uncomment this for digital
+twoside  % Use twoside for printing.
+openright % Uncomment this for printing
+]{book}
+
+% If you use twoside, it will leave different margin for left and right. 
+% Initially you think it is unintutive but it is actually how book margins are left. 
+% See this for further infomation -- https://tex.stackexchange.com/a/319146/105124
+
+%\usepackage{showframe} % This is to check margin area, you dont need it in general
+
+\usepackage[utf8x]{inputenc}
+
+% Footnote related
+\usepackage[bottom]{footmisc} %Footnotes in Tables. Load this before hyperref
+
+\author{Rohit Suratekar}
+\usepackage[pdftex,
+pdfauthor={Rohit Suratekar},
+pdftitle ={Understanding structure and dynamics of the Drosophila PI(4,5)P2 cycle with mathematical models.},
+pdfsubject={Computational Cell Biology},
+pdfkeywords={PIP2 Cycle, Mathematical Model, PIP2, Thesis}, hidelinks]{hyperref} %References and hyperlinks 
+% Remove Hidelinks option from above if you want links
+
+\usepackage{graphicx, float, tikz-cd, xcolor, subcaption, chemfig} %Figures and Graphics
+\usepackage{caption, tabularx, multirow, threeparttable, float} %Tables related
+\usepackage{amsmath, amsfonts, amssymb, mathtools, calc} %Maths and Equations
+\usepackage{standalone} % load only in the main file
+\usepackage{fancyhdr} %For header
+\usepackage{emptypage} % Removes header from empty pages
+\usepackage{longtable} % Multipage Tables
+\usepackage{makeidx} %To make index page
+\usepackage[totoc]{idxlayout} %To get index into TOC
+\usepackage[acronym,toc]{glossaries} %Acronyms, TOC option will add it to TOC
+\usepackage[titletoc,title]{appendix} %For Appendix
+
+
+\usepackage[version=3]{mhchem} %Chemistry reactions
+
+%Tikz-cd setup
+\usetikzlibrary{decorations.text}
+\usetikzlibrary{positioning}
+
+% To order citation within multiple citations
+\usepackage[sort]{natbib}  %Need for sectionbib
+\usepackage[sectionbib]{chapterbib} %References on each chapter
+
+\allowdisplaybreaks %Allows equations to break page
+\usepackage[final]{pdfpages} %Include PDF page
+
+% Need to remove section numbers of appendix from TOC
+\usepackage{etoolbox}
+\appto\appendix{\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}}
+% reinstate the correct level for list of tables and figures
+\appto\listoffigures{\addtocontents{lof}{\protect\setcounter{tocdepth}{1}}}
+\appto\listoftables{\addtocontents{lot}{\protect\setcounter{tocdepth}{1}}}
+
+
+%Create new style to add header on each page
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\fancyhf{}
+\makeatletter
+\rhead{\fancyplain{}{\if@mainmatter \slshape\nouppercase{\leftmark}} \fi}
+\makeatother
+\lhead{\fancyplain{}{}} 
+\cfoot{\fancyplain{}{\thepage}}
+
+% Comment following Hypersetup during printing
+\hypersetup{ 
+	colorlinks   = true, %Colours links instead of ugly boxes
+	urlcolor     = blue, %Colour for external hyperlinks
+	linkcolor    = blue, %Colour of internal links
+	citecolor   = red %Colour of citations
+}
+
+% Footnote related command
+\newcommand\pubnote[1]{%
+	\begingroup
+	\renewcommand\thefootnote{}\footnote{#1}%
+	\addtocounter{footnote}{-1}%
+	\endgroup
+}
+
+\makeindex %Makes index file.
+\makeglossaries %Make glossary file
+
+\input{helpers/acronym} %Include add acronyms
+
+% For generating random text. You don't need it 
+\usepackage{blindtext}
+
+
+% Following new definition to align table text to left in case of multi-row and multi-column
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% Appendix related. Remove appendix sections from appearning in table of content
+\usepackage{etoolbox}
+\appto\appendix{\addtocontents{toc}{\protect\setcounter{tocdepth}{0}}}
+\appto\listoffigures{\addtocontents{lof}{\protect\setcounter{tocdepth}{1}}}
+\appto\listoftables{\addtocontents{lot}{\protect\setcounter{tocdepth}{1}}}
+
+\begin{document}
+	\frontmatter
+	\input{front_matter/cover_page}
+	\input{front_matter/declaration}
+	\input{front_matter/certificate}
+	\input{front_matter/publications}
+	\input{front_matter/acknowledgment}
+	\input{front_matter/dedication}
+	
+	\printglossary[type=\acronymtype,title={Abbreviations}, style=alttree]
+	\phantomsection
+	\addcontentsline{toc}{chapter}{\listfigurename}
+	\listoffigures
+	\phantomsection
+	\addcontentsline{toc}{chapter}{\listtablename}
+	\listoftables
+	\tableofcontents
+	
+	\mainmatter
+	\include{chapters/chapter1}
+	\include{chapters/chapter2}
+	
+	
+	% Switch off Caption
+	\captionsetup{list=no}
+	\include{appendix/appendix1}
+	\printindex
+\end{document}

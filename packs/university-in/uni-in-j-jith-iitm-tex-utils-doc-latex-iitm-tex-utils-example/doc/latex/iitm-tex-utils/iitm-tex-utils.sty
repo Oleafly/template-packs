@@ -1,0 +1,267 @@
+% LaTeX package for preparing GTC/DC/Semester reports in IIT Madras style/format.
+% Author: Jithin Jith <j.jith@outlook.com>
+%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{iitm-tex-utils}[2016/12/15 v0.1 IIT Madras style cover page, datasheet, etc. for research scholar reports]
+
+\RequirePackage{graphicx}
+\RequirePackage{kvoptions}
+
+\SetupKeyvalOptions{
+    family = opt,
+    prefix = opt@
+}
+
+\DeclareBoolOption{semreport} % Pass this option if preparing semester report
+\ProcessKeyvalOptions*
+
+% Commands for data sheet
+% --------------------------------
+
+% Period of review (for semester reports)
+\newcommand*{\period}[1]{\gdef\@period{#1}%
+}
+\newcommand*{\@period}{Jan/Jul to Jun/Dec YYYY}
+
+% Department name
+\newcommand*{\department}[1]{\gdef\@department{#1}%
+}
+\newcommand*{\@department}{Name of the Department}
+
+% Roll number
+\newcommand*{\rollno}[1]{\gdef\@rollno{#1}%
+}
+\newcommand*{\@rollno}{}
+
+% Research scholar's program
+\newcommand*{\program}[1]{\gdef\@program{#1}%
+}
+\newcommand*{\@program}{MS/PhD/MS \& PhD/M.Tech \& PhD}
+
+% Specialisation
+\newcommand*{\spec}[1]{\gdef\@spec{#1}%
+}
+\newcommand*{\@spec}{}
+
+% Scholar's category
+\newcommand*{\category}[1]{\gdef\@category{#1}%
+}
+\newcommand*{\@category}{Regular/Part-time/External/QIP}
+
+% Command to add guides
+\let\@guides\@empty
+%\newcounter{numguides}
+\newcommand*{\guide}[1]{%\stepcounter{numguides}%
+    \ifx\@guides\@empty%
+        \g@addto@macro\@guides{#1}%
+    \else%
+        \g@addto@macro\@guides{\\#1}%
+    \fi%
+}
+
+% Date of joining
+\newcommand*{\datejoin}[1]{\gdef\@datejoin{#1}%
+}
+\newcommand*{\@datejoin}{}
+
+% Date of registration
+\newcommand*{\datereg}[1]{\gdef\@datereg{#1}%
+}
+\newcommand*{\@datereg}{}
+
+% Area of research
+\newcommand*{\area}[1]{\gdef\@area{#1}%
+}
+\newcommand*{\@area}{}
+
+% Date of comprehensive exam
+\newcommand*{\datecompre}[1]{\gdef\@datecompre{#1}%
+}
+\newcommand*{\@datecompre}{n/a}
+
+% Date of research proposal seminar
+\newcommand*{\dateproposal}[1]{\gdef\@dateproposal{#1}%
+}
+\newcommand*{\@dateproposal}{n/a}
+
+% Date of second seminar
+\newcommand*{\dateseminar}[1]{\gdef\@dateseminar{#1}%
+}
+\newcommand*{\@dateseminar}{n/a}
+
+% Command to add courses
+% Should be used as: \course{course no. & course name & semester & type (core/elec) & credits & grade}
+\let\@courses\@empty
+\newcounter{numcourses}
+\newcommand*{\course}[1]{\stepcounter{numcourses}%
+    \ifx\@courses\@empty%
+        \protected@edef\@temprow{\thenumcourses & \unexpanded{#1}}
+    \else%
+        \protected@edef\@temprow{\noexpand\\ \thenumcourses & \unexpanded{#1}}
+    \fi%
+    \expandafter\g@addto@macro\expandafter\@courses\expandafter{\@temprow}%
+}
+
+% Signature
+\newif\ifmysignature
+\mysignaturefalse
+\newcommand*{\mysign}[1]{\mysignaturetrue%
+    \gdef\@mysign{#1}
+}
+
+
+% Commands for cover page
+% --------------------------------
+
+% If the scholar belongs to a subdivision of the department, use this command
+\newcommand*{\division}[1]{\gdef\@division{#1}%
+}
+\newcommand*{\@division}{\ }
+
+% For the top-right box with date/place/time on coverpage.
+% Date of seminar/meeting
+\newcommand*{\coverdate}[1]{\gdef\@coverdate{#1}%
+}
+\newcommand*{\@coverdate}{dd-mm-yy}
+% Venue of seminar/meeting
+\newcommand*{\covervenue}[1]{\gdef\@covervenue{#1}%
+}
+\newcommand*{\@covervenue}{venue}
+% Time of seminar/meeting
+\newcommand*{\covertime}[1]{\gdef\@covertime{#1}%
+}
+\newcommand*{\@covertime}{hh:mm}
+
+% Show the "period" on data sheet? [False by default]
+\newif\ifperiod
+\periodfalse
+
+% Show the top-right date/place/time box on coverpage? [True by default]
+\newif\ifcoverbox
+\coverboxtrue
+
+%\DeclareOption*{\PackageWarning{examplepackage}{Unknown ‘\CurrentOption’}}
+%\ProcessOptions\relax
+
+% If the "semreport" option is passed, remove box on coverpage, and show period on datesheet
+\ifopt@semreport
+\coverboxfalse
+\periodtrue
+\fi
+
+% Create data sheet
+\newcommand*{\makedatasheet}{%
+    \newpage
+    \thispagestyle{empty}
+    {\centering%
+        \ifopt@semreport
+        {\bfseries\Large Six Monthly Progress Report of Research Scholars\unskip\strut\par}
+        \else
+        {\bfseries\Large Data Sheet\unskip\strut\par}
+        \fi
+        \vspace{1em}
+        %
+        \ifperiod
+        {\bfseries\large Period: \@period\unskip\strut\par}
+        \vspace{1em}
+        \fi
+        %
+        {\bfseries\large\@department\unskip\strut\par}
+        \vspace{1em}
+        %
+        \begin{tabular}{rlll}
+            1 & Name                              & : &  \@author \\
+            2 & Roll No.                          & : &  \@rollno \\
+            3 & Program                           & : &  \@program \\
+            4 & Specialisation                    & : &  \@spec \\
+            5 & Category                          & : &  \@category \\
+            6 & Guide(s)                          & : &
+            \begin{tabular}[t]{@{}l@{}}%
+                \@guides
+            \end{tabular}\\
+            7 & Date of Joining                   & : &  \@datejoin \\
+            8 & Date of Registration              & : &  \@datereg \\
+            9 & Area of Research                  & : &
+            %\begin{minipage}[t]{0.8\columnwidth}%
+            \begin{tabular}[t]{@{}l@{}}%
+                \@area
+            \end{tabular}\\
+            %\end{minipage}\\
+            10 & Date of Comprehensive Examination & : &  \@datecompre \\
+            11 & Date of Research Proposal Meeting & : &  \@dateproposal \\
+            12 & Date of Second Seminar            & : &  \@dateseminar %\\
+        \end{tabular}
+        \unskip\strut\par
+        %
+        \vspace{2em}
+        %\vfill
+        {\bfseries Details of Coursework\unskip\strut\par}
+        \vspace{1em}
+        \begin{tabular}{cclcccc}
+            \hline
+            S.No. & Course No. & Course Name & Sem. & Type & Credits & Grade \\
+            \hline
+            \@courses \\
+            \hline
+        \end{tabular}
+        \unskip\strut\par
+    }
+    \vspace{2em}
+    {\raggedright%
+        \@date\unskip\strut\par
+    }
+    {\raggedright%
+        IIT Madras, Chennai\unskip\strut\par
+    }
+    \vspace{1em}
+    {\raggedright%
+        Signature of the Guide(s)
+        \hfill
+        Signature of the Scholar\\%
+        \ifmysignature%
+        \hfill%
+        \@mysign%
+        \fi%
+    }
+    \newpage
+}
+
+% Create cover page
+\newcommand*{\makecoverpage}{%
+    \newpage
+    \thispagestyle{empty}
+    %
+    \ifcoverbox
+    {\raggedright%
+        \large%
+        \hfill%
+        \begin{tabular}{|lll|}%
+            \hline%
+            {\bfseries Date} & : & \@coverdate \\%
+            {\bfseries Venue} & : & \@covervenue \\%
+            {\bfseries Time} & : & \@covertime \\%
+            \hline%
+        \end{tabular}%
+    }
+    \fi
+    %
+    {\centering%
+        %
+        \vfill
+        {\bfseries\Large\@title\unskip\strut\par}
+        %
+        \vfill
+        {\bfseries By \\ \ \\ \large\@author\unskip\strut\par}
+        %
+        \vspace{2em}
+        {\bfseries Under the guidance of \\ \ \\ \large\@guides\unskip\strut\par}
+        %
+        \vfill
+        %\centering
+        \includegraphics[width=0.2\textwidth]{iitm-logo}
+        %
+        \vfill
+        {\large\bfseries \@division \\ \@department \\ Indian Institute of Technology Madras \\ Chennai 600 036\unskip\strut\par}
+    }
+    \newpage
+}

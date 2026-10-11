@@ -1,0 +1,208 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GT-DISS
+%
+%  This file defines the packages required to compile
+%  "thesis.tex", as well as style settings for the 
+%  document (e.g., prefixes for equations). 
+%
+%  Some of the settings are required by GT, so make
+%  sure any changes are in compliance.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% For images and plots
+\usepackage{graphicx} 
+% Set required margins. It's insisted that the left margin be 1.5 in (for printing)
+% even for digital copies. This is lunacy.
+\usepackage[letterpaper, left=1.5in, right=1in, top=1in, bottom=1in]{geometry}
+% Allows us to set linespacing conveniently as desired
+\usepackage{setspace}  
+% Title control and formatting
+\usepackage[explicit]{titlesec}  
+% Table of contents control and formatting
+\usepackage[titles]{tocloft}  
+% Load package for appendices
+\usepackage[page]{appendix} 
+
+% Set up bibliography formatting ----------
+%  Use either cite OR biblatex, but they are incompatible
+\usepackage[superscript]{cite}
+% \usepackage[backend=bibtex, sorting=none, bibstyle=ieee]{biblatex} 
+
+% For rotated, landscape images
+\usepackage{rotating} 
+% For italicized text 
+\usepackage[normalem]{ulem}  
+
+% Pretty much indispensible math packages
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% To demonstrate commands (without LaTeX trying to interpret them)
+\usepackage{verbatim}
+
+% For dummy text
+\usepackage[english]{babel}
+\usepackage{blindtext}
+
+% This will allow numbering of subsubsections
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4} % Set to 3 to exclude subsubsections from TOC
+
+% Use caption package
+\usepackage{caption}
+% Set caption preferences
+\DeclareCaptionLabelFormat{bsc}{\textbf{\textsc{#1}\ #2}}
+\captionsetup{labelformat=bsc,margin=10pt,font=small,width=0.8\linewidth}
+% Define macro to reference subfigures within caption.
+\newcommand{\capsubref}[1]{%
+  \textbf{(\textrm{\subref{#1}})}%
+  }
+
+% Call it "References" instead of "Bibliography"
+\renewcommand\bibname{References}
+
+% Set up the Table of Contents formatting guide says we must have flushright page numbers. 
+% While I'd prefer to remove dot leaders altogether as, in the words of Robert Bringhurst, they
+% are "unenlightening rows of dots [that] force the eye to walk the width of the page like a 
+% prisoner being escorted back to its cell." But the solutions he suggests aren't really feasible
+% for this type of document, so I've retained them only for sections (and removed the page numbers
+% for subsections and below). I think this is a decent compromise, but change these however you 
+% see fit. 
+
+\renewcommand\contentsname{Table of Contents}
+
+% Chapter settings
+\renewcommand{\cftchapdotsep}{\cftdotsep}  % add dot separators
+\renewcommand{\cftchapfont}{\bfseries}  % set title font weight
+\renewcommand{\cftchappagefont}{\bfseries}  %set page number font weight
+\renewcommand{\cftchappresnum}{Chapter }
+\renewcommand{\cftchapaftersnum}{:~~}
+\renewcommand{\cftchapnumwidth}{5em}
+\renewcommand{\cftchapafterpnum}{\vskip0.5\baselineskip} % set correct spacing for entries in single space environment
+\renewcommand{\cftchapdotsep}{1000}  % Leader separation set to huge number (1000 works) to remove
+
+% Section and subsection formatting
+\cftsetindents{section}{6mm}{8mm}
+\renewcommand{\cftsecdotsep}{5}  % Leader separation set to huge number (1000 works) to remove
+%\renewcommand{\cftsecafterpnum}{\vskip\baselineskip}  %set correct spacing for entries in single space environment
+
+\cftsetindents{subsection}{12mm}{11mm}
+\renewcommand{\cftsubsecdotsep}{1000}  % No leaders
+\renewcommand{\cftsubsecfont}{\small}  % Title font
+\cftpagenumbersoff{subsection} % Turns off page numbers
+
+\cftsetindents{subsubsection}{18mm}{13mm}
+\renewcommand{\cftsubsubsecdotsep}{1000}  % No leaders
+\cftpagenumbersoff{subsubsection} % Turns off page numbers
+
+\cftpagenumbersoff{subsection}
+
+
+% Format title font size and position (this also applies to list of figures and list of tables)
+
+% Set heading formats
+% Chapter
+\titleformat{\chapter}[display]
+{\Large\bfseries\filcenter}{\chaptertitlename\ \thechapter}{0pt}{#1}
+% Section
+\titleformat{\section}{\large\bfseries}{\thesection\hspace{2mm}}{0pt}{#1}
+% Subsection
+\titleformat{\subsection}{\bfseries}{\thesubsection\hspace{2.5mm}}{0pt}{#1}
+% Subsubsection
+\titleformat{\subsubsection}{\bfseries}{\thesubsubsection\hspace{3mm}}{0pt}{#1}
+
+
+% Set up footnote style. We'll use symbols to distinguish from superscipt numbers, which
+% are used for the references. We won't use the asterisk though, because I think it's kinda 
+% ugly. The hang and flushmargin prevent the first line from being indented
+\usepackage[bottom,hang,flushmargin,perpage,symbol*]{footmisc} 
+\DefineFNsymbols*{lamportnostar}[math]{\dagger\ddagger\S\P\|{\dagger\dagger}{\ddagger\ddagger}}
+\setfnsymbol{lamportnostar}
+\interfootnotelinepenalty=10000 % Prevent from breaking accross pages
+
+% Use Baskervald Font. This is not one of the recommended fonts, but it is not required
+% that we use a font from that list, and it's my favorite for this type of document.
+\usepackage[lf]{Baskervaldx} % lining figures
+\usepackage[bigdelims,vvarbb]{newtxmath} % Use math italic letters from Nimbus Roman
+%\usepackage[default,regular,black]{sourceserifpro}
+\usepackage[cal=cm]{mathalfa} % Use mathcal from Computer Modern
+\renewcommand*\oldstylenums[1]{\textosf{#1}}
+\frenchspacing % Use single spacing after periods
+
+% Set up nomenclature conditions
+\usepackage{nomencl}
+\makenomenclature
+% Set nomenclature title
+\renewcommand{\nomname}{List of Symbols}
+\renewcommand{\nompreamble}{Effort has been made to use the blow symbols consistently. In the interest of clarity, symbols are occasionally used in isolation for other purposes, in which case their pertinent meaning will be stated.}
+% Nomenclature group definitions
+\usepackage{ifthen}
+\renewcommand{\nomgroup}[1]{%
+  \ifthenelse{\equal{#1}{A}}{ {\vskip 6mm} \item[\textbf{Roman Letters}]}{%
+    \ifthenelse{\equal{#1}{G}}{ {\vskip 6mm} \item[\textbf{Greek Letters}]}{%
+      \ifthenelse{\equal{#1}{M}}{ {\vskip 6mm} \item[\textbf{Mathematical Notations}]}{%
+        \ifthenelse{\equal{#1}{S}}{ {\vskip 6mm} \item[\textbf{Subscripts and Superscripts}]}{%
+        }
+      }
+    }
+  }
+}
+
+% Load hyperref second to last since it redefines some macros. Make all links black so they
+% don't stand out in the PDF
+\usepackage[bookmarksnumbered,pdfa]{hyperref}
+ \hypersetup{bookmarks=true,
+         pdfauthor={Author Name},
+         pdftitle={Title of Dissertation},
+         pdfsubject={Research Notes},
+         pdfkeywords={Keywords},
+         colorlinks=true,
+         urlcolor=black,
+         linkcolor=black,
+         citecolor=black}
+\usepackage[all]{hypcap}
+
+% Finally, load cleveref, which allows automatic formatting of the references
+\usepackage{cleveref}
+
+% Set formats of reference types
+\crefname{equation}{Eq.}{Eqs.}
+\Crefname{equation}{Equation}{Equations}
+
+\crefname{table}{Table}{Tables}
+\Crefname{table}{Table}{Tables}
+
+\crefname{figure}{Fig.}{Figs.}
+\Crefname{figure}{Figure}{Figures}
+
+\crefname{section}{Sec.}{Secs.}
+\Crefname{section}{Section}{Sections}
+
+\crefname{chapter}{Chap.}{Chaps.}
+\Crefname{section}{Section}{Sections}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

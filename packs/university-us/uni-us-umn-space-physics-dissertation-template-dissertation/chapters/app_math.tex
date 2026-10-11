@@ -1,0 +1,75 @@
+% #############################################################################
+% ############################################################## Appendix: Math
+% #############################################################################
+
+\chapter{Math}
+  \label{app_math}
+
+As you may recall from \cref{ch_data}, there was some data. 
+
+Now let's look at some math. It's based on work by Lysak\cite{lysak_2013}. 
+
+More on that in \cref{sec_maxeqn}
+
+% =============================================================================
+% =============================================================================
+% =============================================================================
+
+\section{Maxwell's Equations}
+  \label{sec_maxeqn}
+
+Start with \amplaw, swapping out the current for $\; \tensor{\sigma} \cdot 
+\vec{E} \;$ per Kirchhoff's formulation of \ohmlaw. Finagle a bit to get it
+into a form where we can use an integrating factor. 
+\begin{align}
+  \tensor{\epsilon} \cdot \ddt \vec{E} &= \oomz \curl{B} -
+    \tensor{\sigma} \cdot \vec{E}
+\end{align}
+
+This can be finagled to:
+\begin{align}
+  \label{eqn_intfac_0}
+  \lr{ \tensor{\Omega} + \tensor{ \mathbb{I} } \ddt } \cdot \vec{E} &=
+    \tensor{V}^2 \cdot \vec{F}
+\end{align}
+
+Where $\tensor{ \mathbb{I} }$ is the identity tensor, 
+${\vec{F} \equiv \curl{B}}$ and in dipole $x$-$y$-$z$ coordinates, 
+\begin{align}
+  \label{eqn_intfac_1}
+  \tensor{V}^2 &\equiv \oomz \tensor{\epsilon}^{-1} = 
+    \mmm{\va^2}{0}{0}
+        {0}{\va^2}{0}
+        {0}{0}{c^2} &
+  & \text{and} &
+  \tensor{\Omega} &\equiv \tensor{\epsilon}^{-1} \cdot \tensor{\sigma} = 
+    \mmm{ \frac{\sp}{\ep} }{ \frac{-\sh}{\ep} }{0}
+        { \frac{\sh}{\ep} }{ \frac{\sp}{\ep} }{0}
+        {0}{0}{ \frac{\sz}{\ez} } 
+\end{align}
+
+Multiplying through by $\exp \lr{ \tensor{\Omega} \, t }$ and applying the
+product rule, \cref{eqn_intfac_1} becomes\footnote{Tensor exponentiation is
+analogous to scalar exponentiation\cite{hall_2015}:
+$\exp\lr{\tensor{T}} \equiv \displaystyle\sum_n \frac{1}{n!} \tensor{T}^n$. }
+\begin{align}
+  \label{eqn_intfac_2}
+  \ddt \Big( \exp \arg{\tensor{\Omega} \, t} \cdot \vec{E} \, \Big) &=
+    \exp \lr{\tensor{\Omega} \, t} \cdot \tensor{V}^2 \cdot \vec{F}
+\end{align}
+
+\cref{eqn_intfac_2} can then be integrated over a small time step \dt. Note
+that in \cref{eqn_intfac_3}, the $\leftarrow$ operator indicates assignment;
+values on the left are new, and those on the right are old. 
+\begin{align}
+  \label{eqn_intfac_3}
+  \vec{E} &\leftarrow \exp \arg{ -\tensor{\Omega} \, \dt } \cdot \vec{E} +
+    \dt \, \exp \arg{ -\tensor{\Omega} \, \tfrac{\dt}{2} } \cdot
+    \tensor{V}^2 \cdot \vec{F}
+\end{align}
+
+Now there's something we can plug into the computer! 
+
+
+
+

@@ -1,0 +1,203 @@
+\ProvidesPackage{vuthesis}[2015/04/01]
+%Unoffcial thesis style template for Villanova University.
+%Nathan Charles - 2015/22/04
+%https://github.com/nrcharles/VUThesis
+%This was loosely based on the Stanford template.
+%Much respect to the left coast.
+
+\newlength{\signaturespace}
+\setlength{\signaturespace}{.5in}
+
+\def\dedication#1{\gdef\@dedication{#1}}
+\def\@dedication{*}
+
+\def\acknowledgments#1{\gdef\@acknowledgments{#1}}
+\def\@acknowledgments{*}
+
+\def\authorstatement#1{\gdef\@authorstatement{#1}}
+\def\@authorstatement{
+This thesis has been submitted in partial fulfillment of requirements for an advanced degree at Villanova University.
+
+Brief quotations from this thesis are allowable without special permission, provided that accurate acknowledgment of source is made.
+Requests for permission for extended quotation from or reproduction of this manuscript in whole or in part may be granted by the head of the major department or the Associate Dean for Graduate Studies and Research of the College of Engineering when in his or her judgment the proposed use of the material is in the interests of scholarship.
+In all other instances, however, permission must be obtained from the author.
+}
+
+\def\frontmatter{
+
+%Title Page
+%Copyright Page
+%Approval Page
+%Statement by Author Page
+%Dedication page (optional)
+%Acknowledgment Page (optional)
+%Table of Contents 4
+%List of Tables
+%List of Figures
+%Nomenclature
+%Abstract 
+
+\begin{spacing}{1.0}
+\titlep
+\tcopyright
+\signaturepage
+\end{spacing}
+
+\if*\@authorstatement\else
+    \thispagestyle{empty}
+    \begin{center}STATEMENT BY AUTHOR
+    \end{center}
+    \@authorstatement
+    \vfill
+    \clearpage
+\fi
+
+
+\if*\@dedication\else
+    \thispagestyle{empty}
+    \begin{center}Dedication
+    \end{center}
+    \@dedication
+    \vfill
+    \clearpage
+\fi
+
+\if*\@acknowledgments\else
+    \thispagestyle{empty}
+    \begin{center}Acknowledgments
+    \end{center}
+    \@acknowledgments
+    \vfill
+    \clearpage
+\fi
+
+\begin{spacing}{1.0}
+\tableofcontents
+\listoffigures
+\listoftables
+\vfill
+\clearpage
+\end{spacing}
+\pagenumbering{arabic}
+
+}
+
+\def\tcopyright{
+
+\vspace*{\fill}
+\thispagestyle{empty}
+\begin{center}
+Copyright \textcopyright \the\year\ by \@author\\ All Rights Reserved
+\end{center}
+\vspace*{\fill}
+
+\clearpage
+}
+
+\def\titlep{%
+
+\begin{titlepage}
+\begin{center}
+
+
+% Title
+{\Large \@title\\[2cm]}
+
+{By\\[1cm]}
+
+{\@author\\[2cm]}
+% Author and supervisor
+
+% Bottom of the page
+
+{Thesis\\
+Submitted to the College of Engineering\\
+Villanova University\\
+in partial fulfillment of the requirements\\
+for the degree of\\[2cm]}
+
+{MASTER OF SCIENCE\\[1cm]}
+
+{In\\[1cm]}
+
+{\@program\\[1cm]}
+
+\vfill
+{\today\\[1cm]}
+
+{Villanova, Pennsylvania}
+
+\end{center}
+\end{titlepage}
+
+
+}
+
+\def\dept#1{\gdef\@dept{#1}}
+\def\program#1{\gdef\@program{#1}}
+\def\advis@r{Adviser} % default spelling
+\def\principaladviser#1{\gdef\@principaladviser{#1}}
+\def\principaladvisor#1{\gdef\@principaladviser{#1}\gdef\advis@r{Advisor}}
+\def\coprincipaladvisor#1{\gdef\@coprincipaladviser{#1}\gdef\advis@r{Co-Advisor}}
+\def\coprincipaladviser#1{\gdef\@coprincipaladviser{#1}\gdef\advis@r{Co-Adviser}}
+\def\firstreader#1{\gdef\@firstreader{#1}}
+\def\secondreader#1{\gdef\@secondreader{#1}}
+\def\thirdreader#1{\gdef\@thirdreader{#1}}
+\def\fourthreader#1{\gdef\@fourthreader{#1}}
+\def\submitdate#1{\gdef\@submitdate{#1}}
+\def\copyrightyear#1{\gdef\@copyrightyear{#1}} % \author, \title in report
+% needed only for dual language departments to choose the language
+\def\languagemajor#1{\gdef\@languagemajor{#1}} \def\@language{babel}
+\def\jointprogram#1{\gdef\@jointprogram{#1}}
+\def\@program{Sustainable Engineering}
+\def\@title{}\def\@author{}\def\@dept{computer science}
+\def\@principaladviser{}\def\@firstreader{*}\def\@secondreader{*}
+\def\@principaladvisertitle{}\def\@firstreadertitle{*}\def\@secondreadertitle{*}
+\def\@coprincipaladviser{*}
+\def\@thirdreader{*}
+\def\@fourthreader{*}
+
+\def\signaturepage{% 
+\thispagestyle{empty}
+\begin{center}
+\large\uppercase\expandafter{\@title}
+\\
+By\\
+\@author
+
+\end{center}
+
+\signature{\@principaladviser\quad \\Principal \advis@r}{}
+  \vfill
+        \if*\@coprincipaladviser \else
+        \signature{\@coprincipaladviser\quad \\Principal \advis@r}
+        \vfill\fi
+        \if*\@firstreader \else
+        \signature{\@firstreader}
+        \vfill\fi
+        \if*\@secondreader \else
+        \signature{\@secondreader}
+        \vfill\fi
+        \if*\@thirdreader \else 
+        \signature{\@thirdreader}{}
+        \vfill\fi
+        \if*\@fourthreader \else 
+        \signature{\@fourthreader}
+        \vfill\fi
+        \begin{center}
+        %A copy of this thesis is available for research purposes\\
+        %at Falvey Memorial Library\\
+        \end{center}
+\clearpage
+}
+
+\long\def\signature#1{%
+\vspace{\signaturespace}
+\flushleft Approved:
+\noindent \underline{\hspace*{5in}} \\
+\hspace*{0.8in}
+\begin{minipage}{5in}
+#1\\
+\end{minipage}
+}
+

@@ -1,0 +1,125 @@
+%-------------------------------------------------------------%
+% Dissertation template for the University of Pennsylvania
+% Created by Aletheia Cui
+% Penn Dissertation formatting guide:
+%    http://guides.library.upenn.edu/dissertation_manual/formatting
+% ------------------------------------------------------------%
+
+\documentclass[letterpaper,11pt,oneside]{PennDissertation}
+
+% To generate lorem ipsum text blocks to illustration purposes
+\usepackage{lipsum}
+
+% Location of the figures
+\graphicspath{{Figures/}{../Figures/}}
+
+% Package commonly used to manage citations
+\usepackage{natbib} 
+\usepackage{apalike}
+
+% 1. Title Page
+\makeatletter
+% The TITLE MUST BE IN ALL CAPS
+\title{YOUR AWESOME PENN DISSERTATION TITLE} \let\Title\@title
+% Your name
+\author{Firstname Lastname} \let\Author\@author
+% The year is automatically generated
+\date{\the\year} \let\Date\@date
+\makeatother
+
+% Your academic department/subject
+\subject{Subject}
+
+% Dissertation supervisor and their full title
+\supervisor{Zoe Supervisor}
+\supervisortitle{Professor of Subject}
+
+% Department chairperson and their full title
+\chairperson{Mal Chairperson}
+\chairpersontitle{Associate Professor of Subject}
+
+% Committee members and their full titles.
+% Separate each committee member by "\par"
+\committee{Jayne Dissertation, Associate Professor of Subject \par
+           Simon Committee, Assistant Professor of Subject \par
+           Kaylee Members, Professor of Subject}
+
+\begin{document}
+
+% Begin Roman style (i, ii, iii, iv...) page numbering
+% Penn style: "Every page in the dissertation has a number, except for the Title Page and the copyright notice (if desired). The title page is counted as page i, and the copyright page (if there is one) as page ii, but do not print the page numbers on either of these two pages"
+
+\frontmatter 
+\maketitle
+
+% This is set so that the dedication page is numbered "iii"
+\setcounter{page}{2} 
+
+% 2. Copyright Notice (optional)
+\copyrightpage % This is automatically generated
+
+% 3. Dedication (optional). Write your dedication here.
+\dedication{For/Dedicated to/To my\ldots}
+
+% 4. Acknowledgment (optional)
+\acknowledgment{
+% Modify the file Chapters/Abstract.tex for your acknowledgment
+\input{Chapters/Acknowledgment}
+}
+
+% 5. Abstract
+\abstract{
+% Modify the file Chapters/Abstract.tex for your abstract
+\input{Chapters/Abstract}
+}
+
+% 6. Table of Contents
+\tableofcontents
+
+% 7. List of Tables
+\listoftables
+
+% 8. List of Illustrations
+\listoffigures
+
+\pagestyle{plain}
+
+% 9. Preface (optional)
+\preface{
+\input{Chapters/Preface} % Optional preface
+}
+
+\addtocontents{toc}{\vspace{1em}}
+% Begin numeric (1,2,3...) page numbering
+\mainmatter
+
+% Chapters of the dissertation
+\input{Chapters/Chapter1} % Some chapter
+
+\input{Chapters/Chapter2} % Some chapter
+
+\input{Chapters/Chapter3} % Some chapter
+
+\input{Chapters/Chapter4} % Some chapter
+
+%\input{Chapters/Chapter5} % Some chapter
+
+%\input{Chapters/Chapter6} % Some chapter
+
+\addtocontents{toc}{\vspace{2em}} 
+
+\appendix
+
+\input{Appendices/AppendixA} % Appendix
+
+\input{Appendices/AppendixB} % Appendix
+
+\addtocontents{toc}{\vspace{1em}}
+
+% The bibliography
+\clearpage
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{apalike}
+\bibliography{Bibliography} 
+
+\end{document}

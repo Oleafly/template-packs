@@ -1,0 +1,80 @@
+\documentclass[12pt,oneside]{report}
+
+    % -------------------- Packages --------------------
+    \usepackage[letterpaper,margin=1in]{geometry}
+    \usepackage{setspace}
+    \usepackage{tocloft}
+    \usepackage{hyperref}
+    \usepackage{bookmark}
+
+    % Optional: if you want Times New Roman-like look, uncomment:
+    %\usepackage{newtxtext,newtxmath}
+
+    % -------------------- Metadata --------------------
+    \newcommand{\ETDTitle}{[Title of Your Dissertation]}
+    \newcommand{\ETDAuthor}{[Your Name]}
+    \newcommand{\ETDType}{[Dissertation/Thesis/Project/Problem Report]}
+    \newcommand{\ETDCollege}{[Name of Your College Goes Here]}
+    \newcommand{\ETDDegree}{[Degree]}
+    \newcommand{\ETDProgram}{[Your Department/Concentration Goes Here]}
+    \newcommand{\ETDDepartment}{[Your Department]}
+    \newcommand{\ETDLocation}{Morgantown, West Virginia}
+    \newcommand{\ETDYear}{[Year of Graduation]}
+    \newcommand{\ETDKeywords}{[Keywords: keyword1, keyword2, keyword3]}
+    \newcommand{\ETDCopyrightYear}{[Year]}
+    \newcommand{\ETDChair}{[Chair Name], [Degree]}
+    \newcommand{\ETDCommitteeA}{[Committee Member], [Degree]}
+    \newcommand{\ETDCommitteeB}{[Committee Member], [Degree]}
+    \newcommand{\ETDCommitteeC}{[Committee Member], [Degree]}
+
+    % -------------------- Page style --------------------
+    % Use plain style (page number centered in footer) throughout.
+    \pagestyle{plain}
+
+    % -------------------- Document --------------------
+    \begin{document}
+
+    % WVU: Title page counts as i, but number must NOT appear.
+    % Start Roman numbering at i, then suppress the number on the title page.
+    \pagenumbering{roman}
+    \input{frontmatter/titlepage}
+
+    % WVU: Abstract counts as ii (and iii if it continues) but must NOT show page numbers.
+    \input{frontmatter/abstract}
+
+    % Front matter after abstract shows roman numerals (iii, iv, v, ...)
+    % At this point the next page is automatically iii.
+    \cleardoublepage
+    \pagestyle{plain}
+
+    \input{frontmatter/dedication}    % optional
+    \input{frontmatter/acknowledgments} % optional
+
+    \cleardoublepage
+    \pdfbookmark[0]{Table of Contents}{toc}
+    \tableofcontents
+
+    % If needed:
+    %\cleardoublepage
+    %\listoftables
+    %\cleardoublepage
+    %\listoffigures
+
+    % -------------------- Main body --------------------
+    \cleardoublepage
+    \pagenumbering{arabic} % restart at 1
+
+    \input{chapters/chapter1}
+    \input{chapters/chapter2}
+    % \input{chapters/chapter3} % add more as needed
+
+    % -------------------- Back matter --------------------
+    \cleardoublepage
+    \bibliographystyle{plain} % change per your discipline/style manual
+    \bibliography{backmatter/references}
+
+    % Appendices (optional)
+    %\appendix
+    %\input{backmatter/appendixA}
+
+    \end{document}

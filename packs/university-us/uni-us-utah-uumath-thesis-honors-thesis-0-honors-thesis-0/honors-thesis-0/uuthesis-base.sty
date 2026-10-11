@@ -1,0 +1,444 @@
+%%% -*-TeX-*-
+%%% ====================================================================
+%%% This file provides the MINIMAL set of commands needed to define
+%%% values needed to format the front matter of a University of Utah
+%%% dissertation or thesis.  It is a MANDATORY package, and the
+%%% command \usepackage{uuthesis-base} should appear immediately after
+%%% the \documentclass[...]{book} command that begins the top-level
+%%% LaTeX file.
+%%%
+%%% Great efforts have been made to avoid
+%%%
+%%%     * duplication or modification of standard LaTeX formatting
+%%%       commands;
+%%%
+%%%     * hard-coding of magic numbers in macro definitions;
+%%%
+%%%     * introducing incompatible definitions of standard LaTeX
+%%%       formatting commands;
+%%%
+%%%     * forcing floats (figures, tables, programs, ...) to end of
+%%%       chapter;
+%%%
+%%%     * use of inscrutable, undocumented, and unreadable (La)TeX
+%%%       macro definitions.
+%%%
+%%% The goal is to satisfy local thesis formatting requirements, while
+%%% allowing maximal use of standard LaTeX packages, and easing the
+%%% often onerous job of optimizing float placement.
+%%%
+%%% [16-Oct-2018] -- version 2.01 with Mathematics Department
+%%%                  recommended formatting (underlined running page
+%%%                  headers, uppercase cover-page title, and smaller
+%%%                  font sizes in sectional headings)
+%%% [27-Jan-2018] -- version 2.00 for new book-style-based disseration
+%%%                  and thesis design (versions 1.x did not exist
+%%%                  under this name, but were implemented in the
+%%%                  inflexible uuthesis2e.cls file and associated
+%%%                  styles)
+%%% ====================================================================
+
+\NeedsTeXFormat {LaTeX2e} [1994/12/01]
+\ProvidesPackage {uuthesis-base} [2018/10/16 v2.01]
+
+\immediate \write16 {===============================================================================}%
+\immediate \write16 {}%
+\immediate \write16 {This is uuthesis-base.sty version 2.01 <16 October 2018>}%
+\immediate \write16 {}%
+\immediate \write16 {===============================================================================}%
+
+%%% Basic page dimensions (assuming US A-format paper: 8.5in x 11in).
+%%% These are fixed by University of Utah Thesis Office regulations,
+%%% and MUST NEVER be changed by the user.
+\setlength {\textwidth}                 {6in}
+\setlength {\textheight}                {8.65in}
+
+\newcommand {\doublespace}              {\setlength {\baselineskip} {19pt}}
+\newcommand {\singlespace}              {\setlength {\baselineskip} {13pt}}
+
+\newcommand {\uunormalspace}            {\doublespace}
+
+%%% ====================================================================
+%%% We need a compact way to issue progress messages if the user
+%%% requested them:
+
+\newif \ifnoisy
+\noisytrue
+
+\def \uuthesis@noise #1%
+{%
+    \ifnoisy
+        \typeout{#1}%
+    \fi
+}%
+
+%%% ====================================================================
+%%% Title page fields (and checks for missing mandatory fields):
+
+%% \newcommand {\@author}               {\@latex@warning@no@line{No \noexpand\author given}}
+%% \newcommand {\@title}                {\@latex@warning@no@line{No \noexpand\title given}}
+%% \newcommand {\@degree}               {\@latex@warning@no@line{No \noexpand\degree given}}
+%% \newcommand {\@thesistype}           {\@latex@warning@no@line{No \noexpand\thesistype given}}
+
+\renewcommand {\author}                 [1]{\gdef \@author                      {#1}}
+\renewcommand {\title}                  [1]{\gdef \@title                       {#1}}
+
+\newcommand {\thesistype}               [1]{\gdef \@thesistype                  {#1}}
+\newcommand {\degree}                   [1]{\gdef \@degree                      {#1}}
+
+%%% Committee page fields:
+\newcommand {\approvaldepartment}       [1]{\gdef \@approvaldepartment          {#1}}
+\newcommand {\department}               [1]{\gdef \@department                  {#1}}
+\newcommand {\graduatedean}             [1]{\gdef \@graduatedean                {#1}}
+
+\newcommand {\departmentchair}          [1]{\gdef \@departmentchair             {#1}}
+\newcommand {\committeechair}           [1]{\gdef \@committeechair              {#1}}
+\newcommand {\firstreader}              [1]{\gdef \@firstreader                 {#1}}
+\newcommand {\secondreader}             [1]{\gdef \@secondreader                {#1}}
+\newcommand {\thirdreader}              [1]{\gdef \@thirdreader                 {#1}}
+\newcommand {\fourthreader}             [1]{\gdef \@fourthreader                {#1}}
+\newcommand {\chairtitle}               [1]{\gdef \@chairtitle                  {#1}}
+\newcommand {\submitdate}               [1]{\gdef \@submitdate                  {#1}}
+\newcommand {\copyrightyear}            [1]{\gdef \@copyrightyear               {#1}}
+\newcommand {\chairdateapproved}        [1]{\gdef \@chairdateapproved           {#1}}
+\newcommand {\firstdateapproved}        [1]{\gdef \@firstdateapproved           {#1}}
+\newcommand {\seconddateapproved}       [1]{\gdef \@seconddateapproved          {#1}}
+\newcommand {\thirddateapproved}        [1]{\gdef \@thirddateapproved           {#1}}
+\newcommand {\fourthdateapproved}       [1]{\gdef \@fourthdateapproved          {#1}}
+
+\usepackage {uuthesis-approval}
+
+%%% Miscellaneous fields:
+\newcommand {\dedication}               [1]{\gdef \@dedication                  {#1}}
+
+\newcommand {\dedicationpage}
+{
+  \newpage
+  \thispagestyle{empty}
+  \vspace*{3.0in}
+  \begin{center}{\@dedication}\end{center}
+  \ifnoisy \typeout{Dedication.} \fi
+}
+
+%% Command to change from front matter roman page numbering to main text arabic numbering
+\newcommand {\uumaintext}
+{%
+    \clearpage
+    \uunormalspace
+    \pagestyle{headings}%
+    \pagenumbering{arabic}%
+}
+
+%%% ====================================================================
+%%% Miscellaneous dimensions and their defaults.
+%%%
+%%% See Leslie Lamport, The LaTeX User Guide and Reference Manual (LUGRM)
+%%% (1986), Figure C.3, Page style parameters, page 182, for the
+%%% meaning of these dimensions.
+
+\newlength {\footheight}
+\setlength {\footheight}                {2em}
+
+\newlength {\minilength}
+\setlength {\minilength}                {0.95\textwidth}
+
+\setlength {\oddsidemargin}             {0.25in}
+\setlength {\evensidemargin}            {0.25in}
+
+\setlength {\topskip}                   {0.0in}
+\setlength {\topmargin}                 {0.0in}
+\setlength {\headheight}                {0.0in}
+\setlength {\headsep}                   {24pt}
+\setlength {\footskip}                  {2\normalbaselineskip} % was {0.0in}
+\setlength {\voffset}                   {0in}
+
+\newcommand {\fixmainheadingSKIP}       {\vskip 12pt}
+
+\flushbottom
+
+\newcommand {\frontmatterformat}
+{%
+  \pagestyle     {headings}%
+  \pagenumbering {roman}%
+  \setcounter    {page} {-1}
+  \parskip =     0pt plus 1pt
+}
+
+%%% ====================================================================
+%%% Title page layout
+%%%
+%%% In the thesis cover title page, and also within quotation and quote
+%%% environments, we require the ability to force tighter interline
+%%% spacing than the default.  Because theses can be set in 10pt
+%%% (default), or 11pt or 12pt font sizes, we adjust the spacing from
+%%% the normal size-dependent spacing saved in \normalbaselineskip.
+
+\def \uuthesis@smallsinglespace
+{%
+    \baselineskip = \normalbaselineskip
+    \advance \baselineskip by -1pt
+}%
+
+\newcommand {\uuthesis@frontmattersmallskip}    {\par {\vskip 0.5\normalbaselineskip}}
+
+\renewcommand {\titlepage}
+{
+  \frontmatterformat
+  \thispagestyle{empty}%
+  \noindent
+  \hspace{1em}%
+  \begin{minipage}[c]{\minilength}%
+    \begin{center}%
+      \vbox to 9\baselineskip
+      {%
+          \bfseries
+          \vss
+          \begin{center}%
+              \LARGE
+              \@title
+          \end{center}%
+          \vss
+      }%
+      \mbox{} \\
+    by
+      \uuthesis@frontmattersmallskip
+      \@author \\
+      \vbox to 15\baselineskip
+      {%
+        \vss
+        \uuthesis@smallsinglespace
+        A \@thesistype ~submitted to the faculty of\\
+        The University of Utah\\
+        in partial fulfillment of the requirements for the degree of
+        \vss
+      }%
+      {%  NB: the degree can be 1 or MORE lines long!w
+          % \uuthesis@smallsinglespace
+          \doublespace
+          \@degree
+          \par
+      }%
+      \vskip 7\baselineskip
+      \expandafter{\@department}%
+      \uuthesis@frontmattersmallskip
+      The University of Utah
+      \uuthesis@frontmattersmallskip
+      \@submitdate%
+    \end{center}%
+  \end{minipage}%
+  \uuthesis@noise{Title.}%
+  \newpage    % Added 1995 by GBG; see Eric Eide notes.
+}%
+
+%%% ====================================================================
+%%% Copyright page
+
+\newcommand {\copyrightpage}
+{%
+    \newpage
+    \thispagestyle{empty}%
+    \rule{0in}{4.25in}%
+    \noindent
+    \begin{minipage}{\minilength}%
+        \begin{center}%
+            Copyright \copyright\ \@author\ \@copyrightyear
+            \uuthesis@frontmattersmallskip
+            All Rights Reserved
+        \end{center}%
+    \end{minipage}%
+    \rule{0in}{4.2in}%
+    \uuthesis@noise{Copyright.}%
+    \newpage
+}%
+
+%%% ====================================================================
+%%% Usage: \preface{basefilename}{heading name}
+
+% Optional preface is treated almost like a chapter - goes in toc, but no
+% number assigned.
+
+% We need a shorthand to suppress hyphenations in various places
+\newcommand {\nohyphenation}                    {\hyphenpenalty = 10000 \exhyphenpenalty = 10000 \relax}
+
+%% We should be able to remove \mainheading* macros entirely: for now,
+%% use this workaround
+\newcommand {\mainheading} [1] {\@makeschapterhead{\indexname}}
+
+\newlength {\mainheadingwidth}
+\setlength {\mainheadingwidth}                  {4.5in}
+\setlength {\mainheadingwidth}                  {\textwidth}
+
+%%: \newcommand {\mainheading} [1]
+%%: {%
+%%:     \hrule width 0in
+%%:     \vspace {0.4in}%
+%%:     \hrule width 0in
+%%:     \mainheadingtext{#1}{\bfseries}%
+%%: }
+
+\newcommand {\mainheadingtext} [2] % #1=text, #2=font size and style
+{%
+  \begin{center}%
+    \parbox{\mainheadingwidth}{%
+     \begin{center}%
+        #2%
+        \uppercase{{\nohyphenation #1}}%
+      \end{center}%
+      \removelastskip
+    }% end parbox
+   \end{center}%
+}
+
+\newcommand {\prefacesection} [1]
+{%
+  \newpage
+  \thispagestyle{empty}
+  \uunormalspace
+  \addcontentsline{toc}{chapter}{\uppercase{#1}}
+  \setcounter {page} {2}                % UofU Thesis Office demands abstract on p. iii: start one lower
+  \chapter*{#1}
+}
+
+\newcommand {\preface} [2]
+{%
+  \typeout{DEBUG: preface: arg 1 = [#1] arg 2 = [#2]}
+  \prefacesection{#2}
+  % NO: \par
+  \input{#1}
+  \ifnoisy \typeout{#2.} \fi
+}
+
+%%% ====================================================================
+%%% Style changes against original book.cls definitions from
+%%% <dollar>prefix/share/lib/tex/texlive-2018-01/texmf-dist/tex/latex/base/book.cls
+
+%%% No uppercasing of running page headers et al, but preserve the
+%%% original definition in case the user needs it later.  Making
+%%% the new definition a TeX no-op (\relax) means that we do not
+%%% have to redefine several macros from book.cls, or other packages
+%%% that might be included.
+
+\let \LaTeXMakeUpperCase = \MakeUppercase
+\let \MakeUppercase      = \relax
+
+%%% NB: A bare \let redefinition of \uppercase here conflicts with the
+%%% hyperref package producing an inscrutable error
+%%%
+%%%   /home/archive/share/lib/tex/texlive-2018-01/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+%%%   ! Missing } inserted.
+%%%   <inserted text>
+%%%                   }
+%%%   l.5523 \x 89
+%%%               %
+%%%   ? x
+%%% Using a \newcommand redefinition removes the error.
+
+\let \LaTeXuppercase     = \uppercase
+\let \uppercase          = \relax
+\newcommand {\uppercase} [1] {#1}
+
+%%% ====================================================================
+%%% Because float positioning is frequently challenging, and floats
+%%% are often numerous in technical documents, relax the restrictions
+%%% in book.cls in the parameters that affect their placement to try
+%%% to keep them closer to their point of definition and first
+%%% reference (see pages 199--200 of the LUGRM).  We only need to set
+%%% parameters for single-column formatting.
+
+\setcounter     {topnumber}             {10}    % was {2}
+\renewcommand   {\topfraction}          {0.9}   % was {.7}
+\setcounter     {bottomnumber}          {10}    % was {1}
+\renewcommand   {\bottomfraction}       {0.9}   % was {.3}
+\setcounter     {totalnumber}           {20}    % was {3}
+\renewcommand   {\textfraction}         {0.1}   % was {.2}
+\renewcommand   {\floatpagefraction}    {0.5}   % was {.5}
+
+\newcommand {\optionalfront} [1]
+{%
+    \clearpage
+    \thispagestyle{empty}%
+    \addcontentsline{toc}{chapter}{\uppercase{#1}}%
+    \chapter*{#1}%
+    \markboth{#1}%
+    \ifnoisy \typeout{#1.} \fi
+}
+
+\setcounter{secnumdepth}{2}             % number down to subsections, but not below that level
+
+\renewcommand{\bibname}{References}     % was Bibliography: UofU Thesis Office wants References
+
+%%% ====================================================================
+%%% [16-Oct-2018]
+%%% Style change 1:
+%%%
+%%% Force titlepage title to be all caps
+\let \oldtitle = \title
+\renewcommand{\title}[1]{\oldtitle{\LaTeXuppercase{\boldmath #1}}}
+
+%%% ====================================================================
+%%% [16-Oct-2018]
+%%% Style change 2:
+%%%
+%%% Add a horizontal rule under running headers to distinguish them
+%%% from section headings that start a page.  We copy the code from
+%%% book.cls that is invoked by \pagestyle{headings}, then redefine
+%%% the even and odd headers to box them and underline that box.
+
+%% From book.cls:138:
+
+\if@twoside
+  \def\ps@headings{%
+      \let\@oddfoot\@empty\let\@evenfoot\@empty
+      \def\@evenhead{\thepage\hfil\slshape\leftmark}%
+      \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
+      %
+      % Utah changes:
+      \def \@evenhead {\underline{\hbox to \textwidth{\thepage \hfil \slshape \leftmark   {}}}}%
+      \def \@oddhead  {\underline{\hbox to \textwidth{{\slshape \rightmark}\hfil \thepage {}}}}%
+      %
+      \let\@mkboth\markboth
+    \def\chaptermark##1{%
+      \markboth {\MakeUppercase{%
+        \ifnum \c@secnumdepth >\m@ne
+          \if@mainmatter
+            \@chapapp\ \thechapter. \ %
+          \fi
+        \fi
+        ##1}}{}}%
+    \def\sectionmark##1{%
+      \markright {\MakeUppercase{%
+        \ifnum \c@secnumdepth >\z@
+          \thesection. \ %
+        \fi
+        ##1}}}}
+\else
+  \def\ps@headings{%
+    \let\@oddfoot\@empty
+    \def\@oddhead{{\slshape\rightmark}\hfil\thepage}%
+    %
+    % Utah changes:
+    \def \@oddhead  {\underline{\hbox to \textwidth{{\slshape \rightmark}\hfil \thepage {}}}}%
+    %
+    \let\@mkboth\markboth
+    \def\chaptermark##1{%
+      \markright {\MakeUppercase{%
+        \ifnum \c@secnumdepth >\m@ne
+          \if@mainmatter
+            \@chapapp\ \thechapter. \ %
+          \fi
+        \fi
+        ##1}}}}
+\fi
+
+%%% ====================================================================
+%%% [16-Oct-2018]
+%%% Style change 3:
+%%% Scaled headings, with the smaller size the default for the UofUtah
+%%% Mathematics Department
+
+\RequirePackage {uuthesis-scaled-headings}
+\uusmallerheadings
+% \uusmallestheadings
+% \uunormalheadings
+% \uulargerheadings
+% \uulargestheadings

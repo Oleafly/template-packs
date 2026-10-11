@@ -1,0 +1,220 @@
+\documentclass[a4paper,12pt,oneside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{ {fig/} }
+\usepackage{times}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{tocloft}
+\usepackage{tabu}
+\usepackage{fancyhdr}
+\geometry{a4paper, tmargin=1in, rmargin=1in, bmargin=1in, lmargin=1.5in}
+
+
+%-----------------------------------------
+% Editables of the document
+%-----------------------------------------
+\newcommand{\thesistitle}{A LaTeX Template for Reports at University of Michigan} % Title of the Thesis, change here
+\newcommand{\thesisauthora}{Jin Li} % Person 1
+%\newcommand{\thesisauthorb}{Person 2 (Roll No. 2)} % Person 2
+%\newcommand{\thesisauthorc}{Person 3 (Roll No. 3)} % Person 3
+% If the number of people is different, change accordingly in titlepage and bonafide certificate
+\newcommand{\thesisdept}{Department Name} % Department
+\newcommand{\thesisguide}{PROJECT GUIDE} % Project Guide
+\newcommand{\depthod}{DEPARTMENT HOD} % Department Head
+% Also, change the graduation year in titlepage and bonafide certificate
+%-----------------------------------------
+
+% References are to be added in reference.bib and cited in any part of the document. Read any examples online on how to add references. You can also use Google Scholar to get the reference formatted for BibTex.
+
+
+% For Figures and Subfigures
+\usepackage{graphicx, caption, subcaption}
+
+% Package for block commenting
+\usepackage{comment}
+
+\usepackage{physics}
+
+% Package to keep images in place
+\usepackage{float}
+
+% Package for Appendices
+\usepackage{titletoc}
+\usepackage{appendix}
+
+% Chapter and Appendix in TOC prefixed
+\makeatletter
+\titlecontents{chapter}%
+ [0pt]% 
+ {\bfseries}%
+ {\MakeUppercase \@chapapp\ \thecontentslabel\quad}% 
+ {}% 
+ {\normalfont\cftdotfill{\cftdotsep}\contentspage}% 
+ [\addvspace{0pt}]% 
+
+\g@addto@macro\appendices{%
+  \addtocontents{toc}{\protect\renewcommand{\protect\@chapapp}{\appendixname}}%
+}
+\makeatother
+
+
+% Package for codes
+\usepackage{listings}
+\lstset{
+    breaklines = true,
+    captionpos = b,
+    numberstyle = \scriptsize,
+    numbers=left,                    
+    numbersep=10pt
+}
+
+
+% Package for enumerate
+\usepackage{enumitem}
+
+% Block Diagram Packages and Functions
+\usepackage{tikz}
+\usetikzlibrary{arrows, decorations.markings}
+\usetikzlibrary{arrows,positioning,shapes.geometric}
+\tikzstyle{vecArrow} = [thick, decoration={markings,mark=at position
+   1 with {\arrow[semithick]{open triangle 60}}},
+   double distance=1.4pt, shorten >= 5.5pt,
+   preaction = {decorate},
+   postaction = {draw,line width=1.4pt, white,shorten >= 4.5pt}]
+\tikzstyle{innerWhite} = [semithick, white,line width=1.4pt, shorten >= 4.5pt]
+\tikzstyle{block} = [draw, fill=blue!20, rectangle, 
+    minimum height=3em, minimum width=6em]
+
+% Chapter Title Customization
+\usepackage{titlesec}
+%\titleformat{\chapter}[display]% OLD
+%    {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}% OLD
+% \titlespacing*{\chapter}{0pt}{50pt}{40pt}% OLD
+
+\titleformat{\chapter}[display]
+{\Large\bfseries\centering}{\MakeUppercase\chaptertitlename\ \thechapter}{5pt}{\Large}
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+% Section Customization
+\titleformat{\section}{\large \bfseries}{\thesection}{1em}{}
+
+% Sub-Section Customization
+\titleformat{\subsection}{\fontsize{13pt}{13pt} \bfseries}{\thesubsection}{1em}{}
+
+
+% Align the titles of auxiliary content to center
+\renewcommand*\contentsname{\Large \centerline{TABLE OF CONTENTS}}
+\renewcommand*\listfigurename{\Large \centerline{LIST OF FIGURES}}
+\renewcommand*\listtablename{\Large \centerline{LIST OF TABLES}}
+
+
+% References Addition
+\usepackage[backend=bibtex,
+style=numeric,
+bibencoding=ascii,
+maxbibnames=99,
+sorting=none
+%style=alphabetic
+%style=reading
+]{biblatex}
+\addbibresource{reference.bib}
+
+% Page Style
+\pagestyle{fancy}
+\cfoot{\thepage}
+\rhead{}
+\lhead{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Line Spacing
+\usepackage{setspace}
+
+% Indent First Paragraph
+\usepackage{indentfirst}
+
+% To make uppercase words
+\usepackage{textcase}
+
+
+\usepackage[bookmarks, colorlinks=false, pdfborder={0 0 0}, pdftitle={\thesistitle}, pdfkeywords={}]{hyperref}
+
+\usepackage{siunitx}
+
+\usepackage{booktabs}
+
+\newcommand{\ud}{\mathrm{d}}
+
+\begin{document}
+
+% To expand the word spacing
+\spaceskip=1.5\fontdimen2\font plus 1.5\fontdimen3\font
+minus 1.5\fontdimen4\font
+
+
+\frontmatter
+\pagenumbering{gobble}
+\input{titlepage}
+%\input{dedicate.tex}
+%\input{bonafide}
+
+
+\clearpage
+\pagenumbering{roman}
+\fontsize{12pt}{12pt}\selectfont
+\onehalfspacing
+\addtocontents{toc}{\textbf{Title}\hfill\textbf{Page No.}\par}
+\input{abstract}
+%\input{acknowledgements.tex}
+
+% Table of Contents Page
+\clearpage
+\phantomsection
+\doublespacing
+\addcontentsline{toc}{chapter}{TABLE OF CONTENTS}
+\tableofcontents
+
+% List of Tables Page
+%\clearpage
+%\phantomsection
+%\doublespacing
+%\addcontentsline{toc}{chapter}{LIST OF TABLES}
+%\listoftables
+%
+%% List of Figures Page
+%\clearpage
+%\phantomsection
+%\doublespacing
+%\addcontentsline{toc}{chapter}{LIST OF FIGURES}
+%\listoffigures
+
+% Main Content
+\mainmatter
+\doublespacing
+\input{Chapter1.tex}
+\input{Chapter2.tex}
+\input{summary.tex}
+
+
+% Appendix and Code Attachments
+%\fontsize{10pt}{10pt}\selectfont
+%
+%\begin{appendices}
+%\input{code_attachments.tex}
+%\end{appendices}
+%
+\fontsize{12pt}{12pt}\selectfont
+
+\singlespace
+% Change Bibliography to References
+\renewcommand\bibname{REFERENCES}
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{REFERENCES}
+\printbibliography
+
+
+\end{document}

@@ -1,0 +1,83 @@
+\chapter{Package File: sha3\_pkg.svh}
+
+\begin{verbatim}
+package sha3_pkg;
+
+// Include Package Items and Macros
+import uvm_pkg::*;
+`include "uvm_macros.svh"
+
+// Define Sequencer, Include Sequence Items   
+`include "sequence_item.svh"
+typedef uvm_sequencer#(sequence_item) sequencer;
+
+// Sequences
+`include "sequences/base_sequence.svh"
+`include "sequences/reset_seq.svh"
+`include "sequences/msg_seq.svh"
+`include "sequences/empty_msg_seq.svh"
+`include "sequences/long_msg_seq.svh"
+`include "sequences/tr1_seq.svh"
+`include "sequences/tr2_seq.svh"
+`include "sequences/tr3_seq.svh"
+`include "sequences/tr4_seq.svh"
+
+// UVM Components
+`include "sha3_driver.svh"
+`include "sha3_monitor.svh"
+`include "sha3_agent_config.svh"
+`include "sha3_agent.svh"
+`include "sha3_scoreboard.svh"
+`include "sha3_env.svh"
+
+// Base Test and Extended Tests 
+`include "test/sha3_base_test.svh"
+`include "test/tr1_test.svh"
+`include "test/tr2_test.svh"
+`include "test/tr3_test.svh"
+`include "test/tr4_test.svh"
+
+endpackage: sha3_pkg
+
+\end{verbatim}
+
+\newpage
+\section{File System Hierarchy}
+% To print plaintext
+\begin{verbatim}
+sha3_uvm
+|__ main
+|    |__ high_throughput_core
+|    |__ low_throughput_core
+|    |__ testbench
+|          |__ sequences
+|          |      |__ msg_seq.svh
+|          |      |__ reset_seq.svh
+|          |      |__ rndmsg_seq.svh
+|          |      |__ empty_seq.svh
+|          |      |__ tr1_seq.svh
+|          |      |__ tr2_seq.svh
+|          |      |__ tr3_seq.svh
+|          |      |__ tr4_seq.svh
+|          |__ test
+|          |      |__ sha3_base_test.svh
+|          |      |__ tr1_test.svh
+|          |      |__ tr2_test.svh
+|          |      |__ tr3_test.svh
+|          |      |__ tr4_test.svh
+|          |__ sequence_item.svh
+|          |__ sha3_agent.svh
+|          |__ sha3_driver.svh
+|          |__ sha3_env.svh
+|          |__ sha3_monitor.svh
+|          |__ sha3_scoreboard.svh
+|__ dut_htc.f
+|__ dut_ltc.f
+|__ interface_htc.sv
+|__ interface_ltc.sv
+|__ run.do
+|__ sha3_pkg.svh
+|__ tb.f
+|__ top.sv
+|__testcases.xlsx
+\end{verbatim}

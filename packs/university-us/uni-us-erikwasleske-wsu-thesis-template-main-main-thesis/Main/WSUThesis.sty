@@ -1,0 +1,299 @@
+%****************************************************************************
+%** `WSUThesis.sty'
+%**
+%** This file is used as a package with the ``WSUThesis.cls''
+%** LaTeX2e Washington State University graduate thesis class file.
+%**
+%**  The .sty file has been edited by
+%**    Sean Mossman c/o Washingto State Graduate and Professional Student Association
+%**  and originally authored by 
+%**    Parisa Rashidi <parisa.rashidi@email.wsu.edu> 2010.
+%**  The .cls file and parts of the .sty file is based on the .cls file provided by:
+%**  Tolga Acar <acar@ece.orst.edu> Oregon State University 1997.
+%**
+%** This file is distributed in the hope that it will be useful,
+%** but without ANY WARRANTY; without even the implied warranty of
+%** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+%**
+%** COPYRIGHT NOTICE
+%** You can distribute this file as you please, keeping this copyright
+%** notice and line lines above it.
+%****************************************************************************
+
+
+\ProvidesPackage{WSUThesis}
+
+% -------------- Information Macros ---------------------------------------------
+
+% define spacing macros
+\providecommand{\singlespace}{\renewcommand{\baselinestretch}{1.0} \small\normalsize}
+\providecommand{\singlespaceNormal}{\renewcommand{\baselinestretch}{1.0} \normalsize}
+\providecommand{\doublespace}{\renewcommand{\baselinestretch}{2.0} \small\normalsize}
+\providecommand{\quadspace}{\renewcommand{\baselinestretch}{4.0} \small\normalsize}
+
+\let\@afterindentfalse\@afterindenttrue
+\@afterindentfalse
+
+% Initialize to empty
+\newif\if@addCopyright \@addCopyrightfalse
+\newif\if@mytitle      \@mytitlefalse
+\newif\if@mytitle      \@mytitlefalse
+\newif\if@mycommitteed \@mycommitteedfalse
+\newif\if@mycommitteee \@mycommitteeefalse
+
+\let\myname\empty
+\let\mymonth\empty
+\let\myyear\empty
+\let\mycommitteea\empty
+\let\mycommitteeb\empty
+\let\mycommitteec\empty
+\let\mycommitteed\empty
+\let\mycommitteee\empty
+\let\mytitle\empty
+\let\mydept\empty
+\let\myschool\empty
+\let\mydegree\empty
+\let\mythesis\empty
+\let\addCopyright\empty
+
+% define commands for setting values
+\newcommand{\setmyname}[1]{\def\myname{#1}}
+\newcommand{\setmymonth}[1]{\def\mymonth{#1}}
+\newcommand{\setmyyear}[1]{\def\myyear{#1}}
+\newcommand{\setmyadvisor}[1]{\def\myadvisor{#1}}
+\newcommand{\setmycommitteea}[1]{\def\mycommitteea{#1}}
+\newcommand{\setmycommitteeb}[1]{\def\mycommitteeb{#1}}
+\newcommand{\setmycommitteec}[1]{\def\mycommitteec{#1}}
+\newcommand{\setmycommitteed}[1]{\def\mycommitteed{#1}\@mycommitteedtrue}
+\newcommand{\setmycommitteee}[1]{\def\mycommitteee{#1}\@mycommitteeetrue}
+\newcommand{\setmytitle}[1]{\def\mytitle{#1}\@mytitletrue}
+\newcommand{\setmydept}[1]{\def\mydept{#1}}
+\newcommand{\setmyschool}[1]{\def\myschool{#1}}
+\newcommand{\setmydegree}[1]{\def\mydegree{#1}}
+\newcommand{\setmythesis}[1]{\def\mythesis{#1}}
+\newcommand{\setCopyright}{\@addCopyrighttrue}
+
+% define commands for parts/chapters/etc
+\newcommand\chaptername{CHAPTER}
+\newcommand\contentsname{TABLE OF CONTENTS}
+\newcommand\contentscont{TABLE OF CONTENTS (Continued)}
+\newcommand\listfigurename{LIST OF FIGURES}
+\newcommand\listfigurecont{LIST OF FIGURES (Continued)}
+\newcommand\listtablename{LIST OF TABLES}
+\newcommand\listtablecont{LIST OF TABLES (Continued)}
+\newcommand\refname{\large{Bibliography}}
+\newcommand\indexname{INDEX}
+\newcommand\figurename{Figure}
+\newcommand\tablename{Table}
+\newcommand\appendixname{APPENDIX}
+\newcommand\appendicesname{APPENDICES}
+
+\global\def\mydate{\mymonth\space\myyear}
+
+
+%********************* Page Setup ********************************************
+
+\newcommand{\setUpThesisPages}{
+ % Page setup: In most cases you won't need to change this.
+\setpapersize{USletter}
+\setmarginsrb{1.25in}{1.25in}{1.25in}{1.25in}  % left, top, right, bottom
+             {0ex}{5ex}{0in}{0.15in} % headht, headsp, footht, footsp
+\setlength\ULdepth{0.9ex}
+}
+
+%********************* Page Style Setup ********************************************
+
+\newcommand{\setUpThesisStyle}{
+ \clearpage
+ \setcounter{page}{1}
+ \pagestyle{plain}
+ \pagenumbering{arabic}
+ \pagestyle{myheadings}
+}
+
+%********************* Tables Setup ********************************************
+%TOC, LOF, LOT
+    \newcommand{\setUpTables}{
+    \let\WriteBookmarks\relax
+    \pdfbookmark[0]{TABLE OF CONTENTS}{theTOC}
+    \tableofcontents \clearpage
+    \listoftables \clearpage
+    \listoffigures \clearpage
+    \addtocontents{lot}{\hspace{-1em}Table \hfill Page}
+    \addtocontents{lof}{\hspace{-1em}Figure\hfill Page}
+}
+
+%********************* Title Page ********************************************
+\newcommand{\DisplayTitlePage}{
+  \thispagestyle{empty}
+  \doublespace
+  \begin{center}
+
+    % display title
+    \MakeUppercase{\mytitle}
+
+    % display candidate's name
+    \vfill
+
+    By \\
+    \doublespace
+    \MakeUppercase{\myname}\\
+    \vfill
+
+    % display degree
+    \singlespace
+    A \MakeLowercase{\mythesis} submitted in partial fulfillment of \\
+    the requirements for the degree of \\
+    \doublespace
+    \MakeUppercase{\mydegree}
+
+    % display school and department
+    \quadspace
+    \MakeUppercase{\myschool} \\
+    \singlespaceNormal
+    \mydept
+
+    % display defense date
+    \doublespace
+    \MakeUppercase{\mydate}
+
+    %copyright page
+    \if@addCopyright
+     \copyright \space Copyright by \MakeUppercase{\myname}, \myyear \\
+     \singlespace
+     All Rights Reserved
+    \fi
+
+   \end{center}
+
+     %start a new page
+    \newpage
+}
+
+%********************* Signature Page ********************************************
+\newcommand{\DisplaySignaturePage}{
+
+    % The numbering style is roman for the first few pages
+    \pagestyle{myheadings}
+    \doublespace
+    \pagenumbering{roman}
+    \setcounter{page}{2}
+    \vspace*{\fill}
+
+    % Text
+    \begin{flushleft}To the Faculty of \myschool:\\ \end{flushleft}
+    \begin{flushleft}
+        \hspace{1cm} The members of the Committee appointed to examine the \MakeLowercase{\mythesis} of \MakeUppercase{\myname} find it satisfactory and recommend that it be accepted.
+    \end{flushleft}
+
+    % Name of committee members and their signatures. Can be more than 3, 4, or 5 members.
+    \vspace{2.0 \baselineskip}
+    \hfill
+    \begin{minipage}{3in}
+        \begin{center}
+	       \singlespace
+           \hrulefill \\
+	       \mycommitteea, Ph.D., Chair \\
+	       \vspace{2.0 \baselineskip}
+	       \hrulefill \\
+	       \mycommitteeb, Ph.D. \\
+	       \vspace{2.0 \baselineskip}
+	       \hrulefill \\
+	       \mycommitteec, Ph.D. \\
+           \if@mycommitteed
+               \vspace{2.0 \baselineskip}
+    	       \hrulefill \\
+    	       \mycommitteed, Ph.D. \\
+           \fi
+           \if@mycommitteee
+               \vspace{2.0 \baselineskip}
+    	       \hrulefill \\
+    	       \mycommitteee, Ph.D. \\
+           \fi
+       \end{center}
+    \end{minipage}
+
+    %start a new page
+    \vfill
+    \newpage
+}
+
+%********************* Copyright Page ********************************************
+
+% Copyright page
+\newcommand{\DisplayCopyright}{
+  \if@addCopyright
+   \thispagestyle{empty}
+   \vspace*\fill
+   \begin{center}
+     \copyright \space Copyright by \MakeUppercase{\myname}, \myyear\\
+     \singlespace
+     All Rights Reserved
+   \end{center}
+   \clearpage
+  \fi
+}
+
+%********************* Dedication Page ********************************************
+
+\newenvironment{dedication}
+{
+  \parindent 0pt\vspace*{\stretch{1}}
+   \begin{center}\textbf{Dedication} \\
+  }
+{
+\end{center}\vspace*{\stretch{3}}
+\setcounter {chapter} {0} }
+
+%********************* Acknowledgment Page ********************************************
+
+\newenvironment{acknowledgments}{
+   \def\toclevel@section{0}
+   \phantomsection
+   \addcontentsline{toc}{chapter}{ACKNOWLEDGMENTS}
+   \def\toclevel@section{1}
+   \vspace*{2.0 \baselineskip}
+   \begin{center}\textbf{ACKNOWLEDGMENTS}\end{center}
+}{\newpage}
+
+%********************* Conclusions & Future Work **************************************
+
+\newenvironment{conclusions}{
+   \def\toclevel@section{0}
+   \phantomsection
+   \addcontentsline{toc}{chapter}{SUMMARY AND CONCLUSIONS}
+   \def\toclevel@section{1}
+    \newpage
+    \begin{center}\large\bfseries{SUMMARY AND CONCLUSIONS}\end{center}
+    %\par
+    \vspace{2ex}{\hrule height 2pt}\vspace{7ex}
+    \vspace{4.5ex}
+   %\resetbaselineskip\normalfont\normalsize
+   \normalfont\normalsize
+}{\newpage}
+
+%********************* Abstract Page ********************************************
+
+\newenvironment{abstract}{
+   \def\toclevel@section{0}
+   \cleardoublepage
+   \phantomsection
+   \addcontentsline{toc}{chapter}{ABSTRACT}
+   \def\toclevel@section{1}
+   \vspace*{2.0 \baselineskip}
+   \begin{center}
+      \MakeUppercase{\mytitle} \\
+      Abstract \\
+      \doublespace
+      by \myname, Ph.D.\\
+      \singlespace
+      \myschool \\
+      \mydate \\
+      \quadspace
+      Chair: \mycommitteea
+   \end{center}
+   \doublespace
+}
+{\newpage}
+
+%*********************************************************************************

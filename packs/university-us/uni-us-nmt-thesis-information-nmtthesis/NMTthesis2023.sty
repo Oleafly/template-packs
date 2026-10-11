@@ -1,0 +1,962 @@
+% NMTthesis2019.sty: LaTeX style file for New Mexico Tech theses.
+%   THE FOLLOWING DOCUMENTATION IS NOW OUTDATED, but left for historical purposes.
+%   For external documentation, see:
+%     http://www.nmt.edu/~shipman/soft/latex2014/
+%   For internal documentation, see:
+%     http://www.nmt.edu/~shipman/soft/latexims2014/
+%   This package is based on the original developed by John Shipman for NMT. (nmtthesis2014):2`
+%     2018/04/24 v11.0 Updated by L.M. Liebrock
+%     2019/09/22 v12.0 Updated by A.I. El-Osery
+%     2023/12/16 v12.0 Updated by A.I. El-Osery
+%
+\ProvidesPackage{NMTthesis2020}[2019/09/22 v12.0 (A.I. El-Osery)]
+\typeout{NMT thesis format, 2019/09/22 v12.0}
+%================================================================
+% Packages used
+%-----------------------------------------1----------------------
+\RequirePackage{mathpazo}
+\RequirePackage{ifthen}
+\usepackage{titletoc}
+\usepackage{graphicx}
+\usepackage{datetime}
+\providecommand\phantomsection{}
+\usepackage[hypertexnames=false]{hyperref}  % create live links in TOC
+%================================================================
+% Package customizations:
+%----------------------------------------------------------------
+\addtocontents{toc}{~\hfill\textbf{Page}\par}
+\addtocontents{lot}{\textbf{Table}~\hfill\textbf{Page}\par}
+\addtocontents{lof}{\textbf{Figure}~\hfill\textbf{Page}\par}
+%================================================================
+% Options to this package:
+%   [pic]   Request double-spacing.
+%----------------------------------------------------------------
+\newboolean{double@option}%
+\setboolean{double@option}{false}%
+\DeclareOption{double}%
+{% [double] option asserted
+  \setboolean{double@option}{true}%
+}% [double] option asserted
+\DeclareOption{single}%
+{% [single] option asserted
+  \setboolean{double@option}{false}%
+}% [single] option asserted
+\ExecuteOptions{single}%
+\ProcessOptions
+%================================================================
+% Page geometry
+%----------------------------------------------------------------
+\setlength{\paperwidth}{8.4in}
+\setlength{\textwidth}{5.9in}
+\setlength{\hoffset}{0.05in}
+\setlength{\oddsidemargin}{0.5in}
+\setlength{\evensidemargin}{0in}
+\setlength{\paperheight}{10.9in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\footskip}{24pt}
+\setlength{\textheight}{622pt}
+\setlength{\voffset}{0.05in}
+\setlength{\topskip}{24pt}
+%
+% The 'inbody' switch is set true during the first \chapter.
+%
+\newboolean{inbody}
+\setboolean{inbody}{false}
+\setlength{\parindent}{2pc}
+\setlength{\parskip}{5pt plus1.5pt minus0.5pt}
+
+%
+% - - -   \ a u t h o r
+%
+\renewcommand{\author}[1]%
+{% #1 is the author's name in mixed case.
+  \newcommand{\author@}{#1}%
+}% End \author
+%
+% - - -   \ c o m p l e t i o n d a t e
+%
+
+\providecommand{\thesiscompletiondate}[1]%
+{% #1 is date of the thesis completion, not conferral.
+  \newcommand{\thesiscompletiondate@}{#1}%
+}% End \thesiscompletiondate
+%
+%% - - -   \ a c a d e m i c a d i v i s o r
+%
+\providecommand{\academicadvisor@}{}
+\newcommand{\academicadvisor}[1]
+{
+  \renewcommand{\academicadvisor@}{#1}
+}% End \ academicadvisor
+%
+%% - - -   \ r e s e a r c h a d v i s o r
+%
+\providecommand{\researchadvisor@}{}
+\providecommand{\second@researchadvisor}{}
+
+\newcommand{\researchadvisor}[1]
+{
+  \renewcommand{\researchadvisor@}{#1}
+}% End \researchadvisor
+%
+% - - -   \ c o r e s e a r c h a d v i s o r
+%
+\newcommand{\coresearchadvisors}[2]
+{
+  \renewcommand{\researchadvisor@}{#1}
+  \renewcommand{\second@researchadvisor}{#2}
+}
+%
+% - - -   \ c o m m i t t e e m e m b e r s
+%
+\providecommand{\committeememberone@}{}
+\newcommand{\committeememberone}[1]
+{
+  \renewcommand{\committeememberone@}{#1}
+}% End \cmema
+%
+\providecommand{\committeemembertwo@}{}
+\newcommand{\committeemembertwo}[1]%
+{%
+  \renewcommand{\committeemembertwo@}{#1}%
+}% End \committeemembertwo
+%
+\providecommand{\committeememberthree@}{}
+\newcommand{\committeememberthree}[1]%
+{%
+  \renewcommand{\committeememberthree@}{#1}%
+}% End \committeememberthree
+%
+\providecommand{\committeememberfour@}{}
+\newcommand{\committeememberfour}[1]%
+{%
+  \renewcommand{\committeememberfour@}{#1}%
+}% End \ committeememberfour
+%
+\providecommand{\committeememberfive@}{}
+\newcommand{\committeememberfive}[1]%
+{%
+  \renewcommand{\committeememberfive@}{#1}%
+}% End \committeememberfive
+%
+\providecommand{\committeemembersix@}{}
+\newcommand{\committeemembersix}[1]%
+{%
+  \renewcommand{\committeemembersix@}{#1}%
+}% End \committeemembersix
+%
+% - - -   \ c o m m i t t e e s i z e
+%
+\newcommand{\committeesize}[1]%
+{%
+  \newcommand{\committee@size}{#1}%
+}%
+%
+% - - -   \ c o m m i t t e e m e m b e r t o p r i n t
+%
+\newcounter{committeemembertoprint}
+%{
+%  \renewcommand\thecommitteemembertoprint{C\arabic{committeemembertoprint}}
+%}
+\setcounter{committeemembertoprint}{1}
+%
+% - - -   \ d e g r e e
+%
+\newcommand{\degreeSought}[1]%
+{%
+  \newcommand{\degreeSought@}{#1}%
+}% End \degree
+%
+% - - -   \ g r a d u a t i o n d a t e
+%
+\providecommand{\graduation@date}{}%
+\newcommand{\graduationdate}[1]%
+{%
+  \renewcommand{\graduation@date}{#1}%
+}% End \graduationdate
+%
+% - - -   \ g r a d u a t i o n @ d a t e
+%
+\renewcommand{\graduation@date}%
+{%
+  \ifthenelse{\month < 6}{May}%
+  {%
+    \ifthenelse{\month < 9}{August}{December}%
+  }%
+  , \number\year
+}% End \graduation@date
+%
+% - - -   \ t h e s i s
+%
+\providecommand{\thesis@type}{}%
+\newcommand{\thesis}%
+{%
+  \renewcommand{\thesis@type}{thesis}%
+}% End \thesis
+%
+% - - -   \ m a s t e r s r e p o r t
+%
+\newcommand{\mastersreport}%
+{%
+  \renewcommand{\thesis@type}{report}
+}% End \mastersreport
+%
+% - - -   \ d i s s e r t a t i o n
+%
+\newcommand{\dissertation}%
+{%
+  \renewcommand{\thesis@type}{dissertation}
+}% End \dissertation
+\thesis
+%
+% - - -   \ t i t l e
+%
+\renewcommand{\title}[1]%
+{%
+  \newcommand{\title@}{\MakeUppercase{#1}}%
+}% End \title
+%
+% - - -   \ t y p i s t
+%
+\providecommand{\typist@}{}
+\newcommand{\typist}[1]%
+{%
+  \renewcommand{\typist}{#1}%
+}% End \typist
+\renewcommand{\typist@}{the author}%
+%
+% - - -   \ t i t l e p a g e
+%
+\renewcommand{\titlepage}%
+{%
+  \phantomsection
+  \pdfbookmark{TITLE PAGE}{titlepage}
+  %
+  % Set single or double-spacing generally
+  %
+  \ifthenelse{\boolean{double@option}}%
+  {% [double] option used
+    \double@spacing
+  }% [double] option used
+  {% [double] option not used
+    \single@spacing
+  }% [double] option not used
+  \pagenumbering{roman}
+  \thispagestyle{empty}
+  {% Localizing group
+    \centering
+    \vspace*{1in}
+    {% Localize title style
+      \single@spacing
+      \large\bfseries\title@\par
+    }%
+    \vspace{1pc}
+    by\\[1pc]
+    \author@
+    \vfill
+    Submitted in Partial Fulfillment\\
+    of the Requirements for the Degree of\\
+    \degreeSought@\par
+    \vspace{1pc}
+    \includegraphics[width = 60mm]{NMTLogo.jpg}
+    \vspace{1pc}
+    \\
+    New Mexico Institute of Mining and Technology\\
+    Socorro, New Mexico\\
+    \graduation@date\par
+  }% Localizing group
+  \pagebreak[4]
+  %\addtocounter{page}{1}
+}% End \titlepage
+%
+% - - -   \ m a k e t i t l e
+%
+\renewcommand{\maketitle}{\titlepage}%
+%
+%
+% - - -   { d e d i c a t i o n }
+%
+\newenvironment{dedication}%
+{% dedication prologue
+  \clearpage
+  \thispagestyle{empty}
+  \single@spacing
+  \vspace*{\fill}
+  \begin{center}
+}% dedication prologue
+{% dedication epilogue
+  \end{center}
+  \vspace{3pc}
+  \begin{flushright}
+    \author@\\
+    \slshape
+    New Mexico Institute of Mining and Technology\\
+    \graduation@date
+  \end{flushright}
+  \vfill
+  \pagebreak[4]
+}% dedication epilogue
+% - - -   \ e p i g r a p h
+%
+\providecommand{\epigraph}{}%
+\renewcommand{\epigraph}[2][]%
+{% Epigraph environment
+%    #1: Optional attribution
+%    #2: The quote
+  \clearpage
+  \thispagestyle{empty}
+  \vspace*{\fill}
+  \begin{center}
+    \parbox{4in}%
+    {% Start \parbox
+      \single@spacing
+      #2%
+    }% End \parbox
+  \end{center}
+  \ifthenelse{\equal{#1}{}}%
+  {}% No optional argument: do nothing
+  {% Optional argument is attribution, skip down and set flush right
+    \begin{flushright}
+      #1%
+    \end{flushright}
+  }%
+  \vfill
+  \pagebreak[4]
+}% End \epigraph
+%
+% - - -   \ f r o n t i s p i e c e
+%
+\providecommand{\frontispiece}{}%
+\renewcommand{\frontispiece}[2][]%
+{% frontispiece: graphic with optional title
+%    #1: optional title
+%    #2: graphic
+  \clearpage
+  \thispagestyle{empty}
+  \vspace*{\fill}
+  \begin{center}
+    #2%
+  \end{center}
+  \ifthenelse{\equal{#1}{}}%
+  {}% No title
+  {% Title
+    \begin{center}
+      #1%
+    \end{center}
+  }%
+  \vfill
+  \pagebreak[4]
+}% \frontispiece
+%
+% - - -   { a b s t r a c t }
+%
+\renewenvironment{abstract}%
+{% abstract prologue
+  \clearpage
+  \phantomsection
+  \pdfbookmark{ABSTRACT}{abstract}
+  \pagestyle{empty}
+  \make@majorhead{ABSTRACT}
+  \@afterheading
+}% abstract prologue
+{% abstract epilogue
+  \par\vfill
+   \pagebreak[4]   
+   %\setcounter{page}{2}
+}% abstract epilogue
+%
+% - - -   \ k e y w o r d s
+%
+\providecommand{\keywords}{}
+\renewcommand{\keywords}[1]%
+{% List of keywords and key phrases
+  \vspace{\baselineskip}
+  \noindent
+  \textbf{Keywords}: #1\par
+}%
+%
+% - - -   { a c k n o w l e d g m e n t s }
+%
+\newenvironment{acknowledgments}%
+{% ack prologue
+  \clearpage
+  %\setcounter{page}{2}
+  \pagestyle{plain}
+  \make@majorhead{ACKNOWLEDGMENTS}
+  \@afterheading
+}% ack prologue
+{% ack epilogue
+  \par
+  This \thesis@type\ was typeset with \LaTeX{}%
+  \protect\footnote%
+  {% Start footnote
+    The \LaTeX\ document preparation system was developed by Leslie
+    Lamport as a special version of Donald Knuth's \TeX\ program for
+    computer typesetting. \TeX\ is a trademark of the American
+    Mathematical Society. The \LaTeX\ macro package for the 
+    New Mexico Institute of Mining and Technology
+    \thesis@type\ format was written by John W.\ Shipman.%
+  }% End footnote
+ \ by \typist@.
+  \par
+}% ack epilogue
+%
+% - - -   \ t a b l e o f c o n t e n t s
+%
+\renewcommand{\tableofcontents}%
+{%
+  \clearpage
+  \phantomsection
+  \pdfbookmark{Contents}{toc}
+  \make@majorhead{CONTENTS}%
+  \@starttoc{toc}%
+}%
+%
+% - - -   \ l i s t o f t a b l e s
+%
+\renewcommand{\listoftables}%
+{%
+  \clearpage
+  \phantomsection
+  \pdfbookmark{Table of Tables}{tot}
+  \internal@chapter*{LIST OF TABLES}
+  \@starttoc{lot}
+
+}% End \listoftables
+%
+% - - -   \ l i s t o f f i g u r e s
+%
+\renewcommand{\listoffigures}%
+{%
+  \clearpage
+  \phantomsection
+  \pdfbookmark{Table of Figures}{tof}
+  \internal@chapter*{LIST OF FIGURES}
+  \let\oldnumberline\numberline%
+  \renewcommand{\numberline}{\figurename~\oldnumberline}
+  \@starttoc{lof}
+}% End \listoffigures
+
+%
+% - - -   \ l i s t o f a b b r s
+%
+\providecommand{\listofabbrs}{}%
+\renewcommand{\listofabbrs}%
+{% List of abbreviations (including acronyms)
+  \clearpage
+  \phantomsection
+  \pdfbookmark{List of Abbreviations}{chapter}
+  \internal@chapter*{LIST OF ABBREVIATIONS}
+  \input{abbrs}
+}% End \listofabbrs
+%
+% - - -   \ s i g n a t u r e p a g e
+%
+\newcounter{signature@count}%
+\providecommand{\signaturepage}{}%
+\renewcommand{\signaturepage}%
+{%
+  \clearpage
+  \thispagestyle{empty}  
+  %\addtocounter{page}{-1}
+  \addtocounter{page}{1}
+  \vspace*{1in}
+% put NMT LOGO HERE
+  \begin{sloppypar}
+     \noindent
+     This \thesis@type\ is accepted on behalf of the faculty
+     of the Institute by the following \mbox{committee}:
+  \newline
+  \end{sloppypar}    
+%
+  \setcounter{signature@count}{\committee@size}%
+  \ifthenelse{\equal{\second@researchadvisor}{}}% Is there a co-researchadvisor?
+  {% Single research advisor
+    % if research and academic same person
+    \ifthenelse{\equal{\researchadvisor@}{\academicadvisor@}} 
+    {
+      \addtocounter{signature@count}{-1}
+      {\centering \researchadvisor@ \par}
+      \vspace{-8pt}
+      \sign@here
+      \vspace{-32pt}
+      {\centering Academic and Research Advisor \par}
+      \vspace{\baselineskip}
+      \par
+    }
+    { % academic and research advisors are different
+      \addtocounter{signature@count}{-2}
+      {\centering \academicadvisor@ \par}
+      \vspace{-8pt}
+      \sign@here
+      \vspace{-32pt}
+      {\centering Academic Advisor \par}
+      \vspace{\baselineskip}
+      \par
+      {\centering \researchadvisor@ \par}
+      \vspace{-8pt}
+      \sign@here
+      \vspace{-32pt}
+      {\centering Research Advisor \par}
+      \vspace{\baselineskip}
+      \par
+    }
+  }% Single researchadvisor
+%
+  {% Co-researchadvisors
+    % test whether research and academic same person
+    \ifthenelse{\equal{\researchadvisor@}{\academicadvisor@}} 
+    { % academic advisor and research advisor are same person
+      \addtocounter{signature@count}{-2}
+      {\centering \academicadvisor@ \par}  % same as researchadvisor
+      \vspace{-8pt}
+      \sign@here
+      \vspace{-32pt}
+      {\centering Academic and Research Advisor \par}
+      \vspace{\baselineskip}
+      \par
+      {\centering \second@researchadvisor \par}
+      \vspace{-8pt}
+      \sign@here
+      \vspace{-32pt}
+      {\centering Research Advisor \par}
+      \vspace{\baselineskip}
+      \par
+    } % academic advisor and research advisor are same person
+    { % academic and research advisor are different, but may be co-researchadvisor
+      \ifthenelse{\equal{\second@researchadvisor}{\academicadvisor@}} 
+      { % academic and co-research advisors are different
+        \addtocounter{signature@count}{-2}
+        {\centering \academicadvisor@ \par} % same as second@researchadvisor
+        \vspace{-8pt}
+        \sign@here
+        \vspace{-32pt}
+        {\centering Academic and Research Advisor \par}
+        \vspace{\baselineskip}
+        \par
+        {\centering \researchadvisor@ \par}
+        \vspace{-8pt}
+        \sign@here
+        \vspace{-32pt}
+        {\centering Research Advisor \par}
+        \vspace{\baselineskip}
+        \par
+      } % academic and research advisor are different, but may be co-researchadvisor
+      { % academic advisor is not a research advisor
+      \addtocounter{signature@count}{-1}  % for academic advisor
+      {\centering \academicadvisor@ \par}
+      \vspace{-8pt}
+      \sign@here
+      \vspace{-32pt}
+      {\centering Academic Advisor \par}
+      \vspace{\baselineskip}
+      \par
+      \addtocounter{signature@count}{-1}  % for co-research advisors
+      \noindent
+      {\centering \researchadvisor@\ and \second@researchadvisor \par}
+      \vspace{-8pt}
+      \sign@here
+      \vspace{-32pt}
+      {\centering Research Advisors \par}
+      \vspace{\baselineskip}
+      \par
+      } % academic advisor is not a research advisor
+    } % academic and research advisor are different, but may be co-researchadvisor
+  }% Co-researchadvisors
+  \vspace{\baselineskip}
+  
+  \whiledo{\value{signature@count} > 0}%
+  {% Loop to produce unlabeled signature lines
+    \noindent
+    \ifnum\value{committeemembertoprint}=1
+        {\centering \committeememberone@ \par}
+    \fi
+    \ifnum\value{committeemembertoprint}=2
+        {\centering \committeemembertwo@ \par}
+    \fi
+    \ifnum\value{committeemembertoprint}=3
+        {\centering \committeememberthree@ \par}
+    \fi
+    \ifnum\value{committeemembertoprint}=4
+        {\centering \committeememberfour@ \par}
+    \fi
+    \ifnum\value{committeemembertoprint}=5
+        {\centering \committeememberfive@ \par}
+    \fi
+    \ifnum\value{committeemembertoprint}=6
+        {\centering \committeemembersix@ \par}
+    \fi
+    \vspace{-8pt}
+    \sign@here
+%    \vspace{\baselineskip}
+    \addtocounter{committeemembertoprint}{1}
+    \addtocounter{signature@count}{-1}
+  }% Loop to produce named signature lines
+
+%  \newline
+%  \newline
+  \vfill
+  \begin{sloppypar}
+    \noindent I release this document to the New Mexico Institute of Mining
+    and Technology.
+  \end{sloppypar}
+  \vspace{\baselineskip}
+  \noindent
+  \author@\hfill \thesiscompletiondate@
+  \newline
+  \sign@here
+%  \makebox[\textwidth][s]%
+%  {% Box for author and date
+%    \author@\hfill Date%
+%  }% Box for author and date
+}% End \signaturepage
+%
+% - - -   { p r e f a c e }
+%
+\newenvironment{preface}%
+{% preface prologue
+  \clearpage
+  \internal@chapter*{PREFACE}
+}% preface prologue
+{% preface epilogue
+  \par\vfill
+  \clearpage
+}% preface epilogue
+%
+% - - -   \ c h a p t e r
+%
+\renewcommand{\chapter}%
+{% Start a new chapter or appendix
+  \clearpage
+
+  \ifthenelse{\boolean{inbody}}%
+  {}%  Not the first \chapter
+  {% First \chapter
+    \pagenumbering{arabic}%
+    \setboolean{inbody}{true}%
+  }% First \chapter
+  \internal@chapter
+}% End \chapter
+%
+% - - -   \ s e c t i o n
+%
+\newlength{\pre@sectionskip}%
+\setlength{\pre@sectionskip}{2.5em plus1em minus0.5em}%
+\newlength{\post@sectionskip}%
+\setlength{\post@sectionskip}{1em plus0.3em minus0.1em}%
+\renewcommand{\section}%
+{%
+  \@startsection{section}{1}{\z@}%
+    {\pre@sectionskip}%
+    {\post@sectionskip}%
+    {\normalsize\bfseries}%
+}% End \section
+%
+% - - -   \ s u b s e c t i o n
+%
+\renewcommand{\subsection}%
+{%
+  \@startsection{subsection}{2}{\parindent}%
+    {\pre@sectionskip}%
+    {\post@sectionskip}%
+    {\normalsize\bfseries}%
+}% End \subsection
+%
+% - - -   \ s u b s u b s e c t i o n
+%
+\renewcommand{\subsubsection}%
+{%
+  \@startsection{subsubsection}{3}{\z@}%
+    {\pre@sectionskip}%
+    {-1em}%
+    {\normalsize\bfseries}%
+}% End \subsubsection
+%
+% - - -   \ a p p e n d i x
+%
+\renewcommand{\appendix}%
+{%
+  \par\clearpage
+  \setcounter{chapter}{0}%
+  \renewcommand{\chapter@orappendix}{APPENDIX}%
+  \renewcommand{\thechapter}{\Alph{chapter}}%
+}% 
+%
+% - - -   \ b i b @ t i t l e
+%
+\providecommand{\bib@title}{}%
+\renewcommand{\bib@title}{REFERENCES}%
+%
+% - - -   \ b i b @ s a m p l e
+%
+\providecommand{\bib@sample}{}%
+\renewcommand{\bib@sample}{}%
+%
+% - - -   \ b i b @ m a r g i n
+%
+\newlength{\bib@margin}%
+\setlength{\bib@margin}{2pc}%
+%
+% - - -   { R e f e r e n c e s }
+%
+\newenvironment{References}[1][]%
+{% References prologue
+%  Argument #1 is the sample citation number, e.g., [99], for
+%  numeric citations.  It is omitted for author-year citations.
+  \renewcommand{\bib@title}{REFERENCES}%
+  \renewcommand{\bib@sample}{#1}%
+}% References prologue
+{% References epilogue
+}% References epilogue
+%
+% - - -   { B i b l i o g r a p h y }
+%
+\newenvironment{Bibliography}[1][]%
+{% Bibliography prologue
+  \renewcommand{\bib@title}{BIBLIOGRAPHY}%
+  \renewcommand{\bib@sample}{#1}%
+  \cleardoublepage
+}% Bibliography prologue
+{% Bibliography epilogue
+  \cleardoublepage
+  \cleardoublepage
+}% Bibliography epilogue
+%
+% - - -   \ t h e b i b l i o g r a p h y
+%
+\renewenvironment{thebibliography}[1]%
+{% thebibliography prologue
+  \clearpage
+  \phantomsection
+  \pdfbookmark{REFERENCES}{bibliography}
+  \chapter*{\bib@title}
+  \begin{bib@list}
+}% thebibliography prologue
+{% thebibliography epilogue
+  \end{bib@list}
+}% thebibliography epilogue
+\providecommand{\copyrightpage}{}%
+\renewcommand{\copyrightpage}%
+{% Produce a copyright page.  No arguments.
+  \clearpage
+  \begin{center}
+    \centering
+    \single@spacing
+    \title@\par
+    \vspace{1pc}
+    by\\[1pc]
+    \author@
+  \end{center}
+  \vspace*{\fill}
+  \begin{quotation}
+    \single@spacing
+    Permission to make digital or hard copies of all or part of
+    this work for personal or classroom use is granted without fee
+    provided that copies are not made or distributed for profit
+    or commercial advantage and that copies bear this notice and
+    the full citation on the last page.  To copy otherwise, to
+    republish, to post on servers or to redistribute to lists,
+    requires prior specific permission and may require a fee.
+  \end{quotation}
+  \vfill
+  \begin{center}
+  \includegraphics[width = 60mm]{NMTLogo.jpg}
+  \end{center}
+}% \copyrightpage
+%
+% - - -   { c h a p a b s t r a c t }
+%
+\newenvironment{chapterabstract}%
+{% chapterabstract prologue
+  \clearpage
+  \section*{Abstract}
+  \single@spacing
+}% chapterabstract prologue
+{% chapterabstract epilogue
+  \double@spacing
+}% chapterabstract epilogue
+%
+% - - -   { c h a p t e r a c k }
+%
+\newenvironment{chapterack}%
+{% chapterack prologue
+  \par
+  \section*{Acknowledgments}
+}% chapterack prologue
+{% chapterack epilogue
+  \par
+}% chapterack epilogue
+%
+% - - -   \ c h a p t e r a p p e n d i c e s
+%
+\newenvironment{chapterappendices}%
+{% chapterappendices prologue
+  \par
+  \setcounter{section}{0}
+  \renewcommand{\thesection}%
+  {%
+    \thechapter.\Alph{section}%
+  }% End \thesection
+}% chapterappendices prologue
+{% chapterappendices epilogue
+  \setcounter{section}{0}
+  \renewcommand{\thesection}{\thechapter.\arabic{section}}%
+}% chapterappendices epilogue
+%
+% - - -   { c h a p t e r b i b l i o g r a p h y }
+%
+\newenvironment{chapterbibliography}[1][]%
+{% chapterbibliography prologue
+  \section*{References}
+  \renewcommand{\bib@sample}{#1}%
+  \begin{bib@list}
+}% chapterbibliography prologue
+{% chapterbibliography epilogue
+  \end{bib@list}
+}% chapterbibliography epilogue
+%
+% - - -   { b i b @ l i s t }
+%
+\newenvironment{bib@list}%
+{% bib@list prologue
+  \begin{list}{}%
+  {% Changes to list environment
+    \usecounter{enumiv}%
+    \ifthenelse{\equal{\bib@sample}{}}%
+    {% No sample: use author-year citations
+      \setlength{\itemindent}{-\bib@margin}%
+      \setlength{\labelwidth}{0pt}%
+      \setlength{\leftmargin}{\bib@margin}%
+    }% No sample
+    {% Sample: use numeric citations
+      \setlength{\itemindent}{0pt}%
+      \settowidth{\labelwidth}{[\bib@sample]}%
+      \setlength{\leftmargin}{\labelwidth}%
+      \addtolength{\leftmargin}{\labelsep}%
+    }% Sample
+  }% Changes to list environment
+  \sloppy
+  \frenchspacing
+  \single@spacing
+}% bib@list prologue
+{% bib@list epilogue
+  \end{list}
+  \double@spacing
+}% bib@list epilogue
+%
+% - - -   \ c h a p t e r @
+%
+\newcommand{\chapter@}[2][]%
+{% Generate a numbered chapter heading.
+%  #1 is the chapter title or short title if given.
+%  #2 is the chapter title.
+  \phantomsection
+  \ifthenelse{\c@secnumdepth >\m@ne}
+  {% Chapter is numbered
+    \refstepcounter{chapter}
+    \typeout{\chapter@orappendix\space\thechapter.}%
+    \addcontentsline{toc}{chapter}%
+    {\chapter@orappendix \space \protect\numberline{\thechapter.} \texorpdfstring{\MakeUppercase {#1}}{\thechapter}}%
+
+  }% Chapter is numbered
+  {% Chapter is unnumbered
+    \addcontentsline{toc}{chapter}{\texorpdfstring{\MakeUppercase {#1}}{}}
+  }% Chapter is unnumbered
+  \chaptermark{#1}
+  \addtocontents{lof}{\protect\addvspace{10pt}}
+  \addtocontents{lot}{\protect\addvspace{10pt}}
+  \make@chapterhead{#2}%
+  \@afterheading
+}% End \chapter@
+%
+% - - -   \ c h a p t e r @ o r a p p e n d i x
+%
+\newcommand{\chapter@orappendix}{CHAPTER}
+%
+% - - -   \ c h a p t e r @ s t a r
+%
+\newcommand{\chapter@star}[1]%
+{% Generate an unnumbered chapter heading.
+%  #1 is the chapter title.
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\texorpdfstring{\MakeUppercase {#1}}{}}%
+  \make@majorhead{\texorpdfstring{\MakeUppercase {#1}}{}}%
+  \@afterheading
+}% End \chapter@star
+%
+% - - -   \ d o u b l e @ s p a c i n g
+%
+\newcommand{\double@spacing}%
+{%
+  \setlength{\baselineskip}{2em plus0.1em minus0.1em}
+}% End \double@spacing
+%
+% - - -   \ i n t e r n a l @ c h a p t e r
+%
+\newcommand{\internal@chapter}%
+{% Start a new chapter
+  \par
+  \clearpage
+  \global\@topnum=\z@
+  \@afterindenttrue
+  \secdef\chapter@\chapter@star
+}% End \internal@chapter
+%
+% - - -   \ m a k e @ c h a p t e r h e a d
+%
+\newcommand{\make@chapterhead}[1]%
+{% Display a new chapter heading.
+%  #1 is the chapter title.
+  \ifthenelse{\c@secnumdepth >\m@ne}%
+   {% Chapters are numbered
+     \make@majorhead%
+     [\chapter@orappendix~\thechapter]%
+     {\texorpdfstring{\MakeUppercase {#1}}{}}%
+   }% Chapters are numbered
+   {% Chapters are not numbered
+     \make@majorhead{\texorpdfstring{\MakeUppercase {#1}}{}}%
+   }%
+}% End \make@chapterhead
+%
+% - - -   \ m a k e @ m a j o r h e a d
+%
+\newcommand{\make@majorhead}[2][]%
+{% Format a heading such as ABSTRACT or a chapter or appendix heading.
+  \vspace*{3pc}
+    {% Localize style changes
+    \setlength{\parindent}{0pt}
+    \centering
+    \large\bf
+    \ifthenelse{\equal{#1}{}}%
+     {}% No optional argument
+     {% Optional argument
+       #1\par
+       \vspace{\baselineskip}
+     }% Optional argument
+    \texorpdfstring{\MakeUppercase {#2}}{}\par
+    \nopagebreak[4]
+    \vspace{1.5\baselineskip}
+  }% Localize style changes
+}% End \make@majorhead
+%
+% - - -   \ s i g n @ h e r e
+%
+\newcommand{\sign@here}%
+{%
+  \noindent
+  \makebox[\textwidth][s]%
+  {% Start line box
+    \rule[-32pt]{0pt}{36pt}% Strut
+    \hrulefill
+  }% End line box
+  \par
+}% End \sign@here
+%
+% - - -   \ s i n g l e @ s p a c i n g
+%
+\newcommand{\single@spacing}%
+{%
+  \setlength{\baselineskip}{1em plus0.1em minus0.1em}
+}% End \single@spacing

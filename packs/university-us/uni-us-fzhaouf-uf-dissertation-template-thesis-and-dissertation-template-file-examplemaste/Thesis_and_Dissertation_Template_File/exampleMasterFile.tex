@@ -1,0 +1,98 @@
+\documentclass[editMode]{ufdissertation}\sloppy
+\usepackage[colorlinks=true]{hyperref}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                 User Package and Style File loading.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\usepackage{CustomMacros}%  This is a user macro/style file.
+
+\usepackage{tikz}%       tikz is used by almost everyone, but certainly by me for this.
+\usepackage{pgfplots}%   pgfplots is tikz but better.
+%\usepackage{amsrefs}%   amsrefs contains the .bibtex style content for mathematician papers.
+\usepackage{algpseudocode}
+
+\usepackage{scrextend}
+\deffootnote{1.5em}{0em}{\thefootnotemark\quad}
+\usepackage[all]{nowidow} %avoids single lines of text at the top or bottom of page.  If any of your packages cause this package not to work, you will have to manually remove any orphans/widows or add a line penalty
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                     User Configuration commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Uncomment the relevant line below if you have tables or figures.
+\haveTablestrue%        Uncomment this if you have tables in your thesis.
+\haveFigurestrue%       Uncomment this if you have figures in your thesis.
+\haveObjectstrue%       Uncomment this if you have Objects in your thesis. This is almost certainly not the case however.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Below are the commands to set the degree type, department, graduation time, and chair. 
+%       Most of these are self explanatory. 
+%       Note: The \chair command takes an optional argument for a cochair. 
+%           So if John was your chair and Jacob was a cochair, you would use \chair[Jacob]{John}.
+%           If John was your chair and you had no cochair, you can simply use \chair{John}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Dissertation and Thesis Example File}%  Put your title here.
+
+\degreeType{Doctor of Philosophy}%   Official name of your degree; eg "Doctor of Philosophy".
+\major{Mathematics}%                    Your official Department
+\author{Jason Nowell}%                  Your Name
+\thesisType{Dissertation}%              Dissertation (PhD) or Thesis (Masters)
+\degreeYear{2025}%                      Intended graduation year (not the year you submit the thesis)
+\degreeMonth{May}%                   Month of graduation should be May, August, or December.
+\chair[Jack Griffin]{Claude Rains}%                   Chair and Cochair (see comment block above).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% For each of the following, type in the name of the file that contains each section. 
+% They are assumed to be tex files, but if they aren't the command takes an optional argument for the extension.
+%So, you could load dedication.tex as your dedication file using \setDedicationFile{dedication}
+% You could load dedication.txt instead with \setDedicationFile[txt]{dedication}.
+
+% NOTE: For some compilers they may or may not add a .tex to the end of the file automatically.
+% If you get a "couldn't find dedication.tex.tex" type error, try the command with an empty optional argument,
+%e.g. \setDedicationFile[]{dedication}
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% These are REQUIRED sections; easiest to do via these commands.
+
+\setDedicationFile{dedicationFile}%                 Dedication Page
+\setAcknowledgementsFile{acknowledgementsFile}%     Acknowledgements Page
+\setAbstractFile{abstractFile}%                     Abstract Page (This should only include the abstract itself)
+\setReferenceFile{referenceFile}{agsm}%         References. First argument is your bibtex source file
+%                                                       the second argument is your bibtex style file.
+
+\setBiographicalFile{biographyFile}%                Biography file of the Author (you).
+
+%%% These are NOT required, so only use them if you actually need/have them.
+
+\setAbbreviationsFile{abbreviations}%           Abbreviations Page
+\setAppendixFile{appendix}%                     Appendix Content; hyperlinking might be weird.
+\multipleAppendixtrue%                          Uncomment this if you have more than one appendix, 
+%                                                   comment it if you have only one appendix.
+
+
+%%%%%%%                     End of File Assignment
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%% Here you just need to include/input your actual work. 
+%       The above files (dedication, acknowledgement, titlepage, etc etc) will all be added for you 
+%       using the files you assigned above. 
+%       If you want to input the above files manually you can comment out the \setFILE command above 
+%       and use \input or \include here. Generally you want to use \include to get your pagebreak.
+%       NOTE: If you input manually you will have to do some/all the formatting manually.
+
+\include{chapter1}% Modified from old template.
+\include{chapter2}% Modified from old template.
+\include{chapter3}% Modified from old template.
+
+\chapter{EXAMPLES OF EDITOR/Author TOOLS}% Notice that we can use chapter/section etc breaks in the master file if we want, and then use \input instead of \include to avoid unneccessary page breaks.
+\input{editorAndAuthorRemarks}%     Stuff about using editorRemark and authorRemark commands
+
+\include{chapter5}% Modified from old template.
+
+
+
+\end{document}
+

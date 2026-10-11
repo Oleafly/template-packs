@@ -1,0 +1,228 @@
+\documentclass[oneside, 12pt]{IIScthesisPSnPDF}
+% \pagestyle{bfheadings}
+%\usepackage{psfig}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{multicol}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{fancyhdr}
+\usepackage[numbers]{natbib}
+\usepackage{cleveref}
+\usepackage{wrapfig}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{enumerate}
+\usepackage{cancel}
+\usepackage{mathrsfs}
+% \usepackage{sfgame}
+\usepackage{color}
+\usepackage[compact]{titlesec}
+\usepackage{mdwlist}
+\usepackage{tikz}
+\usepackage{varwidth}
+\usepackage[vertfit]{breakurl}
+\usepackage{datetime}
+\usepackage{pdfpages}
+\usepackage{caption}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{subcaption}
+
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.8}
+
+
+
+
+% \usepackage{biblatex}
+\usetikzlibrary{shapes, arrows, trees}
+\input{preamble}
+
+% \newcommand{\nobibentry}[1]{{\let\nocite\ignore\bibentry{#1}}}
+\newdateformat{monthyeardate}{ \monthname[\THEMONTH], \THEYEAR}
+\newcommand{\sn}[1]{\noindent
+\textcolor{blue}{{\bf SN: }{``{\em #1}''}}}
+\newcommand{\blankpage}{
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
+}
+
+\newcommand{\blankpagewithnumber}{
+\newpage
+% \thispagestyle{empty}
+\mbox{}
+\newpage
+}
+
+\crefname{observation}{observation}{observations}
+\crefname{algorithm}{algorithm}{algorithms}
+\crefname{align}{equation}{equations}
+\crefname{eqnarray}{equation}{equations}
+
+% turn of those nasty overfull and underfull hboxes
+\hbadness=10000
+\hfuzz=50pt
+
+% Put all the style files you want in the directory StyleFiles and usepackage like this:
+% \usepackage{StyleFiles/watermark}
+
+% Comment out the next line to get single spacing
+\onehalfspacing
+
+\begin{document}
+	\title{Evaluation of synthetic Chest X-rays on pathology classification
+	models}
+
+	\submitdate{\monthyeardate\today} \mtech
+	%\phd
+	%\mtechresearch
+	\degree{Master of Technology (Research)} \dept{Computer Science and Automation}
+	\faculty{Faculty of Engineering}
+	\author{Rajiv Porana}
+
+	% Using the watermark package which is in StyleFiles/
+	% and to remove DRAFT COPY ONLY appearing on the top of all pages comment out below line
+	%\watermark{DRAFT COPY ONLY}
+
+	\maketitle
+
+	\begin{center}
+		\LARGE{\underline{\textbf{Declaration of Originality}}}
+	\end{center}
+	\noindent
+	I, \textbf{Rajiv Porana}, with SR No. \textbf{23-1-23243} hereby declare
+	that the material presented in the thesis titled
+
+	\begin{center}
+		\textbf{Evaluation of synthetic Chest X-rays on pathology classification
+		models}
+	\end{center}
+
+	\noindent
+	represents original work carried out by me in the \textbf{Department of
+	Computer Science and Automation} at \textbf{Indian Institute of Science}
+	during the years \textbf{2023-2025}.
+
+	\noindent
+	With my signature, I certify that:
+	\begin{itemize}
+		\item I have not manipulated any of the data or results.
+
+		\item I have not committed any plagiarism of intellectual property. I
+			have clearly indicated and referenced the contributions of others.
+
+		\item I have explicitly acknowledged all collaborative research and discussions.
+
+		\item I have understood that any false claim will result in severe disciplinary
+			action.
+
+		\item I have understood that the work may be screened for any form of academic
+			misconduct.
+	\end{itemize}
+
+	\vspace{20mm}
+
+	\noindent
+	{\footnotesize{Date: \hfill Student Signature}} \qquad
+
+	\vspace{20mm}
+
+	\noindent
+	In my capacity as supervisor of the above-mentioned work, I certify that the
+	above statements are true to the best of my knowledge, and I have carried out
+	due diligence to ensure the originality of the report.
+
+	\vspace{20mm}
+
+	\noindent
+	{\footnotesize{Advisor Name: Dr.Chiranjib Bhattacharyya \hfill Advisor Signature}}
+	\qquad
+
+	\blankpage
+
+	\vspace*{\fill}
+	\begin{center}
+		\large\bf \textcopyright \ Rajiv Porana\\
+		\large\bf \monthyeardate\today\\
+		\large\bf All rights reserved
+	\end{center}
+	\vspace*{\fill}
+	\thispagestyle{empty}
+
+	% \blankpage
+
+	% \vspace*{\fill}
+	% \begin{center}
+	% 	DEDICATED TO \\[2em]
+	% 	\Large\it The Student Community\\[2em]
+	% 	\Large\it who can use and reuse this template to glory
+	% \end{center}
+	% \vspace*{\fill}
+	% \thispagestyle{empty}
+
+	%\blankpage
+	%\includepdf[pages={1}]{declaration.pdf}
+
+	%\vspace*{\fill}
+	%\begin{tabular}{p{0.4\columnwidth}p{0.5\columnwidth}}
+	% {\em Signature of the Author}: & \dotfill \\
+	% & Your Name \\
+	% & Dept.\ of Computer Science and Automation \\
+	% & Indian Institute of Science, Bangalore \vspace{1in}\\
+	% {\em Signature of the Thesis Supervisor}: & \dotfill \\
+	% & Your Advisor's Name \\
+	% & Professor \\
+	% & Dept.\ of Computer Science and Automation \\
+	% & Indian Institute of Science, Bangalore
+	%\end{tabular}
+	%\vspace*{\fill}
+	%\thispagestyle{empty}
+
+	%\blankpage
+
+	%set the number of sectioning levels that get number and appear in the contents
+	\setcounter{secnumdepth}{3}
+	\setcounter{tocdepth}{3}
+
+	\frontmatter % book mode only
+	\pagenumbering{roman}
+
+	% \include{Dedication/dedication}
+	\prefacesection{Acknowledgements}
+	% \input{acknowledgments}
+
+	\prefacesection{Abstract}
+	\input{abstract}
+
+	\tableofcontents
+
+	\mainmatter % book mode only
+	\setcounter{page}{1}
+	\input{chap_introduction}
+	\input{chap_previous_works}
+	\input{chap_VAE}
+	\input{chapters/chap_baselines}
+	\input{chap_GANS}
+	\input{chap_diffusion}
+
+	\bibliographystyle{plainnat}
+	\bibliography{references}
+	
+	\appendix
+	\setcounter{chapter}{0}
+	\renewcommand{\chaptername}{Appendix}
+	\renewcommand{\thechapter}{\Alph{chapter}}
+	\renewcommand{\thesection}{\thechapter.\arabic{section}}
+	\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+	\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+	\input{disease_descriptions}
+	
+
+\end{document}

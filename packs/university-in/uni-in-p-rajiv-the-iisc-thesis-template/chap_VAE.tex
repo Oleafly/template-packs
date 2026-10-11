@@ -1,0 +1,42 @@
+\chapter{Variational Autoencoders}
+\label{chap:Variational Autoencoders}
+
+\input{theories/vae_theory.tex}
+
+\section{Experiments}
+\subsection{Latent space visualization of VAE trained on all pathologies}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./images/scatter_all_classes__pca50_umap2d.png}
+    \caption{Latent space visualization of VAE trained on all pathologies.}
+    \label{fig:latent_space_all}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./images/posneg_Cardiomegaly_pca50_umap2d.png}
+    \caption{Latent space visualization of possitive and negative samples of Cardiomegaly class.}
+    \label{fig:enter-label}
+\end{figure}
+% Unlike datasets such as MNIST where digit classes form well-separated manifolds, chest X-ray pathologies exhibit subtle intensity variations and overlapping anatomical structures, making it difficult for a standard VAE to produce clearly separated clusters in latent space.
+
+% This explains the absence of strong pathology-based clustering observed in Figure~\ref{fig:latent_space_all}.
+
+From visualization of VAE latents on all pathologies we can see that there is no clear clustering of 
+images based on pathologies, this is not true for other datasets like MNIST.  
+
+\subsection{Image Generation using VAEs}
+\input{images/vqvae_gen.tex}
+Figure 3.3 shows images generated using the trained VAE. We can clearly see that images reconstructed using VAE are blurry.  
+
+\subsection{Image Reconstruction using VAE's}
+\input{./images/vqvae_recon.tex}
+Figure 3.4 shows images resonstructed using VAE we can clearly show that here images are of far better quality as compared to generation. 
+
+\subsection{Validate with FID,LPIPS}
+FID of images reconstructed using VAE is 2.9 with just 5000 images, which implies extremely good reconstruction.
+LPIPS of images reconstructed using VAE is 0.019 which also implies good reconstruction.
+
+Where as for generation: 
+
+

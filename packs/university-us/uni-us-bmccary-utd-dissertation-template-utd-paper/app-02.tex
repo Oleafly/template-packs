@@ -1,0 +1,386 @@
+
+\utdchapter{Notation, Conventions, and Philosophy}
+    \label{app:notation}
+
+\section{Notation and Conventions}
+
+    In mathematical literature it is often preferable to have
+    an abstract representation (e.g., \emph{basis-free}) because such representations
+    are more general. Perhaps just as useful is that abstract representations
+    often lend themselves to a concise notation. 
+    In the words of \citep[p. 60]{Munkres:AoM}, ``The usefulness of well-chosen
+    notation can hardly be overemphasized.''
+    The main ideas presented in this report use mathematics as an \emph{applied}
+    science with special attention given to computation. In order
+    to translate abstract mathematical models into numerical
+    procedures one must carefully consider the many possible
+    concrete representations and trace the consequences of each
+    decision. Therefore, we add slightly to this quote:
+    The usefullness of a well-chosen and consistent notation
+    can hardly be overemphasized.
+
+    For example, let \(f:\mathbb{R}^d \to \mathbb{R}\). In the abstract
+    setting, one does not often speak of \(x \in \mathbb{R}^d\) as
+    being a \emph{row}-vector or a \emph{column}-vector. One
+    often desires to speak of the gradient of \(f\), denoted \(\nabla f\),
+    which is a function \(\nabla f:\mathbb{R}^d \to \mathbb{R}^d\).
+    As a matter of convenience, mathematicians often choose to arrange matters 
+    so that expressions such as
+    \begin{equation}
+        x + (\nabla f)(x)
+        \label{eqn:GD}
+    \end{equation}
+    make sense. The reasoning is because expressions of the form in \autoref{eqn:GD} 
+    are used in gradient descent. We adopt this choice, and as a practical
+    consequence this means that when we choose a basis for \(\mathbb{R}^d\)
+    we require that \(x \in \mathbb{R}^d\) and \((\nabla f)(x)\) are
+    both \emph{row}-vectors or both \emph{column}-vectors. However, we emphasize
+    that \(\nabla f\) is \emph{not} the derivative of \(f\). To be
+    precise, let us import the standard definition of derivative for
+    this type of function.
+    \begin{definition}[Differentiability]
+        \label{def:Deriv}
+        Let \(\Omega \subset \mathbb{R}^m\) and let \(f:\Omega \to \mathbb{R}^n\). Suppose
+        \(\Omega\) contains an open neighborhood of the point \(x \in \Omega\). Then
+        \(f\) is said to be \emph{differentiable} at \(x \in \Omega\) if there
+        exists a linear function \(T_x:\mathbb{R}^m \to \mathbb{R}^n\) such that
+        \[
+            \lim_{\|h\| \to 0} \frac{\|f(x + h) - f(x) - T_x(h)\|}{\|h\|} = 0.
+        \]
+    \end{definition}
+    It is a standard result that if \(T_x\) in definition \defref{def:Deriv} exists
+    then it is unique. In this case \(T_x\) referred to as \emph{the derivative of \(f\) at \(x\)}
+    and is denoted as \(\Dee_x f\). If \(f\) is such that \(\Dee_x f\) exists 
+    for all \(x \in \Omega\), we often speak of the function \(\Dee f:\Omega \to \mathbb{R}^n\)
+    and drop the \(x\) subscript.
+   
+    So let us consider the situation where \(f:\mathbb{R}^d \to \mathbb{R}\)
+    and \(\Dee_x f\) is defined for all \(x \in \Omega\). We now present the following
+    question: are \(\Dee f\) and \(\nabla f\) the same function on \(\Omega\)? 
+    In a certain sense they \emph{are} the same function. However, let us consider
+    what happens if we choose a basis. Let \(x \in \mathbb{R}^d\) be fixed and
+    represented as a \emph{column}-vector. This choice is so that \(T_x\) may be represented 
+    as a matrix which multiplies on the left
+    \[
+        T_x(h) = T_x h.
+    \]
+    For \(f:\mathbb{R}^d \to \mathbb{R}\) this means that \(\Dee_x f = T_x\) is
+    a \emph{row}-vector so that
+    \begin{equation}
+        \label{eqn:DerivTranspose}
+        (\nabla f)(x) = (\Dee_x f)^\Tee,
+    \end{equation}
+    that is, the gradient is the tranpose of the derivative. This fact may be of 
+    little import in an abstract setting. In this report, however, we are interested 
+    in the implementation of numerical procedures so that bases will be chosen and 
+    transpositions must be respected.
+
+    The matter is further complicated by the chain rule.
+    Let \(f:\mathbb{R}^d \to \mathbb{R}\) and \(g:\mathbb{R}^d \to \mathbb{R}^d\).
+    In this context, we can compose \(f\) and \(g\) and if \(g\)
+    is a \emph{diffeomporphism} on an open set \(\Omega \in \mathbb{R}^d\), then
+    \(g\) may be thought of as a change-of-coordinates for \(f\) on \(\Omega\).
+    Let composition of \(f\) with \(g\) be denoted \(f \circ g\). Then the derivative
+    of \(f \circ g\) at \(x \in \Omega\) according to the \Frechet rules is
+    \[
+        \Dee_x (f \circ g) = (\Dee_{g(x)} f) \circ (\Dee_x g).
+    \]
+    However, when a basis is chosen one likes to think of \(\Dee_x g\) as the
+    Jacobian matrix of \(g\) and one likes to think of \(\Dee_{g(x)} f\)
+    as \((\nabla f)(g(x))\). The reason is because one might like to
+    have a matrix-vector-product expression of the form
+    \[
+        (\Jay g) \cdot (\nabla f),
+    \]
+    where \(\Jay g\) is the ``Jacobian'' of \(g\) and \(\nabla f\) is
+    the column vector of partial derivatives of \(f\). In order
+    for this to be the case, it is necessary that \(\Jay g = (\Dee g)^\Tee\).
+    To further complicate matters, other authors form matrix-vector-product
+    expressions of the form
+    \[
+        (\Jay g)^\Tee \cdot (\nabla f)
+    \]
+    necessistating that \(\Jay g = \Dee g\). Therefore when reading
+    literature with derivatives of this type it is crucial to be
+    aware of what notations and conventions are being used.
+    In some works a basis is assumed, but not mentioned. 
+    In other works it assumed that \(x + y\) is defined
+    as long as \(x\) and \(y\) are vectors with the same
+    number of elements, but it does not matter if \(x\)
+    is a \emph{row}-vector and \(y\) is a \emph{column}-vector. In
+    still other works it is assumed that (in an abuse of notation)
+    \(\Dee = \nabla\) instead of \(\Dee = \nabla^\Tee\) or that \(\Dee = \Jay\)
+    instead of \(\Dee = \Jay^\Tee\). Worst of all is when
+    convention switches between sections.
+   
+    We have a view to avoid this situation. With this in mind, we take 
+    the following conventions in this report. 
+    Let us assume we will choose a basis for \(x \in \mathbb{R}^d\).
+    \begin{enumerate}
+        \item \(x \in \mathbb{R}^d\) is a \emph{column}-vector.
+        \item The composition of functions \(f\) and \(g\) is denoted \(f \circ g\). The
+                derivative of \(f \circ g\) evaluated at \(x\) is
+                \[
+                    \Dee_x(f \circ g) = (\Dee_{g(x)} f) \circ (\Dee_x g),
+                \]
+                and when a basis must be chosen this means
+                \[
+                    \Dee_x(f \circ g) = (\Dee_{g(x)} f)(\Dee_x g).
+                \]
+                where \(\Dee_{g(x)} f\) and \(\Dee_x g\) are matrices
+                corresponding to the linear function mentioned
+                in \defref{def:Deriv}.
+        \item In the special case when \(f:\mathbb{R}^d \to \mathbb{R}\),
+                we will enforce the requirement demonstrated in
+                \autoref{eqn:DerivTranspose}. That is,
+                \(\Dee f\) will be a \emph{row}-vector and \(\nabla f\)
+                is the transpose of \(\Dee f\). Written as a matrix,
+                \[
+                    \Dee f = 
+                        \left[ 
+                            \begin{array}{ccc}
+                                \frac{\partial f}{\partial x_1} & \dots & \frac{\partial f}{\partial x_d} 
+                            \end{array}
+                        \right] 
+                    \text{  where  }~ 
+                    x = 
+                        \left[
+                            \begin{array}{c}
+                                x_1 \\
+                                \vdots \\
+                                x_d
+                            \end{array}
+                        \right].
+                \]
+        \item In the case when \(g:\mathbb{R}^d \to \mathbb{R}^d\), we
+                will enforce the requirement that the Jacobian of \(g\)
+                is the transpose of the derivative of \(g\). That is,
+                \(\Jay g = (\Dee g)^\Tee\). Written as a matrix, the
+                derivative is
+                \[
+                    \Dee g = 
+                        \left[
+                            \begin{array}{ccc}
+                                \frac{\partial g_1}{\partial x_1} & \dots  & \frac{\partial g_1}{\partial x_d} \\
+                                \vdots                            & \ddots & \vdots                            \\
+                                \frac{\partial g_d}{\partial x_1} & \dots  & \frac{\partial g_d}{\partial x_d} \\
+                            \end{array}
+                        \right] 
+                    \text{  where  }~
+                    x = 
+                        \left[
+                            \begin{array}{c}
+                                x_1 \\
+                                \vdots \\
+                                x_d
+                            \end{array}
+                        \right]
+                    \text{  and  }~
+                    g = 
+                        \left[
+                            \begin{array}{c}
+                                g_1 \\
+                                \vdots \\
+                                g_d
+                            \end{array}
+                        \right].
+                \]
+    \end{enumerate}
+
+    Besides the finite-dimensional derivatives above, there will be occasion in this report
+    to compute functional derivatives. For completeness, we illustrate the
+    definitions and notation we will use here.
+    \begin{definition}[\Frechet Differentiability]
+        \label{def:FrechetDeriv}
+        Let \(X\) and \(Y\) be Banach spaces and let \(Z \subset X\) be open. Then
+        \(f:Z \to Y\) is said to be \emph{\Frechet differentiable} at \(x \in Z\)
+        if there exists a bounded, linear operator \(T_x:Z \to Y\) such that
+        \[
+            \lim_{h \to 0} \frac{\|[f(x+h) - f(x)] - T_x(h)\|_Y}{\|h\|_X} = 0.
+        \]
+    \end{definition}
+    When \(T_x\) in \defref{def:FrechetDeriv} exists it is called
+    the \Frechet derivative of \(f\) at \(x\) and is denoted \(\Dee_x f\). We
+    note that \defref{def:Deriv} is subsumed in \defref{def:FrechetDeriv}.
+    Another useful notion of derivative is a \emph{directional} derivative.
+    In the case of Banach spaces, this is called the \Gateaux derivative.
+    \begin{definition}[\Gateaux Differentiability]
+        \label{def:GateauxDeriv}
+        Let \(X\) and \(Y\) be Banach spaces, let \(Z \subset X\) be open, and
+        let \(h \in X\) be nonzero and fixed. Then \(f:Z \to Y\) is said to be 
+        \emph{\Gateaux differentiable} at \(x \in Z\) in the direction \(h\)
+        if
+        \[
+            \lim_{\ve \to 0} \frac{f(x + \ve h) - f(x)}{\ve}
+        \]
+        exists in \(Y\).
+    \end{definition}
+    When the limit in \defref{def:GateauxDeriv} exists it called
+    the \Gateaux derivative of \(f\) at \(x\) in the direction \(h\)
+    and is denoted \(\partial_x^h f\). When the \Gateaux derivative
+    exists it can be computed directly as
+    \begin{equation}
+        \label{eqn:GateauxDeriv}
+        \partial_x^h f = \left. \left[ \frac{\partial}{\partial \ve} \Big(f(x + \ve h)\Big) \right] \right|_{\ve = 0}.
+    \end{equation}
+    We note here that if \(f\) is \Frechet differentiable then \(f\) is \Gateaux
+    differentiable and the corresponding derivatives agree.
+    The converse is not true in general. In the context of this report, we will 
+    in general assume that \(f\) is a functional on a real Hilbert space and
+    that the \Frechet and \Gateaux derivatives agree. When this is the case,
+    the two derivatives can be related to each other by the following
+    remark.
+    \begin{remark}[The Relation between the \Frechet and \Gateaux derivatives]
+        \label{rem:FGR}
+        Let \(H\) be a real Hilbert space, let \(f:H \to \mathbb{R}\) be a functional,
+        let \(x \in H\) be fixed, let \(h \in H\) be fixed. Assume
+        that \(\Dee_x f\) and \(\partial_x^h f\) exist. Then these derivatives
+        are related to each other by
+        \[
+            \partial_x^h f = \left< \Dee_x f, h \right>_H.
+        \]
+    \end{remark}
+    In this report, we will use \remref{rem:FGR} several
+    times to ``extract'' the \Frechet derivative from the \Gateaux derivative
+    because it is much more expedient to compute the \Gateaux derivative
+    according to \autoref{eqn:GateauxDeriv} than to attempt to use
+    \defref{def:FrechetDeriv} directly. 
+
+\section{Philosophy}
+
+    The results in this report are framed as optimization problems.
+    In particular, we will describe a state space and to each admissible
+    state we will assign an energy. Given an initial state we will provide
+    the direction to travel in the state space to obtain a lower energy.
+    Mathematically, each state will correspond to a function and the state space 
+    in turn will be a Hilbert space. Therefore the map which assigns an energy to 
+    a state will be a functional on a Hilbert space, which allows us to
+    use the derivatives described above. In fact all of our
+    energy functionals will have the form
+    \begin{equation}
+        \label{eqn:Action}
+        E = \int L,
+    \end{equation}
+    which is interpreted to mean (in a sense) that the energy of a state can 
+    be found by integrating its individual 
+    parts\footnote{The name \(L\) in
+                    \autoref{eqn:Action} is chosen because it is
+                    referred to as the \emph{Lagrangian} in classical
+                    mechanics.}. 
+    From here we use a variational 
+    principle\footnote{In other contexts, the term
+                        \emph{variational principle} may be replaced by \emph{action principle},
+                        \emph{Maupertuis principle} or \emph{principle of least action}. These terms
+                        are not equivalent, but the motivations behind their developments are
+                        analogous.} 
+    which is to search for the form of stationary states, that is, where the derivative of the 
+    energy functional is zero\footnote{Which is analogous to Fermat's theorem.}. 
+    It is at the stationary states where the so-called Euler-Lagrange equation 
+    of the system is satisfied, which is a necessary condition for optimality.
+    In the case of \autoref{eqn:Action}, the Euler-Lagrange equation
+    takes the form
+    \begin{equation}
+        \label{eqn:EL}
+        \Dee_x L = 0,
+    \end{equation}
+    so that the state \(x\) is optimal only if \autoref{eqn:EL} is
+    satisfied. Therefore given any initial state \(x\) we may use a gradient descent 
+    in an artificial time of the form
+    \begin{equation}
+        \label{eqn:Descent}
+        \frac{\partial x}{\partial t} + \Dee_x L = 0     
+    \end{equation}
+    and evolve until steady.
+
+    This framework of choosing a function space, choosing an ``energy'' functional, 
+    computing a functional derivative, and using the result to prescribe the
+    necessary for optimal states is pervasive in mathematical physics. In the 
+    context of mathematical physics this argument can be used to estimate the 
+    evolution equations for classical mechanics and quantum mechanics alike,
+    and it is pleasing to proceed by analogy in this report on image processing.
+    For example, in classical mechanics a system of particles
+    is usually described as having \(L\) equal to kinetic energy minus
+    potential energy
+    \[
+        L = T - V,
+    \]
+    for each independent particle. \(E\), in turn is a summation
+    over all particles. Because \(T\) and \(V\) depend on both time
+    and space the resulting Euler-Lagrange equation turns out to be
+    a differential equation which describes the evolution of particles in both 
+    time and space. This estimation of reality was deduced through observation of
+    real world phenomena such as the trajectories of projectiles.
+    When the same technique is used in the context of optimization, 
+    the situation is slightly more abstracted because there is not a pre-built and faithful 
+    simulator\footnote{In the case of physical sciences, the \emph{physical universe.}}
+    to observe and from which to draw conclusions. Instead, one tries
+    to imagine what optimality means and then tries to mathematically describe a
+    universe in which the rules enforce the optimality condition
+    to exist and always be obtained. After this a faithful simulator
+    must be constructed and then finally one can observe. It is usually only
+    after extensive observation that a conclusion about this creative process
+    can be drawn. For example, in the context of Geometric Active Contours
+    \citep{Kass:Snakes}, 
+    \citep{Kichenassamy:GFGAC}, 
+    \citep{Chan:ACWE}
+    the states correspond to closed curves, there is an energy functional, 
+    functional derivative and corresponding gradient. In simulation, this
+    gradient can be seen to trace paths through the space of closed curves. 
+    To a mathematician it is tempting to wonder whether these paths are geodesics 
+    in the space of closed curves because then it might be possible to exploit the additional structure
+    encoded by the metric induced by the geodesics. In fact, this is precisely
+    what was explored in \citep{Caselles:GAC} titled \emph{Geodesic Active Contours}
+    and it was shown that in fact these paths are geodesics. 
+    Alas, it was later shown in \citep{Michor:RG} that the metric induced
+    by the \(L^2\) inner product is pathological\footnote{I.e., the distance
+    between any two closed curves is zero.}. With the benefit of hindsight
+    and a simulator one can see this pathology manifest itself. In
+    particular, the image segmentation functionals given in \citep{Caselles:GAC}
+    require a significant regularization term, without which the curve
+    may evolve in a highly irregular fashion for images which are not simple.
+    Two solutions to this problem occurred more-or-less simultaneously
+    in the literature. One solution was presented in \citep{Sundaramoorthi:SAC}.
+    In this paper the authors demonstrate that it is not necessary to use 
+    \(L^2\) as the Hilbert space of functions and in many cases it may be beneficial
+    to use a Sobolev space. The inner products in these Sobolev spaces generally
+    take the form
+    \[
+        \left< f, g \right>_{L^2} + \lambda \left< f', g' \right>_{L^2},
+    \]
+    where \(f'\) and \(g'\) are the derivatives of \(f\) and \(g\), respectively.
+    The upshot is that because derivatives are involved in the norms, curves
+    remain more regular during evolution. The authors then go on to show
+    that in the two dimensional case that the Sobolev gradient can be
+    obtained from the \(L^2\) gradient via a convolution. Experimentation
+    generally confirms the authors' claims. Another solution to the
+    problem of irregular evolution in the space of curves was given in
+    \citep{Charpiat:2005}. In this paper the authors first provide
+    a similar argument as presented in \citep{Sundaramoorthi:SAC},
+    which is to transform one inner product into another via an
+    operator
+    \[
+        \left< u, v \right>_L = \left< L u, v \right>_F
+    \]
+    thereby changing the geometry of the associated Hilbert space of
+    functions. The second argument presented in \citep{Charpiat:2005}
+    is that motion in the space of curves can be decomposed. In particular,
+    any gradient direction can be projected onto the mutually orthogonal
+    subspaces \(T, R\) or \(S\) which are translations, rotations, and
+    scalings, respectively. If \(\nabla f\) is the gradient and 
+    \(\left. \nabla f \right|_T\) represents projection onto \(T\),
+    the effect of using \(\left. \nabla f \right|_T\) in a gradient
+    descent is simply to translate \(f\), which is a highly regular
+    evolution.
+
+    The purpose of the previous paragraph is to illustrate that this
+    area of applied 
+    mathematics\footnote{But perhaps not all areas of applied mathematics. Some mathematicians
+                            consider functional analysis of any kind (even if a simulation
+                            is never mentioned or considered) to be far into ``applied'' spectrum.} 
+    is indeed an applied science and that 
+    development of theoretical methods and concrete experimentation go 
+    hand-in-hand. Therefore in this report, we will endeavor to make
+    all theoretical and experimental details manifest and to motivate
+    the choices as they are made.
+
+% vim:ts=4:sw=4:et

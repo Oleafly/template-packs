@@ -1,0 +1,60 @@
+\chapter{An Example Model} 
+
+% Define block styles
+
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+text width=11em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=blue!20, node distance=3cm,
+minimum height=2em]
+\begin{figure}[!htbp] %\hspace*{-.75cm}
+	\label{model} 
+	\begin{tikzpicture}[node distance = 1cm, >=latex', font={\footnotesize}]
+	% Place nodes
+	\node [block] (institution) {Institutional Context ($V_1$)};
+	\node [block, below right of=institution, node distance=4cm] (emergence) {Unified Elites ($V_2$):
+		\begin{itemize}
+		\item[--] Text
+		\end{itemize}};
+	\node [block, below left of=institution, node distance=4cm] (divided) {Elites Divided ($V_2$): 
+		\begin{itemize}
+		\item[--] Text
+		\end{itemize}};
+	\node [block, below of=emergence, node distance=4cm] (commission) {Creation of Commission ($V_3-V_8$):
+		\begin{itemize}
+		\item[--] Text ($V_3-V_8$)
+		\end{itemize}};
+	\node [block, below of=commission, below of=emergence, node distance=5cm] (strong) {Strong Campaign ($V_9$):
+		\begin{itemize}
+		\item[--] Text
+		\end{itemize}};
+	\node [block, left of=anti, below of=divided, node distance=4cm] (weak) {Weak Campaign ($V_9$):
+		\begin{itemize}
+		\item[--] Text
+		\end{itemize}};
+	\node [block, below of=divided, node distance=10cm] (anti) {Opposition Campaign ($V_{10}$):
+		\begin{itemize}
+		\item[--] Text
+		\end{itemize}};
+	\node [decision, below of=strong, node distance=4cm] (success) {Outcome 2};
+	\node [cloud, below of=anti, node distance=4cm] (fail) {Outcome 1};
+	%\node [cloud, below of=decide, node distance=3cm] (stop) {stop};
+	% Draw edges
+	\path [line] (institution) -- (emergence);
+	\path [line, dashed] (institution) -- (divided);
+	\path [line] (emergence) -- (commission);
+	\path [line] (commission) -- (strong);
+	\path [line, dashed] (commission) -- (weak);
+	\path [line, dashed] (commission) -- (anti);
+	%\path [line] (decide) -| node [near start] {yes} (update);
+	%\path [line] (update) |- (identify);
+	%\path [line] (decide) -- node {no}(stop);
+	\path [line,dashed] (weak) |- (fail);
+	\path [line,dashed] (divided) -- (anti);
+	\path [line,dashed] (anti) -- (fail);
+	\path [line] (strong) -- (success);
+	\end{tikzpicture}
+	\caption{An Example \href{https://www.ctan.org/pkg/pgf}{\textsf{TikZ/pgf}} Model}
+\end{figure}

@@ -1,0 +1,163 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% HEADER
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{unc_dissertation}
+
+%Font packages
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+
+%Bilbiography styles
+\bibliographystyle{ieeetr}
+
+% List of acronyms
+\usepackage{longtable}
+\usepackage[acronym]{glossaries}
+
+%% Math Packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage{geometry}
+
+%% Reduce spacing between paragraph and section title %%%%%%%
+%% @todo: Put this modification in the class file itself.
+\usepackage{titlesec}
+\titlespacing*{\section}
+{0pt}{-5pt}{0pt}
+\titlespacing*{\subsection}
+{0pt}{-5pt}{0pt}
+\usepackage{indentfirst}   %Indents first paragraphs in every section.
+
+%% Flush footnotes to the left
+\usepackage[hang,flushmargin]{footmisc}
+%% Places footnotes immediately below horizontal rule
+\setlength{\footnotesep}{0pt}
+
+%% Normal LaTeX or pdfLaTeX? %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{ifpdf}
+
+%% Packages for Graphics & Figures %%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifpdf %%Inclusion of graphics via \includegraphics{file}
+	\usepackage[pdftex]{graphicx} %%graphics in pdfLaTeX
+\else
+	\usepackage[dvips]{graphicx} %%graphics and normal LaTeX
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DOCUMENT SETTINGS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Dissertation Title}
+\author{Dissertation Author}
+\committee{Advisor}{Committee Member}{Committee Member}{Committee Member}{Committee Member}
+\date{January 1, 1970}
+
+\input{abstract.tex}
+
+\dedication{To someone}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GLOSSARIES AND ABBREVIATIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% To update the printed glossary, you need to run:
+% - pdflatex dissertation
+% - makeglossaries dissertation
+% - pdflatex dissertation
+% On Windows, you might need to install Perl first.
+\newacronym{unc}{UNC}{The University of North Carolina at Chapel Hill}
+\makeglossaries
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\linespread{1.0}
+\begin{document}
+
+%% File Extensions of Graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifpdf
+	\DeclareGraphicsExtensions{.pdf,.jpg,.png}
+\else
+	\DeclareGraphicsExtensions{.eps}
+\fi
+
+\pagestyle{plain}
+
+%%%%%%%%%%%%%%%%%
+%% INITIAL THINGS
+%%%%%%%%%%%%%%%%%
+
+\frontmatter
+
+\maketitle
+
+\chapter*{Acknowledgements}
+\input{acknowledgements.tex}
+
+% The graduate school requires that entries are double spaced.
+% They also require that multiple lines in a single entry are single spaced.
+% This achieves that by setting \baselineskip (the space between lines)
+% and \parskip (the additional space between paragraphs) directly, then restoring them
+%
+% @todo: Find a more elegant way of achieving this
+
+% Establish original spacings
+\newlength{\oldbaselineskip}
+\setlength{\oldbaselineskip}{\the\baselineskip}
+\newlength{\oldparskip}
+\setlength{\oldparskip}{\the\parskip}
+
+% Set spacings for these sections
+\setlength{\baselineskip}{0.5\oldbaselineskip}
+\setlength{\parskip}{0.5\oldbaselineskip}
+
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+% Restore original spacings
+\setlength{\baselineskip}{1.0\oldbaselineskip}
+\setlength{\parskip}{1.0\oldparskip}
+
+\listofabbreviations
+
+\mainmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%MAIN CHAPTERS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagestyle{plain} % Restore page numbers
+
+% Chapter 1
+\chapter{Chapter 1}
+\input{chapter1.tex}
+
+% Chapter 2
+\chapter{Chapter 2}
+\input{chapter2.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% BIBLIOGRAPHY AND OTHER LISTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\backmatter
+
+% Bibliography
+\bibliography{dissertation}
+\addtocontents{toc}{\protect\vspace*{\baselineskip}}
+
+% Add bibliography to contents page
+%\addcontentsline{toc}{chapter}{Bibliography} %'Bibliography' into toc
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% APPENDICES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\chapter{}
+\section{}
+
+\end{document}

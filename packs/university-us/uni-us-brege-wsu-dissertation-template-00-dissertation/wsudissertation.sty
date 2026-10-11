@@ -1,0 +1,39 @@
+\ProvidesPackage{wsudissertation}[2015/02/08 v1.0 WSU Dissertation Macros]
+% Macros fulfilling the formatting requirements for Ph.D. dissertations at
+%   Washington State University. Include with \usepackage{wsudissertation}.
+% Brett Deaton -- Feb 2015
+
+% *******************************************************************************
+% Set left,right,top margins to 1in
+% Set bottom margin to provide 0.5in border around page number. (We need
+%   footskip=0.5in+(12pt font)/(72.27in/pt)=0.67in=48pt,
+%   but we don't set footskip without adjusting the bottom margin up by the same
+%   amount, so there's still 0.5in to the bottom of the paper.)
+\usepackage[left=1in,right=1in,top=1in,bottom=1.17in,footskip=0.67in]{geometry}
+
+% *******************************************************************************
+% define signature line with name centered under it
+\newcommand{\signhere}[1]{
+  \parbox[t][1in][b]{0.5\textwidth}{
+    \centering
+    \rule{0.5\textwidth}{1pt}\\
+    #1
+  }
+}
+
+% *******************************************************************************
+% Index chapters with the English number words, 'one', 'two', etc
+%\usepackage{fmtcount,etoolbox}
+%\makeatletter
+%\patchcmd{\@makechapterhead}{\thechapter}{\Numberstring{chapter}}{}{}
+%\patchcmd{\chaptermark}{\thechapter}{\NUMBERstring{chapter}}{}{}
+%\makeatother
+
+% *******************************************************************************
+% reset TOC/LOT/LOF styles
+\usepackage{tocloft}
+\addtocontents{toc}{~\hfill\mbox{Page}\par}
+\renewcommand{\contentsname}{Table of Contents}
+%\renewcommand{\listtablename}{LIST OF TABLES}
+%\renewcommand{\listfigurename}{LIST OF FIGURES}
+

@@ -1,0 +1,104 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% 
+%
+% Columbia Astronomy PhD Dissertation Template
+%
+%
+%
+% Current version : March 2019
+% Andrew Emerick generated this blank template from a version sent to him by
+% Sarah Pearson. Sarah got this from Susan, who got this from Stephanie, 
+% who got this from Jennifer Weston. Jennifer got this from Munier Salem,
+% Munier got it from Yuan Li.
+%
+% Munier said:
+% Yuan Li sent me this, which she got from Lia Corrales. Then Yuan 
+% made changes based on Destry's version Yuan got from Jenna. TeX 
+% format adapted from the thesis of Destry Saul, which was adapted largely 
+% from the thesis of Takamitsu Tanaka, which was adapted from Emily C. 
+% Rauscher which was adapted from David Spiegel, and so on and so forth, 
+% probably since dinosaurs.
+%
+% This version hacked to include elements from Adrian Price-Whelan's, which
+% was modified to include elements from Jos? Koiller's
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \documentclass[12pt,draft,letterpaper]{report}
+% \documentclass[12pt,letterpaper]{report}
+\documentclass[twoside,12pt,letterpaper]{report}
+\newcommand{\thesistitle}{Astronomy Things I Know: Space is Cool Edition}
+\newcommand{\thesisauthor}{Anonymous}
+\newcommand{\graddate}{Year}
+
+\input{preamble}    % definitions and packages
+\input{textstyle}   % sets the spacing, margins, etc.
+
+\begin{document}
+
+% Cover pages and abstract: no page numbers
+% (title, copyright, abstract)
+{
+	\pagestyle{empty}
+	\input{title}
+	\input{copyright}
+	\input{abstract}
+}
+
+% Prefatory pages: Lower case Roman numerals beginning with "i" centered at the bottom of each page
+% (Table of Contents, List of Charts, Graphs, Illustrations, Acknowledgments)
+{
+	\pagestyle{plain}
+	\pagenumbering{roman}
+
+	% Skip second abstract page
+	\setcounter{page}{1}
+	\addtocounter{page}{-1}
+	\tableofcontents
+
+        \raggedbottom
+ 
+	\newpage\addcontentsline{toc}{chapter}{List of Figures}
+	\listoffigures
+
+	\newpage\addcontentsline{toc}{chapter}{List of Tables}
+	\listoftables
+	%\input{intentionallyblank}
+
+	%\section*{Acknowledgements}
+	\input{intentionallyblank}
+	\newpage
+	\addcontentsline{toc}{chapter}{Acknowledgments}
+	\input{acknowledgments}
+	\newpage
+}
+
+% Main body and all other pages: Arabic numerals beginning with "1" centered at the bottom of each page
+% (introduction, chapters, conclusions)
+{
+	\pagestyle{plain}
+	\pagenumbering{arabic}
+	\setcounter{page}{1}
+
+	\setlength{\headheight}{0in}
+	\setlength{\headsep}{0.5in}
+
+	\renewcommand{\chaptermark}[1]{\markboth{\chaptername\  \thechapter: \ #1}{}}
+	\renewcommand{\sectionmark}[1]{\markright{\thesection: \ #1}{}}
+
+	\input{chapters/ch_introduction}
+	\input{chapters/ch_chapter1}
+%	\input{chapters/ch_chapter2}
+%	\input{chapters/ch_chapter3}					
+%	\input{chapters/ch_chapter4}
+	\input{chapters/ch_conclusion}
+
+	%\cleardoublepage
+
+	\newpage\addcontentsline{toc}{chapter}{Bibliography}
+	\markboth{Bibliography}{Bibliography}
+	\bibliography{refs/refs}
+%}
+
+\end{document}

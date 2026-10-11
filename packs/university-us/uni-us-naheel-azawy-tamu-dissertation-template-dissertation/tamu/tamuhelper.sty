@@ -1,0 +1,476 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Modified by Naheel Faisal Kamal, 2024
+%
+%  Based on:
+%  New template code for TAMU Theses and Dissertations
+%  starting Spring 2021.
+%
+%
+%  Author: Thesis Office
+%
+%  Last Updated: 2024-06-17
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tamu/tamuhelper}[2024/04/15 TAMU template helper by Naheel Faisal]
+
+\newcommand{\mkpre}{
+
+\usepackage{tamu/tamuconfig}
+
+
+% Most of the packages that set the default settings
+% for the document have moved to the style file
+% tamuconfig.sty. This includes
+
+%These next lines change the font. Fixes for certain
+%fonts will be implemented in a future release.
+
+%Comment this line if you do not wish to use Times
+%New Roman. The font used will then be the LaTeX
+%default of Computer Modern.
+\usepackage{times}
+%\usepackage{cmbright}
+\usepackage[T1]{fontenc}
+
+% For natbib-style references, uncomment this.
+%\usepackage{natbib}
+
+%This package allows for the use of graphics in the
+%document.
+\usepackage{graphicx}
+
+% For quick document navigation.
+\usepackage[hidelinks]{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Additional packages used by the helper commands below.
+%% Add your own packages in dissertation.tex instead.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{soul} % for \hl
+\usepackage{amsmath,amsfonts}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{array}
+\usepackage{textcomp}
+\usepackage{stfloats}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{cite}
+\usepackage{arydshln}
+\usepackage{capt-of}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{calc}
+\usepackage{forarray}
+\usepackage{caption}
+\usepackage{subcaption} %% for sub-figures
+\usepackage{tabularx} %% for stretching the tables
+
+\usepackage{bibentry}
+\nobibliography* %% uses the same refs.bib in \bibliography
+
+\usepackage[symbol]{footmisc}
+
+%% left align with size for tables
+\newcolumntype{x}[1]{>{\raggedright\arraybackslash}p{##1}}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% HELPER COMMANDS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% wrapper to skip responsehelper
+\newcommand{\revcolor}[1]{#1}
+\newcommand{\rev}[2]{#2}
+\newcommand{\mkresponse}[2]{}
+
+%% local labels and refs
+\newcommand{\paperprefix}{}
+\newcommand{\llabel}[1]{}
+\newcommand{\lref}[1]{}
+
+%% to access each part of the document
+\newcommand{\includepart}[1]{
+\renewcommand{\paperprefix}{#1}
+\renewcommand{\llabel}[1]{\label{\paperprefix-##1}}
+\renewcommand{\lref}[1]{\ref{\paperprefix-##1}}
+\input{parts/\paperprefix.tex}
+}
+
+%% Nicer uniform ref
+\newcommand{\chap}[1]{Chapter~\ref{chap:#1}}
+\newcommand{\appx}[1]{Appendix~\ref{chap:#1}}
+\newcommand{\fig}[1]{Fig.~\lref{fig:#1}}
+\newcommand{\tbl}[1]{Table~\lref{tbl:#1}}
+\newcommand{\sect}[1]{Section~\lref{sec:#1}}
+\newcommand{\algo}[1]{Algorithm~\lref{algo:#1}}
+
+%% Chapter headings and reprint footnote
+\newcommand{\mybibentry}[1]{\begin{NoHyper}\bibentry{#1}\end{NoHyper}}
+\newcommand{\chapreprint}[1]{\footnote{This chapter including figures/tables are reprinted with permission from #1}}
+\newcommand{\chapternormal}[1]{\chapter{\texorpdfstring{\uppercase{#1}}{#1}}}
+\newcommand{\chapterwithpreprint}[2]{\chapter[\texorpdfstring{\uppercase{#1}}{#1}]{{\texorpdfstring{\uppercase{#1}}{#1}}\chapreprint{#2}}}
+
+%% Highlight todos
+\newcommand{\TODO}[1]{\noindent\hl{TODO:} #1\\}
+%% \newcommand{\DONE}[1]{\noindent{\color{green}DONE:} #1\\}
+\newcommand{\DONE}[1]{}
+
+\newcommand{\mktitlepage}{
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLE PAGE
+%% The values get updated automatically.  Please do not make changes to this file other than adding/deleting committee members where necessary.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\providecommand{\tabularnewline}{\\}
+
+
+
+\begin{titlepage}
+\begin{center}
+\begin{doublespace}
+
+\MakeUppercase{  \tamumanuscripttitle}
+\end{doublespace}
+\vspace{4em}
+
+A \tamupapertype
+
+by
+
+\MakeUppercase{\tamufullname}
+
+\vspace{4em}
+
+\begin{singlespace}
+
+Submitted to the Graduate and Professional School of \\
+Texas A\&M University \\
+
+in partial fulfillment of the requirements for the degree of \\
+\end{singlespace}
+
+\MakeUppercase{\tamudegree}
+\par\end{center}
+\vspace{2em}
+\begin{singlespace}
+\begin{tabular}{ll}
+                        & \tabularnewline
+                        & \cr
+% If you have Co-Chairs comment out the 'Chair of Committee' line below and uncomment the 'Co-Chairs of Committee' line.
+% Chair of Committee,   & \tamuchairone\tabularnewline
+Co-Chairs of Committee, & \tamuchairone\tabularnewline & \tamuchairtwo\tabularnewline
+Committee Members,      & \tamumemberone\tabularnewline
+                        & \tamumembertwo\tabularnewline
+                        & \tamumemberthree\tabularnewline
+                        & \tamumemberfour\tabularnewline
+Head of Department,     & \tamudepthead\tabularnewline
+\end{tabular}
+\end{singlespace}
+
+\vspace{3em}
+
+\begin{center}
+\tamugradmonth \hspace{2pt} \tamugradyear
+
+\vspace{3em}
+
+Major Subject: \tamudepartment \par
+\vspace{3em}
+Copyright \tamugradyear \hspace{.5em}\tamufullname
+\par\end{center}
+\end{titlepage}
+\pagebreak{}
+
+}
+
+\newcommand{\mkabstract}[1]{
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                           ABSTRACT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter*{ABSTRACT}
+\addcontentsline{toc}{chapter}{ABSTRACT} % Needs to be set to part, so the TOC doesn't add 'CHAPTER ' prefix in the TOC.
+
+\pagestyle{plain} % No headers, just page numbers
+\pagenumbering{roman} % Roman numerals
+\setcounter{page}{2}
+
+\indent #1
+
+\pagebreak{}
+
+}
+
+\newcommand{\mkdedication}[1]{
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                           DEDICATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter*{DEDICATION}
+\addcontentsline{toc}{chapter}{DEDICATION}  % Needs to be set to part, so the TOC doesnt add 'CHAPTER ' prefix in the TOC.
+
+
+
+\begin{center}
+\vspace*{\fill}
+#1
+\vspace*{\fill}
+\end{center}
+
+\pagebreak{}
+
+}
+
+\newcommand{\mkacknowledgments}[1]{
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                           ACKNOWLEDGMENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter*{ACKNOWLEDGMENTS}
+\addcontentsline{toc}{chapter}{ACKNOWLEDGMENTS}  % Needs to be set to part, so the TOC doesnt add 'CHAPTER ' prefix in the TOC.
+
+
+\indent #1
+
+\pagebreak{}
+
+}
+
+\newcommand{\mkcontributors}[1]{
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%             CONTRIBUTORS AND FUNDING SOURCES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter*{CONTRIBUTORS AND FUNDING SOURCES}
+\addcontentsline{toc}{chapter}{CONTRIBUTORS AND FUNDING SOURCES}  % Needs to be set to part, so the TOC doesn't add 'CHAPTER ' prefix in the TOC.
+
+
+%This section is taken directly from the MS Word templates.
+
+%Old version below.
+
+%All theses and dissertations must include a contributors and funding sources section. In this section, name all members of the dissertation committee, and any collaboration with others in carrying out your thesis or dissertation research. Your independent contributions must be made clear.
+%
+%If financial support from the university or any other source was gained to conduct your thesis or dissertation research and compilation, it must be listed in this section. If you completed all work independently without outside financial support, indicate this here.
+%\textit{(Sample Wording)}
+%
+%This work was supported by a dissertation committee consisting of Professor XXX [advisor – also note if co-advisor] and XXXX of the Department of [Home Department] and Professor(s) XXXX of the Department of [Outside Department].
+%
+%The data analyzed for Chapter III was provided by Professor XXXX. The analyses depicted in Chapter IV were conducted in part by Rebekah Jones of the Department of Bio-statistics and were published in (year) in an article listed in the Biographical Sketch.
+%
+%All other work conducted for the dissertation was completed by the student independently.
+%
+%\noindent \textit{(or)}
+%
+%This work was supervised by a dissertation committee consisting of Professor XXXX [advisor – also note if co-advisor] and Professor(s) XXXX of the Department of [Home Department] and Professor(s) XXXX of [Outside Department]. All work for the dissertation was completed independently by the student.
+%
+%\noindent \textit{(or)}
+%
+%Graduate study was supported by a fellowship from Texas A\&M University and a dissertation research fellowship from XXX Foundation.
+
+#1
+\pagebreak{}
+
+}
+
+\newcommand{\mknomeclature}[1]{
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                           NOMENCLATURE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter*{NOMENCLATURE}
+\addcontentsline{toc}{chapter}{NOMENCLATURE}  % Needs to be set to part, so the TOC doesnt add 'CHAPTER ' prefix in the TOC.
+
+%A note about aligning: These entries will align
+%themselves according to the ampersand (&).
+%No extra spaces are needed, as seen in some of
+%the entries below.
+
+%Example of the longtable environment.
+\hspace*{-1.25in}
+\vspace{12pt}
+\begin{spacing}{1.0}
+  \begin{longtable}[htbp]{@{}p{0.35\textwidth} p{0.62\textwidth}@{}}
+    % \begin{tabular}{@{}p{0.33\textwidth} p{0.62\textwidth}@{}}
+    #1
+    % XXXXXXXX		&	This is an optional page. Random word to test how long the sentence can be? This is just for test purpose. The current setting aims to align left/right margin same as all other pages.\\	[2ex]
+    % \end{tabular}%
+  \end{longtable}
+\end{spacing}
+
+\pagebreak{}
+
+}
+
+\newcommand{\mklists}{
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%       TABLE OF CONTENTS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% single-space sections in Table of Contents  - commented in version 1.7
+%\renewcommand{\cftsecafterpnum}{\vskip0.5\baselineskip}
+%\renewcommand{\cftsubsecafterpnum}{\vskip0.5\baselineskip}
+%\renewcommand{\cftsubsubsecafterpnum}{\vskip0.5\baselineskip}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\phantomsection
+\addcontentsline{toc}{chapter}{TABLE OF CONTENTS}
+
+\begin{singlespace}
+\renewcommand\contentsname{\normalfont} {\centerline{TABLE OF CONTENTS}}
+
+\setcounter{tocdepth}{4} % This puts \subsubsection[]{×} in your List of Tables.  The default is 3.
+
+
+%%%%%%%%%%%%%  Adds Page above the page number in TOC
+\setlength{\cftaftertoctitleskip}{1em}
+\renewcommand{\cftaftertoctitle}{%
+\hfill{\normalfont {Page}\par}}
+
+
+\tableofcontents
+
+%\addtocontents{toc}{\protect\afterpage{~\hfill\normalfont{Page}\par\medskip}}
+\end{singlespace}
+
+\pagebreak{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                           LIST OF FIGURES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\phantomsection
+\addcontentsline{toc}{chapter}{LIST OF FIGURES}
+
+\renewcommand{\cftloftitlefont}{\center\normalfont\MakeUppercase}
+
+\setlength{\cftbeforeloftitleskip}{-12pt} %% Positions the LOF title vertically to match the chapter titles
+\renewcommand{\cftafterloftitleskip}{12pt}
+
+
+\renewcommand{\cftafterloftitle}{%
+\\[4em]\mbox{}\hspace{2pt}FIGURE\hfill{\normalfont Page}\vskip\baselineskip}
+
+\begingroup
+
+
+\begin{center}
+\begin{singlespace}
+%% These values make the lof table entries appear double spaced between.
+\setlength{\cftbeforechapskip}{0.4cm}
+\setlength{\cftbeforesecskip}{0.30cm}
+\setlength{\cftbeforesubsecskip}{0.30cm}
+\setlength{\cftbeforefigskip}{0.4cm}
+\setlength{\cftbeforetabskip}{0.4cm}
+
+% Provided by Andy Philips.
+% needed to make chapter gaps look no different than sections:
+% \addtocontents{lof}{\protect\renewcommand*\protect\addvspace[1]{}}
+
+% Philips' document had 30 figures. Is there a maximum number of figures
+% that changes the spacing to non-uniform, i.e., not double-spaced
+% between all entries?
+
+\listoffigures
+
+\end{singlespace}
+\end{center}
+
+\pagebreak{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                           LIST OF TABLES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\phantomsection
+\addcontentsline{toc}{chapter}{LIST OF TABLES}
+
+\renewcommand{\cftlottitlefont}{\center\normalfont\MakeUppercase}
+
+\setlength{\cftbeforelottitleskip}{-12pt} %% Positions the LOT title vertically to match the chapter titles
+
+%Note that the similar parameter in the LOF is 12pt; this
+%is intentional to make the spacing between the headers
+%and the first entry look consistent.
+\renewcommand{\cftafterlottitleskip}{1pt}
+
+
+\renewcommand{\cftafterlottitle}{%
+\\[4em]\mbox{}\hspace{2pt}TABLE\hfill{\normalfont Page}\vskip\baselineskip}
+
+\begin{center}
+\begin{singlespace}
+
+%% These values make the lot table entries appear double spaced between.
+\setlength{\cftbeforechapskip}{0.4cm}
+\setlength{\cftbeforesecskip}{0.30cm}
+\setlength{\cftbeforesubsecskip}{0.30cm}
+\setlength{\cftbeforefigskip}{0.4cm}
+\setlength{\cftbeforetabskip}{0.4cm}
+
+\listoftables
+
+\end{singlespace}
+\end{center}
+\endgroup
+\pagebreak{}  % Need this for the page numbering to be correct.
+
+}
+
+\newcommand{\mkchaptersstart}{
+
+\pagestyle{plain} % No headers, just page numbers
+\pagenumbering{arabic} % Arabic numerals
+\setcounter{page}{1}
+
+}
+
+\newcommand{\mkbib}[1]{
+
+%fix spacing in bibliography, if any...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\let\oldbibitem\bibitem
+\renewcommand{\bibitem}{\setlength{\itemsep}{0pt}\oldbibitem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%The bibliography style declared is the IEEE format. If
+%you require a different style, see the document
+%bibstyles.pdf included in this package. This file,
+%hosted by the University of Vienna, shows several
+%bibliography styles and examples of in-text citation
+%and a references page.
+\bibliographystyle{ieeetr}
+
+\phantomsection
+\addcontentsline{toc}{chapter}{REFERENCES}
+
+\renewcommand{\bibname}{{\normalsize\rm REFERENCES}}
+
+%This file is a .bib database that contains the sources.
+%This removes the dependency on the previous file
+%bibliography.tex.
+\bibliography{#1}
+
+}
+
+\newcommand{\mkappendices}[1]{
+
+\begin{appendices}
+\titleformat{\chapter}{\centering\normalsize}{APPENDIX \thechapter}{0em}{\vskip .5\baselineskip\centering}
+\renewcommand{\appendixname}{APPENDIX}
+
+\phantomsection{}
+
+#1
+
+\end{appendices}
+
+}

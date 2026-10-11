@@ -1,0 +1,69 @@
+% Create appendix with unnumbered section
+\appendixsection{A}{Dynamic Functional Theory - Free Energy Functional}
+\setappendixlabel{A}
+
+% Add appendix to toc at section level
+%\addcontentsline{toc}{section}{Appendix A - Vacancy PFC Rescaling Notes}
+%\appendix{Rescaling PFC Equations}
+\label{appendix:dft-free-energy}
+
+N-body problems are famously unsolvable.  When interactions between particles are present, positions $\{\posn{i}\}$ and momenta $\{\vec{p}_i\}$ have exact solutions for two particles ($i = 1,2$) and are numerically solvable for up to a few hundred or thousand particles with various approximations.  Rather than deal with $6N$ (in 3D space) unknowns and their associated equations, DFT defines the one-body density $\denseR$ as the probability of a particle being found at position $\pos$ at (or near) equilibrium as
+
+\begin{equation}
+\denseR = \left\langle \sum_{i = 1}^N \delta(\pos - \posn{i}) \right\rangle
+\end{equation}
+%
+where $\langle \ldots \rangle$ is the ensemble average and $\delta(\pos)$ is the Dirac delta distribution.  The equilibrium distribution is denoted $\denseReq$.  In 1965, Mermin showed that that the equilibrium phase distribution $\psi_\text{eq}(\{\posn{i}, \vec{p}_i\}_{\text{eq}})$ is determined by $\denseReq$ \cite{mermin1965thermal}, such that the grand-canonical free energy $\Omega(T, \mu, \denseR)$can be written
+
+\begin{equation}
+\Omega(T, \mu, \denseR) = F_\text{in}(T, \denseR) + \int \dpos \denseR U_1(\pos) - \mu \int \dpos \denseR
+\end{equation}
+%
+where $F_\text{in}$ is the intrinsic free-energy functional.  The Helmholtz free-energy functional $F(T, \denseR)$, is given as
+
+\begin{equation}
+F(T, \denseR) = \Fid(T, \denseR) + \Fexc(T, \denseR),
+\label{eq-energyfunctional-intrinsic}
+\end{equation}
+%
+where $\Fid$ denotes the free energy of an ideal gas due to entropy and given by
+
+\begin{equation}
+\Fid(T, \denseR) = k_B T \int \dpos \denseR (\ln(\Lambda^3 \denseR) - 1),
+\label{eq-energyfunctional-ideal-gas}
+\end{equation}
+%
+with $\Lambda$, the thermal de Broglie wavelength, and $\Fexc$, the excess free energy due to particle interactions \cite{hohenberg1977theory}.  Then the variational principle of DFT requires that
+
+\begin{equation}
+\left. \frac{\delta F(T, \denseR)}{\delta \denseR} \right|_{\denseR = \denseReq} = 0.
+\end{equation}
+%
+What remains is to make a suitable estimate of the excess free energy $\Fexc$ due to particle interactions.
+
+Following \cite{emmerich2012phase}, the functional Taylor expansion of $\Fexc$ about a reference density $\denseref$ is given by
+
+\begin{equation}
+\Fexc(T, \denseR) = \Fexc^{(0)}(\denseref) - \sum_{n=1}^\infty \frac{k_B T}{n!} \int \dposn{1} \cdots \int \dposn{n} \cnRn \prod_{i = 1}^n \Delta\denseRn{i}),
+\label{eq-fexc-Taylor}
+\end{equation}
+%
+where the \textit{n}th order direct correlation function is
+
+\begin{equation}
+\cnRn = - \left. \frac{1}{k_B T} \frac{\delta^n F(T, \denseR)}{\delta \denseRn{1} \cdots \delta \denseRn{n}} \right|_{\denseR = \denseref}
+\end{equation}
+%
+and $\Delta \denseR = \denseR - \denseref$ is the reduced density.  The Taylor series in Eq.~\ref{eq-fexc-Taylor} can be truncated at second order to model freezing of a super-cooled liquid, as in the Ramakrishnan-Yussouff approximation \cite{ramakrishnan1979first}, or at higher order for other systems.  Furthermore, the two-point correlation function $\cn{2}$ can be estimated as
+
+\begin{align}
+\cn{2}(\posn{1} - \posn{2}) = - \frac{U_2(\posn{1} - \posn{2})}{k_B T} & & \text{[random phase approximation]}
+\end{align}
+%
+or
+
+\begin{align}
+\cn{2}(\posn{1} - \posn{2}) = \exp \left( - \frac{U_2(\posn{1} - \posn{2})}{k_B T} \right) - 1, & & \text{[virial expression]}
+\end{align}
+%
+where $U_2$ is the interaction potential between pairs of particles.

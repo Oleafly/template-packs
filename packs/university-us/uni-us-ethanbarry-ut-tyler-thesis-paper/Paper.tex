@@ -1,0 +1,328 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-----% CLASSIC STEM PAPER TEMPLATE %------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-----% SOURCE CODE LICENSE %--------------------%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% This template was drafted by Ethan Barry, but
+%%% has been created with tidbits from many diff-
+%%% erent StackExchange discussions. :)
+%%% You may have it under the terms
+%%% of the BSD 2-clause license. Go wild.
+%%% -----
+%%% THIS IS NOT OFFICIALLY ENDORSED BY THE UNIV-
+%%% ERSITY OF TEXAS AT TYLER, OR ITS FACULTY.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Frontmatter inspired by Mario Vilar's great
+%%% template at:
+%%%     github.com/mariovilar/Thesis-Template
+%%% No code from that document was used, however.
+
+%%%%%%% PRELUDE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[letterpaper,
+               extrafontsizes,
+               11pt,
+               oneside,
+               final]{memoir}   % The superior LaTeX class.
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}             % memoir does not provide theorem environments.
+\usepackage[english]{babel}     % Split words correctly.
+\usepackage{caption}
+                                % To change the font, alter the package import below.
+                                % But don't, unless you want a typographic abomination.
+                                % If you must, use Palatino or something else classic.
+                                % NOTE: If you change the font, it is very likely you
+                                %       will have to hunt down and remove the uses of \textsw
+                                %       and \swshape in this file, as many fonts do not provide
+                                %       swash italics. You've been warned!
+\usepackage{ebgaramond}[RawFeature={+hlig,+hist}]
+\usepackage{ebgaramond-maths}   % Make your math font awesome, too.
+\usepackage{fontenc}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref}
+\usepackage{microtype}          % Makes adjustments to spacing.
+\usepackage{pgfpages}
+\usepackage{quiver}             % Use <https://q.uiver.app/> to draw tikz diagrams!
+\usepackage{tikz}
+                                % The package below is needed by ebgaramond-maths.
+\usepackage[math-style=ISO,
+            bold-style=ISO]{unicode-math}
+\usepackage{witharrows}         % Draw arrows between equations. Very handy.
+\usepackage{xcolor}
+\usepackage{xfrac}              % Proper 'slanted' fractions.
+
+\usepackage{lipsum}             % Remove this when not in use.
+
+\WithArrowsOptions{displaystyle}
+\setmathfont{Garamond-Math.otf}[StylisticSet={2,7,9}] % Awesome math font. See documentation.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-----% GLOBAL VARIABLES %-----------------------%
+
+%%% Set these to your desired values if you want
+%%% to use the titlepage.
+\newcommand{\thedocumenttitle}{Document Title}
+\newcommand{\thedepartment}{Departments of Mathematics \& Computer Science}
+\newcommand{\theuniversity}{University of Texas at Tyler}
+\newcommand{\thepublisher}{UT Tyler Press}
+\newcommand{\theamsclassif}{00000, 10101}
+\newcommand{\thecity}{Tyler, Texas}
+\newcommand{\thecountry}{The United States of America}
+\newcommand{\theauthors}{Author I, Author II, Author III, Author IV}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-----% PAGE LAYOUT %----------------------------%
+
+%%% The memoir class makes headings a breeze.
+%%% Just do
+%%% \makeXhead{<style>}{<left>}{<center>}{<right>}
+%%% to set up the heading style.
+\makepagestyle{myheadings}
+\makeevenhead{myheadings}{\thepage}{\scshape{\MakeTextLowercase\thedocumenttitle}}{}
+\makeoddhead{myheadings}{}{\scshape{chapter~\thechapter}}{\thepage}
+\pagestyle{myheadings}
+
+%-----% MARGINS & TYPEBLOCK %--------------------%
+
+%%% This template includes a large right margin
+%%% for margin notes. Margin notes should be used
+%%% to introduce variables, terms, &c.
+\setlrmarginsandblock{0.85in}{1.65in}{*}    % Left-right margins.
+\setulmarginsandblock{0.85in}{1in}{*}       % Upper-lower margins.
+\setmarginnotes{2em}{7em}{2em}              % Better spacing for margin notes on letterpaper.
+\setheadfoot{0.2in}{0.4in}
+\checkandfixthelayout[lines]                % THIS MUST BE CALLED.
+\OnehalfSpacing                             % Like double-spacing, but better.
+
+%-----% HEADINGS & SECTIONS %--------------------%
+\chapterstyle{thatcher}                     % Multiple choices available. This one fits the template well.
+\setbeforesecskip{3ex}                      % Set document division appearances.
+\setbeforesubsecskip{3ex}
+\setsecheadstyle{\raggedright\Large\scshape}
+\setsubsecheadstyle{\raggedright\large\scshape}
+\setsubsubsecheadstyle{\raggedright\large\swshape}
+
+\maxsecnumdepth{subsubsection}              % Everything down to subsubsections will be numbered.
+\setsecnumdepth{subsubsection}
+%\renewcommand*{\thesection}{\arabic{section}} % Do not display chapter numbers. Useful in a paper.
+
+%-----% REFERENCES & NAVIGATION %----------------%
+\setcounter{tocdepth}{2}                    % What division level appears in the ToC. 2 means subsection.
+
+%-----% MATH FORMATTING %------------------------%
+
+%%% NOTE: If you don't like the short math env.
+%%%       names, this is the place to change them!
+\theoremstyle{plain}                        % See amsthm for details on this section.
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+\newtheorem{prp}{Proposition}[section]
+
+\theoremstyle{definition}
+\newtheorem{dfn}{Definition}[section]
+
+\theoremstyle{remark}
+\newtheorem{rem}{Remark}
+\newtheorem{nte}{Note}
+
+%-----% DOCUMENT MACROS %------------------------%
+
+%%% MarginNote places a correctly-formatted note in the margin.
+%%% Just pass the text.
+\newcommand{\MarginNote}[1]{
+  \marginpar{\footnotesize\itshape\raggedright #1}
+}
+
+%%% Places a variable declaration in an inline math environment.
+%%% Use \quad or \> to space them.
+\newcommand{\MarginVariable}[1]{{\footnotesize\marginpar{\( #1 \)}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-----% THE DOCUMENT %---------------------------%
+\begin{document}
+
+%-----% THE TITLE PAGE %-------------------------%
+\setlrmarginsandblock{1in}{1in}{*}          % Center the title page material.
+\checkandfixthelayout                       % Must call this.
+\titlingpageend{\clearpage}{\clearpage}     % Eliminate extra blank pages. NOTE: If you use a twoside
+                                            %                                    layout, YOU MUST UNDO THIS!!!
+\begin{titlingpage}
+  \begin{center}
+  \vspace*{1in}
+
+  {\LARGE\itshape Subject}
+
+  \vspace{0.25in}
+
+  {\Huge\scshape\thedocumenttitle}
+
+  \vspace{0.25in}
+  \newcommand{\theoldtabcolsep}{\tabcolsep}
+  \setlength{\tabcolsep}{0.25in}
+
+  \begin{tabular}{cccc}
+    {\scshape Author I} & {\scshape Author II} & {\scshape Author III} & {\scshape Author IV}\\
+    {\verb|ID|} & {\verb|ID|} & {\verb|ID|} & {\verb|ID|}
+  \end{tabular}
+  \setlength{\tabcolsep}{\theoldtabcolsep}
+
+  \vfill
+
+  \includegraphics[width=2in]{UT_Tyler_Seal_Orange.png}         % Use the seal when you want a good titlepage.
+ %\includegraphics[width=3.5in]{UT_Tyler_Primary_Logo.png}\\    % Use this logo if you like horrible graphic design,
+                                                                % or your document isn't so formal as to require the
+                                                                % seal.
+  \vspace{1in}
+  \end{center}
+\end{titlingpage}
+%-----% THE COPYRIGHT PAGE %---------------------%
+\begin{titlingpage}
+  \setlength{\parindent}{0in} % NOTE: This doesn't seem to propagate outside this environment.
+                              %       If it causes problems, just use \noindent here.
+  {\scshape\large\thedepartment}\\
+  {\scshape\large\theuniversity}\\
+  \vspace{0.25in}
+
+  {\itshape Published by:} {\scshape\thepublisher}\\
+  {\itshape Template by: } {\scshape Ethan Barry} {\itshape (after Mario Vilar)}\\ % TODO: Remove me (if you want)!
+  {\itshape AMS Classification: } {\scshape\theamsclassif}\\
+  \vfill
+
+  {\thecity, on 18 June, 2024 }\\
+  ©\>{\scshape\theauthors}\,---\,2024\\
+  {\itshape All Rights Reserved}\\
+  \vspace{0.10in}
+
+  {\scshape printed in {\MakeLowercase{\thecountry}}}
+\end{titlingpage}
+\setlrmarginsandblock{0.85in}{1.65in}{*}    % Go back to the wide right margin layout.
+\checkandfixthelayout                       % Must call this.
+%-----% THE TABLE OF CONTENTS %------------------%
+\begin{titlingpage}
+  \tableofcontents
+\end{titlingpage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-----% ACKNOWLEDGEMENTS %-----------------------%
+\chapter*{Acknowledgements}
+\begin{center}
+\parbox[c]{0.8\textwidth}{
+  \small\lipsum[1]
+}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-----% CHAPTER ONE %----------------------------%
+ \chapter{The Beginning Chapter...}
+ \epigraph{If all else fails, immortality can always be assured by spectacular error.}{\textit{This Is An Epigraph}\\\textsc{John Kenneth Galbraith}}
+ Typeset this!\footnote{Here is a footnote.}
+ \lipsum[2]
+ \section{Here is a section division...}
+ \lipsum[6]\footnote{And another footnote...}
+ \begin{enumerate}
+   \item \lipsum[7]
+   \item \lipsum[8]
+ \end{enumerate}
+
+ \subsection{And here is a subsection...}
+ \lipsum[9]\MarginNote{Here is a margin note which can float and drop down.}
+
+ \subsubsection{And here is a sub-sub-section...}
+ \lipsum[10]\MarginVariable{x\>z}                % Introduce your variables in the margins!
+ \[  z \in \mathbb{Z} \quad\text{\textit{\&}}\quad x \in \mathbb{R} \]
+ \[ \int_a^b f'(t)\,dt = f(b) - f(a) \]
+ \begin{thm}
+  This is some theoremic text where we state some things about math. We can even do a math
+  expression here, like so:
+  \[ 1 + 1 \in \{1,2,3\} \]
+ \end{thm}
+ \begin{proof}
+   This sentence is a proof. As you can see, it's long and complicated.
+ \end{proof}
+ \begin{dfn}
+  A compiler is an algorithm that transforms one formal grammar into another.
+  \footnote{We can even have a footnote in the Definition environment.}
+ \end{dfn}
+ \marginpar{\footnotesize\itshape{This diagram shows a rough sketch of a compiler's components.}}
+ \[
+ \begin{tikzcd}
+     {\text{Source Code}} & {\text{Lexer}} \\
+     & {\text{Parser}} \\
+     & {\text{Compiler}} & {\text{Assembly}}
+     \arrow[dashed, from=1-1, to=1-2]
+     \arrow[from=1-2, to=2-2]
+     \arrow[from=2-2, to=3-2]
+     \arrow[dashed, from=3-2, to=3-3]
+ \end{tikzcd}
+ \]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-----% CHAPTER TWO %----------------------------%
+ \chapter{The Chapter after the Beginning...}
+ \epigraph{I really like these epigraph things that come before the chapters.} {\textsw{Reflections \& Translations}\\\textsc{Ethan Barry}}
+ \lipsum[11]\MarginNote{\lipsum[11]}
+ \begin{rem}
+  This is our first remark. Isn't it remarkable?
+ \end{rem}
+ Here is a lovely commutative diagram made with
+ the website \href{https://q.uiver.app}{q.uiver.app} which showcases some of the power of \LaTeX\,
+ and the \verb|tikz| package.
+ \begin{figure}[h!]
+   % https://q.uiver.app/#q=WzAsOCxbMCwwLCJcXGRlbHRhIl0sWzIsMCwiXFx2YXJlcHNpbG9uIl0sWzAsMiwiXFx2YXJwaGkiXSxbMiwyLCJcXGdhbW1hIl0sWzEsMSwiXFxldGEiXSxbMywxLCJcXGlvdGEiXSxbMSwzLCJcXGthcHBhIl0sWzMsMywiXFx2YXJ0aGV0YSJdLFswLDRdLFswLDJdLFsyLDZdLFs0LDZdLFswLDFdLFs0LDVdLFsxLDVdLFs1LDddLFsxLDNdLFsyLDNdLFs2LDddLFszLDddXQ==
+   \[
+   \begin{tikzcd}
+    \delta && \varepsilon \\
+    & \eta && \iota \\
+    \varphi && \gamma \\
+    & \kappa && \vartheta
+    \arrow[from=1-1, to=1-3]
+    \arrow[from=1-1, to=2-2]
+    \arrow[from=1-1, to=3-1]
+    \arrow[from=1-3, to=2-4]
+    \arrow[from=1-3, to=3-3]
+    \arrow[from=2-2, to=2-4]
+    \arrow[from=2-2, to=4-2]
+    \arrow[from=2-4, to=4-4]
+    \arrow[from=3-1, to=3-3]
+    \arrow[from=3-1, to=4-2]
+    \arrow[from=3-3, to=4-4]
+    \arrow[from=4-2, to=4-4]
+   \end{tikzcd}
+   \]
+   \caption{The caption goes here.}
+ \end{figure}
+
+
+ And we can follow this by some text and a huge equation. \lipsum[12]
+ \begin{equation*}
+    \mathrm{i}\,\hslash\frac{\partial}{\partial t} \Psi(\mathbf{r},t) = -\frac{\hslash^2}{2\,m}\nabla^2\Psi(\mathbf{r},t) + V(\mathbf{r})\Psi(\mathbf{r},t)
+\end{equation*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-----% CONCLUSION %-----------------------------%
+\chapter*{Conclusion}
+\lipsum[13]
+
+Hopefully this provides you with a nice template to get started. Remember,
+\begin{itemize}
+  \item Change the global variables to use the existing design without much hassle,
+  \item Decide what logo you want on the titlepage,
+  \item Set up your margin notes, if you want them. (You should.)
+  \item Don't forget to add something like \verb|biblatex-chicago| to manage your references.
+  \item Start writing!
+\end{itemize}
+
+\vfill
+
+\begin{center}
+  {\large\swshape Soli Deo Gloria}
+\end{center}
+
+%%%%% END OF DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

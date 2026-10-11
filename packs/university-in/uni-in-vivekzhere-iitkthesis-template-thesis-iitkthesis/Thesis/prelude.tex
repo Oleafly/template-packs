@@ -1,0 +1,102 @@
+% prelude.tex
+%   - titlepage
+%   - dedication (optional)
+%   - approval sheet
+%   - course certificate
+%   - table of contents, list of tables and list of figures
+%   - nomenclature
+%   - abstract
+%============================================================================
+
+
+\clearpage\pagenumbering{roman}  % This makes the page numbers Roman (i, ii, etc)
+
+
+
+% TITLE PAGE
+%   - define \title{} \author{} \date{}
+\title{Title}
+\author{Name}
+\newdateformat{monthyear}{\monthname[\THEMONTH], \THEYEAR}
+\date{\monthyear\today}
+
+%  - Roll number, required for title page, approval sheet, and
+%    certificate of course work 
+\rollnum{RollNo} 
+
+%   - The default degree is ``Doctor of Philosophy''
+%     (unless the document style msthesis is specified
+%      and then the default degree is ``Master of Science'')
+%     Degree can be changed using the command \iitbdegree{}
+\iitbdegree{Master of Technology}
+
+%   - The default report type is preliminary report.
+%      * for a PhD thesis, specify \thesis
+\thesis
+%      * for a M.Tech./M.Phil./M.Des./M.S. dissertation, specify \dissertation
+%\dissertation
+%      * for a DIIT/B.Tech./M.Sc.project report, specify \project
+%\project
+%      * for any other type, use  \reporttype{}
+%\reporttype{ReportType}
+
+%   - The default department is ``Unknown Department''
+%     The department can be changed using the command \department{}
+\department{Computer Science \& Engineering}
+
+%    - Set the guide's name
+\setguide{Guide}
+\setguidedept{Department of Computer Science \& Engineering}
+
+%   - once the above are defined, use \maketitle to generate the titlepage
+\maketitle
+
+%--------------------------------------------------------------------%
+% CERTIFICATE
+%     The first page after the title page.
+\makecertificate
+%\includepdf[pages=-]{thesis_front.pdf}
+
+%--------------------------------------------------------------------%
+% COPYRIGHT PAGE
+%   - To include a copyright page use \copyrightpage
+% \copyrightpage
+
+%--------------------------------------------------------------------%
+% ABSTRACT
+\cleardoublepage
+\phantomsection \label{abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\begin{abstract}
+Abcd abstract
+
+\end{abstract}
+
+%--------------------------------------------------------------------%
+% DEDICATION
+%   Dedications, if any.
+\begin{dedication}
+To my family
+\end{dedication}
+
+% Acknowledgements
+\begin{acknowledgments}
+
+Abcd Acknol
+
+\end{acknowledgments}
+
+%--------------------------------------------------------------------%
+% CONTENTS, TABLES, FIGURES
+\setcounter{secnumdepth}{3}
+\phantomsection \label{toc}
+\addcontentsline{toc}{chapter}{Contents}
+\tableofcontents
+%\listoftables
+
+\cleardoublepage
+\phantomsection \label{listoffig}
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+
+\cleardoublepage\pagenumbering{arabic} % Make the page numbers Arabic (1, 2, etc)

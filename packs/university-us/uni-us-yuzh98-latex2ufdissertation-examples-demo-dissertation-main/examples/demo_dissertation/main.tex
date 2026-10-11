@@ -1,0 +1,82 @@
+%%% =====================================================================
+%%% UF Dissertation — Demo / Known-Good Reference Project
+%%% =====================================================================
+%%%
+%%% This is the master .tex file for the latex2ufdissertation demo
+%%% dissertation. It is a hand-crafted fixture that satisfies every
+%%% must-fix rule in docs/uf-rules.md. Running:
+%%%
+%%%     latex2ufdissertation examples/demo_dissertation/
+%%%
+%%% should produce a clean report (zero must-fix, zero review).
+%%%
+%%% Read top-to-bottom. Every block is annotated with the UF rule it
+%%% satisfies, so this file doubles as a teaching aid for students.
+
+%%% --- Document class ---------------------------------------------------
+%%% UF-F13: documentclass MUST be ufdissertation (Fall 2025+ template).
+%%% UF-D1:  editMode is NOT present here — must be removed before
+%%%         submission. The example template ships with editMode ON;
+%%%         the demo intentionally turns it OFF.
+%%% UF-D3:  overrideTitles / overrideChapters NOT used (defaults are
+%%%         correct).
+\documentclass{ufdissertation}
+
+%%% \sloppy loosens LaTeX's line-breaking criteria to reduce overfull
+%%% hbox warnings; it does not affect text alignment (UF-F5 ragged-right
+%%% is enforced separately by the class).
+\sloppy
+
+%%% --- LuaLaTeX directive -----------------------------------------------
+%%% UF-D2: UF requires LuaLaTeX + TeX Live 2025 (S4 — accessibility).
+%%% This magic comment tells editors and the validator the compiler.
+% !TEX program = lualatex
+
+%%% --- User packages ----------------------------------------------------
+%%% Minimal set; the class file already loads hyperref, geometry, fonts,
+%%% titlesec, titletoc, longtable, natbib, threeparttable, etc.
+\usepackage{graphicx}      % for \includegraphics
+\usepackage[all]{nowidow}  % per UF template convention (orphan/widow)
+\usepackage{tikz}          % for vector diagrams in chapter 2
+\usepackage{pgfplots}      % for plots in chapter 2
+    \pgfplotsset{compat=1.18}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,backgrounds,calc}
+\usepackage{algpseudocode}  % for algorithm pseudocode in chapter 2
+
+%%% --- Metadata macros --------------------------------------------------
+%%% UF-F14: every required metadata macro is set with a non-empty value.
+\title{A Lightweight Static Analyzer for Validating LaTeX-Based Dissertations Against University Formatting Specifications}
+\degreeType{Doctor of Philosophy}     % UF-F14
+\major{Computer Science}              % UF-F14
+\author{Jordan Avery Lee}             % UF-F14
+\thesisType{Dissertation}             % UF-F14 — must be "Dissertation" for v1.0 scope
+\degreeYear{2026}                     % UF-F14
+\degreeMonth{May}                     % UF-F14 — May / August / December only
+\chair[Co-chair Example]{Chair Example}  % UF-F14 — optional cochair via [bracket]
+
+%%% --- Section file assignments ----------------------------------------
+%%% UF-F8 / UF-P1: each \set*File names a file present on disk.
+\setDedicationFile{dedicationFile}              % optional
+\setAcknowledgementsFile{acknowledgementsFile}  % required
+\setAbbreviationsFile{abbreviations}            % optional
+\setAbstractFile{abstractFile}                  % required
+\setReferenceFile{referenceFile}{plainnat}      % required (two-arg form)
+\setBiographicalFile{biographyFile}             % required
+\setAppendixFile{appendix}                      % optional
+
+%%% List-of-Figures / List-of-Tables / List-of-Objects flags
+%%% Set true if the document actually has any figures / tables / objects.
+\haveFigurestrue       % chapter 2 has figures
+\haveTablestrue        % chapter 2 has a table
+\haveObjectstrue       % chapter 2 has objects (via \addObject)
+\multipleAppendixtrue  % appendix.tex has >1 \chapter — label as A, B, ...
+
+%%% =====================================================================
+\begin{document}
+
+%%% UF-F10: at least three chapters (intro + body + closing summary).
+\include{chapter1}   % Introduction
+\include{chapter2}   % Main body
+\include{chapter3}   % Closing summary
+
+\end{document}

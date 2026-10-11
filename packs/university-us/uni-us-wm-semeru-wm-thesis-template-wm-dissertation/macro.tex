@@ -1,0 +1,113 @@
+\makeatletter
+
+% this  is a easy way to add and highlight new text  ...
+% just comment in/out the \tnew macro ..
+
+\newcommand{\tnew}[1]{{\bf { #1 }} }
+%\newcommand{\tnew}[1]{{ { #1 }} }
+
+% math and theorem definition
+
+\newcommand{\ndef}{\stackrel{\rm def}{=}}
+
+% this is used for draft only
+
+%\renewcommand{\baselinestretch}{2}
+
+% just to number pages in the draft
+
+\useunder{\uline}{\ul}{}
+
+% nothing i.e., no-numbering final and camera ready
+
+%\pagestyle{empty}
+
+\newcommand{\CrashScopesp}{{\textsc CrashScope~}}
+\newcommand{\CrashScopes}{{\textsc \small CrashScope's~}}
+\newcommand{\CrashDroid}{{\textsc CrashDroid~}}
+\newcommand{\CrashScopebf}{{ \textbf{\textsc CrashScope~}}}
+
+\newcommand{\ReDraw}{{\textsc{\small ReDraw}}\xspace}
+\newcommand{\ReDraws}{{\textsc{\small ReDraw's}}\xspace}
+\newcommand{\Remaui}{{\textsc{\small Remaui}}\xspace}
+\newcommand{\Remauis}{{\textsc{\small Remaui's}}\xspace}
+\newcommand{\CrashScope}{{\textsc{\small CrashScope}}\xspace}
+\newcommand{\MonkeyLab}{{\textsc{\small MonkeyLab}}\xspace}
+\newcommand{\pixcode}{{pix2code}\xspace}
+
+\newcommand{\GVTsp}{{\textsc{\small Gvt~}}}
+\newcommand{\GVT}{{\textsc{\small Gvt}}}
+\newcommand{\GVTs}{{\textsc{\small Gvt's~}}}
+\newcommand{\dv}{{\textit{DV}}\xspace}
+\newcommand{\dvs}{{\textit{DVs}}\xspace}
+\newcommand{\gc}{{\textit{GC}}\xspace}
+\newcommand{\gcs}{{\textit{GCs}}\xspace}
+\newcommand{\mgc}{{\textit{M-GC}}\xspace}
+\newcommand{\mgcs}{{\textit{M-GCs}}\xspace}
+\newcommand{\igc}{{\textit{I-GC}}\xspace}
+\newcommand{\igcs}{{\textit{I-GCs}}\xspace}
+
+
+\newcommand{\ReDrawAbs}{{R}{\ssmall E}{D}{\ssmall RAW}\xspace}
+
+
+
+
+\newsavebox\CBox
+\newlength\CLength
+\def\circled#1{\sbox\CBox{#1}%
+  \ifdim\wd\CBox>\ht\CBox \CLength=\wd\CBox\else\CLength=\ht\CBox\fi
+    \makebox[1.2\CLength]{\makebox(0,0.9\CLength){\put(0,0){\circle{1.3\CLength}}}%
+    \makebox(0,1.0\CLength){\put(-.5\wd\CBox,0){#1}}}}
+
+\def\circledlong#1{\sbox\CBox{#1}%
+  \ifdim\wd\CBox>\ht\CBox \CLength=\wd\CBox\else\CLength=\ht\CBox\fi
+    \makebox[1.2\CLength]{\makebox(0,0.6\CLength){\put(0,0){\circle{1.3\CLength}}}%
+    \makebox(0,0.6\CLength){\put(-.5\wd\CBox,0){#1}}}}
+
+\lstset{
+	basicstyle=\footnotesize\ttfamily,
+	breaklines=true,
+    frame=tb, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{Red}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{OliveGreen}, % string color
+	xleftmargin=.25in %align numbers to left side
+}
+
+\newboolean{showcomments}
+
+
+\setboolean{showcomments}{true}
+
+\ifthenelse{\boolean{showcomments}}
+  {\newcommand{\nb}[2]{
+    \fbox{\bfseries\sffamily\scriptsize#1}
+    {\sf\small$\blacktriangleright$\textit{#2}$\blacktriangleleft$}
+   }
+   \newcommand{\cvsversion}{\emph{\scriptsize$-$Id: macro.tex,v 1.9 2005/12/09 22:38:33 giulio Exp $}}
+  }
+  {\newcommand{\nb}[2]{}
+   \newcommand{\cvsversion}{}
+  }
+
+\newcommand\KEVIN[1]{{\color{blue} \nb{KEVIN}{#1}}}
+\newcommand\MICHAEL[1]{{\color{blue} \nb{MICHAEL}{#1}}}
+\newcommand\CARLOS[1]{{\color{blue} \nb{CARLOS}{#1}}}
+\newcommand\RICHIE[1]{{\color{blue} \nb{RICHIE}{#1}}}
+\newcommand\DENYS[1]{{\color{blue} \nb{DENYS}{#1}}}
+
+\newcommand{\ie}{\textit{i.e.},\xspace}
+\newcommand{\eg}{\textit{e.g.},\xspace}
+\newcommand{\etc}{\textit{etc.}\xspace}
+\newcommand{\etal}{\textit{et al.}\xspace}
+\newcommand{\aka}{\textit{a.k.a.}\xspace}
+
+\newcommand\NEW[1]{\nb{NEW}{#1}}
+
+
+
+

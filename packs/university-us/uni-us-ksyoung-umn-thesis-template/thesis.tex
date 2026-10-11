@@ -1,0 +1,108 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% thesis.tex: This is the Primary TeX control file for thesis.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% 
+%%% CHANGE TO MNTHESIS CLASS'S DEFINITION OF XFLOATS.
+%%% 
+%%% This change allowed me to use the deluxetable environment, which is what
+%%% my Tables were (already) made in for the AJ articles.  One of the tables
+%%% is both rotated and contains footnotes, which deluxetable can do but
+%%% which the other table environment included by default in the MN thesis
+%%% template could not handle.
+%%%
+%%% I learned this fix from:
+%%% 		http://tex.stackexchange.com/questions/191808/problems-with-tikz-when-i-change-document-class
+%%%
+%%% save a copy of the kernel's \@xfloat
+\makeatletter\let\latex@xfloat\@xfloat\makeatother
+%%%
+%%% load the mnthesis class
+\documentclass[11pt,oneside]{mnthesis}
+%%%
+%%% fix floats to use single spacing
+\usepackage{etoolbox}
+\makeatletter
+\let\@xfloat\latex@xfloat
+\apptocmd{\@xfloat}{\linespread{1}\normalsize}{}{}
+\makeatother
+%%%
+%%% (END OF CHANGE TO MNTHESIS CLASS'S DEFINITION OF XFLOATS.)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{epsfig,epic,eepic,units}
+
+
+%% In response to request from AAS
+ \usepackage[bookmarks=false,         % show bookmarks bar?
+     pdfnewwindow=true,      % links in new window
+     colorlinks=true,    % false: boxed links; true: colored links
+     linkcolor=cyan,     % color of internal links
+     citecolor=cyan,     % color of links to bibliography
+     filecolor=cyan,  % color of file links
+     urlcolor=cyan,      % color of external links
+ ]{hyperref}
+
+%% for editing changes
+%\usepackage{xcolor}
+
+\usepackage{url}
+\usepackage{longtable}
+\usepackage{mathrsfs}
+\usepackage{multirow}
+\usepackage{bigstrut}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{relsize}
+\usepackage{threeparttable}
+\usepackage{float}
+\usepackage[usenames, dvipsnames]{color}
+\definecolor{orange}{rgb}{1,0.5,0}
+\definecolor{brown}{rgb}{0.74,0.72,0.42}
+\definecolor{pink}{rgb}{1,0.07843,0.57647}
+\definecolor{grey}{rgb}{0.6627,0.6627,0.6627}
+\definecolor{skyblue}{rgb}{0.53,0.808,0.98}
+% Per Jake Simones' github notes, this packages aastex_hack from Pete Mendygral
+% eases the use of common AASTeX commands
+\usepackage{aastex_hack}
+
+\usepackage{natbib, deluxetable}
+
+% add this package for subfigures
+%\usepackage[caption=false]{subfig}   
+\usepackage{subcaption}
+
+\linespread{1.3}		% Sets inter-line spacing.  Assuming 1.3 is the right number since it's in the MN template
+
+\setcounter{secnumdepth}{3}  %% number \subsubsection{}. (default is 2, number subsections)
+\setcounter{tocdepth}{1}  %% put chapter (0) and sections (1) in TOC. Not subsections (2) or subsubsections (3). (default is 2)
+
+\begin{document}
+
+% Bibliography style file: I changed from the template's default to the apj style file ``apj.bst'' because hunrst.bst did not
+% format the cites in the text the way they should be.  
+\bibliographystyle{apj}
+
+% Title and the other sections that appear before the body of the document (List of Figures, List of Tables)
+\include{title}
+
+% Intro Chapters
+\include{intro}
+
+% Science Chapters 
+\include{yomama}
+
+%Conclusion Chapter
+\include{conclusion}
+
+% Bibliography
+\bibliography{thesis}  
+
+% Appendices
+%\appendix
+%\include{appA}
+
+\end{document}

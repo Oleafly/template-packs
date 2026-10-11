@@ -1,0 +1,182 @@
+%-- This is a template for Ph.D. dissertations in the UCI format.
+%-- https://github.com/tsutterley/uci-thesis-latex
+%--
+%-- All fonts, including those for sub- and superscripts, must be 10
+%-- points or larger.  Recommended sizes are 14-point for chapter
+%-- headings, 12-point for the main body of text and figure/table
+%-- titles, and 10-point for footnotes, sub- and super-scripts, and text
+%-- in figures and tables.
+%--
+%-- UCI Theses and Dissertations Manual
+%-- http://special.lib.uci.edu/dissertations/electronic/td2e.html#2.3
+%--
+%-- Notes: Add short title to figures, sections, via square brackets,
+%-- e.g. \section[short]{long}.
+\documentclass[12pt,fleqn]{ucithesis}
+
+% A few common packages
+\usepackage{amsmath,mathtools}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{relsize}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage[bottom,symbol]{footmisc}
+\usepackage{titlesec}
+
+% plainpages=false fixes the "duplicate ignored" error with page counters
+% Set pdfborder to 0 0 0 to disable colored borders around PDF hyperlinks
+\usepackage[plainpages=false,pdfborder={0 0 0},colorlinks=true,urlcolor=black,citecolor=black,linkcolor=black]{hyperref}
+\usepackage{cleveref}
+
+% If statement for using chapterbib package (default is false)
+\newif\ifchapterbib
+% Uncomment the following two lines to use the chapterbib package,
+% which allows for individual bibliographies for each chapter rather than a
+% combined bibliography for the entire thesis.
+%\usepackage{chapterbib}
+%\chapterbibtrue
+
+% Uncomment the following two lines to use the algorithm package,
+% which provides an algorithm environment similar to figure and table
+% ("\begin{algorithm}...\end{algorithm}"). A list of algorithms will
+% automatically be added in the preliminary pages. Note that you
+% probably want a package for the actual code to go with this (e.g.,
+% algorithmic).
+%\usepackage{algorithm}
+%\renewcommand{\listalgorithmname}{\protect\centering\protect\Large LIST OF ALGORITHMS}
+
+% Uncomment the following line to enable Unicode support. This will allow you
+% to enter non-ASCII characters (such as accented characters) directly without
+% having to use LaTeX's awkward escape syntax (e.g., \'{e})
+% NOTE: You may have to install the ucs.sty package for this to work. See:
+% http://www.unruh.de/DniQ/latex/unicode/
+%\usepackage[utf8x]{inputenc}
+
+% Caption label with bold font
+\captionsetup{labelfont=bf}
+
+% Uncomment the following to avoid "widowing", where page breaks cause
+% single lines of paragraphs to float onto the next page (this is not
+% a UCI requirement but more of an aesthetic choice).
+%\widowpenalty=10000
+%\clubpenalty=10000
+
+% Modify or extend these at will.
+\newtheorem{theorem}{\textsc{Theorem}}[chapter]
+\newtheorem{definition}{\textsc{Definition}}[chapter]
+\newtheorem{example}{\textsc{Example}}[chapter]
+
+% Figure Subdirectories
+\graphicspath{{chapter1.dir/}{chapter1.dir/}}
+
+% Uncomment the following to have numbered subsubsections (by default
+% numbering goes only to subsections).
+%\setcounter{secnumdepth}{4}
+
+
+% Set this to only select a subset of the includes directives below.
+% Very handy to speed up compilation if you're working on a certain
+% part of your thesis. It conserves page numbers, references, etc.
+% even for non-included files.
+%\includeonly{chapter1}
+
+\begin{document}
+
+\thesistitle{Title of the Thesis}
+
+\degreename{Doctor of Philosophy}
+
+% Use the wording given in the official list of degrees awarded by UCI:
+% http://www.rgs.uci.edu/grad/academic/degrees_offered.htm
+\degreefield{Earth System Science}
+
+% Your name as it appears on official UCI records.
+\authorname{Peter Anteater}
+
+% Use the full name of each committee member.
+\committeechair{Professor A}
+\othercommitteemembers
+{
+ 	Professor B \\
+ 	Professor C
+}
+
+\degreeyear{\the\year}
+
+\copyrightdeclaration
+{
+	{\copyright} {\Degreeyear} \Authorname
+}
+
+% If you have previously published parts of your manuscript, you must list the
+% copyright holders; see Section 3.2 of the UCI Thesis and Dissertation Manual.
+% Otherwise, this section may be omitted.
+ \prepublishedcopyrightdeclaration
+ {
+ 	\hyperref[chap:2]{\Cref{chap:2}} {\copyright} 2014 IOP Publishing Ltd., \href{http://creativecommons.org/licenses/by/3.0}{Licensed under Creative Commons} \\
+% 	\hyperref[chap:3]{\Cref{chap:3}} {\copyright} 2014  American Geophysical Union \\
+% 	\hyperref[chap:4]{\Cref{chap:4}} {\copyright} 2014  American Geophysical Union \\
+ 	All other materials {\copyright} {\Degreeyear} \Authorname
+ }
+
+% Add PDF document info fields
+\hypersetup{
+	pdftitle={\Thesistitle},
+	pdfauthor={\Authorname},
+	pdfsubject={\Degreefield},
+}
+
+% include Optional Dedication and Thesis Acknowledgments
+\include{acknowledgments}
+
+% include Curriculum Vitae
+\include{curriculumvitae}
+
+% include Thesis Abstract
+\include{thesisabstract}
+
+% Preliminary pages are always loaded
+\preliminarypages
+
+% Chapter, section and subsection formats (smaller font sizes than default)
+\titleformat{\chapter}[display]{\fontsize{20}{20}\selectfont\bfseries}{\chaptertitlename\ \thechapter}{0pt}{\raggedright}
+\titleformat*{\section}{\fontsize{16}{16}\selectfont\bfseries}
+\titleformat*{\subsection}{\fontsize{14}{14}\selectfont\bfseries}
+
+% Include the different components of your thesis, in separate files.
+% Using \include allows you to set \includeonly above.
+\include{chapter1}
+\include{chapter2}
+%\include{chapter3}
+% ... and so on
+
+% These commands fix an odd problem in which the bibliography line
+% of the Table of Contents shows the wrong page number.
+\clearpage
+\phantomsection
+
+\ifchapterbib
+    % using chapterbib to create chapter specific bibliographies.
+\else
+    % "References should be formatted in style most common in discipline",
+    % abbrvnat is only a suggestion.
+    \bibliographystyle{abbrvnat}
+    \bibliography{thesis-bib-2016}
+\fi
+
+% The Thesis Manual says not to include appendix figures and tables in
+% the List of Figures and Tables, respectively, so these commands from
+% the caption package turn it off from this point onwards. If needed,
+% it can be re-enabled later (using list=yes argument).
+\captionsetup[figure]{list=no}
+\captionsetup[table]{list=no}
+
+% If you have an appendix, it should come after the references.
+\include{appendix}
+
+\end{document}

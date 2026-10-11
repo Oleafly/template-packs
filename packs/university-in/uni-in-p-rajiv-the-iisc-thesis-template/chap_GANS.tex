@@ -1,0 +1,320 @@
+\chapter{GANs}
+\label{chap:GANs}
+\section{Generative Adversarial Networks (GANs)}
+\label{sec:gan_theory}
+
+Generative Adversarial Networks (GANs) \cite{goodfellow2014generativeadversarialnetworks} are 
+implicit generative models, where a neural network called the generator learns to synthesize 
+realistic images by using feedback from a discriminator. The discriminator learns to distinguish 
+between real and generated images, effectively critiquing the generator’s outputs, while the 
+generator improves its samples based on this feedback to better fool the discriminator. Unlike 
+VAEs, GANs do not explicitly maximize likelihood but instead learn to approximate the data 
+distribution through adversarial training.
+
+\subsection{Adversarial Learning Framework}
+
+Let $\mathbf{x} \sim p_{\text{data}}(\mathbf{x})$ denote real samples from the data distribution, and let $\mathbf{z} \sim p(\mathbf{z})$ denote latent noise sampled from a simple prior (typically $\mathcal{N}(0, I)$).
+
+The generator $G_\theta$ maps latent variables to image space:
+
+\begin{equation}
+\tilde{\mathbf{x}} = G_\theta(\mathbf{z})
+\end{equation}
+
+The discriminator $D_\phi$ outputs the probability that an input is real:
+
+\begin{equation}
+D_\phi(\mathbf{x}) \in [0,1]
+\end{equation}
+
+\subsection{Minimax Objective}
+
+GAN training is formulated as a minimax optimization problem:
+
+\begin{align}
+\min_\theta \max_\phi \; V(D_\phi, G_\theta)
+&=
+\mathbb{E}_{\mathbf{x} \sim p_{\text{data}}}
+\left[
+\log D_\phi(\mathbf{x})
+\right]
+\\
+&\quad +
+\mathbb{E}_{\mathbf{z} \sim p(\mathbf{z})}
+\left[
+\log \left(1 - D_\phi(G_\theta(\mathbf{z}))\right)
+\right]
+\end{align}
+
+The discriminator aims to maximize this objective, while the generator aims to minimize it.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{model_architectures/GAN-and-loss}
+    \caption{Schematic diagram of the standard GAN framework and associated loss functions. The generator $G$ learns to map random noise $\mathbf{z}$ to the data space, while the discriminator $D$ distinguishes between real and generated data. Adversarial training proceeds via the minimax objective described above.}
+    \label{fig:gan_architecture}
+\end{figure}
+
+
+\subsection{Non-Saturating Generator Loss}
+
+In practice, the generator is trained using the non-saturating loss for stronger gradients:
+
+\begin{equation}
+\mathcal{L}_G =
+- \mathbb{E}_{\mathbf{z} \sim p(\mathbf{z})}
+\left[
+\log D_\phi(G_\theta(\mathbf{z}))
+\right]
+\end{equation}
+
+while the discriminator optimizes:
+
+\begin{equation}
+\mathcal{L}_D =
+- \mathbb{E}_{\mathbf{x} \sim p_{\text{data}}}
+\left[
+\log D_\phi(\mathbf{x})
+\right]
+-
+\mathbb{E}_{\mathbf{z} \sim p(\mathbf{z})}
+\left[
+\log \left(1 - D_\phi(G_\theta(\mathbf{z}))\right)
+\right]
+\end{equation}
+
+\subsection{Wasserstein GAN}
+
+Standard GANs may suffer from training instability due to vanishing gradients. Wasserstein GAN (WGAN) replaces JS divergence with Wasserstein distance:
+
+\begin{equation}
+W(p_{\text{data}}, p_G) =
+\inf_{\gamma \in \Pi(p_{\text{data}}, p_G)}
+\mathbb{E}_{(\mathbf{x},\tilde{\mathbf{x}}) \sim \gamma}
+\left[
+\|\mathbf{x} - \tilde{\mathbf{x}}\|
+\right]
+\end{equation}
+
+Using Kantorovich–Rubinstein duality:
+
+\begin{equation}
+W(p_{\text{data}}, p_G) =
+\sup_{\|D\|_L \le 1}
+\mathbb{E}_{\mathbf{x} \sim p_{\text{data}}}
+[D(\mathbf{x})]
+-
+\mathbb{E}_{\mathbf{z} \sim p(\mathbf{z})}
+[D(G(\mathbf{z}))]
+\end{equation}
+
+This leads to improved training stability.
+
+\subsection{Conditional GANs}
+
+To control generation, GANs can be conditioned on labels $y$:
+
+\begin{equation}
+G_\theta(\mathbf{z}, y), \quad
+D_\phi(\mathbf{x}, y)
+\end{equation}
+
+The objective becomes:
+
+\begin{align}
+\min_G \max_D
+\;
+\mathbb{E}_{\mathbf{x},y \sim p_{\text{data}}}
+[\log D(\mathbf{x}, y)]
++
+\mathbb{E}_{\mathbf{z} \sim p(\mathbf{z}), y}
+[\log(1 - D(G(\mathbf{z}, y), y))]
+\end{align}
+
+Conditional GANs are particularly relevant in medical imaging for pathology-controlled image generation.
+
+% \subsection{Comparison with Likelihood-Based Models}
+
+Unlike VAEs, GANs do not require explicit likelihood modeling, no pixel-wise reconstruction term is used and generated images are typically sharper.
+However, GANs exhibit  training instability, mode collapse (limited diversity) and lacks explicit latent density estimation.
+
+\section{DC GAN Experiments}
+
+
+\subsection{Progressive GAN}
+
+
+\begin{figure}[h!]
+    \centering
+    
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/pro_gan/image_0.png}
+    \end{subfigure}
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/pro_gan/image_3.png}
+    \end{subfigure}
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/pro_gan/image_7.png}
+    \end{subfigure}
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/pro_gan/image_12.png}
+    \end{subfigure}
+
+    \caption{Images generated using Progressive GAN}
+    \label{fig:progan_images}
+\end{figure}
+
+\subsubsection{Evaluation results}
+FID of generated images is 80.701  
+
+We can clearly see that the images generated are meaningfully realistic, we can also see that that there are artifacts if we zoom in , this is reason why the FID of generated images is so high.
+
+\subsubsection{Training details:} 
+\begin{itemize}
+    \item Trained for 48 hours on 4 NVIDIA A100 GPUs (consuming approximately 10GB memory per GPU).
+    \item Batch size of 32 for 70,000 iterations.
+    \item Generated image size of $256 \times 256$.
+    \item Optimized using Adam optimizer with learning rate $1\times10^{-3}$ and $(\beta_1, \beta_2) = (0.0, 0.99)$.
+    \item Latent vector dimension set to 128.
+    \item Training followed progressive growing from $8 \times 8$ to $256 \times 256$ resolution with smooth fade-in transitions.
+    \item Wasserstein GAN with Gradient Penalty (WGAN-GP) loss was used with gradient penalty coefficient $\lambda = 10$.
+\end{itemize}
+
+
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.85\textwidth]{model_architectures/progressive-gan.png}
+    \caption{Progressive GAN architecture. Progressive growing enables synthesis of high-resolution images by starting at low resolution and incrementally adding layers to both generator and discriminator.}
+    \label{fig:pro-gan-architecture}
+\end{figure}
+
+
+
+\section{Style-Based Generative Adversarial Networks}
+\label{sec:stylegan_theory}
+
+StyleGAN introduces a style-based generator architecture that improves controllability, disentanglement, and image fidelity. Unlike classical GANs that feed the latent vector directly into the generator, StyleGAN modifies the internal normalization and feature modulation process. In this work we verified StyleGAN2 given its superior performance on popular datasets like FFHQ.
+
+
+\subsection{StyleGAN2}
+
+StyleGAN2 addresses artifacts introduced by AdaIN and progressive growing.
+
+\subsubsection{Weight Demodulation}
+
+Instead of AdaIN, StyleGAN2 incorporates style modulation directly into convolution weights.
+
+Let convolution weights be $W$. Modulation is applied as:
+
+\begin{equation}
+W'_{i,j} = s_i W_{i,j}
+\end{equation}
+
+where $s_i$ is derived from $\mathbf{w}$.
+
+To prevent signal amplification, weights are demodulated:
+
+\begin{equation}
+\hat{W}_{i,j} =
+\frac{W'_{i,j}}
+{\sqrt{\sum_k (W'_{i,k})^2 + \epsilon}}
+\end{equation}
+
+This eliminates normalization-induced artifacts and improves image fidelity.
+
+\subsubsection{Removal of Progressive Growing}
+
+StyleGAN2 removes progressive growing and instead uses skip connections and residual architectures, leading to:
+
+\begin{itemize}
+    \item Improved training stability
+    \item Better frequency consistency
+    \item Reduced texture artifacts
+\end{itemize}
+
+\subsubsection{Path Length Regularization}
+
+To encourage smooth latent interpolation, StyleGAN2 introduces path length regularization:
+
+\begin{equation}
+\mathcal{L}_{\text{pl}} =
+\mathbb{E}_{\mathbf{z}, \mathbf{y}}
+\left[
+\left(
+\|\nabla_{\mathbf{w}} G(\mathbf{w}) \mathbf{y}\|_2 - a
+\right)^2
+\right]
+\end{equation}
+
+where $\mathbf{y}$ is random noise and $a$ is a running average.
+
+This regularization encourages consistent perceptual change per unit step in latent space.
+
+\bigskip
+
+
+
+However, GAN-based models remain limited in:
+
+\begin{itemize}
+    \item Modeling rare pathologies (mode collapse risk),
+    \item Providing likelihood estimates,
+    \item Ensuring full coverage of anatomical variability.
+\end{itemize}
+
+
+
+
+
+\section{Wavelet-DDGAN}
+
+Wavelet Denoising Diffusion GAN successfully generated images of resolution 512 $\times$ 512 with FID of 11.4 after 100 epochs on NIH dataset, but still the procedure is unconditional. 
+
+\begin{figure}[h!]
+    \centering
+    
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/wddgan_images/cxr_512_epoch_100_WDDGAN/0_epoch_100.png}
+    \end{subfigure}
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/wddgan_images/cxr_512_epoch_100_WDDGAN/10_1725785601.4691365.png}
+    \end{subfigure}
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/wddgan_images/cxr_512_epoch_100_WDDGAN/21_1725785604.2285786.png}
+    \end{subfigure}
+    \begin{subfigure}{0.24\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/wddgan_images/cxr_512_epoch_100_WDDGAN/13_1725785602.20652.png}
+    \end{subfigure}
+
+    \caption{Images generated using Wavelet Denoising Diffusion GAN}
+    \label{fig:progan_images}
+    
+    \vspace{0.5em}
+
+    % Second row: architecture
+    \begin{subfigure}{0.8\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/DDGAN_arch.png}
+    \end{subfigure}
+
+    \caption{Wavelet-DDGAN generated samples (top) and model architecture (bottom).}
+    \label{fig:wddgan_all}
+\end{figure}
+
+We only trained the model for 4 denoising steps, as mentioned in the paper \cite{phung2023wavelet}, which makes the inference way faster comapred to diffusion models which even after using better samplers need 40 to 50 steps to 
+generate images. 
+
+One of the best tradeoffs of WDDGAN is Faster generation it generates 10 images per second, while maintaining good generation quality. 
+
+\section{Problem of Conditional Generation}
+
+We can clearly see that compared to VAEs, GANs typically yield sharper images but major problem is that we need pathology conditional images for our downstream tasks, so our GANs should produce images for specified diseases, but conditional generation becomes very hard in GANs. One major reason is mode collapse. 

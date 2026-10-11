@@ -1,0 +1,118 @@
+% ============================================================
+%  main.tex
+%  Amrita Vishwa Vidyapeetham – Doctoral Document Template
+%  ============================================================
+%
+%  HOW TO USE:
+%  1. Edit doc-info.tex with your personal/document details.
+%  2. Edit each chapter file in chapters/.
+%  3. Edit frontmatter/abstract.tex and frontmatter/acknowledgements.tex.
+%  4. Compile:  pdflatex main  →  bibtex main  →  pdflatex main  →  pdflatex main
+%     (or use your editor's "Build" button / latexmk -pdf main)
+%
+%  FILES YOU WILL EDIT:
+%    doc-info.tex                  ← personal info (ONE PLACE)
+%    frontmatter/abstract.tex      ← abstract
+%    frontmatter/acknowledgements.tex
+%    frontmatter/abbreviations.tex
+%    chapters/ch01-introduction.tex
+%    chapters/ch02-literature-review.tex
+%    chapters/ch03-methodology.tex
+%    chapters/ch04-results.tex
+%    chapters/ch05-conclusion.tex
+%    backmatter/publications.tex
+%    backmatter/appendix.tex
+%    references.bib
+%
+%  FILES YOU SHOULD NOT NEED TO EDIT:
+%    styles/configuration.tex      ← global formatting
+%    frontmatter/titlepage.tex     ← auto-generated from doc-info.tex
+%    frontmatter/certificate.tex   ← auto-generated
+%    frontmatter/declaration.tex   ← auto-generated
+%    frontmatter/dedication.tex    ← auto-generated
+% ============================================================
+
+\documentclass[12pt,a4paper]{report}
+\renewcommand{\bibname}{References}
+% ---- Load personal / document information ------------------
+\newcommand{\DocType}{thesis}
+\input{doc-info}
+
+% ---- Conditional inclusion helper --------------------------
+\usepackage{ifthen}
+
+% ---- Load global configuration (packages, formatting) ------
+\input{styles/configuration}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+% ---- TITLE PAGE --------------------------------------------
+\pagenumbering{gobble}   % no page number on title page
+\input{frontmatter/titlepage}
+
+% ---- FRONT MATTER ------------------------------------------
+% Certificate
+\input{frontmatter/certificate}
+% Scholar's Declaration
+\input{frontmatter/declaration}
+\newpage
+
+% Dedication (comment out next two lines to suppress)
+\ifthenelse{\equal{\DedicationText}{}}{}{%
+  \input{frontmatter/dedication}}
+\pagenumbering{roman}
+\setcounter{page}{1}
+% Acknowledgements
+\input{frontmatter/acknowledgements}
+\newpage
+
+% Abstract
+\input{frontmatter/abstract}
+\newpage
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% List of Figures
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+\newpage
+
+% List of Tables
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+\newpage
+
+% List of Abbreviations
+\input{frontmatter/abbreviations}
+\newpage
+
+% ---- MAIN BODY ---------------------------------------------
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\pagestyle{fancy}
+
+\input{chapters/ch01-introduction}
+\input{chapters/ch02-literature-review}
+\input{chapters/ch03-methodology}
+\input{chapters/ch04-results}
+\input{chapters/ch05-conclusion}
+
+% ---- BACK MATTER -------------------------------------------
+
+% Publications
+\input{backmatter/publications}
+
+% Bibliography
+\cleardoublepage
+\addcontentsline{toc}{chapter}{References}
+\bibliography{references}
+
+% Appendices (comment out if none)
+\input{backmatter/appendix}
+
+% ============================================================
+\end{document}

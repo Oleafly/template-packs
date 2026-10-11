@@ -1,0 +1,74 @@
+\documentclass[12pt]{report}
+\usepackage[letterpaper, margin=1in]{geometry}
+\renewcommand{\baselinestretch}{1.5} 
+% \usepackage{minitoc}
+\usepackage{amsmath}
+\usepackage[numbers]{natbib}
+\usepackage{pdfpages}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{subcaption}
+\usepackage{standalone}
+\usepackage{indentfirst}
+\usepackage{chemformula} % Formula subscripts using \ch{}
+\usepackage[T1]{fontenc} % Use modern font encodings
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries}{}{0pt}{\Large}
+\titlespacing{\chapter}{0pt}{-24pt}{*0}
+\title{Title}
+\author{Author}
+\usepackage{hyperref}
+
+
+\begin{document}
+\begin{titlepage}
+\cleardoublepage
+\thispagestyle{empty}
+\input{title}
+\noindent
+\textbf{Project Overview}
+
+Project Overview
+\begin{enumerate}
+\item item 1
+\item item 2
+\end{enumerate}
+
+\end{titlepage}
+
+\cleardoublepage
+\thispagestyle{empty}
+\input{title}
+% \vspace*{-1in}
+\begingroup
+\let\clearpage\relax
+\tableofcontents
+\endgroup
+
+\cleardoublepage
+\setcounter{chapter}{1}
+\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}{Curriculum Vitae}}
+\phantomsection
+\includepdf[pages = -, pagecommand={}]{Empty_CV.pdf}
+
+\newpage
+\chapter{Research Plan}
+\section{Background}
+Background\cite{dirac}
+
+\section{Research Progress}
+Research Progress
+\subsection{subsection 1}
+subsection 1
+\section{Conclusions and Future Work}
+Conclusions and Future Work
+% \clearpage
+\newpage
+\addcontentsline{toc}{chapter}{Bibliography}
+\phantomsection
+\bibliographystyle{ieeetr}
+\bibliography{Ref.bib}
+\end{document}

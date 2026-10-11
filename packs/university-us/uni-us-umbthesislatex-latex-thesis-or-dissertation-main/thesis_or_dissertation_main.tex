@@ -1,0 +1,193 @@
+\documentclass{UMassThesis14}
+%%%%%%%%%%
+%%%%%%%%%% special notes on packages amsthm, amsmath, and amssymb %%%%%%%%%%%
+%%%%%%%%%%
+% 1. If you want to use the package amsthm, then (for reasons explained in the class file, UMassThesis14.cls), *do not* load that package explicitly (i.e., in the preamble of your .tex file). 
+% Instead, add the option 'amsthm' to the class file, like this:
+% \documentclass[amsthm]{UMassThesis14}
+%
+% 2. The package 'amsmath' is automatically loaded by the class. (For reasons explained in the class file, it would not be practical to try to avoid loading amsmath.) 
+% If you want amsmath to be loaded with options, just supply them to the class, which will pass them on to amsmath. 
+% For example, if you want amsmath to be loaded with the options 'centertags' and 'nosumlimits', then load the class file like this:
+% \documentclass[centertags,nosumlimits]{UMassThesis14}
+% 
+% 3. The package amssymb should not be loaded because it conflicts with newtxmath. This is usually not a problem because newtxmath provides all the functionality and commands of amssymb. However, since there are packages that have \RequirePackage{amssymb} command in their code, the class file makes LaTeX 'think' that amssymb has been loaded, so that \RequirePackage{amssymb} does nothing.
+
+%%%%%%%%%%
+%%%%%%%%%% other packages loaded by the class file
+%%%%%%%%%%
+% In addition to amsmath, the class file loads some additional packages. Unlike in the case of amsmath, you *cannot* add or change options for these other packages from the .tex file. 
+% (You would have to change the .cls file itself, which I don't recommend, since it could lead to unexpected and undesirable consequences.) 
+% Here are the additional packages loaded by the class file:
+%
+% [bottom]footmisc (meaning, the package footmisc with the option 'bottom'), setspace, indentfirst, [T1]fontenc, [scaled=1.03]newtxtext, [scaled=1.03]newtxmath, calc, geometry (with appropriate options to fix the margins), [newparttoc]titlesec, titletoc, subcaption
+
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage[defaultlines=2,all]{nowidow}
+
+
+\setcounter{tocdepth}{2}
+
+
+\usepackage[pdfpagelabels,implicit=false]{hyperref}
+
+\begin{document}
+
+%%%%%%%%% setting up the front pages %%%%%%%%%%%
+
+\title{College in the later years: the effects of formal education on the careers of older women}
+% It is not necessary that the title be entered in all caps (though you can if you want to); the class file will capitalize it automatically.
+%
+% You may use linebreaks (meaning, \\) in the title, like this:
+% \title{College in the later years: the effects of formal\\ education on the careers of older women}
+
+
+\author{Carol A. Smith} % do NOT use all capitals here! There are places in the front pages where it shouldn't be capitalized. And in places where it should, the class file will do it.
+
+
+\AuthorDegrees{B.A., Columbia University\\
+M.S., University of Massachusetts Boston\\
+Ph.D., University of Massachusetts Boston}
+
+\DirectedBy{Professor Francis Jones} % normally this should be the same person as the Chairperson of Committee, in the first \CommitteeMember entry
+
+\ProgramName{Applied Physics Program} 
+
+\DegreeMonthYear{May}{2025} 
+
+\ThesisOrDissertation{Dissertation}
+% \ThesisOrDissertation{Thesis}
+\DegreeName{Doctor of philosophy} 
+
+%%%%%%%%
+%%%%%%%% setting up the people on the signature page
+%%%%%%%%
+
+\ProgramDirector{%
+Chandra Yelleswarapu, Program Director\\
+Applied Physics Program
+}
+
+\DeptChairperson{%
+Rahul Kulkarni, Chair\\
+Department of Physics
+}
+
+% The committee members will appear in order in which they are added by the \CommitteeMember{ command
+
+\CommitteeMember{%
+Francis Jones, Associate Professor\\
+Chairperson of Committee
+}
+
+\CommitteeMember{%
+Zhiling Ma, Associate Professor\\
+Member
+}
+
+
+% add other committee members as needed, e.g.,
+% \CommitteeMember{%
+% Natalia Smirnova, Professor\\
+% Member
+% }
+
+% external member is usually listed as the final member
+\CommitteeMember{%
+Catherine Smith, MD\\
+Bay City Hospital\\
+Member
+}
+
+
+\PrintTitlePage
+\PrintCopyrightPage
+\PrintSignaturetPage
+
+
+
+\begin{UMBAbstract}
+In this work, we show\ldots
+\end{UMBAbstract}
+
+\newpage
+
+\topmatter{\ToCListls{ACKNOWLEDGMENTS}}
+
+\doublespacing
+Many thanks to\ldots
+
+\newpage
+\PrintToCLoFLoT
+
+\SetUpMainText
+
+
+% you may choose to keep different parts of the text (e.g., each different chapter) as a separate file. For example, your introduction might be in the file ch_introduction.tex . Then, in the main document, you just put the command
+% \input{ch_introduction}
+
+%%%%% command for chapters
+%%%%% for reasons elxplained in the class file, you should use the command \UMBchapter rather than the usual \chapter
+%%%%%
+
+\UMBchapter{Introduction}
+\label{ch:introduction}
+
+In this thesis, \cite{delone_1985} is used\ldots
+
+
+%%%% However, for the lower-level sectionings, use the standard commands, i.e. \section, \subsection, and \subsubsection
+\section{This section title has math: $e^{i\pi}+1=0$}
+\label{sec:section_example}
+
+Here is some text\ldots
+
+\UMBchapter{Here is a much longer chapter title, which will take several lines in the table of contents}
+\label{ch:second_chapter}
+
+There will be a figure later, namely, Fig.~\ref{fig:myfig}.
+
+In Ch.~\ref{ch:introduction}, we saw\ldots We refer to \cite{cooper1988_1} for more discussion.
+
+\section{Another section, this one with a quite a bit longer title}
+\label{sec:section_another_example}
+
+More text. There is a table on p.~\pageref{tabl:mytable}, namely, Table~\ref{tabl:mytable}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.3\textwidth]{smiley_figure}
+    \caption[Here is an example of a figure.]{Here is an example of a figure. Note that the caption can be quite long, but in the table of figures, we need to include only the first sentence. This is done by entering the first sentence as an optional argument to the caption command, as we've done here.}
+    \label{fig:myfig}
+\end{figure}
+
+
+\subsection{Here is a subsubsection}
+\label{subsec:subsection_example}
+Yet more text.
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Some parameters & Something else & More stuff \\ \hline
+George & Carol & John \\ 
+Sam & $e^{-i \pi}$ & Luna \\
+ Liz & Donna & Jack \\
+ \hline
+\end{tabular}
+ \caption[A silly nonsense table.]{A silly nonsense table. As with figures, the caption can be long, but only the first sentence is included in the list of tables.}
+ \label{tabl:mytable}
+\end{table}
+
+\section{And anoter section}
+\label{sec:further_section}
+And yet more text.
+
+
+\SetUpBibliography
+\bibliographystyle{ieeetr} % you can use a different bibliography style if you wish
+\bibliography{my_bibtex_references}
+
+\end{document}

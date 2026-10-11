@@ -1,0 +1,383 @@
+% !TeX document-id = {14b3cd72-aa81-489c-8c86-2a62d262f7af}
+\documentclass[12pt]{article}
+%https://github.com/gpoore/minted/issues/231
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
+\usepackage{minted}
+\usepackage{mathtools}
+
+%\usepackage[letterpaper, margin=2in]{geometry}
+\usepackage[letterpaper, left=1.25in, top=1.0in, right=1.0in, bottom=1.1in]{geometry}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{tocloft}
+\usepackage[printonlyused,withpage]{acronym}
+\usepackage{xpatch}
+
+%https://tex.stackexchange.com/questions/56316/top-right-side-page-numbering
+%https://latex.org/forum/viewtopic.php?t=9622
+%Page numbering 
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+%https://bbs.archlinux.org/viewtopic.php?id=97939
+%This worked!
+%Attempt to fix special page numbering 
+\fancypagestyle{plain}{%
+	\fancyhf{}
+	\fancyhead[R]{\thepage}
+	\renewcommand{\headrulewidth}{0pt}
+}
+
+% help from here: https://tex.stackexchange.com/questions/13438/changing-the-toc-style-of-an-article-document-class 
+%https://tex.stackexchange.com/questions/53898/how-to-get-lines-with-dots-in-the-table-of-contents-for-sections
+%\renewcommand\cftsecfont{\normalfont}
+%\renewcommand\cftsecpagefont{\normalfont}
+%\renewcommand{\cfttableader}{\cftdotfill{\cftdotsep}}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+%\renewcommand{\cftsecleader}{\cftdotfill{\cftsecdotsep}}
+\renewcommand{\cftfigleader}{\cftdotfill{\cftdotsep}}
+
+
+%\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} 
+\renewcommand\cftsecdotsep{\cftdot}
+\renewcommand\cftsubsecdotsep{\cftdot}
+
+%\renewcommand{\listfigurename}{}
+
+
+
+
+\linespread{1.5}
+%opening
+%\title{Developing Biologically-Inspired Flexible Data Fusion Neural Networks}
+
+\title{Your Dissertation Title Here}
+
+\author{Your name Here}
+
+\date{Month Year of your graduation date}
+
+%\usepackage[utf8]{inputenc}
+
+
+
+%\inputencoding{utf8}
+%\usepackage[style=ieee, backend=biber, bibencoding=utf8]{biblatex}
+%\usepackage[backend=biber]{biblatex}
+%\addbibresource{bibliography.bib}
+%\inputencoding{ascii}
+%bibencoding=utf8
+%Take this out if it causes issues%
+%\bibliography{bibliography} %
+
+
+\begin{document}
+%https://www.overleaf.com/learn/latex/How_to_Write_a_Thesis_in_LaTeX_(Part_5)%3A_Customising_Your_Title_Page_and_Abstract
+%\newpage
+%\thispagestyle{empty}
+\pagenumbering{roman}
+\thispagestyle{empty}
+%\begin{titlepage}
+	\begin{center}
+		\vspace*{1cm}
+		\section*{Title of Your Dissertation Here}
+		\vspace*{0.5cm}
+		%\textbf{Mary Everett}
+		\vfill
+		A Dissertation \\ Presented in Partial Fulfillment of the Requirements for the  \\ Degree of Doctor of Philosophy \\ with a \\ Major in Computer Science \\ in the \\ College of Graduate Studies \\ University of Idaho \\ by \\ Your Name Here
+		
+		\vspace*{0.5cm}
+		\vspace*{\fill
+		}
+		Approved by: \\
+		Major Professor: Your Major Professor, PhD. \\
+		Committee Members: Member Name 1, PhD.; Member Name 2, PhD.; Member Name 3, PhD.\\
+		Department Administrator: Department Head Name, PhD.\\
+		\vspace*{0.3cm}
+		\vspace*{\fill}
+		Graduation Month Year 
+	\end{center}
+%\end{titlepage}
+%\maketitle
+
+
+
+
+\newpage
+%\pagenumbering{roman}
+%\addcontentsline{toc}{section}{\protect\numberline{\textbf{Abstract}}}
+%\addcontentsline{toc}{section}{\textbf{Abstract}}
+
+\setcounter{secnumdepth}{-1}
+\section{Abstract}
+Put your abstract here. 
+%\end{abstract}
+
+
+
+\newpage
+%\addcontentsline{toc}{section}{\protect\numberline{\textbf{Acknowledgments}}}
+\section{Acknowledgments}
+Thank your major professor, committee members, and anyone else who has helped you prepare this document. 
+
+ 
+\newpage
+\begin{center}
+\vspace*{\fill}
+%\addcontentsline{toc}{section}{\protect\numberline{\textbf{Dedication}}}
+\section{Dedication}
+
+
+%This is a comment
+This section is optional, but is nice to include if you would like to dedicate to someone or a group of special people in your life. This could include your parents, significant other, a mentor, etc. 
+
+
+ 
+\vspace*{\fill}
+\end{center}
+\newpage
+
+%https://tex.stackexchange.com/questions/458959/bad-right-margins-in-list-of-tables-and-list-of-figures 
+%For some completely unknown reason, this makes these auto-generated pages respect the margins. 
+\sloppy
+\setcounter{tocdepth}{2}
+\tableofcontents 
+\newpage
+%This is your table of contents
+\addcontentsline{toc}{section}{\protect{\textbf{List of Figures}}}
+%\addcontentsline{toc}{section}{\protect\numberline{\textbf{List of Figures}}}
+%\section{List of Figures}
+%This is your list of figures
+\listoffigures
+\newpage
+\fussy 
+%End need of margin respect, again for unknown reasons 
+
+%https://tex.stackexchange.com/questions/492175/how-to-generate-list-of-abbreviations-in-latex
+%This is your list of acronyms - I think you have to manually alphabetize
+\section{List of Acronyms}
+%That worked.  - Making spacing consistent 
+\begin{acronym}[FIVE]\itemsep=-3pt
+	\acro{AE}{Autoencoder}
+	\acro{AI}{Artificial Intelligence}
+	\acro{ANN}{Artificial Neural Network}
+	\acro{CNN}{Convolutional Neural Network}
+	\acro{IoT}{Internet of Things}
+	\acro{GA}{Genetic Algorithm}
+	\acro{GPUs}{Graphics Processing Units}
+	\acro{LSTM}{Long Short Term Memory Network}
+	\acro{MAE}{Mean Absolute Error}
+	\acro{MAPE}{Mean Average Percentage Error}
+	\acro{PA}{Precision Agriculture}
+	\acro{QARM}{Quantitative Association Rule Mining}
+	\acro{RNN}{Recurrent Neural Networks}
+	\acro{RMSE}{Root Mean Squared Error}
+	\acro{TPUs}{Tensor Processing Units}
+	\acro{MSE}{Mean Squared Error}
+\end{acronym}
+
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{secnumdepth}{2}
+\section{Introduction}
+Introduction section here
+
+\subsection{General Motivation}
+General motivation subsection, if you want it.
+
+
+\subsection{Specific Application Area Motivation}
+Specific area you are working in 
+Note - after this we started a new page. This was a hack for a page straggler line that UI doesn't like in dissertations. 
+%This line gets rid of a PAGE STRAGGLER 
+\newpage
+
+
+\subsubsection{This is a sub sub section}
+
+Leaving a paragraph in for an example citation. 
+A 2012 UN Article titled \textquotedblleft Feeding the World Sustainably\textquotedblright writes: \textquotedblleft According to estimates compiled by the Food and Agriculture Organization (FAO), by 2050 we will need to produce 60 per cent more food to feed a world population of 9.3 billion\textquotedblright \cite{un}.  
+
+
+\subsection{Introduction Summary}
+Summarize your Introduction 
+\newpage 
+
+\section{Review of Work}
+This is where your citations will go. Usually give a summary sentence or two per paper, or a paragraph of summary that applies to several papers. 
+
+\subsection{Specific Area in Review 1}
+I left some example text here for citation, acronym, equations, and image examples. 
+
+\ac{ANN}s are perhaps the most popular Artificial Intelligence tool currently in existence. ANNs are not a new technique (the basis for the design was developed in the 1940s \cite{NNHistory}), but developments in computational power, memory, and availability of large datasets have caused an explosion of interest in their use over the last decade.
+ 
+ANNs are loosely analogous to a human brain architecture. Neural networks consist of nodes, which are organized into layers. For a basic, fully connected feedforward ANN, each node in a layer is connected to every node in the layer before and after. An input layer passes data to the network, typically in vectorized form, while the output layer produces information relevant to whatever task the ANN is trained for. 
+
+The method of connection between nodes in a network consists of weight and bias values. Each input to the node is multiplied with a specific weight, and then the bias term is added. This value is then processed by an activation function to introduce non-linear learning capabilities to the network. For \emph{x}, a vector of inputs, \emph{w} a weight vector, \emph{b} a bias vector, and $\theta$ an activation function, the output of a node \emph{n} is expressed in relation to the inputs in Equation \ref{NN Base Equation}:
+
+\begin{equation}\label{NN Base Equation}
+ n = \theta(x*w + b)
+\end{equation}
+
+where \emph{x}*\emph{w} is an element-wise multiplication followed by summation. 
+
+Figure \ref{fig:Diagrams_NN} illustrates the basic structure of an artificial neural network.
+
+\begin{figure}[!htbp]
+	\includegraphics[width=\linewidth]{"figures/Diagrams_NN"}
+	\caption{The basic structure of an artificial neural network. There are often multiple hidden layers.}
+	\label{fig:Diagrams_NN}
+\end{figure}
+
+While there exist tools and tricks to help mitigate these problems (the Adam Optimizer for the learning rate, dropout for overfitting, etc.). crafting neural networks that will perform well on a given task is not always straightforward. Network designers often use rules of thumb or transfer learning, where good performance on one network for a task can be used as a baseline for another task.
+
+
+
+For a simple feed-forward fully connected neural network, data is fed to the network as a vector. This prevents a network from learning spatial correlations on more structured data. Another form of ANN, a \ac{CNN}, helps mitigate this problem. 
+
+\subsection{Specific Area in Review 2}
+Similar to previous section. 
+
+
+\subsection{Add Subsections for However Many Review Areas You Have}
+Just like your first ones. 
+
+\subsection{Review of Work Summary}
+Summarize your review of work section.
+\newpage 
+
+\section{Dissertation Focus Areas and Datasets}
+You might organize your dissertation differently. This is where I explained my focus areas and described my datasets. 
+
+\subsection{Focus Areas}
+I made a list of my focus areas. 
+
+
+
+\subsection{Datasets}
+I explained each dataset in a sub section 
+
+\subsubsection{Dataset Descriptions}
+\paragraph{Dataset 1:}  One paragraph overview on dataset 1.  
+
+
+\paragraph{Dataset 2:} Overview on Dataset 2
+
+\subsubsection{Dataset Choice Justification}
+I explained why I picked them. 
+
+\subsection{Focus and Datasets Summary}
+Summarize this section 
+\newpage 
+
+
+\section{Methodology and Proposed Experiments}
+The focus of this section of the dissertation is to explain your methodology and experimental plan
+
+\subsection{Research Focus 1}
+This subsection is covers the methodology and design related to research focus one
+
+\subsubsection{Research Questions}
+ I listed mine 
+\begin{enumerate}
+	\item \textbf{What is my research question 1?} 
+	Explain
+	\item \textbf{What is my research question 2?}
+	Explain 
+	
+	\item \textbf{What is my research question 3?}
+	Explain
+
+\end{enumerate}
+ 
+
+\subsubsection{Experiment Design}
+Explain the experiments 
+
+\paragraph{Experiment 1: Broad Investigative Category}
+Explain. Use Diagrams. 
+ 
+
+\paragraph{Experiment 1: Broad Investigative Category}
+Explain. Use Diagrams. 
+ 
+
+ 
+\subsubsection{Model Metrics}
+
+Explain your metrics for how you are measuring performance and provide equations for how they are calculated. 
+
+\newpage
+
+
+
+\subsection{Methodology Summary}
+Summarize your experimental methodology. 
+\newpage 
+
+\section{Experimental Setup}
+This section describes the specific setups for each experiment and trial run. 
+
+
+\subsubsection{Data Formatting}
+Explained how the data was manipulated, transformed, etc. 
+
+
+\subsubsection{Models to Run}
+Explained individual models. 
+
+
+\subsubsection{Experiment Parameters}
+Explained the parameters that changed between models runs. 
+
+
+
+\subsection {Experiment Analysis Techniques and Assumptions}
+ 
+This section I just used for more background on the statistical analysis techniques used for evaluation.  
+
+
+\subsection{Experimental Setup Summary}
+Summarize your experimental setup section. 
+\newpage
+
+\section{Results and Discussion}
+I would break up this section by research question or experimental runs. Add lots of tables and figures. Make sure this section is clean and logically organized, because it is easy to get lost. 
+
+
+
+\subsection{Results Summary}
+Summarize your results.  
+\newpage 
+
+\section{Study Limitations and Future Work }
+This section acknowledges the limitation of the experiments conducted in the dissertation particularly in the areas of datasets and model architectures. It also outlines several different directions of future work that could be pursued based on the results obtained. 
+
+\subsection{Study Limitations}
+Explain your limitations. 
+
+\ 
+
+\subsection{Future Work}
+Explain where you are going next.  
+
+\subsubsection{Limitations and Future Work Summary}
+Summarize your limitations and future work. 
+
+\newpage 
+
+\section{Conclusions}
+Bring it home! What did you learn? 
+\newpage
+
+
+\bibliographystyle{IEEEtran}
+%\bibliographystyle{unsrt}
+\interlinepenalty=10000
+\bibliography{bibliography}
+
+\end{document}

@@ -1,0 +1,144 @@
+\chapter{INTRODUCTION}
+%\chapter[short entry]{long title}
+\label{chap:intro}
+
+This document provides a simple template of how the provided \verb+iiitdm.cls+ \LaTeX\ class is to be used.  Also provided are several valuable tips for doing various things that might be useful when
+writing your thesis. 
+
+Before reading any further, please note that you are strongly advised against changing any of the formatting options used in the class provided in this directory unless you are absolutely sure that it
+does not violate the IIITDM Kancheepuram formatting guidelines. \emph{Please do not change the margins or the spacing.}   
+
+It is also a good idea to take a quick look at the formatting guidelines. In fact, I would strongly suggest you go through them even before you venture into the present template. 
+
+To compile your sources, run the following from the command line:
+\begin{verbatim}
+% latex thesis.tex
+% bibtex thesis
+% latex thesis.tex
+% latex thesis.tex
+\end{verbatim}
+Modify this suitably for your sources. Alternatively, you can use standard \TeX environments like \TeX Studio, \TeX Maker, etc., to make this process much simpler.
+
+To generate PDFs with the links from the \verb+hyperref+ package, use the following command:
+\begin{verbatim}
+% dvipdfm -o thesis.pdf thesis.dvi
+\end{verbatim}
+
+\section{Package Options}
+This file serves as a minimal template to start formating your thesis. The \verb+iiitdm+ class can be used by simply using something like this:
+\begin{verbatim}
+\documentclass[PhD]{iiitdm}  
+\end{verbatim}
+
+For getting a print form of the same thesis, with the chapters starting on the right side, and appropriate blank pages wherever necessary, add the option \verb+PrntForm+ like:
+\begin{verbatim}
+\documentclass[PhD,PrntForm]{iiitdm}  
+\end{verbatim}
+
+There are also default color bars on the title page in the new format. For the Ph.D. thesis, the default would be black. There is also 'NoColor' option you can give not to print this color bar.
+
+\begin{verbatim}
+\documentclass[PhD,PrntForm,NoColor]{iiitdm}  
+\end{verbatim}
+
+The title page formatting depends on how large or small your thesis title is.  Consequently, it might require some hand-tuning.  Edit the options in the \verb+iiitdm.cls+ file for it to suitably do this. I recommend doing this as a first step once your title is final.
+
+To write a synopsis, use the \verb+synopsis.tex+ file as a simple template. The synopsis option turns this on and can be used as shown below:
+\begin{verbatim}
+\documentclass[PhD,synopsis]{iiitdm}                                
+\end{verbatim}
+
+For synopsis, the concept of 'Blue' or 'Yellow' tape to represent the draft and approved reports must be reflected on the title page of respective documents in the new guidelines. Remember that there is a compliance-checking staff at the Academics Cell who would ensure you submit it with the proper color coding. Else, you might have to re-make and re-submit the report again. Options to give would be 'BlueTape' or 'YellowTape' and can be used as shown below:
+\begin{verbatim}
+\documentclass[PhD,synopsis,BlueTape]{iiitdm}                                
+\end{verbatim}
+
+Like the thesis, there is a 'NoColor' option for the synopsis, but it will not be that useful. Also, the default option gives a black color bar.
+
+Suppose you want to modify the spacing between the lines/text of the title page. In that case, it can be quickly done by editing the class file if you are familiar with \LaTeX and requiring some minor fine-tuning.
+
+This sample file uses the \verb+hyperref+ package that makes all labels and references clickable in both the generated DVI and PDF files.  These are very useful when reading the document online and do not affect the output when the files are printed.
+
+\section{Example Figures and Tables}
+
+Figure~\ref{fig:iiitdm} shows a simple figure with sub-figures and sub-captions for illustration along with a long caption using \verb+subcaption+ package.  A sample commented code using \verb|resizebox| has also been given if you prefer to use that instead. Either way, the formatting of caption text is automatically single-spaced and indented.
+
+%%%  Sample figure-subfigure using 'subcaption' package
+% Notice the values of \textwidth and \linewidth used to achieve the placement of sub-figures
+\begin{figure}[htpb] % '%' is required between two subfigures to keep the next subfigure in the same row
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{iiitdmlogo.png}
+		\caption{}
+		\label{fig:iiitdma}
+	\end{subfigure}%
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{iiitdmlogo.png}
+		\caption{}
+		\label{fig:iiitdmb}
+	\end{subfigure} 	% A blank line next to change the row
+
+	\begin{subfigure}{1\textwidth}
+		\centering
+		\includegraphics[width=0.45\linewidth]{iiitdmlogo.png}
+		\caption{}
+		\label{fig:iiitdmc}
+\end{subfigure}
+    \caption {Two IIITDM logos in a row and another in the next row (a) One logo, (b) Adjacent logo, and (c) Another logo in the next row. It is also an example of a very long figure caption that wraps around more than two lines. Notice that the caption is single-spaced.}
+\label{fig:iiitdm}
+\end{figure}
+
+In the new format, emphasis has been made on the proper copyright compliance when reusing figures/images/tables from other authors and sources. Appropriate attributions and usage policies have to be included within the thesis certificate page. An example has been provided for using the IIITDM Kancheepuram logo as a sample figure in the present template.
+
+Table~\ref{tab:sample} shows a sample table with the caption placed correctly. The caption for this should always be placed before the table, as shown in the example. Like figure captions, the text is automatically single-spaced and indented.
+
+\begin{table}[htbp]
+  \caption{A sample table with its caption placed appropriately. This is also very long and is single-spaced. Also notice how the text is aligned.}
+  \begin{center}
+  \begin{tabular}[c]{|c|r|} \hline
+    $x$ & $x^2$ \\ \hline
+    1  &  1   \\
+    2  &  4  \\
+    3  &  9  \\
+    4  &  16  \\
+    5  &  25  \\
+    6  &  36  \\
+    7  &  49  \\
+    8  &  64  \\ \hline
+  \end{tabular}
+  \label{tab:sample}
+  \end{center}
+\end{table}
+
+\section{Bibliography with BIB\TeX}
+
+I strongly recommend that you use BIB\TeX\ to generate your bibliography automatically.  It makes managing your references much more effortless.  It is an excellent way to organize your references and reuse them. You can use one set of entries for your references and cite them in your thesis, papers, and reports.  If you have not used it anytime before, please invest some time learning how to use it. Also, you can use reference managers like Mendeley, Zotero, EndNote, etc., to import this bib-formatted library with all your references. It makes the citation process less painful. The \verb+refs.bib+ file used in this template is one such example.
+
+I have included a simple example BIB\TeX\ file along in this directory called \verb+refs.bib+.  The \verb+iiitdm.cls+ class package used in this thesis and for the synopsis adopts the \verb+natbib+ package to format the references with a customized bibliography style. It is provided as the \verb+iiitdm.bst+ file in the directory containing \verb+thesis.tex+.  Documentation for the \verb+natbib+ package should be available in your distribution of \LaTeX.  To cite the author along with the author name and year, use \verb+\cite{key}+ where \verb+key+ is the citation key for your bibliography entry.  You can also use \verb+\citet{key}+ to get the same effect.  To make the citation without the author name in the main text but inside the parenthesis, use \verb+\citep{key}+.  The following paragraph shows how citations can be used in text effectively.
+
+More information on BIB\TeX\ is available in the book by \cite{lamport:86}, which is a citation for the book. \cite{lamport1:86} is the same book citation in the old format where the year comes at the end. Now to cite the references within parentheses. There are many references~\citep{lamport:86} that explain how to use BIB\TeX.  Read the \verb+natbib+ package documentation for more details on how to cite things differently.
+
+Here are other references, for example.  The present study has been carried out in OpenFOAM, which is based on \cite{Weller1998}. The Lagrangian solver has two injection models based on the nature of the injection source, viz. \texttt{pointInjection} model, which injects the spray at a given point, and \texttt{detailedSprayProfileInj- ection} model, which injects the spray over a spherical sector of a given injection radius. The configuration and experimental data to compare the spray statistics is taken from \cite{Zhou2015a}
+
+The above paragraphs had journal and book references. Other sample references to check are: for thesis \cite{Syed2013,Cheekati2014,Syed2020}, for conferences \cite{Sasidharan2017,Syed2018,Syed2018a}, for manual \cite{Ayachit2015},  for book chapter \cite{Ahren2005}.One more reference, \cite{Roenby2016} with arxiv and doi.
+
+Python~\citep{py:python} is a programming language and is cited here to show how to cite something that is best identified with a URL. For the technical report, \cite{Syed2015} is an example, and \cite{UnitedNations2019} is an example of a non-technical report.
+
+\section{Other useful \LaTeX\ packages}
+
+The following packages might be helpful when writing your thesis. It is also an illustration of using pointers in your thesis where the text spacing within each pointer is single-spaced. There is a double spacing between two adjacent pointers.
+
+\begin{itemize}  
+	\item It is handy to include line numbers in your document. That way, it is straightforward for people to suggest corrections to your text. I recommend the usage of the \texttt{lineno} package for this purpose. It is not a standard package but can be obtained on the internet. The directory containing this file should contain a \verb|lineno| directory that includes the package and documentation for it.
+	
+	\item The \texttt{listings} package should be available with your
+	distribution of \LaTeX.  This package is handy when one needs to list source code or pseudo-code.
+	
+	\item For special figure captions the \texttt{ccaption} package may be useful.  It is advantageous if one has a figure that spans more than two pages, and you need to use the same figure number.
+	
+	\item The notation page can be entered manually or automatically generated using the \texttt{nomencl} package.
+	
+\end{itemize}
+
+More details on how to use these specific packages are available, along with the documentation of the respective packages.

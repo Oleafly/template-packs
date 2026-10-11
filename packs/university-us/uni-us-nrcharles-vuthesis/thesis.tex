@@ -1,0 +1,110 @@
+\documentclass [12 pt, letterpaper]{report}
+%This is an example of how VUThesis style can be used.
+%https://github.com/nrcharles/VUThesis
+\usepackage{vuthesis}
+\usepackage{etoolbox}
+
+\makeatletter
+\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter head
+\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{}{}{}% Removes space above \chapter* head
+\makeatother
+
+\usepackage{textcomp}
+\usepackage{gensymb}
+\usepackage{cite}
+\usepackage[utf8]{inputenc}
+\usepackage{blindtext} % Demotext
+\usepackage[english]{babel}
+\usepackage{setspace}
+\usepackage{glossaries}
+\usepackage{subscript}
+\usepackage[T1]{fontenc}
+\usepackage{fontspec}
+%\setmainfont[Mapping=tex-text]{Georgia}
+\setmainfont[Mapping=tex-text]{Times New Roman}
+%\setmainfont[Mapping=tex-text]{Hoefler Text}
+\setsansfont[Mapping=tex-text]{Helvetica Neue}
+\setmonofont{Monaco}
+%\linespread{1.05}
+%\linespread{2}
+\usepackage{microtype}
+
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption}
+\usepackage{booktabs}
+\usepackage{csvsimple}
+\usepackage{array}
+
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{hyperref}
+
+\usepackage{lettrine}
+\usepackage{paralist}
+
+\usepackage{rotating}
+\usepackage{pdflscape}
+\usepackage{titlesec}
+%\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+%\pagestyle{fancy}
+%\rfoot{Draft: \today}
+%\cfoot{}
+%\lfoot\thepage{}
+
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{layouts}
+\pagenumbering{roman}
+
+\usepackage[firstpage]{draftwatermark}
+\title{Using \LaTeX \ to write a thesis}
+
+\author{Nathan Charles}
+
+\begin{document}
+\begin{spacing}{2.0}
+
+\principaladviser{Pricipal adviser\\Title}
+\coprincipaladvisor{Co-principal adviser\\Title}
+\firstreader{First Reader\\Title}
+\secondreader{Second Reader\\Title}
+
+\dedication{Thesis students using \LaTeX}
+%\acknowledgments{\input{./thanks.tex}}
+\acknowledgments{Those who walked before...}
+
+%\authorstatement{I'm not responsible blah blah blah}
+
+\frontmatter
+
+%hack to add Abstract to table of contents
+\addcontentsline{toc}{chapter}{Abstract}                                                                                            
+\markboth{Abstract}{Abstract}
+\begin{abstract}
+\noindent This is an example abstract but can also be file \textbackslash input.
+Make sure you use something like Mendeley or Endnote to manage your citations.
+Example citations\cite{Vari}\cite{Mori2008}.
+%\input{./abstract.tex}
+\end{abstract}
+
+\blinddocument 
+
+\end{spacing}
+
+\addcontentsline{toc}{section}{References}
+\renewcommand{\bibname}{References}
+\bibliographystyle{unsrt}
+
+\bibliography{latex}
+
+\appendix
+\addcontentsline{toc}{chapter}{APPENDICES}
+
+\chapter{One}
+Appendix
+
+\end{document}

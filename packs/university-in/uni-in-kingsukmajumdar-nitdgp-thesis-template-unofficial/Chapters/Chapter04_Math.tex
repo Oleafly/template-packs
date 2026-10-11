@@ -1,0 +1,239 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title: Chapter 4 - Mathematical Equations with siunitx Package
+% Purpose: IEEE standard mathematical notation using modern siunitx
+% Compiler: pdflatex
+% OS: Manjaro 
+% Version: V2 (siunitx)
+% Written on: July 06, 2025
+% Revision Date: July 06, 2025
+% Author: Kingsuk Majumdar
+% Copyright (c) 2025 Kingsuk Majumdar
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Mathematical Equations and IEEE Standards}
+\label{chap:math}
+
+This chapter demonstrates IEEE standards for mathematical equations using the modern siunitx package for proper unit notation and formatting.
+
+\section{Simple Mathematical Equation}
+\label{sec:simple_equation}
+
+Equation \ref{eq:ohms_law} presents Ohm's law, which is fundamental to electrical circuit analysis \cite{alexander2016fundamentals}. This demonstrates the standard IEEE format for mathematical equations with proper numbering and citation.
+
+\begin{equation}
+	V = I \cdot R
+	\label{eq:ohms_law}
+\end{equation}
+
+where $V$ is the voltage in \unit{\volt}, $I$ is the current in \unit{\ampere}, and $R$ is the resistance in \unit{\ohm}.
+
+\section{Multi-line Mathematical Equation}
+\label{sec:multiline_equation}
+
+The power flow equations for an electrical power system require multi-line mathematical expressions. Equations \ref{eq:power_flow_P}, \ref{eq:power_flow_Q}, and \ref{eq:power_flow_S} show the complete power flow formulation using IEEE alignment standards \cite{kundur1994power}.
+
+\begin{align}
+	P_i &= V_i \sum_{j=1}^{n} V_j \left[ G_{ij} \cos(\delta_i - \delta_j) + B_{ij} \sin(\delta_i - \delta_j) \right] \label{eq:power_flow_P} \\
+	Q_i &= V_i \sum_{j=1}^{n} V_j \left[ G_{ij} \sin(\delta_i - \delta_j) - B_{ij} \cos(\delta_i - \delta_j) \right] \label{eq:power_flow_Q} \\
+	S_i &= P_i + jQ_i = V_i I_i^* \label{eq:power_flow_S}
+\end{align}
+
+where:
+\begin{itemize}
+	\item $P_i$ is the real power injection at bus $i$ (\unit{\watt})
+	\item $Q_i$ is the reactive power injection at bus $i$ (\unit{\volt\ampere})  
+	\item $S_i$ is the complex power at bus $i$ (\unit{\volt\ampere})
+	\item $V_i$ is the voltage magnitude at bus $i$ (\unit{\volt})
+	\item $\delta_i$ is the voltage angle at bus $i$ (\unit{\radian})
+	\item $G_{ij}$ is the conductance of line $i$-$j$ (\unit{\siemens})
+	\item $B_{ij}$ is the susceptance of line $i$-$j$ (\unit{\siemens})
+	\item $n$ is the total number of buses
+\end{itemize}
+
+\section{Long Multi-line Mathematical Equations}
+\label{sec:long_equations}
+
+For complex electrical engineering formulations, long equations often require breaking the right-hand side into multiple lines. Equation \ref{eq:long_transfer_function} demonstrates a high-order transfer function for a power electronic converter with proper IEEE line breaking \cite{mohan2003power}.
+
+\begin{equation}
+	\begin{split}
+		H(s) &= \frac{K_p \cdot \omega_n^2 \cdot (1 + sT_z)}{s^4 + 2\zeta_1\omega_{n1}s^3 + \omega_{n1}^2s^2 + 2\zeta_2\omega_{n2}s + \omega_{n2}^2} \\
+		&\quad \times \frac{(1 + sT_{z1})(1 + sT_{z2})}{(1 + sT_{p1})(1 + sT_{p2})(1 + sT_{p3})} \\
+		&\quad \times \frac{\exp(-sT_d)}{1 + sT_f} \cdot \frac{1}{1 + \frac{s}{\omega_c}}
+	\end{split}
+	\label{eq:long_transfer_function}
+\end{equation}
+
+where $K_p$ is the proportional gain, $\omega_n$ is the natural frequency (\unit{\radian\per\second}), $T_z$, $T_{z1}$, $T_{z2}$ are zero time constants (\unit{\second}), $T_{p1}$, $T_{p2}$, $T_{p3}$ are pole time constants (\unit{\second}), $T_d$ is the delay time (\unit{\second}), $T_f$ is the filter time constant (\unit{\second}), and $\omega_c$ is the cutoff frequency (\unit{\radian\per\second}).
+
+\section{Conditional Mathematical Equations}
+\label{sec:conditional_equations}
+
+Conditional equations are frequently used in electrical engineering for piecewise functions, control algorithms, and protection systems. Equation \ref{eq:pwm_switching} shows the switching function for a pulse-width modulated inverter \cite{rashid2017power}.
+
+\begin{equation}
+	S_a(t) = \begin{cases}
+		1 & \text{if } v_{\text{control}}(t) > v_{\text{triangular}}(t) \\
+		0 & \text{if } v_{\text{control}}(t) \leq v_{\text{triangular}}(t)
+	\end{cases}
+	\label{eq:pwm_switching}
+\end{equation}
+
+Another example is the fault current calculation in power systems, shown in Equation \ref{eq:fault_current}:
+
+\begin{equation}
+	I_{\text{fault}} = \begin{cases}
+		\frac{V_{\text{pre-fault}}}{Z_1 + Z_2 + Z_0} & \text{if single line-to-ground fault} \\
+		\frac{V_{\text{pre-fault}}}{Z_1 + Z_2} & \text{if line-to-line fault} \\
+		\frac{V_{\text{pre-fault}}}{Z_1} & \text{if three-phase fault} \\
+		\frac{V_{\text{pre-fault}}}{\sqrt{3}(Z_1 + Z_2 + Z_0)} & \text{if double line-to-ground fault}
+	\end{cases}
+	\label{eq:fault_current}
+\end{equation}
+
+where $Z_1$, $Z_2$, and $Z_0$ are the positive, negative, and zero sequence impedances respectively (\unit{\ohm}), and $V_{\text{pre-fault}}$ is the pre-fault voltage (\unit{\volt}).
+
+For control systems, the discrete-time control law can be expressed as shown in Equation \ref{eq:discrete_control}:
+
+\begin{equation}
+	u[k] = \begin{cases}
+		K_p e[k] + K_i \sum_{j=0}^{k} e[j] + K_d (e[k] - e[k-1]) & \text{if } |e[k]| > \varepsilon \\
+		0 & \text{if } |e[k]| \leq \varepsilon \text{ and } k > k_{\text{settle}} \\
+		u_{\text{nominal}} & \text{if system in steady-state mode}
+	\end{cases}
+	\label{eq:discrete_control}
+\end{equation}
+
+where $u[k]$ is the control output at sample $k$, $e[k]$ is the error signal, $K_p$, $K_i$, $K_d$ are the PID gains, $\varepsilon$ is the error threshold, and $k_{\text{settle}}$ is the settling time index.
+
+\section{IEEE Unit Standards with siunitx}
+\label{sec:ieee_units}
+
+According to IEEE standards, units must be written in roman (upright) font, not italic, and follow specific formatting rules \cite{ieee2018style}. The siunitx package provides excellent unit formatting commands. Table \ref{tab:ieee_units} shows the correct notation for common electrical engineering units.
+
+\textbf{siunitx Package Commands:}
+\begin{itemize}
+	\item \texttt{\textbackslash SI\{number\}\{unit\}} - for values with units: \SI{230}{\volt}
+	\item \texttt{\textbackslash unit\{unit\}} - for units only: \unit{\hertz}
+	\item \texttt{\textbackslash micro} - for micro prefix: \SI{100}{\micro\ampere}
+	\item \texttt{\textbackslash ohm} - for ohm symbol: \unit{\ohm}
+	\item \texttt{\textbackslash percent} - for percentage: \SI{5}{\percent}
+\end{itemize}
+
+\begin{table}[htbp]
+	\centering
+	\caption{IEEE Standard Unit Notation with siunitx Package}
+	\label{tab:ieee_units}
+	\adjustbox{width=\textwidth,center}{%
+		\begin{tabular}{|l|c|c|l|}
+			\hline
+			\textbf{Quantity} & \textbf{Symbol} & \textbf{Unit} & \textbf{siunitx Code} \\
+			\hline
+			Voltage & $V$ & \unit{\volt} & \texttt{\textbackslash unit\{\textbackslash volt\}} \\
+			Current & $I$ & \unit{\ampere} & \texttt{\textbackslash unit\{\textbackslash ampere\}} \\
+			Resistance & $R$ & \unit{\ohm} & \texttt{\textbackslash unit\{\textbackslash ohm\}} \\
+			Power & $P$ & \unit{\watt} & \texttt{\textbackslash unit\{\textbackslash watt\}} \\
+			Reactive Power & $Q$ & \unit{\volt\ampere} & \texttt{\textbackslash unit\{\textbackslash volt\textbackslash ampere\}} \\
+			Apparent Power & $S$ & \unit{\volt\ampere} & \texttt{\textbackslash unit\{\textbackslash volt\textbackslash ampere\}} \\
+			Energy & $W$ & \unit{\watt\hour} & \texttt{\textbackslash unit\{\textbackslash watt\textbackslash hour\}} \\
+			Frequency & $f$ & \unit{\hertz} & \texttt{\textbackslash unit\{\textbackslash hertz\}} \\
+			Capacitance & $C$ & \unit{\farad} & \texttt{\textbackslash unit\{\textbackslash farad\}} \\
+			Inductance & $L$ & \unit{\henry} & \texttt{\textbackslash unit\{\textbackslash henry\}} \\
+			Magnetic Flux & $\Phi$ & \unit{\weber} & \texttt{\textbackslash unit\{\textbackslash weber\}} \\
+			Magnetic Field & $B$ & \unit{\tesla} & \texttt{\textbackslash unit\{\textbackslash tesla\}} \\
+			Electric Field & $E$ & \unit{\volt\per\meter} & \texttt{\textbackslash unit\{\textbackslash volt\textbackslash per\textbackslash meter\}} \\
+			Conductance & $G$ & \unit{\siemens} & \texttt{\textbackslash unit\{\textbackslash siemens\}} \\
+			Impedance & $Z$ & \unit{\ohm} & \texttt{\textbackslash unit\{\textbackslash ohm\}} \\
+			Admittance & $Y$ & \unit{\siemens} & \texttt{\textbackslash unit\{\textbackslash siemens\}} \\
+			\hline
+		\end{tabular}%
+	}
+\end{table}
+
+\textbf{IEEE Unit Writing Rules with siunitx Package:}
+\begin{itemize}
+	\item Units are written in roman font: \textbf{Correct:} \SI{10}{\volt}, \textbf{Wrong:} 10~$V$
+	\item Automatic spacing: \textbf{Correct:} \SI{50}{\hertz}, \textbf{Manual:} 50~\unit{\hertz}
+	\item No period after unit symbols: \textbf{Correct:} \SI{100}{\watt}, \textbf{Wrong:} 100~W.
+	\item Use proper prefixes: \SI{11}{\kilo\volt}, \SI{5}{\mega\watt}, \SI{100}{\micro\ampere}, \SI{5}{\milli\henry}
+	\item Complex units: \SI{230}{\volt\per\meter}, \SI{50}{\ohm\per\kilo\meter}
+\end{itemize}
+
+\section{Common Mathematical Symbols}
+\label{sec:math_symbols}
+
+Table \ref{tab:math_symbols} presents common mathematical symbols used in electrical engineering with their LaTeX notation and IEEE standard representation \cite{gratzer2016more}.
+
+\begin{table}[htbp]
+	\centering
+	\caption{Common Mathematical Symbols in Electrical Engineering}
+	\label{tab:math_symbols}
+	\adjustbox{width=\textwidth,center}{%
+		\begin{tabular}{|l|c|c|l|}
+			\hline
+			\textbf{Description} & \textbf{Symbol} & \textbf{LaTeX Code} & \textbf{Usage Example} \\
+			\hline
+			\multicolumn{4}{|c|}{\textbf{Basic Operations}} \\
+			\hline
+			Multiplication & $\cdot$ & \texttt{\textbackslash cdot} & $V = I \cdot R$ \\
+			Division & $/$ & \texttt{/} & $f = 1/T$ \\
+			Plus/minus & $\pm$ & \texttt{\textbackslash pm} & $V = \SI{230 \pm 10}{\volt}$ \\
+			Proportional & $\propto$ & \texttt{\textbackslash propto} & $P \propto I^2$ \\
+			Approximately & $\approx$ & \texttt{\textbackslash approx} & $\pi \approx 3.14$ \\
+			\hline
+			\multicolumn{4}{|c|}{\textbf{Greek Letters}} \\
+			\hline
+			Alpha & $\alpha$ & \texttt{\textbackslash alpha} & Attenuation constant \\
+			Beta & $\beta$ & \texttt{\textbackslash beta} & Phase constant \\
+			Gamma & $\gamma$ & \texttt{\textbackslash gamma} & Propagation constant \\
+			Delta & $\delta, \Delta$ & \texttt{\textbackslash delta, \textbackslash Delta} & Phase angle, change \\
+			Epsilon & $\varepsilon$ & \texttt{\textbackslash varepsilon} & Permittivity \\
+			Theta & $\theta, \Theta$ & \texttt{\textbackslash theta, \textbackslash Theta} & Phase angle \\
+			Lambda & $\lambda$ & \texttt{\textbackslash lambda} & Wavelength \\
+			Mu & $\mu$ & \texttt{\textbackslash mu} & Permeability, micro \\
+			Pi & $\pi$ & \texttt{\textbackslash pi} & Mathematical constant \\
+			Rho & $\rho$ & \texttt{\textbackslash rho} & Resistivity \\
+			Sigma & $\sigma, \Sigma$ & \texttt{\textbackslash sigma, \textbackslash Sigma} & Conductivity, summation \\
+			Tau & $\tau$ & \texttt{\textbackslash tau} & Time constant \\
+			Phi & $\phi, \Phi$ & \texttt{\textbackslash phi, \textbackslash Phi} & Phase, magnetic flux \\
+			Omega & $\omega, \Omega$ & \texttt{\textbackslash omega, \textbackslash Omega} & Angular frequency, ohm \\
+			\hline
+			\multicolumn{4}{|c|}{\textbf{Complex Numbers}} \\
+			\hline
+			Imaginary unit & $j$ & \texttt{j} & $Z = R + jX$ \\
+			Real part & $\Re$ & \texttt{\textbackslash Re} & $\Re\{Z\} = R$ \\
+			Imaginary part & $\Im$ & \texttt{\textbackslash Im} & $\Im\{Z\} = X$ \\
+			Magnitude & $|Z|$ & \texttt{|Z|} & $|Z| = \sqrt{R^2 + X^2}$ \\
+			Angle & $\angle Z$ & \texttt{\textbackslash angle Z} & $\angle Z = \arctan(X/R)$ \\
+			\hline
+		\end{tabular}%
+	}
+\end{table}
+
+\section{IEEE Mathematical Writing Standards}
+\label{sec:ieee_math_standards}
+
+IEEE mathematical notation standards require \cite{ieee2018style}:
+
+\begin{itemize}
+	\item \textbf{Variables:} Written in italic font ($V$, $I$, $R$)
+	\item \textbf{Functions:} Written in roman font ($\sin$, $\cos$, $\log$, $\exp$)
+	\item \textbf{Units:} Use siunitx package commands (\texttt{\textbackslash SI\{10\}\{\textbackslash volt\}}, \texttt{\textbackslash unit\{\textbackslash hertz\}})
+	\item \textbf{Constants:} Mathematical constants in roman ($\mathrm{e}$, $\pi$)
+	\item \textbf{Operators:} Proper spacing around operators ($a + b$, not $a+b$)
+	\item \textbf{Subscripts/Superscripts:} Roman if descriptive ($V_{\mathrm{rms}}$), italic if variable ($V_i$)
+\end{itemize}
+
+Example of correct IEEE mathematical formatting using siunitx package:
+\begin{equation}
+	V_{\mathrm{rms}} = \sqrt{\frac{1}{T} \int_0^T v^2(t) \, dt} \quad \text{(\unit{\volt})}
+	\label{eq:rms_voltage}
+\end{equation}
+
+or with integrated number and unit:
+\begin{equation}
+	V_{\mathrm{rms}} = \SI{230}{\volt} \pm \SI{10}{\percent}
+	\label{eq:rms_voltage_example}
+\end{equation}
+
+The systematic application of these IEEE mathematical standards with the modern siunitx package ensures consistent, professional presentation of technical equations and expressions in electrical engineering documentation.

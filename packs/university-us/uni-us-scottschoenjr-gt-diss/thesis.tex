@@ -1,0 +1,166 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GT-DISS
+%
+%  Main file to be compiled. Required packages and
+%  their options are set in preamble.tex.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{report}
+
+% Load in required packages and settings
+\input{preamble.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Start of Document
+%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\onehalfspacing  % Sets line spacing
+\frenchspacing   % Do not add extra space after periods
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title Page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{titlePage.tex}
+\currentpdfbookmark{Title Page}{titlePage}  %add PDF bookmark for this page
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Approval Page
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{approvalPage.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Epigraph
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{epigraph.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Dedication
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{dedication.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Acknowledgments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pagenumbering{roman}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+
+% Set the page number appropriately based on the number of intro pages
+\setcounter{page}{5} 
+\input{acknowledgements.tex}
+
+%\addtocontents{toc}{\cftpagenumbersoff{chapter}} 
+
+%\currentpdfbookmark{Acknowledgments}{acknowledgments}
+%\addtocontents{toc}{\cftpagenumberson{chapter}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Table of Contents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{\singlespacing
+\tableofcontents
+}
+
+\currentpdfbookmark{Table of Contents}{TOC}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of figures and tables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\addcontentsline{toc}{chapter}{List of Tables}
+\begin{singlespace}
+	\setlength\cftbeforetabskip{0.5\baselineskip}  %manually set spacing between entries
+	\listoftables
+  \label{sec:ListOfTables}
+\end{singlespace}
+
+\clearpage
+
+\addcontentsline{toc}{chapter}{List of Figures}
+\begin{singlespace}
+\setlength\cftbeforefigskip{0.5\baselineskip}  %manually set spacing between entries
+\listoffigures
+\end{singlespace}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is the Summary (abstract should be separate document)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{summary.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Chapters
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Resume page numbering for rest of document
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1} % set the page number appropriately
+
+%%%%%%%%%%%%%%%%
+% Chapter 1
+%%%%%%%%%%%%%%%%
+
+\input{chapter1.tex}
+
+%%%%%%%%%%%%%%%%
+% Chapter 2
+%%%%%%%%%%%%%%%%
+
+\input{chapter2.tex}
+
+%%%%%%%%%%%%%%%%
+% Chapter 3
+%%%%%%%%%%%%%%%%
+
+\input{chapter3.tex}
+
+%%%%%%%%%%%%%%%%
+% Chapter 4
+%%%%%%%%%%%%%%%%
+
+\input{chapter4.tex}
+
+%%%%%%%%%%%%%%%%
+% Chapter 5
+%%%%%%%%%%%%%%%%
+
+\input{chapter5.tex}
+
+%%%%%%%%%%%%%%%%
+% Appendices
+%%%%%%%%%%%%%%%%
+
+\input{appendix.tex}
+
+%%%%%%%%%%%%%%%%
+% References
+%%%%%%%%%%%%%%%%
+
+{ \singlespacing				   
+\bibliographystyle{bibliography/jasanum} 
+\bibliography{bibliography/demoReferences}    
+}
+
+%%%%%%%%%%%%%%%%
+% Vita 
+% Only for PhD students
+% Masters students remove this line
+%%%%%%%%%%%%%%%%
+\input{vita.tex}
+
+
+\end{document}

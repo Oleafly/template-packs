@@ -1,0 +1,120 @@
+% for each entry, the comment line states whether it is required or optional, 
+% and also O for Overview and T for Thesis 
+
+%%%%% [OPTIONAL, O]
+\iftoggle{overviewannouncement}{%
+  \makeoverviewannouncement
+}{} % end \iftoggle
+
+
+%%%%% [OPTIONAL, T]
+\iftoggle{defenseannouncement}{%
+ \makedefenseannouncement
+}{} % end \iftoggle
+
+
+%%%%% [REQUIRED, O and T]
+\iftoggle{titlepage}{%
+  \maketitle
+}{} % end \iftoggle
+
+
+%%%%% [OPTIONAL, T]
+\iftoggle{dedication}{%
+\dedication{{\large To my dog, who did not eat my homework\\
+(and to my cat as well)}}
+\makededication
+}{} % end \iftoggle
+
+
+%%%%% [REQUIRED, O and T]
+\iftoggle{abstract}{%
+% add this page to the Table of Contents
+\phantomsection
+\protect\addcontentsline{toc}{chapter}{Abstract}
+%
+\begin{center}\textbf{Abstract}\end{center}
+\vspace*{0.1in}
+
+\noindent This is the abstract, as long as it needs to be \ldots
+}{} % end \iftoggle
+
+
+%%%%% [REQUIRED, T]
+\iftoggle{acknowledgements}{%
+\phantomsection
+\protect\addcontentsline{toc}{chapter}{Acknowledgements}
+\acknowledgements{
+\noindent I wish to thank many many people...
+
+\vspace{0.2in}
+\singlespacing
+
+%%%%% CHANGE HERE %%%%%
+\emph{\author}
+
+\emph{check frontmatter.tex file and insert name and date here ... }
+
+\emph{Pittsburgh, PA}
+
+\emph{\date}
+%%%%% CHANGE HERE %%%%%
+
+\doublespacing
+}
+\makeacknowledgements
+}{} % end \iftoggle
+
+
+%%%%% [OPTIONAL, T (but strongly suggested)]
+\iftoggle{publist}{%
+% add this page to the Table of Contents
+\phantomsection
+\protect\addcontentsline{toc}{chapter}{List of Publications Resulting from this Work}
+% 
+\begin{center}\textbf{List of Publications Resulting from this Work}\end{center}
+\vspace*{0.5cm}
+The following papers related to the work presented in this thesis have been published or submitted:
+\begin{enumerate}
+	\item \ldots
+\end{enumerate}
+}{} % end \iftoggle
+
+
+%%%%% [REQUIRED, O and T]
+\iftoggle{ToC}{%
+  \tableofcontents
+}{} % end of \iftoggle
+
+
+%%%%% [OPTIONAL for O, REQUIRED for T]
+% followed by the List of Tables and List of Figures
+%%%%%
+\iftoggle{figuretablelist}{%
+  \listoftables\clearpage
+  \listoffigures\clearpage
+}{} % end of \iftoggle
+
+
+%%%%%%%%%%%
+% Add list of notation
+%%%%%%%%%%%
+\iftoggle{symbollist}{%
+\phantomsection
+\protect\addcontentsline{toc}{chapter}{List of Symbols} 
+\notationlist{
+\begin{center}
+\begin{longtable}{lp{0.1in}p{3.75in} }
+   $\alpha$ & & the first letter of the Greek alphabet \\
+   $x$  & & the typical symbol for an unknown quantity
+\end{longtable}
+\end{center}
+
+}
+\makenotationlist
+}{} % end of \iftoggle
+
+
+%%%%%
+% that's it for the frontmatter
+%%%%%

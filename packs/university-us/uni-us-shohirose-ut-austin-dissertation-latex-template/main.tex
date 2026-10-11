@@ -1,0 +1,182 @@
+\documentclass[12pt,letterpaper]{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{setspace} % singlespacing, onehalfspacing, doublespacing
+
+% -----------------------------------------------------------------------
+%                              Set margins
+% -----------------------------------------------------------------------
+\usepackage[letterpaper]{geometry}
+\geometry{
+    left=1.25truein,
+    right=1.25truein,
+    top=1.25truein,
+    bottom=1.25truein,
+}
+
+% -----------------------------------------------------------------------
+%                   Format chapter, section, subsection
+% -----------------------------------------------------------------------
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{3} % numbering up to subsubsection
+
+% Chapter
+\titleformat{\chapter}% command
+    [block]% shape
+    {\bfseries\large}% format
+    {Chapter \thechapter:}% label
+    {0.5em}% sep
+    {\centering}% before-code
+\titlespacing{\chapter}
+    {0pt}% left
+    {18pt}% before-sep
+    {6pt}% after-sep
+
+% Section
+\titleformat{\section}
+    [block]% shape
+    {\bfseries\normalsize}% font
+    {\thesection}% label
+    {0.5em}% sep
+    {}% before-code
+\titlespacing{\section}
+    {0pt}% left
+    {18pt}% before-sep
+    {6pt}% after-sep
+
+% Subsection
+\titleformat{\subsection}% command
+    [block]% shape
+    {\bfseries\normalsize}% format
+    {\thesubsection}% label
+    {0.5em}% sep
+    {}% before-code
+\titlespacing{\subsection}
+    {0pt}% left
+    {18pt}% before-sep
+    {6pt}% after-sep
+    
+% Subsubsection
+\titleformat{\subsubsection}% command
+    [block]% shape
+    {\bfseries\normalsize\slshape}% format
+    {\thesubsubsection}% label
+    {0.5em}% sep
+    {}% before-code
+\titlespacing{\subsubsection}
+    {0pt}% left
+    {18pt}% before-sep
+    {6pt}% after-sep    
+
+% -----------------------------------------------------------------------
+%                       Format ToC, LoT, LoF
+% -----------------------------------------------------------------------
+
+% Handles contents appear in TOC
+% By default, ToC, LoT, LoF, and Bibliography appear in ToC.
+\usepackage[
+    nottoc% Prevent ToC from appearing in ToC
+]{tocbibind}
+
+% Change format of ToC, LoT, and LoF
+\usepackage{tocloft}
+
+% --------
+% ToC
+% Change default name 'Contents' to 'Table of Contents'
+\renewcommand{\contentsname}{Table of Contents}
+% Set ToC depth to one. Only chapters and sections are listed in ToC.
+\setcounter{tocdepth}{1}
+% 14pt size, bold, and centered
+% \null is required because LaTeX removes horizontal space that comes at the end of a line.
+\renewcommand{\cfttoctitlefont}{\hfill\large\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill\null}
+% Remove spaces above and below
+\renewcommand{\cftbeforetoctitleskip}{0pt}
+\renewcommand{\cftaftertoctitleskip}{0pt}
+
+% Modify chapters in ToC
+\renewcommand{\cftchapfont}{\normalsize}% Use normal font
+\renewcommand{\cftchappagefont}{\normalsize}
+\renewcommand{\cftchappresnum}{Chapter }% Add 'Chapter' before number
+\renewcommand{\cftchapaftersnum}{:}% Add ':' after number
+\renewcommand{\cftchapnumwidth}{5.5em}% Indent for chapter title
+% Fill between title and page numbers with dots.
+\renewcommand{\cftchapleader}{\cftdotfill{\cftchapdotsep}}
+% Set the seperation of dots to the default value.
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+% Remove spaces above chapters
+\setlength{\cftbeforechapskip}{0pt}
+
+% --------
+% LoT
+% Modify title font and location
+\renewcommand{\cftlottitlefont}{\hfill\large\bfseries}
+\renewcommand{\cftafterlottitle}{\hfill\null}
+\setlength{\cftbeforelottitleskip}{0pt}
+\setlength{\cftafterlottitleskip}{0pt}
+
+% Add 'Table' before the numbers and ':' after the numbers.
+\renewcommand{\cfttabpresnum}{Table }
+\renewcommand{\cfttabaftersnum}{:}
+\renewcommand{\cfttabnumwidth}{6em}
+
+% --------
+% LoF
+% Modify title font and location
+\renewcommand{\cftloftitlefont}{\hfill\large\bfseries}
+\renewcommand{\cftafterloftitle}{\hfill\null}
+\setlength{\cftbeforeloftitleskip}{0pt}
+\setlength{\cftafterloftitleskip}{0pt}
+
+% Add 'Figure' before the numbers and ':' after the numbers.
+\renewcommand{\cftfigpresnum}{Figure }
+\renewcommand{\cftfigaftersnum}{:}
+\renewcommand{\cftfignumwidth}{6em}
+
+% -----------------------------------------------------------------------
+%                     Format enumerate and itemize
+% -----------------------------------------------------------------------
+
+\usepackage{enumitem}
+\setlist{nosep}
+\setlist[itemize,1]{leftmargin=0.5truein, labelsep=*}
+\setlist[enumerate,1]{leftmargin=0.5truein, labelsep=*}
+
+% -----------------------------------------------------------------------
+%                           Document Section
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\setcounter{page}{1}
+
+% Set page number to roman (i, ii, ...)
+\renewcommand{\thepage}{\roman{page}}
+
+\doublespacing
+
+\input{copyright}
+\input{committee}
+\input{title}
+\input{dedication}
+\input{acknowledgements}
+\input{abstract}
+
+% Display ToC, LoT, LoF
+\tableofcontents \clearpage
+\listoftables    \clearpage
+\listoffigures   \clearpage
+
+\setcounter{page}{1}
+% Set page number to arabic (1, 2, ...)
+\renewcommand{\thepage}{\arabic{page}}
+
+\input{chapter1}
+\input{chapter2}
+%\bibliography{dissertation}
+\clearpage
+\input{appendix}
+
+\end{document}

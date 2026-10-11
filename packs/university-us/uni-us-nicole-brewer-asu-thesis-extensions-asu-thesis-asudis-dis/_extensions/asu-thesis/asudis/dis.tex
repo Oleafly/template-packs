@@ -1,0 +1,137 @@
+\documentclass[12pt,letterpaper]{report}
+\usepackage{natbib}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{afterpage}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsbsy}
+\usepackage{dcolumn,array}
+\usepackage{tocloft}
+\usepackage{asudis}
+\usepackage[pageanchor=true,plainpages=false,pdfpagelabels,bookmarks,bookmarksnumbered]{hyperref}
+
+% from quartos pandoc/templates.tex
+\usepackage{bookmark}
+\usepackage{comment}
+% Define a new environment "CSLReferences" using the comment package
+\excludecomment{CSLReferences}
+
+\begin{document}
+%-----------------------front matter
+\pagenumbering{roman}
+
+% TITLE PAGE
+\setlength{\parindent}{0em}
+\newlength{\fiveblanklines}\setlength{\fiveblanklines}{0.7 in}
+\newlength{\tenblanklines}\setlength{\tenblanklines}{1.5 in}
+\begin{titlepage}
+  \enlargethispage{0.5in}
+  \thispagestyle{empty}
+  \begin{minipage}[t][647.0truept][t]{\linewidth}
+    \exactdoublespace
+    \begin{center}
+      $title$\\
+      $if(subtitle)$ $subtitle$\\ $endif$
+      by\\
+      $author$
+    \end{center}
+    \singlespace
+    \vspace{\fiveblanklines}
+    \begin{center}
+      \singlespace
+      A $document-type$ Presented in Partial Fulfillment\\
+      of the Requirements for the Degree\\
+      $degree-type$
+    \end{center}
+    \vspace{\tenblanklines}
+    \begin{center}
+      \singlespace
+      Approved $approval-date$ by the\\
+      Graduate Supervisory Committee:\\
+      \ \\
+      $if(chair)$ $chair$\\
+      $elseif(co-chairs)$
+      $for(co-chairs)$$co-chairs$, Co-Chair \\$endfor$
+      $endif$
+      $for(committee)$$committee$ \\ $endfor$
+    \end{center}
+    \vfill
+    \begin{center}
+      \doublespace
+      ARIZONA STATE UNIVERSITY\\
+      Graduation $graduation-date$
+    \end{center}
+  \end{minipage}
+  \clearpage
+\end{titlepage}
+
+
+% ABSTRACT PAGE
+$if(abstract)$
+\setcounter{page}{1}
+\begin{center}
+  ABSTRACT
+\end{center}
+\doublespace
+$abstract$
+\clearpage
+$endif$
+
+$if(acknowledgements)$
+\begin{center}
+  ACKNOWLEDGMENTS
+\end{center}
+\doublespace
+$acknowledgements$
+\clearpage
+$endif$
+
+$if(dedication)$
+\begin{center}
+   \doublespace
+   {\itshape $dedication$}
+\end{center}
+\clearpage
+$endif$
+
+\tableofcontents
+% This puts the word "Page" right justified above everything else.
+\addtocontents{toc}{~\hfill Page\par}
+% Asking LaTeX for a new page here guarantees that the LOF is on a separate page
+% after the TOC ends.
+\newpage
+% Making the LOT and LOF "parts" rather than chapters gets them indented at
+% level -1 according to the chart: top of page 4 of the document at
+% ftp://tug.ctan.org/pub/tex-archive/macros/latex/contrib/tocloft/tocloft.pdf
+\addcontentsline{toc}{part}{LIST OF TABLES}
+\renewcommand{\cftlabel}{Table}
+\listoftables
+% This gets the headers for the LOT right on the first page.  Subsequent pages
+% are handled by the fancyhdr code in the asudis.sty file.
+\addtocontents{lot}{Table~\hfill Page \par}
+\newpage
+\addcontentsline{toc}{part}{LIST OF FIGURES}
+\addtocontents{toc}{CHAPTER \par}
+\renewcommand{\cftlabel}{Figure}
+% This gets the headers for the LOF right on the first page.  Subsequent pages
+% are handled by the fancyhdr code in the asudis.sty file.
+\addtocontents{lof}{Figure~\hfill Page \par}
+\listoffigures
+%-----------------------body
+\doublespace
+\pagenumbering{arabic}
+
+$body$
+
+%-----------------------back matter
+{\singlespace
+% Making the references a "part" rather than a chapter gets it indented at
+% level -1 according to the chart: top of page 4 of the document at
+% ftp://tug.ctan.org/pub/tex-archive/macros/latex/contrib/tocloft/tocloft.pdf
+\addcontentsline{toc}{part}{REFERENCES}
+\bibliographystyle{asudis}
+\bibliography{dis}}
+\renewcommand{\chaptername}{APPENDIX}
+\addtocontents{toc}{APPENDIX \par}
+\appendix
+\end{document}

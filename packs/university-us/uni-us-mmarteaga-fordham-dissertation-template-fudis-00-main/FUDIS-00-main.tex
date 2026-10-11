@@ -1,0 +1,80 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                              %
+%       MARDOQUEO (Marc) ARTEAGA               %
+%          Fordham University                  %
+%                 2022                         %        
+%                                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%% BEGIN DOCUMENT SETUP (rerouted to the "options.sty" document)
+
+\documentclass[letterpaper,12pt]{report}
+\usepackage{FUDIS-00-options}   % paper size and other options in options.sty
+\pgfplotsset{compat=1.16}   % Unsure of this one, but it gets rid of a warning message --- could be a version issue. Open to suggestions!
+
+%%%%%%%%%% END DOCUMENT SETUP
+
+%%%%%%%%%% BEGIN DOCUMENT
+\begin{document}
+
+%%%%% COVER
+\include{FUDIS-01-cover}
+\setcounter{page}{1}
+\pagenumbering{roman}
+
+%%%%% SIG PAGE
+\include{FUDIS-02-signaturepage}
+
+%%%%% ACK
+\include{FUDIS-03-acknowledgements}
+
+\tableofcontents
+\listoftables
+\listoffigures
+\newpage
+
+%%%%% PREFACE
+\include{FUDIS-04-preface}
+
+\pagestyle{myheadings}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%%%%% DISSERTATION CONTENT (the hard part!)
+\include{FUDIS-05-introduction}
+
+\include{FUDIS-06-chapter1}
+
+\include{FUDIS-07-chapter2}
+
+\include{FUDIS-08-chapter3}
+
+%include more chapter files as needed.
+
+\include{FUDIS-09-conclusion}
+
+%%%%% BIBLIOGRAPHY
+\begin{spacing}{1.25} % I like my bibs to breathe a bit, but some people have different preferences. 
+\nocite{*}%this makes sure all the bib entries are included in the bibliography
+\bibliographystyle{apacite} % could use another style!
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliography{library}
+\end{spacing}
+\newpage
+
+%%%%% APPENDIX
+\appendix
+\include{FUDIS-10-appendix}
+%include more appendix files as needed.
+\printindex
+
+%%%%% ABSTRACT AND VITA
+\pagestyle{empty}%no pagination for the abstract and vita.
+\addtocontents{toc}{\noindent \textbf{Abstract} \\ }
+\addtocontents{toc}{\noindent \textbf{Vita} \\ }
+\include{FUDIS-11-abstract}
+\include{FUDIS-12-vita}
+
+
+%%%%%%%%%% END DOCUMENT
+\end{document}

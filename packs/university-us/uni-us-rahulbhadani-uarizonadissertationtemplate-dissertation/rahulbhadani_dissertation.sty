@@ -1,0 +1,606 @@
+
+%\ProvidesPackage{rahulbhadani_thesis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Author: Rahul Kumar Bhadani
+%%% Maintainer Email: rahulbhadani@email.arizona.edu
+
+%% CopyRight Rahul Kumar Bhadani
+% Permission is hereby granted, without written agreement and without 
+% license or royalty fees, to use, copy, modify, and distribute this
+%software and its documentation for any %purpose, provided that the 
+%above copyright notice and the following two %paragraphs appear in 
+%all copies of this software.
+
+% IN NO EVENT SHALL THE ARIZONA BOARD OF REGENTS, ANY MEMBER OF THE 
+% UNIVERSITY OF ARIZONA OR AUTHORS BE LIABLE TO ANY PARTY 
+% FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES 
+% ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN 
+% IF THE ARIZONA BOARD OF REGENTS HAS BEEN ADVISED OF THE POSSIBILITY OF 
+% SUCH DAMAGE.
+
+% THE ARIZONA BOARD OF REGENTS, ANY MEMBER OF THE UNIVERSITY OF ARIZONA
+% AND/OR THEAUTHOR SPECIFICALLY DISCLAIMS ANY WARRANTIES, 
+% INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY 
+% AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE PROVIDED HEREUNDER
+% IS ON AN "AS IS" BASIS, AND THE ARIZONA BOARD OF REGENTS HAS NO OBLIGATION
+% TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+%%% 
+
+\usepackage[toc,page]{appendix}
+\usepackage{graphicx,hhline}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amscd}
+\usepackage{amsthm}
+\usepackage{amsmath, bm}
+\usepackage{float}
+\usepackage[bookmarks,bookmarksnumbered,
+    pdfborder={0 0 0},
+    pagebackref,
+    linktocpage,
+    colorlinks=true,
+    ]{hyperref}
+
+
+\usepackage{natbib}
+\bibliographystyle{abbrvnat}
+\setcitestyle{authordate}
+
+% adapt back reference leading text to account for number of citations
+%
+\renewcommand*{\backreflastsep}{, }
+\renewcommand*{\backreftwosep}{, }
+\renewcommand*{\backref}[1]{1=#1}
+\renewcommand*{\backrefalt}[4]{%
+  \color{scarletred}{$\Uparrow$  Pages} \ifcase #1 {}
+  \or {\color{scarletred}{[#2]}}%
+  \else {\color{scarletred}{[#2]}}%
+  \fi%
+}
+
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage[export]{adjustbox}
+\usepackage[final]{pdfpages}
+\usepackage[table]{xcolor}
+\usepackage{multirow}
+\usepackage{gensymb}
+\usepackage{marvosym}
+\usepackage{enumitem}
+\setlist{nolistsep}
+
+\usepackage{physics}
+\usepackage{xspace}
+\usepackage{minted}
+\usepackage{mdframed}
+\usemintedstyle{manni}
+
+\usepackage{color}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{sectsty}
+\usepackage[makeroom]{cancel}
+
+
+
+%%%%%%%%%%%  Special Math Letter Notations %%%%%%%%%%
+\def\Acal{{\mathcal A}}
+\def\Bcal{{\mathcal B}}
+\def\Ccal{{\mathcal C}}
+\def\Dcal{{\mathcal D}}
+\def\Ecal{{\mathcal E}}
+\def\Fcal{{\mathcal F}}
+\def\Gcal{{\mathcal G}}
+\def\Hcal{{\mathcal H}}
+\def\Ical{{\mathcal I}}
+\def\Jcal{{\mathcal J}}
+\def\Kcal{{\mathcal K}}
+\def\Lcal{{\mathcal L}}
+\def\Mcal{{\mathcal M}}
+\def\Ncal{{\mathcal N}}
+\def\Ocal{{\mathcal O}}
+\def\Pcal{{\mathcal P}}
+\def\Qcal{{\mathcal Q}}
+\def\Rcal{{\mathcal R}}
+\def\Scal{{\mathcal S}}
+\def\Tcal{{\mathcal T}}
+\def\Ucal{{\mathcal U}}
+\def\Vcal{{\mathcal V}}
+\def\Wcal{{\mathcal W}}
+\def\Xcal{{\mathcal X}}
+\def\Ycal{{\mathcal Y}}
+\def\Zcal{{\mathcal Z}}
+
+\def\abf{{\mathbf a}}
+\def\bbf{{\mathbf b}}
+\def\cbf{{\mathbf c}}
+\def\dbf{{\mathbf d}}
+\def\ebf{{\mathbf e}}
+\def\fbf{{\mathbf f}}
+\def\gbf{{\mathbf g}}
+\def\hbf{{\mathbf h}}
+\def\ibf{{\mathbf i}}
+\def\jbf{{\mathbf j}}
+\def\kbf{{\mathbf k}}
+\def\lbf{{\mathbf l}}
+\def\mbf{{\mathbf m}}
+\def\nbf{{\mathbf n}}
+\def\obf{{\mathbf o}}
+\def\pbf{{\mathbf p}}
+\def\qbf{{\mathbf q}}
+\def\rbf{{\mathbf r}}
+\def\sbf{{\mathbf s}}
+\def\tbf{{\mathbf t}}
+\def\ubf{{\mathbf u}}
+\def\vbf{{\mathbf v}}
+\def\wbf{{\mathbf w}}
+\def\xbf{{\mathbf x}}
+\def\ybf{{\mathbf y}}
+\def\zbf{{\mathbf z}}
+
+\def\Abf{{\mathbf A}}
+\def\Bbf{{\mathbf B}}
+\def\Cbf{{\mathbf C}}
+\def\Dbf{{\mathbf D}}
+\def\Ebf{{\mathbf E}}
+\def\Fbf{{\mathbf F}}
+\def\Gbf{{\mathbf G}}
+\def\Hbf{{\mathbf H}}
+\def\Ibf{{\mathbf I}}
+\def\Jbf{{\mathbf J}}
+\def\Kbf{{\mathbf K}}
+\def\Lbf{{\mathbf L}}
+\def\Mbf{{\mathbf M}}
+\def\Nbf{{\mathbf N}}
+\def\Obf{{\mathbf O}}
+\def\Pbf{{\mathbf P}}
+\def\Qbf{{\mathbf Q}}
+\def\Rbf{{\mathbf R}}
+\def\Sbf{{\mathbf S}}
+\def\Tbf{{\mathbf T}}
+\def\Ubf{{\mathbf U}}
+\def\Vbf{{\mathbf V}}
+\def\Wbf{{\mathbf W}}
+\def\Xbf{{\mathbf X}}
+\def\Ybf{{\mathbf Y}}
+\def\Zbf{{\mathbf Z}}
+\def\thetabf{{\boldsymbol{\theta}}}
+
+\def\Abb{{\mathbb A}}
+\def\Bbb{{\mathbb B}}
+\def\Cbb{{\mathbb C}}
+\def\Dbb{{\mathbb D}}
+\def\Ebb{{\mathbb E}}
+\def\Fbb{{\mathbb F}}
+\def\Gbb{{\mathbb G}}
+\def\Hbb{{\mathbb H}}
+\def\Ibb{{\mathbb I}}
+\def\Jbb{{\mathbb J}}
+\def\Kbb{{\mathbb K}}
+\def\Lbb{{\mathbb L}}
+\def\Mbb{{\mathbb M}}
+\def\Nbb{{\mathbb N}}
+\def\Obb{{\mathbb O}}
+\def\Pbb{{\mathbb P}}
+\def\Qbb{{\mathbb Q}}
+\def\Rbb{{\mathbb R}}
+\def\Sbb{{\mathbb S}}
+\def\Tbb{{\mathbb T}}
+\def\Ubb{{\mathbb U}}
+\def\Vbb{{\mathbb V}}
+\def\Wbb{{\mathbb W}}
+\def\Xbb{{\mathbb X}}
+\def\Ybb{{\mathbb Y}}
+\def\Zbb{{\mathbb Z}}
+
+\def\ahat{{\hat a}}
+\def\bhat{{\hat b}}
+\def\chat{{\hat c}}
+\def\dhat{{\hat d}}
+\def\ehat{{\hat e}}
+\def\fhat{{\hat f}}
+\def\ghat{{\hat g}}
+\def\hhat{{\hat h}}
+\def\ihat{{\hat i}}
+\def\jhat{{\hat j}}
+\def\khat{{\hat k}}
+\def\lhat{{\hat l}}
+\def\mhat{{\hat m}}
+\def\nhat{{\hat n}}
+\def\ohat{{\hat o}}
+\def\phat{{\hat p}}
+\def\qhat{{\hat q}}
+\def\rhat{{\hat r}}
+\def\shat{{\hat s}}
+\def\that{{\hat t}}
+\def\uhat{{\hat u}}
+\def\vhat{{\hat v}}
+\def\what{{\hat w}}
+\def\xhat{{\hat x}}
+\def\yhat{{\hat y}}
+\def\zhat{{\hat z}}
+
+\def\Ahat{{\hat A}}
+\def\Bhat{{\hat B}}
+\def\Chat{{\hat C}}
+\def\Dhat{{\hat D}}
+\def\Ehat{{\hat E}}
+\def\Fhat{{\hat F}}
+\def\Ghat{{\hat G}}
+\def\Hhat{{\hat H}}
+\def\Ihat{{\hat I}}
+\def\Jhat{{\hat J}}
+\def\Khat{{\hat K}}
+\def\Lhat{{\hat L}}
+\def\Mhat{{\hat M}}
+\def\Nhat{{\hat N}}
+\def\Ohat{{\hat O}}
+\def\Phat{{\hat P}}
+\def\Qhat{{\hat Q}}
+\def\Rhat{{\hat R}}
+\def\Shat{{\hat S}}
+\def\That{{\hat T}}
+\def\Uhat{{\hat U}}
+\def\Vhat{{\hat V}}
+\def\What{{\hat W}}
+\def\Xhat{{\hat X}}
+\def\Yhat{{\hat Y}}
+\def\Zhat{{\hat Z}}
+
+\def\adot{{\dot a}}
+\def\bdot{{\dot b}}
+\def\dotc{{\dot c}}
+%\def\ddot{{\dot d}}
+\def\edot{{\dot e}}
+\def\fdot{{\dot f}}
+\def\gdot{{\dot g}}
+\def\hdot{{\dot h}}
+\def\idot{{\dot i}}
+\def\jdot{{\dot j}}
+\def\kdot{{\dot k}}
+\def\ldot{{\dot l}}
+\def\mdot{{\dot m}}
+\def\ndot{{\dot n}}
+
+\def\pdot{{\dot p}}
+\def\qdot{{\dot q}}
+\def\rdot{{\dot r}}
+\def\sdot{{\dot s}}
+\def\tdot{{\dot t}}
+\def\udot{{\dot u}}
+\def\vdot{{\dot v}}
+\def\wdot{{\dot w}}
+\def\xdot{{\dot x}}
+\def\ydot{{\dot y}}
+\def\zdot{{\dot z}}
+
+\def\xbar{{\overline x}}
+\def\pbar{{\overline p}}
+\def\qbar{{\overline q}}
+\def\rbar{{\overline r}}
+\def\sbar{{\overline s}}
+\def\tbar{{\overline t}}
+\def\ubar{{\overline u}}
+\def\vbar{{\overline v}}
+\def\wbar{{\overline w}}
+\def\xbar{{\overline x}}
+\def\ybar{{\overline y}}
+\def\zbar{{\overline z}}
+\def\Nbar{{\overline N}}
+\def\Lcalh{{\hat{\mathcal L}}}
+
+
+%%%%%%%% Define colors and captions %%%%%%%%%%%%%%%%%
+\definecolor{ArizonaBlue}{rgb}{0.046875, 0.13671875, 0.29296875}
+\definecolor{ArizonaRed}{rgb}{0.66796875, 0.01953125,0.125}
+\definecolor{ArizonaOasis}{rgb}{0.07, 0.08, 0.4}
+\definecolor{charcoal}{rgb}{0.21, 0.27, 0.31}
+\definecolor{red}{rgb}{0.9, 0.17, 0.41}
+\definecolor{green}{rgb}{0.2, 0.65, 0.35}
+\definecolor{blue}{rgb}{0.1, 0.15, 0.95}
+\definecolor{bittersweet}{rgb}{1.0, 0.44, 0.37}
+\definecolor{cerulean}{rgb}{0.0, 0.48, 0.65}
+\definecolor{darkslateblue}{rgb}{0.28, 0.24, 0.55}
+\definecolor{mustard}{rgb}{1.0, 0.16, 0.95}
+\definecolor{scarletred}{rgb}{0.9, 0.03, 0.03}
+\definecolor{White}{gray}{1.0}
+\definecolor{Black}{gray}{0.0}
+\definecolor{LightButter}{rgb}{0.98,0.91,0.31}
+\definecolor{LightOrange}{rgb}{0.98,0.68,0.24}
+\definecolor{LightChocolate}{rgb}{0.91,0.72,0.43}
+\definecolor{LightChameleon}{rgb}{0.54,0.88,0.20}
+\definecolor{LightSkyBlue}{rgb}{0.45,0.62,0.81}
+\definecolor{LightPlum}{rgb}{0.68,0.50,0.66}
+\definecolor{LightScarletRed}{rgb}{0.93,0.16,0.16}
+\definecolor{Butter}{rgb}{0.93,0.86,0.25}
+\definecolor{Orange}{rgb}{0.96,0.47,0.00}
+\definecolor{Chocolate}{rgb}{0.75,0.49,0.07}
+\definecolor{Chameleon}{rgb}{0.45,0.82,0.09}
+\definecolor{SkyBlue}{rgb}{0.20,0.39,0.64}
+\definecolor{Plum}{rgb}{0.46,0.31,0.48}
+\definecolor{ScarletRed}{rgb}{0.80,0.00,0.00}
+\definecolor{DarkButter}{rgb}{0.77,0.62,0.00}
+\definecolor{DarkOrange}{rgb}{0.80,0.36,0.00}
+\definecolor{DarkChocolate}{rgb}{0.56,0.35,0.01}
+\definecolor{DarkChameleon}{rgb}{0.30,0.60,0.02}
+\definecolor{DarkSkyBlue}{rgb}{0.12,0.29,0.53}
+\definecolor{DarkPlum}{rgb}{0.36,0.21,0.40}
+\definecolor{DarkScarletRed}{rgb}{0.64,0.00,0.00}
+\definecolor{Aluminium1}{rgb}{0.93,0.93,0.92}
+\definecolor{Aluminium2}{rgb}{0.82,0.84,0.81}
+\definecolor{Aluminium3}{rgb}{0.73,0.74,0.71}
+\definecolor{Aluminium4}{rgb}{0.53,0.54,0.52}
+\definecolor{Aluminium5}{rgb}{0.33,0.34,0.32}
+\definecolor{Aluminium6}{rgb}{0.18,0.20,0.21}
+
+\DeclareCaptionFont{red}{\color{red}}
+\DeclareCaptionFont{green}{\color{green}}
+\DeclareCaptionFont{blue}{\color{blue}}
+\DeclareCaptionFont{bittersweet}{\color{bittersweet}}
+\DeclareCaptionFont{cerulean}{\color{cerulean}}
+\DeclareCaptionFont{mustard}{\color{mustard}}
+\captionsetup{labelfont={blue,bf},textfont=blue}
+
+
+%%%%%%%%%%%%%% Custom Commands for Equations %%%%%%%%%%%%%%%%
+\newcommand{\spliteq}[1]{\begin{equation}\begin{split}#1\end{split}\end{equation}}
+\newcommand{\m}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand\cut[2][black]{\renewcommand\CancelColor{\color{#1}}\cancel{#2}}
+\newcommand\cutto[3][black]{\renewcommand\CancelColor{\color{#1}}\cancelto{#2}{#3}}
+
+%%%%%%%%%%%%% Paper settings %%%%%%%%%%%%%
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\belowcaptionskip}{-1pt}
+\setboolean{@twoside}{false}
+
+\setcounter{secnumdepth}{6}
+\hypersetup{
+    pdffitwindow=false,            % window fit to page
+    pdfstartview={Fit},            % fits width of page to window
+    pdftitle={\disstitle},     % document title
+    pdfauthor={\authorname},         % author name
+    pdfsubject={\department},                 % document topic(s)
+    pdfnewwindow=true,             % links in new window
+    linktoc=all,
+    colorlinks=true,               % coloured links, not boxed
+    linkcolor=ArizonaOasis,      % colour of internal links
+    citecolor=ArizonaRed,       % colour of links to bibliography
+    filecolor=DarkPlum,            % colour of file links
+    urlcolor=DarkSkyBlue           % colour of external links
+}
+
+
+%%%%%%%%%%%% Custom font styles %%%%%%%%%%
+\newcommand{\texthd}[1]{\textsc{\textcolor{blue}{#1}}}
+
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter] % reset theorem numbering for each chapter
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition} % definition numbers are dependent on theorem numbers
+\newtheorem{example}[thm]{\color{Orange}{Example}} % same for example numbers
+
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+    \usepackage[vmargin=1.5in, hmargin=1.25in]{geometry}
+    
+%   \usepackage{mathptmx}
+\usepackage[12pt]{moresize}
+
+
+
+\renewcommand{\contentsname}{\sc \LARGE Contents \vspace{10px} \hrule}
+\renewcommand{\listfigurename}{\sc \LARGE Figures \vspace{10px} \hrule}
+\renewcommand{\bibname}{\sc \LARGE Bibliography \vspace{10px} \hrule}
+
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace{40\p@}%
+  {\parindent \z@ \raggedright 
+  \color{ArizonaRed}\bf
+  \hspace*{\fill}\HUGE \Leo {\bfseries\thechapter}\\
+  \sc
+  \vskip 20\p@
+  \hrule
+  \vskip 10\p@   
+   \interlinepenalty\@M
+   \huge #1\par\nobreak
+   \vskip 20\p@
+  \hrule
+    \vskip 10\p@
+  }}
+\makeatother
+
+
+    \renewcommand{\chaptername}{\HUGE{\sf \S}}
+   
+   \makeatletter
+   \let\stdl@section\l@section
+\renewcommand*{\l@section}[2]{%
+  \stdl@section{\textcolor{ArizonaRed}{#1}}{\textcolor{ArizonaBlue}{#2}}}
+
+   \let\stdl@chapter\l@chapter
+\renewcommand*{\l@chapter}[2]{%
+  \stdl@chapter{{\large {\sc #1}}}{\large {#2}}}  
+
+\let\stdl@subsection\l@subsection
+\renewcommand*{\l@subsection}[2]{%
+  \stdl@subsection{{#1}}{{#2}}}
+  
+\chapterfont{\color{ArizonaBlue}}
+\sectionfont{\color{ArizonaRed}}
+\subsectionfont{\color{ArizonaRed}}
+
+\makeatletter
+\renewcommand\frontmatter{%
+  \cleardoublepage
+  \@mainmatterfalse
+  %\pagenumbering{roman}% Don't reset
+}
+\renewcommand\mainmatter{%
+  \cleardoublepage
+  \@mainmattertrue
+  %\pagenumbering{arabic}% Don't reset
+}
+\makeatother
+
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage{tgpagella}
+%\usepackage{lmodern}
+%\usepackage{mathptmx}
+%\usepackage{charter}
+\newcommand\figref{Figure~\ref}
+\setlength{\parindent}{20pt}
+%\setlength{\parskip}{1.25em}
+%\renewcommand{\baselinestretch}{1.5}
+\setlength{\parskip}{15pt}%
+
+\definecolor{gray}{rgb}{0.05, 0.05, 0.05}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{\color{red}{Definition}}
+\newtheorem{proposition}[theorem]{Proposition}
+	
+\newcommand{\argmin}[1]{\underset{#1}{\operatorname{arg}\,\operatorname{min}}\;}
+
+\newcommand{\argmax}[1]{\underset{#1}{\operatorname{arg}\,\operatorname{max}}\;}
+
+
+\newcommand{\rE}{\mbox{\rm E}}
+\newcommand{\cov}{\mbox{Cov}}
+\newcommand{\corr}{\mbox{Corr}}
+\newcommand{\FT}{\mathcal{F}} %Fourier Transform Symbol
+\newcommand{\IFT}{\mathcal{F}^{-1}} %Inverse Fourier Transform Symbol
+\newcommand{\ej}{e^{j\omega}}
+\newcommand{\eJ}{e^{j\Omega}}
+
+\newcommand{\Gs}[5]{#5(s) & = #3\bigg(sI - #1\bigg)^{-1}#2 + #4}
+\newcommand{\ejw}[1]{e^{-#1 j\omega}}
+\newcommand{\xpj}[1]{e^{#1j}}
+\newcommand{\R}{\ensuremath{\Bbb R}\xspace}
+
+
+\usepackage{ifxetex,ifluatex}
+\usepackage{etoolbox}
+
+
+\usepackage{tikz}
+
+\usepackage{framed}
+
+% conditional for xetex or luatex
+\newif\ifxetexorluatex
+\ifxetex
+  \xetexorluatextrue
+\else
+  \ifluatex
+    \xetexorluatextrue
+  \else
+    \xetexorluatexfalse
+  \fi
+\fi
+%
+\ifxetexorluatex%
+  \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O} % selects Libertine as the quote font
+\else
+  \newcommand*\quotefont{\fontfamily{LinuxLibertineT-LF}} % selects Libertine as the quote font
+\fi
+
+\newcommand*\quotesize{60} % if quote size changes, need a way to make shifts relative
+% Make commands for the quotes
+\newcommand*{\openquote}
+   {\tikz[remember picture,overlay,xshift=-4ex,yshift=-2.5ex]
+   \node (OQ) {\quotefont\fontsize{\quotesize}{\quotesize}\selectfont``};\kern0pt}
+
+\newcommand*{\closequote}[1]
+  {\tikz[remember picture,overlay,xshift=4ex,yshift={#1}]
+   \node (CQ) {\quotefont\fontsize{\quotesize}{\quotesize}\selectfont''};}
+
+% select a colour for the shading
+\colorlet{shadecolor}{White}
+
+\newcommand*\shadedauthorformat{\emph} % define format for the author argument
+
+% Now a command to allow left, right and centre alignment of the author
+\newcommand*\authoralign[1]{%
+  \if#1l
+    \def\authorfill{}\def\quotefill{\hfill}
+  \else
+    \if#1r
+      \def\authorfill{\hfill}\def\quotefill{}
+    \else
+      \if#1c
+        \gdef\authorfill{\hfill}\def\quotefill{\hfill}
+      \else\typeout{Invalid option}
+      \fi
+    \fi
+  \fi}
+% wrap everything in its own environment which takes one argument (author) and one optional argument
+% specifying the alignment [l, r or c]
+%
+\newenvironment{shadequote}[2][l]%
+{\authoralign{#1}
+\ifblank{#2}
+   {\def\shadequoteauthor{}\def\yshift{-2ex}\def\quotefill{\hfill}}
+   {\def\shadequoteauthor{\par\authorfill\shadedauthorformat{#2}}\def\yshift{2ex}}
+\begin{snugshade}\begin{quote}\openquote}
+{\shadequoteauthor\quotefill\closequote{\yshift}\end{quote}\end{snugshade}}
+
+
+
+
+
+\newcommand{\on}{\ensuremath{\textsf{on}}\xspace}
+\newcommand{\off}{\ensuremath{\textsf{off}}\xspace}
+\newcommand{\error}{\ensuremath{\textsf{error}}\xspace}
+\newcommand{\thetadot}{\ensuremath{\dot{\theta}}\xspace}
+\newcommand{\CEA}{C_{\text{EA}}\xspace}
+\newcommand{\OH}{\text{OH}\xspace}
+\newcommand{\OPC}{\text{OPC}\xspace}
+\newcommand{\signal}{\ahat_s\xspace}
+\newcommand{\idler}{\ahat_i\xspace}
+\newcommand{\Nth}{N_{\text{th}}}
+\newcommand*{\permcomb}[4][0mu]{{{}^{#3}\mkern#1#2_{#4}}}
+\newcommand*{\comb}[1][-1mu]{\permcomb[#1]{C}}
+    
+\usepackage{booktabs}
+
+\newcommand{\todo}[1]{{\large{\textcolor{blue}{TODO: \texttt{#1}}}}}
+
+
+%% special equation commands
+\newcommand{\Tau}{\ensuremath{\tau}\xspace}
+\newcommand{\Beta}{\ensuremath{\beta}\xspace}
+\newcommand{\delay}{\ensuremath{\delta}\xspace}
+\newcommand{\accuracy}{\ensuremath{\varepsilon}\xspace}
+\newcommand{\metrics}{\ensuremath{\theta}\xspace}
+\newcommand{\distance}{\ensuremath{x}}
+\newcommand{\relativevel}{\ensuremath{\dot{x}}}
+\newcommand{\dotdd}{\ensuremath{\ddot{d}}\xspace}
+\newcommand{\xddot}{\ensuremath{\ddot{x}}\xspace}
+\newcommand{\yddot}{\ensuremath{\ddot{y}}\xspace}
+\newcommand{\wddot}{\ensuremath{\ddot{w}}\xspace}
+
+\newcommand{\strym}{\texttt{strym}\xspace}
+\newcommand{\strymread}{\texttt{strymread}\xspace}
+\newcommand{\strymmap}{\texttt{strymmap}\xspace}
+\newcommand{\phasespace}{\texttt{phasespace}\xspace}
+\newcommand{\libpanda}{Libpanda\xspace}
+
+
+\usepackage{soul}
+%\newcommand{\changes}[1]{\hl{#1}}
+\DeclareRobustCommand{\hlcyan}[1]{{\sethlcolor{pink}\hl{#1}}}
+%\newcommand{\changesmore}[1]{\hlcyan{#1}}
+%\newcommand{\changesmore}[1]{\hl{#1}}
+%\newcommand{\Rahul}[1]{\hl{#1}}
+\newcommand{\Rahul}[1]{#1}

@@ -1,0 +1,263 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% File: utthesis2.doc, version 2.0jab, February 2002
+%%%
+%%% Based on: utthesis.doc, version 2.0, January 1995
+%%% =============================================
+%%% Copyright (c) 1995 by Dinesh Das.  All rights reserved.
+%%% This file is free and can be modified or distributed as long as
+%%% you meet the following conditions:
+%%%
+%%% (1) This copyright notice is kept intact on all modified copies.
+%%% (2) If you modify this file, you MUST NOT use the original file name.
+%%%
+%%% This file contains a template that can be used with the package
+%%% utthesis.sty and LaTeX2e to produce a thesis that meets the requirements
+%%% of the Graduate School of The University of Texas at Austin.
+%%%
+%%% All of the commands defined by utthesis.sty have default values (see
+%%% the file utthesis.sty for these values).  Thus, theoretically, you
+%%% don't need to define values for any of them; you can run this file
+%%% through LaTeX2e and produce an acceptable thesis, without any text.
+%%% However, you probably want to set at least some of the macros (like
+%%% \thesisauthor).  In that case, replace "..." with appropriate values,
+%%% and uncomment the line (by removing the leading %'s).
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% "In general, use at least ten-point or twelve-point font for the body of the text."
+\documentclass[11pt, pdftex]{report}  %% LaTeX2e document.
+\usepackage {cmu-ece-thesis} %% Preamble.
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{multirow}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{mathtools}
+\usepackage{siunitx}
+\usepackage{tabularx,booktabs,caption}
+\usepackage{varwidth}
+\usepackage{verbatim}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{graphics}
+\usepackage{tikz}
+\usepackage{url}
+\usepackage{color}
+\usepackage{moreverb}
+
+\usepackage{epstopdf}
+
+% The following option used to avoid PDF version mismatch warnings.
+% it require `-shell-escape` command line option for `pdflatex`
+% which is present in our `Makefile`.
+\epstopdfDeclareGraphicsRule{.eps}{pdf}{.pdf}{%
+    epstopdf --gsopt=-dCompatibilityLevel=1.5 #1
+    --outfile=\OutputFile}
+
+
+\usepackage[numbers]{natbib}
+\usepackage[backref,pageanchor=true,plainpages=false, pdfpagelabels, bookmarks,bookmarksnumbered,
+%pdfborder=0 0 0,  %removes outlines around hyper links in online display
+]{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=green,
+    filecolor=red,
+    linkcolor=blue,
+    urlcolor=green
+}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{CStyle}{ 
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{mGray},
+    stringstyle=\color{mPurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C
+}
+
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+% \mastersthesis                     %% Uncomment one of these; if you
+% don't
+%\phdthesis                         %% use either, the default is \phdthesis.
+
+\thesisdraft                       %% Uncomment this if you want a draft
+                                     %% version; this will print a timestamp
+                                     %% on each page of your thesis.
+
+% \leftchapter                       %% Uncomment one of these if you want
+% \centerchapter                     %% left-justified, centered or
+% \rightchapter                      %% right-justified chapter headings.
+                                     %% Chapter headings includes the
+                                     %% Contents, Acknowledgments, Lists
+                                     %% of Tables and Figures and the Vita.
+                                     %% The default is \centerchapter.
+
+% \singlespace                       %% Uncomment one of these if you
+% want
+% \oneandhalfspace                   %% single-spacing, space-and-a-half
+\doublespace                       %% or double-spacing; the default is
+                                     %% \oneandhalfspace, which is the
+                                     %% minimum spacing accepted by the
+                                     %% Graduate School.
+
+\renewcommand{\thesisauthor}{Firstname Middleinitial Lastname}  %% Your official CMU name.
+
+\renewcommand{\thesismonth}{June}     %% Your month of graduation.
+
+\renewcommand{\thesisyear}{2020}      %% Your year of graduation.
+
+\renewcommand{\thesistitle}{\bf{This is my thesis title}}     %% The title
+%% of your thesis; use 
+                                     %% mixed-case.
+
+\renewcommand{\thesisauthorpreviousdegrees}{
+B.S., Electrical \& Computer Engineering, Carnegie Mellon University\\
+M.S., Electrical \& Computer Engineering, Carnegie Mellon University\\
+Any other degrees obtained
+}
+
+\renewcommand{\thesissupervisor}{Dr. Franz Franchetti}
+                                     %% Your thesis supervisor; use mixed-case
+                                     %% and don't use any titles or degrees.
+
+% \renewcommand{\thesiscosupervisor}{}
+                                     %% Your PhD. thesis co-supervisor; if any.
+                                     %% Use mixed case and don't use any titles
+                                     %% or degrees. Uncomment if you
+                                     %% have a co-supervisor.
+                                     %% (Ignored for Master's)
+
+\renewcommand{\thesiscommitteemembera}{Dr. First1 Last1}
+\renewcommand{\thesiscommitteememberb}{Dr. First1 Last1}
+\renewcommand{\thesiscommitteememberc}{Dr. First1 Last1}
+\renewcommand{\thesiscommitteememberd}{Dr. First1 Last1}
+
+
+\renewcommand{\thesisauthoraddress}{...}
+                                     %% Your permanent address; use "\\" for
+                                     %% linebreaks.
+
+\renewcommand{\thesisdedication}{To my mom and dad!}
+                                     %% Your dedication, if you have one; use
+                                     %% "\\" for linebreaks.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% The following commands are all optional, but useful if your requirements
+%%% are different from the default values in utthesis.sty.  To use them,
+%%% simply uncomment (remove the leading %) the line(s).
+
+% \renewcommand{\thesiscommitteesize}{...}
+                                     %% Uncomment this only if your thesis
+                                     %% committee does NOT have 5 members
+                                     %% for \phdthesis or 2 for \mastersthesis.
+                                     %% Replace the "..." with the correct
+                                     %% number of members.
+
+% \renewcommand{\thesisdegree}{...}  %% Uncomment this only if your thesis
+                                     %% degree is NOT "DOCTOR OF PHILOSOPHY"
+                                     %% for \phdthesis or "MASTER OF ARTS"
+                                     %% for \mastersthesis.  Provide the
+                                     %% correct FULL OFFICIAL name of
+                                     %% the degree.
+
+% \renewcommand{\thesisdegreeabbreviation}{...}
+                                     %% Use this if you also use the above
+                                     %% command; provide the OFFICIAL
+                                     %% abbreviation of your thesis degree.
+
+% \renewcommand{\thesistype}{...}    %% Use this ONLY if your thesis type
+                                     %% is NOT "Dissertation" for \phdthesis
+                                     %% or "Thesis" for \mastersthesis.
+                                     %% Provide the OFFICIAL type of the
+                                     %% thesis; use mixed-case.
+
+% \renewcommand{\thesistypist}{...}  %% Use this to specify the name of
+                                     %% the thesis typist if it is anything
+                                     %% other than "the author".
+
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%\thesiscertificationpage             %% Generate the PhD. certification page.
+
+\thesistitlepage                     %% Generate the title page.
+
+\thesiscopyrightpage                 %% Generate the copyright page.
+
+%\thesissignaturepage                %% Generate the Master's signature page.
+
+%\thesisdedicationpage                %% Generate the dedication page.
+
+\begin{thesisacknowledgments}        %% Use this to write your
+  All theses and dissertations must include an Acknowledgments
+  section. This section is used to thank mentors and colleagues or name
+  the individuals or institutions that supported your research or
+  provided special assistance, such as consultation or aid. Acknowledge
+  any owners of copyrighted materials that have granted you permission
+  to reproduce their work. Describe all sources of funding from outside
+  grants, fellowships, awards, or self-supported funding. For any
+  grants, include the identifying number. Acknowledgment of the
+  source(s) of support is important ethically in all research
+  publications and presentations, including theses, to give the sponsors
+  the recognition they deserve, and also to disclose publicly the
+  organization or persons funding the research.
+
+  For doctoral submissions, the doctoral committee must also be listed
+  in the Acknowledgments, and the chair of the committee must be
+  identified. The doctoral committee should not be listed on the title
+  page.
+\end{thesisacknowledgments}          %% allowed in LaTeX2e par-mode.
+
+\begin{thesisabstract}
+  Thesis abstract goes here
+\end{thesisabstract}                 %% allowed in LaTeX2e par-mode.
+
+\tableofcontents                     %% Generate table of contents.
+                                     %% of tables.
+\listoffigures                     %% Uncomment this to generate list
+%% of figures.
+\listoftables                      %% Uncomment this to generate list
+%\listofalgorithms
+%\addcontentsline{toc}{chapter}{List of Algorithms}
+
+
+\addcontentsline {toc}{chapter}{Bibliography} %% Force Bibliography to appear in contents
+
+\bibliographystyle{ieeetr}
+
+\nocite{*}
+\bibliography{thesis}                    %% also use the \bibliography command
+
+
+%\begin{thesisauthorvita}             %% Write your vita here; it can be
+%...                                  %% anything in LaTeX2e par-mode.
+%\end{thesisauthorvita}               %%
+
+\end{document}                       %% Done.

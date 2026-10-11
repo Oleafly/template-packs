@@ -1,0 +1,165 @@
+\documentclass[12pt,twoside,openright]{report}
+\usepackage[utf8]{inputenc}
+
+\usepackage{blindtext}
+\usepackage{amsmath}
+
+\usepackage{txfonts, mathptmx, setspace}
+\usepackage{fancyhdr} % for header and footer
+
+\usepackage{titlesec} %this package controls chapter heading style
+\usepackage{framed}
+
+\usepackage{tocloft} %[titles] this package removes dots in toc
+\usepackage{titletoc} % helps in customizing toc chapter name styling
+%\usepackage{etoolbox}
+\usepackage{lmodern} % introduces modern fonts
+%%%%%%%%% to include fancy colors %%%%%%%%%%
+\usepackage[dvipsnames]{xcolor}
+\definecolor{myred}{RGB}{160,0,0}
+\definecolor{myyellow}{RGB}{169,121,69}
+%%%%%%%%%% to include figures %%%%%%%%%%
+\usepackage{graphicx}
+\graphicspath{{figs/}}
+%%%%%%%%% to insert a blank page %%%%%%%%%%
+\usepackage{afterpage}
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
+%%%%%%%%% to set geometry of page %%%%%%%%%%
+\usepackage[a4paper,margin=3.0cm]{geometry} %bindingoffset=6mm
+\textheight 23.7cm
+\textwidth 15.0cm
+\parindent 0.0cm
+\parskip 0.3cm
+
+\setlength\headheight{15pt}
+%%%%%%%%%% control hyperlinks and bibliography %%%%%%%%%%
+\usepackage[hidelinks,linktocpage=true]{hyperref}
+\hypersetup{colorlinks=true,linkcolor=myred,filecolor=magenta,urlcolor=myred,citecolor=myred}
+\usepackage[numbers,square,sort&compress]{natbib}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\AtBeginDocument{\renewcommand\contentsname{Table of Contents}}
+\begin{document}
+\pagenumbering{gobble} % this command removes and skips the page number
+\include{initPages/coverPage}
+\afterpage{\blankpage}
+\include{initPages/recommendationOfCommittee}
+\afterpage{\blankpage}
+\include{initPages/statementByAuthor}
+\afterpage{\blankpage}
+\include{initPages/declaration}
+\afterpage{\blankpage}
+\include{initPages/publicationsList}
+\afterpage{\blankpage}
+\include{initPages/dedication}
+\afterpage{\blankpage}
+\include{initPages/acknowledgement}
+%\afterpage{\blankpage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewenvironment{leftbar}{%
+    \def\FrameCommand{{\color{myyellow}\vrule width 2pt depth 6pt} \hspace{10pt}}%
+    \MakeFramed {\advance\hsize-\width \FrameRestore}%
+}%
+{\endMakeFramed}
+\makeatletter
+
+\def\@chapter[#1]#2{%
+    \ifnum \c@secnumdepth >\m@ne
+        \if@mainmatter
+            \refstepcounter{chapter}%
+            \typeout{\@chapapp\space\thechapter.}%
+            \addtocontents{toc}{%
+                {\protect\parbox{3.5em}{\hfill\Huge\color{myred}\bfseries\thepage}}%
+                \protect\hspace*{.5em}%
+                \protect\parbox{\dimexpr\linewidth-5em\relax}{%
+                    \protect\begin{leftbar}
+                    {\scshape\small\chaptername~\thechapter}\\\sffamily#1%
+                    \protect\end{leftbar}%
+                }
+                \par\noindent%
+            }%
+        \else
+            \addcontentsline{toc}{chapter}{#1}%
+        \fi
+    \else
+        \addcontentsline{toc}{chapter}{#1}%
+    \fi
+    
+    \chaptermark{#1}%
+    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+    \if@twocolumn
+        \@topnewpage[\@makechapterhead{#2}]%
+    \else
+        \@makechapterhead{#2}%
+        \@afterheading
+    \fi%
+}
+
+\renewcommand\tableofcontents{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{{\color{myred}\contentsname}% change here the formatting
+    \@mkboth{%
+    \MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
+    \@starttoc{toc}%
+    \if@restonecol\twocolumn\fi
+}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{roman}
+\renewcommand{\cftdot}{} %removes dots in toc using package tocloft
+\tableofcontents
+\cleardoublepage
+
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\cleardoublepage
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Synopsis}
+\include{initPages/synopsis}
+\cleardoublepage
+
+\phantomsection
+\addcontentsline{toc}{chapter}{Abstract}
+\include{initPages/abstract}
+\cleardoublepage
+
+%%%%%%%%%% to control chapter heading %%%%%%%%%%
+%\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hspace{20pt}\textcolor{Gray}{$|$}\hspace{20pt}}{0pt}{\Huge\bfseries}
+%\titleformat{\chapter}[display]{\normalfont\Large\raggedleft}{\MakeUppercase{\chaptertitlename}\rlap{ \resizebox{!}{1.5cm}{\thechapter}\rule{5cm}{1.5cm}}}{10pt}{\Huge}
+\newcommand{\chapnumfont}{%     % define font for chapter number
+  \usefont{T1}{pnc}{b}{n}%      % choose New Chancery, bold, normal shape
+  \fontsize{80}{80}%          % font size 100pt, baselineskip 100pt
+  \selectfont%                  % activate font
+}
+\colorlet{chapnumcol}{myred}  %gray!75 color for chapter number
+\titleformat{\chapter}[display]{\filleft\bfseries}{\filleft\chapnumfont\textcolor{chapnumcol}{\thechapter}}{-24pt}{\usefont{T1}{ppl}{b}{n}\Huge}
+%%%%%%%%%%% %%%%%%%%%% %%%%%%%%%
+\pagenumbering{arabic}
+\include{chapters/ch1_introduction}
+\include{chapters/ch2_methodsTools}
+\include{chapters/ch3_thermalResponse}
+\include{chapters/ch4_mechanicalTempGrad}
+\include{chapters/ch5_poiseuilleFlow}
+%\include{chapters/ch6_asymmetricBinaryMixture1}
+\include{chapters/ch7_asymmetricBinaryMixture2}
+\include{chapters/conclusions}
+\cleardoublepage
+
+\phantomsection
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{apsrev4-1}% apalike
+\bibliography{bibliography}
+\end{document}

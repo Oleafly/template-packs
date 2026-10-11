@@ -1,0 +1,135 @@
+%% Version 0.001 of Poly PhD thesis template.
+%% Time-stamp: <2011-12-27 14:52:09 Boris Aronov>
+
+\documentclass[letterpaper]{polythesis} 
+
+%% This controls the sizes, spacing, and font of section headings.  It
+%% does NOT control the layout of chapter header pages.  There are
+%% many different styles possible.
+\usepackage[medium]{titlesec}
+
+% Allows box rotation.  Uncomment if you need it.
+% \usepackage{rotate}
+
+%% Using CMR fonts.  Add appropriate font commands if you want to
+%% switch to something else.  Be warned that there are virtually zero
+%% text/math font combinations available that work well in TeX.  It's
+%% a standard TeX FAQ
+
+\usepackage{calc}
+
+%% Occasionally needed for weird footnote behavior  Do not use if you
+%% have no footnotes in your thesis.
+%\usepackage[bottom]{footmisc}
+
+%% WARNING:  This will BREAK if your subfigure.sty is v2.0 or before!
+\usepackage[subfigure]{ccaption}
+\usepackage{subfigure}
+
+%\usepackage{type1cm}
+\usepackage{url, cite, graphicx, algorithmic, amsmath, amsfonts, amsthm}
+\usepackage[chapter]{algorithm}
+
+%% this is a customized package
+%% Do NOT use unless you ABSOLUTELY have to.  Nesting sections that
+%% deep is ridiculous.
+% \usepackage{subsections}
+% \setcounter{secnumdepth}{5}
+% \setcounter{tocdepth}{5}
+
+%% Abbreviations that you might need...
+% \newcommand{\AA}{\mathcal{A}}
+% \newcommand{\reals}{\mathbb{R}}
+% ...
+
+\newtheorem{condition}{Condition}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{example}[section]{Example}
+\newtheorem{note}{Note}[section]
+
+%% Some trickery to be able to add stuff in before the first chapter.
+\def\nonumchapter#1{%
+    \chapter*{#1}
+    \addcontentsline{toc}{chapter}{#1}}
+
+\def\prefacesection#1{%
+    \chapter*{#1}
+    \addcontentsline{toc}{chapter}{#1}}
+
+\def\afterpreface{\newpage
+    \pagenumbering{arabic}
+    \typeout{Thesis preface pages completed.}
+    }
+
+%% New operators if you need them.
+% \DeclareMathOperator{\area}{area}
+
+%% Uncomment if you need to see every file your document uses, with
+%% all versions.
+% \listfiles
+
+\begin{document}
+
+\frontmatter
+
+\title{Fancy Research Results of World-Wide Importance}
+\author{Generic M.\ Student}
+
+\date{\today}
+
+\pagenumbering{roman}
+
+\maketitle
+
+{\setstretch{2}
+\include{title}
+\include{commi}}
+\include{micro}
+\include{vita}
+\include{dedic} %% OPTIONAL
+\include{ackno} %% OPTIONAL
+
+\include{abstract}
+\tableofcontents
+%% Comment out appropriate lines below if you have no figures, or no
+%% tables, or no algorithms.
+%% Rules say that if you have 10 or fewer figures you need not include
+%% the list of tables.  Same with figures.
+\listoffigures 
+\listoftables
+\listofalgorithms
+
+\afterpreface
+
+\mainmatter
+
+%%% ------------- uncomment the following line to enable true double spacing
+%\doublespacing
+% This is for 1 1/2 spacing, which is usually good enough. Comment
+% this out if you want really double spaceing.
+\onehalfspacing
+
+\include{chapter1/chapter1}
+\include{chapter2/chapter2}
+\include{chapter3/chapter3}
+
+\bibliographystyle{plain}
+{\singlespace
+%% If you are using BibTeX, else comment out
+\bibliography{bibliography}
+%% If you are not using BibTeX, but hand-craft your bibliography,
+%% uncomment the line below.
+% \include{biblio}
+}
+
+%% Comment out if you have no appendices.
+\appendix
+\include{appendix/appendix}
+
+\end{document}

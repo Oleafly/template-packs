@@ -1,0 +1,598 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title: LaTeX Thesis Template Usage Guide Chapter
+% Purpose: Comprehensive guide for using the thesis template
+% Compiler: pdflatex
+% OS: Manjaro 
+% Version: V1 (NIT Durgapur Edition)
+% Written on: July 07, 2025
+% Revision Date: October 18, 2025
+% Author: Kingsuk Majumdar
+% Copyright (c) 2025 Kingsuk Majumdar
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{LaTeX Thesis Template Usage Guide}
+\label{ch:template_guide}
+\justifying
+
+\section{Introduction}
+\label{sec:intro}
+
+The main aim of this chapter is to provide a comprehensive guide for using the LaTeX thesis template [\textbf{Un-official} ] specifically designed for National Institute Of Technology Durgapur . This template has been developed to streamline the thesis writing process for undergraduate, postgraduate, and doctoral students while maintaining institutional formatting standards and academic presentation quality.
+
+The template architecture follows a modular approach with clear separation between user inputs and system-level formatting commands. The primary advantage of this template lies in its automated handling of multi-student configurations, conditional rendering of content based on degree type, and professional formatting that adheres to institutional guidelines.\\
+Kingsuk Majumdar\\
+M. Tech (EE, 2013) Ph.D (EE, 2023)
+
+\section{Template Architecture and Directory Structure}
+\label{sec:architecture}
+
+The template follows a well-organized hierarchical structure that facilitates easy content management and compilation. The complete directory structure is presented below:
+{\small
+\begin{verbatim}
+	ug-thesis-template/
+	|-- main.tex                    # Main document file (User Input Section)
+	|-- thesis.cls                  # LaTeX class file (Formatting Engine)
+	|-- references.bib              # Bibliography database
+	|-- mcode.sty                   # MATLAB code highlighting package
+	|-- README.md                   # Documentation file
+	|-- LICENSE.lic                 # License information
+	|-- Frontmatter/
+	|   |-- Declaration.tex         # Student declaration page (Dont Change it) 
+	|   |-- Certificate.tex         # Supervisor approval certificate (Dont Change it)
+	|   |-- Acknowledgment.tex      # Acknowledgments section
+	|   |-- Abstract.tex            # Abstract and keywords
+	|   +-- Acronyms.tex            # List of abbreviations and nomenclature
+	|-- Chapters/
+	|   |-- Chapter01_Introduction.tex    # Introduction chapter (MUST BE)
+	|   |-- Chapter02_Literature.tex      # Literature review (MUST BE)
+	|   |-- Chapter02_Table.tex           # Table examples
+	|   |-- Chapter03_Figure.tex          # Figure examples
+	|   |-- Chapter04_Math.tex            # Mathematical expressions
+	|   |-- Chapter03_Methodology.tex     # Research methodology
+	|   |-- Chapter04_Implementation.tex  # Implementation details
+	|   |-- Chapter05_Results.tex         # Results and analysis (MUST BE)
+	|   +-- Chapter06_Conclusion.tex      # Conclusions and future work (MUST BE)
+	|-- Backmatter/
+	|   |-- PublicationsList.tex    # Publications by authors
+	|   +-- AuthorBio.tex           # Author biographies (Strictly PG/PhD only)
+	|-- Figures/
+	|   |-- college_logo.png        # Institutional logo (required)
+	|   |-- StudentOne_photo.jpg    # Student photograph
+	|   |-- StudentTwo_photo.jpg    # Student photograph
+	|   |-- StudentThree_photo.jpg  # Student photograph
+	|   |-- Chapter01/              # Chapter-wise figure organization
+	|   |-- Chapter02/
+	|   |-- Chapter03/
+	|   |-- Chapter04/
+	|   |-- Chapter05/
+	|   +-- Chapter06/
+	+-- OUTPUT/                     # Generated output files (after compilation)
+	|-- main.pdf                # Final thesis document
+	|-- main.aux                # Auxiliary file
+	|-- main.bbl                # Bibliography file
+	|-- main.blg                # Bibliography log
+	|-- main.log                # Compilation log
+	|-- main.toc                # Table of contents
+	|-- main.lof                # List of figures
+	+-- main.lot                # List of tables
+\end{verbatim}
+}
+\section{Configuration and User Input Section}
+\label{sec:configuration}
+
+The template utilizes a sophisticated variable definition system within the \texttt{main.tex} file. All user-specific information is contained within the clearly marked ``USER INPUT SECTION'' which must be modified according to individual thesis requirements.
+
+\subsection{Thesis Information Configuration}
+\label{subsec:thesis_info}
+
+The fundamental thesis parameters are defined through the following commands:
+
+\begin{verbatim}
+	%% Thesis Information
+	\ThesisTitle{Long Thesis Title}
+	\ShortTitle{Short Thesis Title}
+	\Department{Department of Electrical Engineering}
+	\College{National Institute Of Technology Durgapur}
+	\University{National Institute Of Technology Durgapur}
+	\DegreeType{Bachelor of Technology (B. Tech.)}
+	\ThesisYear{2025}
+	\ThesisMonth{May}
+	\Location{Durgapur}
+	\AY{2024-2025}
+	\Address{Mahatma Gandhi Avenue, Durgapur – 713209, West Bengal, India}
+\end{verbatim}
+
+\subsection{Project-Specific Information}
+\label{subsec:project_info}
+
+For academic projects, the following parameters must be configured:
+
+\begin{verbatim}
+	%% Project Information
+	\GroupNo{Group 00}
+	\PaperName{Final Year Project Stage-II}
+	\PaperCode{PWEE881}
+\end{verbatim}
+
+\subsection{Student Configuration System}
+\label{subsec:student_config}
+
+The template implements a dynamic student handling system that automatically adjusts content based on the number of students specified:
+
+\begin{verbatim}
+	%% Number of Students Configuration
+	\NumberOfStudents{3}  % Range: 1-5 for UG, 1 for PG/PhD
+	
+	%% Student Information
+	\StudentOne{Pradosh Chandra Mitter}
+	\RollOne{18/EE/045}
+	\RegOne{184410301045}
+	\EmailOne{pradosh.mitter@student.nitdgp.ac.in}
+	\PhotoOne{Figures/StudentOne_photo.jpg}
+	
+	\StudentTwo{Tapesh Ranjan Mitter}
+	\RollTwo{18/EE/052}
+	\RegTwo{184410301052}
+	\EmailTwo{tapesh.mitter@student.nitdgp.ac.in}
+	\PhotoTwo{Figures/StudentTwo_photo.jpg}
+	
+	\StudentThree{Lalmohan Gonguly}
+	\RollThree{18/EE/063}
+	\RegThree{184410301063}
+	\EmailThree{lalmohan.gonguly@student.nitdgp.ac.in}
+	\PhotoThree{Figures/StudentThree_photo.jpg}
+\end{verbatim}
+
+\subsection{Supervision Structure}
+\label{subsec:supervision}
+
+The template accommodates both single supervisor and co-supervisor configurations with flexible college affiliations:
+
+\begin{verbatim}
+	%% Supervisor Configuration
+	\HasCoSupervisor{2} % 1=supervisor only, 2=both supervisor and co-supervisor
+	
+	\Supervisor{Professor C.V. Raman}
+	\SupervisorDesignation{Professor}
+	\SupervisorEmail{cv.raman@ee.nitdgp.ac.in}
+	\SupervisorDept{Department of Electrical Engineering}
+	\SupervisorCollege{National Institute Of Technology Durgapur}
+	
+	\CoSupervisor{Acharya Prafulla Chandra Ray}
+	\CoSupervisorDesignation{Assistant Professor}
+	\CoSupervisorEmail{pc.ray@ee.nitdgp.ac.in}
+	\CoSupervisorDept{Department of Electrical Engineering}
+	\CoSupervisorCollege{National Institute Of Technology Durgapur}
+\end{verbatim}
+
+\section{Degree-Specific Configurations}
+\label{sec:degree_config}
+
+\subsection{Undergraduate (UG) Thesis Requirements}
+\label{subsec:ug_requirements}
+
+For undergraduate theses, the following specifications must be observed:
+
+\begin{itemize}
+	\item \textbf{Maximum Students}: 5 students per group
+	\item \textbf{Author Biography}: Not included in final document
+	\item \textbf{Degree Type}: Bachelor of Technology (B. Tech.)
+	\item \textbf{Paper Code}: PWEE881 (Final Year Project Stage-II) or as per department
+\end{itemize}
+
+The configuration for undergraduate thesis should exclude author biography by commenting out the relevant include statement:
+
+\begin{verbatim}
+	% Publications by authors
+	\include{Backmatter/PublicationsList}
+	
+	% About the authors - COMMENTED OUT FOR UG
+	%\include{Backmatter/AuthorBio} % Applicable for PG/PhD ONLY
+\end{verbatim}
+
+\subsection{Postgraduate (PG) Thesis Requirements}
+\label{subsec:pg_requirements}
+
+For postgraduate theses, the specifications are:
+
+\begin{itemize}
+	\item \textbf{Number of Students}: 1 student only
+	\item \textbf{Author Biography}: Mandatory inclusion
+	\item \textbf{Degree Type}: Master of Technology (M. Tech.) or equivalent
+	\item \textbf{Enhanced Documentation}: Comprehensive literature review and methodology
+\end{itemize}
+
+The configuration for postgraduate thesis must include author biography:
+
+\begin{verbatim}
+	% Publications by authors
+	\include{Backmatter/PublicationsList}
+	
+	% About the authors - REQUIRED FOR PG/PhD
+	\include{Backmatter/AuthorBio} % Applicable for PG/PhD ONLY
+\end{verbatim}
+
+\subsection{Doctoral (PhD) Thesis Requirements}
+\label{subsec:phd_requirements}
+
+For doctoral theses, the specifications are:
+
+\begin{itemize}
+	\item \textbf{Number of Students}: 1 student only
+	\item \textbf{Author Biography}: Mandatory with detailed research profile
+	\item \textbf{Degree Type}: Doctor of Philosophy (Ph.D.)
+	\item \textbf{Publications List}: Comprehensive list of published research papers
+	\item \textbf{Extended Documentation}: In-depth literature survey, methodology, and contributions
+\end{itemize}
+
+\section{Compilation Methods}
+\label{sec:compilation}
+
+\subsection{Offline Compilation in Manjaro Linux}
+\label{subsec:offline_compilation}
+
+For offline compilation in Manjaro Linux environment, the following procedure should be followed:
+
+\subsubsection{Prerequisites Installation}
+\label{subsubsec:prerequisites}
+
+\begin{verbatim}
+	# Update system repositories
+	sudo pacman -Syu
+	
+	# Install complete LaTeX distribution
+	sudo pacman -S texlive-most texlive-bibtexextra
+	
+	# Alternative: Install full TeX Live distribution
+	sudo pacman -S texlive-core texlive-bin texlive-latexextra texlive-fontsextra
+	
+	# Install latexmk for automated compilation
+	sudo pacman -S texlive-binextra
+\end{verbatim}
+
+\subsubsection{Compilation Process [Recommended]}
+\label{subsubsec:compilation_process}
+
+Navigate to the thesis template directory and execute the following commands:
+
+\begin{verbatim}
+	# Navigate to project directory
+	cd /path/to/ug-thesis-template/
+	
+	# Create output directory
+	mkdir -p OUTPUT
+	
+	# Primary compilation sequence
+	pdflatex main.tex
+	bibtex main
+	pdflatex main.tex
+	pdflatex main.tex
+	
+	# Move generated files to OUTPUT directory
+	mv main.pdf OUTPUT/
+	mv *.aux *.bbl *.blg *.log *.toc *.lof *.lot OUTPUT/ 2>/dev/null || true
+\end{verbatim}
+
+\subsubsection{Using latexmk for Automated Compilation}
+\label{subsubsec:latexmk_compilation}
+
+The \texttt{latexmk} tool provides intelligent automated compilation with dependency tracking:
+
+\begin{verbatim}
+	# Navigate to project directory
+	cd /path/to/ug-thesis-template/
+	
+	# Create output directory
+	mkdir -p OUTPUT
+	
+	# Automated compilation with latexmk
+	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" main.tex
+	
+	# Continuous preview mode (auto-recompile on changes)
+	latexmk -pdf -pvc -pdflatex="pdflatex -interaction=nonstopmode" main.tex
+	
+	# Clean auxiliary files
+	latexmk -c
+	
+	# Clean all generated files including PDF
+	latexmk -C
+	
+	# Move files to OUTPUT directory
+	mv main.pdf OUTPUT/
+	mv *.aux *.bbl *.blg *.log *.toc *.lof *.lot *.fls *.fdb_latexmk \
+	OUTPUT/ 2>/dev/null || true
+\end{verbatim}
+
+\subsubsection{Creating latexmkrc Configuration File}
+\label{subsubsec:latexmkrc}
+
+For project-specific latexmk configuration, create a \texttt{.latexmkrc} file in the project root:
+
+\begin{verbatim}
+	# .latexmkrc configuration file
+	$pdf_mode = 1;                    # Generate PDF using pdflatex
+	$bibtex_use = 2;                  # Run bibtex when needed
+	$pdflatex = 'pdflatex -interaction=nonstopmode -synctex=1 %O %S';
+	$out_dir = 'OUTPUT';              # Output directory
+	$aux_dir = 'OUTPUT';              # Auxiliary files directory
+	$clean_ext = 'bbl aux blg idx ilg ind lof lot out toc synctex.gz fdb_latexmk 
+	fls log';
+	@default_files = ('main.tex');   # Default main file
+\end{verbatim}
+
+Then simply run:
+\begin{verbatim}
+	latexmk
+\end{verbatim}
+
+\subsubsection{Advanced Compilation Options}
+\label{subsubsec:advanced_compilation}
+
+For debugging and optimization:
+
+\begin{verbatim}
+	# Compilation with detailed logging
+	pdflatex -interaction=nonstopmode -file-line-error main.tex > 
+	compilation.log 2>&1
+	
+	# Draft mode compilation (faster for testing)
+	pdflatex "\def\isdraft{1}\input{main.tex}"
+	
+	# Shell escape mode (for external programs)
+	pdflatex -shell-escape main.tex
+	
+	# Using latexmk with custom options
+	latexmk -pdf -shell-escape -interaction=nonstopmode main.tex
+\end{verbatim}
+
+\subsection{Online Compilation using Overleaf Platform}
+\label{subsec:online_compilation}
+
+Overleaf provides a convenient cloud-based LaTeX editing and compilation environment. The template can be deployed on Overleaf through the following process:
+
+\subsubsection{Project Setup on Overleaf}
+\label{subsubsec:overleaf_setup}
+
+\begin{enumerate}
+	\item \textbf{Create New Project}: Access Overleaf platform and create a new blank project
+	\item \textbf{Upload Template Files}: Upload all template files maintaining the directory structure
+	\item \textbf{Set Compiler}: Configure project settings to use \texttt{pdfLaTeX} compiler
+	\item \textbf{Bibliography Engine}: Set bibliography processor to \texttt{bibtex}
+	\item \textbf{Alternative}: Use \texttt{latexmk} as the compiler for automated processing
+\end{enumerate}
+
+\subsubsection{Overleaf Configuration Parameters}
+\label{subsubsec:overleaf_config}
+
+\begin{verbatim}
+	% Overleaf-specific settings (add to main.tex if needed)
+	\RequirePackage[utf8]{inputenc}  % Ensure UTF-8 encoding
+	\RequirePackage[T1]{fontenc}     % Font encoding compatibility
+\end{verbatim}
+
+\subsubsection{Collaborative Features}
+\label{subsubsec:collaborative}
+
+Overleaf enables multi-user collaboration which is particularly beneficial for multi-student projects:
+
+\begin{itemize}
+	\item \textbf{Real-time Editing}: Multiple users can edit simultaneously
+	\item \textbf{Version Control}: Automatic versioning and change tracking
+	\item \textbf{Comment System}: Collaborative review and feedback mechanism
+	\item \textbf{Bibliography Management}: Integrated reference management
+\end{itemize}
+
+\section{Content Development Guidelines}
+\label{sec:content_development}
+
+\subsection{Chapter Organization Strategy}
+\label{subsec:chapter_organization}
+
+Each chapter should follow a structured approach with clear objectives and logical flow:
+
+\begin{verbatim}
+	\chapter{Chapter Title}
+	\label{ch:chaptersymbol}
+	\justifying
+	
+	% Chapter introduction
+	% Literature review (if applicable)
+	% Methodology description
+	% Results presentation
+	% Chapter summary
+\end{verbatim}
+
+\subsection{Figure and Table Management}
+\label{subsec:figure_table}
+
+The template provides automated figure and table handling with proper referencing:
+
+\begin{verbatim}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\textwidth]{Chapter01/figure_name.png}
+		\caption{Descriptive caption for the figure}
+		\label{fig:figurelabel}
+	\end{figure}
+\end{verbatim}
+
+\subsection{Mathematical Expression Formatting}
+\label{subsec:math_formatting}
+
+For electrical engineering applications, mathematical expressions are formatted using enhanced packages:
+
+\begin{verbatim}
+	\begin{equation}
+		P = V \cdot I \cdot \cos(\phi)
+		\label{eq:power}
+	\end{equation}
+\end{verbatim}
+
+\section{Quality Assurance and Best Practices}
+\label{sec:quality_assurance}
+
+\subsection{File Organization Recommendations}
+\label{subsec:file_organization}
+
+To maintain template integrity and facilitate collaboration, the following practices should be observed:
+
+\begin{enumerate}
+	\item \textbf{Consistent Naming}: Use descriptive file names with chapter prefixes
+	\item \textbf{Image Resolution}: Maintain high-resolution images (300 DPI minimum)
+	\item \textbf{Backup Strategy}: Regular backup of work using version control systems
+	\item \textbf{Validation Testing}: Periodic compilation testing to identify issues early
+\end{enumerate}
+
+\subsection{Common Error Resolution}
+\label{subsec:error_resolution}
+
+Typical compilation errors and their solutions:
+
+\begin{itemize}
+	\item \textbf{Missing Packages}: Install required packages using package manager
+	\item \textbf{File Path Issues}: Verify relative paths for figures and includes
+	\item \textbf{Encoding Problems}: Ensure UTF-8 encoding for all text files
+	\item \textbf{Bibliography Errors}: Check reference format and .bib file syntax
+	\item \textbf{latexmk Issues}: Clear auxiliary files using \texttt{latexmk -C}
+\end{itemize}
+
+\section{Performance Optimization}
+\label{sec:performance}
+
+For large documents with numerous figures and references, compilation performance can be optimized through:
+
+\begin{verbatim}
+	% Draft mode for faster compilation during writing
+	\documentclass[draft]{thesis}
+	
+	% Selective chapter compilation
+	%\includeonly{Chapters/Chapter01_Introduction}
+	
+	% Using latexmk with parallel processing (if supported)
+	latexmk -pdf -pdflatex="pdflatex %O -interaction=nonstopmode %S" main.tex
+\end{verbatim}
+
+\section{Third-Party Components and Acknowledgments}
+\label{sec:acknowledgments}
+
+This template incorporates several third-party components and packages that enhance its functionality and appearance. Proper attribution and licensing information for these components is provided below:
+
+\subsection{MATLAB Code Highlighting}
+\label{subsec:mcode}
+
+The template includes the \texttt{mcode.sty} package developed by Florian Knorn for MATLAB code syntax highlighting. This package provides professional formatting for MATLAB code snippets within LaTeX documents. The \texttt{mcode.sty} package is distributed under the BSD License and can be used for academic and commercial purposes.
+
+To use MATLAB code highlighting in your thesis:
+
+\begin{verbatim}
+	\begin{lstlisting}[style=Matlab-editor]
+		function result = myFunction(input)
+		% Your MATLAB code here
+		result = input * 2;
+		fprintf('Result: %f\n', result);
+		end
+	\end{lstlisting}
+\end{verbatim}
+
+\subsection{Template Availability and Distribution}
+\label{subsec:template_availability}
+
+This LaTeX thesis template is made available through multiple platforms to ensure easy access and collaboration:
+
+\subsubsection{GitHub Repository}
+The complete template source code, documentation, and version history are maintained in the GitHub repository:
+
+\textbf{GitHub Link}: 
+\href{https://github.com/KingsukMajumdar/NITDGP-Thesis-Template-Unofficial.git}{\texttt{[NITDGP-Thesis-Template-Unofficial]}}
+The GitHub repository provides:
+\begin{itemize}
+	\item Complete source code with version control
+	\item Issue tracking and bug reports
+	\item Collaborative development environment
+	\item Release management and downloads
+\end{itemize}
+
+\subsubsection{Overleaf Template}
+For users preferring online LaTeX editing, the template is also available as an Overleaf template:
+
+\textbf{Overleaf Link}: \texttt{[Overleaf template link will be added here]}
+
+The Overleaf version offers:
+\begin{itemize}
+	\item One-click template import
+	\item Collaborative editing capabilities
+	\item Automatic compilation and preview
+	\item No local LaTeX installation required
+\end{itemize}
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+This chapter has provided a comprehensive overview of the LaTeX thesis template usage for National Institute Of Technology Durgapur. The template's modular architecture and automated formatting capabilities significantly reduce the formatting overhead, allowing students to focus on content development rather than document structure.
+
+The distinction between undergraduate, postgraduate, and doctoral requirements has been clearly delineated, with specific guidelines for student numbers and author biography inclusion. Both offline compilation in Manjaro Linux (including latexmk for automated processing) and online compilation through Overleaf have been detailed to accommodate different working preferences and technical environments.
+
+Through proper utilization of this template, students can produce professional-quality thesis documents that adhere to institutional standards while maintaining consistency across different projects and departments at NIT Durgapur.
+
+\section{License Information}
+\label{sec:license}
+
+\subsection{MIT License}
+\label{subsec:mit_license}
+
+This LaTeX thesis template is released under the MIT License, which allows for maximum flexibility in usage, modification, and distribution. The complete license text is provided below:
+
+\begin{verbatim}
+	MIT License
+	
+	Copyright (c) 2025 Kingsuk Majumdar
+	
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+	
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+	
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+\end{verbatim}
+
+\subsection{Usage Terms}
+\label{subsec:usage_terms}
+
+Under the MIT License, users are granted the following rights:
+
+\begin{itemize}
+	\item \textbf{Commercial Use}: The template may be used for commercial purposes
+	\item \textbf{Modification}: Users may modify the template to suit their requirements
+	\item \textbf{Distribution}: The template may be distributed freely
+	\item \textbf{Private Use}: Private usage is permitted without restriction
+\end{itemize}
+
+The only requirement is the inclusion of the copyright notice and license text in any distributions of the template or substantial portions thereof.
+
+\subsection{Third-Party License Compliance}
+\label{subsec:third_party_licenses}
+
+This template incorporates third-party components with their respective licenses:
+
+\begin{itemize}
+	\item \textbf{mcode.sty}: BSD License (Florian Knorn)
+	\item \textbf{Standard LaTeX Packages}: Various open-source licenses
+	\item \textbf{TeX Live Distribution}: TeX Users Group License
+	\item \textbf{latexmk}: GNU General Public License
+\end{itemize}
+
+All third-party components are used in compliance with their respective licensing terms, and users should ensure continued compliance when modifying or redistributing the template.\\
+With Regards\\
+Kingsuk Majumdar, Ph.D (Electrical Engineering)\\
+An Initiative by an Alumnus

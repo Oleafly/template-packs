@@ -1,0 +1,130 @@
+This demonstrates how OGS wants figures and tables formatted. For
+figures, the caption goes below the figure and ``Figure'' is in bold.
+See Figure~\ref{fig:zen}. Tables are formatted with the caption above
+the table. See Table~\ref{tab:bad}.
+
+Of course, Table~\ref{tab:bad} looks horrible. It should probably be
+formatted like Table~\ref{tab:good} instead.
+
+For facing caption pages, see Table~\ref{tab:facing}. Of course,
+facing caption pages are vaguely ridiculous and my implementation of
+them in the class file is by far the most brittle part of the
+implementation. It's entirely possible that something has changed and
+these don't work at all. I implemented it merely for the challenge.
+
+\begin{figure}
+\centering
+\fbox{\parbox{.9\linewidth}{%
+	\noindent
+	{\Huge PHD ZEN}\par
+	\vskip.5in
+	\centerline{comic here}
+	\vskip.5in
+}}
+\caption[``Ph.D. Zen'']{Comic entitled ``Ph.D. Zen'' by Jorge Cham, 2005. Copyright
+has not been obtained and so it isn't displayed.}
+\label{fig:zen}
+\end{figure}
+
+\begin{table}
+\centering
+\caption[Electronic Dissertation Submission Rates]{Electronic
+Dissertation Submission Rates at UCSD, Fall 2005 and Winter 2006.
+(First two quarters that the program was available to all Ph.D.
+candidates not in a Joint Doctoral Program with SDSU.)}
+\label{tab:bad}
+\begin{tabular}{|*{5}{>{\centering\arraybackslash}m{.15\linewidth}|}}
+\hline
+&Ph.D.s awarded (Including Joint degrees) & Electronic submission of
+Dissertation & Paper Submission of Dissertation & Percentage of
+Electronic Submission\\
+\hline
+Fall\par 2005 & 84 & 37 & 47 & 44.05\%\\
+\hline
+Winter\par 2006 & 64 & 42 & 22 & 65.63\%\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption[Electronic Dissertation Submission Rates]{Electronic
+Dissertation Submission Rates at UCSD, Fall 2005 and Winter 2006.
+(First two quarters that the program was available to all Ph.D.
+candidates not in a Joint Doctoral Program with SDSU.)}
+\label{tab:good}
+\renewcommand\tabularxcolumn[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\begin{tabularx}{.9\linewidth}{lcccc}
+\toprule
+&\multicolumn{1}{X}{Ph.D.s awarded (Including Joint degrees)}
+&\multicolumn{1}{X}{Electronic submission of Dissertation}
+&\multicolumn{1}{X}{Paper Submission of Dissertation}
+&\multicolumn{1}{X}{Percentage of Electronic Submission}\\
+\midrule
+Fall 2005 & 84 & 37 & 47 & 44.05\%\\
+Winter 2006 & 64 & 42 & 22 & 65.63\%\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{facingcaption}{table}
+\caption[UCSD Gender Distribution]{University of
+California, San Diego Gender Distribution for the Campus Population,
+October~2005\\
+(http://assp.ucsd.edu/analytical/Campus\%20Population.shtml)\\
+\emph{(This is an example of a facing caption page, the next page is
+the example of the table/figure/etc.\ that corresponds to this
+caption. It is also an example of table/figure that is rotated 90
+degrees to fit the page.)}}
+\label{tab:facing}
+\renewcommand\tabularxcolumn[1]{>{\RaggedLeft\arraybackslash}p{#1}}
+\parindent=0pt
+\setbox0=\vbox{%
+\vsize\textwidth
+\hsize\textheight
+\linewidth\hsize
+\columnwidth\hsize
+\textwidth\hsize
+\textheight\vsize
+\begin{tabularx}{\linewidth}{lXXXXXX}
+\toprule
+& \multicolumn{2}{c}{\textbf{Women}}
+& \multicolumn{2}{c}{\textbf{Men}}
+& \multicolumn{2}{c}{\textbf{Total}}\\
+\cmidrule(l){2-3}\cmidrule(l){4-5}\cmidrule(l){6-7}
+\textbf{Population Segment}
+& \multicolumn{1}{c}{\textbf{N}} & \multicolumn{1}{c}{\textbf{\%}}
+& \multicolumn{1}{c}{\textbf{N}} & \multicolumn{1}{c}{\textbf{\%}}
+& \multicolumn{1}{c}{\textbf{N}} & \multicolumn{1}{c}{\textbf{\%}}\\
+\midrule
+Students & 12,987 & 51\% & 12,686 & 49\% & 25,673 & 100\%\\
+Employees & 9,943 & 56\% &  7,671 & 44\% & 17,614 & 100\%\\
+\addlinespace
+\hfill\textbf{Total} & \textbf{22,930} & \textbf{53\%} &
+\textbf{20,357} & \textbf{47\%} & \textbf{43,287} & \textbf{100\%}\\
+\bottomrule
+\end{tabularx}
+\singlespacing
+
+\emph{Notes}:
+\begin{enumerate}
+\item The counts shown below will differ from the official quarterly
+Registrar's registration report because 1) data for residents in the
+Schools of Medicine and Pharmacy and Pharmaceutical Science are
+excluded, and 2) registered, non-matriculated, visiting students are
+included.
+\item Student workers are excluded from employees; however emeritus
+faculty and others on recall status are included.
+\end{enumerate}
+
+Campus Planning. Analytical Studies and Space Planning\\
+31 January 2006
+}
+\centerline{\rotatebox{90}{\box0}}
+\end{facingcaption}
+
+% This will give us some more text
+% \Blinddocument
+
+
+\input{contents/chapter2/contents/acknowledgement}

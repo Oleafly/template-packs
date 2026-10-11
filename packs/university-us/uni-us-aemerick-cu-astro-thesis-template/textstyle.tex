@@ -1,0 +1,196 @@
+% 
+%
+% This file specifies the thesis style and formatting.
+% It has been unchanged from the version passed down to me (Mar. 2019)
+%
+%
+
+
+% Set how deep the table of contents goes
+% Change this to 1 for only Sections to appear in the ToC
+\setcounter{tocdepth}{2}
+
+% Sectional units up to subsubsections are numbered. To number
+% subsections, but not subsubsections, decrease this counter to 2.
+\setcounter{secnumdepth}{3}
+
+% Columbia wants double spacing
+\usepackage{setspace}
+\doublespacing{}
+
+% Page layout (customized to letter paper and Columbia requirements):
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textheight}{8.3in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\footskip}{.5in}
+% \setlength{\skip\footins}{.3in}
+
+\bibpunct{(}{)}{;}{a}{}{,} % sets the punctuation style of references
+
+% Magic to add quote before chapter text
+\makeatletter
+%\renewcommand{\@chapapp}{}% Not necessary...
+\newenvironment{chapquote}[2][2em]
+  {\setlength{\@tempdima}{#1}%
+   \def\chapquote@author{#2}%
+   \parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+   \itshape}
+  {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
+\makeatother
+
+
+% --- OLD ----
+%\paperwidth=8.5in
+%\paperheight=11in
+%\oddsidemargin=0.00in
+%\evensidemargin=0.00in
+%\topmargin=-0.5in          % top margin (less 1") (LaTeX)
+%%%%%% I'm changing this one by hand.  Make sure it's right!
+%%\topmargin=0.4in          % top margin (less 1") (LaTeX)
+%\headheight=0.3in          % height of heading (LaTeX)
+%\headsep=0.3in             % separation of heading from body (LaTeX)
+%%\textheight=8.0in          % height of body (LaTeX)
+%\textheight=8.5in          % height of body (LaTeX)
+%\footskip=0.5in            % distance between bottoms of body & foot (LaTeX)
+%\textwidth=6.5in             % width of body (LaTeX)
+%\hsize=6in                 % " (TeX)
+%\parindent=25pt            % indentation (TeX)
+%%\parskip=\medskipamount    % space between paragraphs (TeX)
+%\parskip=0.2mm    % space between paragraphs (TeX)
+%\lineskip=0pt              % minimum box separation (TeX)
+%\abovedisplayskip=1em plus.3em minus.5em    % space above equation (TeX)
+%\belowdisplayskip=1em plus.3em minus.5em    % " below
+%\abovedisplayshortskip=.5em plus.2em minus.4em % " above when no overlap
+%\belowdisplayshortskip=.5em plus.2em minus.4em % " below
+%%\def\baselinestretch{1.6}    % magnification for line spacing (LaTeX)
+%\def\baselinestretch{1.9}    % magnification for line spacing (LaTeX)
+%                             % normal=1.2 double spaced=1.6
+%\thicklines                  % thick straight lines for pictures (LaTeX)
+%\marginparwidth=1.in                       % marginal note width (LaTeX)
+
+%
+%\def\@tablenotetext#1#2{\vspace{.5ex}{\noindent\llap{$^{#1}$}#2\par}}
+%
+%%%%%%%%%%%%%%%%
+%% Dave's macros
+%\def\plotone#1{\centering \leavevmode
+%\includegraphics[clip=,width=.80\columnwidth]{#1}}
+%%\includegraphics[clip=, width=.95\columnwidth]{#1}}
+%\def\plotonesmall#1{\centering \leavevmode
+%\includegraphics[clip=,width=.55\columnwidth]{#1}}
+%\def\plottwo#1#2{\centering \leavevmode
+%\includegraphics[clip=,width=.42\columnwidth]{#1} \hfil
+%\includegraphics[clip=,width=.42\columnwidth]{#2}}
+%%\includegraphics[width=.45\columnwidth]{#1} \hfil
+%%\includegraphics[width=.45\columnwidth]{#2}}
+%\def\plotthree#1#2#3{\centering \leavevmode
+%\includegraphics[clip=,width=.30\columnwidth]{#1} \hfil
+%\includegraphics[clip=,width=.30\columnwidth]{#2} \hfil
+%\includegraphics[clip=,width=.30\columnwidth]{#3}}
+%
+%\newcommand{\R}[0]{\mathcal{R}}
+%\newcommand{\pn}[1]{\mbox{$(#1)$}}
+%\newcommand{\spa}{\mbox{ }}
+%\def\gsim{\;\rlap{\lower 2.5pt
+% \hbox{$\sim$}}\raise 1.5pt\hbox{$>$}\;}
+%\def\lsim{\;\rlap{\lower 2.5pt
+%   \hbox{$\sim$}}\raise 1.5pt\hbox{$<$}\;}
+%% end of Dave's macros
+%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\renewcommand{\textfraction}{0}
+%\renewcommand{\bottomfraction}{1}
+%\renewcommand{\topfraction}{1}
+%
+%\newbox\grsign \setbox\grsign=\hbox{$>$}
+%\newdimen\grdimen \grdimen=\ht\grsign
+%\newbox\laxbox \newbox\gaxbox
+%\setbox\gaxbox=\hbox{\raise.5ex\hbox{$>$}\llap
+%     {\lower.5ex\hbox{$\sim$}}}\ht1=\grdimen\dp1=0pt
+%\setbox\laxbox=\hbox{\raise.5ex\hbox{$<$}\llap
+%     {\lower.5ex\hbox{$\sim$}}}\ht2=\grdimen\dp2=0pt
+%
+%\setcounter{secnumdepth}{4} % number subsubsections in the text
+%
+%% Alter some LaTeX defaults for better treatment of figures:
+%    % See p.105 of "TeX Unbound" for suggested values.
+%    % See pp. 199-200 of Lamport's "LaTeX" book for details.
+%    %   General parameters, for ALL pages:
+%    \renewcommand{\topfraction}{0.9}    % max fraction of floats at top
+%    \renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+%    %   Parameters for TEXT pages (not float pages):
+%    \setcounter{topnumber}{2}
+%    \setcounter{bottomnumber}{2}
+%    \setcounter{totalnumber}{4}     % 2 may work better
+%    \setcounter{dbltopnumber}{2}    % for 2-column pages
+%    \renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+%    \renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+%    %   Parameters for FLOAT pages (not text pages):
+%    \renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+%	% N.B.: floatpagefraction MUST be less than topfraction !!
+%    \renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+%
+%	% remember to use [htp] or [htpb] for placement
+%
+%
+%\renewcommand{\footnoterule}{} % get rid of line above footnotes
+%
+%
+%
+%
+%%%%%% put in stuff about a part
+%%\newcounter {part}
+%%\renewcommand \thepart {\@Roman\c@part}
+%%\newcommand\part{%
+%%  \if@openright
+%%    \cleardoublepage
+%%  \else
+%%    \clearpage
+%%  \fi
+%%  \if@nonumchpt\thispagestyle{empty}\fi
+%%  \if@twocolumn
+%%    \onecolumn
+%%    \@tempswatrue
+%%  \else
+%%    \@tempswafalse
+%%  \fi
+%%  \null\vfil
+%%  \secdef\@part\@spart}
+%%
+%%\def\@part[#1]#2{%
+%%    \ifnum \c@secnumdepth >-2\relax
+%%      \refstepcounter{part}%
+%%      \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}%
+%%    \else
+%%      \addcontentsline{toc}{part}{#1}%
+%%    \fi
+%%    \markboth{}{}%
+%%    {\centering
+%%     \interlinepenalty \@M
+%%     \normalfont
+%%     \ifnum \c@secnumdepth >-2\relax
+%%       \huge\bfseries \partname~\thepart
+%%       \par
+%%       \vskip 20\p@
+%%     \fi
+%%     \Huge \bfseries #2\par}%
+%%    \@endpart}
+%%\def\@spart#1{%
+%%    {\centering
+%%     \interlinepenalty \@M
+%%     \normalfont
+%%     \Huge \bfseries #1\par}%
+%%    \@endpart}
+%%\def\@endpart{\vfil\newpage
+%%              \if@twoside
+%%                \null
+%%                \thispagestyle{empty}%
+%%                \newpage
+%%              \fi
+%%              \if@tempswa
+%%                \twocolumn
+%%              \fi}

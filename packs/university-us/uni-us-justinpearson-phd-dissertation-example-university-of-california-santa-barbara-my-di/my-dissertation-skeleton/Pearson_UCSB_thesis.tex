@@ -1,0 +1,713 @@
+%%%---PREAMBLE---%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[oneside,12pt,final]{ucthesis-CA2012}
+% \documentclass[oneside,12pt,final]{ucthesis}
+\pdfoutput=1
+
+% jpp note: see:
+%
+% http://www.graddiv.ucsb.edu/docs/default-source/default-document-library/guide-to-formatting-filing-theses-dissertations.pdf?sfvrsn=0
+%
+% University of California, Santa Barbara
+% Guide to Formatting and Filing Theses, Dissertations, and DMA Supporting Documents
+% 2016-17
+
+%--- Packages ---------------------------------------------------------
+\usepackage[lofdepth,lotdepth,caption=false]{subfig}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{amsmath, amssymb, graphicx} 
+\usepackage{xspace}
+\usepackage{braket}
+\usepackage{color}
+\usepackage{setspace}
+% \usepackage{subfigure} (Subfigure package clashes with another package)
+% \usepackage{subfig}
+\usepackage{bm,ushort} % Needed for UAV coordination chapter
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pandoc
+
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% end pandoc
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%---New Definitions and Commands------------------------------------------------------
+\def\p{\partial}
+\def\im{\mrm{im}}
+\def\Tr{\mrm{Tr}}
+%\def\Z{\mbb{Z}}
+%\def\R{\mbb{R}}
+%\def\C{\mbb{C}}
+\def\half{\frac{1}{2}}
+\def\filler{\phantom{fillerfillerfiller}}
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\mbb}[1]{\mathbb{#1}}
+\newcommand{\mrm}[1]{\mathrm{#1}}
+\newcommand{\mcal}[1]{\mathcal{#1}}
+\newcommand{\mbf}[1]{\mathbf{#1}}
+\newcommand{\ph}[1]{\phantom{#1}}
+\newcommand{\udten}[3]{#1^{#2}_{\ph{#2}#3}}
+\newcommand{\duten}[3]{#1^{\ph{#2}#3}_{#2}}
+\newcommand{\pd}[2]{\frac{\p#1}{\p#2}}
+\newcommand{\D}[2]{\frac{d#1}{d#2}}
+
+% %%% Needed for UAV coordination chapter
+% \newcommand{\frk}{\mathfrak}               
+% \newcommand{\cl}{\mathcal}
+% %%%
+
+%---Set Margins ------------------------------------------------------
+
+% jpp note: for double-spacing:
+% \def\dsp{\def\baselinestretch{1}\large\normalsize} % jpp
+\def\dsp{\def\baselinestretch{2}\large\normalsize} % jpp
+% originally defined in 
+% in ucthesis-CA2012.cls
+
+\setlength\oddsidemargin{0.25 in} 
+\setlength\evensidemargin{0.25 in} 
+\setlength\textwidth{6.25 in} 
+\setlength\textheight{8.50 in}
+\setlength\footskip{0.25 in} 
+\setlength\topmargin{0 in} 
+\setlength\headheight{0.25 in} 
+\setlength\headsep{0.25 in}
+
+
+% % jpp customizations (generous margins)
+\setlength\textwidth{5.7 in} 
+\setlength\textheight{8.4 in}
+\setlength\footskip{0.45 in} 
+\setlength\topmargin{0 in} 
+\setlength\evensidemargin{0.5 in} 
+\setlength\oddsidemargin{0.5 in} 
+
+
+% jpp customizations (thin margins for draft printing)
+% \usepackage[letterpaper, margin=.2in]{geometry}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%     David's Additions    %%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \usepackage{amsmath,amssymb,amsfonts}
+%\usepackage{url}
+%\usepackage{fullpage}
+% \usepackage{setspace}      % \singlespace, \doublespace \onehalfspacing
+% \usepackage{ifthen}      % \ifthenelse,\boolean,\newboolean,\setboolean
+% \usepackage{mathptmx} % slightly more compressed font.
+%\usepackage[T1]{fontenc}\usepackage[condensed,math]{kurier} % fancy font
+% \usepackage{makeidx}  % to make a keyword index: \index{}
+% \usepackage{showidx}  % prints index entries in the left margin (debug)
+% \usepackage{needspace}     % \needspace{5\baselineskip} no page breaks for 5 lines
+% \usepackage{mparhack} % correct Latex bug in \marginpar
+% \usepackage{chemarr}  % arrows 4 chem: \xrightleftharpoons[]{} \xrightarrow{}
+\usepackage{listings} % source code printer for latex
+\lstset{language=Matlab}
+\lstset{basicstyle=\small,morekeywords={cvx_begin,cvx_end,variables,maximize,minimize,subject,to,linprog,quadprog,ones,optimset}}
+
+%%%% Figure packages
+%\usepackage{graphicx}
+ \usepackage{pstool}           % \psfrag for pdflatex -- preferable(?), not transparent
+% \usepackage{auto-pst-pdf}      % \psfrag & PStricks for pdflatex -- transparent!!!
+% \usepackage[pdftex]{graphics}
+%\usepackage{subfigure}         % \subfigure[a]{\includegraphics\ldots\label{fi:\ldots}}
+% \usepackage{sidecaption}       % \sidecaption (to be placed inside figure env.
+% \graphicspath{{./figuresdir1/}{./figuresdir2/}{./figuresdir3/}}
+% \graphicspath{{./figures}} % david
+\graphicspath{{./figures}} % not sure why double {{ necessary. See
+                           % http://en.wikibooks.org/wiki/LaTeX/Importing_Graphics 
+\DeclareGraphicsExtensions{.pdf,.jpg,.eps,.png}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%% Bibliography packages (order is important)
+% \usepackage{bibentry}% \nobibliography* \ldots  \bibentry{..} inserts a bib entry
+% apparently incompatible with hyperef
+% \makeatletter\let\NAT@parse\undefined\makeatother % enbl natbib with IEEE cls
+%\usepackage[numbers,sort&compress,sectionbib]{natbib} % \cite,\citet,\citep,\ldots
+%\usepackage[letterpaper,colorlinks=true,linkcolor=blue,backref=page]{hyperref}
+%\renewcommand*{\backref}[1]{\small (cited in p.~#1)}
+%\usepackage[norefs,nocites]{refcheck} % options:norefs,nocites,msgs,chkunlbld
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[draft,fancythm,fancybb,morse]{jphmacros2e}
+% \usepackage[elsart,draft,fancythm,fancybb,morse]{jphmacros2e}
+
+
+% \usepackage{algorithm2e} % algorithms, see https://www.sharelatex.com/learn/Algorithms
+% arg, joao defined algorithm environment already. Use this instead:
+\usepackage{algorithmic}
+% Seems to be preferred for IEEE journals according to
+% https://en.wikibooks.org/wiki/LaTeX/Algorithms#Typesetting_using_the_algorithmic_package
+% NOTE: I think this has to go after usepackage{jphmacros} because
+% joao defines the algorithm environment for something else, and I
+% want to write over his def'n. 
+
+
+% Overruns margin: \section{Sufficient condition for stability with limited-communication encoders}
+% https://tex.stackexchange.com/questions/195885/margins-of-section-title-is-out-of-bounds
+\usepackage{blindtext}
+\usepackage[raggedright]{titlesec}
+
+
+%% Macros & options for this Document
+
+%\DeclareMathOperator{\id}{id}
+
+\allowdisplaybreaks
+
+% \makeindex
+
+\newcommand{\david}[1]{\drafttext{\footnote{\drafttext{David: #1}}}}
+%\renewcommand{\l}{\operatorname{\ell}}     % l space
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%    End David's Additions    %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+\newlength{\figwidth}
+\setlength{\figwidth}{.9\textwidth}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Justin's terminology
+
+% We've had many names for the following concept: Given an encoder,
+% max over all possible symbol streams that the encoder may emit, the
+% average number of non-free symbols in that symbol stream. We denote
+% this $\gamma_{\max}$, but we've used:
+% 0. Average fraction of non-free symbols
+% 1. Average energy
+% 2. Average power
+% 3. Average communication
+% 4. Average cost-per-symbol
+% ... so let's have a macro for it:
+\newcommand{\avecost}{average cost per symbol}
+
+% We've changed the definition of 'bit-rate' a couple times, so
+% 'average bit-rate' may not be as appropriate as just 'bit-rate' now.
+% 2014-09-22: We changed it back, 'average' is now appropriate. :)
+\newcommand{\bitrate}{average bit-rate}
+\newcommand{\bitrates}{average bit-rates}
+\newcommand{\abitrate}{an average bit-rate}
+
+% We've had differing opinions about using "seconds" or "time units". 
+\newcommand{\timeunit}{time unit}
+\newcommand{\timeunits}{time units}
+
+% We've had differing opinions about "process (1)" vs "the process (1)".
+% 2016-03-26: reviewer says use "process (1)" for everything. Fine.
+\newcommand{\theprocess}{process \eqref{eq:full-process}}
+\newcommand{\thescalarprocess}{process \eqref{eq:scalar-process}}
+\newcommand{\process}{process \eqref{eq:full-process}}
+\newcommand{\theunstableprocess}{process \eqref{eq:process-unstable-subspace}}
+
+% Let's be consistent with our "sum of unstable eigenvalues"
+% expression.
+% Note: 2015-06-29 we decided to use strict ineq in the sum of
+% eigs. I'll just hack it and change sumeigs too.
+
+\newcommand{\sumeigs}{ \sum_{i:\Re\lambda_i[A] > 0}\lambda_i[A] }
+\newcommand{\sumeigsstrict}{ \sum_{i:\Re\lambda_i[A] > 0}\lambda_i[A] }
+\newcommand{\sumeigsplus}{ \sum_{i:\Re\lambda_i[A_+] \ge 0}\lambda_i[A_+] }
+
+% How to refer to each of the n scalar encoder/decoder pairs that we use in proof of Lem 4 and event-based?
+\newcommand{\subenc}{sub-encoder}
+\newcommand{\subencs}{sub-encoders}
+\newcommand{\Subenc}{Sub-encoder}
+\newcommand{\subdec}{sub-decoder}
+\newcommand{\Subdec}{Sub-decoder}
+\newcommand{\subdecs}{sub-decoders}
+
+% We've vascillated over time about whether to refer to the maximum
+% allowable average power (average cost) as \gamma_{\max} or just
+% \gamma.
+% \newcommand{\gmax}{\gamma_{\max}}
+\newcommand{\gmax}{\gamma}
+
+\newcommand{\tauu}{\underline{\tau}}
+
+\newcommand{\nonfree}{non-free}
+
+
+% Adds padding around table entries. (Q: What table?)
+% http://tex.stackexchange.com/questions/64761/add-just-a-little-more-padding-to-my-table
+% \renewcommand{\arraystretch}{2}  
+
+% In 'there exists x such that...', is 'such that' a pipe or colon?
+\newcommand{\suchthat}{:}
+
+% Least-common multiple time period 
+\newcommand{\Tlcm}{T_0}
+
+% Event-based mag and angle encoder time periods
+% \newcommand{\Tr}{T_\rho}
+\newcommand{\Tth}{T_\theta}
+
+% The string of symbols produced by the encoder from t=0 to t=t,
+% starting from IC x_0: \encoder(t)
+\DeclareMathOperator{\encoder}{\mathbf{Enc}}
+
+% The overline notation for "the midpoint of an interval" is maybe
+% confusing, so let's try this:
+\DeclareMathOperator{\midpoint}{\mathbf{mid}}
+
+
+% From http://www.math.rochester.edu/mathfolk/help/tex-style-files/thesis/urcsmacros.tex
+%
+% various latin abbreviations
+%
+\def\adhoc{{\em ad hoc}}
+\def\aposteriori{{\em a posteriori}}
+\def\apriori{{\em a priori}}
+\def\Cf{{\em Cf.}}
+\def\cf{{\em cf.}}
+\def\Eg{{\em E.g.}}
+\def\eg{{\em e.g.}}
+\def\etal{{\em et al.}}
+\def\etc{{\em etc.}}
+\def\Ibid{{\em Ibid.}}
+\def\ibid{{\em ibid.}}
+\def\Id{{\em Id.}}
+\def\id{{\em id.}}
+\def\Ie{{\em I.e.}}
+\def\ie{{\em i.e.}}
+
+
+% differentiating 1-d and 2-d error vectors
+\usepackage{bm}  % bold math
+\def\ee{{\bm{e}}}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Justin's random preamble stuff from MINENG
+
+%% From Daniel Lieberzon:
+% \usepackage{cancel} % \cancel{}, \bcancel{}, \xcancel{}, \cancelto{}{}
+
+\DeclareMathOperator{\prob}{\mathbb{P}}
+\DeclareMathOperator{\diam}{{\textbf{diam}}}
+  
+\renewcommand{\PReal}{{\Real_{>0}}}          % Set of Positive Real Numbers
+\renewcommand{\NNReal}{{\Real_{\ge 0}}}         % Set of Non Negative Real Numbers
+
+% Daniel: Get rid of the \qed signs at the end of statements to save
+% space. They are only needed at the end of proofs.
+\renewcommand{\frqed}{}
+
+
+%%
+% for longer draft notes which won't fit in the footnotes. (JPP, 2012.05.23)
+\newcommand{\draftnoteinline}[1]{
+\vspace{5mm}
+{\footnotesize 
+$\ddot\smile$ {\bf #1 } $\ddot\smile$}
+\vspace{5mm}
+} 
+
+\newcommand{\notetoself}[1]{
+\rule{\textwidth}{1pt} %
+
+\vspace{5mm} %
+{\footnotesize  %
+$\ddot\smile$ { #1 } $\ddot\smile$} %
+\vspace{5mm} %
+
+\rule{\textwidth}{1pt} %
+} 
+
+
+\newcommand{\notetoselfhide}[1]{}
+
+
+\providecommand{\joao}[1]{\footnote{\drafttext{Joao: #1}}}
+\newcommand{\justin}[1]{\footnote{\drafttext{Justin: #1}}}
+
+% END justin's preamble stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%
+% START Justin from cyclops paper
+
+
+
+\renewcommand{\r}{\textcolor{red}}
+\renewcommand{\b}{\textcolor{blue}}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+% \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+% \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+% \DeclareMathOperator*{\argmin}{\arg\!\min}
+% \DeclareMathOperator*{\argmax}{\arg\!\max}
+% \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+% \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+%\usepackage{achemso}
+%s\setlength{\bibsep}{0pt}
+%\usepackage{titling}
+
+%%%%%%%%%%%%%%%%%%
+\newcommand{\eco}{\text{$\mathbb{EN}$}}
+%\newcommand{\encFHE}[2]{\text{ENC}^{\text{FHE}}_{#1}(#2)}
+%\newcommand{\encPHE}[2]{\text{ENC}^{\text{PHE}}_{#1}(#2)}
+
+%\newcommand{\decFHE}[2]{\text{DEC}^{\text{FHE}}_{#1}(#2)}
+%\newcommand{\decPHE}[2]{\text{DEC}^{\text{PHE}}_{#1}(#2)}
+
+
+%\newcommand{\encPHE}[2]{\llbracket #2 \rrbracket_{#1}}
+%\newcommand{\decPHE}[2]{\texttt{DEC}^{\text{PHE}}_{#1}(#2)}
+\newcommand{\encPHE}[1]{\llbracket #1\rrbracket}
+\newcommand{\decPHE}{\texttt{DEC}}
+
+\renewcommand{\Re}{{\mathbb{R}}}
+% \newcommand{\R}{{\mathbb{R}}}
+\newcommand{\Ze}{{\mathbb Z}}
+%\newcommand{\sys}{\textbf{SelCon }} 
+\newcommand{\sys}{SeleCon } 
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor limit-ed-comm-uni-cat-ion}
+
+
+% maybe should go after begin{document}?
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0,0,0.82}
+\definecolor{backcolour}{rgb}{1,1,1}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\scriptsize\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\scriptsize\color{codepurple},
+    basicstyle=\scriptsize,
+    %frame=single,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=t,                    
+    keepspaces=true,                             
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    belowcaptionskip=0.5em,
+    aboveskip=0.3em,
+    belowskip=0.3em,
+    moredelim=**[is][\color{blue}]{@}{@},
+    emph={%  
+    assert_pin, WAIT_US, deassert_pin%
+    },emphstyle={\color{red}}%
+}
+
+\lstset{style=mystyle}
+% end maybe
+
+
+% END Justin from cyclops
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BEGIN Justin from CDC 2017 rejected paper
+
+
+
+% \DeclareMathOperator{\id}{id}
+
+
+
+% We've had differing opinions about using ``seconds'' or ``time units''. 
+% \newcommand{\timeunit}{time unit}
+% \newcommand{\timeunits}{time units}
+
+% Not sure if we should call it a ``real-time unit'' or a ``real-time processor''.
+% Just use \rtu\ and change this def later.
+\newcommand{\rtu}{real-time unit}
+\newcommand{\Rtu}{Real-time unit}
+\newcommand{\RTU}{RTU}
+
+% Same with ``real-time I/O coprocessor''.
+\newcommand{\rtio}{real-time I/O coprocessor}
+
+\newcommand{\uC}{microcontroller}
+\newcommand{\uCs}{microcontrollers}
+
+\newcommand{\timestamp}{time-stamp}
+\newcommand{\timestamps}{time-stamps}
+\newcommand{\timestamped}{time-stamped}
+
+\hyphenation{time-stamp}
+\hyphenation{time-stamps}
+\hyphenation{time-stamp-ed}
+\hyphenation{time-stamp-ing}
+\hyphenation{Free-RTOS}
+
+% END Justin from CDC 2017
+
+
+% justin hacks to expand spacing & margins, see Jason & Josh's theses
+
+% \usepackage{setspace}
+% \setlength{\parindent}{4em}
+% \setlength{\parskip}{1em}
+% \renewcommand{\baselinestretch}{2.5}
+ % \setlength{\baselineskip}{2em}
+ % \linespread{2}
+
+
+
+\usepackage{lipsum}
+
+% https://tex.stackexchange.com/questions/66896/ref-chapter-name-in-latex
+\usepackage{nameref}
+
+
+
+%%%---DOCUMENT---%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%=== Preliminary Pages ============================================
+\begin{frontmatter}
+
+    \title{Control under energy and time constraints}
+
+    \author{Justin Payne Pearson}
+
+    \report{Dissertation} 
+    \Degree{Doctor of Philosophy} 
+    \degreemonth{March} 
+    \degreeyear{2018}
+    \defensemonth{January}
+    \defenseyear{2018}
+
+    \chair{Professor Jo\~ao P. Hespanha} 
+    \othermemberA{Professor Andrew R. Teel} 
+    \othermemberB{Professor Jason R. Marden}   
+    \othermemberC{Professor Amr El Abbadi}
+    \numberofmembers{4}
+
+    \field{Electrical and Computer Engineering}
+    \campus{Santa Barbara}
+
+    \maketitle
+    \approvalpage
+    \copyrightpage
+
+    \begin{dedication}
+        \input{Chapters/02_dedication}
+    \end{dedication} 
+
+% \dsp
+% \def\baselinestretch{2}\large\normalsize
+
+    \begin{acknowledgements}
+        \addcontentsline{toc}{chapter}{Acknowledgements}
+        \input{Chapters/03_ack}
+    \end{acknowledgements} 
+
+    \begin{vitae}
+        \addcontentsline{toc}{chapter}{Curriculum Vitae}
+        \input{Chapters/07_cv}
+    \end{vitae}
+
+    \begin{abstract}
+        \addcontentsline{toc}{chapter}{Abstract}
+        \input{Chapters/09_abstract}
+        %\abstractsignature
+    \end{abstract}
+
+    \tableofcontents
+    \listoffigures
+    \listoftables
+
+\end{frontmatter}
+
+
+
+
+
+\begin{mainmatter}
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Dumb crap from Grad Div 
+
+    %---Set Headers and Footers ------------------------------------------------------
+    \pagestyle{fancy}
+    \renewcommand{\chaptermark}[1]{\markboth{{\sf #1 \hspace*{\fill} Chapter~\thechapter}}{} }
+    \renewcommand{\sectionmark}[1]{\markright{ {\sf Section~\thesection \hspace*{\fill} #1 }}}
+    \fancyhf{}
+
+    \makeatletter \if@twoside \fancyhead[LO]{\small \rightmark} \fancyhead[RE]{\small\leftmark} \else \fancyhead[LO]{\small\leftmark}
+    \fancyhead[RE]{\small\rightmark} \fi
+
+    \def\cleardoublepage{\clearpage\if@openright \ifodd\c@page\else
+      \hbox{}
+      \vspace*{\fill}
+      \begin{center}
+        This page intentionally left blank
+      \end{center}
+      \vspace{\fill}
+      \thispagestyle{plain}
+      \newpage
+      \fi \fi}
+    \makeatother
+    \fancyfoot[c]{\textrm{\textup{\thepage}}} % page number
+    \fancyfoot[C]{\thepage}
+    % \renewcommand{\headrulewidth}{0.4pt}
+
+    \fancypagestyle{plain} { \fancyhf{} \fancyfoot[C]{\thepage}
+    % \renewcommand{\headrulewidth}{10pt}
+    % \renewcommand{\footrulewidth}{0pt}
+    }
+
+
+    % END: Dumb crap from Grad Div 
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+% \onehalfspacing % from spacings 
+% \singlespacing
+% \renewcommand{\baselinestretch}{2.5}
+% \linespread{2}
+% \def\baselinestretch{2}\large\normalsize
+
+% \part{Theory}
+% \chapter{MinEng}
+% % \lipsum[1-10]
+% \part{Timing on BBB}
+% \chapter{The BBB}
+
+
+    \include{Chapters/10_Introduction}
+    \include{Chapters/20_MinEng}
+    \include{Chapters/25_EventBased}
+    \include{Chapters/30_preemption_resistance}
+%    \include{Chapters/40_cyclops}
+
+    \appendix
+    \dsp % double space
+    \include{Chapters/90_Appendix_mineng}
+    % \include{Chapters/92_Appendix_BBB_Bash_lib}
+    % \include{Chapters/93_Appendix_BBB_C_lib}
+    % \include{Chapters/91_Appendix_pasm_highlighter}
+
+
+
+
+\end{mainmatter}
+
+
+%----- Bibliography ----------------
+\ssp
+\bibliographystyle{plain}
+%\bibliographystyle{JHEP3}
+\bibliography{bib/bib_jpp}
+
+%\bibliography{bib_jpp,bib/mpcmhe-journal-bib,bib/robustUAVcoordRefs,bib/mpcmhe-adaptive-learning-bib,bib/mpcmhe-SP-bib,bib/mpcmhe-AP-bib,bib/mpcmhe-misc}
+%\bibliography{Copp_UCSB_thesis}
+
+
+%\scriptsize
+%\bibliographystyle{plain}
+%\bibliographystyle{abbrvnat}
+%\bibliography{strings,optimization,games}
+%\bibliography{Copp_UCSB_thesis}
+
+% \printindex
+
+
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% eval: (tex-pdf-mode)  ; only for pdflatex
+%%% TeX-master: t
+%%% End:

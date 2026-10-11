@@ -1,0 +1,176 @@
+%>>> Welcome to Vanderbilt's Dissertation Template <<<%
+%>>> Prepared by J. Zachary Gaslowitz in 2018 <<<%
+
+%>>> Pick your font size ('10pt', '11pt', or '12pt') <<<%
+%>>> When you're ready, change 'signatures' to 'approved' <<<%
+\documentclass[final, 12pt, signatures]{vuthesis}
+%>>> Some options: <<<%
+% draft vs final, for packages that should behave differently in the final version
+% 10pt vs 11pt vs 12pt, base font size
+% signatures vs approved: how committee is shown on title page
+% smallnames vs largenames: size of committee names under signature lines
+% centersec vs flushsec: alignment of section headings
+% centersubsec vs flushsubsec: alignment of subsection headings
+
+%>>> If you'd like, you can customize the various titles and headings <<<%
+\titlesize{\large}
+\chaptersize[\large]{\Large}
+\sectionsize{\large}
+
+
+%>>> Definitely delete this; you don't need any filler text in your beautiful dissertation <<<%
+\usepackage{blindtext}
+
+%>>> Some useful packages.  Uncomment whichever you'd like, or add your own! <<<%
+
+% For creating a list of abbreviations.
+% If you don't want one, delete these lines and `\printnomenclature' below
+\usepackage[intoc]{nomencl}
+	\renewcommand{\nomname}{LIST OF ABBREVIATIONS}
+	\makenomenclature
+
+% Good math packages:
+\usepackage{amsmath, amsfonts, amssymb, mathtools} % many nice math commands and environments
+%\usepackage{amsbsy, bm} % useful for bold math symbols
+\usepackage{amsthm} % Some useful environments for theorems, the likes
+	% Uses the same counter for all of these environments, resets numbering for each chapter
+	\newtheorem{theorem}{Theorem}[chapter]
+	\newtheorem{lemma}[theorem]{Lemma}
+	\newtheorem{proposition}[theorem]{Proposition}
+	\newtheorem{corollary}[theorem]{Corollary}
+	\newtheorem{conjecture}[theorem]{Conjecture}
+	\newtheorem{observation}[theorem]{Observation}
+	\newtheorem{claim}{Claim}[theorem] % (numbered inside their theorem/lemma)
+	\theoremstyle{definition} 
+	\newtheorem{definition}[theorem]{Definition}
+
+% Graphics packages:
+%\usepackage{tikz} % A great and powerful library for drawing pictures
+%\usepackage{graphicx} % For including external images
+	%\graphicspath{{images/}} % Look for images in this directory
+	%\DeclareGraphicsExtensions{.pdf,.jpeg,.png,.PNG,.eps,.tiff}
+%\usepackage{rotating} % Good for creating rotated figures and tables
+
+%\usepackage{algorithm} % Creates a new float for algorithms
+%\usepackage{algpseudocode} % Facilitates the typing of pseudocode
+
+
+\usepackage[notref]{showkeys} % in draft mode, shows labels in document
+\usepackage{url} % improved typesetting of urls with \url{}
+\usepackage{subcaption} % allows for subfigures and subtables
+\usepackage{nowidow} % Discourages pagebreaks at the first or last line of a paragraph
+
+%!! Most packages should be loaded before hyperref !!%
+\usepackage{hyperref} % automatically creates links where you'd want them to be
+
+%>>> You can set margins here, among other things <<<%
+\usepackage[top=1in, bottom=1in, inner=1.25in, outer=1.25in]{geometry}
+
+
+
+%>>> Choose your line spacing. <<<%
+%\singlespacing
+%\onehalfspacing
+\doublespacing
+
+
+
+%>>> Tell us a little bit about yourself. <<<%
+\title{A Compendium of Super Advanced Mathematics Which Will Undoubtedly Improve Every Aspect of the Field}
+\author{J. Zachary Gaslowitz}
+\degree{Doctor of Philosophy}
+\major{Mathematics}
+\graduationdate{May 11, 2018}
+\oncommittee{Paul Erd\"os, Ph.D.}
+\oncommittee{Lise Meitner, Ph.D.}
+\oncommittee{Richard Feynman, Ph.D.}
+\oncommittee{Emmy Noether, Ph.D.}
+\oncommittee{Marie Curie, Ph.D.}
+\oncommittee{Brian May, Ph.D.}
+
+
+
+\begin{document}
+
+\maketitle
+
+\preliminaries
+
+%>>> (You can remove this section if you don't want it) <<<%
+\copyrightpage{2018}
+
+%>>> (You can remove this section if you don't want it) <<<%
+\begin{dedication}
+	This template is dedicated to those people who are awesome.
+\end{dedication}
+
+%>>> (You can remove this section if you don't want it) <<<%
+\acknowledgements
+I would like to thank my advisor and the federal government for their intellectual and financial support, respectively.
+Without either of these parties, I'm sure that I wouldn't have a dissertation in which to write these acknowledgments.
+
+\blindtext
+
+%>>> (You can remove this section if you don't want it) <<<%
+\preface
+\blindtext
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+%>>> (You can remove this section if you don't want it) <<<%
+\printnomenclature
+
+\maincontent
+%>>> I highly suggest putting each chapter in its own file <<<%
+
+\include{Sample-Chapter-1}
+\include{Sample-Chapter-2}
+
+\appendix
+%>>> Any chapter after this line will be typeset as an appendix <<<%
+
+\chapter{Previously Excluded Details}
+\blindtext[2]
+
+\chapter{Unnecessary Information}
+\section{A Discussion of the Nature of Necessity}
+\blindtext
+\section{The Really Worthless Part}
+\blindtext
+
+\nomenclature{$c$}{Speed of light in a vacuum inertial system}
+\nomenclature{$h$}{Planck Constant}
+\nomenclature{$g$}{Gravitational Constant}
+\nomenclature{$\mathbb{R}$}{Real Numbers}
+\nomenclature{$\mathbb{C}$}{Complex Numbers}
+\nomenclature{$\mathbb{H}$}{Quaternions}
+\nomenclature{$\rho$}{Friction Index}
+
+
+
+%\ForEach{,}%
+%{%
+%	\addtocounter{chapter}{1}%
+%	\addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}Another chapter}%
+%	\ForEachX{;}%
+%	{%
+%		\ifnum\thislevelcount=1%
+%		\else%
+%			\addtocounter{section}{1}%
+%			\addcontentsline{toc}{section}{\protect\numberline{\thesection}Another section}%
+%		\fi
+%	}
+%	{\thislevelitem}
+%}%
+%{;;;,;,,}
+
+\nocite{*}
+
+%>>> You may need to change the bibliography style, depending on your field. <<<%
+\bibliographystyle{amsplain} 
+\bibliography{Dissertation}
+
+
+\end{document}

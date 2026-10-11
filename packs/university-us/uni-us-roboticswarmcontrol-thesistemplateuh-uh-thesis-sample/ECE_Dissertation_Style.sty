@@ -1,0 +1,346 @@
+
+\@ifundefined{chapter}{\@latexerr{The `UHdissertatin' option should be used
+with the `report' document style}{You should probably read the
+documentation.}}{}
+
+
+\def\dsp{
+     \baselineskip=24pt
+     %\lineskip=12pt
+     \lineskip=2ex
+     \lineskiplimit=12pt}
+%
+% Set the margins of page ( 8.5 x 11 inch page )
+%
+\pagestyle{plain}
+\oddsidemargin 1in   %  Note that \oddsidemargin = \evensidemargin
+%\evensidemargin .0in  %  Left Margin
+% Theses are single-sided, so we don't care about \evensidemargin
+\textheight  9.0in    %  Height of text (including footnotes and figures,
+                      %  excluding running head and foot).
+\textwidth  6.0in     %  Width of text line.
+\topmargin 0.0in      %  Nominal distance from top of page to top of
+                      %  box containing running head.
+\headheight 0.0in     %  Height of box containing running head.
+\headsep 0.0in        %  Space between running head and text.
+\footskip 0.5in       %  Distance from baseline of box containing foot
+                      %  to baseline of last line of text.
+\parindent 2.5em
+\parskip 1.0ex
+
+\def\ssp{\def\baselinestretch{1.0}\large\normalsize}
+\toksdef\ta=0 \toksdef\tb=2 % token list registers for temp use
+\long\def\leftappenditem#1\to#2{\ta={\\{#1}}\tb=\expandafter{#2}%
+  \edef#2{\the\ta\the\tb}}
+\long\def\rightappenditem#1\to#2{\ta={\\{#1}}\tb=\expandafter{#2}%
+  \edef#2{\the\tb\the\ta}}
+
+\def\bibname{References}
+
+\def\title#1{\gdef\@title{#1}}
+\def\department#1{\gdef\@department{#1}}
+\def\field#1{\gdef\@field{#1}}
+\def\sectitl#1{\gdef\@sectitl{#1}}
+
+%\def\advisor#1{\gdef\@advisor{#1}}
+%\def\firstreader#1{\gdef\@firstreader{#1}}
+%\def\secondreader#1{\gdef\@secondreader{#1}}
+%\def\thirdreader#1{\gdef\@thirdreader{#1}}
+%\def\fourthreader#1{\gdef\@fourthreader{#1}}
+\def\@advisor{}
+\def\@firstreader{}
+\def\@secondreader{}
+\def\@thirdreader{}
+\def\@fourthreader{}
+
+
+% Define \{first|second|third|fourth}reader{} to take two
+% optional arguments after the name. Thus, the usage is 
+%    \*reader{Reader Name}[Reader Unit][Reader Institution]
+% Reader Unit defaults to \@department and Reader Institution
+% defaults to University of Houston.
+\newcommand{\advisor}[1]{%
+  \@ifnextchar[{\advisor@i{#1}}{\advisor@i{#1}[\@department]}%]
+}
+\def\advisor@i#1[#2]{%
+  \@ifnextchar[{\advisor@ii{#1}[#2]}{\advisor@ii{#1}[#2][ ]}%]
+}
+\def\advisor@ii#1[#2][#3]{%
+\ifx\empty#1\empty\else\rightappenditem#1\to\@advisor%
+    \rightappenditem#2\to\@advisor%
+    \rightappenditem#3\to\@advisor%
+    \fi
+}          
+
+\newcommand{\firstreader}[1]{%
+  \@ifnextchar[{\firstreader@i{#1}}{\firstreader@i{#1}[\@department]}%]
+}
+\def\firstreader@i#1[#2]{%
+  \@ifnextchar[{\firstreader@ii{#1}[#2]}{\firstreader@ii{#1}[#2][ ]}%]
+}
+\def\firstreader@ii#1[#2][#3]{%
+\ifx\empty#1\empty\else\rightappenditem#1\to\@firstreader%
+    \rightappenditem#2\to\@firstreader%
+    \rightappenditem#3\to\@firstreader%
+    \fi
+}          
+
+\newcommand{\secondreader}[1]{%
+  \@ifnextchar[{\secondreader@i{#1}}{\secondreader@i{#1}[\@department]}%]
+}
+\def\secondreader@i#1[#2]{%
+  \@ifnextchar[{\secondreader@ii{#1}[#2]}{\secondreader@ii{#1}[#2][ ]}%]
+}
+\def\secondreader@ii#1[#2][#3]{%
+\ifx\empty#1\empty\else\rightappenditem#1\to\@secondreader%
+    \rightappenditem#2\to\@secondreader%
+    \rightappenditem#3\to\@secondreader%
+    \fi
+}          
+
+\newcommand{\thirdreader}[1]{%
+  \@ifnextchar[{\thirdreader@i{#1}}{\thirdreader@i{#1}[\@department]}%]
+}
+\def\thirdreader@i#1[#2]{%
+  \@ifnextchar[{\thirdreader@ii{#1}[#2]}{\thirdreader@ii{#1}[#2][ ]}%]
+}
+\def\thirdreader@ii#1[#2][#3]{%
+\ifx\empty#1\empty\else\rightappenditem#1\to\@thirdreader%
+    \rightappenditem#2\to\@thirdreader%
+    \rightappenditem#3\to\@thirdreader%
+    \fi
+}          
+
+\newcommand{\fourthreader}[1]{%
+  \@ifnextchar[{\fourthreader@i{#1}}{\fourthreader@i{#1}[\@department]}%]
+}
+\def\fourthreader@i#1[#2]{%
+  \@ifnextchar[{\fourthreader@ii{#1}[#2]}{\fourthreader@ii{#1}[#2][ ]}%]
+}
+\def\fourthreader@ii#1[#2][#3]{%
+\ifx\empty#1\empty\else\rightappenditem#1\to\@fourthreader%
+    \rightappenditem#2\to\@fourthreader%
+    \rightappenditem#3\to\@fourthreader%
+    \fi
+}          
+
+
+\def\submitdate#1{\gdef\@submitdate{#1}}
+\def\copyrightyear#1{\gdef \@copyrightyear{#1}} % \author, \title in report
+\def\@title{}
+\def\@sectitl{}
+\def\@field{}
+\def\@deptartment{}
+\def\@author{}
+\def\@advisor{}
+\def\@firstreader{}
+\def\@secondreader{}
+\def\@thirdreader{}
+\def\@fourthreader{}
+\def\@submitdate{\ifcase\the\month\or
+  January\or February\or March\or April\or May\or June\or
+  July\or August\or September\or October\or November\or December\fi
+  \space \number\the\year}
+\ifnum\month=12
+    \@tempcnta=\year \advance\@tempcnta by 1
+   \edef\@copyrightyear{\number\the\@tempcnta}
+\else
+    \def\@copyrightyear{\number\the\year}
+\fi
+
+%
+%% Is this a thesis or a dissertation?
+%
+\newif\ifdissertation
+\dissertationfalse % default to thesis
+
+\newcommand{\major}[1]%
+   {\ifx\empty#1\empty\else\gdef\@major{#1}\fi}
+\newcommand{\degree}[1]%
+  {\ifx\empty#1\empty\else\gdef\@degree{#1}\fi}
+
+
+
+\newif\ifcopyright
+\def\titlep{%
+	\thispagestyle{empty}
+	\dsp
+	\begin{center}
+		{\large\uppercase\expandafter{\@title}}
+	\end{center}
+	\vfill
+	\begin{center}
+		\large{A \ifdissertation Dissertation \else Thesis \fi \\ \vspace{0.3in}
+		Presented to\\ \vspace{0.3in}
+        the Faculty of the \@department\\ \vspace{0.3in}
+        University of Houston}
+	\end{center}
+	\vfill
+	\begin{center}
+		\large{in Partial Fulfillment\\ \vspace{0.3in}
+		of the Requirements for the Degree\\ \vspace{0.3in}
+		{\@degree} \\ \vspace{0.3in}
+		in {\@major}}
+	\end{center}
+	\vfill
+	\begin{center}\sc
+		\rm \large{by\\
+		\@author\\
+		\vspace{1mm}
+		\@submitdate\\}
+	\end{center}
+\newpage}
+
+\def\signaturepage{
+	\thispagestyle{empty}
+    \headsep 0in
+	\ssp
+	\begin{center}
+		{\large\uppercase\expandafter{\@title}}
+	\end{center}\vspace {0.3in}
+	\vfill
+	\begin{center}
+		\rule{2in}{.015in}\\
+        \vspace{-0.08in}
+		\@author
+	\end{center} \vspace {0.08in}
+	%\vskip 0.05in
+	\vfill
+	\begin{tabbing}
+		\hspace{1.6in}\= \hspace{1.2in}\= \kill
+		Approved:\>\>\rule{3.75in}{.015in}\+\+ \\
+		Chair of the Committee \
+		\@advisor
+	\end{tabbing} \vspace {0.18in}
+	\vfill
+	\begin{tabbing}
+		\hspace{1.6in}\= \hspace{1.2in}\= \kill
+
+		Committee Members:\>\>\rule{3.75in}{.015in}\+\+ \
+		\@firstreader \\
+	\end{tabbing}	
+    %\vskip 0.05in
+	\vfill
+	\begin{tabbing}
+		\hspace{1.6in}\= \hspace{1.2in}\= \kill
+		\>\>\rule{3.75in}{.015in}\+\+ \
+		\@secondreader \\
+	\end{tabbing}
+	%\vskip 0.05in
+	\vfill
+	\begin{tabbing}
+		\hspace{1.6in}\= \hspace{1.2in}\= \kill
+ \ifx\@empty\@thirdreader \relax \else
+		\>\>\rule{3.75in}{.015in}\+\+\
+		\@thirdreader \\
+\fi
+	\end{tabbing}
+	%\vskip 0.05in
+	\vfill
+	\begin{tabbing}
+		\hspace{1.6in}\= \hspace{1.2in}\= \kill
+ \ifx\@empty\@fourthreader \relax \else
+        \>\>\rule{3.75in}{.015in}\+\+\
+		\@fourthreader \\
+\fi
+	\end{tabbing}
+	\vfill
+	\begin{tabbing}
+		\hspace{-.3in}\hspace{2in}\= \hspace{1.2in}\= \kill
+		\rule{2.5in}{.015in}\>\>\hspace{-.1in}\rule{3.0in}{.015in}\\
+		Suresh K. Khator, Associate Dean,  \>\> \hspace{-.1in}Badrinath Roysam, Professor and Chair,\\
+		Cullen College of Engineering \>\>\hspace{-.1in}Electrical and Computer Engineering\\
+	\end{tabbing}
+	\vskip -0.3in
+	\newpage}
+
+\def\copyrightpage{%
+\thispagestyle{empty}
+        \null\vfill
+        \begin{center}
+                \copyright\ Copyright by {\@author}  {\@copyrightyear} \\
+                All Rights Reserved
+        \end{center}
+        \vfill\newpage
+}
+
+\def\abstitlep{%
+\newpage
+	\thispagestyle{empty}
+	\dsp
+	\begin{center}
+		{\large\uppercase\expandafter{\@title}}
+	\end{center}
+	\vfill
+	\begin{center}
+     	 \large{An Abstract\\ \vspace{0.3in}
+     	 of a\\ \vspace{0.3in}
+     	 \ifdissertation Dissertation \else Thesis \fi \\ \vspace{0.3in}
+		 Presented to\\ \vspace{0.3in}
+ 		 the Faculty of the \@department\\ \vspace{0.3in}
+         University of Houston}
+	\end{center}
+	\vfill
+	\begin{center}
+		\large{in Partial Fulfillment\\ \vspace{0.3in}
+		of the Requirements for the Degree\\ \vspace{0.3in}
+		{\@degree} \\ \vspace{0.3in}
+		in {\@major}}
+	\end{center}
+	\vfill
+	\begin{center}\sc
+		\rm \large{by\\\
+		\@author\\
+		\vspace{1mm}
+		\@submitdate\\}
+	\end{center}
+\newpage}
+
+
+\def\abstractsection{\newpage
+        \pagestyle{plain}%
+        \chapter*{\centerline{Abstract}}
+        \baselineskip=24pt
+        \lineskip=12pt
+        \lineskiplimit=12pt
+        \addcontentsline{toc}{chapter}{Abstract}
+        }
+
+\def\acknowledgements{\newpage
+        \pagestyle{plain} %
+        \chapter*{\centerline{Acknowledgements}}
+        \baselineskip=24pt
+        \lineskip=12pt
+        \lineskiplimit=12pt
+        \addcontentsline{toc}{chapter}{Acknowledgements}
+       }
+
+\def\makecoverpages{%
+    \pagenumbering{roman}
+     \blankpage  \ifcopyright\copyrightpage\fi \titlep \signaturepage}
+
+\def\makecontentspages{%
+    \clearpage
+    \addcontentsline{toc}{chapter}{Table of Contents}
+    \renewcommand\contentsname{Table of Contents}
+    %\renewcommand\cftchaptername{\chaptername~}
+    \tableofcontents
+    \clearpage
+    \addcontentsline{toc}{chapter}{List of Figures}
+    \listoffigures
+    \clearpage
+    \addcontentsline{toc}{chapter}{List of Tables}
+    \listoftables
+}
+
+
+\def\prefacesection{\newpage
+	\dsp \pagenumbering{arabic}}
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \newpage}   
+
+\makeatother
+

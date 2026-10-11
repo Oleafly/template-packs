@@ -1,0 +1,876 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% "bsu-cs" is our "in-house" class file for Boise State dissertations, theses
+% and project reports.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The \documentclass command is the first command in a LaTeX file.
+
+%\documentclass{bsu-cs}  % default is thesis
+%\documentclass[project]{bsu-cs}  % for project reports
+
+% Dissertation: default is a two-sided document with mirrored margins and
+% alternating page number sides, suitable for binding/printing.
+\documentclass[dissertation]{bsu-cs}  % for dissertation
+\usepackage[inner=1.5in,outer=1in,letterpaper,twoside]{geometry}
+
+% For a one-sided dissertation document, comment out the two previous lines and
+% uncomment the following line: 
+% \documentclass[dissertation]{bsu-cs}  % for dissertation
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Some General Information about LaTeX
+%
+% LaTeX source (also called "code") files are split into two basic parts:
+% the preamble, which contains package loading commands, and other
+% document-wide definitions, and the main document text.  The preamble starts
+% with the \documentclass command and ends with the \begin{document} command.
+% The main text is contained between the \begin{document} and \end{document}
+% commands.
+%
+% Only LaTeX commands (and whitespace) are allowed in the preamble.  A LaTeX
+% command has the form
+%
+%   \<name>{<arg>}{<arg>}...
+%
+% where the number of arguments is set by the command definition.
+% Some commands allow an optional argument
+%
+%   \name[<opt>]{<arg>}{<arg>}...
+%
+% which may or may not be given.  There are also LaTeX environments
+%
+%   \begin{<name>}...\end{<name>}
+%
+% which can be nested, but must be balanced.
+%
+% (If you haven't already guessed, anything after a '%' character on a line
+% is taken as a comment and ignored.)
+%
+% In the main text all non-commands and non-comments are treated as ordinary
+% text.  LaTeX normally treats any run of spaces as a single space.  Line
+% breaks are ignored (TeX uses its own linebreaking algorithm); blank lines
+% are paragraph separators.  Runs of blank lines are treated as a single
+% blank line.  A common mistake novice users make is to try to use literal
+% spacing and line breaks in the .tex file to control formatting.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages
+
+% The 'graphicx' package is quite extensive; the main purpose here is
+% the includion of PostScript graphics.  The 'dvips' option makes it work
+% better with 'dvips' (which is what is often used under Linux)
+%\usepackage[dvips]{graphicx}
+% Comment the above line and uncomment below to use pdflatex
+\usepackage[pdftex]{graphicx}
+% Then the figures should be in pdf, jpg or png format.
+
+% Others to consider
+\usepackage{listings}
+\usepackage{color}
+\definecolor{listinggray}{gray}{0.95}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\definecolor{maroon}{rgb}{0.5,0.00,0.0}
+
+
+\lstdefinestyle{javanum}{
+  backgroundcolor=\color{listinggray},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize\ttfamily, % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=none,                   % sets the caption-position to bottom
+  aboveskip=\smallskipamount,
+  belowskip=\smallskipamount,     % default is \medskipamount
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=none,                      % adds a frame around the code (none, single)
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{maroon},       % keyword style
+  language=Java,                   % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=4,                       % sets default tabsize to 2 spaces
+%   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\lstdefinestyle{javanonum}{
+  backgroundcolor=\color{listinggray},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize\ttfamily, % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=none,                 % sets the caption-position to bottom
+  aboveskip=\smallskipamount,
+  belowskip=\smallskipamount,      % default is \medskipamount
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=none,                      % adds a frame around the code (none, single)
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{maroon},       % keyword style
+  language=Java,                   % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=none,                    % where to put the line-numbers; possible values are (none, left, right)
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=4,                       % sets default tabsize to 4 spaces
+% title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+\lstset{style=javanonum}
+
+
+% The 'subfigure' package does a nice job handling and labelling subfigures
+%\usepackage{subfig}
+
+% If you want to use PostScript fonts (or the Nimbus knockoffs) try
+%\usepackage{mathptmx}
+%\usepackage[scaled=0.92]{helvet}
+
+% The 'citesort' package puts mutliple citation numbers in order
+%\usepackage{citesort}
+
+% Or, the natbib package allows for \citet and using a .bib file for reference handling.
+% \usepackage[sort&compress,numbers,square]{natbib}
+% \bibliographystyle{plainnat}
+% \usepackage[nottoc,notbib]{tocbibind} % adds References/Bibliography to table of contents
+
+% Generate intra-document links and also allows url and href commands for
+% to generate embedded links in the document.
+\usepackage{hyperref}
+\hypersetup{
+ 	colorlinks=true,
+ 	allcolors=blue,
+}
+
+%% Make table and figure captions bold; note this might mess up 
+% longtable tables (if so, try \clearpage right before a longtable)
+\usepackage{caption}
+\captionsetup{
+    labelfont=bf,
+    textfont=bf
+}
+
+% Additional packages for table and figure formatting.
+% \usepackage{makecell}
+% \usepackage{multirow}
+% \usepackage{enumerate}
+% \usepackage{booktabs}
+% \usepackage{longtable}
+% \usepackage{placeins} % for \FloatBarrier, useful for placing tables and figures within text sections
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Local commands
+
+% Define your macros (new commands) here.
+
+% Example: for colored edits starting with 'ME:' and 'ADVISOR:'
+\newcommand{\myedit}[1]{\textcolor{red}{ME: #1}} % now, use '\myedit{...}'
+\newcommand{\advisoredit}[1]{\textcolor{purple}{ADVISOR: #1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Front Matter Definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% These definitions are used by the commands below to construct the front
+% matter pages.
+
+% Document title
+% The \titleBreak command produces a line break in the title on the
+% title page (this may be necessary to keep longer titles from looking
+% strange)
+\title{An Ode to Wabi-sabi:\titleBreak Homage to a Great and Wonderful Person}
+
+% Author's name (must be exactly what name the Registrar has)
+% normally it is of the form "First Middle Last"
+\author{Wabi-sabi Admirer}
+
+% Day of oral defense
+\defenseDate{1st December, 2022}
+
+% Month of graduation (do not abbreviate)
+\graduationMonth{December}
+
+% Year of graduation
+\graduationYear{2022}
+
+% Advisor (chair)
+% Use full name, with surname last, without any titles
+% The \advisor command accepts an optional argument that specifies the
+% advisor's position, which defaults to "Advisor"; for example,
+%
+% \advisor[Chair]{Wabi-sabi the Great}
+%
+% causes "Chair" to appear on the approval page (the one with the signatures)
+% in place of "Advisor"
+\advisor{Wabi-sabi The Great, Ph.D.} % also the chair of your committee
+
+% Committee members: \committeeA is listed first after the advisor,
+% \committeeB second, etc.  An optional argument is accepted to replace
+% the default "Committee Member" position.
+\committeeA{Aaa, Ph.D.}
+\committeeB{Bbb, Ph.D.}
+
+% Masters or PhD committees normally have three members, but in case there is
+% a need for more, use these commands
+%\committeeC[Ex-Officio Committee Member]{ccc}
+%\committeeD{ddd}
+
+
+% Full name of the degree
+%\degree{Master of Science}
+\degree{Doctor of Philosophy}
+
+
+% Full name of major. For PhD in Computing, add the appropriate emphasis in parentheses.
+%\major{Computer Science}
+\major{Computing (Emphasis)}
+
+% Major department. These aren't really used.
+\department{Computer Science}
+
+% College. These aren't really used.
+\college{Engineering}
+
+% Current department chair (at the moment, this is not used).
+\departmentChair{Jerry Fails}
+
+
+% Graduate coordinator, only used for masters.
+\gradCoordinator{Francesca Spezzano}
+
+
+% Document abstract
+\abstract{ An \emph{abstract} is a brief summary of the document. A typical
+  abstract provides a brief introduction, enough to provide context for the document, explains
+  the purpose of the thesis or dissertation or project, and summarizes the major results and
+  conclusions.  Keep in mind that a casual observer is likely to judge the content of the document
+  by the abstract and title alone.  (There is an old adage: ``in a joke, the punchline comes
+  at the end; in a paper [or thesis], it comes in the abstract.'')  A single concise paragraph
+  usually suffices for the abstract.  If it spills onto a second page, it is probably too long.
+}
+
+
+% The remaining elements are optional
+
+% \includeCopyright causes a copyright page to be produced.  It is not
+% required; in fact, a copyright notice is no longer needed to ensure
+% copyright protection.
+\includeCopyright
+
+% \maxPage is used to format the page numbers in the table of contents.
+% The actual value is not important: the width of the value given is used
+% as the maximum width of any page number.  The following values are suggested
+%
+% \maxPage{99} for less than 100 pages (this is the default)
+% \maxPage{199} for less than 200 pages
+% \maxPage{999} for less than 1000 pages
+%
+% (If the work is more than 1000 pages, consider cutting it down!)
+% The space has to be wide enough for front matter page numbers, which are
+% miniscule Roman numerals.  This might have to be widened if there are
+% more than 12 front matter pages (which might happen if there is a long
+% list of symbols or list of abbreviations, like this template has).
+\maxPage{199}
+
+% The Acknowledgments page is a place for the author to express thanks
+% or generally acknowledge anyone or anything that assisted in the
+% project or research.  If the student was supported even in part by
+% funding from research grant, it needs to be acknowledged here.
+% The Acknowledgments section can have multiple pages, just like the
+% Abstract section, but like the abstract, more than one page is probably
+% too long.  Acknowledgments are often written in the third person, but
+% it is one place (the only place) in the document where first-person
+% references (i.e., the use of "I") can be acceptable.
+\acknowledgments{
+The author wishes to express gratitude to Wabi-sabi.  This work would have been
+partially supported by some particular grant, if there was one.
+}
+
+% The work can be "dedicated" to someone, typically family members or
+% someone similar.  Unlike acknowledgments, which are included in almost
+% every thesis or dissertation or project, many students omit the dedication.
+\dedication{dedicated to Wabi-sabi}
+
+
+% A brief autobiographical sketch can be included.  Many students omit this.
+% If it is included, remember that it is a sketch, so keep it brief.  Also
+% try to limit the content to academically relevant material, such as under-
+% graduate work, previous graduate work, employment, etc.  Some students
+% like to include their military service.  Otherwise, unless you have
+% overcome some particular adversity, it's probably better to leave out
+% personal information.
+\biosketch{
+Wabi-sabi Admirer was born admiring Wabi-sabi. Wabi-sabi Admirer has been tinkering
+with admiration of Wabi-sabi for a long time. Now it is time to be blessed by
+Wabi-sabi.
+}
+
+% The title of the bibliography defaults to "References" but if you include
+% references that are not specifically cited in the text, it needs to be
+% titled "Bibliography" instead.
+%\bibliographyName{Bibliography}
+
+
+% (End of preamble)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% \begin{document} begins the document text, including front matter material
+
+\begin{document}
+
+% The \frontmatter command prepares for front matter material
+\frontmatter  %! Do not remove!
+
+% The \buildFrontPages builds all the front matter pages
+\buildFrontPages %! Do not remove!
+
+% The (optional) list of abbreviations goes here
+\begin{listAbbreviations}
+  \item[LOL] Laughing Out Loud
+  \item[OMG] Oh My God!
+  \item[ROFL] Rolling on the Floor Laughing
+\end{listAbbreviations}
+
+
+% The (optional) list of symbols goes here
+\begin{listSymbols}
+  \item[$\sqrt{2}$] square root of 2
+  \item[$\lambda$] lambda symbol, normally used in lambda calculus but
+    it sometimes gets used for wavelength as well
+\end{listSymbols}
+
+
+% The main text of the work starts here.  The first chapter is normally
+% named "Introduction".
+
+\mainmatter
+
+% Note that judiciously placed comments can serve as landmarks, just as
+% in program source code.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Chapter: Introduction
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Introduction}
+
+% The \label{<tag>} command allows the chapter to be referenced elsewhere
+% in the text by the <tag>: 'Chapter~\ref{ch:intro}' gets formatted as
+% "Chapter 1" or whatever number this chapter gets assigned.  It usually
+% requires a second 'latex' execution to get the labels right.  (The labels
+% are stored in the ".aux" file, and that gets updated each time latex runs.)
+%   Writers who use LaTeX a lot are often in the habit of adding labels to
+% chapter, figure, and table, then adding other labels to things like sections
+% and subsections as they are needed.  Label tags follow no specific format,
+% but it's typical to include a colon-terminated prefix to indicate what
+% is being labeled, e.g.
+%
+%   ch:<name>  for chapters
+%   sec:<name> for sections
+%   tbl:<name> for tables
+%   fig:<name> for figures
+%
+% WARNING: Do not use numbers or special characters such as '_', '$', etc.
+%          in label tags (although ':' is okay).
+
+\label{ch:intro}
+
+% \section adds a first-level subheading
+\section{What is this?}
+This is a template that allows you to typeset your dissertation (or thesis or project report)
+in the format approved by the Boise State Graduate College. It greatly reduces your typesetting
+work and helps you produce an aesthetically pleasing and consistent document. The template
+depends on a style class, titled \texttt{bsu-cs.cls} that was specifically designed for Boise
+State Computer Science students but would also work for students from other departments.
+
+\subsection{Where are the style class files?}
+
+% \cite{<tag>} is bibilography citation; <tag> must match a bibliography
+% item label.  It can take multiple, comma-separated, arguments.
+
+% The '~' is a "tie", which is an unbreakable space.  That is, it is
+% the same a a space but TeX won't break the line there.  Ties are used
+% between text and a reference or citation, to avoid something like Figure
+% 1, which looks weird.
+
+Please consult the guide from Graduate College~\cite{guide} for resolving any style issues
+that are not addressed by the style class files that are provided along with this document. The
+files associated with this style can be found on the GitHub website~\cite{mainrepo}.
+
+% \texttt{} changes to "typewriter" (monospaced) font, which is typically
+% used for literal code or filenames.
+% \emph{} "emphasizes" the text, which normally means placing it in
+% italics if the running text is in Roman font, or vice-versa.
+
+The file \texttt{bsu-cs.cls} contains the formatting directives for the \emph{bsu-cs} style.
+It is based on the standard \LaTeX\ \texttt{report} style with 12 point font option.
+
+% \begin{enumerate} creates a numbered list.
+\begin{enumerate}
+% \item starts a new list item.
+\item Simply copy \texttt{bsu-cs.cls} to the directory containing your \LaTeX\ document.
+That way, \LaTeX\ will find it, because it looks in current directory by default.
+
+\item Upload the \texttt{bsu-cs.cls} file along with this template (and associated files)
+to Overleaf to use web-based LaTeX.
+
+\item The current style class file may be installed in some directory available system wide.  (Ask your
+systems administrator if this is the case).  You will have to include that directory in the path
+\LaTeX\ uses to search for input files.  Under Linux, this is controlled by the \texttt{TEXINPUTS}
+environment variable, which can be set in the \texttt{.bashrc} file in your home directory.
+For example
+% The 'verbatim' environment formats text in the typewriter font,
+% just as it appears in the file.
+%
+% WARNING: 'verbatim' doesn't expand tab characters, so if you cut and paste
+% be sure to remove any tabs (you can use the 'M-x untabify' command in emacs).
+
+\begin{verbatim}
+    TEXINPUTS=.:/usr/local/texinputs/:/usr/share/texmf//
+    export TEXINPUTS
+\end{verbatim}
+
+adds \texttt{/usr/local/texinputs}, a possible location for \texttt{bsu-cs.cls}, although it
+will not take effect until you \texttt{source} the \texttt{.bashrc} file, or log in again.
+
+\item Install the style class files in a directory under your accounts and set the \texttt{TEXINPUTS}
+variable accordingly.
+
+\end{enumerate}
+
+% If you have blank lines before the \begin{enumerate} or after the
+% \end{enumerate} it makes the LaTeX code easier to read, but it also
+% starts a new paragrah.  You can always use empty comments for readablilty.
+%
+% Although, you can always use \noindent to prevent paragraph indentation.
+
+The first or second way is recommended, because they involve making a local copy of the style
+file.  This assures your document format will not be affected affected by subsequent updates
+to \texttt{bsu-cs.cls} (but gives you the option to copy the updated file if you want).
+
+\section{Get ready for Wabi-sabi}\label{sec:getReady}
+
+% The \footnote command creates a footnote
+So who is Wabi-sabi? We need a lot of text in here to see what happens when we hit the bottom of
+a page with text and try out things like footnotes
+\footnote{What's not to like about footnotes, anyway?  Brian O'Nolan and George MacDonald Fraser both used them to great effect}.
+So here is some extra stuff:%
+\footnote{Too many footnotes, however, can be distracting.}
+% A '%' comment character at the end of a line, like above, has the
+% effect of "escaping" the newline, thereby avoiding adding a space.
+% In this case, it prevents there being space between the end of the
+% text and the footnote superscript
+
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+
+We need lots more stuff to get a full page of text, without a chapter or section heading,
+so we can check all the margins.
+
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff stuff
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Chapter: The Greatness of Wabi-sabi
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{The Greatness of Wabi-sabi}\label{ch:wabisabiGreatness}
+
+\section{Previous work}
+The greatness of Wabi-sabi The Great derives from her early work as documented in
+her books~\cite{ws:book1,ws:book2}.
+
+\section{What are their names?}
+Please consult the articles by Admirer~\cite{me:paper1} and Admirer, Smith and Doe~\cite{me:paper2}
+for more details. Note that the references are cited by the last names of all authors for three
+authors or less. For more than three authors, ``et al'' can be used.
+
+%! The \label command applies to the most recent heading in the main text,
+%! or the current figure or table.
+%! The \pageref{<tag>} command references the page number of a label.
+Check the References on page~\pageref{references} for an example of how to format the references.
+
+\section{The code of Wabi-sabi}
+
+% \textbf{} sets text in bold face.  It is useful in headings, but
+% is rarely used in running text.  It is used here to denote literal
+% LaTeX commands, and to illustrate its use.  Normally it is preferable
+% to use \emph{} to emphasize text.
+When showing a program fragment, use the \textbf{verbatim} environment. However, when you wan
+to show an algorithm, use either the \textbf{tabbing} or \textbf{algorithm} environment.
+
+Thesis and dissertation text is normally ``double'' spaced.  It is customary to single-space
+literal code.  Figure~\ref{fig:code} shows a sample Java program.
+
+% The 'figure' environment starts a new figure, which is a type of
+% "floating" element.  That means it goes where LaTeX decides to put it,
+% rather than at the current point in the running text.  Don't be surprised
+% when figures and tables get placed in unexpected places.
+%
+% You can control, to some degree, where floating elements go by setting
+% the optional argument of \begin{figure}.  The options are
+%
+%   h - place the figure at this point, if possible (avoid this)
+%   t - place the figure at the top of a page
+%   b - place the figure at the bottom of a page
+%   p - place the figure on a special page containing only figures and tables
+%
+% The options can be combined, and a '*' can be appended to make LaTeX
+% try harder to match the request.  For example, \begin{figure}[tp*]
+% allows the figure to be placed at the top of the page or on a special
+% page ([tp*] is in fact the default set in "bsu-cs.cls").  Avoid using
+% [h] by itself--it is inflexible and can cause formatting problems.  At
+% the same time, it can be very useful in forcing figure placement.
+% Finessing figure placement is a typesetting task that you just have to get
+% used to, no matter what system you are using.
+%
+% WARNING: when LaTeX has trouble placing floating elements, it sometimes
+%          puts all of them at the very end of the document.  So if your
+%          figures and tables suddenly disappear, check the end of the
+%          document.  Adding more 'p' specifiers can help with this.
+
+\begin{figure}[t]
+
+\begin{vcode}
+% an alternative to 'singlespace', that also shrinks the
+% typewriter font so that it blends better with the text
+\begin{lstlisting}
+/**
+Compute x^n using recursive doubling technique. O(lg n) multiplications.
+@param x  The base value, unlimited precision.
+@param n  The exponent, an integer.
+@return   The computed power as a BigInteger
+*/
+public static BigInteger power(BigInteger x, int n)
+{
+    BigInteger temp = x;
+    BigInteger result = BigInteger.ONE;
+	while (n != 0) {
+        if ((n & 1) == 1)
+            result = result.multiply(temp);
+		if ((n = n >>>1) != 0)
+           	temp = temp.multiply(temp);
+    }
+    return result;
+}
+\end{lstlisting}
+\end{vcode}
+%\caption{} gives the figure or table a caption, which is normally
+% placed below the figure (but above a table).  The caption is also
+% used as the title of the figure in the list of figures.  An optional
+% argument gives the figure a "short title" for use in the list of
+% figures, which is useful if the caption is long, or includes some
+% extra information.
+\caption[Repeated Squaring Power Method]{Repeated Squaring Power Method. This figure
+also serves as an example of the inclusion of literal code.}
+%
+% WARNING: the labels can get screwed up if the label in a figure is given
+%          before the caption (another one of LaTeX's quirks)
+\label{fig:code}
+\end{figure}
+
+
+\section{Other mysteries of Wabi-sabi}
+
+Here is an itemized list of all the mysteries of Wabi-sabi.
+% The 'itemize' environment is for unordered lists: the items are bulleted
+% rather than numbered.  A different bullet style is used for itemized
+% lists inside itemized lists.
+\begin{itemize}
+\item Mystery 1.
+\item Mystery 2.
+\item Mystery 3.
+\item Mystery 4.
+\end{itemize}
+
+% Tables are like figures, except that they are numbered separately
+% and the caption is placed at the top.  Also there is a separate
+% list of tables in the front matter.
+
+Here is a simple table.
+
+\begin{table}[ht] % 'h' in this case prevents the table from being placed
+                 % too close to the figure
+% By custom, the caption of a table is placed at the top of the table.
+\caption{The Approximate Time of Parallelizing Each Code}
+% (The label must follow the caption)
+\label{table4}
+\centering % tables need be horizontally centered
+% The 'tabular' environment can be used to format tables.  Unfortunately
+% it is one of the more cumbersome LaTeX constructs.
+\begin{tabular}{|c|c|c|c|}\hline \hline
+Parallel library/language  &WRS Code  &OCS Code  &ICSAMD Code\\ \hline
+MPI                        &20 hours  &2 weeks   &1 month\\ \hline
+HPF                        &3 hours   &1 1/2 weeks  &1 month\\ \hline
+\end{tabular}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Chapter: not so great
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{The not so great things about Wabi-sabi}
+
+\section{Figures}
+Check Figure~\ref{fig:fuzzyImage} for what happens when Wabi-sabi gets compiled. This example
+shows how to include an image (in PDF, JPG or PNG) into a LaTeX document.
+
+\begin{figure}[ht]
+% Code in figures is normally not centered, but graphical figures are
+% (the \centering command works as well as the 'center' environment,
+% because its scope is limited to the figure).
+\begin{center}
+\includegraphics*[width=4.0in,keepaspectratio]{figure}
+\end{center}
+\caption{How to Correct Errors in a Fuzzy Image}
+\label{fig:fuzzyImage}
+\end{figure}
+
+\section{Tables}
+
+Table~\ref{tbl:CSSSM} shows the formatting and labeling for a table.
+
+\begin{table}[ht]
+\caption{Complexity of Selection and Search in Sorted Matrices}
+\label{tbl:CSSSM}
+\centerline{
+\begin{tabular}{|l|cccc|}
+\hline
+& Sorted $X+Y$ & \multicolumn{2}{c}{Matrix with sorted rows} & Matrix with sorted \\
+&  & \multicolumn{2}{c}{and sorted columns} & columns \\ \cline{2-5}
+& $|X|=|Y|=n$ &  $n \times m$, $m \leq n$ & $n \times n$ & $n \times m$ \\
+\hline
+$k = \Theta(mn)$ or $\Theta(n^2)$ & $\Theta(n)$ & $\Theta(m
+\log (2n/m))$ & $\Theta(n)$ & $\Theta(m \log n)$ \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+
+Here are two more examples of tables:
+
+\begin{table}[ht]
+\caption{Comparison of Slow MPI Version and the Fast MPI Version}
+\label{tbl:CSPV}
+\centerline{
+\begin{tabular}{|lc|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{3}{|c|}{Parameters}   & \multicolumn{7}{|c|}{Process Number}\\ \hline
+N &M & &1 &5 &10 &15 &20 &25 &30\\ \hline
+128 &100 &Slow MPI(secs) &2.11 &3.91 &5.78 &8.26 &10.91 &14.17 &19.47\\ \cline {3-10}
+    &    &Fast MPI(secs) &2.10 &1.20 &1.56 &1.95 &2.79 &3.22 &4.07\\ \hline
+\end{tabular}
+}
+\end{table}
+
+
+\begin{table}[h]
+\caption{The Speedup of the MPI WRS Code and the HPF WRS Code}
+\label{tbl:SPWC}
+\centerline{
+\begin{tabular}{|lc|c|c|c|c|c|c|c|c|}
+\hline
+\multicolumn{3}{|c|}{Parameters}   & \multicolumn{7}{|c|}{Process Number}\\ \hline
+N &M & &1 &10 &20 &30 &40 &50 &60\\ \hline
+128 &600 &MPI(speedup) &1 &5.18 &7.67 &8.24 &6.99 &5.55 &4.49\\ \cline {3-10}
+    &    &HPF(speedup) &1 &8.40 &12.15 &13.98 &14.73 &13.52 &13.21\\ \hline
+256 &300 &MPI(speedup) &1 &6.70 &7.74 &6.47 &5.19 &3.72 &2.94\\ \cline {3-10}
+    &    &HPF(speedup) &0.99 &7.24 &9.65 &10.58 &10 &9.48 &8.73\\ \hline
+512 &150 &MPI(speedup) &1 &6.75 &10.64 &12.14 &13.35 &13.87 &13.98\\ \cline {3-10}
+    &    &HPF(speedup) &0.98 &6.72 &9.88 &11.55 &12.86 &13.38 &13.83\\ \hline
+1024 &75 &MPI(speedup) &1 &2.13 &2.30 &2.36 &2.38 &2.39 &2.40\\ \cline {3-10}
+    &    &HPF(speedup) &0.95 &1.94 &2.06 &2.10 &2.13 &2.13 &2.14\\ \hline
+\end{tabular}
+}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Chapter: Conclusions
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Conclusions}
+
+
+\section{What have we done so far?}
+
+\section{Future directions}
+The coming revolution in Wabi-sabi-lets offers many opportunities for further
+research.
+
+% The main text of the work ends here; the remaining text is back matter.
+\backmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Bibilography
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% There are different bibliography styles; 'plain' is used for theses.
+\bibliographystyle{plain} % or plainnat if using natbib
+
+% If using natbib package
+% \bibliography{NAME_OF_BIB_FILE}
+
+% Another way of constructing the bibliography is to list the entries explicitly
+% in a 'thebibliography' environment, which is done here.
+%
+% If you prefer, you can use the 'bibtex' program, which formats the
+% bibliography from a separate .bib file of "BibTeX" entries.  An advantage
+% is that most references are available online in bibtex format, and
+% doing cut-and-paste from the web browser can save you a lot of work.
+% But it also adds extra complication.  The normal sequence, after you
+% have changed anyting in the .bib file is
+%
+%   latex <filename>.tex
+%   latex <filename>.tex
+%   bibtex <filename>
+%   latex <filename>.tex
+
+
+% Literal Bibliography
+
+% The 99 means make labels be as wide as the width of the number 99
+\begin{thebibliography}{99}
+\label{references}
+\bibitem{ws:book1} Wabi-sabi The Great. \emph{The World According to Wabi-sabi.} NoWabi-sabi
+Press, Wabi-sabiland, 1922.
+\bibitem{ws:book2} Wabi-sabi The Great. \emph{The World Without Wabi-sabi.} NoWabi-sabi
+Press, Wabi-sabiland, 1952.
+\bibitem{me:paper1} Wabi-sabi Admirer. ``An Analysis of Wabi-sabiism.'' \emph{Journal of the
+Advanced Computing Wabi-sabi}, vol. 21(2), pp. 272--287.
+\bibitem{me:paper2} Wabi-sabi Admirer, Jim Smith and Jane Doe. ``Everyday
+Wabi-sabiism.'' \emph{Journal of the Advanced Wabi-sabi Computing}, vol. 23(4), pp. 272--287.
+\bibitem{guide} Graduate College. \emph{Standards for Preparation of Dissertations, Theses \&
+Projects.} February 2021.
+\bibitem{mainrepo} Amit Jain. \emph{Style files for PhD Dissertation or M.S. Thesis or Project}.\\
+\texttt{https://github.com:/BoiseState/thesis-dissertation-template}
+\bibitem{wabisabi} Wikipedia. \emph{Wabi-sabi}.\\
+\texttt{http://en.wikipedia.org/wiki/Wabi-sabi}
+\end{thebibliography}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Appendix
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Use the \appendix command (only once) to start the appendix (or appendices)
+
+\appendix
+
+% After \appendix has executed, the \chapter command creates an appendix.
+% Appendices are numbered by "A", "B", etc.
+
+\chapter{Timing Measurements}\label{app:Timing}
+
+Here is Appendix A. See Appendix~\ref{app:Setup} for the experimental setup.
+
+% Test a figure in it to see if it works right
+
+\chapter{Experimental Setup}\label{app:Setup}
+
+Here is Appendix~\ref{app:Setup}.
+
+
+% The \finish command is executed just before the \end{document}.
+% Among other thigs, it produces the requisite blank page at the end
+% of the document.
+\finish  %! Do not remove!
+
+\end{document}
+
+

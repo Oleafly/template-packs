@@ -1,0 +1,260 @@
+% =============
+% Demonstration of iisc_thesis_new.sty for LaTeX2e
+% Files required in the same directory:
+%   iisc_thesis_new.sty   -- the style file
+%   iisclogo.jpg          -- IISc logo image (or .png / .pdf)
+%   iisc_references.bib   -- your BibTeX database
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,a4paper]{report}
+\usepackage{iisc_thesis_new}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ADDITIONAL PACKAGES  (add freely -- LaTeX2e advantage)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  frame=single,
+  breaklines=true
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THESIS METADATA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{
+  M.Tech Project Report\\
+  \large ------------- subtitle if any goes here -------------------
+ }
+\author{YALLA MAHANTH}
+\submitdate{MAY 2026}
+\dept{Computer Science and Automation}
+
+% --- Degree (uncomment exactly ONE) ---
+%\phd
+%\mscengg
+%\me
+\mtech{Artificial Intelligence}
+%   ^^ Prints:  Master of Technology
+%               IN
+%               Artificial Intelligence
+
+\iisclogotrue          % Comment this out if you do not have iisclogo.jpg
+\figurespagetrue       % List of Figures  (default: true)
+\tablespagetrue        % List of Tables   (default: false)
+
+\pagestyle{bfheadings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% -------------------------------------------------------------------------
+% FRONT MATTER  (roman page numbering)
+% -------------------------------------------------------------------------
+\begin{frontmatter}
+
+\maketitle
+
+\input{declaration}
+
+\begin{dedication}
+  \begin{center}
+    TO \\[2em]
+    \large\itshape Mahanth Yalla \\
+    and \\
+    \large\itshape His Ingenuity
+  \end{center}
+\end{dedication}
+
+\acknowledgements
+Many thanks to all the people who made the original IISc style file.
+This modernised version preserves the look and feel while enabling
+the full power of \LaTeXe{} and all modern packages.
+
+\vita
+IISc was founded in 1909 and continues to be a premier research
+institution in India.
+
+\publications
+\begin{enumerate}
+  \item Mahanth Yalla, \textit{A Great Result}, Conference/Journal of Something, 2026.
+\end{enumerate}
+
+\begin{abstract}
+\slshape
+This document demonstrates \texttt{iisc\_thesis\_new.sty} -- a drop-in
+\LaTeXe{} replacement for the original \texttt{iiscthes.sty}.
+All layout parameters are reproduced faithfully.
+Modern packages such as \textsf{amsmath}, \textsf{graphicx},
+\textsf{booktabs}, and \textsf{hyperref} are available out of the box.
+The new \verb|\mtech| degree command is also demonstrated.
+\end{abstract}
+
+\makecontents
+
+\keywords
+{\large\bfseries LaTeX2e, IISc thesis, style file, modernised template.}
+
+\vspace{10mm}
+\noindent
+\textit{Note:} Use a standard classification such as ACM Computing
+Classification or AMS Classification for keywords.
+
+\notations
+No special notation is introduced in this demonstration document.
+
+\end{frontmatter}
+% -------------------------------------------------------------------------
+% END FRONT MATTER
+% -------------------------------------------------------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Introduction}
+
+\section{Purpose of this Demo}
+
+This file demonstrates \texttt{iisc\_thesis\_new.sty}, the \LaTeXe{}
+modernisation of the original IISc thesis style.  Every layout rule from
+the 1991 original is preserved, while adding support for all modern packages.
+The citation system now uses BibTeX with a \texttt{.bib} file
+\cite{MtechAIatIISc2026}.
+
+\section{New Features}
+
+\begin{itemize}
+  \item Full \LaTeXe{} compatibility -- \verb|\usepackage| works everywhere.
+  \item Math via \textsf{amsmath} / \textsf{amssymb}: $E = mc^2$,
+        $\int_0^\infty e^{-x}\,dx = 1$.
+  \item Graphics via \textsf{graphicx} (Chapter~\ref{ch:elements}).
+  \item Better tables via \textsf{booktabs} (Chapter~\ref{ch:elements}).
+  \item Clickable cross-references and PDF bookmarks via \textsf{hyperref}.
+  \item New \verb|\mtech{<discipline>}| degree command.
+  \item Logo loaded with \verb|\includegraphics| from \texttt{iisclogo.jpg}.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{The \texttt{\textbackslash mtech} Command}
+
+The \verb|\mtech| command sets the degree to ``Master of Technology''
+and prints the discipline on the title page.  Its syntax is:
+
+\begin{lstlisting}[language=TeX, caption={Using \textbackslash mtech}]
+\mtech{Artificial Intelligence}
+\end{lstlisting}
+
+This produces the following block on the title page:
+\begin{center}
+  \scshape Submitted For the Degree of \\[0.8ex]
+  {\large\bfseries Master of Technology} \\[0.4ex]
+  \scshape in \\[0.2ex]
+  \normalfont Artificial Intelligence
+\end{center}
+
+All other degree commands from the original are still available:
+\verb|\phd|, \verb|\mscengg|, and \verb|\me|.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Document Elements}
+\label{ch:elements}
+
+\section{Mathematics}
+
+Display math with \textsf{amsmath}:
+\begin{equation}
+  \nabla^2 \phi = \frac{\partial^2 \phi}{\partial x^2}
+                + \frac{\partial^2 \phi}{\partial y^2}
+                + \frac{\partial^2 \phi}{\partial z^2} = 0
+  \label{eq:laplace}
+\end{equation}
+Equation~\eqref{eq:laplace} is Laplace's equation.
+
+\begin{align}
+  \sin^2\theta + \cos^2\theta &= 1, \\
+  e^{i\pi} + 1                &= 0.
+\end{align}
+
+\section{Tables}
+
+Table~\ref{tab:sample} uses \textsf{booktabs} rules.
+
+\begin{table}[ht]
+  \centering
+  \caption{A sample table using \texttt{booktabs}}
+  \label{tab:sample}
+  \begin{tabular}{@{}llr@{}}
+    \toprule
+    \textbf{Column A} & \textbf{Column B} & \textbf{Value} \\
+    \midrule
+    Alpha  & Experiment 1 & 3.14 \\
+    Beta   & Experiment 2 & 2.71 \\
+    Gamma  & Experiment 3 & 1.41 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{Figures}
+\label{sec:figures}
+
+Figure~\ref{fig:sample} demonstrates \verb|\includegraphics|.
+Place your image file (e.g.\ \texttt{myfig.png}) in the same folder and
+replace \texttt{example-image} with the actual filename.
+
+\begin{figure}[ht]
+  \centering
+  % Replace example-image with your actual image filename, e.g.:
+  % \includegraphics[width=0.5\textwidth]{myfig.png}
+  \includegraphics[width=0.5\textwidth]{example-image}
+  \caption{A sample figure included with \texttt{graphicx}}
+  \label{fig:sample}
+\end{figure}
+
+\section{Line Spacing}
+
+The default is $1.5\times$ line spacing.  Use \textsf{setspace} environments
+to change it locally:
+
+\begin{singlespace}
+  This paragraph uses single-line spacing via the \texttt{singlespace}
+  environment.  You may also use \texttt{onehalfspace} or
+  \texttt{doublespace}.
+\end{singlespace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Conclusions}
+
+The \texttt{iisc\_thesis\_new.sty} style file faithfully reproduces the
+layout of the original IISc thesis style while supporting the full
+\LaTeXe{} ecosystem \cite{MtechAIatIISc2026}.
+Use it as a drop-in replacement and add any packages your thesis requires.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+\chapter{Appendix: Build Instructions}
+
+\begin{lstlisting}[language=bash, caption={Compile sequence}]
+del /q *.aux *.bbl *.blg *.toc *.out *.lof *.lot *.idx *.ilg *.ind *.fls *.fdb_latexmk *.synctex.gz
+
+pdflatex MTechThesisReport_Yalla_Mahanth_MTechAI26.tex
+bibtex MTechThesisReport_Yalla_Mahanth_MTechAI26
+pdflatex MTechThesisReport_Yalla_Mahanth_MTechAI26.tex
+pdflatex MTechThesisReport_Yalla_Mahanth_MTechAI26.tex
+\end{lstlisting}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bibliography via BibTeX (.bib file)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibtitle{References}
+\bibliographystyle{plain}        % or unsrt, alpha, ieeetr, etc.
+\bibliography{iisc_references}   % check if it matches iisc_references.bib
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

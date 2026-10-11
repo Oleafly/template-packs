@@ -1,0 +1,199 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% UCF thesis Dissertation Formatting on Latex 2e
+% Sample paper.tex file.
+% Modified by David Ellis Jan 2011
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\documentclass [PhD,letterpaper] {ucfthes}
+%\documentclass [PhD,single,twoside] {ucfthes}
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%\documentclass[12pt,leqno,openright]{book}
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%\bibliographystyle {thesis} %CS-style
+\bibliographystyle {ieeetr}  %EE-style
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%\bibliographystyle {agsm}
+%\usepackage{harvard}
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%\usepackage{epsfig}
+%\usepackage{rotating}
+%\usepackage{oldlfont}
+%\usepackage{latexsym}
+%\usepackage{tableau}
+%%%%%%%%%%%%%%%\usepackage{draftnote}
+%\input{newsection}
+%\input{macros}
+%\input{schartmac}
+%\input{trmacros}
+%\input {mymacros}                        
+%mathematical macros
+%\input{macros/macros}
+%\input{macros/ALSSmacros}
+%\usepackage{amssymb} 	% Need this for the hat!
+%\usepackage{amsmath,amssymb,amsfonts} 	% Typical math packages
+\usepackage{graphicx}			% To include graphs
+%\usepackage{epsfig}
+%\usepackage{psfrag}
+
+%\usepackage[ps2pdf,bookmarks=true,breaklinks=true]{hyperref}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%I.G. Feb,2005
+%This is to produce the PDF links to be comply with UCF 
+%PDF rules.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[breaklinks=true]{hyperref}
+\hypersetup{
+ pdfauthor = {Your Name Here},
+ pdftitle = {Your Title Here},
+ pdfsubject = {Phd Dissertation, Fall 2011, Univ. of Central Florida},
+ pdfkeywords = {keyword1, keyword2, etc.},
+ pdfcreator = {LaTeX with hyperref package},
+% pdfdisplaydoctitle = true,
+ bookmarksnumbered = true,
+ pdfborder = {0 0 0},
+ }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% other options not used, but tried ;(
+% bookmarksopen = true,
+% bookmarksopenlevel = 4,
+%colorlinks = false,
+% naturalnames = true
+% colorlinks = false,
+% pdfproducer = {dvips + ps2pdf}
+% citebordercolor=none,
+% linkbordercolor=none,
+% menubordercolor={1 1 1},
+% filebordercolor={1 1 1},
+% urlbordercolor={1 1 1},
+\usepackage{fullpage}
+\usepackage{indentfirst}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Convenience environment for UCF dissertations added by D Ellis Feb 2011
+% Usage:
+% \begin{ucftable}{|l|l|l|}{Caption Text Goes Here}{LabelRefVarHere}\hline
+%  	a & b & c \\ \hline \hline
+%	1 & 2 & 3 \\ \hline
+% \enducftable}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{ucftable}[3]{
+  \begin{table}[!hp]
+    \caption{#2\label{#3}}
+    \begin{center}
+      \begin{tabular}{#1}
+}{
+      \end{tabular}
+    \end{center}
+  \end{table}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Convenience command for UCF dissertations added by D Ellis Feb 2011
+% Usage:
+% \ucffigure{path/to/image.pdf}{width=Xin}{Caption Text Here}{LabelRefHere}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ucffigure}[4]{
+  \begin{figure}[!hp]
+    \centering
+    \includegraphics[#2]{#1}
+    \caption{#3\label{#4}}
+  \end{figure}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PRELIMINARY PAGES, ACKNOWLEDGMENTS, AND ABSTRACT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                      %
+%                          PRELIMINARY PAGES                           %
+%                                                                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title		{Your Title Here}
+
+\author		{Your Name Here}
+
+\prevdegreei 	{B.S. Computer Engineering, University of Central Florida, 2007}
+\prevdegreeii 	{M.S. Electrical Engineering, University of Central Florida, 2010}
+
+\department	{Electrical Engineering}
+%\school		{Electrical and Computer Engineering}
+\college	{Engineering and Computer Science}
+\term		{Fall}
+% Note:  degreeyear should be optional, but as of  5-Feb-96
+% it seems required or you get a year of ``2''.   -johnh
+\degreeyear	{2011}
+
+\professor	{Dr. Professor Here}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chair		{Dr. Professor Here}
+\member		{Dr. Prof 2}
+\member		{Dr. Prof 3}
+\member		{Dr. Prof 4}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\dedication     {\textsl{To my parents, etc., etc}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\acknowledgments {Here acks if any :) }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\abstract{Abstract goes here}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% START DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin {document}
+
+% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+\makeintropages
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHAPTERS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{INTRODUCTION\label{ChIntro}}
+\input{intro.tex}
+
+\chapter{INITIAL WORK\label{ChInitial}}
+\input{initial.tex}
+
+\chapter{REALLY COOL WORK\label{ChCool}}
+\input{cool.tex}
+
+\chapter{WORK REQUIRED BY SPONSORS\label{ChSponsor}}
+\input{sponsor.tex}
+
+\chapter{AWESOME 3D SIMULATIONS\label{ChSimulation}}
+\input{simulation.tex}
+
+\chapter{CONCLUSIONS\label{ChConclusions}}
+\input{conclusions.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDIX
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+
+\chapter{FULL DERIVATION OF INITIAL WORK\label{ChInitialDerive}}
+\input{initial_derive.tex}
+
+\chapter{FULL DERIVATION OF COOL WORK TOO DIFFICULT FOR ANYONE TO READ\label{ChCoolDerive}}
+\input{
+cool_derive.tex}
+
+\bibliography{IEEEabrv,dissertation_bib}    % bibliography references
+
+\end{document}

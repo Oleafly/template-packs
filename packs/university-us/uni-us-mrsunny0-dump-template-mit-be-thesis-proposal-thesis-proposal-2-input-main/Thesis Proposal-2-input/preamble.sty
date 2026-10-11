@@ -1,0 +1,125 @@
+%---------------------------------------------------------------------------%
+%								   Preamble									%
+%---------------------------------------------------------------------------%
+\ProvidesPackage{preamble}
+
+%-----------%
+% Essential %
+%-----------%
+\usepackage[english]{babel}
+%\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{mathtools}		% for obscure math commands
+\usepackage{amssymb}		% for obscure math symbols
+\usepackage{amsfonts} 		% for obscure math fonts
+\usepackage{float}			% [H] float command
+\usepackage{subcaption} 	% for subfigure captions
+\usepackage{sidecap}		% for figure side captions
+\usepackage{makecell}		% formatting cells within tabular with \thead and \makecell
+\usepackage{multicol} 		% for tabular \multicolumn 
+\usepackage{multirow} 		% for tabular - \multirow
+% \usepackage{hyperref}		% urls
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}	% urls that linebreak
+\usepackage{import}			% import subfiles
+\usepackage{cite}			% exernal .bib referencing
+\usepackage{longtable}		% tables extend multiple pages \begin{longtable}{}
+\usepackage{ltablex}		% provides tabularx, page breaking capabilities
+\usepackage{rotating}		% sideways and rotate package
+
+%--------------%
+% bibliography %
+%--------------%
+%\usepackage[super,comma,sort]{natbib}	% for superscript citations 
+%\usepackage[sorting=none,backend=bibtex]{biblatex} % essential for unsorted bibliographies
+%\setlength{\bibsep}{0pt}	% removing spacing in bibliography using bibtex
+
+%---------%
+% Add-ons %
+%---------%
+\usepackage{fancyhdr}		% Fancy headers
+\usepackage{setspace}		% double or set spacing
+\usepackage{wrapfig}		% wrap figures around text
+\usepackage{booktabs}		% top, mid and bottom rule for tables
+\usepackage{mhchem}			% for writing chemical formulas, use \ce{}
+\usepackage{rotating}		% writing vertically using \begin{turn} ... \end{turn}
+\usepackage{amssymb}		% random symbols like checkmarks
+\usepackage{enumitem}		% modifications to enumerated list
+\usepackage{siunitx}		% include SI units in math mode
+\usepackage{adjustbox}		% rescale tables to fit page
+\usepackage{changepage}   	% for the adjustwidth environment
+\usepackage[hang,flushmargin,bottom]{footmisc} 	% foot notes go on the bottom and no indent
+\usepackage{cleveref}		% multi-clever referencing
+\usepackage{pdfpages}		% add external pdf module
+\usepackage{enumitem}		% enumerate referenced items
+
+%---------------%
+% Graphics Path %
+%---------------%
+% ignore white spares in pathnames
+\usepackage[space]{grffile}
+
+%---------------%
+% Modifications %
+%---------------%
+%% Tabular method
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+%% Adjusting spacing and indentation
+\setlength{\parindent}{12pt}
+%\usepackage[left=1in,top=1in,right=1in,bottom=1in,bindingoffset=0cm]{geometry}
+% use 'showframe' as an argument to see margin lines
+\usepackage[margin=0.8in, bindingoffset=0cm]{geometry}
+% note that 1in margins actually => 1.26in
+
+%% Figure and Table Caption Headers
+% declare a | seperator
+\DeclareCaptionLabelSeparator{vert}{ \bf{\textbar} } 
+% for figure captions
+\usepackage[labelfont=bf,labelsep=vert, font=small]{caption}	% 10 pt font		
+
+%% Coloring tables
+% color in tables in tabular
+\usepackage{xcolor,colortbl}
+\definecolor{gray}{gray}{0.85}
+
+%% adding units to the side of equation environments
+\usepackage{siunitx}
+\sisetup{detect-all}
+
+%% left adjustment to all subfigures & subtables
+% \captionsetup[subfigure]{justification=raggedright,singlelinecheck=false}
+% \captionsetup[subtable]{justification=raggedright,singlelinecheck=false}
+
+%% footnotes are at the bottom of page
+\usepackage[bottom]{footmisc}
+
+\makeatletter
+\providecommand\add@text{}
+\newcommand\tagaddtext[1]{%
+  \gdef\add@text{#1\gdef\add@text{}}}% 
+\renewcommand\tagform@[1]{%
+  \maketag@@@{\llap{\add@text\quad}(\ignorespaces#1\unskip\@@italiccorr)}%
+}
+\makeatother
+
+%% no maker for footnotes
+%\newcommand\blfootnote[1]{%
+%  \begingroup
+%  \renewcommand\thefootnote{}\footnote{#1}%
+%  \addtocounter{footnote}{-1}%
+%  \endgroup
+%}
+
+\captionsetup{font=footnotesize}
+
+%---------%
+% Testing %
+%---------%
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage{lipsum}

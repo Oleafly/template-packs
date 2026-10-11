@@ -1,0 +1,113 @@
+\documentclass[12pt]{WSUThesis}
+%\documentclass[12pt,twoside]{WSUThesis}
+
+%*************** Packages *************************************
+\usepackage{WSUThesis}
+\usepackage{amsfonts,amsmath,amssymb,amsthm}
+\usepackage[usenames,dvipsnames]{color}
+% Set the default graphics format used and add any folders
+% specifically holding graphics.
+\usepackage{graphicx}
+   \graphicspath{{./../Figures/}}
+\usepackage{float}
+\usepackage[hang,small,bf]{caption}
+\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage[normalem]{ulem}
+\usepackage{vmargin}
+\usepackage{multirow}
+\usepackage{makeidx}
+\usepackage[numbers]{natbib}
+\usepackage[toc,page]{appendix}
+% The hyperref package allows all internal references to act like hyperlinks
+% within the compiled pdf document
+\usepackage{hyperref}
+\hypersetup{
+    pdffitwindow=false,
+    pdftitle={The title of this dissertation},
+    pdfauthor={Butch T. Coug},
+    pdfsubject={Dissertation},
+    colorlinks=true, % false: boxed links; true: colored links
+    linkcolor=black,
+    citecolor=BlueViolet,
+    urlcolor=BlueViolet,
+    breaklinks=true,
+    hypertexnames=false,
+    bookmarksnumbered=true
+}
+\usepackage[all]{hypcap}
+\usepackage{bookmark}
+%*************** Add additional packages here! *******************%
+
+\usepackage{verbatim}
+
+%These next three lines allow for naive use of quotation marks
+%\usepackage [english]{babel}
+%\usepackage [autostyle, english = american]{csquotes}
+%\MakeOuterQuote{"}
+
+
+%*************** Page Setup *************************************
+
+\setUpThesisPages
+
+%*************** Information *************************************
+
+% set your information here:
+\setmyname{Butch T. Coug}  % NAME
+\setmymonth{May}                  % Month degree is granted
+\setmyyear{2017}                  % Year degree is granted
+\setmycommitteea{Committee member 1}    % Committee Members:
+\setmycommitteeb{Committee member 2}
+\setmycommitteec{Committee member 3}
+%\setmycommitteed{Fourth Committee Member}
+%\setmycommitteee{Fifth Committee Member}
+
+\setmytitle{The title of this dissertation} %Title
+
+\setmydept{My Department}                       % DEPARTMENT
+\setmyschool{Washington State University}                             % SCHOOL
+\setmydegree{Doctor of Philosophy}                                    % DEGREE TYPE
+\setmythesis{Dissertation}                                            % Dissertation (Ph.D)
+\setCopyright                                                         % Adds the copyright notice. Comment this line if material is not copyrighted.
+
+%*************** Prologue *************************************
+
+\begin{document}
+
+% pretext pages
+\DisplayTitlePage     % displays the title page with your provided information
+\DisplayCopyright     % displays the copyright page with your provided information:
+                      % you don't need need to comment this line even if you don't have copyrighted material. Just commenting \setCopyright suffices.
+\DisplaySignaturePage % displays the signature page with your provided information
+
+\addtocontents{toc}{\hfill Page}  %Necessary here to get the "Page" label above the Acknowledgements in the TOC
+\input{./../pretext/acknowledge}
+\input{./../pretext/abstract}
+
+% Table of contents, list of figures, list of tables
+\setUpTables
+
+\input{./../pretext/dedicate}
+
+%*************** Main Content ********************* ****************
+\setUpThesisStyle
+\input{./../Chapter1/Chapter1}
+\input{./../Chapter2/Chapter2}
+%\input{./../Chapter3/Chapter3}
+%\input{./../Chapter4/Chapter4}
+%\input{./../Chapter5/Chapter5}
+%\input{./../Chapter6/Chapter6}
+%\input{./../Conclusion/Conclusion}
+\newpage
+\appendix
+\input{./../Appendices/AppendixA}
+
+%*************** Epilogue *************************************
+\newpage
+\renewcommand{\bibname}{\large\bfseries\MakeUppercase{Bibliography}}
+\let\WriteBookmarks\relax
+\pdfbookmark[0]{Bibliography}{thebibliography}
+\bibliography{./../BibFile/references} %Enter the relative directory for your BibFile.bib here
+\bibliographystyle{plain}
+
+\end{document} 

@@ -1,0 +1,133 @@
+
+\epigraph{"Mathematics is serious, but your LaTeX doesn't have to be."}{\textit{Anonymous TeX Enthusiast}}
+
+Welcome to this templated PhD thesis! This chapter is your **user manual**, showing how to wield the magical powers of LaTeX, AMS environments, colors, macros, symbols, and acronyms — all in one place.
+
+% ===========================================================
+\section{Files in This Template}\index{template}
+This template consists of several supporting files, each with a specific role:
+
+\begin{itemize}
+    \item \textbf{main.tex:} The master document that ties everything together. Compile this to produce the final PDF.
+    \item \textbf{preamble.tex:} Loads packages, defines theorem environments, AMS math structures, headers, and page styles.
+    \item \textbf{colors.tex:} Defines all custom colors. Use them via \verb|\textcolor{colorname}{text}| or in hyperref, tikz, and tcolorbox.
+    \item \textbf{macros.tex:} Handy macros for math and text. Examples:
+        \begin{itemize}
+            \item \verb|\R| $\Rightarrow \mathbb{R}$, \verb|\C| $\Rightarrow \mathbb{C}$
+            \item \verb|\Bh| $\Rightarrow \mathcal{B}(\mathcal{H})$
+            \item \verb|\tb{text}| $\Rightarrow$ \textbf{text}, \verb|\tn{text}| $\Rightarrow$ normal text
+            \item Vector macros: \verb|\bv|, \verb|\bx|, \verb|\btheta|, etc.
+        \end{itemize}
+    \item \textbf{chapters/}: Contains separate `.tex` files for each chapter.
+    \item \textbf{chapters/symbols.tex:} Defines all mathematical symbols for the glossary. Use them via \verb|\gls{}|, e.g., $\gls{R}$.
+    \item \textbf{chapters/acronyms.tex:} Defines all abbreviations. Use via \verb|\ac{}|, e.g., \ac{masa}.
+\end{itemize}
+
+% ===========================================================
+\section{How to Use Theorem-Like Environments}
+Thanks to \verb|preamble.tex|, you have access to **AMS theorem environments** and boxed theorems.  
+
+\subsection*{Theorems, Lemmas, Propositions, Corollaries}
+\begin{itemize}
+    \item \verb|\begin{theorem}[Optional Name] ... \end{theorem}|
+    \item \verb|\begin{lem}[Optional Name] ... \end{lem}|
+    \item \verb|\begin{prop}[Optional Name] ... \end{prop}|
+    \item \verb|\begin{cor}[Optional Name] ... \end{cor}|
+\end{itemize}
+
+\subsection*{Definitions, Examples, Exercises}
+\begin{itemize}
+    \item \verb|\begin{definition}[Optional Name] ... \end{definition}|
+    \item \verb|\begin{example}[Optional Name] ... \end{example}|
+    \item \verb|\begin{exercise}[Optional Name] ... \end{exercise}|
+\end{itemize}
+
+\subsection*{Remarks, Notes, Cases, Notation}
+\begin{itemize}
+    \item \verb|\begin{remark}[Optional Name] ... \end{remark}|
+    \item \verb|\begin{note} ... \end{note}| (unnumbered)
+    \item \verb|\begin{case}[Optional Name] ... \end{case}|
+    \item \verb|\begin{notation} ... \end{notation}|
+\end{itemize}
+
+\subsection*{Boxed Theorems}
+\verb|tcolorbox| provides visually appealing boxed theorems:
+\begin{verbatim}
+\begin{theo}{Name of Theorem}{label}
+  Statement goes here.
+\end{theo}
+\end{verbatim}
+
+% ===========================================================
+\section{Symbols and Glossary}\index{symbols}
+All symbols are defined in \verb|chapters/symbols.tex|.  
+
+Use the command \verb|\gls{}| to reference them. Examples:
+
+\begin{itemize}
+    \item $\gls{N}$: Set of natural numbers  
+    \item $\gls{R}$: Set of real numbers  
+    \item $\gls{Bh}$: Algebra of bounded operators on a Hilbert space  
+    \item $\gls{affsm}$: Lattice of affiliated subspaces of a von Neumann algebra  
+    \item $\gls{mvnaff}$: Murray–von Neumann affiliated operators  
+\end{itemize}
+
+\begin{tcolorbox}[colback=goldenrod!10,colframe=crimson,title=Tip]
+Always use \verb|\gls{}| instead of typing symbols manually — this ensures they appear in the \textbf{List of Symbols}.
+\end{tcolorbox}
+
+% ===========================================================
+\section{Acronyms}
+Defined in \verb|chapters/acronyms.tex|.  
+
+Use \verb|\ac{}| to reference them. Examples:
+
+\begin{itemize}
+    \item \ac{masa}: Maximal Abelian Self-adjoint Algebra  
+    \item \ac{vna}: von Neumann Algebra  
+    \item \ac{mvn}: Murray–von Neumann  
+\end{itemize}
+
+\begin{tcolorbox}[colback=softblue!10,colframe=royalblue,title=Tip]
+Introduce acronyms at first use using \verb|\ac{}|, then simply repeat using \verb|\ac{}|. Your readers (and future self) will thank you.
+\end{tcolorbox}
+
+% ===========================================================
+\section{AMS and Math Environments}
+All AMS environments from \verb|amsmath, amssymb, mathtools| are available:
+\begin{itemize}
+    \item Inline math: \verb|$...$|
+    \item Display math: \verb|\[ ... \]|
+    \item Alignments: \verb|align, gather, multline, cases|
+    \item Numbering: Equations are numbered per section (\verb|\numberwithin{equation}{section}|)
+\end{itemize}
+
+% ===========================================================
+\section{Colors and Macros}
+\begin{itemize}
+    \item Colors: \verb|colors.tex| provides \textcolor{royalblue}{royalblue}, \textcolor{indraRed}{indraRed}, \textcolor{deepblue}{deepblue}, etc.
+    \item Macros: \verb|macros.tex| provides shortcuts for math and text. Examples:
+    \begin{itemize}
+        \item Vectors: \verb|\bv|, \verb|\bx|, \verb|\btheta|
+        \item Operators: \verb|\grad|, \verb|\curl|, \verb|\div|
+        \item Algebras: \verb|\Bh|, \verb|\Ch|, \verb|\aff{A}|
+        \item Bold or normal text: \verb|\tb{text}|, \verb|\tn{text}|
+    \end{itemize}
+\end{itemize}
+
+% ===========================================================
+\section{Compiling the Thesis}
+\begin{enumerate}
+    \item Always compile \verb|main.tex|.
+    \item Make sure \verb|preamble.tex|, \verb|colors.tex|, and \verb|macros.tex| are accessible via \verb|\input{}|.
+    \item To generate the glossary and symbols:
+    \begin{itemize}
+        \item \verb|makeglossaries main|
+        \item \verb|makeindex main|
+    \end{itemize}
+    \item View your PDF to check formatting, symbols, and theorem boxes.
+\end{enumerate}
+
+% ===========================================================
+\section{Final Notes}
+This chapter is your **LaTeX cheat sheet** for this thesis template. Modify colors, macros, or environments freely — even serious mathematicians deserve a little fun.

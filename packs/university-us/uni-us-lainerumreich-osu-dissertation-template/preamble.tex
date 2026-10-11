@@ -1,0 +1,178 @@
+% ------------------------------------- [ Packages ]
+
+\RequirePackage{amsmath}
+
+%---------------------------------------------
+% Encoding and Fonts
+%---------------------------------------------
+\usepackage[utf8]{inputenc}      % UTF-8 encoding
+\usepackage[T1]{fontenc}         % Font encoding with accented character support
+\usepackage{textcomp}            % Extra symbols (e.g., copyright)
+\usepackage{inconsolata}         % Monospaced font
+\usepackage{bm}                  % Bold math symbols
+\usepackage{upgreek}             % Upright Greek letters
+\usepackage{dsfont}              % Double stroke font
+\usepackage{xspace}              % Smart space handling after macros
+\usepackage{microtype}           % Typographical improvements
+
+%---------------------------------------------
+% Math and Symbols
+%---------------------------------------------
+\usepackage{amsmath, amssymb, amsfonts, amsthm} % AMS math packages
+\usepackage{mathtools}            % Math extensions to amsmath
+\usepackage{bbm}                  % Blackboard bold for digits/indicators
+\usepackage{esvect}               % Vector notation
+\usepackage[nounderscore]{syntax} % BNF grammar support
+
+%---------------------------------------------
+% Graphics and Figures
+%---------------------------------------------
+\usepackage{graphicx}             % Images
+\usepackage{pgfplots}             % Plotting in LaTeX
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{fillbetween}
+\usepackage{adjustbox}            % Resize or scale environments
+\usepackage{wrapfig}              % Wrap text around figures
+\usepackage{float}                % Enhanced float controls
+\usepackage{subcaption}          % Subfigures and subcaptions
+\usepackage{newfloat}            % Define custom floating environments
+\usepackage{rotating}            % Sideways figures and tables
+\usepackage{tikz}                % TikZ graphics
+\usetikzlibrary{
+  arrows.meta, shapes.geometric, matrix, fit, tikzmark,
+  automata, positioning, quotes, decorations.pathreplacing,
+  fillbetween
+}
+\usetikzlibrary{positioning,matrix,fit,shapes} % Extra TikZ support
+
+%---------------------------------------------
+% Tables and Lists
+%---------------------------------------------
+\usepackage{array, tabularx, ragged2e} % Advanced table column formatting
+\usepackage{booktabs, arydshln}        % Professional-quality tables
+\usepackage{tabularray}                % LaTeX3 tabular environment
+\usepackage{multirow}                  % Multirow cells in tables
+\usepackage{colortbl}                  % Color in tables
+\usepackage{multicol}                  % Multi-column text
+\usepackage{enumitem}                 % Custom list formats
+
+%---------------------------------------------
+% Algorithms and Code
+%---------------------------------------------
+\usepackage{algorithm, refcount}      % Algorithm environments + referencing
+\usepackage{algpseudocode}            % Algorithmic pseudocode
+\usepackage{listings}                 % Code listings
+\usepackage{comment}                  % Multi-line comments
+
+%---------------------------------------------
+% Colors and Highlighting
+%---------------------------------------------
+\usepackage[dvipsnames]{xcolor}       % Extended color support
+\usepackage{color}                    % Basic color support
+\usepackage[textsize=tiny]{todonotes} % Margin TODO notes
+
+%---------------------------------------------
+% Text and Typography
+%---------------------------------------------
+\usepackage{verbatim}                 % Verbatim text environments
+\usepackage{setspace}                 % Line spacing control
+\usepackage{hyphenat}                 % Custom hyphenation
+\usepackage{changepage}               % Adjust margins
+\usepackage{tabto}                    % Tab stops
+\usepackage{appendix}                 % Control over appendices
+\usepackage{footmisc}                 % Footnote placement
+\usepackage{listofsymbols}            % List of symbols
+\usepackage{ifthen}                   % Conditional logic
+
+%---------------------------------------------
+% References, URLs, Citations, and Accessibility
+%---------------------------------------------
+\usepackage{accessibility}            % Does not actually work for alt tagging, but allows you to store your alt text
+\usepackage{cite}                     % Citation style
+\usepackage{url}                      % Simple URL handling
+\usepackage[hyperpageref]{backref}   % Backreferences in bibliography
+
+% import hyperref last for correct accessibility setup
+\usepackage{hyperref}
+% section numbers up to 4 decimal points
+\setcounter{secnumdepth}{4}
+\hypersetup{
+  colorlinks=true, % set true if you want colored links
+  linkcolor=black,
+  urlcolor=black,
+  citecolor=black,
+  linktoc=all,     % set to all if you want both sections and subsections linked
+  pdflang=en-US, % accessiblity requirement for document langauge
+  pdfdisplaydoctitle=true % required for accessiblity check to pass
+}
+
+% ------------------------------------- [ Color Definitions ]
+
+\definecolor{pmaroon}{rgb}{0.45,0.0,0.33}
+\definecolor{lightblue}{rgb}{0.56,0.6,0.9}
+\definecolor{pblue}{rgb}{0.0,0.13,0.84}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+\definecolor{cgreen}{rgb}{0.84,1,0.8}
+\definecolor{c2green}{rgb}{0.6,1,0.6}
+\definecolor{darkpink}{rgb}{1,0.6,0.6}
+\definecolor{purple}{rgb}{0.5,0,0.5}
+\definecolor{gold}{rgb}{0.5,0.64,0.125}
+\definecolor{teal}{rgb}{0,0.598,0.598}
+
+% ------------------------------------- [ Custom Commands ]
+
+% BibTeX from the BiBTeX Documentation
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Make titles title case
+\renewcommand\typesetChapterTitle[1]{#1}
+
+% Algorithm comment format
+\algrenewcommand\algorithmicindent{0.7em}
+\usepackage{xcolor,colortbl}
+\algdef{SE}{Begin}{End}{\textbf{begin:}}{\textbf{end}}
+\usepackage{eqparbox}
+\newdimen{\algindent}
+\setlength\algindent{1.5em} 
+\algnewcommand\LeftComment[2]{%
+\hspace{#1\algindent}$\triangleright$ \eqparbox{COMMENT}{#2} \hfill %
+}
+
+% Proof theorems and lemmas
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{defn}{Definition}[section]
+\newtheorem{lem}[thm]{Lemma}
+\numberwithin{thm}{section} 
+\numberwithin{defn}{section} 
+
+% Algorithm indentation
+\algdef{SE}[SUBALG]{Indent}{EndIndent}{}{\algorithmicend\ }%
+\algtext*{Indent}
+\algtext*{EndIndent}
+
+% ------------------------------- [ Minimal Accessibility Setup ]
+% creates an 'artifact' for each figure, using the alt key in includegraphics for alternative text
+% this should automatically resolve the alternative text when using autotag from adobe
+
+\makeatletter
+\define@key{Gin}{alt}[]{%
+  \def\alttext{#1}%
+}
+% fix includegraphics
+\let\oldincludegraphics\includegraphics
+
+\renewcommand{\includegraphics}[2][]{%
+  \setkeys{Gin}{#1}%
+  \ifdefined\alttext
+    \pdfliteral page {/Artifact <</Type /Figure /Alt (\alttext)>> BDC}%
+  \else
+    \pdfliteral page {/Artifact <</Type /Figure >> BDC}%
+  \fi
+  \oldincludegraphics[#1]{#2}%
+  \pdfliteral page {EMC}%
+  \let\alttext\undefined
+}
+

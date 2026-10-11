@@ -1,0 +1,172 @@
+\documentclass[12pt]{cmuthesis}
+
+% This is a template for a CMU thesis.  It is 18 pages without any content :-)
+% The source for this is pulled from a variety of sources and people.
+% Here's a partial list of people who may or may have not contributed:
+%
+%        bnoble   = Brian Noble
+%        caruana  = Rich Caruana
+%        colohan  = Chris Colohan
+%        comar    = Cyrus Omar
+%        dkoes    = David Koes
+%        jab      = Justin Boyan
+%        josullvn = Joseph O'Sullivan
+%        jrs      = Jonathan Shewchuk
+%        kosak    = Corey Kosak
+%        mjz      = Matt Zekauskas (mattz@cs)
+%        pdinda   = Peter Dinda
+%        pfr      = Patrick Riley
+%        rak      = Ryan Kavanagh
+
+% dkoes: My main contribution is putting everything into a single class files and small template since I prefer this to some complicated sprawling directory tree with makefiles.
+
+% rak: I ported it to use the "amsbook" class instead of the plain "book" class,
+%      incorporated formatting changes from Catherine, and added a few bells and
+%      whistles.
+
+% some useful packages
+\usepackage{microtype} % Better typography
+\usepackage{mathpazo}  % Nice default font, see also: times, MinionPro
+\usepackage{graphicx}  % Include graphics
+\usepackage[numbers,sort]{natbib} % Also consider biblatex
+\usepackage[backref,pageanchor=true,plainpages=false, pdfpagelabels, bookmarks,bookmarksnumbered,
+%pdfborder=0 0 0,  %removes outlines around hyper links in online display
+]{hyperref}
+\usepackage{subfigure} % Subfigures
+
+%% If you're versioning your thesis with Git (which you really should),
+%% then the following lines will add a stamp at the bottom of each page
+%% with the build time and current commit number. Very useful for
+%% knowing which particular draft of your thesis your advisors or
+%% committee members are talking about in their comments.
+%%
+%% See "Setup and tailoring" in the documentation for instructions on
+%% how to set up the post-commit, post-merge, and post-checkout hooks
+%% that generate the Git information used by the package:
+%% http://mirrors.ctan.org/macros/latex/contrib/gitinfo2/gitinfo2.pdf
+\usepackage[hhmmss]{datetime}
+\usepackage[mark,markifdirty,markifdraft]{gitinfo2}
+\renewcommand{\gitMark}{\gitBranch\,@\,\gitDescribe{}~\textbullet{}~{\today}~\currenttime}
+%% Comment them out if you do not want the stamp.
+
+
+\title{Awesome Work in Computer Science}
+\author{Me}
+\date{January 3006}
+\email{me@cs.cmu.edu}
+\Year{3006}
+% Email Catherine to request a tech report number
+\trnumber{}
+
+\committee{
+  Nearly Divine Personage, Chair \\
+  Someone else \\
+  Yet another person \\
+  Someone from a strange and faraway land
+}
+
+% You should email the business admins (see the CSD graduation
+% checklist for their contact information) to get the exact
+% wording for your support statement.
+\support{
+  This research was sponsored by Vandelay Industries award 1234.
+}
+% You'll get your version of the disclaimer along with your support
+% statement.
+\disclaimer{The views and conclusions contained in this document
+  are those of the author and should not be interpreted as representing
+  the official policies, either expressed or implied, of any sponsoring
+  institution, the U.S.\ government or any other entity.}
+
+% copyright notice generated automatically from Year and author.
+% permission added if \permission{} given.
+
+\keywords{Stuff, More Stuff}
+
+%% 2020 Mathematics Subject Classification
+%% Look it up at https://mathscinet.ams.org/mathscinet/msc/msc2020.html?t=68-XX
+%% Example:
+\subjclass[2020]{Primary: 68Q55; % Semantics in the theory of computing
+  Secondary: %
+  03B70, % Logic in computer science
+  06B35, % Continuous lattices and posets, applications
+  18C50. % Categorical semantics of formal languages
+}
+
+%% 2012 ACM Computing Classification System (CCS) concepts
+%% Generate at 'http://dl.acm.org/ccs/ccs.cfm'.
+\ccsdesc[500]{Theory of computation~Program semantics}
+\ccsdesc[500]{Computing methodologies~Concurrent programming languages}
+%% End of generated code
+
+\begin{document}
+
+\frontmatter
+
+% The maketitle command also prints your abstract. For this reason,
+% the abstract needs to come before \maketitle.
+
+\begin{abstract}
+  A short summary.
+\end{abstract}
+
+\frontmatter
+
+\maketitle
+
+\begin{dedication}
+  For my dog
+\end{dedication}
+
+\begin{acknowledgments}
+  My advisor is cool.
+\end{acknowledgments}
+
+\tableofcontents
+
+\listoffigures
+
+\listoftables
+
+\mainmatter
+
+%% Double space document for easy review:
+%\renewcommand{\baselinestretch}{1.66}\normalsize
+
+% The other requirements Catherine has:
+%
+%  - avoid large margins.  She wants the thesis to use fewer pages,
+%    especially if it requires colour printing.
+%
+%  - The thesis should be formatted for double-sided printing.  This
+%    means that all chapters, acknowledgements, table of contents, etc.
+%    should start on odd numbered (right facing) pages.
+%
+%  - You need to use the department standard tech report title page.  I
+%    have tried to ensure that the title page here conforms to this
+%    standard.
+%
+%  - Use a nice serif font, such as Times Roman.  Sans serif looks bad.
+%
+% Other than that, just make it look good...
+
+
+\chapter{Introduction}
+\chapter{Conclusion}
+
+%\appendix
+%\include{appendix}
+
+\backmatter
+
+%\renewcommand{\baselinestretch}{1.0}\normalsize
+
+% By default \bibsection is \chapter*, but we really want this to show
+% up in the table of contents and pdf bookmarks.
+\renewcommand{\bibsection}{\chapter{\bibname}}
+%\renewcommand{\bibpreamble}{This text goes between the ``Bibliography''
+%  header and the actual list of references}
+\bibliographystyle{plainnat}
+\bibliography{register} %your bib file
+
+\end{document}

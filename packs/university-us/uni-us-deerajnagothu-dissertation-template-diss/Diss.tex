@@ -1,0 +1,496 @@
+
+%*************************************************************
+%
+%PhD Candidate
+%Computer Engineering
+%Electrical & Computer Engineering Department
+%Watson College of Engineering & Applied Science
+%Binghamton University
+%4400 Vestal Pkwy E, Binghamton, NY 13902
+% Created and Developed by: Deeraj and Ronghua
+%*************************************************************
+
+%*************************************************************
+% BU requirements for dissertation writing are fully adhered to!
+%*************************************************************
+% Import Packages and Methods
+%*************************************************************
+\documentclass[12pt,oneside]{book}
+%*************************************************************
+\usepackage{graphicx}
+\usepackage{titlesec}
+\titleformat{\chapter}[hang] 
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter:}{1em}{} 
+
+\graphicspath{ {figures/} }
+\usepackage{amsmath}
+\usepackage{systeme}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+%\usepackage[noend]{algpseudocode}
+%*************************************************************
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+%*************************************************************
+\makeatother
+\usepackage[toc,page]{appendix}
+\usepackage{amssymb, amsmath, amsthm}
+% these make top, right, bottom margins confirming to the requirements
+\usepackage[a4paper,bindingoffset=0.0in,%
+left=1.5in,right=1in,top=1in,bottom=1in,%
+footskip=.25in]{geometry}
+
+\usepackage{setspace}
+\usepackage{blindtext}
+
+% small stuff
+\usepackage{amsfonts}
+\usepackage{amscd}
+\usepackage{mathbbol}
+\usepackage{multirow}
+\usepackage{hyperref}
+\urlstyle{same}
+
+\usepackage{footnote}
+%************** For Appendix B Publications  *********************************************
+\usepackage[sort,authoryear]{natbib}
+\usepackage{bibunits}
+%***********************************************************
+\hypersetup{colorlinks,linkcolor={black},citecolor={black},urlcolor={black}}  
+
+\usepackage{microtype}
+% \usepackage{showkeys}  
+% uncomment this when editing cross-references
+\numberwithin{equation}{section}
+
+% this makes the chapters start with a 2" margin
+\makeatletter
+%*************************************************************
+\renewcommand*\@makechapterhead[1]{%
+	\vspace*{0.75in}%
+	{\parindent \z@ \raggedright \normalfont
+	   \begin{center}
+	    \ifnum \c@secnumdepth >\m@ne
+		\huge\bfseries \thechapter.\space %\@chapapp\space \thechapter
+		%\par\nobreak
+		%\vskip 20\p@
+		\fi
+		\interlinepenalty\@M
+		\Huge \bfseries #1\par\nobreak
+		\vskip 40\p@
+	   \end{center}
+}}
+\renewcommand*\@makeschapterhead[1]{%
+	\vspace*{0.75in}%
+	{\parindent \z@ \raggedright
+		\normalfont
+		\interlinepenalty\@M
+		\Huge \bfseries  #1\par\nobreak
+		\vskip 40\p@
+}}
+\makeatother
+%*************************************************************
+% theorem style
+\theoremstyle{plain}
+\newtheorem{theorem}[subsection]{Theorem}
+\newtheorem{proposition}[subsection]{Proposition}
+\newtheorem{lemma}[subsection]{Lemma}
+\newtheorem{corollary}[subsection]{Corollary}
+\newtheorem{conjecture}[subsection]{Conjecture}
+\newtheorem{principle}[subsection]{Principle}
+\newtheorem{claim}[subsection]{Claim}
+%\newtheorem*{main-theorem-1}{Main Theorem}
+%\newtheorem*{nil-to-local-repeat}{Proposition \ref{nil-to-local}}
+%\newtheorem*{restate-tech-thm}{Theorem \ref{mainthm-tech}}
+\theoremstyle{definition}
+\newtheorem{definition}[subsection]{Definition}
+\newtheorem{problem}{Problem}
+\theoremstyle{remark}
+\newtheorem{example}{Example}
+\newtheorem{examples}{Examples}
+\newtheorem*{remark}{Remark}
+\newtheorem*{remarks}{Remarks}
+%I prefer slanted leq and geq symbols
+\renewcommand{\leq}{\leqslant}
+\renewcommand{\geq}{\geqslant}
+
+%*************************************************************
+%A proof with an equation if need be.
+\newsavebox{\proofbox}
+\savebox{\proofbox}{\begin{picture}(7,7)%
+	\put(0,0){\framebox(7,7){}}\end{picture}}
+\def\boxeq{\tag*{\usebox{\proofbox}}}
+%*************************************************************
+%Modular arithmetic .
+\newcommand{\md}[1]{\ensuremath{(\operatorname{mod}\, #1)}} % \operatorname automagically uses the right font and size
+%\def\proof{\noindent\textit{Proof. }}
+\def\endproof{\hfill{\usebox{\proofbox}}}
+\def\E{\mathbb{E}}
+\def\so{\mathfrak{so}}
+\def\sp{\mathfrak{sp}}
+\def\Z{\mathbb{Z}}
+\def\R{\mathbb{R}}
+\def\T{\mathbb{T}}
+\def\C{\mathbb{C}}
+\def\N{\mathbb{N}}
+\def\P{\mathbb{P}}
+\def\F{\mathbb{F}}
+\def\Q{\mathbb{Q}}
+\def\b{{\mathbf b}}
+\def\A{{\mathbf A}}
+\def\g{{\mathfrak g}}
+\def\hp{{\mathfrak{hp}}}
+\def\D{\mathcal{D}}
+\def\re{\operatorname{Re}}
+\def\O{\mathcal{O}}
+%*************************************************************
+\newcommand\DD{{\frac{\partial}{\partial z}}}
+\newcommand\DDbar{{\frac{\partial}{\partial \overline{z}}}}
+\newcommand\SPEC{{\textrm{Spec}}}
+\newcommand\MM{{\mathscr M}}
+\newcommand\OO{{\mathscr O}}
+\newcommand\LL{{\mathcal L}}
+\newcommand\PP{{\mathbf P}}
+\newcommand\eps{{\varepsilon}}
+\newcommand\supp{\mathop{\rm supp}}
+\newcommand\Riem{{\operatorname{Riem}}}
+\newcommand\dist{{\operatorname{dist}}}
+\newcommand\Hess{{\operatorname{Hess}}}
+\newcommand\Ric{{\operatorname{Ric}}}
+\newcommand\Vol{{\operatorname{Vol}}}
+\renewcommand\min{{\operatorname{min}}}
+%\newcommand{\INDSTATE}[1][1]{\STATE\hspace{#1\algorithmicindent}}
+
+%***********************imported from ronghua*****************
+\newtheorem{defn}{\textbf{Definition}}[chapter]
+\newtheorem{ruln}{\textbf{Rule}}[chapter]
+\newcommand{\argmin}{\operatornamewithlimits{argmin}}
+\renewcommand{\thealgorithm}{\arabic{chapter}.\arabic{algorithm}}
+\newcommand{\INDSTATE}[1][1]{\STATE\hspace{#1\algorithmicindent}}
+%*************************************************************
+\parindent 0mm
+\parskip   5mm % this should make \ni and  obsolete, hopefully
+%\newenvironment{proof}{\noindent {\bf Proof} }{\endprf\par}
+\def \endprf{\hfill  {\vrule height6pt width6pt depth0pt}\medskip}
+% add a customized "itemize" operator. 
+\def\+{+}
+\makeatletter
+\catcode`\ =12\let\@nl@space= \catcode`\ =10
+\newcount\@nl@rlevel
+\newcount\@nl@llevel
+\@nl@llevel=-1
+
+\def\@nl{%
+	\catcode`\ =12
+	\global\@nl@rlevel=0
+	\futurelet\@nl@store\@nl@%
+}
+\def\@nl@gobble#1{\futurelet\@nl@store\@nl@}
+\def\@nl@enditemize{
+	\ifnum\the\@nl@rlevel<\the\@nl@llevel%
+\end{itemize}%
+\egroup%
+\expandafter\@nl@enditemize%
+\else%
+\ifnum\the\@nl@rlevel=\the\@nl@llevel\else%
+\errmessage{Error: inconsistent identation}
+\fi%
+\fi%
+}
+\def\@nl@{%
+\ifx\@nl@store\@nl@space%
+\global\advance\@nl@rlevel by 1
+\expandafter\@nl@gobble%
+\else%
+\catcode`\ =10
+\ifx\@nl@store+%
+\ifnum\the\@nl@rlevel>\the\@nl@llevel%
+\bgroup%
+\@nl@llevel=\the\@nl@rlevel
+\begin{itemize}%
+	\fi%
+	\@nl@enditemize%
+	\item \expandafter\expandafter\expandafter\@gobble%
+	\else%
+	\ifx\@nl@store\@nl%
+	\global\@nl@rlevel=-1\relax\@nl@enditemize\par
+	\else\space\fi%
+	\fi%
+	\fi%
+}
+\makeatother
+%*************************************************************
+
+
+%*************************************************************
+% Set Chapter Counter.
+%*************************************************************
+\setcounter{chapter}{0}
+% makes page numbers appear
+\pagestyle{plain} 
+%*************************************************************
+
+\begin{document}
+% makes the page numbers roman numerals, doesn't count
+% these pages in the table of contents
+\frontmatter
+\thispagestyle{empty}
+\vbox to 1truein{}
+
+%*************************************************************
+% Beginning of Dissertation Cover/Title Page
+%*************************************************************
+%*************************************************************
+% Dissertation Title
+%*************************************************************
+%\begin{doublespace}
+\centerline{Disseration Title} 
+%\centerline{second line if its long}
+
+%\end{doublespace}
+%*************************************************************
+\vskip 200pt
+
+
+\centerline{BY}
+\vskip 10pt
+
+\centerline{FirstName LastName}
+\vskip 10pt
+\centerline{BTech, ABC University, 2015}
+\centerline{MS, XYZ University, 2017}
+\vskip 10pt
+
+
+
+\vskip 180pt
+
+%\centerline{PROSPECTUS}
+\centerline{DISSERTATION}
+\vskip 10pt
+%\begin{doublespace}
+\centerline{Submitted in partial fulfillment of the requirements for}
+\centerline{the degree of Doctor of Philosophy in Electrical and Computer Engineering}
+\centerline{in the Graduate School of}
+\centerline{Binghamton University}
+\centerline{State University of New York}
+\centerline{202X}
+%\end{doublespace}
+%*************************************************************
+% End of Dissertation Cover/Title Page
+%*************************************************************
+
+%*************************************************************
+% Beginning of Empty Page, just next Title Page
+%*************************************************************
+\newpage
+
+\thispagestyle{empty}
+
+\vbox to 9.0truein{}
+
+\centerline{\copyright\ Copyright by Author Name 202X}
+
+\centerline{All Rights Reserved}
+%*************************************************************
+% End of Empty Page, just next Title Page
+%*************************************************************
+
+%*************************************************************
+% Beginning of Committee Page
+%*************************************************************
+\newpage
+
+{\baselineskip = 10pt
+
+\vbox to 2.0truein{}
+
+
+\vskip 270pt
+
+\centerline{Accepted in partial fulfillment of the requirements for}
+\centerline{the degree of  Doctor of Philosophy in Electrical and Computer Engineering}
+\centerline{in the Graduate School of}
+\centerline{Binghamton University}
+\centerline{State University of New York}
+\centerline{202X}
+
+\
+
+\centerline{Oct 10, 202X}
+
+\
+
+\centerline{FirstName LastName, Ph.D., Chair}
+\centerline{Department of Electrical and Computer Engineering, Binghamton University}
+
+
+\
+
+\centerline{FirstName LastName, Ph.D.,  Member}
+\centerline{Department of Electrical and Computer Engineering, Binghamton University}
+
+\
+
+\centerline{FirstName LastName, Ph.D., Member}
+\centerline{Department of Electrical and Computer Engineering, Binghamton University}
+
+\
+
+\centerline{FirstName LastName, Ph.D., Outside Examiner}
+\centerline{Department of XYZ, ABC University}
+}
+
+%*************************************************************
+% End of  Committee Page
+%*************************************************************
+
+
+%*************************************************************
+% Abstract
+%*************************************************************
+\chapter*{\centering{Abstract}}
+%*************************************************************
+\begin{doublespace}
+
+Add your abstract here.
+	
+
+\end{doublespace}
+
+%*************************************************************
+% Dedication
+%*************************************************************
+\newpage
+
+\chapter*{\centering{Dedication}}
+\bigskip
+\begin{doublespace}
+\centerline{\textbf{To}}
+\centerline{Name here}
+
+Few words for your dedication.
+
+\bigbreak
+\bigbreak
+\centerline{Yours,}
+\centerline{Author Name}
+\end{doublespace}
+
+
+%*************************************************************
+% Acknowledgements
+%*************************************************************
+\newpage
+
+\chapter*{\centering{Acknowledgements}}
+\begin{doublespace}	
+	
+Acknowledge everyone who helped you reach this milestone. Your contributions are enabled by many people supporting your hardwork.  
+	
+\end{doublespace}
+
+%*************************************************************
+% Acknowledgements
+%*************************************************************
+\newpage
+
+
+%*************************************************************
+%Table of content
+%*************************************************************
+\tableofcontents
+
+ 
+%*************************************************************
+%List of Figures
+%*************************************************************
+ % Make the list of figures
+\clearpage %\cleardoublepage %for openright
+\addcontentsline{toc}{chapter}{\listfigurename} 
+\listoffigures
+ %\thispagestyle{plain}
+
+%*************************************************************
+%List of Tables
+%*************************************************************
+% Make the list of tables
+\clearpage %\cleardoublepage %for openright
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+ %\thispagestyle{plain}
+ \clearpage %\cleardoublepage %for openright
+
+
+%*************************************************************
+%All The Chapters in Order 
+%*************************************************************
+
+% Changes page numbers to regular numbers, resets the counter
+\mainmatter
+% This gives 11pt font with 20pt spacing, text from here should be double spaced
+\fontsize{11}{20pt} \selectfont  
+% \include puts in the .tex file with the given name
+% make sure that these files don't have any preamble material
+\begin{doublespacing}
+\include{Ch_1}
+\include{Ch_2}
+\include{Ch_3}
+\include{Ch_4}
+\include{Ch_5}
+\include{Ch_6}
+\include{Ch_7}
+\include{Ch_8}
+\end{doublespacing}
+
+%*************************************************************
+%*************************************************************
+\begin{appendices}
+%*************************************************************
+%*************************************************************
+\begin{doublespacing}
+
+% For Acronyms throughout the dissertation
+\include{Appendix_A}
+% For including your publications as part of disseration. The code in Appendix_B.tex makes your name bold. Please refer to that file to add your name and include the tag '\myname' in the bibtex.
+\include{Appendix_B}
+
+\end{doublespacing}
+
+%\glsaddall
+%\printglossary[type=\acronymtype,title=Acronyms]
+%\nomenclature{EER}{Equal Error Rate}
+%\printnomenclature
+%*************************************************************
+%\chapter{Appendix: Experimental Environment Setup}
+%\label{app:b}
+%*************************************************************
+%*************************************************************
+%\chapter{Appendix: ENF authentication System assumptions}
+%\label{app:c}
+%*************************************************************
+
+%*************************************************************
+%*************************************************************
+\end{appendices}
+%*************************************************************
+%*************************************************************
+
+%*************************************************************
+\addcontentsline{toc}{chapter}{Bibliography} 
+
+\begin{spacing}{1.0}
+\bibliographystyle{abbrv} 
+\bibliography{Ref.bib}
+%\bibliography{zot_references}	
+\end{spacing}
+%*************************************************************
+
+%*************************************************************
+%*************************************************************
+\end{document}
+%*************************************************************
+%*************************************************************
+%Deeraj Nagothu
+%*************************************************************
+

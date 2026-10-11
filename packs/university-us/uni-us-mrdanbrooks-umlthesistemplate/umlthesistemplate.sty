@@ -1,0 +1,280 @@
+\ProvidesPackage{umlthesistemplate}[4/1/2017 by Dan Brooks]
+%%%%%%%%%%% UML THESIS TEMPLATE %%%%%%%%%%%%%
+% Author: [db] '17 ... I wrote this because why the fuck didn't it already exist ?
+%
+% Copyright 2017 Dan Brooks
+% Licensed under the Apache License, Version 2.0 (the "License");
+% you may not use this file except in compliance with the License.
+% You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+% Unless required by applicable law or agreed to in writing, software
+% distributed under the License is distributed on an "AS IS" BASIS,
+% WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+% See the License for the specific language governing permissions and
+% limitations under the License.
+%
+% Disclaimer: It's not my fault if this doesn't match the library guidelines. Don't
+% be lazy, and double check that your document is in compliance.
+% https://www.uml.edu/registrar/docs/thesis_guide.pdf
+%
+% Change Log:
+% 4/1/17 - Original Version, based on UML Thesis and Dissertation Guide (Revised Spring 2008)
+%               https://www.uml.edu/registrar/docs/thesis_guide.pdf
+%
+% Example Usage:
+%\documentclass[12pt,english]{report}
+%\usepackage{umlthesistemplate}
+%\title{A Human-Centric Approach to Autonomous Robot Failures}
+%\author{Daniel J. Brooks}
+%\date{ 20 April, 2017}
+% % The following information is for the approval page
+%\pastdegrees{B.S. West Virginia University (2009) \and M.S. University of Massachusetts Lowell (2014)}
+%\degree{Doctor of Philosophy}
+%\department{Computer Science}
+%\university{University of Massachusetts Lowell}
+%\majorprofessor{Dr. Holly A. Yanco}
+%\majorproftitle{Dissertation Chair}
+%\members{Dr. Jill Drury \and Dr. Aaron Steinfeld}
+% % You can specify what front matter you want generated
+%\abstract{ \input{abstract.tex} }
+%\acknowledgments{ \input{acks.tex} }
+%\includetoc
+%\maketitle
+%\includeapproval
+%\begin{document}
+%\input{chapter1.tex}
+% . . .
+%% Appendix files can be added anywhere, at any time
+%\addappendixfile{myappendix.tex} 
+%\bibliography{main.bib}
+%\end{document}
+
+
+%%%% Page Layout %%%%
+\usepackage{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3.8cm,rmargin=3cm}
+\usepackage{setspace}%  for  \doublespacing
+\pagestyle{plain}
+
+
+
+%%%% Table of contents %%%%
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\usepackage[nottoc,notlof,notlot]{tocbibind} % Adds bibliography to toc
+% Generate pdf index with links to sections
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=true,bookmarksopen=false,
+ breaklinks=true,pdfborder={0 0 0},backref=section,colorlinks=false]
+ {hyperref}
+\hypersetup{colorlinks,citecolor=black,filecolor=black,linkcolor=black,urlcolor=black}
+
+%%%% For Bibliography %%%%
+% see http://en.wikibooks.org/wiki/LaTeX/Bibliography_Management
+\usepackage[square,longnamesfirst]{natbib}
+\bibpunct{[}{]}{;~}{a}{,}{,~}
+
+%%%% Assorted other packages %%%%
+\usepackage{graphicx}	
+\usepackage{appendix}
+
+
+%% defines \acknowledgments{ file.txt }
+\newcommand{\acknowledgments}[1]{\newcommand{\acknowledgmentscontent}{#1}}
+\def\acknowledgmentspage{% modified from usfmanus by [db]
+ \ifdefined\acknowledgmentscontent
+   \clearpage\pagestyle{plain}
+    \begin{doublespace}
+    \subsection*{Acknowledgments}
+    \acknowledgmentscontent
+    \end{doublespace}
+   \fi}
+
+%% redefines \abstract command to be \builtinabstract so that we can have our own \abstract cmd
+%% you can still use \builtinabstract{ my abstract text here } if you like.
+\let\builtinabstract\abstract
+\renewcommand{\abstract}[1]{\newcommand{\abstractcontent}{#1}}
+\def\abstractpage{
+ \ifdefined\abstractcontent
+   \clearpage\thispagestyle{empty}
+    \begin{doublespace}
+    \subsection*{Abstract}
+    \abstractcontent
+    \end{doublespace}
+    \pagestyle{plain}
+   \fi} 
+
+%% Define our own version of the \maketitle command to put it in the appropriate order with everything else
+\let\builtinmaketitle\maketitle
+\renewcommand{\maketitle}{\newcommand{\includemaketitle}{ }}
+\def\maketitlepage{%
+  \ifdefined\includemaketitle
+  \builtinmaketitle
+  \fi}
+
+%% defines \includetoc
+\newcommand{\includetoc}{\newcommand{\includetocpages}{ }}
+\def\tableofcontentspages{% modified from usfmanus by [db]
+ \ifdefined\includetocpages
+   \tableofcontents{}
+   \newpage
+   \listoffigures{}
+   \newpage
+   \listoftables{}
+   \newpage
+   \fi}
+
+
+%  defines \addappendixfile  (this can be used anywhere in the document)
+%http://tex.stackexchange.com/questions/56209/how-can-i-store-variables-and-iterate-over-them
+\def\stack{}
+\def\stackcount{0}
+\def\addappendixfile#1{
+\newcommand{\includeappendixpages}{ }% set 'flag' to include appendecies
+{
+\let\xdo\relax
+\count10=\stackcount\relax
+\advance\count10 by 1
+\xdef\stackcount{\the\count10}
+\toks0{\xdo{#1}}
+\toks2\expandafter{\stack}
+\xdef\stack{\the\toks2 \the\toks0}}}
+
+% List filenames as ``inputs''
+\def\includemyappendixfiles{
+\ifdefined\includeappendixpages
+%% Add the following line back in to add an explicit line entry in the TOC for "Apendices". 
+%% Otherwise, they just get added in when you use \chapter in them
+%\addappheadtotoc
+\appendix
+{\count10=0
+\def\xdo##1{\advance\count10 by 1
+\input{##1} }
+\stack}
+\fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% Approval Page Scripts 
+% (adapted from the adaptations to something that probably originated in usfmanus.cls)
+\newcommand{\includeapproval}{\newcommand{\includemakeapprovalpage}{ }}
+
+\newcount\andcount
+\newcount\totalmembers
+\newcount\majorcount
+\newcount\membercount
+\newcount\degreecount
+
+\def\countands#1{\andcount=0 \expandafter\countand #1\end}
+
+\def\countand#1{%
+  \ifx#1\end%
+    \let\next=\relax%
+  \else%
+    \let\next=\countand%
+    \ifx#1\and%
+      \advance\andcount by 1%
+    \fi%
+  \fi%
+  \next}
+
+
+\def\title#1{\def\@title{\uppercase{#1}}} % Makes the title upper case
+\def\@title{\missingalert{No \title given}}
+\def\author#1{\def\@author{#1}}
+\def\@author{\missingalert{No \author given}}
+
+\def\pastdegrees#1{\def\@pastdegrees{#1}}
+\def\@pastdegrees{\missingalert{No past degrees given}}
+\def\degree#1{\def\@degree{#1}}
+\def\@degree{\missingalert{No degree given}}
+\def\department#1{\def\@department{#1}}
+\def\@department{\missingalert{No department given}}
+\def\university#1{\def\@university{#1}}
+\def\@university{\missingalert{No university given}}
+\def\majorprofessor#1{\def\@majorprofessor{#1}}
+\def\@majorprofessor{\missingalert{No \noexpand\majorprofessor given}}
+\def\majorproftitle#1{\def\@majorproftitle{#1}}
+\def\@majorproftitle{\missingalert{No \noexpand\majorproftitle given}}
+\def\members#1{\def\@members{#1}}
+\def\@members{\missingalert{No \noexpand\members given}}
+
+
+\def\makeapprovalpage{%
+  \ifdefined\includemakeapprovalpage
+  \approvalpage
+  \fi}
+\def\approvalpage{
+  \countands{\@members}
+  \membercount\andcount
+  \advance\membercount by 1
+  \totalmembers\majorcount
+  \advance\totalmembers by \membercount
+  \newpage
+  \thispagestyle{empty}
+  \begin{centering}
+    {\large\@title\\}
+    \vspace*{2\baselineskip}
+    BY \\
+    \vspace*{2\baselineskip}
+    \MakeUppercase{\@author} \\
+    \def\and{\par\MakeUppercase}
+    \and\@pastdegrees
+    \par
+    \vspace*{2\baselineskip}
+    SUBMITTED IN PARTIAL FULFILLMENT OF THE REQUIREMENTS\\
+    FOR THE DEGREE OF \MakeUppercase{\@degree} \\
+    \MakeUppercase{\@department} \\
+    \MakeUppercase{\@university}  \\
+  \end{centering}
+  \vspace*{4\baselineskip}    
+  \begin{flushleft} Author:\quad\dotfill \quad Date: \@date \\ \end{flushleft}
+  \vspace*{0.12in}
+  \begin{flushleft} \@majorproftitle:\quad\dotfill \end{flushleft}%\hrulefill
+  \vspace*{-0.25in}
+  \begin{flushright}\@majorprofessor\end{flushright}
+  \begin{list}{}{\leftmargin 0in \rightmargin 0in}\item[] %https://tex.stackexchange.com/q/332063
+   \def\and{\begin{flushleft}\vspace*{0.04in}Committee Member: \quad\dotfill \end{flushleft}\flushright\vspace*{-0.2in}}
+    \and\@members
+    \end{list}
+}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Defines the beginning of the document...
+%% Title page, abstract, acknowledgements, TOC, page numbering style, etc
+\AtBeginDocument{
+%\maketitle
+%\builtinabstract{
+% Write an abstract here using the builtin abstract command
+%}
+\makeapprovalpage
+\doublespacing
+\maketitlepage
+\abstractpage
+\pagenumbering{roman}
+\acknowledgmentspage
+\tableofcontentspages
+\pagenumbering{arabic}
+}
+
+
+\AtEndDocument{
+\bibliographystyle{abbrvnat}
+\includemyappendixfiles
+}
+
+
+%\AtBeginDocument{
+%  % next four lines add the sheet numbering to page numbering
+%  \countdef\c@sheet=1
+%  \def\thesheet{\@arabic\c@sheet}
+%  \def\cl@page{\stepcounter{sheet}}
+%  \setcounter{sheet}{1}
+%  \if@frontmatter\makefrontmatter\clearpage\fi
+%  \setcounter{page}{1}
+%  \def\thepage{\arabic{page}}
+%  \pagestyle{myheadings}
+%  \raggedbottom}

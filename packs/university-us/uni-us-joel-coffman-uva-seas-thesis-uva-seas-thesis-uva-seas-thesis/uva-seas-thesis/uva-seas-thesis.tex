@@ -1,0 +1,433 @@
+\documentclass[10pt]{article}
+
+\usepackage{booktabs}
+\usepackage[acronym]{glossaries}
+\usepackage[final]{listings}
+\usepackage{longtable}
+\usepackage{mdwlist}
+\usepackage{ragged2e}
+\usepackage{url}
+\usepackage[svgnames]{xcolor}
+
+\loadglsentries{glossary}
+
+\lstset{%
+  language=[LaTeX]TeX,%
+  basicstyle=\small\ttfamily,%
+  keywordstyle=\color{Blue},%
+  commentstyle=\color{Green}\ttfamily,%
+  stringstyle=\rmfamily,%
+  numberstyle=\scriptsize,%
+  stepnumber=5,%
+  showstringspaces=false,%
+  breaklines=true,%
+  frameround=ftff,%
+  frame=single%
+}
+
+\newcommand{\class}[1]{#1}
+\newcommand{\package}[1]{#1}
+\newcommand{\option}[1]{#1}
+\newcommand{\environment}[1]{\texttt{#1}}
+\newcommand{\command}[1]{\texttt{\textbackslash#1}}
+\newcommand{\argument}[1]{\texttt{#1}}
+\newcommand{\default}[1]{\emph{#1}}
+
+\newcommand{\thispackage}{\package{uva-seas-thesis}}
+
+\clubpenalty=9999 % penalty for orphans
+\widowpenalty=9999 % penalty for widows
+
+
+\title{\thispackage\\{\normalsize (version 1.2.54)}}
+\author{
+  Joel Coffman\\
+  \url{jcoffman@cs.virginia.edu}
+}
+
+
+\begin{document}
+\maketitle
+
+The \thispackage\ \LaTeX\ package provides formatting and stylistic commands that ensure documents adhere to the University of Virginia's \gls{SEAS} and Print Services guidelines.
+Like other \LaTeX\ packages, \thispackage\ forces the author to focus on writing content instead of stalling by endlessly changing the document's formatting.
+
+%-------------------------------------------------------------------------------
+\section{Introduction}\label{section:introduction}
+When I started writing my master's thesis in 2009, I discovered that there was no \LaTeX\ package that provided a concise set of commands for formatting my thesis according to the guidelines of \gls{SEAS}.
+The computer science graduate student group referred students to David Coppit's paper template, which faithfully formatted documents according to the aforementioned guidelines, but I thought it lacked the elegance of a complete \LaTeX\ package.
+Thus, I started working on my own \LaTeX\ package to provide similar functionality without exposing the author to any of the low-level commands (like formatting the signatures page).
+
+The result is the \thispackage\ package, which is designed to be easier to use than other classes or packages, many of which (at least for \gls{SEAS}) mix content and presentation.
+This package is designed to be interoperable with a variety of \LaTeX\ classes (e.g., \class{book}), which control most of the actual formatting decisions.
+This documentation is designed to explain options, environments, and commands provided by this package.
+It is only fair to acknowledge that many of the package options and this document itself are patterned after Andy Buckley's \class{hepthesis} class, which partly inspired me to begin writing this package.
+
+If you use this package to format your thesis, I'd enjoy receiving an email (or if you're feeling particularly grateful, a postcard) so I know others are taking advantage of my work.
+You're also more than welcome to include comments and suggestions so I can improve future versions of this package.
+
+%-------------------------------------------------------------------------------
+\section{Requirements}\label{section:requirements}
+\LaTeXe\ is obviously required for typesetting documents using this package.
+The required packages are
+\begin{description*}
+  \item[\package{geometry}] sets appropriate page margins
+  \item[\package{mfirstuc}] capitalizes the first letter of words when necessary
+  \item[\package{ragged2e}] improves appearance of left- and right-justified environments
+  \item[\package{setspace}] double spacing
+\end{description*}
+Additional packages are required depending on the package options.
+The package options and the packages they load are listed below.
+\begin{description*}
+  \item[\option{ams}] \package{amsmath}
+  \item[\option{booktabs}] \package{booktabs}
+  \item[\option{draft}] \package{type1cm}, \package{draftwatermark}, \package{lineno}
+  \item[\option{hidefront}] \package{verbatim}
+  \item[\option{hyper}] \package{hyperref}, \package{hypcap}
+  \item[\option{microtype}] \package{microtype}
+\end{description*}
+
+%-------------------------------------------------------------------------------
+\section{Package Options}\label{section:options}
+This section describes all the options provided by \thispackage.
+Default values for options are denoted by \default{italics}.
+
+\subsection{\option{alphacitations}}
+References by author name(s) and date of publication is an alternative---deemed acceptable by \gls{SEAS}~\cite{seas:instructions}---to numbering references consecutively throughout the text.
+This option sets this alternative reference style as the default.
+
+\subsection{\default{\option{ams}} \textbar\ \option{noams}}
+Loads the \package{amsmath} package to improve the typesetting of mathematical formulas.
+
+
+\subsection{\option{bind} \textbar\ \default{\option{nobind}}}
+Sets the margins suitable for binding or ordinary viewing.
+The bind option increases the size of the inner (i.e., left, unless the \option{twoside} option is also specified) margin whereas nobind has equal margins.
+
+\subsection{\default{\option{booktabs}} \textbar\ \option{nobooktabs}}
+Loads the \package{booktabs} package to enhance the quality of tables.
+Please refer to the \package{booktabs} documentation~\cite{fear:booktabs}, particularly Section 2, for using this package.
+
+\subsection{\option{compliant}}
+Convenience option to make the output as compliant as possible with the published guidelines~\cite{uvaprint:thesis, seas:instructions}.
+This option implies both \option{compliantcopyright} and \option{compliantmargins}.
+Note that this option does \emph{not} override other options that may be non-compliant (e.g., the \option{openany} or \option{twoside} options).
+
+\subsection{\option{compliantcopyright}}
+Creates the copyright notice stipulated by the \gls{UVa} print services~\cite{uvaprint:thesis}.
+Without this option, a more traditional copyright notification is used.
+
+\subsection{\option{compliantmargins}}
+By default, this package delegates the setting of page styles to \LaTeX.
+In some cases (e.g., the first page of a chapter), the default page style is not compliant with the published formatting guidelines~\cite{uvaprint:thesis, seas:instructions}.
+In particular, this option ensures that page numbers \emph{always} appear in the upper-right corner of pages.
+Note that this option also disables printing the chapter and section titles in the header because these technically violate \gls{SEAS}['s] requirements.
+
+\subsection{\option{draft}}
+Prints ``DRAFT" diagonally across the page and adds line numbers in the margin of each page.
+Note that if this option is specified to the document class, it will impact some packages (e.g., \package{microtype}) loaded by this package.
+
+After compiling your document with the draft option, it is necessary to remove the intermediate files before compiling without the draft option.
+Otherwise, you may receive an error due to the undefined command ``\textbackslash@LN.''
+
+\subsection{\option{electronic}}
+Convenience option, shorthand for passing the \option{hyper}, \option{nobind}, \option{openany} options to the package.
+
+\subsection{\option{hidefront}}
+Hides the respective sections of the thesis for commands defined by this package.
+These options are particularly useful for drafts because they eliminate most of the boilerplate sections (e.g., copyright page, table of contents, list of tables) that do not immediately pertain to the content of the thesis.
+Note that these options do \emph{not} remove all material from the respective sections, just material created by this package's commands.
+
+%The \environment{abstract} and \environment{acknowledgments} environments are hidden via inclusion of the \package{verbatim} package, which is used to discard any text that apears in these environments.
+
+\subsection{\option{hyper}}
+Loads the \package{hyperref} package to create hyperlinks in the PDF document and the \package{hypcap} package to correct the location of the link target.
+
+By default, hyperlinks within the PDF itself are colored red, URLs (to external documents) are colored blue, and citations are colored green.
+To change these defaults, the \command{hypersetup} command should be used in the document preamble.
+Listing~\ref{listing:overriding hyperref options} provides an example of how to override the default \package{hyperref} options.
+
+\begin{lstlisting}[gobble=2,float=h,caption={
+    An example of overriding the default \package{hyperref} options.
+    All links will be colored black by default.
+  },label={listing:overriding hyperref options}]
+  \hypersetup{
+    linkcolor=black,% color for internal (intra-document) links
+    citecolor=black,% color for bibliographic links
+    urlcolor=black,% color for URL links
+  }
+\end{lstlisting}
+
+\subsection{\option{final}}
+Specifying this option disables the \option{draft} option and also the \option{hidefront} option.
+It may be passed to this package to override aspects of a global \option{draft} option specified to the document class.
+
+\subsection{\default{\option{microtype}} \textbar\ \option{nomicrotype}}
+Loads the \package{microtype} package to improve the microtypography of the document.
+The \package{microtype} package has no effect when the \option{draft} option is global (i.e., specified to the document class).
+Note that the \package{microtype} package relies on pdf\TeX; you should disable this option if you are creating \gls{DVI}[s].
+
+\subsection{\option{print}}
+Convenience option, shorthand for passing the \option{bind} option to the package and disables the \option{hyper} and \option{twoside} options.
+
+Note that this package cannot set class-wide options.
+It is recommended that the \option{oneside} and \option{openany} options (or their equivalents) be passed to the document class (see Listing~\ref{listing:print options}).
+
+\begin{lstlisting}[gobble=2,float=h,caption={
+    Example of options that are recommend for creating a print version.
+  },label={listing:print options}]
+  \documentclass[final,oneside,openany]{book}
+  \usepackage[print]{uva-seas-thesis}
+\end{lstlisting}
+
+\subsection{\option{sequential}}
+This option numbers tables, figures, equations, etc. \emph{sequentially} in the order in which they appear in the \emph{\LaTeX} document (not necessarily the output file).
+
+\emph{This feature is experimental and support may be dropped from future releases.}
+
+\subsection{\option{singlespace}}
+To conserve paper when printing drafts, the singlespace option disables double spacing in the document.
+This option should not be specified for the final version that will be submitted to \gls{SEAS}.
+
+\subsection{\option{twoside}}
+If the bind option is specified, this option assumes pages will be printed doublesided (i.e., the inner margin alternates between the left and right sides of the page).
+
+\subsection{\option{typewriterdoublespace}}
+The \package{setspace} package doublespacing command does not apply ``true'' double spacing that mimics double spacing from a typewriter---i.e., \package{setspace} gives the visual appearance of skipping a line of text but the actual space is slightly smaller.\footnote{
+  If the text height is the height of a font from the descender to the ascender, the intra-line space is the space between successive lines of text (i.e., the distance between the descender and ascender of the following line), and the line height is the text height \emph{plus} the intra-line space, \package{setspace} sets the intra-line space to the text height.
+  In contrast, skipping a line on a typewriter will make the space between successive lines equal to the intra-line space following the first line \emph{plus} the line height of the skipped line.
+
+  Thanks to Gu Lin for noting this difference.
+}
+This option mimics the double spacing provided by a typewriter.
+\Gls{SEAS} has accepted theses with the smaller double spacing provided by \package{setspace} so this option provided only for completeness and aesthetic appeal.
+
+%-------------------------------------------------------------------------------
+\section{Environments and Commands}
+
+\subsection{\command{degree\{text\}}}
+Specifies the degree being sought.
+The text argument should be ``Master of Science,'' ``Master of Engineering,'' or ``Doctor of Philosophy.''
+If this command does \emph{not} appear in the document preamble, ``Doctor of Philosophy'' is assumed.
+
+\begin{lstlisting}[gobble=2,float=h,caption={Sample document preamble showing the \command{degree}, \command{program}, \command{documenttype}, \command{graduationmonth}, and \command{graduationyear} commands.}]
+  \author{John Doe}
+  \title{A Conceptual Object-Oriented Interface for an Integrated Logical Toolkit}
+  
+  \degree{Doctor of Philosophy}
+  \program{Computer Science}
+  \documenttype{dissertation}
+  
+  \graduationmonth{May}
+  \graduationyear{2096}
+\end{lstlisting}
+
+\subsection{\command{program\{text\}}}
+Specifies the program or field of study (e.g., the department).
+This command \emph{must} appear in the document preamble.
+
+\subsection{\command{documenttype\{text\}}}
+Specifies the type of document (i.e., thesis or dissertation).
+The text argument should be all lower case
+If this command does \emph{not} appear in the document preamble, ``thesis'' is assumed.
+
+\subsection{\command{graduationmonth\{month\}}}
+Identifies the month your degree will be awarded (i.e., May, August, or January), \emph{not} the date when you complete or defend your work.
+This command \emph{must} appear in the document preamble.
+
+\subsection{\command{graduationyear\{year\}}}
+Identifies the year your degree will be awarded.
+This command \emph{must} appear in the document preamble.
+
+\subsection{\command{copyrightpage}}
+Adds a copyright page to your document.
+The copyright page should immediately follow the title page.
+
+\subsection{\environment{signatures}}
+Creates a signatures page (aka approval sheet) for the document.
+The signatures page is where you, your committee, and the dean sign your document.
+
+\begin{lstlisting}[gobble=2,float=h]
+  \renewcommand{\signaturestyle}[1]{\LARGE #1}
+  \begin{signatures}
+    \signature[Richard Miles]{Richard Miles, Adviser}
+    \signature[Fred Bloggs]{Fredd Bloggs, Committee Chair}
+    ...
+    
+    \dean{John Stiles}
+  \end{signatures}
+\end{lstlisting}
+
+\subsubsection{\command{signaturestyle\{commands\}}}
+Redefine this command to control how signatures appear in electronic versions.
+This command must be redefined \emph{before} the environment to correctly typeset the author's name.
+
+\subsubsection{\command{signature[name]\{person\}}}
+Creates a signature line for the specified individual.
+The \argument{person} argument specifies the person and (optionally) that individual's position on the committee (e.g., adviser or chair).
+The \argument{name} argument specifies the text that should appear on the signature line for electronic versions of the thesis.
+
+\subsubsection{\command{dean\{name\}}}
+Specifies the name of the dean of the \gls{SEAS}.
+
+\subsection{\environment{abstract}}
+Defines an abstract environment (not part of the traditional \LaTeX\ book class) for the document's abstract.
+\Gls{UVa} Print Services~\cite{uvaprint:thesis} specifies that the abstract must be 350 words or less;
+the length limit is \emph{not} enforced by this package (it may not even be possible to enforce using \LaTeX).
+
+\begin{lstlisting}[gobble=2,float=h]
+  \begin{abstract}
+    This research problem is very challenging...
+  \end{abstract}
+\end{lstlisting}
+
+\subsection{\environment{acknowledgments}}
+Defines an acknowledgments environment for thanking everyone.
+
+\begin{lstlisting}[gobble=2,float=h]
+  \begin{acknowledgments}
+    To everyone who's helped me during the past seven years...
+  \end{acknowledgments}
+\end{lstlisting}
+
+\subsection{\command{texorpdfstring\{\TeX string\}\{PDFstring\}}}
+The \package{hyperref} package cannot handle fragile commands in moving references (e.g., chapter or section titles).
+This command allows a \TeX\ and PDF version of the text to be specified.
+When \package{hyperref} is \emph{not} loaded, this command is defined so it may always be used in the document.
+
+%-------------------------------------------------------------------------------
+\section{An Example with \thispackage}\label{section:example}
+
+\lstinputlisting[frame=none]{example/paper.tex}
+
+%-------------------------------------------------------------------------------
+\section{Release Notes}\label{section:release notes}
+The following table summarizes the version history of this package:
+\begin{longtable}{r@{.}r@{.}l p{.8\linewidth}}
+  %\toprule
+  \multicolumn{3}{c}{Version} & Comments\\
+  \midrule
+  0	& 9	& 0	& 
+  Initial version, extracted from formatting personal thesis\\
+  \addlinespace
+  1	& 0	& 3	& 
+  Improved handling of front matter constructs (e.g., signatures page)\\
+  1	& 0	& 5	& 
+  Added \option{ams} and \option{final} options\\
+  1	& 0	& 6	& 
+  Added \option{microtype} option; left-justified bibliography\\
+  1	& 1	& 15	& 
+  Fixed bug where acknowledgments (and probably abstract) were numbered; 
+  added option for sequential numbering of equations, figures, tables, etc.\\
+  1	& 2	& 32 	& 
+  Added \option{compliant} option to force best-possible compliance with \gls{SEAS} formatting guidelines; 
+  added \option{electronic} and \option{print} options; 
+  figures and tables automatically centered\\
+  1	& 2	& 33	& 
+  Corrected bug in formatting of dean's signature\\
+  1	& 2	& 34	& 
+  Corrected bugs in page headers (missing header on even pages, missing header for frontmatter environments)\\
+  1     & 2     & 46    & 
+  Changed definition of default placement of floats; 
+  added \option{singlespace} and \option{typewriterdoublespace} options\\
+  1     & 2     & 53    & 
+  Centered, single-spaced text in dedication; 
+  abstract and acknowledgments environments hidden when hidefront specified (requires inclusion of verbatim package); 
+  removed ``compiled'' from draft notice in page footer; 
+  lightened draft watermark; 
+  redefined acknowledgments environment for reuse in acknowledgements environment\\
+  1     & 2     & 54    & 
+  Corrected bug in setting interline spacing with \option{typewriterdoublespace} option; 
+  \option{final} option set for microtype so not disabled by draft option; 
+  table of contents printed on back of title page with \option{hidefront} option;
+  lightened draft watermark
+  %\bottomrule
+\end{longtable}
+
+\subsection*{Known issues}
+The following is a list of all known inconsistencies between this package and the guidelines set forth by the University of Virginia and \gls{SEAS}.
+If you find additional deviations, please email \url{jcoffman@cs.virginia.edu}.
+
+\paragraph{Font size}
+\Gls{SEAS}~\cite{seas:instructions} mandates a standard typeface with 10 or 12 characters per inch.
+This package does not currently enforce this requirement---it is left to the author to choose a font face and size that adheres to this specification.\footnote{
+  Number of characters per inch is typically used to describe monospaced fonts.
+  While the average number of characters per inch could be applied to a variable-width font, conversion depends on the typeface and (point) size.
+  In the past, \Gls{SEAS} has accepted theses written with 10, 11, and 12 point fonts.
+}
+
+\paragraph{Page order}
+The suggested page order~\cite{uvaprint:thesis, seas:instructions} is as follows:
+\begin{itemize*}
+  \item Thesis
+  \begin{itemize*}
+    \item Title page
+    \item Abstract or introduction
+    \item Signature page
+  \end{itemize*}
+  
+  \item Dissertation
+  \begin{itemize*}
+    \item Title page
+    \item Copyright page
+    \item Abstract
+    \item Signatures page
+    \item Dedication page
+    \item Body of text
+  \end{itemize*}
+\end{itemize*}
+This package does not enforce this suggested page ordering (i.e., there is nothing to prevent the user from reordering these pages).
+
+Please be aware that \gls{SEAS} is actually inconsistent regarding the page order.
+Elsewhere~\cite{seas:instructions} it is stated that the title page should be immediately followed by the approval (signatures) page and the abstract.
+
+In addition, \gls{SEAS}~\cite{seas:instructions} mandates that a list of symbols follow the list of figures.
+In the example document (Section~\ref{section:example}), it is assumed that the list of tables precedes the list of figures, but this order is not specified by \gls{SEAS}.
+This package will not automatically produce a list of symbols; the \package{glossaries} package provides one way to create such a list.
+Please note that \gls{SEAS} also requires the symbols to appear in alphabetical order with Arabic symbols followed by Greek symbols.
+
+\paragraph{Page numbers}
+Page numbers should appear in the upper-right corner of pages~\cite{uvaprint:thesis} in the page margin~\cite{seas:instructions}.
+While this policy is followed in general, page numbers appear at the bottom of pages that start a new chapter.
+(This deviation is consistent with many other publications.)
+The \option{compliantmargins} option will override \LaTeX's default page styles to achieve compliance with the standards.
+
+\paragraph{Header and Footer}
+\Gls{SEAS}~\cite{seas:instructions} requires page numbers to be in the page margin and all other text to be kept within the page's margins.
+This requirement is satisfied by \emph{not} including the page header and footer in the page's text area.
+Including chapter headers (e.g., the name of the chapter) in the header technically violates \gls{SEAS}['s] requirements.
+To achieve complete compliance, use the \option{compliantmargins} package option.
+
+\paragraph{Title and Signatures pages}
+This package takes minor liberties with regards to the example title and signatures pages provided by \Gls{SEAS}~\cite{seas:instructions}.
+Although the example is not reproduced perfectly, the deviations are minor.
+
+\paragraph{Copyright notice}
+The copyright notice described by \gls{UVa} print services~\cite{uvaprint:thesis} is not consistent with the notice of copyright prescribed by the U.S.\ copyright office~\cite{copyright2010copyright}.
+The form given by the U.S.\ copyright office is used unless the \option{compliantcopyright} option is passed to the package.
+
+\paragraph{Abstract}
+Both \Gls{UVa} Print Services~\cite{uvaprint:thesis} and \gls{SEAS}~\cite{seas:instructions} specify that the abstract must be 350 words or less.\footnote{
+  Elsewhere, \gls{SEAS} states that the abstract must not exceed 600 words.
+}
+This requirement is not enforced by this package as obtaining accurate word counts are outside the scope of \LaTeX.
+
+\paragraph{Figures}
+\Gls{SEAS}~\cite{seas:instructions} requires each figure to follow its text reference as closely as possible.
+Figures (and presumably other floats) should not appear at the end of the thesis (e.g., as pages of floats).
+This package overrides the figure and table environments to automatically place them at the top or bottom of the page or inline with the text although \LaTeX\ may choose to override this suggestion (e.g., to improve the position of page breaks).
+In addition, this package does not prevent the user from moving figures and tables to a page of floats (e.g., by specifying `p' for the placement).
+
+\paragraph{References}
+References are to be numbered consecutively throughout the work \cite{seas:instructions}.
+By default, the unsrt bibliography style is applied to provide this numbering.
+Please note that this package will not prevent the specification of a different bibliography style that does not meet \gls{SEAS}['s] requirements.
+One alternative allowed by \gls{SEAS} is references by author name(s) and date of publication, which is supported by the \option{alphacitations} package option.
+Bibliographies created using this option will be sorted by author name, which is consistent with most other bibliography styles.
+
+%-------------------------------------------------------------------------------
+\RaggedRight
+\bibliographystyle{abbrv}
+\bibliography{references}
+
+\end{document}

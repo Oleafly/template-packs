@@ -1,0 +1,327 @@
+\chapter[\protect\vspace{-0.5ex}{VERY VERY VERY VERY VERY LONG TITLE I TEST THE DISPLAY IN THE HEADER}]{VERY VERY VERY VERY VERY LONG TITLE I TEST THE DISPLAY IN THE HEADER}
+%Please keep the title in the toc and main content the same, don't use the feature to short the title, the purpose of applying the [] above is to decrease the vertical space between titles.
+Refer to Appendix \ref{cha:appendix}.
+
+\section{Section Test Example 1}
+
+\begin{figure}[!hbp]
+\begin{center}
+\includegraphics[width=\textwidth]{graphic/VERILOG_DESIGN_CHIRP.pdf}
+\caption{Chapter 3 Figure Illustration Example }
+\label{FPGAVerilogOverView}
+\end{center}
+\end{figure}
+
+Fig \ref{FPGAVerilogOverView} is referred here.
+
+\section{Test Section In This Chapter }
+Section Title is to test toc display only, no actual meaning.
+\subsection{Test Subsection In This Chapter}
+ 
+ Picture/Table are only for illustration purpose, testing lof/lot, no exact meaning.
+\begin{figure}[!hbp]
+\begin{center}
+\includegraphics[width=\textwidth]{graphic/I2S_24Bit_Format.bmp}
+\caption{$I^{2}S$ Random Pictures Showing Here For Test Purpose}
+\label{fig:I2S_Timing}
+\end{center}
+\end{figure}
+
+
+\subsection{Subsection Test Example 1}
+
+\begin{figure}[!htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{graphic/LogicDiagram_OSERDES.PNG}
+\caption[\protect\vspace{-2.8ex}{This Is Another Example Of Long Figure/Table Title That Will Display As Single Spacing In The List Of Figures.}]{This Is Another Example Of Long Figure/Table Title That Will Display As Single Spacing In The List Of Figures.}
+\label{fig:OSERDES}
+\end{center}
+\end{figure}
+
+
+
+\section{Section Test Example 2}
+
+ Fig \ref{FPGAVerilogOverView} are two practical implementations for the DDS framework.
+
+\subsection{Subsection Test Example 2}
+
+A chirp is a signal whose frequency increases (`up-chirp', Fig \ref{fig:upChirp} or decreases `down-chirp') with time. 
+
+In a linear chirp, the instantaneous frequency $f(t)$ varies linearly with time, as shown in Equation \eqref{equ:linearChirp};
+%
+\begin{equation}
+f(t)=f_0+k \cdot t \label{equ:linearChirp}
+\end{equation}
+
+$f_0$  is the starting frequency for sweeping in chirp. Its corresponding time domain function for a cosine linear chirp is;
+%
+\begin{equation}
+x(t)=cos(2\pi \int_0^t f(t^{'})dt^{'})=cos(2\pi f_{0}t+k \pi t^2)  \label{equ:int_linearChirp}  
+\end{equation}
+%
+%
+\begin{figure}[!hbp]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{graphic/2000px-Linear-chirp.svg.png}
+\caption{Test Example Picture}
+\label{fig:upChirp}
+\end{center}
+\end{figure}
+The implementation of \ref{equ:int_linearChirp} could be simplified.
+\subsection{Subsection Test Example 3}
+
+\subsubsection{Subsubsection Test Example 1}
+Example of multiple line \textbf{verbatim} environment.
+\pagebreak[4]
+\begin{verbatim}
+      123
+   x 	456
+   ==========
+     	738  (this is 123 x 6)
+     615   (this is 123 x 5, shifted one position to the left)
+   +492    (this is 123 x 4, shifted two positions to the left)
+   =========
+    56088
+\end{verbatim}
+
+\subsubsection{Subsubsection Test Example 2}
+Example Equation is below in Equ. \eqref{equ:rotateVector}:
+\begin{figure}[!htbp]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{graphic/CartesianCoordinate.pdf}
+\caption{Put All The Pictures Here To Fill The First Page To Test Purpose}
+{\small [Rotate from (x, y) to $(x^{'},y^{'})$ via angle of 'a'] }
+\label{fig:Cartesian}
+\end{center}
+\end{figure}
+
+
+\begin{eqnarray}
+V^{'} & = & e^{ja} \times V \\
+      & = & [cos(a) + j \times sin(a)] \times (x+j \times y) \\
+      & = & x \cdot cos(a)-y \cdot sin(a)+j \cdot [x \cdot sin(a) + y \cdot cos(a) ] 
+\label{equ:rotateVector}
+\end{eqnarray}
+
+With the help of complex numbers and Euler's identity, the relationship between $V$ and $V^{'}$ could be deduced:
+\begin{equation}
+V=
+\begin{bmatrix}
+x^{'} 	\\
+y^{'}	\\
+\end{bmatrix}
+= 
+\begin{bmatrix}
+	x \cdot cos(a) - y \cdot sin(a)	\\
+	y \cdot cos(a) + x \cdot sin(a)	\\
+\end{bmatrix}
+\label{equ:vectorRotated}
+\end{equation}
+
+Equ. \eqref{equ:vectorRotated} could be re-arrange as \eqref{x_cordic1} and \eqref{y_cordic1}.
+\begin{align}
+ x^{'}		& 	=cos(a) \cdot [x-y \cdot tan(a)]	  \label{x_cordic1}\\
+ y^{'}		&	=cos(a) \cdot  [y+x \cdot tan(a)]  \label{y_cordic1}
+\end{align}
+
+
+\input{table/ValueOfTan}
+
+\begin{align}
+ x_{i+1}	& 	=cos(a_i) \cdot  [x_{i}- y_i \cdot 2^{-i} \cdot d_i]	\label{x_cordic2} \\
+y_{i+1}	&	=cos(a_i) \cdot  [y_{i} + x_i \cdot 2^{-i} \cdot d_i]	\label{y_cordic2} \\
+cos(\alpha) & = \frac{1}{\sqrt[2]{1+ tan^{2}(\alpha)}}   \label{equ:CosTanRelation}
+\end{align}
+\\[-11ex] %though this is what I would not recommand, but it's an alternative if you don't have any solution to make the format beauty.
+\begin{equation}
+K_{i}  =  cos(arctan(2^{-i})) = \frac{1}{\sqrt[2]{1+tan(arctan(2^{-i}))}} = \frac{1}{\sqrt[2]{}1+2^{-2 \cdot i}} \label{equ:Kfactor}\\
+\end{equation}
+The product of $K_{i}$ represents the so-called $K$ factor (Equ. \ref{equ:Kfactor2})
+\begin{equation}
+K=\prod K_i = \prod^{n-1}_{i=0} \frac{1}{\sqrt{1+2^{-2 \cdot i}}}
+\label{equ:Kfactor2}
+\end{equation}
+
+Table \ref{tab:Kfactor} indicates the change of $K$ factor as the iteration increases. It can be noticed that $K$ will reach the limit of $0.607252935$. Hence, The $K$ factor could be calculated in advance and applied elsewhere in the system. A good solution to implement the $K$ factor is to initialize the iterative rotation with a vector of length $\frac{1}{|K|}$ and this will compensate the gain inherent in the CORDIC algorithm.
+
+\input{table/Kfactor_table}
+
+Removing the $K$ factor, Eqn. \eqref{x_cordic2} and \eqref{y_cordic2} turn into the classical CORDIC Equations \eqref{x_cordic3} and \eqref{y_cordic3}.
+\begin{align}
+ x_{i+1}	&	= [x_{i}- y_i \cdot 2^{-i} \cdot d_i]	\label{x_cordic3}	\\
+y_{i+1}	&	=  [y_{i} + x_i \cdot 2^{-i} \cdot d_i]	\label{y_cordic3}
+\end{align}
+
+Considering the aim of the CORDIC algorithm is to rotate a vector $V(x,y)$ to unit vector $(1,0)$, the direction of each rotation can be decided by $y_{i+1}$ or the angle accumulator, which is defined as $Z_{i+1}$. Since $y_{i+1}$ would finally be $0$, via Equ. \eqref{y_cordic3}, the direction of rotation could be defined as:
+\begin{equation}
+d_{i} = \Bigg\{ 
+\begin{array}{ccc}
++1 & if &  y_i <  0      	\\
+-1 & if &  y_i \ge 0       \\
+\end{array}
+\label{equ:rotateDirection}
+\end{equation}
+
+To be consistent of the definition above, defining the original angle $Z_0$, the angle accumulator can be defined as:
+\begin{equation}
+Z_{i+1}=  Z_{i} + d_i \cdot arctan(2^{-i})	
+\label{equ:AccAngle}
+\end{equation}
+
+Another approach to decide the direction of ratation is by judging the current Accumulated Angle $Z_0$. With the definition in Equ. \eqref{equ:AccAngle}, Eqn. \eqref{equ:rotateDirection} could be re-defined as:
+\begin{equation}
+d_{i} = \Bigg\{ 
+\begin{array}{ccccc}
++1 & if &  y_i <  0 & or & Z_i < 0    	\\
+-1 & if &  y_i >= 0 & or & Z_i \ge 0   \\
+\end{array}
+\label{equ:rotateDirection2}
+\end{equation}
+\\ %I don't know why but this is an example of unbalanced vertical spacing, I have no control over this. Please comment this line and compare the difference if you are interested.
+Now, both $y_i$ and $Z_i$ are consistent with the rotation direction $d_i$. The sum of an infinite number of iterative rotation angles would be equal to $-Z_0$ [Equ. \eqref{equ:SumAngle}].
+\begin{equation}
+Z_{0}= - \sum_{i=0}^{+\infty} d_i \cdot arctan(2^{-i})
+\label{equ:SumAngle}
+\end{equation}
+
+With Equation \eqref{x_cordic3}, \eqref{y_cordic3},\eqref{equ:AccAngle} and Equation \eqref{equ:rotateDirection2}, the CORDIC algorithm in rotation mode is completely described. Because $arctan(2^0 )=45^{\circ}$  is add/subtract in the 1st iteration, the CORDIC approach is originally applicable for angles within $-\pi /2$ and  $\pi /2$. But trigonometric (sin/cos) is symmetric from quadrant to quadrant. That makes it easy to extend the range to within $0$ and $2\pi$.
+
+Table \ref{tab:WholeCordicProcedure} continues the iterative process.
+
+\input{table/WholeCordicProcess}
+
+
+\paragraph{Paragraph Test Example 1}
+
+The structure is directly described by schematics in Figure \ref{IterativeCORDIC}. The branch of $X(i)$ representing the Equation \ref{x_cordic3}, the branch of $Y(i)$ that corresponds to the Equation \ref{y_cordic3}. Equation \ref{equ:AccAngle} is mapped to the 3rd branch with $Z(i)$. Table \ref{tab:WholeCordicProcedure} can be referred to for a better understanding of the whole process. 
+
+\begin{figure}[!htbp]
+\begin{center}
+\includegraphics[width=\textwidth]{graphic/BitParallelIterativeCORDIC.pdf}
+\caption{Example Of Bit Parallel Iterative CORDIC}
+{\small[Picture is from \verb|http://goo.gl/AwCnb|, re-draw for this thesis template]}
+\label{IterativeCORDIC}
+\end{center}
+\end{figure}
+
+The ROM address to obtain $arctan[2^{-i}]$ in the Z branch above.
+
+\paragraph{Paragraph Test Example 2}
+Test paragraph without meaningful text. As shown in Figure \ref{fig:UnrollCORDIC}. Several simplifications become possible here.
+
+\begin{figure}[!hbp]
+\begin{center}
+\includegraphics[width=\textwidth]{graphic/BitParallelUnrollCORDIC.pdf}
+\caption{Bit Parallel Unrolled CORDIC}
+{\small[Picture comes from \verb|http://goo.gl/AwCnb|, re-draw for this thesis template]}
+\label{fig:UnrollCORDIC}
+\end{center}
+\end{figure}
+
+
+\subsection{Subsection Test Example I Forget}
+
+\begin{figure}[!hbp]
+\begin{center}
+\includegraphics[width=\textwidth]{graphic/Generic_NCO.png}
+\caption{Example Picture}
+\label{fig:NCO}
+\end{center}
+\end{figure}
+
+
+\subsection{Section Summary}
+
+\begin{figure}[!hbpt]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{graphic/AfterDigitalized.png}
+\caption{Matlab Output Example}
+\label{fig:MatlabChirp}
+\end{center}
+\end{figure}
+
+\subsubsection{Phase To (X, Y)}
+I would recommend to put some text between section title and equation.
+\begin{equation}
+d_{i} = \Bigg\{ 
+\begin{array}{ccc}
++1 & if &  y_i <  \phi      	\\
+-1 & if &  y_i \ge \phi       \\
+\end{array}
+\label{equ:phiRange}
+\end{equation}
+Test Text between equations. After the specific iteration round is reached, like i = 16, the value in register of X and Y, after multiplication by K factor, are equal to $cos(\phi)$ and $sin(\phi)$. Table \ref{tab:Phase2Cosine} shows the steps in detail for calculating $(cos(\phi) ,sin(\phi))$ from phase $\phi$. In that case, The degree or phase targeted is a \textbf{known} value, which is 23 degree before calculation. The column of 4 is decided by the Equ. \eqref{equ:23Range}.
+\begin{equation}
+d_{i} = \Bigg\{ 
+\begin{array}{ccc}
++1 & if &  y_i <  23      	\\
+-1 & if &  y_i \ge 23       \\
+\end{array}
+\label{equ:23Range}
+\end{equation}
+
+\subsubsection{(X, Y) To Phase}
+Table \ref{tab:Cosine2Phase} can be referred for this procedure. The only difference from Table \ref{tab:Phase2Cosine} to this is the calculation of $d_i$ is decided by the positive/negative of $y_i$ which shows in Equation \ref{equ:rotateDirection}.
+\input{table/Cosine2Phase} 
+\input{table/Phase2Cosine}
+
+\input{table/PhaseControlWord}
+
+A simple paragraph of Verilog code is below in verbatim.
+%\textcolor{blue}{
+\begin{verbatim}
+Always@(posedge LRCK)
+        Begin
+        	Counter = Counter + 1
+        	If (Counter == 40)
+        	Begin
+         		Counter = 0
+	        	Phase_control_word = Phase_Control_word + 1
+         		If (phase_control_word >= 7168)
+         		Begin
+	         		Phase_control_word =4778
+		        end
+        	end
+        end
+\end{verbatim}
+
+\section{Section Test Example 3}
+Test section for toc display only.
+
+\subsection{Subsection Test 1}
+Test subsection for toc display only.
+
+\subsection{Subsection Test 2}
+Test subsection for toc display only.
+
+\subsection{Subsection Test 3}
+
+Test subsection for toc display only.
+
+\subsection{Subsection Test 4}
+
+Test subsection for toc display only.
+
+\section{Section Test Example 4}
+Test subsection for toc display only.
+
+\begin{figure}[!hbp]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{graphic/FIR_Implementation.pdf}
+\caption{Example of FIR Filter}
+\label{fig:genFIR}
+[Test Picture for lof display purpose only.]
+\end{center}
+\end{figure}
+
+
+\begin{figure}[!hbp]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{graphic/LowPass_Filter_Design.PNG}
+\caption{Low Pass FIR Filter Spectrum Characterization}
+\label{fig:lowpass}
+{\small h=firpm(80, [0 8 10 48]/48, [1 1 0 0]); [Test Picture for lof display purpose only.]}
+\end{center}
+\end{figure}
+

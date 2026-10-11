@@ -1,0 +1,144 @@
+\documentclass[12pt,letterpaper,oneside,oldfontcommands]{memoir}
+
+\usepackage{xltxtra}
+\usepackage{hyperref}
+\usepackage{moderntimes}
+
+% Basic page layout
+\usepackage{calc}
+\setlrmarginsandblock{1.5in}{1in}{*}
+\setulmarginsandblock{1in + \headheight + \headsep}{1in + \footskip}{*}
+\DoubleSpacing
+\checkandfixthelayout
+\setlength\evensidemargin{\oddsidemargin}
+
+% some nice chapter headings
+\chapterstyle{chappell}
+
+% section numbering - number subsections, but don't include in TOC
+\setsecnumdepth{subsection}
+\maxtocdepth{subsection}
+\settocdepth{section}
+
+% Use small bold text for captions
+\captionnamefont{\small\bfseries}
+\captionstyle{\small}
+\setlength\abovecaptionskip{1ex}
+\subcaptionsize{\scriptsize}
+
+% Sans-serif section headings
+\setsecheadstyle{\sffamily\large\bfseries}
+\setaftersecskip{8pt plus 3pt minus 2pt}
+\setsubsecheadstyle{\sffamily}
+\setaftersubsecskip{6pt plus 2pt minus 2pt}
+
+\renewcommand{\bibname}{Bibliography}
+\renewcommand{\prebibhook}{\raggedright}
+\newcommand{\subtitle}[1]{\def\thesubtitle{#1}}
+
+% Make verbatim single spaced
+\makeatletter
+\let\old@verbatim@start\verbatim@start
+\def\verbatim@start{\old@verbatim@start%
+\baselineskip\onelineskip}
+\makeatother
+
+% Add Listing float type
+\newfloat[chapter]{listing}{lol}{Listing}
+\newcommand{\listlistingname}{List of Listings}
+\newlistof{listoflistings}{lol}{\listlistingname}
+\newlistentry{listing}{lol}{0}
+
+\title{My Awesome Thesis}
+\subtitle{Making Computing More Awesome}
+\author{A. Student}
+\date{July, 2014}
+\hypersetup{pdfinfo={
+  Title={My Awesome Thesis}
+  Subject={Awesome Studies},
+  Author={A. Student}
+}}
+
+\begin{document}
+% Turn off page numbering
+\pagestyle{empty}
+% Number early pages in unused series (to prevent PDF problems)
+\pagenumbering{Roman}
+
+% Make the title page
+\begin{center}
+\thetitle \\
+\textit{\thesubtitle}
+
+\vskip 1in
+A Dissertation \\
+SUBMITTED TO THE FACULTY OF THE \\
+UNIVERSITY OF MINNESOTA \\
+BY
+\vskip 0.75in
+\theauthor
+
+\vskip 0.75in
+IN PARTIAL FULFILLMENT OF THE REQUIREMENTS FOR THE DEGREE OF \\
+DOCTOR OF PHILOSOPHY
+
+\vskip 0.75in
+Advisor
+
+\vskip 0.75in
+\thedate
+
+\end{center}
+
+% Set up the copyright page
+\newpage
+\vspace*{1.5in}
+\begin{raggedright}
+Copyright \textcopyright{} 2014 A. Student. All rights reserved.\\
+\vskip 1em
+
+\end{raggedright}
+
+\vspace*{1in}
+
+% Set up dedication page
+\newpage
+\frontmatter % this is the first numbered page
+\pagestyle{plain}
+
+\vspace*{1.5in}
+\begin{center}
+    \textit{Dedicated in honor of} \\
+    \textsc{Beneficiary}
+\end{center}
+
+% Acknowledgements
+\newpage
+
+% Now the abstract
+\newpage
+\begin{abstract}
+    My abstract.
+\end{abstract}
+
+\newpage
+\pagestyle{ruled}
+\tableofcontents*
+\newpage
+\listoftables
+\newpage
+\listoffigures
+\newpage
+\listoflistings
+
+% and now the body
+\mainmatter
+
+\SingleSpacing
+% put the bibliography here
+
+\appendix
+
+% and then the appendices
+
+\end{document}

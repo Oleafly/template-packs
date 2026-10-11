@@ -1,0 +1,269 @@
+\documentclass[12pt,letterpaper,oneside]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+%% Package: makeidx
+%% Description: Enables indexing
+%% CTAN Link:
+%% http://www.ctan.org/tex-archive/help/Catalogue/entries/makeidx.html
+%% http://en.wikibooks.org/wiki/LaTeX/Indexing
+\usepackage{makeidx}
+
+%% Package: subfiles
+%% Description: Include LaTeX files
+%% CTAN Link: http://tug.ctan.org/tex-archive/macros/latex/contrib/subfiles/
+\usepackage{subfiles}
+
+%% Package: graphicx
+%% Description: Insert images, PostScript files, graphics, etc.
+%% CTAN Link: http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+\usepackage{graphicx} 
+
+%% Package: hyperref
+%% Description: Insert hyperlinks
+%% CTAN Link: http://tug.ctan.org/tex-archive/macros/latex/contrib/hyperref/
+%% http://www.ctan.org/tex-archive/help/Catalogue/entries/hyperref.html
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+
+%% Package: multirow
+%% Description: Spans multiple rows of a table
+%% CTAN Link: http://www.ctan.org/tex-archive/macros/latex/contrib/multirow/
+%% Example: http://andrewjpage.com/index.php?/archives/43-Multirow-and-multicolumn-spanning-with-latex-tables.html
+\usepackage{multirow}
+
+%% Package: rotating
+%% Description: Rotates tables and figures
+%% CTAN Link: http://www.ctan.org/tex-archive/macros/latex/contrib/rotating/
+\usepackage{rotating}
+
+%% Package: geometry
+%% Description: Sets margins, the easy way
+%% CTAN Link: http://www.ctan.org/tex-archive/macros/latex/contrib/geometry/
+%% WARNING: PDFLaTeX generates INCORRECT margins! Compile with "LaTeX", then "DVI->PS"
+%% and finally "PS->PDF". Also be sure to use PS files for inclusion, not PDF.
+%% Use "convert" in ImageMagick library to convert files.
+%% http://www.imagemagick.org/script/index.php
+\usepackage[left=1.5in,top=1in,right=1in,bottom=1in, nofoot]{geometry}
+
+%% Package: setspace 
+%% Description: Set spacing between lines
+%% CTAN Link: http://www.ctan.org/tex-archive/macros/latex/contrib/setspace/
+\usepackage{setspace}
+
+%% Package: ragged2e
+%% Description: Set ragged right edge (not flush)
+%% CTAN Link: http://tug.ctan.org/tex-archive/macros/latex/contrib/ms/
+\usepackage{ragged2e}
+
+%% Package: subfig
+%% Description: Used to span a figure across multiple pages.
+%% CTAN Link: http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
+%% NOTE: This package conflicts with package tocloft!
+\usepackage{subfig}
+
+%% Package: tocloft
+%% Description: Customize the table and list of contents, list of figures
+%% CTAN Link: http://tug.ctan.org/tex-archive/macros/latex/contrib/tocloft/
+%% NOTE: This package conflicts with package subfig!
+%% To resolve the conflict, include with \usepackage[subfigure]{tocloft}
+\usepackage[subfigure]{tocloft} 
+
+%% Package: sectsty
+%% Description: Customize the section styles (in the document, not ToC/LoF/LoT)
+%% CTAN Link: http://tug.ctan.org/tex-archive/macros/latex/contrib/sectsty/
+%\usepackage{sectsty}
+
+%% Package: bm
+%% Description: Bolds math symbols
+%% CTAN Link: http://www.ctan.org/tex-archive/macros/latex/required/tools/
+%% http://tug.ctan.org/tex-archive/help/Catalogue/entries/bm.html
+%% NOTE: "How can I get bold Greek symbols in equations?"
+%% The answer is short: you should use \boldmath instead of \bf. But this may not work
+%% in all cases. If it does not work, you should import the package bm and use the new
+%% command \bm instead of \boldmath.
+%% Link: http://www.win.tue.nl/latex/faq.html#q13
+\usepackage{bm}
+
+%% Package: listings
+%% Description: Added text verbatium, no LaTeX funky business.
+%% CTAN Link: http://tug.ctan.org/tex-archive/macros/latex/contrib/listings/
+\usepackage{listings}
+
+%% for online website citations
+\usepackage[backend=bibtex8,sorting=nyt,style=ieee,sortcase=false]{biblatex}
+\addbibresource{references.bib} %Imports bibliography file
+\renewbibmacro*{bbx:savehash}{}
+
+%% Add for indenting description lists
+\usepackage{enumitem}
+\setlist[description]{leftmargin=1cm,labelindent=1cm}
+%% ~~~~~~~
+
+
+
+\newif\ifblackandwhite
+% \blackandwhitetrue
+\usepackage{etoolbox}
+\usepackage{longtable}
+\usepackage{tabu}
+
+\usepackage{pdflscape}
+\usepackage[svgnames]{xcolor}
+\usepackage{colortbl}%
+  \newcommand{\myrowcolour}{\rowcolor[gray]{0.925}}
+\usepackage{booktabs}
+% for clever references
+\usepackage{cleveref}
+\usepackage[ampersand]{easylist}
+
+%For the abbreviations page
+\usepackage{nomencl}
+\makenomenclature
+\renewcommand{\nomname}{ABBREVIATIONS}%
+
+%% Used for Positioning on the title page
+\usepackage[absolute]{textpos}
+    \setlength{\TPHorizModule}{1in} % sets our horizontal unit of measuring
+    \setlength{\TPVertModule}{1in} % sets our vertical unit of measuring
+    \textblockorigin{0in}{0in} % and we start measuring in the top left corner
+
+% to center column headings
+\usepackage[up,tiny,center,uppercase]{titlesec}
+% set the section numbering depth
+\setcounter{secnumdepth}{3}
+
+\ifblackandwhite
+  \newcommand{\cheading}[2]{\textbf{#1\hfill #2}}
+  \newcommand{\highest}[1]{\textbf{#1}}% == highest score for question
+\else
+  \newcommand{\cheading}[2]{\textcolor{Maroon}{\textbf{#1\hfill #2}}}
+  \newcommand{\highest}[1]{\textcolor{Maroon}{\textbf{#1}}}%
+\fi
+
+%% add dots in the table of contents
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} 
+\renewcommand{\contentsname}{CONTENTS \hfill}
+%% tocloft already has the correct figure and table names
+\renewcommand{\listfigurename}{LIST OF FIGURES}
+\renewcommand{\listtablename}{LIST OF TABLES}
+
+% Sets plain style for ToC and centers the title
+\renewcommand{\cfttoctitlefont}{\hfill}
+\renewcommand{\cftaftertoctitle}{\hfill}
+
+% Sets plain style for LoF and centers the title
+\renewcommand{\cftloftitlefont}{\hfill}
+\renewcommand{\cftafterloftitle}{\hfill}
+
+% Sets plain style for LoT and centers the title
+\renewcommand{\cftlottitlefont}{\hfill}
+\renewcommand{\cftafterlottitle}{\hfill}
+
+% set plain style for sections
+\renewcommand{\cftsecfont}{}
+
+% set plain style for page numbers
+\renewcommand{\cftsecpagefont}{}
+
+% style for sections titles
+%\allsectionsfont{\usefont{OT1}{cmr}{m}{n}\normalsize\selectfont\MakeUppercase}
+
+%% sets page numbers in upper right hand corner and empty header/footers
+\pagestyle{myheadings}
+
+%% set page style for ToC, LoF, LoT via the tocloft package
+\tocloftpagestyle{myheadings}
+
+%% Scientific notation
+%% The following will look like: 5.621x10^-3
+%% Link: http://www.tapdancinggoats.com/easy-scientific-notation-in-latex.htm
+%\providecommand{\e}[1]{\ensuremath{\times 10^{#1}}}
+
+%% Sets listings to use a monospaced (typewriter) font
+%% http://stackoverflow.com/questions/432349/how-do-you-display-straight-quotes-instead-of-curly-quotes-when-using-latexs-li
+\lstset{basicstyle=\ttfamily}
+
+
+%% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%% AUTHOR MUST MODIFY
+\def\yourtitle{SOUTH DAKOTA STATE UNIVERSITY PHD TEMPLATE}
+\def\yourname{YOUR NAME}
+\def\yourmajor{Your Major}
+\def\youradvisor{Your Advisor, Ph.D.}
+\def\departmenthead{Department Head, Ph.D.}
+%% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+\begin{document}
+\raggedright
+
+\doublespacing
+
+\fontfamily{ptm}\selectfont %% set font to Times
+
+%% Title page
+\subfile{titlepage}
+%% End title page
+
+\setlength{\parindent}{0.5in}
+\pagenumbering{roman}
+\setcounter{page}{2}
+
+%% Approval/signature page
+\subfile{signature}
+
+%% dedication (optional)
+\subfile{dedication}
+
+%% Acknowledgements page
+\subfile{acknowledgements}
+
+%% Table of contents
+\newpage
+\tableofcontents
+
+%% Abbreviations, this is optional
+\newpage
+\printnomenclature[1.0in]
+\addcontentsline{toc}{section}{ABBREVIATIONS}
+
+%% List of figures
+\newpage
+\listoffigures
+\addcontentsline{toc}{section}{LIST OF FIGURES}
+%% List of tables
+\newpage
+\listoftables
+\addcontentsline{toc}{section}{LIST OF TABLES}
+
+%% Abstract
+\subfile{abstract}
+
+%% Change the page numbering for the remainder of the dissertation
+\newpage
+\pagenumbering{arabic}
+%% set the depth of the Table of Contents
+\setcounter{tocdepth}{2}
+
+%% The rest of the paper, use as many as you need
+\subfile{section1}
+\subfile{section2}
+\subfile{section3}
+
+%% To add more sections
+%% just add another file named section4.tex
+%% and uncomment the next line
+%\subfile{section4}
+
+%% appendices
+\subfile{appendices}
+
+%% bibliography
+\subfile{bibliography}
+
+\end{document}
+
