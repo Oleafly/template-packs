@@ -32,7 +32,7 @@
 % fancyhdr 宏包提供了方便使用的命令用于设置页眉、页脚。
 % cs4size 表示小四字号, 也指12pt.
 % V3.0更改——ctexbook中的winfonts设置无法兼容其余操作系统（如Mac），更换为nofonts并手动设置字体
-\LoadClass[UTF8,nofonts,fntef,fancyhdr,a4paper,cs4size]{ctexbook}
+\LoadClass[UTF8,fontset=fandol,fntef,fancyhdr,a4paper,cs4size]{ctexbook}
 % \LoadClass[UTF8,winfonts,fntef,fancyhdr,a4paper,cs4size]{ctexbook} %论文使用A4大小纸张，默认小四号字体
 
 % 装载样式文件中使用的宏包
@@ -47,12 +47,6 @@
 % \setCJKfamilyfont{zhhei}{SimHei}
 % \NewDocumentCommand \songti {}{\CJKfamily{zhsong}}
 % \NewDocumentCommand \heiti {}{\CJKfamily{zhhei}}
-
-\setCJKmainfont[Path=./font/, BoldFont=simhei.ttf]{simsun.ttf}
-\setCJKfamilyfont{zhsong}[Path=./font/]{simsun.ttf}
-\setCJKfamilyfont{zhhei}[Path=./font/]{simhei.ttf}
-\NewDocumentCommand \songti {}{\CJKfamily{zhsong}}
-\NewDocumentCommand \heiti {}{\CJKfamily{zhhei}}
 
 % 保持url与正文字体一致
 \urlstyle{same}

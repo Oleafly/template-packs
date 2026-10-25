@@ -11,7 +11,7 @@
 
 % --- Base class ---
 % UTF8, A4, two-side off, font sizes managed manually with \zihao
-\LoadClass[UTF8,a4paper,oneside,zihao=-4,fontset=none]{ctexbook}
+\LoadClass[UTF8,a4paper,oneside,zihao=-4,fontset=fandol]{ctexbook}
 
 %%==============================================================
 %%  Required packages
@@ -80,31 +80,6 @@
   ItalicFont=TIMESI.TTF,
   BoldItalicFont=TIMESBI.TTF
 ]
-
-% CJK fonts from project root (all-caps filenames)
-\setCJKmainfont{SIMSUN.TTC}[
-  Path=./,
-  UprightFeatures={FontIndex=0},
-  AutoFakeBold=2.5,
-  ItalicFont=SIMKAI.TTF
-]
-\setCJKsansfont{SIMHEI.TTF}[
-  Path=./,
-  AutoFakeBold=2.5
-]
-\setCJKfamilyfont{zhsong}{SIMSUN.TTC}[
-  Path=./,
-  UprightFeatures={FontIndex=0},
-  AutoFakeBold=2.5
-]
-\setCJKfamilyfont{zhhei}{SIMHEI.TTF}[
-  Path=./,
-  AutoFakeBold=2.5
-]
-
-% fontset=none does not define \heiti / \songti; provide them manually
-\newcommand{\heiti}{\CJKfamily{zhhei}}
-\newcommand{\songti}{\CJKfamily{zhsong}}
 
 % Convenience: Bold Times New Roman (for foreign abstract)
 \newcommand{\tnrbf}[1]{{\bfseries #1}}

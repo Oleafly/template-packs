@@ -47,9 +47,6 @@
 \setmainfont{Times New Roman} % 设置正文字体为Times New Roman
 \setsansfont{Arial} % 设置无衬线字体为Arial
 \setmonofont{Courier New} % 设置等宽字体为Courier New
-% 设置中文字体
-%\setCJKmainfont{[simsun.ttc]}[AutoFakeBold=true] % 设置中文字体为宋体，加粗效果为伪粗体
-\setCJKsansfont{[simhei.ttf]} % 设置中文无衬线字体为黑体
 
 % 加载hyperref包，设置PDF元数据、超链接颜色、超链接样式
 \RequirePackage{hyperref}

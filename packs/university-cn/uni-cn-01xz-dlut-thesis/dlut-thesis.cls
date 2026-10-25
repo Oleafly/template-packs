@@ -27,9 +27,9 @@
 
 \ProcessOptions\relax
 \ifdlut@istwoside
-    \LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto,fontset=none]{ctexbook}
+    \LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto,fontset=fandol]{ctexbook}
 \else
-    \LoadClass[zihao=-4,a4paper,oneside,openany,UTF8,space=auto,fontset=none]{ctexbook}
+    \LoadClass[zihao=-4,a4paper,oneside,openany,UTF8,space=auto,fontset=fandol]{ctexbook}
 \fi
 
 \setlength{\parskip}{0pt}
@@ -37,23 +37,8 @@
 %-----------------------------------------------------------------------------------------------------------------------
 % Font settings
 \ProcessOptions\relax
-\ifdlut@adobe
-    \setCJKmainfont[AutoFakeBold=true, Path="fonts/adobe/"]{AdobeSongStd-Light.otf}
-    \newCJKfontfamily{\songti}   [AutoFakeBold=true, Path="fonts/adobe/"] {AdobeSongStd-Light.otf}
-    \newCJKfontfamily{\heiti}    [AutoFakeBold=true, Path="fonts/adobe/"] {AdobeHeitiStd-Regular.otf}
-    \newCJKfontfamily{\kaishu}   [AutoFakeBold=true, Path="fonts/adobe/"] {AdobeKaitiStd-Regular.otf}
-    \newCJKfontfamily{\fangsong} [AutoFakeBold=true, Path="fonts/adobe/"] {AdobeFangsongStd-Regular.otf}
-    \newCJKfontfamily{\xingkai}  [AutoFakeBold=true, Path="fonts/windows/"] {STXingKai.ttf}
-    \newCJKfontfamily{\xihei}    [AutoFakeBold=true, Path="fonts/windows/"] {STXiHei.ttf}
-\else
-    \setCJKmainfont[AutoFakeBold=true, Path="fonts/windows/"]{SimSun.ttc}
-    \newCJKfontfamily{\songti}   [AutoFakeBold=true, Path="fonts/windows/"] {SimSun.ttc}
-    \newCJKfontfamily{\heiti}    [AutoFakeBold=true, Path="fonts/windows/"] {SimHei.ttf}
-    \newCJKfontfamily{\kaishu}   [AutoFakeBold=true, Path="fonts/windows/"] {SimKai.ttf}
-    \newCJKfontfamily{\fangsong} [AutoFakeBold=true, Path="fonts/windows/"] {SimFang.ttf}
-    \newCJKfontfamily{\xingkai}  [AutoFakeBold=true, Path="fonts/windows/"] {STXingKai.ttf}
-    \newCJKfontfamily{\xihei}    [AutoFakeBold=true, Path="fonts/windows/"] {STXiHei.ttf}
-\fi
+\newCJKfontfamily{\xingkai}  [AutoFakeBold=true] {FandolKai-Regular.otf}
+\newCJKfontfamily{\xihei}    [AutoFakeBold=true] {FandolHei-Regular.otf}
 
 \setmainfont[
     Path="fonts/windows/",

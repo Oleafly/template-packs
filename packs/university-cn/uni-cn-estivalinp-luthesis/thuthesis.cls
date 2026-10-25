@@ -100,7 +100,7 @@
   pifootnote}
 \ProcessKeyvalOptions*
 \PassOptionsToPackage{no-math}{fontspec}
-\LoadClass[a4paper,openany,UTF8,zihao=-4,scheme=plain,fontset=none]{ctexbook}
+\LoadClass[a4paper,openany,UTF8,zihao=-4,scheme=plain,fontset=fandol]{ctexbook}
 \ifthu@bachelor\relax\else
   \ifthu@master\relax\else
     \ifthu@doctor\relax\else
@@ -190,14 +190,6 @@
 
 % 特殊符号（笑脸😋）
 \usepackage{fontspec}
-% 中文字体 — 从本地 fonts/ 目录加载
-\setCJKmainfont[BoldFont=simhei, ItalicFont=simkai, Path=./fonts/, Extension=.ttf]{simsun0}
-\setCJKsansfont[Path=./fonts/, Extension=.ttf]{simhei}
-\setCJKmonofont[Path=./fonts/, Extension=.ttf]{simkai}
-\newCJKfontfamily\songti[Path=./fonts/, Extension=.ttf]{simsun0}
-\newCJKfontfamily\heiti[Path=./fonts/, Extension=.ttf]{simhei}
-\newCJKfontfamily\kaishu[Path=./fonts/, Extension=.ttf]{simkai}
-\newCJKfontfamily\fangsong[Path=./fonts/, Extension=.ttf]{simfang}
 % 西文字体 — newtxtext 已负责 Times New Roman
 % DejaVu Sans — 特殊符号
 \newfontfamily\DejaSans[Path=./fonts/, Extension=.ttf]{DejaVuSans}

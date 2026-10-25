@@ -19,7 +19,7 @@
 \ProcessOptions\relax
 
 %% 基于 ctexbook 类
-\LoadClass[zihao=-4,a4paper,openany,oneside,fontset=none]{ctexbook}
+\LoadClass[zihao=-4,a4paper,openany,oneside,fontset=fandol]{ctexbook}
 
 %% 允许使用 @ 宏
 \makeatletter
@@ -76,60 +76,6 @@
 \setsansfont{Arial}
 \setmonofont{Courier New}
 
-%% 中文字体（使用 macOS 系统字体）
-%% 字体选择（优先使用 macOS 常见中文字体，缺失时回退到 TeX Live Fandol）
-\def\dufe@fandolpath{/usr/local/texlive/2025basic/texmf-dist/fonts/opentype/public/fandol/}
-\def\dufe@song{Songti SC}
-\def\dufe@songopts{}
-\IfFontExistsTF{Songti SC}{}{%
-    \IfFileExists{\dufe@fandolpath FandolSong-Regular.otf}{%
-        \def\dufe@song{FandolSong-Regular}%
-        \def\dufe@songopts{Path=\dufe@fandolpath,Extension=.otf}%
-    }{%
-        \def\dufe@song{STSong}%
-    }%
-}
-
-\def\dufe@hei{Heiti SC}
-\def\dufe@heiopts{}
-\IfFontExistsTF{Heiti SC}{}{%
-    \IfFileExists{\dufe@fandolpath FandolHei-Regular.otf}{%
-        \def\dufe@hei{FandolHei-Regular}%
-        \def\dufe@heiopts{Path=\dufe@fandolpath,Extension=.otf}%
-    }{%
-        \def\dufe@hei{\dufe@song}%
-        \def\dufe@heiopts{\dufe@songopts}%
-    }%
-}
-
-\def\dufe@kai{Kaiti SC}
-\def\dufe@kaiopts{}
-\IfFontExistsTF{Kaiti SC}{}{%
-    \IfFileExists{\dufe@fandolpath FandolKai-Regular.otf}{%
-        \def\dufe@kai{FandolKai-Regular}%
-        \def\dufe@kaiopts{Path=\dufe@fandolpath,Extension=.otf}%
-    }{%
-        \def\dufe@kai{\dufe@song}%
-        \def\dufe@kaiopts{\dufe@songopts}%
-    }%
-}
-
-\def\dufe@fang{FandolFang-Regular}
-\def\dufe@fangopts{Path=\dufe@fandolpath,Extension=.otf}
-\IfFileExists{\dufe@fandolpath FandolFang-Regular.otf}{}{%
-    \def\dufe@fang{\dufe@song}%
-    \def\dufe@fangopts{\dufe@songopts}%
-}
-
-\setCJKmainfont[\dufe@songopts]{\dufe@song}
-\setCJKsansfont[\dufe@heiopts]{\dufe@hei}
-\setCJKmonofont[\dufe@fangopts]{\dufe@fang}
-
-%% 重新定义字体命令（覆盖 ctexbook 的定义）
-\DeclareRobustCommand{\heiti}{\CJKfontspec[\dufe@heiopts]{\dufe@hei}}
-\DeclareRobustCommand{\songti}{\CJKfontspec[\dufe@songopts]{\dufe@song}}
-\DeclareRobustCommand{\fangsong}{\CJKfontspec[\dufe@fangopts]{\dufe@fang}}
-\DeclareRobustCommand{\kaishu}{\CJKfontspec[\dufe@kaiopts]{\dufe@kai}}
 
 %% ========== 字号定义 ==========
 \newcommand{\chuhao}{\fontsize{42pt}{50.4pt}\selectfont}

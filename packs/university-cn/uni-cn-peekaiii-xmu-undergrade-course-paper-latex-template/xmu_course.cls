@@ -8,7 +8,7 @@
 \ProcessOptions\relax
 
 % --- 基础文档类 ---
-\LoadClass[a4paper,fontset=none,zihao=5,linespread=1.0,scheme=chinese]{ctexart}
+\LoadClass[a4paper,fontset=fandol,zihao=5,linespread=1.0,scheme=chinese]{ctexart}
 
 % --- 宏包 ---
 \RequirePackage{geometry}
@@ -23,28 +23,11 @@
 \RequirePackage{etoolbox}
 \RequirePackage{pifont}
 
-% --- 字体：从 typeface/ 加载 ---
-\setCJKmainfont{SimSun}[Path=./typeface/, Extension=.ttc, AutoFakeBold]
-\setCJKfamilyfont{zhsong}{SimSun}[Path=./typeface/, Extension=.ttc, AutoFakeBold]
+% --- 字体：中文使用 ctex 的 fandol 字体集 ---
+\newCJKfontfamily\dengexian{FandolHei-Regular.otf}[BoldFont=FandolHei-Bold.otf]
+\newCJKfontfamily\dengexianbold{FandolHei-Bold.otf}
 
-\setCJKsansfont{SimHei}[Path=./typeface/, Extension=.ttf]
-\setCJKfamilyfont{zhhei}{SimHei}[Path=./typeface/, Extension=.ttf]
-
-\setCJKfamilyfont{zhkai}{SimKai}[Path=./typeface/, Extension=.ttf, AutoFakeBold]
-
-\setCJKmonofont{SimKai}[Path=./typeface/, Extension=.ttf]
-\setCJKfamilyfont{zhfs}{SimKai}[Path=./typeface/, Extension=.ttf]
-
-\newCJKfontfamily\dengexian{Deng}[
-  Path=./typeface/, Extension=.ttf,
-  BoldFont=Dengb, ItalicFont=Dengl,
-]
-\newCJKfontfamily\dengexianbold{Dengb}[Path=./typeface/, Extension=.ttf]
-
-\newcommand{\songti}{\CJKfamily{zhsong}}
-\newcommand{\heiti}{\CJKfamily{zhhei}}
 \newcommand{\kaiti}{\CJKfamily{zhkai}}
-\newcommand{\fangsong}{\CJKfamily{zhfs}}
 
 % --- 页面布局 ---
 \geometry{
