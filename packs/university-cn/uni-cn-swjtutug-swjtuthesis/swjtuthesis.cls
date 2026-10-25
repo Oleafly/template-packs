@@ -42,6 +42,7 @@
 \DeclareOption{authoryear}{\@swjtu@numericalfalse}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ExecuteOptions{doctor,chinese,print,super}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 \newif\if@swjtu@addtocspace
 \if@swjtu@bachelor

@@ -30,6 +30,7 @@
 \DeclareOption{normal}{\BIT@isnormaltrue}
 %新定义不同模式下的命令
 
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 \ifBIT@istwoside
 \LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto]{ctexbook}

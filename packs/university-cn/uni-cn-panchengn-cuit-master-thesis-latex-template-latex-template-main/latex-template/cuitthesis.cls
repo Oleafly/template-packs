@@ -3,7 +3,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{cuitthesis}[2026/05/27 CUIT master thesis class]
 
-\LoadClass[UTF8,zihao=-4,scheme=chinese,openany,fontset=mac]{ctexbook}
+\LoadClass[UTF8,zihao=-4,scheme=chinese,openany,fontset=fandol]{ctexbook}
 
 \RequirePackage{geometry}
 \RequirePackage{fontspec}
@@ -42,12 +42,7 @@
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
 \setmonofont{Menlo}
-\setCJKmainfont[AutoFakeBold=2.5]{Songti SC}
-\setCJKsansfont{Heiti SC}
-\setCJKmonofont{STFangsong}
-\setCJKfamilyfont{zhsong}[AutoFakeBold=2.5]{Songti SC}
-\setCJKfamilyfont{zhhei}{Heiti SC}
-\setCJKfamilyfont{cuitfangsong}[BoldFont=STFangsong]{STFangsong}
+\setCJKfamilyfont{cuitfangsong}{FandolFang-Regular.otf}
 \newcommand{\cuitfangsong}{\CJKfamily{cuitfangsong}}
 \newfontfamily{\cuitcoverlatinbold}{Times New Roman Bold}
 \newcommand{\cuitcoverinfofont}{\cuitfangsong\cuitcoverlatinbold\fontsize{14bp}{24bp}\selectfont}

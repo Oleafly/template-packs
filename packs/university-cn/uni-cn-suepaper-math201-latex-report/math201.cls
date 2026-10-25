@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesClass{math}
 [2023/02/08 v0.2 Standard LaTeX Template for math Report]
-\LoadClass[UTF8,a4paper]{ctexart}
+\LoadClass[UTF8,a4paper,fontset=fandol]{ctexart}
 \RequirePackage{graphicx}
 \RequirePackage{geometry}
 \RequirePackage{titlesec}

@@ -50,6 +50,7 @@
 
 %Pass all unprocessed/unknown options to ctexbook. If a wrong option is specified, perhaps ctexbook will throw an error.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions
 
 %Minimum xeCJK version:3.2.10, date:2014/03/01
@@ -175,7 +176,7 @@
 \ifustc@adobefont
 	\setCJKfamilyfont{verthei}[RawFeature={vertical:}]{Adobe Heiti Std}\relax
 \else%
-	\setCJKfamilyfont{verthei}[RawFeature={vertical:}]{SimHei}\relax
+	\setCJKfamilyfont{verthei}[RawFeature={vertical:}]{FandolHei-Regular.otf}\relax
 \fi
 \newcommand{\ustc@verthei}{\CJKfamily{verthei}}
 

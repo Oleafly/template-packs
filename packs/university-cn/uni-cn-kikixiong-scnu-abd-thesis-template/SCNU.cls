@@ -37,7 +37,7 @@
 %%%%%%%%%%%%%%%%%%%%%% 字体与段落 %%%%%%%%%%%%%%%%%%%%%%
 
 \PassOptionsToPackage{no-math}{fontspec}
-\RequirePackage[UTF8,scheme=plain]{ctex}
+\RequirePackage[UTF8,scheme=plain,fontset=fandol]{ctex}
 \setmainfont{Times New Roman}
 
 % 1.25倍行距

@@ -8,7 +8,7 @@
 \ProvidesClass{lzu-gis-report}[2026/01/12 v1.0 Lanzhou University GIS Lab Report Template]
 
 % 基于 ctexart 文档类
-\LoadClass[a4paper,12pt]{ctexart}
+\LoadClass[a4paper,12pt,fontset=fandol]{ctexart}
 
 % ==================== 必需的宏包 ====================
 

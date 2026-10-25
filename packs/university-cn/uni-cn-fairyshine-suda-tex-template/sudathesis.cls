@@ -24,6 +24,7 @@ The LaTeX template for thesis of suda]
 
 % 其余选项传递给ctexbook
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 
 % 引用ctexbook及基本设置

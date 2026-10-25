@@ -142,6 +142,9 @@
         \PassOptionsToClass{\CurrentOption}{ctexart}%
     \fi\fi
 }
+\PassOptionsToClass{fontset=fandol}{ctexart}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
+\PassOptionsToClass{fontset=fandol}{ctexrep}
 \ProcessOptions\relax
 
 % ---------------------------------------------------------
@@ -3450,41 +3453,20 @@
     \newCJKfontfamily\songti{SimSun.ttf}[Path=fonts/, AutoFakeBold=2.5]
 
 }{
-    % [系统回退]
-    \ifmf@oswin
-        \typeout{>> [MindFlow] Using Windows system fonts.}
-        \setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi,AutoFakeBold=2.5]{SimSun}
-        \setCJKsansfont[AutoFakeBold=2.5]{SimHei}
-        \setCJKmonofont[AutoFakeBold=2.5]{KaiTi}
-        \newCJKfontfamily\songti{SimSun}[BoldFont=SimHei,ItalicFont=KaiTi,AutoFakeBold=2.5]
-        \newCJKfontfamily\heiti{SimHei}[AutoFakeBold=2.5]
-        \newCJKfontfamily\kaiti{KaiTi}[AutoFakeBold=2.5]
-    \else
-    \ifmf@osmac
-        \typeout{>> [MindFlow] Using macOS system fonts.}
-        \setCJKmainfont[BoldFont=Heiti SC Medium,ItalicFont=Kaiti SC,AutoFakeBold=2.0]{Songti SC Light}
-        \setCJKsansfont[AutoFakeBold=2.0]{Heiti SC Medium}
-        \setCJKmonofont[AutoFakeBold=2.0]{Kaiti SC}
-        \newCJKfontfamily\songti{Songti SC Light}[BoldFont=Heiti SC Medium,ItalicFont=Kaiti SC, AutoFakeBold=2.0]
-        \newCJKfontfamily\heiti{Heiti SC Medium}
-        \newCJKfontfamily\kaiti{Kaiti SC}
-    \else
-        % Linux / Default (Fandol)
-        \typeout{>> [MindFlow] Using Fandol fonts (Linux/Fallback).}
-        \setCJKmainfont[
-            Extension=.otf,
-            BoldFont=FandolHei-Regular,
-            BoldFeatures={FakeBold=3},
-            ItalicFont=FandolKai-Regular,
-            ItalicFeatures={FakeSlant=0.2}
-        ]{FandolSong-Regular}
-        \setCJKsansfont[Extension=.otf, BoldFont=FandolHei-Regular, BoldFeatures={FakeBold=3}]{FandolHei-Regular}
-        \setCJKmonofont[Extension=.otf, BoldFont=FandolKai-Regular, BoldFeatures={FakeBold=3}]{FandolKai-Regular}
-        \newCJKfontfamily\songti[Extension=.otf]{FandolSong-Regular}
-        \newCJKfontfamily\heiti[Extension=.otf]{FandolHei-Regular}
-        \newCJKfontfamily\kaiti[Extension=.otf]{FandolKai-Regular}
-    \fi
-    \fi
+    % [系统回退] Fandol
+    \typeout{>> [MindFlow] Using Fandol fonts (Linux/Fallback).}
+    \setCJKmainfont[
+        Extension=.otf,
+        BoldFont=FandolHei-Regular,
+        BoldFeatures={FakeBold=3},
+        ItalicFont=FandolKai-Regular,
+        ItalicFeatures={FakeSlant=0.2}
+    ]{FandolSong-Regular}
+    \setCJKsansfont[Extension=.otf, BoldFont=FandolHei-Regular, BoldFeatures={FakeBold=3}]{FandolHei-Regular}
+    \setCJKmonofont[Extension=.otf, BoldFont=FandolKai-Regular, BoldFeatures={FakeBold=3}]{FandolKai-Regular}
+    \newCJKfontfamily\songti[Extension=.otf]{FandolSong-Regular}
+    \newCJKfontfamily\heiti[Extension=.otf]{FandolHei-Regular}
+    \newCJKfontfamily\kaiti[Extension=.otf]{FandolKai-Regular}
 }
 
 

@@ -252,7 +252,6 @@
 \newcommand{\jou@useopensourcefang}{%
     \setCJKfamilyfont{zhfs}[
         Path=\JOUOpenSourceFontDir/,
-        UprightFont=FandolFang-Regular.otf
     ]{FandolFang-Regular.otf}%
 }
 
@@ -297,19 +296,16 @@
 
 \newcommand{\jou@usetexlivesong}{%
     \setCJKmainfont[
-        UprightFont=FandolSong-Regular.otf,
         BoldFont=FandolSong-Regular.otf,
         ItalicFont=FandolSong-Regular.otf,
         BoldItalicFont=FandolSong-Regular.otf
     ]{FandolSong-Regular.otf}%
     \setCJKfamilyfont{zhsong}[
-        UprightFont=FandolSong-Regular.otf,
         BoldFont=FandolSong-Regular.otf,
         ItalicFont=FandolSong-Regular.otf,
         BoldItalicFont=FandolSong-Regular.otf
     ]{FandolSong-Regular.otf}%
     \setCJKmonofont[
-        UprightFont=FandolSong-Regular.otf,
         BoldFont=FandolSong-Regular.otf,
         ItalicFont=FandolSong-Regular.otf,
         BoldItalicFont=FandolSong-Regular.otf
@@ -318,47 +314,34 @@
 
 \newcommand{\jou@usetexlivehei}{%
     \setCJKsansfont[
-        UprightFont=FandolHei-Regular.otf
     ]{FandolHei-Regular.otf}%
     \setCJKfamilyfont{zhhei}[
-        UprightFont=FandolHei-Regular.otf
     ]{FandolHei-Regular.otf}%
     \newCJKfontfamily\JOUCoverHei[
-        UprightFont=FandolHei-Regular.otf
     ]{FandolHei-Regular.otf}%
 }
 
 \newcommand{\jou@usetexlivekai}{%
     \setCJKfamilyfont{zhkai}[
-        UprightFont=FandolKai-Regular.otf
     ]{FandolKai-Regular.otf}%
-    \newCJKfontfamily\JOUCoverKai[
-        UprightFont=FandolKai-Regular.otf
-    ]{FandolKai-Regular.otf}[AutoFakeBold=2.2]%
+    \newCJKfontfamily\JOUCoverKai[AutoFakeBold=2.2]{FandolKai-Regular.otf}%
 }
 
 \newcommand{\jou@usetexlivefang}{%
     \setCJKfamilyfont{zhfs}[
-        UprightFont=FandolFang-Regular.otf
     ]{FandolFang-Regular.otf}%
 }
 
 \newcommand{\jou@usetexlivexiaobiaosong}{%
-    \newCJKfontfamily\JOUXiaobiaoSong[
-        UprightFont=FandolHei-Regular.otf
-    ]{FandolHei-Regular.otf}[AutoFakeBold=2.6]%
+    \newCJKfontfamily\JOUXiaobiaoSong[AutoFakeBold=2.6]{FandolHei-Regular.otf}%
 }
 
 \newcommand{\jou@usetexlivexingkai}{%
-    \newCJKfontfamily\JOUXingkai[
-        UprightFont=FandolKai-Regular.otf
-    ]{FandolKai-Regular.otf}[AutoFakeBold=1.4]%
+    \newCJKfontfamily\JOUXingkai[AutoFakeBold=1.4]{FandolKai-Regular.otf}%
 }
 
 \newcommand{\jou@usetexlivelishu}{%
-    \newCJKfontfamily\JOULishu[
-        UprightFont=FandolHei-Regular.otf
-    ]{FandolHei-Regular.otf}[AutoFakeBold=2.0]%
+    \newCJKfontfamily\JOULishu[AutoFakeBold=2.0]{FandolHei-Regular.otf}%
 }
 
 \newcommand{\jou@setuptexlivecjk}{%
@@ -998,6 +981,14 @@
                 \jou@cjkconfiguredtrue
             }{}%
         \fi
+    \fi
+
+    % 仓库未附带开源中文字体时，默认使用 TeX Live 自带的 Fandol 字体
+    \ifjou@cjkconfigured\else
+        \IfFileExists{\JOUOpenSourceFontDir/NotoSerifCJKsc-Regular.otf}{}{%
+            \jou@setuptexlivecjk
+            \jou@cjkconfiguredtrue
+        }%
     \fi
 
     \ifjou@cjkconfigured\else

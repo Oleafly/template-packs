@@ -24,7 +24,7 @@
 
 
 \ProvidesClass{SYSUReport}
-\LoadClass[12pt,hyperref,a4paper,UTF8]{ctexart}
+\LoadClass[12pt,hyperref,a4paper,UTF8,fontset=fandol]{ctexart}
 %%页边距
 \RequirePackage[left=2.50cm, right=2.50cm, top=2.50cm, bottom=2.50cm]{geometry}
 

@@ -24,7 +24,7 @@
 }
 
 %Font Setting
-\RequirePackage{ctex}
+\RequirePackage[fontset=fandol]{ctex}
 \RequirePackage{fontspec}
 \setmainfont{Times New Roman}
 \setCJKmainfont[AutoFakeBold,ItalicFont={simsun}]{simsun.ttf}

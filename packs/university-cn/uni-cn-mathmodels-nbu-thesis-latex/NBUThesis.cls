@@ -8,7 +8,7 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{NBUThesis}[2024/06/01 Thesis document class of NBU]
-\LoadClass[a4paper,zihao=-4,oneside,openany]{ctexbook}
+\LoadClass[a4paper,zihao=-4,oneside,openany,fontset=fandol]{ctexbook}
 
 % 声明选项 ZhChapter
 \DeclareOption{ZhChapter}{\def\@chapterstyle{zhchapter}}

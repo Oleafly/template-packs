@@ -35,7 +35,7 @@
 \PassOptionsToPackage{AutoFakeBold}{xeCJK}
 
 %----------------页面基本设置----------------------
-\LoadClass[a4paper,punct,space,heading=true]{ctexrep}
+\LoadClass[a4paper,punct,space,heading=true,fontset=fandol]{ctexrep}
 
 %----------导入相关命令和格式设置文件----------------
 \input{settings/commands}

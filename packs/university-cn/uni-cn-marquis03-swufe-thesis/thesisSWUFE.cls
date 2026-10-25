@@ -1,5 +1,5 @@
 \ProvidesClass{thesisSWUFE}
-\LoadClass[fontset=none, zihao=-4]{ctexart}
+\LoadClass[fontset=fandol, zihao=-4]{ctexart}
 \pagestyle{plain}
 
 \RequirePackage[
@@ -37,48 +37,8 @@
 
 \RequirePackage{fontspec}  % 字体支持
 \setmainfont{Times New Roman}  % 英文mainfont Times New Roman
-\setCJKmainfont{SIMSUN}[
-    Path = ./fonts/,
-    Extension = .TTC,
-    AutoFakeBold,
-    AutoFakeSlant,
-]  % 中文mainfont 宋体
-
-\setCJKmonofont{SIMSUN}[
-    Path = ./fonts/,
-    Extension = .TTC,
-    AutoFakeBold,
-    AutoFakeSlant,
-]  % 中文monofont 宋体
-
-\setCJKfamilyfont{songti}{SIMSUN}[
-    Path = ./fonts/,
-    Extension = .TTC,
-    AutoFakeBold,
-    AutoFakeSlant,
-]  % 宋体
-\newcommand{\songti}{\CJKfamily{songti}}
-
-\setCJKfamilyfont{heiti}{SIMHEI}[
-    Path = ./fonts/,
-    Extension = .TTF,
-    AutoFakeBold=true,
-]  % 黑体
-\newcommand{\heiti}{\CJKfamily{heiti}}
-
-\setCJKfamilyfont{hwzhongsong}{STZHONGS}[
-    Path = ./fonts/,
-    Extension = .TTF,
-    AutoFakeBold=true,
-]  % 华文中宋
+\setCJKfamilyfont{hwzhongsong}{FandolSong-Bold.otf}  % 华文中宋
 \newcommand{\hwzhongsong}{\CJKfamily{hwzhongsong}}
-
-\setCJKfamilyfont{fangsong}{STFangsong}[
-    Path = ./fonts/,
-    Extension = .ttf,
-    AutoFakeBold=true,
-]  % 华文仿宋
-\newcommand{\fangsong}{\CJKfamily{fangsong}}
 
 \setlength{\baselineskip}{12pt}  % 基础行距12pt
 \linespread{1.5}  % 1.5倍行距

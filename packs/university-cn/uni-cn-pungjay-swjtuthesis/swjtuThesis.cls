@@ -19,6 +19,7 @@
 
 % swjtuThesis类基于ctexbook文档类制作
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 
 % 论文使用A4大小纸张，默认小四号字体

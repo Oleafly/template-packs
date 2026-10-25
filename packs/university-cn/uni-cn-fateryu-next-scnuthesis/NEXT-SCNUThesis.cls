@@ -8,7 +8,7 @@
 \RequirePackage{amsfonts}
 \RequirePackage{geometry}
 \geometry{headheight=0.2in, top=1in, bottom=1in, left=1in, right=1in, bindingoffset=0.5cm} % 设置页边距
-\RequirePackage{ctex}
+\RequirePackage[fontset=fandol]{ctex}
 \RequirePackage{array}
 \RequirePackage{indentfirst}
 \RequirePackage[pagestyles]{titlesec}

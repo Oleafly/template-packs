@@ -16,7 +16,7 @@
 \ProcessOptions\relax
 
 % ---------- 加载 ctexbook ----------
-\LoadClass[UTF8,fontset=none]{ctexbook}
+\LoadClass[UTF8,fontset=fandol]{ctexbook}
 
 % ============================================================
 % 1. 页面设置（Word 默认页边距）
@@ -46,68 +46,7 @@
 \setsansfont{Times New Roman}
 \setmonofont{Times New Roman}
 
-% 中文字体设置
-% 根据操作系统自动选择（优先 macOS）
-\IfFontExistsTF{Songti SC}{
-    % macOS 系统
-    % macOS 原生 Heiti SC 默认匹配 Light(细体)，太细；Hiragino W6 又太粗。
-    % 改用 Heiti SC Medium（中黑体），字重介于 Light 与 Bold 之间，最接近 SimHei。
-    \setCJKmainfont[
-        BoldFont={Heiti SC Medium},
-        ItalicFont={Kaiti SC}
-    ]{STSong}
-    \setCJKsansfont{Heiti SC Medium}
-    \IfFontExistsTF{Kaiti SC}{
-        \setCJKmonofont[AutoFakeBold]{Kaiti SC}
-    }{
-        \setCJKmonofont{Songti SC}
-    }
-}{
-    \IfFontExistsTF{SimSun}{
-        % Windows 系统
-        \setCJKmainfont[
-            BoldFont={SimHei},
-            ItalicFont={KaiTi}
-        ]{SimSun}
-        \setCJKsansfont{SimHei}
-        \setCJKmonofont{FangSong}
-    }{
-        % Linux / 其他系统
-        \setCJKmainfont{Noto Serif CJK SC}
-        \setCJKsansfont{Noto Sans CJK SC}
-        \setCJKmonofont{Noto Sans Mono CJK SC}
-    }
-}
-
-% 定义 ctex 字体切换命令
-\newcommand{\songti}{\CJKfamily{zhsong}}
-\newcommand{\heiti}{\CJKfamily{zhhei}}
-\newcommand{\kaishu}{\CJKfamily{zhkai}}
-\newcommand{\fangsong}{\CJKfamily{zhfs}}
-
-% 设置字体族名称（用于 ctex 字体命令）
-\IfFontExistsTF{Songti SC}{
-    \setCJKfamilyfont{zhsong}{STSong}
-    \setCJKfamilyfont{zhhei}{Heiti SC Medium}
-    \IfFontExistsTF{Kaiti SC}{
-        \setCJKfamilyfont{zhkai}{Kaiti SC}
-    }{
-        \setCJKfamilyfont{zhkai}{Songti SC}
-    }
-    \setCJKfamilyfont{zhfs}{Songti SC}
-}{
-    \IfFontExistsTF{SimSun}{
-        \setCJKfamilyfont{zhsong}{SimSun}
-        \setCJKfamilyfont{zhhei}{SimHei}
-        \setCJKfamilyfont{zhkai}{KaiTi}
-        \setCJKfamilyfont{zhfs}{FangSong}
-    }{
-        \setCJKfamilyfont{zhsong}{Noto Serif CJK SC}
-        \setCJKfamilyfont{zhhei}{Noto Sans CJK SC}
-        \setCJKfamilyfont{zhkai}{Noto Serif CJK SC}
-        \setCJKfamilyfont{zhfs}{Noto Sans CJK SC}
-    }
-}
+% 中文字体由 ctex 的 fandol 字体集提供
 
 % 定义常用字号命令（Word 字号 → LaTeX pt）
 \newcommand{\xiaochuhao}{\fontsize{44pt}{66pt}\selectfont}

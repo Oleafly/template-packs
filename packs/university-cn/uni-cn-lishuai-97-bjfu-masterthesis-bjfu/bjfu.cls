@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{bjfu}[2024/06/07 A template for bjfu postgraduate thesis]
-\LoadClass[UTF8]{ctexart}
+\LoadClass[UTF8,fontset=fandol]{ctexart}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %协议：MIT协议（http://opensource.org/licenses/MIT）

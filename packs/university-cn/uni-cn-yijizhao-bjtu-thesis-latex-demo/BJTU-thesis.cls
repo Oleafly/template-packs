@@ -44,6 +44,7 @@
 %博士
 \DeclareOption{Doctor}{\@isDoctortrue}
 \DeclareOption{twoside}{\@isTwoSidetrue}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 \if@isTwoSide
 \LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto]{ctexbook}

@@ -15,6 +15,7 @@
 \DeclareOption{authoryear}{\@hnu@numericalfalse}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ExecuteOptions{doctor,chinese,print,super}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 \newif\if@hnu@addtocspace
 \if@hnu@pdf

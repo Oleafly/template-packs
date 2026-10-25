@@ -1,7 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{custhesis}[2026/05/18 Changchun University of Science and Technology undergraduate thesis template]
 
-\LoadClass[UTF8,zihao=-4,oneside,openany,fontset=none]{ctexbook}
+\LoadClass[UTF8,zihao=-4,oneside,openany,fontset=fandol]{ctexbook}
 
 \RequirePackage{iftex}
 \ifXeTeX\else
@@ -49,51 +49,6 @@
 ]{TIMES}
 
 \xeCJKsetup{CJKmath=true,AutoFakeBold=true}
-\IfFileExists{fonts/sim/SIMKAI.TTF}
-  {}
-  {\ClassError{custhesis}{Missing Chinese fonts in fonts/sim}{Please add simsun.ttc, simhei.ttf, FangSong_GB2312.ttf and SIMKAI.TTF to fonts/sim}}
-\setCJKmainfont[
-  Path=fonts/sim/,
-  UprightFont=simsun.ttc,
-  BoldFont=simsun.ttc,
-  BoldFeatures={FakeBold=2},
-  AutoFakeSlant=true
-]{simsun}
-\setCJKsansfont[
-  Path=fonts/sim/,
-  UprightFont=simhei.ttf,
-  BoldFont=simhei.ttf,
-  AutoFakeBold=true,
-  AutoFakeSlant=true
-]{simhei}
-\setCJKfamilyfont{zhsong}[
-  Path=fonts/sim/,
-  UprightFont=simsun.ttc,
-  BoldFont=simsun.ttc,
-  BoldFeatures={FakeBold=2},
-  AutoFakeSlant=true
-]{simsun}
-\setCJKfamilyfont{zhhei}[
-  Path=fonts/sim/,
-  UprightFont=simhei.ttf,
-  BoldFont=simhei.ttf,
-  AutoFakeBold=true,
-  AutoFakeSlant=true
-]{simhei}
-\setCJKfamilyfont{zhfs}[
-  Path=fonts/sim/,
-  UprightFont=FangSong_GB2312.ttf,
-  BoldFont=FangSong_GB2312.ttf,
-  AutoFakeBold=true,
-  AutoFakeSlant=true
-]{fangsonggb}
-\setCJKfamilyfont{zhkai}[
-  Path=fonts/sim/,
-  UprightFont=SIMKAI.TTF,
-  BoldFont=SIMKAI.TTF,
-  AutoFakeBold=true,
-  AutoFakeSlant=true
-]{simkai}
 \providecommand{\songti}{\CJKfamily{zhsong}}
 \providecommand{\heiti}{\CJKfamily{zhhei}}
 \providecommand{\fangsong}{\CJKfamily{zhfs}}

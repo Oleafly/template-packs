@@ -34,6 +34,7 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 
 \ExecuteOptions{master,science,openany,twoside}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 
 %---------------------------------

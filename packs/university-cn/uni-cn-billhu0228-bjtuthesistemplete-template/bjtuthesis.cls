@@ -11,7 +11,7 @@
 %========================================================================%
 \ProvidesClass{bjtuthesis}[2016/09/10]
 \def\version{1.0}
-\LoadClass[a4paper,cs4size,twoside,hyperref,openright]{ctexbook}
+\LoadClass[a4paper,cs4size,twoside,hyperref,openright,fontset=fandol]{ctexbook}
 \NeedsTeXFormat{LaTeX2e}
 %========================================================================%
 % 基本宏包

@@ -5,11 +5,11 @@
 % Compiler: XeLaTeX
 % =============================================================================
 
-\documentclass[12pt, a4paper, fontset=none]{ctexart}
+\documentclass[12pt, a4paper, fontset=fandol]{ctexart}
 \renewcommand{\baselinestretch}{1.5} % 全文 1.5 倍行距
 
-% 字体：优先使用 Windows 系统字体，其次使用 macOS 本地字体，最后使用项目 fonts/ 目录。
-% 请使用 XeLaTeX 编译；Windows 系统字体名称为 SimSun、SimHei、KaiTi、FangSong 和 LiSu。
+% 西文字体：优先使用 Windows 系统字体，其次使用 macOS 本地字体，最后使用项目 fonts/ 目录。
+% 中文字体使用 ctex 的 fandol 字体集，请使用 XeLaTeX 编译。
 \newcommand{\configuretimesfont}[1]{%
   \setmainfont[
     Path=#1,
@@ -24,30 +24,6 @@
     BoldItalicFont={Times New Roman Bold Italic.ttf}
   ]{Times New Roman.ttf}%
 }
-\newcommand{\configuresongtifont}[1]{%
-  \setCJKmainfont[
-    Path=#1,
-    FontIndex=3,
-    BoldFont=Songti.ttc,
-    BoldFeatures={FontIndex=1}
-  ]{Songti.ttc}%
-  \setCJKfamilyfont{zhsong}[
-    Path=#1,
-    FontIndex=3,
-    BoldFont=Songti.ttc,
-    BoldFeatures={FontIndex=1}
-  ]{Songti.ttc}%
-  \setCJKfamilyfont{zhfs}[Path=#1]{Songti.ttc}%
-  \setCJKfamilyfont{zhkai}[Path=#1]{Songti.ttc}%
-}
-\newcommand{\configurewindowscjkfonts}{%
-  \setCJKmainfont[BoldFont={SimHei},ItalicFont={KaiTi}]{SimSun}%
-  \setCJKfamilyfont{zhsong}{SimSun}%
-  \setCJKfamilyfont{zhhei}{SimHei}%
-  \setCJKfamilyfont{zhfs}{FangSong}%
-  \setCJKfamilyfont{zhkai}{KaiTi}%
-}
-
 % 仅在 Windows 上启用 Windows 字体名；避免其他系统将缺失字体错误映射到替代字体。
 \newif\ifwindowsplatform
 \ExplSyntaxOn
@@ -55,17 +31,6 @@
   {\windowsplatformtrue}
   {\windowsplatformfalse}
 \ExplSyntaxOff
-\newif\ifwindowschinesefonts
-\ifwindowsplatform
-  \IfFileExists{C:/Windows/Fonts/simsun.ttc}{%
-    \windowschinesefontstrue
-  }{%
-    \windowschinesefontsfalse
-  }%
-\else
-  \windowschinesefontsfalse
-\fi
-
 % 西文字体：Windows 系统字体 → macOS 本地字体 → 项目内字体文件。
 \ifwindowsplatform
   \IfFileExists{C:/Windows/Fonts/times.ttf}{%
@@ -82,64 +47,9 @@
   }%
 \fi
 
-% 中文正文字体：Windows 系统字体 → macOS 本地字体 → 项目内字体文件。
-\ifwindowschinesefonts
-  \configurewindowscjkfonts
-\else
-  \IfFileExists{/System/Library/Fonts/Supplemental/Songti.ttc}{%
-    \configuresongtifont{/System/Library/Fonts/Supplemental/}%
-  }{%
-    \configuresongtifont{fonts/}%
-  }%
-\fi
-\ifwindowschinesefonts
-  \setCJKsansfont{SimHei}%
-\else
-  \IfFileExists{/System/Library/Fonts/STHeiti Medium.ttc}{%
-    \setCJKsansfont[Path=/System/Library/Fonts/,FontIndex=1]{STHeiti Medium.ttc}%
-    \setCJKfamilyfont{zhhei}[Path=/System/Library/Fonts/,FontIndex=1]{STHeiti Medium.ttc}%
-  }{%
-    \setCJKsansfont[Path=fonts/,FontIndex=1]{STHeiti Medium.ttc}%
-    \setCJKfamilyfont{zhhei}[Path=fonts/,FontIndex=1]{STHeiti Medium.ttc}%
-  }%
-\fi
-\providecommand{\songti}{\CJKfamily{zhsong}}
-\providecommand{\heiti}{\CJKfamily{zhhei}}
-\providecommand{\fangsong}{\CJKfamily{zhfs}}
-\providecommand{\kaishu}{\CJKfamily{zhkai}}
-
-% 封面字体同样按 Windows → macOS → 项目内字体文件的顺序选择。
-\ifwindowschinesefonts
-  \setCJKfamilyfont{coverhei}[AutoFakeBold=3]{SimHei}%
-\else
-  \IfFileExists{/System/Library/Fonts/STHeiti Medium.ttc}{%
-    \setCJKfamilyfont{coverhei}[Path=/System/Library/Fonts/,FontIndex=1,AutoFakeBold=3]{STHeiti Medium.ttc}%
-  }{%
-    \setCJKfamilyfont{coverhei}[Path=fonts/,AutoFakeBold=3]{黑体.ttf}%
-  }%
-\fi
-\ifwindowschinesefonts
-  \IfFileExists{C:/Windows/Fonts/lisu.ttf}{%
-    \setCJKfamilyfont{coverlishu}{LiSu}%
-  }{%
-    \setCJKfamilyfont{coverlishu}{SimSun}%
-  }%
-\else
-  \IfFileExists{/System/Library/AssetsV2/com_apple_MobileAsset_Font8/70875a1270987c17cfd6f40cd3d755ec04d03b33.asset/AssetData/Baoli.ttc}{%
-    \setCJKfamilyfont{coverlishu}[Path=/System/Library/AssetsV2/com_apple_MobileAsset_Font8/70875a1270987c17cfd6f40cd3d755ec04d03b33.asset/AssetData/]{Baoli.ttc}%
-  }{%
-    \setCJKfamilyfont{coverlishu}[Path=fonts/]{Baoli.ttc}%
-  }%
-\fi
-\ifwindowschinesefonts
-  \setCJKfamilyfont{coverlabelsong}{SimSun}%
-\else
-  \IfFileExists{/System/Library/Fonts/Supplemental/Songti.ttc}{%
-    \setCJKfamilyfont{coverlabelsong}[Path=/System/Library/Fonts/Supplemental/,FontIndex=0]{Songti.ttc}%
-  }{%
-    \setCJKfamilyfont{coverlabelsong}[Path=fonts/,FontIndex=0]{Songti.ttc}%
-  }%
-\fi
+\setCJKfamilyfont{coverhei}{FandolHei-Regular.otf}[AutoFakeBold=3]
+\setCJKfamilyfont{coverlishu}{FandolKai-Regular.otf}
+\setCJKfamilyfont{coverlabelsong}{FandolSong-Regular.otf}
 \newcommand{\coverheiti}{\CJKfamily{coverhei}}
 \newcommand{\coverlishu}{\CJKfamily{coverlishu}}
 \newcommand{\coverlabel}{\CJKfamily{coverlabelsong}}

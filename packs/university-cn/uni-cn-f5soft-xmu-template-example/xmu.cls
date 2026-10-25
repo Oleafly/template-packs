@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \PassOptionsToPackage{AutoFakeBold}{xeCJK}
-\LoadClass{ctexbook}
+\LoadClass[fontset=fandol]{ctexbook}
 
 %%%%%%%% 宏包 %%%%%%%%
 

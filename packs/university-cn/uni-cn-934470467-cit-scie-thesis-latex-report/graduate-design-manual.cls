@@ -8,7 +8,7 @@
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexart}}
 \ProcessOptions\relax
-\LoadClass[UTF8, fontset=none, 12pt, a4paper, twoside]{ctexart}
+\LoadClass[UTF8, fontset=fandol, 12pt, a4paper, twoside]{ctexart}
 \RequirePackage{geometry}
 \RequirePackage{etoolbox}
 \RequirePackage{titlesec}
@@ -42,11 +42,9 @@
 \RequirePackage{algpseudocode}  % 伪代码逻辑
 \RequirePackage{newfloat}       % 用于定义新的浮动体
 % 1. 字体定义
-\setCJKmainfont{Simsun.ttc}[Path=fonts/, AutoFakeBold=3]
-\newCJKfontfamily{\songti}{Simsun.ttc}[Path=fonts/, AutoFakeBold=3]
-\newCJKfontfamily{\heiti}{SimHei.ttf}[Path=fonts/, AutoFakeBold=3]
-\newCJKfontfamily{\kai}{Kaiti.ttf}[Path=fonts/]
-\newCJKfontfamily{\zhongsong}{STZHONGS.ttf}[Path=fonts/, AutoFakeBold=3.17]
+\setCJKfamilyfont{zhsong}{FandolSong-Regular.otf}[BoldFont=FandolSong-Bold.otf] % \normalsize 调用 \songti
+\newCJKfontfamily{\kai}{FandolKai-Regular.otf}
+\newCJKfontfamily{\zhongsong}{FandolSong-Bold.otf}
 \setmainfont{times.ttf}[Path=fonts/, BoldFont=times.ttf, AutoFakeBold=3]
 \newfontfamily{\Times}{times.ttf}[Path=fonts/, BoldFont=times.ttf, AutoFakeBold=3]
 \newfontfamily{\Arial}{arial.ttf}[Path=fonts/, BoldFont=arialbd.ttf]

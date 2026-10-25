@@ -17,7 +17,7 @@
 \LoadClass[a4paper,openany,oneside]{book} % A4大小，book布局
 \PassOptionsToPackage{quiet}{fontspec}
 \RequirePackage[AutoFakeBold=true,AutoFakeSlant=true]{xeCJK}
-\RequirePackage[zihao=-4,UTF8,heading=true]{ctex}
+\RequirePackage[zihao=-4,UTF8,heading=true,fontset=fandol]{ctex}
 \RequirePackage{xeCJKfntef}
 
 %%% ---- 定义页边距 ----- %%%

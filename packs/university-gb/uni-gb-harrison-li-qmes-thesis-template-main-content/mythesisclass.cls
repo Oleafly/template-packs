@@ -36,7 +36,7 @@
 \RequirePackage{amsmath}
 \RequirePackage{tcolorbox}
 \tcbuselibrary{listingsutf8} % Library used even if tcolorbox isn't explicitly called in the class
-\RequirePackage[UTF8]{ctex}
+\RequirePackage[UTF8,fontset=fandol]{ctex}
 \RequirePackage{booktabs}
 \RequirePackage{float}
 \RequirePackage{indentfirst}

@@ -1,5 +1,5 @@
 \ProvidesClass{NEUBachelorThesis}
-\LoadClass[UTF8,cs4size,a4paper]{ctexbook}%默认twoside,openright
+\LoadClass[UTF8,cs4size,a4paper,fontset=fandol]{ctexbook}%默认twoside,openright
 \RequirePackage{pdfpages}%插入pdf文档
 
 %--------字体设置-------%

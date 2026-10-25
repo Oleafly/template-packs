@@ -51,6 +51,7 @@
 
 %Pass all unprocessed/unknown options to ctexbook. If a wrong option is specified, perhaps ctexbook will throw an error.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions
 
 \LoadClass[cs4size,a4paper,fancyhdr,fntef]{ctexbook}
@@ -180,7 +181,7 @@
 	\ifustc@macfont
 		\setCJKfamilyfont{verthei}[RawFeature={vertical:}]{Heiti SC}\relax
 	\else
-		\setCJKfamilyfont{verthei}[RawFeature={vertical:}]{SimHei}\relax
+		\setCJKfamilyfont{verthei}[RawFeature={vertical:}]{FandolHei-Regular.otf}\relax
 	\fi
 \fi
 \newcommand{\ustc@verthei}{\CJKfamily{verthei}}

@@ -22,6 +22,7 @@
 \DeclareOption{master}{\BIT@mastertrue}
 \DeclareOption{doctor}{\BIT@doctortrue}
 
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 \ifBIT@istwoside
 \LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto]{ctexbook}

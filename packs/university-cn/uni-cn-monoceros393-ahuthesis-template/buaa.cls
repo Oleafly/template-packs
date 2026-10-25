@@ -105,6 +105,7 @@
 
 %% 默认选项配置
 \ExecuteOptions{master,public,oneside,win,a4paper,sub4section}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 
 %% 引用ctexbook: 小4,1.5倍行距

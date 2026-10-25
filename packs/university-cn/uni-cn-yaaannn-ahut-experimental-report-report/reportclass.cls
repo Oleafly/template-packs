@@ -1,7 +1,7 @@
 \ProvidesClass{reportclass}[2023/03/14 v1.0 Report class]
 
 % \documentclass{ctexart}
-\LoadClass{ctexart}
+\LoadClass[fontset=fandol]{ctexart}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{titlesec}

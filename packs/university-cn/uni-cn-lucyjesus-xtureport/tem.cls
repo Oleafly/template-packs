@@ -7,6 +7,7 @@
 
 % 将所有未知选项转交给基础类
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexart}}
+\PassOptionsToClass{fontset=fandol}{ctexart}
 \ProcessOptions\relax
 
 % 基础类: ctex(中文排版)

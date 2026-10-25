@@ -2,7 +2,7 @@
 \ProvidesClass{kustthesis}[2026/03/12 KUST Thesis Template]
 
 % 基础文档类：基于 ctexbook
-\LoadClass[a4paper, 12pt, openany, twoside]{ctexbook}
+\LoadClass[a4paper, 12pt, openany, twoside, fontset=fandol]{ctexbook}
 
 % ==========================================
 % 宏包引入

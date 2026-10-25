@@ -36,6 +36,7 @@
 \DeclareBoolOption[true]{pageouter}
 \DeclareComplementaryOption{pagecenter}{pageouter}
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{ctexbook}}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessKeyvalOptions{ustc@opt}
 \ifustc@opt@bachelor
     \ustc@page@onesidetrue

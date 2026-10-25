@@ -1,7 +1,7 @@
 % 定义包名
 \ProvidesClass{main}
 \LoadClass[a4paper]{article}
-\RequirePackage[heading]{ctex} % Required for the Chinese and the corresponding section setting
+\RequirePackage[heading,fontset=fandol]{ctex} % Required for the Chinese and the corresponding section setting
 \RequirePackage[includeheadfoot]{geometry} % Required for the Word-like page
 \geometry{top=1.5cm,bottom=1.75cm,left=30mm,right=30mm} % 上下左右的留白
 \RequirePackage{fancyhdr} % Required for custom headers

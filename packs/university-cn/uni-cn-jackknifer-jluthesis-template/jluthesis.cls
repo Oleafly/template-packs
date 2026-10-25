@@ -29,7 +29,7 @@
 % \RequirePackage{hyperref}   % 超链接
 \RequirePackage{afterpage}
 \RequirePackage{diagbox}
-\RequirePackage[UTF8,heading = true]{ctex}
+\RequirePackage[UTF8,heading = true,fontset=fandol]{ctex}
 \RequirePackage{xeCJKfntef}
 \RequirePackage{amsmath,amssymb,amsfonts,mathrsfs}
 \RequirePackage{graphicx}

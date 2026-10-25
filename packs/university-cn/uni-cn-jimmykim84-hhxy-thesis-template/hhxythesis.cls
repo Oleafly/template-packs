@@ -9,9 +9,9 @@
 %%
 %%  依据：《怀化学院本科毕业论文(设计、创作)撰写规范及装订要求》
 %%        （"本科生毕业论文格式.doc"，下称《规范》）
-%%  编译：xelatex（依赖 fontspec / xeCJK 调用系统中文与西文字体）
-%%  平台字体：自动识别 Windows / macOS 选用对应系统字体
-%%           （亦可显式指定 [winfonts] / [macfonts] 覆盖自动判断）
+%%  编译：xelatex（依赖 fontspec / xeCJK 调用中文与西文字体）
+%%  中文字体：默认使用 Fandol 字体（随 TeX 发行版提供）
+%%           （可显式指定 [winfonts] 改用 Windows 系统字体）
 %%
 %%  凡范本（毕业设计（范本）.docx）与《规范》冲突处，一律以《规范》为准，
 %%  相关取舍已在 %%【规范】 注释中说明。
@@ -29,20 +29,11 @@
 \DeclareOption{twoside}{\hhxy@twosidetrue}
 \DeclareOption{oneside}{\hhxy@twosidefalse}
 \DeclareOption{winfonts}{\hhxy@winfontstrue\hhxy@fontsoverridetrue}   % Windows 字体方案（显式覆盖）
-\DeclareOption{macfonts}{\hhxy@winfontsfalse\hhxy@fontsoverridetrue}  % macOS 字体方案（显式覆盖）
+\DeclareOption{macfonts}{\hhxy@winfontsfalse\hhxy@fontsoverridetrue}  % Fandol 字体方案（默认）
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexart}}
+\PassOptionsToClass{fontset=fandol}{ctexart}
 \ProcessOptions\relax
 
-%% 自动按操作系统选择字体方案：Windows → winfonts，其余(macOS/Linux) → macfonts。
-%% 若用户显式给了 [winfonts]/[macfonts]，则以手动指定为准（\hhxy@fontsoverride）。
-\ifhhxy@fontsoverride\else
-  \RequirePackage{expl3}%
-  \ExplSyntaxOn
-  \sys_if_platform_windows:TF
-    { \hhxy@winfontstrue }
-    { \hhxy@winfontsfalse }
-  \ExplSyntaxOff
-\fi
 
 \ifhhxy@twoside
   \PassOptionsToClass{twoside}{ctexart}
@@ -82,22 +73,22 @@
 %%   论文题目 3号黑体（中文）/ 3号 Times New Roman（英文）；大、小标题 小4号黑体；
 %%   正文 小4号仿宋；页码 5号仿宋；**数字和字母 Times New Roman 体**；参考文献 5号仿宋。
 %% 规范 6. 摘要：英文 "Abstract"/"Key words" 4号 Times New Roman；英文摘要内容与具体关键词 小4号 Times New Roman。
-%% 实施：正文主字体 = Times New Roman（数字字母自动走 TNR），CJK 主字体 = STFangsong（中文走仿宋）；
-%%       封面用宋体（Songti SC ≈ 新宋体）；
+%% 实施：正文主字体 = Times New Roman（数字字母自动走 TNR），CJK 主字体 = FandolFang（中文走仿宋）；
+%%       封面用宋体（FandolSong）；
 %%       **把 \CJKrmdefault（ctex 默认正文家族）显式重定向到 zhfs（仿宋）**，避免 ctex/xeCJK
 %%       内部默认（rm=STSong）误被任何位置使用，从而保证正文与摘要中文均为仿宋。
 \newcommand*{\hhxy@setupfonts@mac}{%
   \setmainfont{Times New Roman}%
   \setmonofont{Times New Roman}%               % 行内代码标识符也用 TNR（范本/规范3：字母一律TNR）
-  \setCJKmainfont{STFangsong}[BoldFont = {Heiti SC}, ItalicFont = {Kaiti SC}]%
-  \setCJKsansfont{Heiti SC}[BoldFont = {Heiti SC}]%
-  \setCJKmonofont{STFangsong}%                 % 行内代码里的中文同样用仿宋
-  \setCJKfamilyfont{zhsong}{Songti SC}[BoldFont = {Heiti SC}, ItalicFont = {Kaiti SC}]%
-  %% 封面标签专用：宋体真粗体（Songti SC 自带 Bold 字重，不换成黑体）
-  \setCJKfamilyfont{zhsongbd}{Songti SC}[BoldFont = {Songti SC Bold}]%
-  \setCJKfamilyfont{zhhei}{Heiti SC}[BoldFont = {Heiti SC}]%
-  \setCJKfamilyfont{zhfs}{STFangsong}[BoldFont = {Heiti SC}, ItalicFont = {Kaiti SC}]%
-  \setCJKfamilyfont{zhkai}{Kaiti SC}[BoldFont = {Heiti SC}]%
+  \setCJKmainfont{FandolFang-Regular.otf}[BoldFont = FandolHei-Regular.otf, ItalicFont = FandolKai-Regular.otf]%
+  \setCJKsansfont{FandolHei-Regular.otf}[BoldFont = FandolHei-Regular.otf]%
+  \setCJKmonofont{FandolFang-Regular.otf}%                 % 行内代码里的中文同样用仿宋
+  \setCJKfamilyfont{zhsong}{FandolSong-Regular.otf}[BoldFont = FandolHei-Regular.otf, ItalicFont = FandolKai-Regular.otf]%
+  %% 封面标签专用：宋体真粗体（FandolSong 自带 Bold 字重，不换成黑体）
+  \setCJKfamilyfont{zhsongbd}{FandolSong-Regular.otf}[BoldFont = FandolSong-Bold.otf]%
+  \setCJKfamilyfont{zhhei}{FandolHei-Regular.otf}[BoldFont = FandolHei-Regular.otf]%
+  \setCJKfamilyfont{zhfs}{FandolFang-Regular.otf}[BoldFont = FandolHei-Regular.otf, ItalicFont = FandolKai-Regular.otf]%
+  \setCJKfamilyfont{zhkai}{FandolKai-Regular.otf}[BoldFont = FandolHei-Regular.otf]%
 }
 \newcommand*{\hhxy@setupfonts@win}{%
   \setmainfont{Times New Roman}%
@@ -119,8 +110,8 @@
   \hhxy@setupfonts@mac
 \fi
 
-%% 默认中文正文字族由 \setCJKmainfont{STFangsong} 负责映射（见上），
-%% ctex 的默认 rm 族会自动指向 STFangsong（仿宋），正文与摘要中文一致。
+%% 默认中文正文字族由 \setCJKmainfont{FandolFang-Regular.otf} 负责映射（见上），
+%% ctex 的默认 rm 族会自动指向 FandolFang（仿宋），正文与摘要中文一致。
 %% 注意：不要再对 \CJKrmdefault 做任何重定义，否则会破坏该映射导致误用宋体。
 %% 中文字体切换命令（覆盖 ctex 预设，确保黑体/仿宋/宋体为规范所指字体）
 \def\songti{\CJKfamily{zhsong}}

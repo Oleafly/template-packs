@@ -2,7 +2,7 @@
 \ProvidesClass{nwputhesis}
 [2025/12/20 v0.9.0 Standard LaTeX Template for NWPU thesis]
 % Loading Class
-\LoadClass[12pt,fontset=none]{ctexart}
+\LoadClass[12pt,fontset=fandol]{ctexart}
 % Loading Package
 \RequirePackage{ifxetex}
 \RequireXeTeX
@@ -40,9 +40,7 @@
 % 字体设置
 \RequirePackage{xeCJK}
 \setmainfont{Times New Roman}
-\setCJKmainfont{simsun.ttc}[AutoFakeSlant,AutoFakeBold]
-\newCJKfontfamily{\blackti}{simhei.ttf}
-\setCJKmonofont{simsun.ttc}[AutoFakeSlant,AutoFakeBold]
+\newCJKfontfamily{\blackti}{FandolHei-Regular.otf}
 % 行间距设置
 \RequirePackage{setspace}
 \linespread{1.3541667}

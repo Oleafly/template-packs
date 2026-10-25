@@ -6,7 +6,7 @@
 %%% ---- Load Packages ---- %%%
 % For Chinese characters, both XeCJK and ctex are ok
 %\RequirePackage{xeCJK}
-\RequirePackage{ctex}
+\RequirePackage[fontset=fandol]{ctex}
 
 % For overall page settings
 \RequirePackage{geometry}
@@ -45,7 +45,7 @@ citecolor=black,urlcolor=black]{hyperref}
 \renewcommand\thesubsubsection{(\arabic{subsubsection})}
 \newlist{clause}{enumerate}{1}
 \setlist[clause]{fullwidth,itemindent=2em,label=(\arabic*)}
-\newCJKfontfamily[song]\song{SimSun}[AutoFakeBold]
+\newCJKfontfamily[song]\song{FandolSong-Regular.otf}[AutoFakeBold]
 
 %\setmonofont{Lucida Console}
 %\setsansfont{SimHei}
@@ -115,7 +115,7 @@ citecolor=black,urlcolor=black]{hyperref}
 
 \setmainfont{Times New Roman}
 \newfontfamily\sectionef{Times New Roman}
-\newCJKfontfamily\sectioncf{kaishu}
+\newCJKfontfamily\sectioncf{FandolKai-Regular.otf}
 \setCJKfamilyfont{simkai}{SIMKAI.TTF}
 \renewcommand{\kaishu}{\CJKfamily{simkai}}
 \titleformat{\section}{\raggedright\normalsize\bfseries}{}{-1em}{}

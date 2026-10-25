@@ -4,7 +4,7 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{njit}
-\LoadClass[a4paper,zihao=-4,UTF8]{ctexart}
+\LoadClass[a4paper,zihao=-4,UTF8,fontset=fandol]{ctexart}
 \usepackage{calc} 
 \usepackage{array}
 \usepackage{listings}
