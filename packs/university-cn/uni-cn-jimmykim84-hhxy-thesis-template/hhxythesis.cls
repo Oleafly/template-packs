@@ -31,6 +31,7 @@
 \DeclareOption{winfonts}{\hhxy@winfontstrue\hhxy@fontsoverridetrue}   % Windows 字体方案（显式覆盖）
 \DeclareOption{macfonts}{\hhxy@winfontsfalse\hhxy@fontsoverridetrue}  % macOS 字体方案（显式覆盖）
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexart}}
+\PassOptionsToClass{fontset=fandol}{ctexart}
 \ProcessOptions\relax
 
 %% 自动按操作系统选择字体方案：Windows → winfonts，其余(macOS/Linux) → macfonts。

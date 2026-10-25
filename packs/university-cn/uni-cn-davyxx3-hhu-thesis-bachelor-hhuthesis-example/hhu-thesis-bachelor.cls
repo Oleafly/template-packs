@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}[2008/05/04]
 \ProvidesClass{hhu-thesis-bachelor}[2023/11/23 hhu-thesis-bachelor class]
-\LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto]{ctexbook}
+\LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto,fontset=fandol]{ctexbook}
 
 %%
 %% the setup of ctex package

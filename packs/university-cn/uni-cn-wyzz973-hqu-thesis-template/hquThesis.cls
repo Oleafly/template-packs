@@ -7,7 +7,7 @@
 \ProvidesClass{hquThesis}[2026/02/21 Huaqiao University Thesis Template]
 
 %% ---- 基础文档类 ----
-\LoadClass[a4paper, zihao=-4, UTF8, openright, twoside]{ctexbook}
+\LoadClass[a4paper, zihao=-4, UTF8, openright, twoside, fontset=fandol]{ctexbook}
 
 %% ---- 宏包加载 ----
 \RequirePackage{geometry}

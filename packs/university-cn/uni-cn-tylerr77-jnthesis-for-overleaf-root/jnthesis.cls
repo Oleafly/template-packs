@@ -22,7 +22,7 @@
 
 % \LoadClass[UTF8,zihao=-4,scheme=chinese,nonspace,punct,twoside,a4paper,openany,titlepage=true]{ctexbook} 	
 % 原版注释这个会报错 Unused global option(s):[nonspace,titlepage]
-\LoadClass[UTF8,zihao=-4,scheme=chinese,punct,twoside,a4paper,openany]{ctexbook}
+\LoadClass[UTF8,zihao=-4,scheme=chinese,punct,twoside,a4paper,openany,fontset=fandol]{ctexbook}
 
 \RequirePackage{hyperref} % 超链接
 \RequirePackage{graphicx} % 插图

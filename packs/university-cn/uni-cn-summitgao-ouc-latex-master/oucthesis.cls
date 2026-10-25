@@ -18,6 +18,7 @@
 \PassOptionsToClass{openany}{ctexbook}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ExecuteOptions{print}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 
 \PassOptionsToClass{scheme=chinese}{ctexbook}

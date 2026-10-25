@@ -3,7 +3,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{cuitthesis}[2026/05/27 CUIT master thesis class]
 
-\LoadClass[UTF8,zihao=-4,scheme=chinese,openany,fontset=mac]{ctexbook}
+\LoadClass[UTF8,zihao=-4,scheme=chinese,openany,fontset=fandol]{ctexbook}
 
 \RequirePackage{geometry}
 \RequirePackage{fontspec}

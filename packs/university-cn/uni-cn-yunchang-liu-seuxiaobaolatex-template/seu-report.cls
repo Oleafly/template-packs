@@ -3,7 +3,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{seu-report}[2026/03/11 SEU Anniversary Report Template]
 
-\LoadClass[a4paper, zihao=5, linespread=1.08]{ctexart}
+\LoadClass[a4paper, zihao=5, linespread=1.08, fontset=fandol]{ctexart}
 
 %% ========== 宏包 ==========
 \RequirePackage{geometry}

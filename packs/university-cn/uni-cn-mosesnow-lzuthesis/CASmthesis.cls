@@ -59,6 +59,7 @@
 \DeclareOption{dvipdfm}{\CAST@dvipsfalse}
 \DeclareOption{pdftex}{\CAST@dvipsfalse}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions
 \LoadClass[cs4size,a4paper,fancyhdr,fntef]{ctexbook}[2005/11/25]
 \RequirePackage{indentfirst}

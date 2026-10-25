@@ -142,6 +142,9 @@
         \PassOptionsToClass{\CurrentOption}{ctexart}%
     \fi\fi
 }
+\PassOptionsToClass{fontset=fandol}{ctexart}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
+\PassOptionsToClass{fontset=fandol}{ctexrep}
 \ProcessOptions\relax
 
 % ---------------------------------------------------------

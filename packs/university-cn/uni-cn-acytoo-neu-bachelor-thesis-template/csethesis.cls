@@ -1,5 +1,5 @@
 \ProvidesClass{csethesis}
-\LoadClass[twoside,openright,UTF8,cs4size,a4paper]{ctexbook}%要求从目录页双面，默认twoside
+\LoadClass[twoside,openright,UTF8,cs4size,a4paper,fontset=fandol]{ctexbook}%要求从目录页双面，默认twoside
 \RequirePackage{pdfpages}%插入pdf文档
 
 % http://aao.neu.edu.cn/2018/1112/c2570a42991/pagem.htm 毕业设计要求

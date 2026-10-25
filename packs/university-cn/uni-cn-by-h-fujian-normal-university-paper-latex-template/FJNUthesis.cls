@@ -12,7 +12,7 @@
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{FJNUthesis}[2024/03/29 v1.0 Standard LaTeX documentclass]
-\LoadClass[a4paper,UTF8,openany,oneside,12pt,AutoFakeBold]{ctexart}
+\LoadClass[a4paper,UTF8,openany,oneside,12pt,AutoFakeBold,fontset=fandol]{ctexart}
 
 % 检查是否由xelatex编译
 \RequirePackage{ifxetex}

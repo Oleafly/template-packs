@@ -6,7 +6,7 @@
 %%% ---- Load Packages ---- %%%
 % For Chinese characters, both XeCJK and ctex are ok
 %\RequirePackage{xeCJK}
-\RequirePackage{ctex}
+\RequirePackage[fontset=fandol]{ctex}
 
 % For overall page settings
 \RequirePackage{geometry}

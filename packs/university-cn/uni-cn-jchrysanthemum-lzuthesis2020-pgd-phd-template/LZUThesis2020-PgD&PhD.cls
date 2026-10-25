@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{LZUThesis2020-PgD&PhD}[2020/05/10 V0.1.0 Thesis for LZUer PgD&PhD By Patrick Use 2021 standard]
-\LoadClass[12pt, a4paper, UTF8, openany,oneside]{ctexbook}
+\LoadClass[12pt, a4paper, UTF8, openany,oneside, fontset=fandol]{ctexbook}
 
 % 部分内容参考了https://github.com/suchot/LZUThesis2017，适配了2020最新的毕业论文要求
 

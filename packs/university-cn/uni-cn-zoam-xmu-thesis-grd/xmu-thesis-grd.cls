@@ -28,6 +28,7 @@
 \DeclareOption{pdf}{\xmu@pdftrue}
 \DeclareOption{compact}{\xmu@compacttrue}
 
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 \ifxmu@istwoside
 	\LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto]{ctexbook}

@@ -9,9 +9,9 @@
 \ProcessOptions
 
  \iflib
- \LoadClass[a4paper,zihao=-4,twoside,openany]{ctexbook}
+ \LoadClass[a4paper,zihao=-4,twoside,openany,fontset=fandol]{ctexbook}
  \else
- \LoadClass[a4paper,zihao=-4,twoside]{ctexbook}
+ \LoadClass[a4paper,zihao=-4,twoside,fontset=fandol]{ctexbook}
  \fi
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}

@@ -18,7 +18,7 @@
 %%%%%%%%%%%%%%%%%%%%%%% Load Packages %%%%%%%%%%%%%%%%%%%%%%
 %页面基本设置
 \RequirePackage[boldfont,slantfont]{xeCJK}
-\RequirePackage[cs4size,UTF8,heading=true]{ctex}
+\RequirePackage[cs4size,UTF8,heading=true,fontset=fandol]{ctex}
 \RequirePackage{xifthen, xparse, xstring, fancyhdr, etoolbox}
 
 \RequirePackage{amstext, amsmath, amssymb, amsfonts}

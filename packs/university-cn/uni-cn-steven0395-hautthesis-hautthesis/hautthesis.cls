@@ -24,6 +24,7 @@
 \DeclareOption{authoryear}{\@haut@numericalfalse}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \ExecuteOptions{doctor,chinese,print,super}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 \newif\if@haut@addtocspace
 \if@haut@pdf

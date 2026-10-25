@@ -35,7 +35,7 @@
 	\bjfu@error{XeLaTeX is required to compile this document}
 \fi
 
-\LoadClass[a4paper,UTF8,zihao=-4,oneside,AutoFakeBold,scheme=plain]{ctexbook}[2018/04/01]
+\LoadClass[a4paper,UTF8,zihao=-4,oneside,AutoFakeBold,scheme=plain,fontset=fandol]{ctexbook}[2018/04/01]
 
 % 引用的宏包和相应的定义
 % bjfusetup

@@ -7,7 +7,7 @@
 
 \RequirePackage{graphicx}
 \RequirePackage{titlesec}
-\RequirePackage[UTF8]{ctex}
+\RequirePackage[UTF8,fontset=fandol]{ctex}
 \RequirePackage{fancyhdr}
 \RequirePackage{hyperref}
 \RequirePackage{CJK}

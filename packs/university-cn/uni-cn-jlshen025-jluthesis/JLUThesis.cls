@@ -11,7 +11,7 @@
 %-------------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{JLUThesis}[2023/05/17 v1.3 jilin University Thesis document class]
-\LoadClass[UTF8, oneside, a4paper, 12pt]{ctexbook}       % 论文使用A4纸，默认小四号字体
+\LoadClass[UTF8, oneside, a4paper, 12pt, fontset=fandol]{ctexbook}       % 论文使用A4纸，默认小四号字体
 
 \RequirePackage{xcolor}
 \RequirePackage{tocloft}

@@ -6,7 +6,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{nitthesis}
 % Inherit from the article class
-\LoadClass[UTF8, 12pt,twoside,a4paper]{ctexart}
+\LoadClass[UTF8, 12pt,twoside,a4paper, fontset=fandol]{ctexart}
 
 % Add packages
 \RequirePackage{amssymb,mathrsfs,amsmath}

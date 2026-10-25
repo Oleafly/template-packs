@@ -34,6 +34,7 @@
 \DeclareOption{nonfulltimemaster}{\hhut@nonfulltimemastertrue}
 \DeclareOption{doctor}{\hhut@doctortrue}
 
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax
 \LoadClass[zihao=-4,a4paper,twoside,openright,UTF8,space=auto]{ctexbook}
 

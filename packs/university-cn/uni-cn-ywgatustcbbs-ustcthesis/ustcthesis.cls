@@ -51,6 +51,7 @@
 
 %Pass all unprocessed/unknown options to ctexbook. If a wrong option is specified, perhaps ctexbook will throw an error.
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions
 
 \LoadClass[cs4size,a4paper,fancyhdr,fntef]{ctexbook}

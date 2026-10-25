@@ -1,4 +1,4 @@
-\LoadClass[UTF8, openany, a4paper, oneside, zihao=-4]{ctexbook}
+\LoadClass[UTF8, openany, a4paper, oneside, zihao=-4, fontset=fandol]{ctexbook}
 
 % 目录章节格式（阿拉伯数字）
 \ctexset{

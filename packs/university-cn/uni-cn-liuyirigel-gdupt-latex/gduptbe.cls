@@ -109,6 +109,7 @@
 % use ctexbook class as basic template
 % and pass all declarations to class ctexbook
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexbook}}  
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions\relax   % doing notheing
 %set page size and default font
 \LoadClass[a4paper,UTF8,zihao=-4]{ctexbook}[2017/04/01]

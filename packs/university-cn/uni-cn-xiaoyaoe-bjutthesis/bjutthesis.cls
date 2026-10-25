@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}%
 \ProvidesClass{bjutthesis}[2019/4/23 v1.0 LaTeX document class]%
-\LoadClass[UTF8,a4paper,zihao=-4,twoside]{ctexbook}
+\LoadClass[UTF8,a4paper,zihao=-4,twoside,fontset=fandol]{ctexbook}
 \RequirePackage[paper=a4paper,left=31.7mm,right=31.7mm,top=25.4mm,bottom=25.4mm,headheight=15pt]{geometry}
 \RequirePackage{bm}
 \RequirePackage{hyperref}

@@ -37,7 +37,7 @@
 \ExecuteOptions{colorprint}
 \ProcessOptions\relax
 %% Loading Class
-\LoadClass[a4paper,12pt]{ctexart}
+\LoadClass[a4paper,12pt,fontset=fandol]{ctexart}
 %% Loading Package
 \RequirePackage{ifxetex}
 \RequireXeTeX

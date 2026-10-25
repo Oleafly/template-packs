@@ -55,6 +55,7 @@
 \DeclareBoolOption{nocolor}
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{ctexbook}}
 \kvsetkeys{shu}{raggedbottom,arialtitle}
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessKeyvalOptions*
 \LoadClass[a4paper,UTF8,zihao=-4,scheme=plain]{ctexbook}
 \PassOptionsToPackage{no-math}{fontspec}

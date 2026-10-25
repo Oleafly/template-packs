@@ -547,7 +547,7 @@
 
 \PassOptionsToPackage{no-math}{fontspec}% 为了能修改公式字体为times new roman
 \LoadClass[openany]{book}  % 基于标准book类，取消章节只从奇数页（openright）开始
-\RequirePackage[UTF8]{ctex}  % ctex 包含 xeCJK 包含 fontspec
+\RequirePackage[UTF8,fontset=fandol]{ctex}  % ctex 包含 xeCJK 包含 fontspec
 \RequirePackage{xeCJKfntef}  % 中文添加下划线需要
 \RequirePackage{calc}
 \RequirePackage{color}

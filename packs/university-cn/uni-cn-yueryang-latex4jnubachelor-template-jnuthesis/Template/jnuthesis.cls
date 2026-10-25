@@ -14,6 +14,7 @@
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{ctexart}} %其它选项
 
+\PassOptionsToClass{fontset=fandol}{ctexbook}
 \ProcessOptions %不可省略
 
 % 四号    小四号    五号      小五号
