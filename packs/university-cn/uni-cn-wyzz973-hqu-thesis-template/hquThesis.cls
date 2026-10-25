@@ -66,40 +66,7 @@
 
 % 封面字体：信息区楷体，题目/作者信息区宋体
 \newcommand{\hqu@coverkaifont}{\kaishu}
-\IfFileExists{/Users/sd3/Library/Fonts/KaiTi_GB2312.ttf}{%
-  \setCJKfamilyfont{hqucoverkai}[Path=/Users/sd3/Library/Fonts/]{KaiTi_GB2312.ttf}
-  \renewcommand{\hqu@coverkaifont}{\CJKfamily{hqucoverkai}}
-}{%
-  \IfFontExistsTF{KaiTi}{%
-    \setCJKfamilyfont{hqucoverkai}{KaiTi}
-    \renewcommand{\hqu@coverkaifont}{\CJKfamily{hqucoverkai}}
-  }{%
-    \IfFontExistsTF{Kaiti SC}{%
-      \setCJKfamilyfont{hqucoverkai}{Kaiti SC}
-      \renewcommand{\hqu@coverkaifont}{\CJKfamily{hqucoverkai}}
-    }{%
-      \IfFontExistsTF{STKaiti}{%
-        \setCJKfamilyfont{hqucoverkai}{STKaiti}
-        \renewcommand{\hqu@coverkaifont}{\CJKfamily{hqucoverkai}}
-      }{}%
-    }%
-  }%
-}
 \newcommand{\hqu@coversongfont}{\songti}
-\IfFontExistsTF{SimSun}{%
-  \setCJKfamilyfont{hqucoversong}{SimSun}[AutoFakeBold=2]
-  \renewcommand{\hqu@coversongfont}{\CJKfamily{hqucoversong}}
-}{%
-  \IfFontExistsTF{Songti SC}{%
-    \setCJKfamilyfont{hqucoversong}{Songti SC}[BoldFont=Songti SC Bold]
-    \renewcommand{\hqu@coversongfont}{\CJKfamily{hqucoversong}}
-  }{%
-    \IfFontExistsTF{STSong}{%
-      \setCJKfamilyfont{hqucoversong}{STSong}
-      \renewcommand{\hqu@coversongfont}{\CJKfamily{hqucoversong}}
-    }{}%
-  }%
-}
 
 %% ---- 行距设置 ----
 %% 小四号(12pt) × 1.3 ≈ 视觉上等效Word"固定行距20磅"

@@ -210,7 +210,7 @@
 % \setCJKfamilyfont{GDUPT@songti}{STSong}             %使用STsong 宋体
 % \newcommand{\songti}{\CJKfamily{GDUPT@songti}}
 
-\setCJKfamilyfont{GDUPT@kaiti}{STKaiti}             %使用STsong 楷体
+\setCJKfamilyfont{GDUPT@kaiti}{FandolKai-Regular.otf}             %使用 Fandol 楷体
 \newcommand{\kaiti}{\CJKfamily{GDUPT@kaiti}}
 
 % \setCJKfamilyfont{GDUPT@hwxk}{STXingkai}             %使用STXingkai华文行楷字体

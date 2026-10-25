@@ -230,8 +230,8 @@
 
 
 
-\setCJKfamilyfont{sectionfont}{SimHei} % 设置一级和二级标题字体为黑体
-\setCJKfamilyfont{subsectionfont}{SimHei} 
+\setCJKfamilyfont{sectionfont}{FandolHei-Regular.otf} % 设置一级和二级标题字体为黑体
+\setCJKfamilyfont{subsectionfont}{FandolHei-Regular.otf} 
 
 
 

@@ -176,7 +176,7 @@
 \ifustc@adobefont
 	\setCJKfamilyfont{verthei}[RawFeature={vertical:}]{Adobe Heiti Std}\relax
 \else%
-	\setCJKfamilyfont{verthei}[RawFeature={vertical:}]{SimHei}\relax
+	\setCJKfamilyfont{verthei}[RawFeature={vertical:}]{FandolHei-Regular.otf}\relax
 \fi
 \newcommand{\ustc@verthei}{\CJKfamily{verthei}}
 

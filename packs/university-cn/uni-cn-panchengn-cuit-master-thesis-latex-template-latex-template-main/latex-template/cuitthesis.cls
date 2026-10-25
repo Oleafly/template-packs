@@ -42,12 +42,7 @@
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
 \setmonofont{Menlo}
-\setCJKmainfont[AutoFakeBold=2.5]{Songti SC}
-\setCJKsansfont{Heiti SC}
-\setCJKmonofont{STFangsong}
-\setCJKfamilyfont{zhsong}[AutoFakeBold=2.5]{Songti SC}
-\setCJKfamilyfont{zhhei}{Heiti SC}
-\setCJKfamilyfont{cuitfangsong}[BoldFont=STFangsong]{STFangsong}
+\setCJKfamilyfont{cuitfangsong}{FandolFang-Regular.otf}
 \newcommand{\cuitfangsong}{\CJKfamily{cuitfangsong}}
 \newfontfamily{\cuitcoverlatinbold}{Times New Roman Bold}
 \newcommand{\cuitcoverinfofont}{\cuitfangsong\cuitcoverlatinbold\fontsize{14bp}{24bp}\selectfont}

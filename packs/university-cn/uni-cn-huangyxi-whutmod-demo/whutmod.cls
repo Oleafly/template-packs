@@ -105,22 +105,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \setlength\parindent{2em}
 \setmainfont{Times New Roman}
 \setsansfont{Arial}
-\setCJKfamilyfont{kai}[AutoFakeBold]{simkai.ttf}
+\setCJKfamilyfont{kai}[AutoFakeBold]{FandolKai-Regular.otf}
 \providecommand{\kai}{\CJKfamily{kai}}
-\setCJKfamilyfont{song}[AutoFakeBold]{SimSun}
+\setCJKfamilyfont{song}[AutoFakeBold]{FandolSong-Regular.otf}
 \providecommand{\song}{\CJKfamily{song}}
-\IfFontExistsTF{simfang}{
-	\setCJKfamilyfont{fs}[AutoFakeBold]{simfang}
-	\providecommand{\fs}{\CJKfamily{fs}}
-}{
-	\IfFontExistsTF{simfang.ttf}{
-		\setCJKfamilyfont{fs}[AutoFakeBold]{simfang.ttf}
-		\providecommand{\fs}{\CJKfamily{fs}}
-	}{
-		\ClassWarning{whutmod}{Font `simfang' not found, using `SimSun' instead}%
-		\providecommand{\fs}{\songti}
-	}
-}
+\setCJKfamilyfont{fs}[AutoFakeBold]{FandolFang-Regular.otf}
+\providecommand{\fs}{\CJKfamily{fs}}
 %\setCJKfamilyfont{fangsong}{STFangsong}
 %\newcommand*{\fangsong}{\CJKfamily{fangsong}}
 
