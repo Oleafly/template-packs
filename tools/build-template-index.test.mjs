@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
-import { buildDocuments, escapeCell, readTemplates, table } from "./build-template-index.mjs";
+import { buildDocuments, buildReadmeIndex, EN_STRINGS, escapeCell, readmeTranslations, readTemplates, replaceReadmeIndex, table } from "./build-template-index.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -65,10 +65,35 @@ test("checked-in indexes and README counts match the manifests", () => {
   const gallery = new Set(JSON.parse(readFileSync(join(root, "tools/website-template-ids.json"), "utf8")));
   const documents = buildDocuments(readTemplates(root), gallery);
   const readme = readFileSync(join(root, "README.md"), "utf8");
-  const start = readme.indexOf("## Template index\n");
-  const end = readme.indexOf("## Use a template\n", start);
-  assert.equal(readme.slice(start, end), documents.get("readme-index"));
+  assert.equal(replaceReadmeIndex(readme, documents.get("readme-index")), readme);
   for (const [path, content] of documents) {
     if (path.startsWith("docs/")) assert.equal(readFileSync(join(root, path), "utf8"), content, path);
+  }
+});
+
+test("translated index tables use their own strings and lead back to the repository root", () => {
+  const templates = [
+    { name: "Paper", id: "paper", group: "latex", pack: "papers", path: "packs/papers/paper", main_doc: "main.tex", preview: "packs/papers/paper/preview.png" },
+  ];
+  const strings = { ...EN_STRINGS, numberLocale: "de-DE", indexHeading: "Vorlagen", intro: "**{count}** Vorlagen.", files: "Dateien", view: "Ansehen", browseAll: "Alle {count} {engine}-Vorlagen" };
+  const index = buildReadmeIndex(templates, new Set(["paper"]), strings, "../../");
+  assert.match(index, /^## Vorlagen\n\n\*\*1\*\* Vorlagen\./);
+  assert.match(index, /\[Paper\]\(\.\.\/\.\.\/packs\/papers\/paper\/main\.tex\) \| \[Dateien\]\(\.\.\/\.\.\/packs\/papers\/paper\/\) \| \[Preview\]\(\.\.\/\.\.\/packs\/papers\/paper\/preview\.png\) \| \[Ansehen\]/);
+  assert.match(index, /\[Alle 1 LaTeX-Vorlagen\]\(\.\.\/\.\.\/docs\/templates-latex\.md\)/);
+  assert.throws(() => replaceReadmeIndex("# Title\n", index, strings), /index headings are missing/);
+});
+
+test("every translated README has table strings and an up-to-date index", () => {
+  const gallery = new Set(JSON.parse(readFileSync(join(root, "tools/website-template-ids.json"), "utf8")));
+  const templates = readTemplates(root);
+  const translations = readmeTranslations(root);
+  const files = readdirSync(join(root, "docs/readme-translations")).filter((name) => /^README\.[^.]+\.md$/.test(name)).sort();
+  assert.deepEqual(translations.map(({ path }) => path.split("/").pop()).sort(), files);
+  const locales = JSON.parse(readFileSync(join(root, "tools/readme-locales.json"), "utf8"));
+  for (const { code, path, strings } of translations) {
+    assert.deepEqual(Object.keys(locales[code]).sort(), Object.keys(EN_STRINGS).sort(), `${code} must translate every string`);
+    assert.ok(existsSync(join(root, path)), path);
+    const readme = readFileSync(join(root, path), "utf8");
+    assert.equal(replaceReadmeIndex(readme, buildReadmeIndex(templates, gallery, strings, "../../"), strings), readme, path);
   }
 });

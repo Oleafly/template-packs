@@ -1,5 +1,7 @@
 # LaTeX, Typst & Markdown template packs
 
+[Deutsch](docs/readme-translations/README.de.md) | **English** | [Español](docs/readme-translations/README.es.md) | [Français](docs/readme-translations/README.fr.md) | [日本語](docs/readme-translations/README.ja.md) | [한국어](docs/readme-translations/README.ko.md) | [Português](docs/readme-translations/README.pt.md) | [Русский](docs/readme-translations/README.ru.md) | [中文](docs/readme-translations/README.zh.md) | [العربية](docs/readme-translations/README.ar.md)
+
 Spend less time setting up the page. Find a starting point for your next
 paper, thesis, CV, talk, poster, or report, then make it yours.
 
