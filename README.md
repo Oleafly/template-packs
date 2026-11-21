@@ -31,11 +31,11 @@ Example data and correspondence are labeled so you can replace them with your ow
 
 ## Template index
 
-This collection contains **5,174 templates**. Choose an engine for the full index, or open a starter table below.
+This collection contains **5,187 templates**. Choose an engine for the full index, or open a starter table below.
 
 | Engine | Templates | With previews |
 | --- | ---: | ---: |
-| [LaTeX](docs/templates-latex.md) | 1,814 | 1,814 |
+| [LaTeX](docs/templates-latex.md) | 1,827 | 1,827 |
 | [Typst](docs/templates-typst.md) | 3,357 | 3,357 |
 | [Markdown](docs/templates-markdown.md) | 3 | 3 |
 
@@ -152,7 +152,7 @@ Template names open the main source file. **All files** opens the complete folde
 | [Worksheet](packs/coursework/worksheet/main.tex) | [Files](packs/coursework/worksheet/) | [Preview](packs/coursework/worksheet/preview.png) | [View](https://oleafly.com/templates/worksheet/) |
 | [Year Calendar](packs/creative-misc/calendar-year/main.tex) | [Files](packs/creative-misc/calendar-year/) | [Preview](packs/creative-misc/calendar-year/preview.png) | [View](https://oleafly.com/templates/calendar-year/) |
 
-[Browse all 1,814 LaTeX templates](docs/templates-latex.md).
+[Browse all 1,827 LaTeX templates](docs/templates-latex.md).
 
 </details>
 

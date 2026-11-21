@@ -2300,6 +2300,13 @@
 \RequirePackage{mfirstuc}                       % Provides \capitalisewords to capitlize 1st letter of text, incl. modifiable list of words to ignore (e.g. of, or, etc.)
 \RequirePackage[normalem]{ulem}                 % Provides text underlining/strikethrough commands and customizations
 \RequirePackage{txfonts}
+\RequirePackage{iftex}
+\ifPDFTeX\else
+  \RequirePackage[no-math]{fontspec}
+  \setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \setmonofont{texgyrecursor}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\fi
 \RequirePackage{amsfonts}
 \RequirePackage{bbm}                            % Blackboard bold font package (e.g. creating symbols for reals (R), integers (Z), etc.)
 %\RequirePackage{bickham}                       % Script font style package

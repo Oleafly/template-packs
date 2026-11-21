@@ -36,6 +36,13 @@
 \usepackage{amsfonts}
 \usepackage{ifthen}
 \usepackage{times}
+\RequirePackage{iftex}
+\ifPDFTeX\else
+  \RequirePackage[no-math]{fontspec}
+  \setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \setmonofont{texgyrecursor}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\fi
 \usepackage{chngpage}
 \usepackage{indentfirst}
 \setlength{\parindent}{2em}

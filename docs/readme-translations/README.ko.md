@@ -22,11 +22,11 @@
 
 ## 템플릿 목록
 
-이 컬렉션에는 **템플릿 5,174개**가 있습니다. 엔진을 골라 전체 목록을 보거나 아래에서 시작 템플릿 표를 열어 보세요.
+이 컬렉션에는 **템플릿 5,187개**가 있습니다. 엔진을 골라 전체 목록을 보거나 아래에서 시작 템플릿 표를 열어 보세요.
 
 | 엔진 | 템플릿 수 | 미리보기 포함 |
 | --- | ---: | ---: |
-| [LaTeX](../../docs/templates-latex.md) | 1,814 | 1,814 |
+| [LaTeX](../../docs/templates-latex.md) | 1,827 | 1,827 |
 | [Typst](../../docs/templates-typst.md) | 3,357 | 3,357 |
 | [Markdown](../../docs/templates-markdown.md) | 3 | 3 |
 
@@ -143,7 +143,7 @@
 | [Worksheet](../../packs/coursework/worksheet/main.tex) | [파일](../../packs/coursework/worksheet/) | [미리보기](../../packs/coursework/worksheet/preview.png) | [보기](https://oleafly.com/templates/worksheet/) |
 | [Year Calendar](../../packs/creative-misc/calendar-year/main.tex) | [파일](../../packs/creative-misc/calendar-year/) | [미리보기](../../packs/creative-misc/calendar-year/preview.png) | [보기](https://oleafly.com/templates/calendar-year/) |
 
-[LaTeX 템플릿 1,814개 모두 보기](../../docs/templates-latex.md).
+[LaTeX 템플릿 1,827개 모두 보기](../../docs/templates-latex.md).
 
 </details>
 

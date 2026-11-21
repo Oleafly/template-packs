@@ -31,11 +31,11 @@ Oleafly для этого не нужен.
 
 ## Список шаблонов
 
-Шаблонов в коллекции: **5 174**. Выберите движок, чтобы открыть полный список, или раскройте таблицу стартовых шаблонов ниже.
+Шаблонов в коллекции: **5 187**. Выберите движок, чтобы открыть полный список, или раскройте таблицу стартовых шаблонов ниже.
 
 | Движок | Шаблоны | С превью |
 | --- | ---: | ---: |
-| [LaTeX](../../docs/templates-latex.md) | 1 814 | 1 814 |
+| [LaTeX](../../docs/templates-latex.md) | 1 827 | 1 827 |
 | [Typst](../../docs/templates-typst.md) | 3 357 | 3 357 |
 | [Markdown](../../docs/templates-markdown.md) | 3 | 3 |
 
@@ -152,7 +152,7 @@ Oleafly для этого не нужен.
 | [Worksheet](../../packs/coursework/worksheet/main.tex) | [Файлы](../../packs/coursework/worksheet/) | [Превью](../../packs/coursework/worksheet/preview.png) | [Открыть](https://oleafly.com/templates/worksheet/) |
 | [Year Calendar](../../packs/creative-misc/calendar-year/main.tex) | [Файлы](../../packs/creative-misc/calendar-year/) | [Превью](../../packs/creative-misc/calendar-year/preview.png) | [Открыть](https://oleafly.com/templates/calendar-year/) |
 
-[Открыть все шаблоны LaTeX (1 814)](../../docs/templates-latex.md).
+[Открыть все шаблоны LaTeX (1 827)](../../docs/templates-latex.md).
 
 </details>
 

@@ -26,6 +26,13 @@
 \RequirePackage{titlesec} % Rule 7: Section breaks
 \RequirePackage{etoolbox} % Rule 8: Patching environments
 \RequirePackage{mathptmx} % Rule 4: Professional 12pt font (Times clone)
+\RequirePackage{iftex}
+\ifPDFTeX\else
+  \RequirePackage[no-math]{fontspec}
+  \setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \setmonofont{texgyrecursor}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\fi
 \RequirePackage{graphicx} % For figures
 \RequirePackage{caption} % Rule 10: Caption formatting
 \RequirePackage{tocloft} % Rule 12: ToC styling

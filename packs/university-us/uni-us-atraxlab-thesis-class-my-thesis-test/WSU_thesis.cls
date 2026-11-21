@@ -57,6 +57,13 @@
 % Page margins: 1.5 on left, 1 on top (2 on top for frontmatter and chapter starts), 1 on left and bottom
 \RequirePackage[letterpaper,top=1in,bottom=1in,left=1.5in,right=1in]{geometry}
 \RequirePackage{times}  % Default font Times New Roman
+\RequirePackage{iftex}
+\ifPDFTeX\else
+  \RequirePackage[no-math]{fontspec}
+  \setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \setmonofont{texgyrecursor}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\fi
 
 %% More declarations
 % If I need to modify chapter header formats (right now no, see \titlespacing below)

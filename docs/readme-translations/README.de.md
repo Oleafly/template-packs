@@ -31,11 +31,11 @@ Beispieldaten und Beispielkorrespondenz sind als solche gekennzeichnet, damit du
 
 ## Vorlagenverzeichnis
 
-Vorlagen in dieser Sammlung: **5.174**. Wähle eine Engine für das vollständige Verzeichnis oder öffne unten eine der Tabellen mit Startvorlagen.
+Vorlagen in dieser Sammlung: **5.187**. Wähle eine Engine für das vollständige Verzeichnis oder öffne unten eine der Tabellen mit Startvorlagen.
 
 | Engine | Vorlagen | Mit Vorschau |
 | --- | ---: | ---: |
-| [LaTeX](../../docs/templates-latex.md) | 1.814 | 1.814 |
+| [LaTeX](../../docs/templates-latex.md) | 1.827 | 1.827 |
 | [Typst](../../docs/templates-typst.md) | 3.357 | 3.357 |
 | [Markdown](../../docs/templates-markdown.md) | 3 | 3 |
 
@@ -152,7 +152,7 @@ Der Vorlagenname öffnet die Hauptquelldatei. **Alle Dateien** öffnet den kompl
 | [Worksheet](../../packs/coursework/worksheet/main.tex) | [Dateien](../../packs/coursework/worksheet/) | [Vorschau](../../packs/coursework/worksheet/preview.png) | [Ansehen](https://oleafly.com/templates/worksheet/) |
 | [Year Calendar](../../packs/creative-misc/calendar-year/main.tex) | [Dateien](../../packs/creative-misc/calendar-year/) | [Vorschau](../../packs/creative-misc/calendar-year/preview.png) | [Ansehen](https://oleafly.com/templates/calendar-year/) |
 
-[Alle LaTeX-Vorlagen ansehen (1.814)](../../docs/templates-latex.md).
+[Alle LaTeX-Vorlagen ansehen (1.827)](../../docs/templates-latex.md).
 
 </details>
 

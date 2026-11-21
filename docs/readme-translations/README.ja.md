@@ -22,11 +22,11 @@
 
 ## テンプレート一覧
 
-このコレクションには**5,174件のテンプレート**があります。エンジンを選んで全体の一覧を見るか、下にあるスターターの表を開いてください。
+このコレクションには**5,187件のテンプレート**があります。エンジンを選んで全体の一覧を見るか、下にあるスターターの表を開いてください。
 
 | エンジン | テンプレート数 | プレビューあり |
 | --- | ---: | ---: |
-| [LaTeX](../../docs/templates-latex.md) | 1,814 | 1,814 |
+| [LaTeX](../../docs/templates-latex.md) | 1,827 | 1,827 |
 | [Typst](../../docs/templates-typst.md) | 3,357 | 3,357 |
 | [Markdown](../../docs/templates-markdown.md) | 3 | 3 |
 
@@ -143,7 +143,7 @@
 | [Worksheet](../../packs/coursework/worksheet/main.tex) | [ファイル](../../packs/coursework/worksheet/) | [プレビュー](../../packs/coursework/worksheet/preview.png) | [見る](https://oleafly.com/templates/worksheet/) |
 | [Year Calendar](../../packs/creative-misc/calendar-year/main.tex) | [ファイル](../../packs/creative-misc/calendar-year/) | [プレビュー](../../packs/creative-misc/calendar-year/preview.png) | [見る](https://oleafly.com/templates/calendar-year/) |
 
-[LaTeXのテンプレート1,814件をすべて見る](../../docs/templates-latex.md)。
+[LaTeXのテンプレート1,827件をすべて見る](../../docs/templates-latex.md)。
 
 </details>
 

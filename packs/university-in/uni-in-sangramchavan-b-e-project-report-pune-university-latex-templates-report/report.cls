@@ -21,6 +21,13 @@
 \RequirePackage{float}
 \RequirePackage[a4paper,bindingoffset=0.2in,left=1.5in,right=1in,top=1in,bottom=1.25in,footskip=.25in]{geometry}
 \RequirePackage{mathptmx}
+\RequirePackage{iftex}
+\ifPDFTeX\else
+  \RequirePackage[no-math]{fontspec}
+  \setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \setmonofont{texgyrecursor}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\fi
 \RequirePackage{anyfontsize}
 \RequirePackage{setspace}
 \RequirePackage{fancyhdr}

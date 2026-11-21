@@ -31,11 +31,11 @@ Los datos y la correspondencia de ejemplo están marcados para que puedas sustit
 
 ## Índice de plantillas
 
-Plantillas en esta colección: **5174**. Elige un motor para ver el índice completo o abre una de las tablas de plantillas iniciales de abajo.
+Plantillas en esta colección: **5187**. Elige un motor para ver el índice completo o abre una de las tablas de plantillas iniciales de abajo.
 
 | Motor | Plantillas | Con vista previa |
 | --- | ---: | ---: |
-| [LaTeX](../../docs/templates-latex.md) | 1814 | 1814 |
+| [LaTeX](../../docs/templates-latex.md) | 1827 | 1827 |
 | [Typst](../../docs/templates-typst.md) | 3357 | 3357 |
 | [Markdown](../../docs/templates-markdown.md) | 3 | 3 |
 
@@ -152,7 +152,7 @@ Los nombres de las plantillas abren el archivo fuente principal. **Todos los arc
 | [Worksheet](../../packs/coursework/worksheet/main.tex) | [Archivos](../../packs/coursework/worksheet/) | [Vista previa](../../packs/coursework/worksheet/preview.png) | [Ver](https://oleafly.com/templates/worksheet/) |
 | [Year Calendar](../../packs/creative-misc/calendar-year/main.tex) | [Archivos](../../packs/creative-misc/calendar-year/) | [Vista previa](../../packs/creative-misc/calendar-year/preview.png) | [Ver](https://oleafly.com/templates/calendar-year/) |
 
-[Explora todas las plantillas de LaTeX (1814)](../../docs/templates-latex.md).
+[Explora todas las plantillas de LaTeX (1827)](../../docs/templates-latex.md).
 
 </details>
 
