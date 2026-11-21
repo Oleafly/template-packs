@@ -22,11 +22,11 @@
 
 ## 模板索引
 
-本合集共有 **5,174 个模板**。选择一个引擎查看完整索引，或展开下方的起始模板表格。
+本合集共有 **5,187 个模板**。选择一个引擎查看完整索引，或展开下方的起始模板表格。
 
 | 引擎 | 模板数 | 带预览 |
 | --- | ---: | ---: |
-| [LaTeX](../../docs/templates-latex.md) | 1,814 | 1,814 |
+| [LaTeX](../../docs/templates-latex.md) | 1,827 | 1,827 |
 | [Typst](../../docs/templates-typst.md) | 3,357 | 3,357 |
 | [Markdown](../../docs/templates-markdown.md) | 3 | 3 |
 
@@ -143,7 +143,7 @@
 | [Worksheet](../../packs/coursework/worksheet/main.tex) | [文件](../../packs/coursework/worksheet/) | [预览](../../packs/coursework/worksheet/preview.png) | [查看](https://oleafly.com/templates/worksheet/) |
 | [Year Calendar](../../packs/creative-misc/calendar-year/main.tex) | [文件](../../packs/creative-misc/calendar-year/) | [预览](../../packs/creative-misc/calendar-year/preview.png) | [查看](https://oleafly.com/templates/calendar-year/) |
 
-[浏览全部 1,814 个 LaTeX 模板](../../docs/templates-latex.md)。
+[浏览全部 1,827 个 LaTeX 模板](../../docs/templates-latex.md)。
 
 </details>
 

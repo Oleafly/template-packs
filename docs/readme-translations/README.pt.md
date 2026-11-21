@@ -31,11 +31,11 @@ Os dados e a correspondência de exemplo estão identificados para você substit
 
 ## Índice de modelos
 
-Modelos nesta coleção: **5.174**. Escolha um mecanismo para ver o índice completo ou abra uma das tabelas de modelos iniciais abaixo.
+Modelos nesta coleção: **5.187**. Escolha um mecanismo para ver o índice completo ou abra uma das tabelas de modelos iniciais abaixo.
 
 | Mecanismo | Modelos | Com prévia |
 | --- | ---: | ---: |
-| [LaTeX](../../docs/templates-latex.md) | 1.814 | 1.814 |
+| [LaTeX](../../docs/templates-latex.md) | 1.827 | 1.827 |
 | [Typst](../../docs/templates-typst.md) | 3.357 | 3.357 |
 | [Markdown](../../docs/templates-markdown.md) | 3 | 3 |
 
@@ -152,7 +152,7 @@ Os nomes dos modelos abrem o arquivo-fonte principal. **Todos os arquivos** abre
 | [Worksheet](../../packs/coursework/worksheet/main.tex) | [Arquivos](../../packs/coursework/worksheet/) | [Prévia](../../packs/coursework/worksheet/preview.png) | [Ver](https://oleafly.com/templates/worksheet/) |
 | [Year Calendar](../../packs/creative-misc/calendar-year/main.tex) | [Arquivos](../../packs/creative-misc/calendar-year/) | [Prévia](../../packs/creative-misc/calendar-year/preview.png) | [Ver](https://oleafly.com/templates/calendar-year/) |
 
-[Explore todos os modelos de LaTeX (1.814)](../../docs/templates-latex.md).
+[Explore todos os modelos de LaTeX (1.827)](../../docs/templates-latex.md).
 
 </details>
 

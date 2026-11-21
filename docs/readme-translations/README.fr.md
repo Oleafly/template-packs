@@ -31,11 +31,11 @@ Les données et la correspondance d'exemple sont signalées comme telles, pour q
 
 ## Index des modèles
 
-Nombre de modèles dans cette collection : **5 174**. Choisissez un moteur pour consulter l'index complet, ou ouvrez l'un des tableaux de modèles de démarrage ci-dessous.
+Nombre de modèles dans cette collection : **5 187**. Choisissez un moteur pour consulter l'index complet, ou ouvrez l'un des tableaux de modèles de démarrage ci-dessous.
 
 | Moteur | Modèles | Avec aperçu |
 | --- | ---: | ---: |
-| [LaTeX](../../docs/templates-latex.md) | 1 814 | 1 814 |
+| [LaTeX](../../docs/templates-latex.md) | 1 827 | 1 827 |
 | [Typst](../../docs/templates-typst.md) | 3 357 | 3 357 |
 | [Markdown](../../docs/templates-markdown.md) | 3 | 3 |
 
@@ -152,7 +152,7 @@ Le nom d'un modèle ouvre son fichier source principal. **Tous les fichiers** ou
 | [Worksheet](../../packs/coursework/worksheet/main.tex) | [Fichiers](../../packs/coursework/worksheet/) | [Aperçu](../../packs/coursework/worksheet/preview.png) | [Voir](https://oleafly.com/templates/worksheet/) |
 | [Year Calendar](../../packs/creative-misc/calendar-year/main.tex) | [Fichiers](../../packs/creative-misc/calendar-year/) | [Aperçu](../../packs/creative-misc/calendar-year/preview.png) | [Voir](https://oleafly.com/templates/calendar-year/) |
 
-[Parcourir tous les modèles LaTeX (1 814)](../../docs/templates-latex.md).
+[Parcourir tous les modèles LaTeX (1 827)](../../docs/templates-latex.md).
 
 </details>
 

@@ -31,11 +31,11 @@ Oleafly اختياري.
 
 ## فهرس القوالب
 
-عدد القوالب في هذه المجموعة: **5,174**. اختر محركًا لعرض فهرسه الكامل، أو افتح أحد جداول قوالب البداية أدناه.
+عدد القوالب في هذه المجموعة: **5,187**. اختر محركًا لعرض فهرسه الكامل، أو افتح أحد جداول قوالب البداية أدناه.
 
 | المحرك | القوالب | مع معاينة |
 | --- | ---: | ---: |
-| [LaTeX](../../docs/templates-latex.md) | 1,814 | 1,814 |
+| [LaTeX](../../docs/templates-latex.md) | 1,827 | 1,827 |
 | [Typst](../../docs/templates-typst.md) | 3,357 | 3,357 |
 | [Markdown](../../docs/templates-markdown.md) | 3 | 3 |
 
@@ -152,7 +152,7 @@ Oleafly اختياري.
 | [Worksheet](../../packs/coursework/worksheet/main.tex) | [الملفات](../../packs/coursework/worksheet/) | [معاينة](../../packs/coursework/worksheet/preview.png) | [عرض](https://oleafly.com/templates/worksheet/) |
 | [Year Calendar](../../packs/creative-misc/calendar-year/main.tex) | [الملفات](../../packs/creative-misc/calendar-year/) | [معاينة](../../packs/creative-misc/calendar-year/preview.png) | [عرض](https://oleafly.com/templates/calendar-year/) |
 
-[تصفّح كل قوالب LaTeX (1,814)](../../docs/templates-latex.md).
+[تصفّح كل قوالب LaTeX (1,827)](../../docs/templates-latex.md).
 
 </details>
 
